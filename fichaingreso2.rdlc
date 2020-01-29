@@ -1,0 +1,1166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner" xmlns:cl="http://schemas.microsoft.com/sqlserver/reporting/2010/01/componentdefinition" xmlns="http://schemas.microsoft.com/sqlserver/reporting/2010/01/reportdefinition">
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="datostaller">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>336b67df-3854-44e1-a175-cafa18567a47</rd:DataSourceID>
+    </DataSource>
+    <DataSource Name="datosgenerales">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>198e2456-758c-4d69-8e3d-95468445adaf</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="datosEmp">
+      <Query>
+        <DataSourceName>datosgenerales</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="nombrefantasia">
+          <DataField>nombrefantasia</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="razonsocial">
+          <DataField>razonsocial</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="direccion">
+          <DataField>direccion</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="localidad">
+          <DataField>localidad</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="cuit">
+          <DataField>cuit</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ingbrutos">
+          <DataField>ingbrutos</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ivatipo">
+          <DataField>ivatipo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="inicioact">
+          <DataField>inicioact</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="drei">
+          <DataField>drei</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>datosgenerales</rd:DataSetName>
+        <rd:SchemaPath>C:\Importante\creaciones\kigest\sigt\datasets\datosgenerales.xsd</rd:SchemaPath>
+        <rd:TableName>datosEmpresa</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="datosFing">
+      <Query>
+        <DataSourceName>datostaller</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="piecliente">
+          <DataField>piecliente</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="pieempresa">
+          <DataField>pieempresa</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>datostaller</rd:DataSetName>
+        <rd:SchemaPath>C:\Importante\creaciones\kigest\sigt\datasets\datostaller.xsd</rd:SchemaPath>
+        <rd:TableName>datosFichaIngreso</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+    <DataSet Name="datosOrden">
+      <Query>
+        <DataSourceName>datostaller</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="orden">
+          <DataField>orden</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="fecha">
+          <DataField>fecha</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="clientectarazon">
+          <DataField>clientectarazon</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="codint">
+          <DataField>codint</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="recibio">
+          <DataField>recibio</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="equipotipo">
+          <DataField>equipotipo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="equipomarcamodelo">
+          <DataField>equipomarcamodelo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="accesorios">
+          <DataField>accesorios</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="motivo">
+          <DataField>motivo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="clientedire">
+          <DataField>clientedire</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="equiposerie">
+          <DataField>equiposerie</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>datostaller</rd:DataSetName>
+        <rd:SchemaPath>C:\Importante\creaciones\kigest\sigt\datasets\datostaller.xsd</rd:SchemaPath>
+        <rd:TableName>fichaIngreso</rd:TableName>
+        <rd:TableAdapterFillMethod />
+        <rd:TableAdapterGetDataMethod />
+        <rd:TableAdapterName />
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
+  <ReportSections>
+    <ReportSection>
+      <Body>
+        <ReportItems>
+          <Textbox Name="Textbox295">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!nombrefantasia.Value, "datosEmp")</Value>
+                    <Style>
+                      <FontSize>20pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox295</rd:DefaultName>
+            <Top>5.83006cm</Top>
+            <Left>0.46675cm</Left>
+            <Height>9.09361cm</Height>
+            <Width>0.89cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox1">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="ORDEN: " &amp; First(Fields!orden.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontStyle>Italic</FontStyle>
+                      <FontSize>20pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>0.45675cm</Left>
+            <Height>5.1cm</Height>
+            <Width>0.9cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!fecha.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>9.58013cm</Top>
+            <Left>1.49786cm</Left>
+            <Height>5.34354cm</Height>
+            <Width>0.46cm</Width>
+            <ZIndex>2</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox3">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!codint.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>6.30789cm</Top>
+            <Left>1.48786cm</Left>
+            <Height>3cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>3</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox4">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!recibio.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>1.49786cm</Left>
+            <Height>5.44633cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>4</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox5">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!clientectarazon.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>2.10898cm</Left>
+            <Height>14.37cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>5</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox6">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!clientedire.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>2.72009cm</Left>
+            <Height>14.37cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox7">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equipotipo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>9.42367cm</Top>
+            <Left>3.3312cm</Left>
+            <Height>5.5cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>7</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox8">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equipomarcamodelo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>3.3312cm</Left>
+            <Height>8.65cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>8</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox9">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equiposerie.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>3.94231cm</Left>
+            <Height>14.37cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>9</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox10">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!accesorios.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>4.55342cm</Left>
+            <Height>14.37cm</Height>
+            <Width>0.47cm</Width>
+            <ZIndex>10</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox11">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!motivo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>0.55367cm</Top>
+            <Left>5.16453cm</Left>
+            <Height>14.37cm</Height>
+            <Width>1.1cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+              <WritingMode>Rotate270</WritingMode>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox12">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!piecliente.Value, "datosFing")</Value>
+                    <Style>
+                      <FontSize>6pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>20.6504cm</Top>
+            <Left>3.05968cm</Left>
+            <Height>1.04979cm</Height>
+            <Width>14.37662cm</Width>
+            <ZIndex>12</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line1">
+            <Top>19.64824cm</Top>
+            <Left>8.50691cm</Left>
+            <Height>0cm</Height>
+            <Width>7.97688cm</Width>
+            <ZIndex>13</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Textbox Name="Textbox13">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>FIRMA Y ACLARACION DE CLIENTE</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox13</rd:DefaultName>
+            <Top>19.82463cm</Top>
+            <Left>8.50691cm</Left>
+            <Height>0.50271cm</Height>
+            <Width>7.65939cm</Width>
+            <ZIndex>14</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox296">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!nombrefantasia.Value, "datosEmp")</Value>
+                    <Style>
+                      <FontSize>20pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox295</rd:DefaultName>
+            <Top>8.65645cm</Top>
+            <Left>19.97541cm</Left>
+            <Height>0.89105cm</Height>
+            <Width>8.70292cm</Width>
+            <ZIndex>15</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox14">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="ORDEN: " &amp; First(Fields!orden.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontStyle>Italic</FontStyle>
+                      <FontSize>20pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox1</rd:DefaultName>
+            <Top>8.65645cm</Top>
+            <Left>29.22513cm</Left>
+            <Height>0.89105cm</Height>
+            <Width>5.12689cm</Width>
+            <ZIndex>16</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox15">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!fecha.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>9.72389cm</Top>
+            <Left>19.97541cm</Left>
+            <Height>0.46799cm</Height>
+            <Width>4.98881cm</Width>
+            <ZIndex>17</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox16">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!codint.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>9.73095cm</Top>
+            <Left>25.14061cm</Left>
+            <Height>0.473cm</Height>
+            <Width>2.9498cm</Width>
+            <ZIndex>18</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox17">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!recibio.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>9.73095cm</Top>
+            <Left>28.48229cm</Left>
+            <Height>0.473cm</Height>
+            <Width>5.83798cm</Width>
+            <ZIndex>19</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox18">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!clientectarazon.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>10.34153cm</Top>
+            <Left>19.9754cm</Left>
+            <Height>0.473cm</Height>
+            <Width>14.37662cm</Width>
+            <ZIndex>20</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox19">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!clientedire.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>10.99092cm</Top>
+            <Left>19.9754cm</Left>
+            <Height>0.473cm</Height>
+            <Width>14.37662cm</Width>
+            <ZIndex>21</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox20">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equipotipo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>11.60158cm</Top>
+            <Left>19.9754cm</Left>
+            <Height>0.473cm</Height>
+            <Width>5.51799cm</Width>
+            <ZIndex>22</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox21">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equipomarcamodelo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>11.60158cm</Top>
+            <Left>25.67507cm</Left>
+            <Height>0.473cm</Height>
+            <Width>8.6452cm</Width>
+            <ZIndex>23</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox22">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!equiposerie.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>12.18746cm</Top>
+            <Left>19.9754cm</Left>
+            <Height>0.44125cm</Height>
+            <Width>14.37662cm</Width>
+            <ZIndex>24</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox23">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!accesorios.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>12.77335cm</Top>
+            <Left>19.9754cm</Left>
+            <Height>0.473cm</Height>
+            <Width>14.37662cm</Width>
+            <ZIndex>25</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox24">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!motivo.Value, "datosOrden")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>13.41921cm</Top>
+            <Left>19.97541cm</Left>
+            <Height>1.09742cm</Height>
+            <Width>14.37661cm</Width>
+            <ZIndex>26</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox25">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!pieempresa.Value, "datosFing")</Value>
+                    <Style>
+                      <FontSize>6pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>16.61398cm</Top>
+            <Left>19.97541cm</Left>
+            <Height>1.43079cm</Height>
+            <Width>14.37661cm</Width>
+            <ZIndex>27</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line2">
+            <Top>15.61182cm</Top>
+            <Left>25.10514cm</Left>
+            <Height>0cm</Height>
+            <Width>7.97688cm</Width>
+            <ZIndex>28</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Line>
+          <Textbox Name="Textbox26">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>FIRMA Y SELLO DE EMPRESA</Value>
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox13</rd:DefaultName>
+            <Top>15.78821cm</Top>
+            <Left>25.10514cm</Left>
+            <Height>0.50271cm</Height>
+            <Width>7.97688cm</Width>
+            <ZIndex>29</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox27">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>PARA RETIRAR EL EQUIPO ES IMPRESCINDIBLE PRESENTAR ESTE COMPROBANTE</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>18.08005cm</Top>
+            <Left>19.97541cm</Left>
+            <Height>0.473cm</Height>
+            <Width>14.37661cm</Width>
+            <ZIndex>30</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Line Name="Line3">
+            <Top>15.20958cm</Top>
+            <Left>19.35839cm</Left>
+            <Height>0cm</Height>
+            <Width>14.96188cm</Width>
+            <ZIndex>31</ZIndex>
+            <Style>
+              <Border>
+                <Style>Dashed</Style>
+                <Width>2pt</Width>
+              </Border>
+            </Style>
+          </Line>
+        </ReportItems>
+        <Height>31.82563cm</Height>
+        <Style />
+      </Body>
+      <Width>34.85855cm</Width>
+      <Page>
+        <PageHeight>21cm</PageHeight>
+        <PageWidth>15cm</PageWidth>
+        <InteractiveHeight>21cm</InteractiveHeight>
+        <InteractiveWidth>15cm</InteractiveWidth>
+        <LeftMargin>0cm</LeftMargin>
+        <RightMargin>0cm</RightMargin>
+        <TopMargin>0cm</TopMargin>
+        <BottomMargin>0cm</BottomMargin>
+        <ColumnSpacing>0.13cm</ColumnSpacing>
+        <Style />
+      </Page>
+    </ReportSection>
+  </ReportSections>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>259d2abb-3455-4358-ac10-c373af49735e</rd:ReportID>
+</Report>

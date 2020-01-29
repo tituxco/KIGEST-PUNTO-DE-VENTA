@@ -1,0 +1,78 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="servidor" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="puerto" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="bd" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="usuario" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="pass" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="authuser" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="authpass" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="priv" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="idint" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="idAlmacen" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="idfacRap" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="idPtoVta" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="idCatDef" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="idListaDef" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="ImprTikets" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="ImprTiketsNombre" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UnidDef" Type="System.String" Scope="User">
+      <Value Profile="(Default)">lt</Value>
+    </Setting>
+    <Setting Name="TipoEtiqueta" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CajaDef" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="EtiquetadoraNmb" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="TextoPieTiket" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ivaDef" Type="System.String" Scope="User">
+      <Value Profile="(Default)">21</Value>
+    </Setting>
+    <Setting Name="calcCosto" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="monedaDef" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

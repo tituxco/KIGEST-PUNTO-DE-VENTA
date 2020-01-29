@@ -1,0 +1,12 @@
+﻿CREATE TABLE `ecomerce_promos` (
+  `idecomerce_promos` int(11) NOT NULL AUTO_INCREMENT,
+  `idproducto` int(11) NOT NULL,
+  `sidebar` int(11) NOT NULL DEFAULT '0',
+  `slide` int(11) NOT NULL DEFAULT '0',
+  `nuevo` int(11) NOT NULL DEFAULT '0',
+  `oferta` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idecomerce_promos`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
