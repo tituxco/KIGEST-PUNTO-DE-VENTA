@@ -7,6 +7,7 @@ Public Class imprimirEtiquetas
     Dim ProEtiquetaCod As String
     Dim ProNomb As String
     Dim ProCant As String
+    Dim ProCantEtiq As String
     Dim ProPrecio As String
 
 
@@ -96,8 +97,109 @@ Public Class imprimirEtiquetas
         End Try
     End Sub
 
+    Private Sub CargarControlCantidadesGR1()
+        Dim unid As String = My.Settings.UnidDef
 
-    Private Sub CargarControlCantidades()
+        pnCantidades.Controls.Clear()
+        Dim botonCant(8) As Button
+        botonCant(0) = New Button
+        botonCant(0).Text = "25 " & unid
+        botonCant(0).Width = 110
+        botonCant(0).Dock = DockStyle.Left
+        botonCant(0).Tag = "0,025"
+        botonCant(0).FlatStyle = FlatStyle.Flat
+        botonCant(0).Font = New Font(botonCant(0).Font.Name, 12)
+        botonCant(0).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(0))
+
+        botonCant(1) = New Button
+        botonCant(1).Text = "50 " & unid
+        botonCant(1).Width = 110
+        botonCant(1).Dock = DockStyle.Left
+        botonCant(1).Tag = "0,05"
+        botonCant(1).FlatStyle = FlatStyle.Flat
+        botonCant(1).Font = New Font(botonCant(1).Font.Name, 12)
+        botonCant(1).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(1))
+
+        botonCant(2) = New Button
+        botonCant(2).Text = "75 " & unid
+        botonCant(2).Width = 110
+        botonCant(2).Dock = DockStyle.Left
+        botonCant(2).Tag = "0,075"
+        botonCant(2).FlatStyle = FlatStyle.Flat
+        botonCant(2).Font = New Font(botonCant(2).Font.Name, 12)
+        botonCant(2).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(2))
+
+        botonCant(3) = New Button
+        botonCant(3).Text = "100 " & unid
+        botonCant(3).Width = 110
+        botonCant(3).Dock = DockStyle.Left
+        botonCant(3).Tag = "0,1"
+        botonCant(3).FlatStyle = FlatStyle.Flat
+        botonCant(3).Font = New Font(botonCant(3).Font.Name, 12)
+        botonCant(3).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(3))
+
+
+
+        botonCant(4) = New Button
+        botonCant(4).Text = "125 " & unid
+        botonCant(4).Width = 110
+        botonCant(4).Dock = DockStyle.Left
+        botonCant(4).Tag = "0,125"
+        botonCant(4).FlatStyle = FlatStyle.Flat
+        botonCant(4).Font = New Font(botonCant(4).Font.Name, 12)
+        botonCant(4).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(4))
+
+        botonCant(5) = New Button
+        botonCant(5).Text = "150 " & unid
+        botonCant(5).Width = 110
+        botonCant(5).Dock = DockStyle.Left
+        botonCant(5).Tag = "0,150"
+        botonCant(5).FlatStyle = FlatStyle.Flat
+        botonCant(5).Font = New Font(botonCant(5).Font.Name, 12)
+        botonCant(5).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(5))
+
+        botonCant(6) = New Button
+        botonCant(6).Text = "175 " & unid
+        botonCant(6).Width = 110
+        botonCant(6).Dock = DockStyle.Left
+        botonCant(6).Tag = "0,175"
+        botonCant(6).FlatStyle = FlatStyle.Flat
+        botonCant(6).Font = New Font(botonCant(6).Font.Name, 12)
+        botonCant(6).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(6))
+
+        botonCant(7) = New Button
+        botonCant(7).Text = "200 " & unid
+        botonCant(7).Width = 110
+        botonCant(7).Dock = DockStyle.Left
+        botonCant(7).Tag = "0,20"
+        botonCant(7).FlatStyle = FlatStyle.Flat
+        botonCant(7).Font = New Font(botonCant(7).Font.Name, 12)
+        botonCant(7).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(7))
+
+        botonCant(8) = New Button
+        botonCant(8).Text = "250 " & unid
+        botonCant(8).Width = 110
+        botonCant(8).Dock = DockStyle.Left
+        botonCant(8).Tag = "0,25"
+        botonCant(8).FlatStyle = FlatStyle.Flat
+        botonCant(8).Font = New Font(botonCant(8).Font.Name, 12)
+        botonCant(8).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(8))
+
+        For i = 0 To 8
+            AddHandler botonCant(i).Click, AddressOf ControlCantidades
+        Next
+
+    End Sub
+    Private Sub CargarControlCantidadesLT1()
         Dim unid As String = My.Settings.UnidDef
 
         pnCantidades.Controls.Clear()
@@ -208,8 +310,12 @@ Public Class imprimirEtiquetas
         End Try
     End Sub
     Private Sub imprimirEtiquetas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If My.Settings.UnidDef = "gr" Then
+            CargarControlCantidadesGR1()
+        Else
+            CargarControlCantidadesLT1()
+        End If
 
-        CargarControlCantidades()
         cargarCategoriasProd()
         CargarListas()
     End Sub
@@ -378,6 +484,7 @@ Public Class imprimirEtiquetas
             If TypeOf (boton) Is Button Then
                 If boton.BackColor = Color.FromArgb(255, 128, 0) Then
                     ProCant = boton.Tag
+                    ProCantEtiq = boton.Text
                 End If
             End If
         Next
@@ -417,7 +524,7 @@ Public Class imprimirEtiquetas
                 'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
                 'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
                 e.Graphics.DrawString(ProNomb, font2, Brushes.Black, 0, 60) 'PRODUCTO
-                e.Graphics.DrawString("x " & ProCant & My.Settings.UnidDef, font3, Brushes.Black, 0, 70) 'CANTIDAD
+                e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 0, 70) 'CANTIDAD
                 e.Graphics.DrawString(ProPrecio, font4, Brushes.Black, 60, 70) 'PRECIO
                 e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
                 e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
@@ -454,7 +561,7 @@ Public Class imprimirEtiquetas
 
                 e.Graphics.DrawImage(PictureBox1.Image, 20, 30)
 
-                e.Graphics.DrawString("x " & ProCant & My.Settings.UnidDef, font3, Brushes.Black, 5, 75) 'CANTIDAD
+                e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 10, 75) 'CANTIDAD
                 e.Graphics.DrawString(ProPrecio, font4, Brushes.Black, 90, 75) 'PRECIO
                 'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
                 'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 67)
@@ -608,9 +715,14 @@ Public Class imprimirEtiquetas
     Private Sub txtcantperson_TextChanged(sender As Object, e As EventArgs) Handles txtcantperson.TextChanged
 
         If IsNumeric(DirectCast(sender, TextBox).Text) Then
-            ProCant = FormatNumber(DirectCast(sender, TextBox).Text, 2)
+            ProCant = DirectCast(sender, TextBox).Text
+            If My.Settings.UnidDef = "lt" Then
+                ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
+            ElseIf My.Settings.UnidDef = "gr" Then
+                ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
+            End If
             LlenarEtiqueta()
-        End If
+            End If
     End Sub
 
     Private Sub txtcantperson_GotFocus(sender As Object, e As EventArgs) Handles txtcantperson.GotFocus
@@ -622,21 +734,22 @@ Public Class imprimirEtiquetas
         pnCantidadPerson.BackColor = Color.FromArgb(255, 128, 0)
 
         If IsNumeric(DirectCast(sender, TextBox).Text) Then
-            ProCant = FormatNumber(DirectCast(sender, TextBox).Text, 2)
+            ProCant = DirectCast(sender, TextBox).Text
+            If My.Settings.UnidDef = "lt" Then
+                ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
+            ElseIf My.Settings.UnidDef = "gr" Then
+                ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
+            End If
             LlenarEtiqueta()
         End If
-    End Sub
-
-    Private Sub cmbCategoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCategoria.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub cmblistas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmblistas.SelectedIndexChanged
-
     End Sub
 
     Private Sub cmblistas_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmblistas.SelectionChangeCommitted
         My.Settings.idListaDef = cmblistas.SelectedValue
         My.Settings.Save()
+    End Sub
+
+    Private Sub pnProductos_Paint(sender As Object, e As PaintEventArgs) Handles pnProductos.Paint
+
     End Sub
 End Class
