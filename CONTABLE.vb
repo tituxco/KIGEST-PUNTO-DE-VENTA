@@ -15,13 +15,13 @@ Public Class CONTABLE
         dtpdesdedetallecta.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtdesdecuentaprov.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         tabplancuentas.Parent = Nothing
-        tabstockvalorizado.Parent = Nothing
+
         tabdtostecni.Parent = Nothing
         tablibromayor.Parent = Nothing
-        tabgraficas.Parent = Nothing
+        'tabgraficas.Parent = Nothing
 
         If InStr(DatosAcceso.Moduloacc, "4aa") = False Then tabcomprobantes.Parent = Nothing
-        If InStr(DatosAcceso.Moduloacc, "4aa") = False Then tabcobranzas.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ab") = False Then tabcobranzas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ac") = False Then balance.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ad") = False Then tabremitos.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ae") = False Then tabcheques.Parent = Nothing
@@ -29,6 +29,8 @@ Public Class CONTABLE
         If InStr(DatosAcceso.Moduloacc, "4ag") = False Then tabestadocuentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ah") = False Then tabcuentasclientes.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ai") = False Then tabcuentasproveedores.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "2d") = False Then tabstockvalorizado.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4aa-4ab") = False Then tabgraficas.Parent = Nothing
 
         If InStr(DatosAcceso.Moduloacc, "5") = False Then tabdtostecni.Parent = Nothing
 
@@ -622,19 +624,17 @@ Public Class CONTABLE
 
     Private Sub cargarStockValorizado()
         Try
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT " _
-            & " cat.nombre as Categoria, prod.descripcion as Productos, (select sum(stock) from fact_insumos_lotes where idproducto=prod.id) as Stock, " _
-            & " (select round(sum(replace(precio,',','.')*mon.cotizacion),2) from fact_insumos where moneda=mon.id and id=prod.id)* " _
-            & " (select sum(stock) from fact_insumos_lotes where idproducto=prod.id) as Saldo" _
-            & " from fact_insumos as prod, fact_moneda as mon, fact_categoria_insum as cat, fact_insumos_lotes as st " _
-            & " where cat.id=prod.categoria and mon.id=prod.moneda and st.stock>0 and st.idproducto=prod.id order by cat.nombre asc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+            cat.nombre as Categoria, 
+            round(sum((select round(sum(replace(precio,',','.')*mon.cotizacion),2) from fact_insumos where moneda=mon.id and id=prod.id)* 
+            (select sum(stock) from fact_insumos_lotes where idproducto=prod.id)),2) as Saldo
+            from fact_insumos as prod, fact_moneda as mon, fact_categoria_insum as cat, fact_insumos_lotes as st 
+            where cat.id=prod.categoria and mon.id=prod.moneda and st.stock>0 and st.idproducto=prod.id group by cat.nombre order by cat.nombre asc", conexionPrinc)
 
             Dim tablastock As New DataTable
             consulta.Fill(tablastock)
             'infoestado = tablaestado.Select()
             dtstockvalorizado.DataSource = tablastock
-            dtstockvalorizado.Columns(2).FillWeight = 30
-            dtstockvalorizado.Columns(3).FillWeight = 30
 
 
         Catch ex As Exception
@@ -2290,19 +2290,15 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tabstockvalorizado_Enter(sender As Object, e As EventArgs) Handles tabstockvalorizado.Enter
-        If InStrRev(DatosAcceso.Moduloacc, "5j") = 0 Then
-            MsgBox("NO esta autorizado")
-            cmdbuscar.Enabled = False
-            Exit Sub
-        End If
+
         cargarStockValorizado()
         Dim i As Integer
         Dim sumatot As Double
         For i = 0 To dtstockvalorizado.Rows.Count - 1
-            sumatot += dtstockvalorizado.Rows(i).Cells(3).Value
+            sumatot += dtstockvalorizado.Rows(i).Cells(1).Value
         Next
         dttotstock.Rows.Clear()
-        dttotstock.Rows.Add("", "", "TOTAL", sumatot)
+        dttotstock.Rows.Add("TOTAL", sumatot)
         dttotstock.Rows(dttotales.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen
         dttotstock.Rows(dttotales.RowCount - 1).DefaultCellStyle.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
 
@@ -3098,7 +3094,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Next
         'Dim sqlQuery As String =
         Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set categoria= '" & categDef & "' where categoria in (" & categSel & ")", conexionPrinc)
-        MsgBox(comandoUPD.CommandText)
+        'MsgBox(comandoUPD.CommandText)
         comandoUPD.ExecuteNonQuery()
         Dim comandoELIM As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_categoria_insum where id  in (" & categSel & ")", conexionPrinc)
         comandoELIM.ExecuteNonQuery()
@@ -3133,5 +3129,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
 
+    Private Sub TabPage10_Click(sender As Object, e As EventArgs) Handles TabPage10.Click
 
+    End Sub
+
+    Private Sub dtcategorias_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtcategorias.CellContentClick
+
+    End Sub
 End Class

@@ -477,4 +477,13 @@
     Private Sub dtproductos_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles dtproductos.CellBeginEdit
         dtproductos.CurrentRow.Cells(4).Value = My.Settings.ivaDef
     End Sub
+
+    Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
+        My.Settings.calcCosto = chkcalcularcosto.CheckState
+        My.Settings.Save()
+    End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
 End Class

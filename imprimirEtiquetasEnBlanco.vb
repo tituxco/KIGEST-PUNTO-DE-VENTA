@@ -13,7 +13,6 @@ Public Class imprimirEtiquetasEnBlanco
         Dim g As Graphics = Graphics.FromImage(bmp)
         Dim laBytImagen() As Byte = Nothing
 
-
         Reconectar()
 
         g.FillRectangle(Brushes.White, bmp.GetBounds(GraphicsUnit.Pixel))
@@ -47,6 +46,8 @@ Public Class imprimirEtiquetasEnBlanco
                 pgSize.Width = 196.8 '  135 '180 '196.8 '
                 pgSize.Height = 118  '78 '173.23 '100
             End If
+
+            PrintTxt.DefaultPageSettings.PaperSize = pgSize
             AddHandler PrintTxt.PrintPage, AddressOf ImprimirEtiqueta
             Dim paginas As Integer = CInt(TextBox5.Text)
             Dim i As Integer

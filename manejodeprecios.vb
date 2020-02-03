@@ -97,7 +97,7 @@
             If imprimirlist = False And imprimiretiq = False Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU, 
             pro.precio as costosiniva, pro.ganancia,pro.utilidad1,pro.utilidad2, (select sum(stock) from fact_insumos_lotes  
-            where idproducto=pro.id) as Stock  from fact_insumos as pro " & cadenaComp, conexionPrinc)
+            where idproducto=pro.id) as Stock,pro.iva  from fact_insumos as pro " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
@@ -114,7 +114,7 @@
 
                 dtproductos.Columns(7).Width = 100
                 dtproductos.Columns(7).ReadOnly = True
-
+                dtproductos.Columns(8).Visible = False
             ElseIf imprimirlist = True Or imprimiretiq = True Then
 
                 'Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
@@ -320,6 +320,8 @@
         cargarListas()
         cargarCategoriasProd()
         cargarProveedores()
+
+        chkcalcularcosto.CheckState = My.Settings.calcCosto
     End Sub
 
     Private Sub cmbcatProd_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbcatProd.SelectedIndexChanged
@@ -359,10 +361,18 @@
         End Try
     End Sub
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
+
         Dim idprod As Integer = dtproductos.CurrentRow.Cells(0).Value
+        SendKeys.Send("{UP}")
+        SendKeys.Send("{TAB}")
         If e.ColumnIndex = 3 Then
             If IsNumeric(dtproductos.CurrentRow.Cells(3).Value) Then
                 Dim costo As String = dtproductos.CurrentRow.Cells(3).Value
+                Dim iva As String = dtproductos.CurrentRow.Cells(8).Value
+                If chkcalcularcosto.CheckState = CheckState.Checked Then
+                    costo = Math.Round(FormatNumber(costo, 2) / ((FormatNumber(iva, 2) + 100) / 100), 2)
+                    dtproductos.CurrentCell.Value = costo
+                End If
                 Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set precio='" & costo & "' where id=" & idprod, conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
@@ -509,5 +519,14 @@
         Dim prod As New ImportacionPrecios
         prod.MdiParent = frmprincipal
         prod.Show()
+    End Sub
+
+    Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
+        My.Settings.calcCosto = chkcalcularcosto.CheckState
+        My.Settings.Save()
+    End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
     End Sub
 End Class

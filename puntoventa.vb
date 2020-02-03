@@ -954,7 +954,7 @@ Public Class puntoventa
 
             If My.Settings.ImprTikets = 1 Then
                 ' MsgBox("imprimirtiket")
-                ' cmdimprimir.PerformClick()
+                cmdimprimir.PerformClick()
             End If
 
         Catch ex As Exception

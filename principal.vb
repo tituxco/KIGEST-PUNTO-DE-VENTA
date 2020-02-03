@@ -65,10 +65,9 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "2a") = False Then ABMProductosToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2b") = False Then ConsultaDeProductos.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2c") = False Then ManejoDePreciosToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "2d") = False Then StockToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then MostradorToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then EtiquetasEnBlancoToolStripMenuItem.Visible = False
-
-
 
             If InStr(DatosAcceso.Moduloacc, "3") = False Then cmdfacturacion.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3a") = False Then NuevaEfacturaToolStripMenuItem.Visible = False
