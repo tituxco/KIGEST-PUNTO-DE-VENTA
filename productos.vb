@@ -378,6 +378,9 @@ Public Class productos
                 imprimirlist = False
             End If
 
+            dtproductos.Columns(0).Width = 40
+            dtproductos.Columns(2).Width = 60
+
         Catch ex As Exception
             MsgBox(ex.Message)
 

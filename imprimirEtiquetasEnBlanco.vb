@@ -39,12 +39,13 @@ Public Class imprimirEtiquetasEnBlanco
         Dim PrintTxt As New PrintDocument
         Dim pgSize As New PaperSize
         Try
+            pgSize.RawKind = Printing.PaperKind.Custom
             If My.Settings.TipoEtiqueta = 0 Then
-                pgSize.Width = 180 '196.8 '
-                pgSize.Height = 173.23 '100
+                pgSize.Width = 180 '216.5 '5,5cm
+                pgSize.Height = 173.23 '4,4cm
             ElseIf My.Settings.TipoEtiqueta = 1 Then
-                pgSize.Width = 196.8 '  135 '180 '196.8 '
-                pgSize.Height = 118  '78 '173.23 '100
+                pgSize.Width = 196.8 '5cm
+                pgSize.Height = 118  '3cm
             End If
 
             PrintTxt.DefaultPageSettings.PaperSize = pgSize

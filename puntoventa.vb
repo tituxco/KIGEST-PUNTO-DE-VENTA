@@ -560,7 +560,7 @@ Public Class puntoventa
             filasProd = tablaprod.Select("")
 
             'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM fact_listas_precio where id=" & listaPrecios, conexionPrinc)
+            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR'),auxcol FROM fact_listas_precio where id=" & listaPrecios, conexionPrinc)
             Dim tablalistas As New DataTable
             Dim filaslistas() As DataRow
             consultalis.Fill(tablalistas)

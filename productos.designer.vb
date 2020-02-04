@@ -1862,6 +1862,7 @@ Partial Class productos
         Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
         '
         'Column5
         '
