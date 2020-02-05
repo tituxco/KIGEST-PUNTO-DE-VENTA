@@ -23,11 +23,12 @@ Partial Class manejodeprecios
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(manejodeprecios))
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.chkcalcularcosto = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.txtporcBusq = New System.Windows.Forms.TextBox()
@@ -57,19 +58,18 @@ Partial Class manejodeprecios
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.chkcalcularcosto = New System.Windows.Forms.CheckBox()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnnavegacion.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -98,6 +98,17 @@ Partial Class manejodeprecios
         Me.pnnavegacion.Size = New System.Drawing.Size(1083, 148)
         Me.pnnavegacion.TabIndex = 77
         '
+        'chkcalcularcosto
+        '
+        Me.chkcalcularcosto.AutoSize = True
+        Me.chkcalcularcosto.ForeColor = System.Drawing.Color.White
+        Me.chkcalcularcosto.Location = New System.Drawing.Point(648, 125)
+        Me.chkcalcularcosto.Name = "chkcalcularcosto"
+        Me.chkcalcularcosto.Size = New System.Drawing.Size(126, 17)
+        Me.chkcalcularcosto.TabIndex = 238
+        Me.chkcalcularcosto.Text = "Calcular costo sin iva"
+        Me.chkcalcularcosto.UseVisualStyleBackColor = True
+        '
         'Button1
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
@@ -114,6 +125,7 @@ Partial Class manejodeprecios
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'GroupBox3
         '
@@ -445,48 +457,6 @@ Partial Class manejodeprecios
         Me.dtlistas.Size = New System.Drawing.Size(335, 262)
         Me.dtlistas.TabIndex = 228
         '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Lista"
-        Me.Column3.Name = "Column3"
-        '
-        'Column4
-        '
-        DataGridViewCellStyle9.Format = "N2"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle9
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle10.Format = "C2"
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle10
-        Me.Column5.FillWeight = 60.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
-        '
-        'id
-        '
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 30.0!
-        Me.Column2.HeaderText = "auxUtil"
-        Me.Column2.Name = "Column2"
-        '
         'DataGridViewTextBoxColumn1
         '
         Me.DataGridViewTextBoxColumn1.HeaderText = "Lista"
@@ -495,18 +465,18 @@ Partial Class manejodeprecios
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle11.Format = "N2"
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle12.Format = "C2"
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn3.FillWeight = 60.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -533,16 +503,49 @@ Partial Class manejodeprecios
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         Me.DataGridViewTextBoxColumn6.Width = 43
         '
-        'chkcalcularcosto
+        'Column3
         '
-        Me.chkcalcularcosto.AutoSize = True
-        Me.chkcalcularcosto.ForeColor = System.Drawing.Color.White
-        Me.chkcalcularcosto.Location = New System.Drawing.Point(648, 125)
-        Me.chkcalcularcosto.Name = "chkcalcularcosto"
-        Me.chkcalcularcosto.Size = New System.Drawing.Size(126, 17)
-        Me.chkcalcularcosto.TabIndex = 238
-        Me.chkcalcularcosto.Text = "Calcular costo sin iva"
-        Me.chkcalcularcosto.UseVisualStyleBackColor = True
+        Me.Column3.HeaderText = "Lista"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column5.FillWeight = 60.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'id
+        '
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        Me.Column2.HeaderText = "auxUtil"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Visible = False
         '
         'manejodeprecios
         '
@@ -603,12 +606,6 @@ Partial Class manejodeprecios
     Friend WithEvents txtporcBusq As TextBox
     Friend WithEvents Label6 As Label
     Friend WithEvents cmdAumBusq As Button
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents id As DataGridViewTextBoxColumn
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
@@ -617,4 +614,10 @@ Partial Class manejodeprecios
     Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
     Friend WithEvents Button1 As Button
     Friend WithEvents chkcalcularcosto As CheckBox
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents id As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
 End Class

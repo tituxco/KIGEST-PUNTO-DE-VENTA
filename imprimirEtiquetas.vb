@@ -430,7 +430,8 @@ Public Class imprimirEtiquetas
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") As cotiza, (Select valor from fact_configuraciones where  id =1) As lista"
+            sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") As cotiza, 
+            (Select valor from fact_configuraciones where id =1) As lista"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -442,6 +443,8 @@ Public Class imprimirEtiquetas
             Dim lista As Double
             Dim codaux As Integer = filaslistas(0)(1)
             Dim utilidad As Double
+
+
             Select Case codaux
                 Case 0
                     utilidad = (FormatNumber(filasProd(0)(1)) + 100) / 100
@@ -450,6 +453,11 @@ Public Class imprimirEtiquetas
                 Case 2
                     utilidad = (FormatNumber(filasProd(0)(5)) + 100) / 100
             End Select
+
+            Dim utilSum As Double = FormatNumber(filasProd(0)(5))
+            Dim listaSum As Double = FormatNumber(filaslistas(0)(0))
+
+            Dim SumaUtil As Double = (utilSum + listaSum + 100) / 100
 
             Dim PrecioSinIva As Double
             Dim PrecioVenta As Double
@@ -460,8 +468,13 @@ Public Class imprimirEtiquetas
                 PrecioVenta = PrecioSinIva * iva
             Else
                 lista = (FormatNumber(filaslistas(0)(0) + 100) / 100)
-                PrecioSinIva = precioCosto * cotizacion * utilidad * lista
-                PrecioVenta = PrecioSinIva * iva
+                If codaux = 2 Then
+                    PrecioSinIva = precioCosto * cotizacion * SumaUtil
+                    PrecioVenta = PrecioSinIva * iva
+                Else
+                    PrecioSinIva = precioCosto * cotizacion * utilidad * lista
+                    PrecioVenta = PrecioSinIva * iva
+                End If
             End If
             Return Math.Round(PrecioVenta, 2)
 
@@ -612,7 +625,7 @@ Public Class imprimirEtiquetas
                 .AddWithValue("?codbarr", ProEtiquetaCod)
                 .AddWithValue("?codprod", ProId)
                 .AddWithValue("?prod", ProNomb)
-                .AddWithValue("?cant", FormatNumber(ProCant))
+                .AddWithValue("?cant", FormatNumber(ProCant, 3))
                 .AddWithValue("?precio", FormatNumber(ProPrecio))
                 .AddWithValue("?fecha", fecha)
             End With

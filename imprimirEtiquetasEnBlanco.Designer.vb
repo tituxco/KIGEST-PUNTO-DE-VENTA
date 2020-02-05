@@ -130,7 +130,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 129)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(761, 313)
+        Me.Panel2.Size = New System.Drawing.Size(761, 378)
         Me.Panel2.TabIndex = 79
         '
         'TextBox5
@@ -171,9 +171,9 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(332, 18)
+        Me.PictureBox1.Location = New System.Drawing.Point(345, 18)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(354, 214)
+        Me.PictureBox1.Size = New System.Drawing.Size(320, 203)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -245,7 +245,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(761, 442)
+        Me.ClientSize = New System.Drawing.Size(761, 507)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)

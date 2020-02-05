@@ -246,6 +246,9 @@
             Dim util1 As Double = (FormatNumber(infoprod(0)(4)) + 100) / 100
             Dim util2 As Double = (FormatNumber(infoprod(0)(5)) + 100) / 100
 
+
+            Dim util2sum As Double = FormatNumber(infoprod(0)(5))
+
             Dim costoUtil As Double
             Dim costoFinal As Double
 
@@ -254,7 +257,8 @@
             Dim i As Integer
             For i = 0 To dtlistas.RowCount - 1
                 Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
-
+                Dim utilListSum As Double = (utilidad * 100) - 100
+                Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
                 If dtlistas.Rows(i).Cells(4).Value.ToString = "%" Then
                     dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
                 Else
@@ -264,7 +268,8 @@
                         Case 1
                             dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
                         Case 2
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                            dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
+                            ' MsgBox(costoFinal & "*(" & sumaUtil & ")")
                     End Select
 
                 End If
@@ -365,6 +370,7 @@
         Dim idprod As Integer = dtproductos.CurrentRow.Cells(0).Value
         SendKeys.Send("{UP}")
         SendKeys.Send("{TAB}")
+        'cerrar_Conexiones()
         If e.ColumnIndex = 3 Then
             If IsNumeric(dtproductos.CurrentRow.Cells(3).Value) Then
                 Dim costo As String = dtproductos.CurrentRow.Cells(3).Value

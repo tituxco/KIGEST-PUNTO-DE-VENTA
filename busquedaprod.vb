@@ -1,4 +1,6 @@
-﻿Public Class busquedaprod
+﻿Imports System.Drawing.Printing
+
+Public Class busquedaprod
     Dim modificaProd As Boolean
     Dim imprimirlist As Boolean
     Dim imprimiretiq As Boolean
@@ -259,6 +261,7 @@
             Dim util1 As Double = (FormatNumber(infoprod(0)(4)) + 100) / 100
             Dim util2 As Double = (FormatNumber(infoprod(0)(5)) + 100) / 100
 
+            Dim util2sum As Double = FormatNumber(infoprod(0)(5))
 
             Dim costoUtil As Double
             Dim costoFinal As Double
@@ -268,7 +271,8 @@
             Dim i As Integer
             For i = 0 To dtlistas.RowCount - 1
                 Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
-
+                Dim utilListSum As Double = (utilidad * 100) - 100
+                Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
                 If dtlistas.Rows(i).Cells(4).Value.ToString = "%" Then
                     dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
                 Else
@@ -278,7 +282,7 @@
                         Case 1
                             dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
                         Case 2
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                            dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
                     End Select
 
                 End If
@@ -440,23 +444,103 @@
         End Try
     End Sub
 
-    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+    Private Sub ImprimirBoleta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
+        Try
+            If My.Settings.TipoEtiqueta = 0 Then
+                ' letra
+                'Dim font1 As New Font("EAN-13", 40)
+                Dim font2 As New Font("Arial", 8)
+                Dim font3 As New Font("Arial", 8)
+                Dim font4 As New Font("Arial", 18)
+                Dim font5 As New Font("Arial", 6)
 
+                Dim ProductoDesc As String = dtproductos.CurrentRow.Cells(1).Value
+                Dim ProductoCod As String = dtproductos.CurrentRow.Cells(2).Value
+                Dim ProductoPrec As String = Math.Round(dtlistas.CurrentRow.Cells(2).Value, 2)
+
+                'If TextBox1.Text <> "" Then
+                '    alto = Convert.ToSingle(TextBox1.Text)
+                'End If
+                Dim bm As Bitmap = Nothing
+                bm = Codigos.codigo128(dtproductos.CurrentRow.Cells(2).Value, False, 40)
+                If Not IsNothing(bm) Then
+                    PictureBox1.Image = bm
+                End If
+
+
+                ' impresion
+                e.Graphics.DrawImage(PictureBox1.Image, 0, 0)
+                'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
+                'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
+                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 0, 60) 'PRODUCTO
+                'e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 0, 70) 'CANTIDAD
+                'e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
+                'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
+                'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
+                'LlenarEtiqueta()
+
+            ElseIf My.Settings.TipoEtiqueta = 1 Then
+                Dim font2 As New Font("Arial", 8)
+                Dim font3 As New Font("Arial", 8)
+                Dim font4 As New Font("Arial", 10)
+                Dim font5 As New Font("Arial", 6)
+
+                Dim ProductoDesc As String = dtproductos.CurrentRow.Cells(1).Value
+                Dim ProductoCod As String = dtproductos.CurrentRow.Cells(2).Value
+                Dim ProductoPrec As String = Math.Round(dtlistas.CurrentRow.Cells(2).Value, 2)
+
+                'If TextBox1.Text <> "" Then
+                '    alto = Convert.ToSingle(TextBox1.Text)
+                'End If
+                Dim bm As Bitmap = Nothing
+                bm = Codigos.codigo128(dtproductos.CurrentRow.Cells(2).Value, False, 40)
+                If Not IsNothing(bm) Then
+                    PictureBox1.Image = bm
+                End If
+
+
+                ' impresion
+                e.Graphics.DrawImage(PictureBox1.Image, 35, 0)
+                e.Graphics.DrawString(ProductoCod, font4, Brushes.Black, 35, 43) 'codigo
+                'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
+                'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
+                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 0, 60) 'PRODUCTO
+
+                'e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
+                'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
+                'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
+                'LlenarEtiqueta()
+
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
-    Private Sub txtbuscar_Layout(sender As Object, e As LayoutEventArgs) Handles txtbuscar.Layout
 
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim PrintTxt As New PrintDocument
+        Dim pgSize As New PaperSize
+
+        pgSize.RawKind = Printing.PaperKind.Custom
+        If My.Settings.TipoEtiqueta = 0 Then
+            pgSize.Width = 180 '196.8 '
+            pgSize.Height = 173.23 '100
+        ElseIf My.Settings.TipoEtiqueta = 1 Then
+            pgSize.Width = 196.8 '  135 '180 '196.8 '
+            pgSize.Height = 118  '78 '173.23 '100
+
+        End If
+
+        PrintTxt.DefaultPageSettings.PaperSize = pgSize
+        ' evento print
+        AddHandler PrintTxt.PrintPage, AddressOf ImprimirBoleta
+        PrintTxt.PrinterSettings.PrinterName = My.Settings.EtiquetadoraNmb
+        PrintTxt.Print()
+        'End If
     End Sub
 
-    Private Sub dtlistasImprimir_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistasImprimir.CellContentClick
-
-    End Sub
-
-    Private Sub CheckBox2_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox2.CheckedChanged
-
-    End Sub
-
-    Private Sub dtlistas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistas.CellContentClick
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
 
     End Sub
 End Class

@@ -440,6 +440,8 @@ Public Class productos
             Dim util1 As Double = (FormatNumber(txtutilidad1.Text) + 100) / 100
             Dim util2 As Double = (FormatNumber(txtutilidad2.Text) + 100) / 100
 
+            Dim util2sum As Double = FormatNumber(txtutilidad2.Text)
+
             Dim costoUtil As Double
             Dim costoFinal As Double
 
@@ -451,7 +453,8 @@ Public Class productos
 
             For i = 0 To dtlistas.RowCount - 1
                 Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
-
+                Dim utilListSum As Double = (utilidad * 100) - 100
+                Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
                 If dtlistas.Rows(i).Cells(3).Value.ToString = "%" Then
                     dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
                 Else
@@ -461,7 +464,7 @@ Public Class productos
                         Case 1
                             dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
                         Case 2
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                            dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
                     End Select
 
                 End If

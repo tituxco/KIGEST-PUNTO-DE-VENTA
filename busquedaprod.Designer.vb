@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class busquedaprod
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,16 +20,17 @@ Partial Class busquedaprod
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(busquedaprod))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.Button8 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.cmbcatProd = New System.Windows.Forms.ComboBox()
@@ -99,7 +100,7 @@ Partial Class busquedaprod
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1055, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1204, 40)
         Me.pntitulo.TabIndex = 72
         '
         'Label1
@@ -116,6 +117,7 @@ Partial Class busquedaprod
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.Button8)
         Me.pnnavegacion.Controls.Add(Me.GroupBox1)
         Me.pnnavegacion.Controls.Add(Me.cmbproveedor)
         Me.pnnavegacion.Controls.Add(Me.Label2)
@@ -128,8 +130,25 @@ Partial Class busquedaprod
         Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnnavegacion.Location = New System.Drawing.Point(0, 40)
         Me.pnnavegacion.Name = "pnnavegacion"
-        Me.pnnavegacion.Size = New System.Drawing.Size(1055, 89)
+        Me.pnnavegacion.Size = New System.Drawing.Size(1204, 89)
         Me.pnnavegacion.TabIndex = 75
+        '
+        'Button8
+        '
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
+        Me.Button8.Location = New System.Drawing.Point(710, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(102, 89)
+        Me.Button8.TabIndex = 178
+        Me.Button8.Text = "Codificar"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button8.UseVisualStyleBackColor = True
         '
         'GroupBox1
         '
@@ -228,7 +247,7 @@ Partial Class busquedaprod
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(663, 0)
+        Me.Button3.Location = New System.Drawing.Point(812, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(102, 89)
         Me.Button3.TabIndex = 172
@@ -245,7 +264,7 @@ Partial Class busquedaprod
         Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.ForeColor = System.Drawing.Color.White
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(765, 0)
+        Me.cmdbuscar.Location = New System.Drawing.Point(914, 0)
         Me.cmdbuscar.Name = "cmdbuscar"
         Me.cmdbuscar.Size = New System.Drawing.Size(92, 89)
         Me.cmdbuscar.TabIndex = 170
@@ -273,7 +292,7 @@ Partial Class busquedaprod
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(857, 0)
+        Me.Button1.Location = New System.Drawing.Point(1006, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
         Me.Button1.TabIndex = 168
@@ -290,7 +309,7 @@ Partial Class busquedaprod
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(959, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(1108, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(96, 89)
         Me.cmdsalir.TabIndex = 17
@@ -306,7 +325,7 @@ Partial Class busquedaprod
         Me.Panel1.Controls.Add(Me.GroupBox2)
         Me.Panel1.Controls.Add(Me.grplistasImprimir)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel1.Location = New System.Drawing.Point(703, 0)
+        Me.Panel1.Location = New System.Drawing.Point(852, 0)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(352, 366)
         Me.Panel1.TabIndex = 76
@@ -328,7 +347,7 @@ Partial Class busquedaprod
         Me.GroupBox3.Size = New System.Drawing.Size(326, 562)
         Me.GroupBox3.TabIndex = 234
         Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Opciones Ecomerce "
+        Me.GroupBox3.Text = "Extras "
         '
         'CheckBox2
         '
@@ -354,6 +373,7 @@ Partial Class busquedaprod
         '
         'Button7
         '
+        Me.Button7.Enabled = False
         Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button7.ForeColor = System.Drawing.Color.Black
         Me.Button7.Location = New System.Drawing.Point(9, 326)
@@ -365,6 +385,7 @@ Partial Class busquedaprod
         '
         'Button6
         '
+        Me.Button6.Enabled = False
         Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button6.ForeColor = System.Drawing.Color.Black
         Me.Button6.Location = New System.Drawing.Point(9, 155)
@@ -452,18 +473,18 @@ Partial Class busquedaprod
         '
         'Column4
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Format = "C2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -586,7 +607,7 @@ Partial Class busquedaprod
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 129)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1055, 366)
+        Me.Panel2.Size = New System.Drawing.Size(1204, 366)
         Me.Panel2.TabIndex = 77
         '
         'dtproductos
@@ -603,7 +624,7 @@ Partial Class busquedaprod
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtproductos.Size = New System.Drawing.Size(703, 366)
+        Me.dtproductos.Size = New System.Drawing.Size(852, 366)
         Me.dtproductos.TabIndex = 64
         '
         'ShapeContainer1
@@ -623,18 +644,18 @@ Partial Class busquedaprod
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Format = "C2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -651,7 +672,7 @@ Partial Class busquedaprod
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1055, 495)
+        Me.ClientSize = New System.Drawing.Size(1204, 495)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
@@ -729,4 +750,5 @@ Partial Class busquedaprod
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Button8 As Button
 End Class

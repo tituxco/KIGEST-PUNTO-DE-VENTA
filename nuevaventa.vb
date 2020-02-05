@@ -1715,23 +1715,4 @@ Public Class nuevaventa
         hacerNvaFxCF()
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
-
-    End Sub
-
-    Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellContentClick
-
-    End Sub
-
-    Private Sub txtrazon_TextChanged(sender As Object, e As EventArgs) Handles txtrazon.TextChanged
-
-    End Sub
-
-    Private Sub txtptovta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles txtptovta.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub cmbtipofac_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipofac.SelectedIndexChanged
-
-    End Sub
 End Class

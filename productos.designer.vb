@@ -24,10 +24,10 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -156,6 +156,11 @@ Partial Class productos
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ImportarListaPrecios = New System.ComponentModel.BackgroundWorker()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -170,11 +175,6 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -1736,6 +1736,44 @@ Partial Class productos
         Me.dtlistas.Size = New System.Drawing.Size(301, 117)
         Me.dtlistas.TabIndex = 225
         '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Nombre"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        Me.Column2.HeaderText = "utilAux"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Visible = False
+        '
         'ImportarListaPrecios
         '
         Me.ImportarListaPrecios.WorkerReportsProgress = True
@@ -1848,44 +1886,6 @@ Partial Class productos
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Nombre"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        '
-        'Column4
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 30.0!
-        Me.Column2.HeaderText = "utilAux"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Visible = False
         '
         'productos
         '

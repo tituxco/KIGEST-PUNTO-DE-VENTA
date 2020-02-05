@@ -747,7 +747,7 @@ Partial Class puntoventa
         '
         'Column3
         '
-        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.Format = "N3"
         DataGridViewCellStyle2.NullValue = "1"
         Me.Column3.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column3.FillWeight = 20.0!
@@ -1555,6 +1555,7 @@ Partial Class puntoventa
     Friend WithEvents lblfacIdAlmacen As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Public WithEvents cmdimprimir As Button
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
@@ -1563,5 +1564,4 @@ Partial Class puntoventa
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column10 As DataGridViewTextBoxColumn
-    Public WithEvents cmdimprimir As Button
 End Class

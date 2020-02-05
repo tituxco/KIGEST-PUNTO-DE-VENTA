@@ -1,6 +1,9 @@
 ﻿Public Class addProductosLote
     Public Shared idcomprobante As Integer = 0
     Dim cerrada As Boolean = False
+    Dim AuxCol As Integer
+    Dim UtilGral As Double
+
 
     Private Sub cargarCategoriasProd()
         Try
@@ -38,11 +41,22 @@
             SendKeys.Send(",")
         End If
     End Sub
+    Private Sub cargarListas()
+        Reconectar()
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", conexionPrinc)
+        Dim tablalist As New DataSet
 
+        consulta.Fill(tablalist)
+        cmblista.DataSource = tablalist.Tables(0)
+        cmblista.DisplayMember = tablalist.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmblista.ValueMember = tablalist.Tables(0).Columns(0).Caption.ToString
+        cmblista.SelectedValue = 1
+    End Sub
     Private Sub romaneo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarAlmacenes()
         cargarProveedores()
         cargarCategoriasProd()
+        cargarListas()
         'dtproductos.Columns(4).DefaultCellStyle.NullValue = My.Settings.ivaDef
         chkcalcularcosto.CheckState = My.Settings.calcCosto
 
@@ -199,6 +213,8 @@
                 costo = Math.Round(FormatNumber(precio, 2) / ((FormatNumber(iva, 2) + 100) / 100), 2)
                 dtproductos.CurrentCell.Value = costo
             End If
+
+            calcularPrecios()
         Catch ex As Exception
 
         End Try
@@ -264,8 +280,8 @@
 
                 pnadd.Enabled = False
                 MsgBox("Lote guardado")
-                ' actualizar precios
-                Me.Close()
+            ' actualizar precios
+            'Me.Close()
 
             'End If
         Catch ex As Exception
@@ -283,23 +299,47 @@
             Dim codprov As Integer = cmbproveedor.SelectedValue
             Dim moneda As Integer = My.Settings.monedaDef
             Dim categoria As Integer = cmbcatprod.SelectedValue
-
+            Dim utilprod As String
             For Each producto As DataGridViewRow In dtproductos.Rows
 
                 codbar = producto.Cells(1).Value.ToString.ToUpper
                 descripcion = producto.Cells(3).Value.ToString.ToUpper
                 precio = producto.Cells(5).Value
                 iva = producto.Cells(4).Value
-
+                utilprod = producto.Cells(6).Value
                 'MsgBox(producto.Cells(3).Value)
+                Dim util0 As String
+                Dim util1 As String
+                Dim util2 As String
 
+                If IsNothing(utilprod) Then
+                    utilprod = 0
+                End If
+                Select Case AuxCol
+                    Case 0
+                        util0 = utilprod
+                        util1 = 0
+                        util2 = 0
+                    Case 1
+                        util0 = 0
+                        util1 = utilprod
+                        util2 = 0
+                    Case 2
+                        util0 = 0
+                        util1 = 0
+                        util2 = utilprod
+                    Case Else
+                        util0 = 0
+                        util1 = 0
+                        util2 = 0
+                End Select
 
                 If ExisteProducto(codbar) = False Then
                     'MsgBox("Producto no existe se agregara")
 
                     Dim sqlQuery = "insert into fact_insumos (cod_bar,codigo,descripcion,precio,iva,codprov,categoria,moneda,tipo,calcular_precio,unidades,presentacion
-                    ) values (
-                    ?codbar,?codbar,?descripcion,?precio,?iva,?codprov,?categoria,?moneda,'0','1','1','1')"
+                    ,ganancia,utilidad1,utilidad2) values (
+                    ?codbar,?codbar,?descripcion,?precio,?iva,?codprov,?categoria,?moneda,'0','1','1','1',?util0,?util1,?util2)"
 
                     Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                     With comandoadd.Parameters
@@ -310,6 +350,9 @@
                         .AddWithValue("?codprov", codprov)
                         .AddWithValue("?categoria", categoria)
                         .AddWithValue("?moneda", moneda)
+                        .AddWithValue("?util0", util0)
+                        .AddWithValue("?util1", util1)
+                        .AddWithValue("?util2", util2)
                     End With
                     comandoadd.ExecuteNonQuery()
                     Dim idProd As Integer = comandoadd.LastInsertedId
@@ -391,6 +434,9 @@
             idcomprobante = comandoadd.LastInsertedId
             GuardarProductos()
             GuardarLoteCompra()
+
+            cmdaceptar.Enabled = False
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -485,5 +531,90 @@
 
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
+    End Sub
+
+    Private Sub cmblista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmblista.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmblista_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmblista.SelectedValueChanged
+        Try
+
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Private Sub calcularPrecios()
+        Try
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad,auxcol FROM fact_listas_precio  where id=" & cmblista.SelectedValue, conexionPrinc)
+            Dim tablalist As New DataTable
+            Dim filasList() As DataRow
+
+            consulta.Fill(tablalist)
+            filasList = tablalist.Select("")
+
+            Reconectar()
+            Dim consultaMoneda As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cotizacion  FROM fact_moneda  where id=" & My.Settings.monedaDef, conexionPrinc)
+            Dim tablamoneda As New DataTable
+            Dim filasmoneda() As DataRow
+
+            consultaMoneda.Fill(tablamoneda)
+            filasmoneda = tablamoneda.Select("")
+
+            UtilGral = FormatNumber(filasList(0)(0), 3)
+            AuxCol = filasList(0)(1)
+            Dim precioCosto As Double
+
+            If dtproductos.CurrentRow.Cells(5).Value = "" Then
+                precioCosto = 0
+            Else
+                precioCosto = FormatNumber(dtproductos.CurrentRow.Cells(5).Value, 2)
+            End If
+
+            Dim cotizacion As Double = FormatNumber(filasmoneda(0)(0), 2)
+
+            Dim iva As Double = FormatNumber(dtproductos.CurrentRow.Cells(4).Value, 2)
+
+            iva = (iva + 100) / 100
+            Dim costoFinal As Double
+
+            costoFinal = precioCosto * iva * cotizacion
+
+            Dim utilprod2 As Double
+            Dim utilgral2 As Double
+            Dim UtilProd As Double
+
+            If dtproductos.CurrentRow.Cells(6).Value = "" Then
+                UtilProd = 0
+            Else
+                UtilProd = FormatNumber(dtproductos.CurrentRow.Cells(6).Value, 3)
+            End If
+
+            Dim utilGralSum As Double = (UtilGral + UtilProd + 100) / 100
+
+            UtilProd = (UtilProd + 100) / 100
+            utilgral2 = (UtilGral + 100) / 100
+
+            'MsgBox("costo:" & precioCosto & " ___final:" & costoFinal & "utilprod:" & UtilProd & " Gral: " & UtilGral & "-----" & utilGralSum)
+
+            Select Case AuxCol
+                Case 0
+                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                Case 1
+                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                Case 2
+                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilGralSum
+            End Select
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        GenerarExcel(dtproductos)
     End Sub
 End Class
