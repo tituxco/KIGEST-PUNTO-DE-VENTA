@@ -388,7 +388,7 @@ Module funciones_Globales
             Dim NRow As Integer = ElGrid.RowCount
             'Aqui recorremos todas las filas, y por cada fila todas las columnas y vamos escribiendo.
             For i As Integer = 1 To NCol
-                exHoja.Cells.Item(1, i) = ElGrid.Columns(i - 1).Name.ToString
+                exHoja.Cells.Item(1, i) = ElGrid.Columns(i - 1).HeaderText.ToString
                 'exHoja.Cells.Item(1, i).HorizontalAlignment = 3
             Next
             For Fila As Integer = 0 To NRow - 1

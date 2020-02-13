@@ -112,14 +112,14 @@ Partial Class CONTABLE
         Me.dtphastacob = New System.Windows.Forms.DateTimePicker()
         Me.balance = New System.Windows.Forms.TabPage()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage6 = New System.Windows.Forms.TabPage()
+        Me.tabBalDiario = New System.Windows.Forms.TabPage()
         Me.lstbalancecomprobantes = New System.Windows.Forms.DataGridView()
         Me.Panel29 = New System.Windows.Forms.Panel()
         Me.cmdbalanceGuardar = New System.Windows.Forms.Button()
         Me.cmdbalancebuscar = New System.Windows.Forms.Button()
         Me.grpbalancefecha = New System.Windows.Forms.GroupBox()
         Me.dtpbalancefecha = New System.Windows.Forms.DateTimePicker()
-        Me.TabPage7 = New System.Windows.Forms.TabPage()
+        Me.tabBalHistorico = New System.Windows.Forms.TabPage()
         Me.lstbalancehistorico = New System.Windows.Forms.DataGridView()
         Me.Panel28 = New System.Windows.Forms.Panel()
         Me.cmdbalhistorbuscar = New System.Windows.Forms.Button()
@@ -421,6 +421,25 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn52 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn53 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton4 = New System.Windows.Forms.RadioButton()
+        Me.tabBalConsultas = New System.Windows.Forms.TabPage()
+        Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
+        Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.RadioButton5 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton6 = New System.Windows.Forms.RadioButton()
+        Me.Button18 = New System.Windows.Forms.Button()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.dtpvtashishasta = New System.Windows.Forms.DateTimePicker()
+        Me.dtpvtashisdesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label9 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.tabcontable.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -438,11 +457,11 @@ Partial Class CONTABLE
         Me.GroupBox1.SuspendLayout()
         Me.balance.SuspendLayout()
         Me.TabControl1.SuspendLayout()
-        Me.TabPage6.SuspendLayout()
+        Me.tabBalDiario.SuspendLayout()
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel29.SuspendLayout()
         Me.grpbalancefecha.SuspendLayout()
-        Me.TabPage7.SuspendLayout()
+        Me.tabBalHistorico.SuspendLayout()
         CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel28.SuspendLayout()
         Me.grpbalanceintervalo.SuspendLayout()
@@ -524,6 +543,14 @@ Partial Class CONTABLE
         Me.TabPage2.SuspendLayout()
         CType(Me.chrestad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel10.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.tabBalConsultas.SuspendLayout()
+        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel11.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -602,6 +629,7 @@ Partial Class CONTABLE
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel5.Controls.Add(Me.PictureBox1)
         Me.Panel5.Controls.Add(Me.grpcomprobantes)
         Me.Panel5.Controls.Add(Me.grpacciones)
         Me.Panel5.Controls.Add(Me.grpperiodo)
@@ -1187,8 +1215,9 @@ Partial Class CONTABLE
         '
         'TabControl1
         '
-        Me.TabControl1.Controls.Add(Me.TabPage6)
-        Me.TabControl1.Controls.Add(Me.TabPage7)
+        Me.TabControl1.Controls.Add(Me.tabBalDiario)
+        Me.TabControl1.Controls.Add(Me.tabBalHistorico)
+        Me.TabControl1.Controls.Add(Me.tabBalConsultas)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(3, 31)
         Me.TabControl1.Name = "TabControl1"
@@ -1196,17 +1225,17 @@ Partial Class CONTABLE
         Me.TabControl1.Size = New System.Drawing.Size(1229, 406)
         Me.TabControl1.TabIndex = 12
         '
-        'TabPage6
+        'tabBalDiario
         '
-        Me.TabPage6.Controls.Add(Me.lstbalancecomprobantes)
-        Me.TabPage6.Controls.Add(Me.Panel29)
-        Me.TabPage6.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage6.Name = "TabPage6"
-        Me.TabPage6.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage6.Size = New System.Drawing.Size(1221, 380)
-        Me.TabPage6.TabIndex = 0
-        Me.TabPage6.Text = "Balance diario"
-        Me.TabPage6.UseVisualStyleBackColor = True
+        Me.tabBalDiario.Controls.Add(Me.lstbalancecomprobantes)
+        Me.tabBalDiario.Controls.Add(Me.Panel29)
+        Me.tabBalDiario.Location = New System.Drawing.Point(4, 22)
+        Me.tabBalDiario.Name = "tabBalDiario"
+        Me.tabBalDiario.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabBalDiario.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalDiario.TabIndex = 0
+        Me.tabBalDiario.Text = "Balance diario"
+        Me.tabBalDiario.UseVisualStyleBackColor = True
         '
         'lstbalancecomprobantes
         '
@@ -1227,6 +1256,7 @@ Partial Class CONTABLE
         'Panel29
         '
         Me.Panel29.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel29.Controls.Add(Me.GroupBox4)
         Me.Panel29.Controls.Add(Me.cmdbalanceGuardar)
         Me.Panel29.Controls.Add(Me.cmdbalancebuscar)
         Me.Panel29.Controls.Add(Me.grpbalancefecha)
@@ -1272,7 +1302,7 @@ Partial Class CONTABLE
         Me.grpbalancefecha.ForeColor = System.Drawing.Color.White
         Me.grpbalancefecha.Location = New System.Drawing.Point(3, 3)
         Me.grpbalancefecha.Name = "grpbalancefecha"
-        Me.grpbalancefecha.Size = New System.Drawing.Size(198, 66)
+        Me.grpbalancefecha.Size = New System.Drawing.Size(198, 71)
         Me.grpbalancefecha.TabIndex = 83
         Me.grpbalancefecha.TabStop = False
         Me.grpbalancefecha.Text = "Fecha"
@@ -1287,17 +1317,17 @@ Partial Class CONTABLE
         Me.dtpbalancefecha.Size = New System.Drawing.Size(186, 23)
         Me.dtpbalancefecha.TabIndex = 81
         '
-        'TabPage7
+        'tabBalHistorico
         '
-        Me.TabPage7.Controls.Add(Me.lstbalancehistorico)
-        Me.TabPage7.Controls.Add(Me.Panel28)
-        Me.TabPage7.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage7.Name = "TabPage7"
-        Me.TabPage7.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage7.Size = New System.Drawing.Size(1221, 380)
-        Me.TabPage7.TabIndex = 1
-        Me.TabPage7.Text = "Balance histórico"
-        Me.TabPage7.UseVisualStyleBackColor = True
+        Me.tabBalHistorico.Controls.Add(Me.lstbalancehistorico)
+        Me.tabBalHistorico.Controls.Add(Me.Panel28)
+        Me.tabBalHistorico.Location = New System.Drawing.Point(4, 22)
+        Me.tabBalHistorico.Name = "tabBalHistorico"
+        Me.tabBalHistorico.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabBalHistorico.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalHistorico.TabIndex = 1
+        Me.tabBalHistorico.Text = "Balance histórico"
+        Me.tabBalHistorico.UseVisualStyleBackColor = True
         '
         'lstbalancehistorico
         '
@@ -1318,6 +1348,7 @@ Partial Class CONTABLE
         'Panel28
         '
         Me.Panel28.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel28.Controls.Add(Me.GroupBox3)
         Me.Panel28.Controls.Add(Me.cmdbalhistorbuscar)
         Me.Panel28.Controls.Add(Me.grpbalanceintervalo)
         Me.Panel28.Dock = System.Windows.Forms.DockStyle.Top
@@ -4557,6 +4588,236 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
         Me.DataGridViewTextBoxColumn54.Width = 216
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Location = New System.Drawing.Point(1043, 49)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(100, 50)
+        Me.PictureBox1.TabIndex = 73
+        Me.PictureBox1.TabStop = False
+        Me.PictureBox1.Visible = False
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.ForeColor = System.Drawing.Color.White
+        Me.RadioButton1.Location = New System.Drawing.Point(6, 21)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(92, 17)
+        Me.RadioButton1.TabIndex = 86
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Por proveedor"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.ForeColor = System.Drawing.Color.White
+        Me.RadioButton2.Location = New System.Drawing.Point(6, 44)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(62, 17)
+        Me.RadioButton2.TabIndex = 87
+        Me.RadioButton2.TabStop = True
+        Me.RadioButton2.Text = "General"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.RadioButton1)
+        Me.GroupBox3.Controls.Add(Me.RadioButton2)
+        Me.GroupBox3.ForeColor = System.Drawing.Color.White
+        Me.GroupBox3.Location = New System.Drawing.Point(207, 0)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(110, 71)
+        Me.GroupBox3.TabIndex = 88
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Filtro"
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.RadioButton3)
+        Me.GroupBox4.Controls.Add(Me.RadioButton4)
+        Me.GroupBox4.ForeColor = System.Drawing.Color.White
+        Me.GroupBox4.Location = New System.Drawing.Point(207, 3)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(110, 71)
+        Me.GroupBox4.TabIndex = 89
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Filtro"
+        '
+        'RadioButton3
+        '
+        Me.RadioButton3.AutoSize = True
+        Me.RadioButton3.ForeColor = System.Drawing.Color.White
+        Me.RadioButton3.Location = New System.Drawing.Point(6, 21)
+        Me.RadioButton3.Name = "RadioButton3"
+        Me.RadioButton3.Size = New System.Drawing.Size(92, 17)
+        Me.RadioButton3.TabIndex = 86
+        Me.RadioButton3.TabStop = True
+        Me.RadioButton3.Text = "Por proveedor"
+        Me.RadioButton3.UseVisualStyleBackColor = True
+        '
+        'RadioButton4
+        '
+        Me.RadioButton4.AutoSize = True
+        Me.RadioButton4.ForeColor = System.Drawing.Color.White
+        Me.RadioButton4.Location = New System.Drawing.Point(6, 44)
+        Me.RadioButton4.Name = "RadioButton4"
+        Me.RadioButton4.Size = New System.Drawing.Size(62, 17)
+        Me.RadioButton4.TabIndex = 87
+        Me.RadioButton4.TabStop = True
+        Me.RadioButton4.Text = "General"
+        Me.RadioButton4.UseVisualStyleBackColor = True
+        '
+        'tabBalConsultas
+        '
+        Me.tabBalConsultas.Controls.Add(Me.dtventashistoricas)
+        Me.tabBalConsultas.Controls.Add(Me.Panel11)
+        Me.tabBalConsultas.Location = New System.Drawing.Point(4, 22)
+        Me.tabBalConsultas.Name = "tabBalConsultas"
+        Me.tabBalConsultas.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabBalConsultas.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalConsultas.TabIndex = 2
+        Me.tabBalConsultas.Text = "Consultar ventas no guardadas"
+        Me.tabBalConsultas.UseVisualStyleBackColor = True
+        '
+        'dtventashistoricas
+        '
+        Me.dtventashistoricas.AllowUserToAddRows = False
+        Me.dtventashistoricas.AllowUserToDeleteRows = False
+        Me.dtventashistoricas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtventashistoricas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtventashistoricas.BackgroundColor = System.Drawing.Color.White
+        Me.dtventashistoricas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtventashistoricas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtventashistoricas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtventashistoricas.Location = New System.Drawing.Point(3, 103)
+        Me.dtventashistoricas.Name = "dtventashistoricas"
+        Me.dtventashistoricas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtventashistoricas.Size = New System.Drawing.Size(1215, 274)
+        Me.dtventashistoricas.TabIndex = 16
+        '
+        'Panel11
+        '
+        Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.GroupBox5)
+        Me.Panel11.Controls.Add(Me.Button18)
+        Me.Panel11.Controls.Add(Me.GroupBox6)
+        Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel11.Location = New System.Drawing.Point(3, 3)
+        Me.Panel11.Name = "Panel11"
+        Me.Panel11.Size = New System.Drawing.Size(1215, 100)
+        Me.Panel11.TabIndex = 15
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.RadioButton5)
+        Me.GroupBox5.Controls.Add(Me.RadioButton6)
+        Me.GroupBox5.ForeColor = System.Drawing.Color.White
+        Me.GroupBox5.Location = New System.Drawing.Point(207, 0)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(110, 71)
+        Me.GroupBox5.TabIndex = 88
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Filtro"
+        '
+        'RadioButton5
+        '
+        Me.RadioButton5.AutoSize = True
+        Me.RadioButton5.ForeColor = System.Drawing.Color.White
+        Me.RadioButton5.Location = New System.Drawing.Point(6, 21)
+        Me.RadioButton5.Name = "RadioButton5"
+        Me.RadioButton5.Size = New System.Drawing.Size(92, 17)
+        Me.RadioButton5.TabIndex = 86
+        Me.RadioButton5.TabStop = True
+        Me.RadioButton5.Text = "Por proveedor"
+        Me.RadioButton5.UseVisualStyleBackColor = True
+        '
+        'RadioButton6
+        '
+        Me.RadioButton6.AutoSize = True
+        Me.RadioButton6.ForeColor = System.Drawing.Color.White
+        Me.RadioButton6.Location = New System.Drawing.Point(6, 44)
+        Me.RadioButton6.Name = "RadioButton6"
+        Me.RadioButton6.Size = New System.Drawing.Size(62, 17)
+        Me.RadioButton6.TabIndex = 87
+        Me.RadioButton6.TabStop = True
+        Me.RadioButton6.Text = "General"
+        Me.RadioButton6.UseVisualStyleBackColor = True
+        '
+        'Button18
+        '
+        Me.Button18.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button18.ForeColor = System.Drawing.Color.White
+        Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
+        Me.Button18.Location = New System.Drawing.Point(1135, 0)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(80, 100)
+        Me.Button18.TabIndex = 85
+        Me.Button18.Text = "Buscar"
+        Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button18.UseVisualStyleBackColor = True
+        '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.Label6)
+        Me.GroupBox6.Controls.Add(Me.dtpvtashishasta)
+        Me.GroupBox6.Controls.Add(Me.dtpvtashisdesde)
+        Me.GroupBox6.Controls.Add(Me.Label9)
+        Me.GroupBox6.ForeColor = System.Drawing.Color.White
+        Me.GroupBox6.Location = New System.Drawing.Point(3, 0)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(198, 71)
+        Me.GroupBox6.TabIndex = 82
+        Me.GroupBox6.TabStop = False
+        Me.GroupBox6.Text = "Intervalo"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.Color.White
+        Me.Label6.Location = New System.Drawing.Point(6, 20)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(49, 17)
+        Me.Label6.TabIndex = 44
+        Me.Label6.Text = "Desde"
+        '
+        'dtpvtashishasta
+        '
+        Me.dtpvtashishasta.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpvtashishasta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpvtashishasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpvtashishasta.Location = New System.Drawing.Point(61, 41)
+        Me.dtpvtashishasta.Name = "dtpvtashishasta"
+        Me.dtpvtashishasta.Size = New System.Drawing.Size(117, 23)
+        Me.dtpvtashishasta.TabIndex = 43
+        '
+        'dtpvtashisdesde
+        '
+        Me.dtpvtashisdesde.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpvtashisdesde.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtpvtashisdesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtpvtashisdesde.Location = New System.Drawing.Point(61, 15)
+        Me.dtpvtashisdesde.Name = "dtpvtashisdesde"
+        Me.dtpvtashisdesde.Size = New System.Drawing.Size(117, 23)
+        Me.dtpvtashisdesde.TabIndex = 42
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.BackColor = System.Drawing.Color.Transparent
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.White
+        Me.Label9.Location = New System.Drawing.Point(6, 46)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(45, 17)
+        Me.Label9.TabIndex = 45
+        Me.Label9.Text = "Hasta"
+        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4594,11 +4855,11 @@ Partial Class CONTABLE
         Me.GroupBox1.PerformLayout()
         Me.balance.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
-        Me.TabPage6.ResumeLayout(False)
+        Me.tabBalDiario.ResumeLayout(False)
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel29.ResumeLayout(False)
         Me.grpbalancefecha.ResumeLayout(False)
-        Me.TabPage7.ResumeLayout(False)
+        Me.tabBalHistorico.ResumeLayout(False)
         CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel28.ResumeLayout(False)
         Me.grpbalanceintervalo.ResumeLayout(False)
@@ -4692,6 +4953,18 @@ Partial Class CONTABLE
         Me.TabPage2.ResumeLayout(False)
         CType(Me.chrestad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel10.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
+        Me.tabBalConsultas.ResumeLayout(False)
+        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel11.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
+        Me.GroupBox5.PerformLayout()
+        Me.GroupBox6.ResumeLayout(False)
+        Me.GroupBox6.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -5039,9 +5312,9 @@ Partial Class CONTABLE
     Friend WithEvents dtpbalancefecha As DateTimePicker
     Friend WithEvents grpbalanceintervalo As GroupBox
     Friend WithEvents TabControl1 As TabControl
-    Friend WithEvents TabPage6 As TabPage
+    Friend WithEvents tabBalDiario As TabPage
     Friend WithEvents lstbalancecomprobantes As DataGridView
-    Friend WithEvents TabPage7 As TabPage
+    Friend WithEvents tabBalHistorico As TabPage
     Friend WithEvents Panel29 As Panel
     Friend WithEvents cmdbalanceGuardar As Button
     Friend WithEvents cmdbalancebuscar As Button
@@ -5060,4 +5333,23 @@ Partial Class CONTABLE
     Friend WithEvents TabPage15 As TabPage
     Friend WithEvents DataGridViewTextBoxColumn26 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn27 As DataGridViewTextBoxColumn
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents RadioButton3 As RadioButton
+    Friend WithEvents RadioButton4 As RadioButton
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents tabBalConsultas As TabPage
+    Friend WithEvents dtventashistoricas As DataGridView
+    Friend WithEvents Panel11 As Panel
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents RadioButton5 As RadioButton
+    Friend WithEvents RadioButton6 As RadioButton
+    Friend WithEvents Button18 As Button
+    Friend WithEvents GroupBox6 As GroupBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents dtpvtashishasta As DateTimePicker
+    Friend WithEvents dtpvtashisdesde As DateTimePicker
+    Friend WithEvents Label9 As Label
 End Class

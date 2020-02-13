@@ -15,8 +15,17 @@ Public Class puntoventa
     Public IdFactura As Integer
     Dim TipoIVAContr As Integer
     Private Sub puntoventa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        lblfactfecha.Text = "Fecha: " & fechagral
 
+        lblfactfecha.Text = "Fecha: " & fechagral
+        If My.Settings.numDecimales = 0 Then
+            CheckBox1.CheckState = CheckState.Checked
+            dtproductos.Columns(5).DefaultCellStyle.Format = "N0"
+            dtproductos.Columns(6).DefaultCellStyle.Format = "N0"
+        Else
+            CheckBox1.CheckState = CheckState.Unchecked
+            dtproductos.Columns(5).DefaultCellStyle.Format = "N2"
+            dtproductos.Columns(6).DefaultCellStyle.Format = "N2"
+        End If
         If DatosAcceso.StockPpref = 1 Then
             chkquitarstock.CheckState = CheckState.Checked
         End If
@@ -218,9 +227,9 @@ Public Class puntoventa
                         Else
                             Exit Sub
                         End If
-                        subtotal = Math.Round(subtotal105 + subtotal21, 2)
+                        subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, 2)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 1
                         If producto.Cells(4).Value = "10,5" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
@@ -230,32 +239,32 @@ Public Class puntoventa
                         Else
                             Exit Sub
                         End If
-                        iva105 = Math.Round(subtotal105 * (10.5 / 100), 2)
-                        iva21 = Math.Round(subtotal21 * (21 / 100), 2)
+                        iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
+                        iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
                         lblfactiva21.Text = iva21
                         txtsub21.Text = subtotal21
                         txtsub105.Text = subtotal105
-                        subtotal = Math.Round(subtotal21 + subtotal105, 2)
+                        subtotal = Math.Round(subtotal21 + subtotal105, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, 2)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 6
                         If producto.Cells(4).Value = "10,5" Then
-                            subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, 2)
+                            subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, My.Settings.numDecimales)
                         ElseIf producto.Cells(4).Value = "21" Then
-                            subtotal21 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.21, 2)
+                            subtotal21 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.21, My.Settings.numDecimales)
                         Else
                             Exit Sub
                         End If
-                        iva105 = Math.Round(subtotal105 * (10.5 / 100), 2)
-                        iva21 = Math.Round(subtotal21 * (21 / 100), 2)
+                        iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
+                        iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
                         lblfactiva21.Text = iva21
                         txtsub21.Text = subtotal21
                         txtsub105.Text = subtotal105
-                        subtotal = Math.Round(subtotal105 + subtotal21, 2)
+                        subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, 2)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                 End Select
 
             Next
@@ -307,8 +316,6 @@ Public Class puntoventa
 
                 dtproductos.Rows(fila).Cells(6).Value = precio * FormatNumber(dtproductos.Rows(fila).Cells(2).Value)
                 dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.GreenYellow
-
-
             Next
 
         Catch ex As Exception
@@ -1389,8 +1396,8 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             If e.ColumnIndex = 1 Then
                 Reconectar()
                 Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("Select " _
-                & "id, condVta, vendedor from fact_facturas where observaciones Like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=9", conexionPrinc)
-        Dim tablaped As New DataTable
+                & "id, condVta, vendedor from fact_facturas where observaciones Like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
+                Dim tablaped As New DataTable
                 Dim infoped() As DataRow
                 consultapedido.Fill(tablaped)
                 infoped = tablaped.Select("")
@@ -1400,10 +1407,17 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                     SendKeys.Send("{UP}")
                     Exit Sub
                 End If
+                If dtpedidosfact.Rows.Count = 2 And lblfacvendedor.Text <> infoped(0)(2) Then
+                    MsgBox("la factura va a cambiar de vendedor >>> " & infoped(0)(2))
+                ElseIf dtpedidosfact.Rows.Count > 2 And lblfacvendedor.Text <> infoped(0)(2) Then
+                    MsgBox("el pedido pertenece a otro vendedor, no se lo puede agregar a esta factura")
+                    dtpedidosfact.Rows.Remove(dtpedidosfact.CurrentRow)
+                    Exit Sub
+                End If
                 dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
                 'cmbcondvta.SelectedValue = infoped(0)(1)
                 'cmbvendedor.SelectedValue = infoped(0)(2)
-
+                lblfacvendedor.Text = infoped(0)(2)
                 Reconectar()
                 Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
                 Dim tablaitm As New DataTable
@@ -1849,6 +1863,27 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
     End Sub
 
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
+
+    Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellContentClick
+
+    End Sub
+
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
+
+        Try
+            If CheckBox1.CheckState = CheckState.Checked Then
+                My.Settings.numDecimales = 0
+            Else
+                My.Settings.numDecimales = 2
+            End If
+            'MsgBox("La configuracion tendra efecto la proxima vez que ingrese a facturación")
+            My.Settings.Save()
+        Catch ex As Exception
+
+        End Try
+
 
     End Sub
 End Class

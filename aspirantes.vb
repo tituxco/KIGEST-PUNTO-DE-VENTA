@@ -552,7 +552,7 @@ Public Class frmaspirantes
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
             & "idclientes as Cuenta, nomapell_razon as Cliente,contacto,telefono,celular,dir_domicilio,cuit  from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor, conexionPrinc)
-            MsgBox(consulta.SelectCommand.CommandText)
+            'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaPers As New DataTable
 
             consulta.Fill(tablaPers)

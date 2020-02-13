@@ -33,11 +33,14 @@
                 cmdnvalistacarga.Visible = True
                 cmdlistacarga.Visible = True
             End If
+            dtpedidos.Columns(9).DefaultCellStyle.WrapMode = DataGridViewTriState.True
+            dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+            dtpedidos.Columns(8).DefaultCellStyle.WrapMode = DataGridViewTriState.True
 
         Catch ex As Exception
         End Try
     End Sub
-    Private Sub cargarPedidos()
+    Public Sub cargarPedidos()
         Try
             Dim ConsultaEXT As String
 
@@ -58,9 +61,13 @@
             End If
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, " _
-            & "concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,fac.fecha,fac.razon,fac.direccion, fac.localidad, con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones " _
-            & "from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995" & ConsultaEXT & " order by fac.id desc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, 
+concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,fac.fecha,
+(select nomapell_razon from fact_clientes where idclientes= fac.id_cliente) as razon, 
+(select direccion from fact_clientes where idclientes= fac.id_cliente) as direccion, 
+(select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
+con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones 
+from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT & " order by fac.id desc", conexionPrinc)
             Dim tablaped As New DataTable
             consulta.Fill(tablaped)
 
@@ -87,6 +94,17 @@
             tec.modificar = True
             tec.idFactura = dtpedidos.CurrentRow.Cells(0).Value
             tec.Show()
+            'For Each fila As DataGridViewRow In dtpedidos.Rows
+            '    Dim tec As New nuevopedido
+            '    tec.MdiParent = Me.MdiParent
+            '    tec.modificar = True
+            '    tec.idFactura = dtpedidos.CurrentRow.Cells(0).Value
+            '    tec.Show()
+            '    'System.Threading.Thread.Sleep(5000)
+            '    tec.cmdguardar.PerformClick()
+            '    System.Threading.Thread.Sleep(500)
+            '    tec.Close()
+            'Next
         Catch ex As Exception
 
         End Try
@@ -210,11 +228,18 @@
     End Sub
 
     Private Sub rdImportar_CheckedChanged(sender As Object, e As EventArgs) Handles rdImportar.CheckedChanged
-        If rdImportar.Checked = True Then
-            cmdmodificar.Text = "Importar"
-        Else
-            cmdmodificar.Text = "Modificar"
-        End If
+        Try
+            If rdImportar.Checked = True Then
+                cmdmodificar.Text = "Importar"
+                dtpedidos.Columns(8).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+                dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.White
+            Else
+                cmdmodificar.Text = "Modificar"
+                dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+                dtpedidos.Columns(8).DefaultCellStyle.BackColor = Color.White
+            End If
+        Catch ex As Exception
+        End Try
         cargarPedidos()
     End Sub
 
@@ -224,5 +249,9 @@
 
     Private Sub rdpendientes_CheckedChanged(sender As Object, e As EventArgs) Handles rdpendientes.CheckedChanged
         cargarPedidos()
+    End Sub
+
+    Private Sub dtpedidos_Enter(sender As Object, e As EventArgs) Handles dtpedidos.Enter
+
     End Sub
 End Class

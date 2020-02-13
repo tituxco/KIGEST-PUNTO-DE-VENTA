@@ -407,8 +407,8 @@
                         tmrcontrolarnumfact.Enabled = True
                         Dim idAPP = infocl(0)(7)
 
-                    Dim consulta2 As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion, format(iva,2,'es_AR'),format(punit,2,'es_AR'), format(ptotal,2,'es_AR',id FROM fact_items  " _
-               & " where codint=" & idAPP, conexionPrinc)
+                    Dim consulta2 As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion, format(iva,2,'es_AR'),format(punit,2,'es_AR'), format(ptotal,2,'es_AR'),id FROM fact_items  " _
+               & " where codint like '" & idAPP & "'", conexionPrinc)
                     Dim tablaprod As New DataTable
                         Dim filasProd() As DataRow
                         consulta2.Fill(tablaprod)
@@ -603,7 +603,7 @@
         End Try
 
         Try
-            
+
             Dim cod As String
             Dim cantidad As String
             Dim descripcion As String
@@ -636,8 +636,8 @@
                 "', total='" & txttotal.Text & "', observaciones= 'PENDIENTE', observaciones2='" & txtobservaciones.Text & "' where id=" & idFactura
 
                 Dim comandoUpdped As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                    comandoUpdped.ExecuteNonQuery()
-                End If
+                comandoUpdped.ExecuteNonQuery()
+            End If
 
             For i = 0 To dtproductos.RowCount - 2
                 cod = dtproductos.Rows(i).Cells(0).Value
@@ -677,15 +677,14 @@
 
             Next
 
-
-
-
             MsgBox("Pedido guardado satisfactoriamente")
             panelencabeza.Enabled = False
             panelcliente.Enabled = False
             dtproductos.Enabled = False
             cmdguardar.Enabled = False
             cmdimprimir.Enabled = True
+            Presupuestos.Button1.PerformClick()
+            'CType(frmprincipal.ActiveMdiChild, Presupuestos).cargarPedidos()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

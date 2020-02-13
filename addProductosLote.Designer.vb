@@ -22,17 +22,18 @@ Partial Class addProductosLote
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(addProductosLote))
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -62,6 +63,8 @@ Partial Class addProductosLote
         Me.lblcomprobante = New System.Windows.Forms.Label()
         Me.lblproveedor = New System.Windows.Forms.Label()
         Me.pnadd = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.cmblista = New System.Windows.Forms.ComboBox()
         Me.chkcalcularcosto = New System.Windows.Forms.CheckBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmbcatprod = New System.Windows.Forms.ComboBox()
@@ -74,6 +77,7 @@ Partial Class addProductosLote
         Me.txtcantPLU = New System.Windows.Forms.TextBox()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -81,6 +85,7 @@ Partial Class addProductosLote
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.pnDatosFact.SuspendLayout()
         Me.pnadd.SuspendLayout()
@@ -89,9 +94,9 @@ Partial Class addProductosLote
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle11.Format = "N0"
-        DataGridViewCellStyle11.NullValue = "0"
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle1.Format = "N0"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle1
         Me.DataGridViewTextBoxColumn1.FillWeight = 10.0!
         Me.DataGridViewTextBoxColumn1.HeaderText = "id"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -108,9 +113,9 @@ Partial Class addProductosLote
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle12.Format = "N2"
-        DataGridViewCellStyle12.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Cant"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -126,9 +131,9 @@ Partial Class addProductosLote
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle13.Format = "N2"
-        DataGridViewCellStyle13.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "IVA"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -137,9 +142,9 @@ Partial Class addProductosLote
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle14.Format = "N2"
-        DataGridViewCellStyle14.NullValue = "0"
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn6.HeaderText = "P. Unit"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
@@ -147,9 +152,9 @@ Partial Class addProductosLote
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle15.Format = "N2"
-        DataGridViewCellStyle15.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "P. Total"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -189,7 +194,7 @@ Partial Class addProductosLote
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1156, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1193, 40)
         Me.pntitulo.TabIndex = 89
         '
         'Label1
@@ -206,6 +211,7 @@ Partial Class addProductosLote
         'pnDatosFact
         '
         Me.pnDatosFact.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnDatosFact.Controls.Add(Me.Button2)
         Me.pnDatosFact.Controls.Add(Me.cmdaceptar)
         Me.pnDatosFact.Controls.Add(Me.cmdsalir)
         Me.pnDatosFact.Controls.Add(Me.txtcomprobanteObservaciones)
@@ -223,7 +229,7 @@ Partial Class addProductosLote
         Me.pnDatosFact.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnDatosFact.Location = New System.Drawing.Point(0, 40)
         Me.pnDatosFact.Name = "pnDatosFact"
-        Me.pnDatosFact.Size = New System.Drawing.Size(1156, 99)
+        Me.pnDatosFact.Size = New System.Drawing.Size(1193, 99)
         Me.pnDatosFact.TabIndex = 90
         '
         'cmdaceptar
@@ -234,7 +240,7 @@ Partial Class addProductosLote
         Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdaceptar.ForeColor = System.Drawing.Color.White
         Me.cmdaceptar.Image = CType(resources.GetObject("cmdaceptar.Image"), System.Drawing.Image)
-        Me.cmdaceptar.Location = New System.Drawing.Point(952, 0)
+        Me.cmdaceptar.Location = New System.Drawing.Point(989, 0)
         Me.cmdaceptar.Name = "cmdaceptar"
         Me.cmdaceptar.Size = New System.Drawing.Size(102, 99)
         Me.cmdaceptar.TabIndex = 186
@@ -251,7 +257,7 @@ Partial Class addProductosLote
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(1054, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(1091, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(102, 99)
         Me.cmdsalir.TabIndex = 187
@@ -375,6 +381,8 @@ Partial Class addProductosLote
         'pnadd
         '
         Me.pnadd.BackColor = System.Drawing.Color.DarkGray
+        Me.pnadd.Controls.Add(Me.Label4)
+        Me.pnadd.Controls.Add(Me.cmblista)
         Me.pnadd.Controls.Add(Me.chkcalcularcosto)
         Me.pnadd.Controls.Add(Me.Label2)
         Me.pnadd.Controls.Add(Me.cmbcatprod)
@@ -389,15 +397,37 @@ Partial Class addProductosLote
         Me.pnadd.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnadd.Location = New System.Drawing.Point(0, 139)
         Me.pnadd.Name = "pnadd"
-        Me.pnadd.Size = New System.Drawing.Size(1156, 25)
+        Me.pnadd.Size = New System.Drawing.Size(1193, 25)
         Me.pnadd.TabIndex = 91
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(846, 7)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(34, 13)
+        Me.Label4.TabIndex = 240
+        Me.Label4.Text = "Lista"
+        '
+        'cmblista
+        '
+        Me.cmblista.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmblista.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmblista.FormattingEnabled = True
+        Me.cmblista.Items.AddRange(New Object() {"Util0", "Util1", "Util2"})
+        Me.cmblista.Location = New System.Drawing.Point(882, 2)
+        Me.cmblista.Name = "cmblista"
+        Me.cmblista.Size = New System.Drawing.Size(130, 21)
+        Me.cmblista.TabIndex = 239
         '
         'chkcalcularcosto
         '
         Me.chkcalcularcosto.AutoSize = True
-        Me.chkcalcularcosto.Location = New System.Drawing.Point(846, 4)
+        Me.chkcalcularcosto.Dock = System.Windows.Forms.DockStyle.Right
+        Me.chkcalcularcosto.Location = New System.Drawing.Point(1067, 0)
         Me.chkcalcularcosto.Name = "chkcalcularcosto"
-        Me.chkcalcularcosto.Size = New System.Drawing.Size(126, 17)
+        Me.chkcalcularcosto.Size = New System.Drawing.Size(126, 25)
         Me.chkcalcularcosto.TabIndex = 238
         Me.chkcalcularcosto.Text = "Calcular costo sin iva"
         Me.chkcalcularcosto.UseVisualStyleBackColor = True
@@ -504,20 +534,37 @@ Partial Class addProductosLote
         Me.dtproductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dtproductos.BackgroundColor = System.Drawing.Color.White
         Me.dtproductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtproductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column7, Me.Column1, Me.Column3, Me.Column2, Me.Column6, Me.Column4, Me.Column5})
+        Me.dtproductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column7, Me.Column1, Me.Column3, Me.Column2, Me.Column6, Me.Column4, Me.Column5, Me.Column8})
         Me.dtproductos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtproductos.Location = New System.Drawing.Point(0, 164)
         Me.dtproductos.MultiSelect = False
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.Size = New System.Drawing.Size(1156, 348)
+        Me.dtproductos.Size = New System.Drawing.Size(1193, 348)
         Me.dtproductos.TabIndex = 92
+        '
+        'Button2
+        '
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Location = New System.Drawing.Point(887, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(102, 99)
+        Me.Button2.TabIndex = 188
+        Me.Button2.Text = "Exportar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button2.UseVisualStyleBackColor = True
         '
         'Column7
         '
-        DataGridViewCellStyle16.Format = "N0"
-        DataGridViewCellStyle16.NullValue = "0"
-        Me.Column7.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle6.Format = "N0"
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.Column7.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column7.FillWeight = 10.0!
         Me.Column7.HeaderText = "id"
         Me.Column7.Name = "Column7"
@@ -531,61 +578,71 @@ Partial Class addProductosLote
         '
         'Column3
         '
-        DataGridViewCellStyle17.Format = "N2"
-        DataGridViewCellStyle17.NullValue = "0"
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = "0"
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle7
         Me.Column3.FillWeight = 20.0!
         Me.Column3.HeaderText = "Cant"
         Me.Column3.Name = "Column3"
         '
         'Column2
         '
-        Me.Column2.FillWeight = 140.0!
+        Me.Column2.FillWeight = 120.0!
         Me.Column2.HeaderText = "Producto"
         Me.Column2.Name = "Column2"
         '
         'Column6
         '
-        DataGridViewCellStyle18.Format = "N2"
-        DataGridViewCellStyle18.NullValue = "0"
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle8.Format = "N2"
+        DataGridViewCellStyle8.NullValue = "0"
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle8
         Me.Column6.FillWeight = 20.0!
         Me.Column6.HeaderText = "IVA"
         Me.Column6.Name = "Column6"
         '
         'Column4
         '
-        DataGridViewCellStyle19.Format = "N2"
-        DataGridViewCellStyle19.NullValue = "0"
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle9.Format = "N2"
+        DataGridViewCellStyle9.NullValue = "0"
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle9
         Me.Column4.FillWeight = 20.0!
         Me.Column4.HeaderText = "P. Unit"
         Me.Column4.Name = "Column4"
         '
         'Column5
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = "0"
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle10.Format = "N2"
+        DataGridViewCellStyle10.NullValue = "0"
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle10
         Me.Column5.FillWeight = 20.0!
-        Me.Column5.HeaderText = "P. Total"
+        Me.Column5.HeaderText = "Utilidad"
         Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        Me.Column5.Visible = False
+        '
+        'Column8
+        '
+        DataGridViewCellStyle11.Format = "N2"
+        DataGridViewCellStyle11.NullValue = "0"
+        Me.Column8.DefaultCellStyle = DataGridViewCellStyle11
+        Me.Column8.FillWeight = 20.0!
+        Me.Column8.HeaderText = "P. Final"
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
         '
         'addProductosLote
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1156, 512)
+        Me.ClientSize = New System.Drawing.Size(1193, 512)
         Me.Controls.Add(Me.dtproductos)
         Me.Controls.Add(Me.pnadd)
         Me.Controls.Add(Me.pnDatosFact)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
         Me.Name = "addProductosLote"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "addProductosLote"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
         Me.pnDatosFact.ResumeLayout(False)
@@ -637,6 +694,9 @@ Partial Class addProductosLote
     Friend WithEvents Label2 As Label
     Friend WithEvents cmbcatprod As ComboBox
     Friend WithEvents chkcalcularcosto As CheckBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents cmblista As ComboBox
+    Friend WithEvents Button2 As Button
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column3 As DataGridViewTextBoxColumn
@@ -644,4 +704,5 @@ Partial Class addProductosLote
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As DataGridViewTextBoxColumn
 End Class

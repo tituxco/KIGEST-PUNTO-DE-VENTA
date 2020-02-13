@@ -94,6 +94,7 @@ Partial Class puntoventa
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.lblnoplu = New System.Windows.Forms.Label()
         Me.txtpreciounitPLU = New System.Windows.Forms.TextBox()
         Me.txtivaPLU = New System.Windows.Forms.TextBox()
@@ -229,7 +230,7 @@ Partial Class puntoventa
         'PictureBox1
         '
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 507)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 588)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(234, 22)
         Me.PictureBox1.TabIndex = 75
@@ -243,7 +244,7 @@ Partial Class puntoventa
         Me.dtpedidosfact.Dock = System.Windows.Forms.DockStyle.Top
         Me.dtpedidosfact.Location = New System.Drawing.Point(0, 427)
         Me.dtpedidosfact.Name = "dtpedidosfact"
-        Me.dtpedidosfact.Size = New System.Drawing.Size(234, 80)
+        Me.dtpedidosfact.Size = New System.Drawing.Size(234, 161)
         Me.dtpedidosfact.TabIndex = 74
         '
         'Column8
@@ -797,6 +798,7 @@ Partial Class puntoventa
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.DarkGray
+        Me.Panel2.Controls.Add(Me.CheckBox1)
         Me.Panel2.Controls.Add(Me.lblnoplu)
         Me.Panel2.Controls.Add(Me.txtpreciounitPLU)
         Me.Panel2.Controls.Add(Me.txtivaPLU)
@@ -815,6 +817,16 @@ Partial Class puntoventa
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(961, 37)
         Me.Panel2.TabIndex = 88
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox1.Location = New System.Drawing.Point(751, 0)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(93, 37)
+        Me.CheckBox1.TabIndex = 73
+        Me.CheckBox1.Text = "Sin decimales"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'lblnoplu
         '
@@ -921,6 +933,7 @@ Partial Class puntoventa
         Me.chkaplicardesc.TabIndex = 63
         Me.chkaplicardesc.Text = "Aplicar descuentos"
         Me.chkaplicardesc.UseVisualStyleBackColor = True
+        Me.chkaplicardesc.Visible = False
         '
         'Label25
         '
@@ -1564,4 +1577,5 @@ Partial Class puntoventa
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column10 As DataGridViewTextBoxColumn
+    Friend WithEvents CheckBox1 As CheckBox
 End Class

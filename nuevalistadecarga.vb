@@ -3,7 +3,7 @@
     Public idFactura As Integer
     'Public modificar As Boolean
     'Public Rehacer As Boolean
-    Public tipoFac As Integer = 20
+    Public tipoFac As Integer = 997
     Private Sub nuevalistadecarga_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarDatosGrales()
         lblfecha.Text = "Fecha: " & fechagral
@@ -120,7 +120,7 @@
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from tipos_comprobantes where id=" & tipoFac
+            sql.CommandText = "select confnume from tipos_comprobantes where donfdesc=" & tipoFac
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -164,7 +164,7 @@
     Private Sub dtpedidosfact_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellEndEdit
         Reconectar()
         Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-        & "id, condvta, vendedor from fact_facturas where observaciones like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=9", conexionPrinc)
+        & "id, condvta, vendedor from fact_facturas where observaciones like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
         Dim tablaped As New DataTable
         Dim infoped() As DataRow
         consultapedido.Fill(tablaped)
@@ -266,8 +266,6 @@
                 .AddWithValue("?tot", total)
                 .AddWithValue("?vend", vendedor)
                 .AddWithValue("?observa", observa)
-
-
             End With
                 comandoadd.ExecuteNonQuery()
                 idFactura = comandoadd.LastInsertedId
@@ -276,8 +274,8 @@
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
                 sql.Connection = conexionPrinc
-                sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where id= " & tipoFac
-                sql.CommandType = CommandType.Text
+            sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where donfdesc= " & tipoFac
+            sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
             lector.Read()
 
@@ -335,7 +333,7 @@
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from fact_conffiscal where id=" & tipoFac
+            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & tipoFac
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -359,7 +357,7 @@
             & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon," _
             & "concat(fac.direccion, ' - ', fac.localidad)  as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit,fac.vendedor as facvend, " _
             & "fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21 " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.id=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()

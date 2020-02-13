@@ -170,12 +170,12 @@ Public Class manejoStock
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         romaneo.idcomprobante = 0
         romaneo.Show()
-        romaneo.TopMost = True
+        'romaneo.TopMost = True
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
         addProductosLote.idcomprobante = 0
         addProductosLote.Show()
-        addProductosLote.TopMost = True
+        'addProductosLote.TopMost = True
     End Sub
 End Class

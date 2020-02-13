@@ -340,6 +340,18 @@ Namespace My
                 Me("monedaDef") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
+        Public Property numDecimales() As Integer
+            Get
+                Return CType(Me("numDecimales"),Integer)
+            End Get
+            Set
+                Me("numDecimales") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

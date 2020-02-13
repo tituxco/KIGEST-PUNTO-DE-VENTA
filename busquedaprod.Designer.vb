@@ -23,13 +23,14 @@ Partial Class busquedaprod
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(busquedaprod))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.chkimprimirprecio = New System.Windows.Forms.CheckBox()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.Label7 = New System.Windows.Forms.Label()
@@ -77,6 +78,7 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -91,6 +93,7 @@ Partial Class busquedaprod
         Me.Panel3.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -117,7 +120,7 @@ Partial Class busquedaprod
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pnnavegacion.Controls.Add(Me.Button8)
+        Me.pnnavegacion.Controls.Add(Me.Panel4)
         Me.pnnavegacion.Controls.Add(Me.GroupBox1)
         Me.pnnavegacion.Controls.Add(Me.cmbproveedor)
         Me.pnnavegacion.Controls.Add(Me.Label2)
@@ -133,17 +136,30 @@ Partial Class busquedaprod
         Me.pnnavegacion.Size = New System.Drawing.Size(1204, 89)
         Me.pnnavegacion.TabIndex = 75
         '
+        'chkimprimirprecio
+        '
+        Me.chkimprimirprecio.AutoSize = True
+        Me.chkimprimirprecio.Dock = System.Windows.Forms.DockStyle.Top
+        Me.chkimprimirprecio.ForeColor = System.Drawing.Color.White
+        Me.chkimprimirprecio.Location = New System.Drawing.Point(0, 0)
+        Me.chkimprimirprecio.Name = "chkimprimirprecio"
+        Me.chkimprimirprecio.Size = New System.Drawing.Size(104, 17)
+        Me.chkimprimirprecio.TabIndex = 179
+        Me.chkimprimirprecio.Text = "Imprimir precio"
+        Me.chkimprimirprecio.UseVisualStyleBackColor = True
+        '
         'Button8
         '
-        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Top
         Me.Button8.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button8.ForeColor = System.Drawing.Color.White
         Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
-        Me.Button8.Location = New System.Drawing.Point(710, 0)
+        Me.Button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button8.Location = New System.Drawing.Point(0, 17)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(102, 89)
+        Me.Button8.Size = New System.Drawing.Size(104, 73)
         Me.Button8.TabIndex = 178
         Me.Button8.Text = "Codificar"
         Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -473,18 +489,18 @@ Partial Class busquedaprod
         '
         'Column4
         '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle6.Format = "C2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -644,18 +660,18 @@ Partial Class busquedaprod
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle8.Format = "C2"
-        DataGridViewCellStyle8.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -666,6 +682,16 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn4.HeaderText = "id"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.Visible = False
+        '
+        'Panel4
+        '
+        Me.Panel4.Controls.Add(Me.Button8)
+        Me.Panel4.Controls.Add(Me.chkimprimirprecio)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel4.Location = New System.Drawing.Point(708, 0)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(104, 89)
+        Me.Panel4.TabIndex = 180
         '
         'busquedaprod
         '
@@ -697,6 +723,8 @@ Partial Class busquedaprod
         Me.Panel3.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -751,4 +779,6 @@ Partial Class busquedaprod
     Friend WithEvents Label3 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Button8 As Button
+    Friend WithEvents chkimprimirprecio As CheckBox
+    Friend WithEvents Panel4 As Panel
 End Class

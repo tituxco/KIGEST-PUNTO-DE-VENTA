@@ -71,6 +71,8 @@ Partial Class frmaspirantes
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.dtistaclientes = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.chkvendedor = New System.Windows.Forms.CheckBox()
+        Me.cmbvendedor_lst = New System.Windows.Forms.ComboBox()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.chklocalidad = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -78,8 +80,6 @@ Partial Class frmaspirantes
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
-        Me.chkvendedor = New System.Windows.Forms.CheckBox()
-        Me.cmbvendedor_lst = New System.Windows.Forms.ComboBox()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.pnlistaclientes.SuspendLayout()
@@ -655,7 +655,7 @@ Partial Class frmaspirantes
         '
         'Panel1
         '
-        Me.Panel1.BackColor = System.Drawing.Color.Gray
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Panel1.Controls.Add(Me.chkvendedor)
         Me.Panel1.Controls.Add(Me.cmbvendedor_lst)
         Me.Panel1.Controls.Add(Me.Button2)
@@ -669,10 +669,33 @@ Partial Class frmaspirantes
         Me.Panel1.Size = New System.Drawing.Size(1093, 74)
         Me.Panel1.TabIndex = 0
         '
+        'chkvendedor
+        '
+        Me.chkvendedor.AutoSize = True
+        Me.chkvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkvendedor.ForeColor = System.Drawing.Color.White
+        Me.chkvendedor.Location = New System.Drawing.Point(381, 13)
+        Me.chkvendedor.Name = "chkvendedor"
+        Me.chkvendedor.Size = New System.Drawing.Size(106, 24)
+        Me.chkvendedor.TabIndex = 69
+        Me.chkvendedor.Text = "Vendedor"
+        Me.chkvendedor.UseVisualStyleBackColor = True
+        '
+        'cmbvendedor_lst
+        '
+        Me.cmbvendedor_lst.Enabled = False
+        Me.cmbvendedor_lst.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbvendedor_lst.FormattingEnabled = True
+        Me.cmbvendedor_lst.Location = New System.Drawing.Point(381, 37)
+        Me.cmbvendedor_lst.Name = "cmbvendedor_lst"
+        Me.cmbvendedor_lst.Size = New System.Drawing.Size(331, 24)
+        Me.cmbvendedor_lst.TabIndex = 68
+        '
         'Button2
         '
-        Me.Button2.BackColor = System.Drawing.Color.Gray
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
@@ -698,8 +721,9 @@ Partial Class frmaspirantes
         '
         'Button1
         '
-        Me.Button1.BackColor = System.Drawing.Color.Gray
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
@@ -713,8 +737,9 @@ Partial Class frmaspirantes
         '
         'cmdbuscar
         '
-        Me.cmdbuscar.BackColor = System.Drawing.Color.Gray
+        Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.ForeColor = System.Drawing.Color.White
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
@@ -739,28 +764,6 @@ Partial Class frmaspirantes
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
-        '
-        'chkvendedor
-        '
-        Me.chkvendedor.AutoSize = True
-        Me.chkvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkvendedor.ForeColor = System.Drawing.Color.White
-        Me.chkvendedor.Location = New System.Drawing.Point(381, 13)
-        Me.chkvendedor.Name = "chkvendedor"
-        Me.chkvendedor.Size = New System.Drawing.Size(106, 24)
-        Me.chkvendedor.TabIndex = 69
-        Me.chkvendedor.Text = "Vendedor"
-        Me.chkvendedor.UseVisualStyleBackColor = True
-        '
-        'cmbvendedor_lst
-        '
-        Me.cmbvendedor_lst.Enabled = False
-        Me.cmbvendedor_lst.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbvendedor_lst.FormattingEnabled = True
-        Me.cmbvendedor_lst.Location = New System.Drawing.Point(381, 37)
-        Me.cmbvendedor_lst.Name = "cmbvendedor_lst"
-        Me.cmbvendedor_lst.Size = New System.Drawing.Size(331, 24)
-        Me.cmbvendedor_lst.TabIndex = 68
         '
         'frmaspirantes
         '

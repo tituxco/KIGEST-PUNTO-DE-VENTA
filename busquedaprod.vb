@@ -451,7 +451,7 @@ Public Class busquedaprod
                 'Dim font1 As New Font("EAN-13", 40)
                 Dim font2 As New Font("Arial", 8)
                 Dim font3 As New Font("Arial", 8)
-                Dim font4 As New Font("Arial", 18)
+                Dim font4 As New Font("Arial", 10)
                 Dim font5 As New Font("Arial", 6)
 
                 Dim ProductoDesc As String = dtproductos.CurrentRow.Cells(1).Value
@@ -469,18 +469,21 @@ Public Class busquedaprod
 
 
                 ' impresion
-                e.Graphics.DrawImage(PictureBox1.Image, 0, 0)
+                e.Graphics.DrawImage(PictureBox1.Image, 35, 0)
+                e.Graphics.DrawString(ProductoCod, font4, Brushes.Black, 35, 43) 'codigo
                 'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
                 'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
                 e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 0, 60) 'PRODUCTO
                 'e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 0, 70) 'CANTIDAD
-                'e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
+                If chkimprimirprecio.CheckState = CheckState.Checked Then
+                    e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
+                End If
                 'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
                 'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
                 'LlenarEtiqueta()
 
             ElseIf My.Settings.TipoEtiqueta = 1 Then
-                Dim font2 As New Font("Arial", 8)
+                    Dim font2 As New Font("Arial", 8)
                 Dim font3 As New Font("Arial", 8)
                 Dim font4 As New Font("Arial", 10)
                 Dim font5 As New Font("Arial", 6)
@@ -541,6 +544,12 @@ Public Class busquedaprod
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+
+    End Sub
+
+    Private Sub busquedaprod_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
+
+        chkimprimirprecio.Location = Button8.Location
 
     End Sub
 End Class

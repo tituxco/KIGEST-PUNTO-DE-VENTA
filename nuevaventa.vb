@@ -939,11 +939,9 @@ Public Class nuevaventa
                         Case 4, 10
                             .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\notacredleg.rdlc"
                     End Select
-
                 Else
                     .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
                 End If ' End Select
-
                 .rptfx.LocalReport.DataSources.Clear()
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
