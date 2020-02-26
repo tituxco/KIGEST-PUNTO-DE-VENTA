@@ -11,7 +11,7 @@
         Try
             Reconectar()
 
-            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from fact_conffiscal where tip=2 or tip=3", conexionPrinc)
+            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from fact_conffiscal where (tip=2 or tip=3) and ptovta=" & ptovta, conexionPrinc)
             Dim readftipo As New DataSet
             tablaftipo.Fill(readftipo)
             cmbtipofac.DataSource = readftipo.Tables(0)
@@ -86,6 +86,8 @@
             cmbproveedores.DisplayMember = readprov.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbproveedores.ValueMember = readprov.Tables(0).Columns(0).Caption.ToString
             cmbproveedores.SelectedIndex = -1
+
+            txtptovta.Text = String.Format("{0:0000}", ptovta)
         Catch ex As Exception
 
         End Try

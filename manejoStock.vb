@@ -76,13 +76,13 @@ Public Class manejoStock
 
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fi.cod as CodInterno, pro.descripcion, sum(fi.cantidad) as ventasPeriodo,
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fi.cod as CodInterno, pro.descripcion, sum(fi.cantidad) as ventasTotalesPeriodo,
             (select sum(stock) from fact_insumos_lotes where idproducto=pro.id and idalmacen=" & cmbalmacen.SelectedValue & ") as StockActualEnAlmacen
             FROM fact_items as fi, fact_facturas as fa , fact_insumos as pro
             where fa.id=fi.id_fact and fi.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
             and " & catprod & " and " & proveed & " and " & buscnomb & " 
             group by fi.cod limit " & LimMin & "," & LimMax, conexionPrinc)
-            'MsgBox(consulta.SelectCommand.CommandText)
+            MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaprod As New DataTable
 
             consulta.Fill(tablaprod)

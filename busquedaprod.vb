@@ -473,7 +473,7 @@ Public Class busquedaprod
                 e.Graphics.DrawString(ProductoCod, font4, Brushes.Black, 35, 43) 'codigo
                 'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
                 'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
-                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 0, 60) 'PRODUCTO
+                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 10, 60) 'PRODUCTO
                 'e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 0, 70) 'CANTIDAD
                 If chkimprimirprecio.CheckState = CheckState.Checked Then
                     e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
@@ -507,8 +507,10 @@ Public Class busquedaprod
                 e.Graphics.DrawString(ProductoCod, font4, Brushes.Black, 35, 43) 'codigo
                 'e.Graphics.DrawString(ProEtiquetaCod, font1, Brushes.Black, 0, 0) 'CODIGO DE BARRAS
                 'e.Graphics.DrawString("*" & Me.ProId.Trim & "*", font2, Brushes.Black, 50, 47) ' CODIGO NUMERICO
-                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 0, 60) 'PRODUCTO
-
+                e.Graphics.DrawString(ProductoDesc, font5, Brushes.Black, 10, 60) 'PRODUCTO
+                If chkimprimirprecio.CheckState = CheckState.Checked Then
+                    e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
+                End If
                 'e.Graphics.DrawString("$" & ProductoPrec, font4, Brushes.Black, 60, 70) 'PRECIO
                 'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
                 'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
@@ -548,8 +550,6 @@ Public Class busquedaprod
     End Sub
 
     Private Sub busquedaprod_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
-
         chkimprimirprecio.Location = Button8.Location
-
     End Sub
 End Class

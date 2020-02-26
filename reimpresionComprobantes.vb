@@ -148,6 +148,7 @@ Public Class reimpresionComprobantes
         Dim font3 As New Font("Courier New", 8)
         Dim font4 As New Font("Courier New", 18)
         Dim font5 As New Font("Courier New", 6)
+        Dim fontCAE As New Font("Courier New", 5.3, FontStyle.Italic)
 
         Dim alto As Single = 0
         Dim topMargin As Double '= e.MarginBounds.Top
@@ -175,6 +176,11 @@ Public Class reimpresionComprobantes
         Dim FacIva21 As String = ""
         Dim FacIva105 As String = ""
 
+        Dim facCAE As String = ""
+        Dim facVtoCAE As String = ""
+        Dim facCodBARRA As String = ""
+
+
 
         Reconectar()
 
@@ -186,7 +192,7 @@ Public Class reimpresionComprobantes
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -207,6 +213,10 @@ Public Class reimpresionComprobantes
         facSubtotal = tablaEmpresa.Rows(0).Item(31)
         FacIva21 = tablaEmpresa.Rows(0).Item(21)
         FacIva105 = ""
+
+        facCAE = tablaEmpresa.Rows(0).Item(25)
+        facCodBARRA = tablaEmpresa.Rows(0).Item(29)
+        facVtoCAE = tablaEmpresa.Rows(0).Item(28)
 
 
         e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 0, 100) 'RAZON SOCIAL
@@ -326,8 +336,19 @@ Public Class reimpresionComprobantes
         lineatotal = StrDup(XXX, ".")
         yPos += 10
         e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
-
         yPos += 30
+
+        e.Graphics.DrawString("COMPROBANTE AUTORIZADO POR WEB SERVICE", fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
+        e.Graphics.DrawString("CAE: " & facCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
+        e.Graphics.DrawString("F. Vto CAE: " & facVtoCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+        e.Graphics.DrawString(facCodBARRA, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
         e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 15, yPos)
         yPos += 10
         e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 15, yPos)

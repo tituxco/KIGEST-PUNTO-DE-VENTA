@@ -23,18 +23,17 @@ Partial Class imprimirEtiquetas
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(imprimirEtiquetas))
         Me.pntitulo = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.txtCantEtiq = New System.Windows.Forms.TextBox()
+        Me.Label2 = New System.Windows.Forms.Label()
         Me.lblprecios = New System.Windows.Forms.Label()
         Me.pnCantidadPerson = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtcantperson = New System.Windows.Forms.TextBox()
         Me.cmblistas = New System.Windows.Forms.ComboBox()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.txtbuscarprod = New System.Windows.Forms.TextBox()
         Me.cmbCategoria = New System.Windows.Forms.ComboBox()
@@ -44,8 +43,8 @@ Partial Class imprimirEtiquetas
         Me.Datosfacturas1 = New SIGT__KIGEST.datosfacturas()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.pntitulo.SuspendLayout()
-        Me.FlowLayoutPanel1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
         Me.pnCantidadPerson.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.Datosfacturas1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -54,52 +53,72 @@ Partial Class imprimirEtiquetas
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pntitulo.Controls.Add(Me.Button1)
-        Me.pntitulo.Controls.Add(Me.FlowLayoutPanel1)
+        Me.pntitulo.Controls.Add(Me.PictureBox1)
+        Me.pntitulo.Controls.Add(Me.Panel3)
         Me.pntitulo.Controls.Add(Me.lblprecios)
         Me.pntitulo.Controls.Add(Me.pnCantidadPerson)
-        Me.pntitulo.Controls.Add(Me.Button3)
-        Me.pntitulo.Controls.Add(Me.Button2)
         Me.pntitulo.Controls.Add(Me.Panel1)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1304, 140)
+        Me.pntitulo.Size = New System.Drawing.Size(1282, 140)
         Me.pntitulo.TabIndex = 66
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.PictureBox1.Location = New System.Drawing.Point(1051, 0)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(100, 140)
+        Me.PictureBox1.TabIndex = 20
+        Me.PictureBox1.TabStop = False
+        '
+        'Panel3
+        '
+        Me.Panel3.Controls.Add(Me.Button1)
+        Me.Panel3.Controls.Add(Me.txtCantEtiq)
+        Me.Panel3.Controls.Add(Me.Label2)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel3.Location = New System.Drawing.Point(1151, 0)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(131, 140)
+        Me.Panel3.TabIndex = 19
         '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(978, 0)
+        Me.Button1.Location = New System.Drawing.Point(0, 43)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(126, 140)
+        Me.Button1.Size = New System.Drawing.Size(131, 97)
         Me.Button1.TabIndex = 10
         Me.Button1.Text = "Imprimir"
         Me.Button1.UseVisualStyleBackColor = False
         '
-        'FlowLayoutPanel1
+        'txtCantEtiq
         '
-        Me.FlowLayoutPanel1.Controls.Add(Me.PictureBox1)
-        Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.FlowLayoutPanel1.Location = New System.Drawing.Point(1176, 0)
-        Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-        Me.FlowLayoutPanel1.Size = New System.Drawing.Size(26, 140)
-        Me.FlowLayoutPanel1.TabIndex = 14
+        Me.txtCantEtiq.Dock = System.Windows.Forms.DockStyle.Top
+        Me.txtCantEtiq.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtCantEtiq.Location = New System.Drawing.Point(0, 17)
+        Me.txtCantEtiq.Name = "txtCantEtiq"
+        Me.txtCantEtiq.Size = New System.Drawing.Size(131, 26)
+        Me.txtCantEtiq.TabIndex = 18
+        Me.txtCantEtiq.Text = "1"
         '
-        'PictureBox1
+        'Label2
         '
-        Me.PictureBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 3)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(232, 0)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.PictureBox1.TabIndex = 13
-        Me.PictureBox1.TabStop = False
+        Me.Label2.AutoSize = True
+        Me.Label2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(0, 0)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(109, 17)
+        Me.Label2.TabIndex = 19
+        Me.Label2.Text = "Numero de etiq."
         '
         'lblprecios
         '
@@ -108,7 +127,7 @@ Partial Class imprimirEtiquetas
         Me.lblprecios.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.lblprecios.Location = New System.Drawing.Point(814, 0)
         Me.lblprecios.Name = "lblprecios"
-        Me.lblprecios.Size = New System.Drawing.Size(362, 140)
+        Me.lblprecios.Size = New System.Drawing.Size(337, 140)
         Me.lblprecios.TabIndex = 9
         Me.lblprecios.Text = "$"
         Me.lblprecios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -152,32 +171,6 @@ Partial Class imprimirEtiquetas
         Me.cmblistas.Name = "cmblistas"
         Me.cmblistas.Size = New System.Drawing.Size(243, 54)
         Me.cmblistas.TabIndex = 1
-        '
-        'Button3
-        '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(1104, 0)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(100, 140)
-        Me.Button3.TabIndex = 16
-        Me.Button3.UseVisualStyleBackColor = True
-        Me.Button3.Visible = False
-        '
-        'Button2
-        '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(1204, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(100, 140)
-        Me.Button2.TabIndex = 15
-        Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
         '
         'Panel1
         '
@@ -227,7 +220,7 @@ Partial Class imprimirEtiquetas
         Me.pnCantidades.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnCantidades.Location = New System.Drawing.Point(0, 140)
         Me.pnCantidades.Name = "pnCantidades"
-        Me.pnCantidades.Size = New System.Drawing.Size(1304, 87)
+        Me.pnCantidades.Size = New System.Drawing.Size(1282, 87)
         Me.pnCantidades.TabIndex = 68
         '
         'pnProductos
@@ -237,7 +230,7 @@ Partial Class imprimirEtiquetas
         Me.pnProductos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pnProductos.Location = New System.Drawing.Point(0, 227)
         Me.pnProductos.Name = "pnProductos"
-        Me.pnProductos.Size = New System.Drawing.Size(1304, 278)
+        Me.pnProductos.Size = New System.Drawing.Size(1282, 278)
         Me.pnProductos.TabIndex = 69
         '
         'Datosfacturas1
@@ -254,7 +247,7 @@ Partial Class imprimirEtiquetas
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1304, 505)
+        Me.ClientSize = New System.Drawing.Size(1282, 505)
         Me.Controls.Add(Me.pnProductos)
         Me.Controls.Add(Me.pnCantidades)
         Me.Controls.Add(Me.pntitulo)
@@ -263,8 +256,9 @@ Partial Class imprimirEtiquetas
         Me.Text = "IMPRESION DE PRODUCCION"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
-        Me.FlowLayoutPanel1.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.pnCantidadPerson.ResumeLayout(False)
         Me.pnCantidadPerson.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -285,13 +279,13 @@ Partial Class imprimirEtiquetas
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Label5 As Label
     Friend WithEvents txtbuscarprod As TextBox
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents FlowLayoutPanel1 As FlowLayoutPanel
     Friend WithEvents Datosfacturas1 As datosfacturas
     Friend WithEvents Timer1 As Timer
     Friend WithEvents pnCantidadPerson As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents txtcantperson As TextBox
-    Friend WithEvents Button3 As Button
-    Friend WithEvents Button2 As Button
+    Friend WithEvents txtCantEtiq As TextBox
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Label2 As Label
+    Friend WithEvents PictureBox1 As PictureBox
 End Class

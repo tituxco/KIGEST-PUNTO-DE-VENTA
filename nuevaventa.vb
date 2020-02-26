@@ -270,7 +270,7 @@ Public Class nuevaventa
             For i = 0 To dtproductos.RowCount - 2
                 If cmbtipocontr.SelectedValue = 1 Then
                     Select Case cmbtipofac.SelectedValue
-                        Case 3, 13, 4, 15, 8, 17
+                        Case 1, 3, 2
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
@@ -286,7 +286,7 @@ Public Class nuevaventa
                             txtiva21.Text = iva21
                             txtsub21.Text = subtotal21
                             txtsub105.Text = subtotal105
-                        Case 2, 12, 29
+                        Case 6, 8, 7
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
@@ -434,15 +434,15 @@ Public Class nuevaventa
             infocl = tablacl.Select("")
             If infocl(0)(3) <> 1 Then
                 Select Case cmbtipofac.SelectedValue
-                    Case 3, 13, 4, 15, 8, 17
-                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente")
+                    Case 1, 3, 2
+                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & infocl(0)(3))
                         txtrazon.Focus()
                         Exit Sub
                 End Select
             ElseIf infocl(0)(3) = 1 Then
                 Select Case cmbtipofac.SelectedValue
-                    Case 1, 14, 10, 16, 11, 18
-                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente")
+                    Case 6, 8, 7
+                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & infocl(0)(3))
                         txtrazon.Focus()
                         Exit Sub
                 End Select
@@ -1713,4 +1713,7 @@ Public Class nuevaventa
         hacerNvaFxCF()
     End Sub
 
+    Private Sub txtrazon_TextChanged(sender As Object, e As EventArgs) Handles txtrazon.TextChanged
+
+    End Sub
 End Class

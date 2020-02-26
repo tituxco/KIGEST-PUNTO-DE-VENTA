@@ -380,12 +380,13 @@ Public Class imprimirEtiquetas
         Try
             Dim montomin As Double
             Dim porcdesc As Double = 1
-
+            Dim CantSTR As String = cant.ToString.Replace(",", ".")
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento producto ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and ins.codigo=" & codprod & " and prom.compra_min<= " & cant, conexionPrinc)
+            "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and ins.codigo like '" & codprod & "' and prom.compra_min<= " & CantSTR, conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
+            'MsgBox(consultaDescProd.SelectCommand.CommandText)
             consultaDescProd.Fill(tablaDescProd)
             filasDescProd = tablaDescProd.Select("")
 
@@ -412,7 +413,7 @@ Public Class imprimirEtiquetas
         Try
             Dim ganancia As Double
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2 FROM fact_insumos where codigo=" & ProId, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2 FROM fact_insumos where codigo like '" & ProId & "'", conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
@@ -443,7 +444,6 @@ Public Class imprimirEtiquetas
             Dim lista As Double
             Dim codaux As Integer = filaslistas(0)(1)
             Dim utilidad As Double
-
 
             Select Case codaux
                 Case 0
@@ -501,17 +501,23 @@ Public Class imprimirEtiquetas
                 End If
             End If
         Next
+        Dim promocion As Double = 0
+
+        promocion = calcularPromociones(ProId, ProCant)
 
 
-        Dim promocion As Double = calcularPromociones(ProId, ProCant)
-
-        Dim precioUnit As Double = calcularPrecio(ProId) / promocion
+            Dim precioUnit As Double = calcularPrecio(ProId) / promocion
         lblprecios.Text = "$" & Math.Round(ProCant * precioUnit, 2)
         ProPrecio = Math.Round(ProCant * precioUnit, 2)
         ProEtiquetaCod = "00" & ProId & ObtenerSiguienteCodigo()
 
     End Sub
     Private Sub ImprimirBoleta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
+
+        If ("A" & ProEtiquetaCod & "B").Length > 13 Then
+            MsgBox("el codigo generado es demasiado largo, verifique el codigo de producto")
+            Exit Sub
+        End If
 
         If My.Settings.TipoEtiqueta = 0 Then
             ' letra
@@ -636,12 +642,36 @@ Public Class imprimirEtiquetas
         End Try
     End Function
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        'Dim Barra As New ProgressBar
+        'Barra.Style = ProgressBarStyle.Marquee
+        'Barra.Size = New Point(270, 40)
+        'Barra.Location = New Point(10, 30)
+        'Barra.Value = 100
+        'EnProgreso.Controls.Add(Barra)
+        EnProgreso.Show()
+        Application.DoEvents()
         If ProId <> "" And ProCant <> "" Then
             ProPrecio = lblprecios.Text
             ' documento
             Dim PrintTxt As New PrintDocument
             Dim pgSize As New PaperSize
+            Dim cantEtiq As Integer
+            Dim i As Integer
 
+            If IsNumeric(txtCantEtiq.Text) Then
+                cantEtiq = CInt(txtCantEtiq.Text)
+            End If
             pgSize.RawKind = Printing.PaperKind.Custom
             If My.Settings.TipoEtiqueta = 0 Then
                 pgSize.Width = 180 '196.8 '
@@ -653,11 +683,17 @@ Public Class imprimirEtiquetas
             End If
 
             PrintTxt.DefaultPageSettings.PaperSize = pgSize
-            ' evento print
+
+
+            '' evento print
             AddHandler PrintTxt.PrintPage, AddressOf ImprimirBoleta
             PrintTxt.PrinterSettings.PrinterName = My.Settings.EtiquetadoraNmb
-            PrintTxt.Print()
+            PrintTxt.PrintController = New StandardPrintController
+            For i = 1 To cantEtiq
+                PrintTxt.Print()
+            Next
         End If
+        EnProgreso.Close()
 
     End Sub
 
@@ -679,43 +715,43 @@ Public Class imprimirEtiquetas
         DirectCast(sender, TextBox).Text = ""
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
         Try
             pnProductos.VerticalScroll.Value -= 100
         Catch ex As Exception
         End Try
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs)
         Try
             pnProductos.VerticalScroll.Value += 100
         Catch ex As Exception
         End Try
     End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        Try
-            If Button2.Focused Then
-                pnProductos.VerticalScroll.Value -= 100
-            ElseIf Button3.Focused Then
-                pnProductos.VerticalScroll.Value += 100
-            End If
-        Catch ex As Exception
-        End Try
-    End Sub
+    'Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+    '    Try
+    '        If Button2.Focused Then
+    '            pnProductos.VerticalScroll.Value -= 100
+    '        ElseIf Button3.Focused Then
+    '            pnProductos.VerticalScroll.Value += 100
+    '        End If
+    '    Catch ex As Exception
+    '    End Try
+    'End Sub
 
-    Private Sub Button2_MouseUp(sender As Object, e As MouseEventArgs) Handles Button2.MouseUp
+    Private Sub Button2_MouseUp(sender As Object, e As MouseEventArgs)
         Timer1.Enabled = False
     End Sub
 
-    Private Sub Button2_MouseDown(sender As Object, e As MouseEventArgs) Handles Button2.MouseDown
+    Private Sub Button2_MouseDown(sender As Object, e As MouseEventArgs)
         Timer1.Enabled = True
     End Sub
 
-    Private Sub Button3_MouseDown(sender As Object, e As MouseEventArgs) Handles Button3.MouseDown
+    Private Sub Button3_MouseDown(sender As Object, e As MouseEventArgs)
         Timer1.Enabled = True
     End Sub
 
-    Private Sub Button3_MouseUp(sender As Object, e As MouseEventArgs) Handles Button3.MouseUp
+    Private Sub Button3_MouseUp(sender As Object, e As MouseEventArgs)
         Timer1.Enabled = False
     End Sub
     Private Sub imprimirEtiquetas_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -727,15 +763,7 @@ Public Class imprimirEtiquetas
 
     Private Sub txtcantperson_TextChanged(sender As Object, e As EventArgs) Handles txtcantperson.TextChanged
 
-        If IsNumeric(DirectCast(sender, TextBox).Text) Then
-            ProCant = DirectCast(sender, TextBox).Text
-            If My.Settings.UnidDef = "lt" Then
-                ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
-            ElseIf My.Settings.UnidDef = "gr" Then
-                ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
-            End If
-            LlenarEtiqueta()
-            End If
+
     End Sub
 
     Private Sub txtcantperson_GotFocus(sender As Object, e As EventArgs) Handles txtcantperson.GotFocus
@@ -763,6 +791,25 @@ Public Class imprimirEtiquetas
     End Sub
 
     Private Sub pnProductos_Paint(sender As Object, e As PaintEventArgs) Handles pnProductos.Paint
+
+    End Sub
+
+    Private Sub txtcantperson_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcantperson.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            If IsNumeric(DirectCast(sender, TextBox).Text) Then
+                ProCant = DirectCast(sender, TextBox).Text
+                If My.Settings.UnidDef = "lt" Then
+                    ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
+                ElseIf My.Settings.UnidDef = "gr" Then
+                    ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
+                End If
+                LlenarEtiqueta()
+            End If
+        End If
+
+    End Sub
+
+    Private Sub Panel3_Paint(sender As Object, e As PaintEventArgs) Handles Panel3.Paint
 
     End Sub
 End Class
