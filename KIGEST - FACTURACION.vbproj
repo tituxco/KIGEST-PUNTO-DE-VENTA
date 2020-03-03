@@ -15,7 +15,7 @@
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>D:\KIGEST-FACT-SIGT\</PublishUrl>
+    <PublishUrl>D:\KIGEST - SISTEMAS PUBLICADOS\KIGEST-FACT-SIGT\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>124</ApplicationRevision>
+    <ApplicationRevision>132</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -197,6 +197,12 @@
     <Compile Include="Codigos.vb" />
     <Compile Include="comprobar_tablas.vb" />
     <Compile Include="conexiones.vb" />
+    <Compile Include="configuracion.Designer.vb">
+      <DependentUpon>configuracion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="configuracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ConfiguracionTerminal.Designer.vb">
       <DependentUpon>ConfiguracionTerminal.vb</DependentUpon>
     </Compile>
@@ -525,6 +531,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="cheques_en_cartera.resx">
       <DependentUpon>cheques_en_cartera.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="configuracion.resx">
+      <DependentUpon>configuracion.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfiguracionTerminal.resx">
       <DependentUpon>ConfiguracionTerminal.vb</DependentUpon>

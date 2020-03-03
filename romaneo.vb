@@ -358,7 +358,7 @@
                         .AddWithValue("?idfactura", lotfact)
                         .AddWithValue("?compracant", lotcompracant)
                         .AddWithValue("?tipoprod", lottipoprod)
-                        .AddWithValue("?idalmacen", DatosAcceso.IdAlmacen)
+                        .AddWithValue("?idalmacen", cmbalmacen.SelectedValue)
                     End With
                     comandoadd.ExecuteNonQuery()
                 Next
@@ -392,10 +392,6 @@
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-    End Sub
-
-    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
-
     End Sub
 
     Private Sub cmdaceptar_Click(sender As Object, e As EventArgs) Handles cmdaceptar.Click

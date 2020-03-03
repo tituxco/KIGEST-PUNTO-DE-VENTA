@@ -37,7 +37,7 @@ Public Class puntoventa
     End Sub
     Public Sub cargar_datos_factura()
         Try
-
+            Reconectar()
             Dim consfactrap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fr.nombre, fis.abrev, lpad(fr.punto_venta, 4, 0) As ptovta, lpad(fis.confnume + 1, 8, 0) As numfact, fr.tipofact 
             From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta
             Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And fr.id = " & idfacrap, conexionPrinc)
@@ -62,7 +62,7 @@ Public Class puntoventa
             lblfacvendedor.Text = DatosAcceso.Vendedor
             lblfacIdAlmacen.Text = DatosAcceso.IdAlmacen
 
-            dtproductos.Rows.Clear()
+            'dtproductos.Rows.Clear()
             If tipofact <> 13 Then
                 Idcliente = 9999
                 cargarCliente()
@@ -485,6 +485,7 @@ Public Class puntoventa
                 Dim montomin As Double
                 Dim porcdesc As Double
                 Reconectar()
+                'MsgBox(codprod)
                 Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento producto ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
                 "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and prom.idproducto=" & codprod, conexionPrinc)
                 Dim tablaDescProd As New DataTable
@@ -1044,9 +1045,16 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                 'pgSize.Height = 173.23 '100
                 PrintTxt.DefaultPageSettings.PaperSize = pgSize
                 ' evento print
-                AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
-                PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-                PrintTxt.Print()
+
+                If ptovta <> FacturaElectro.puntovtaelect Then
+                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
+                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
+                    PrintTxt.Print()
+                Else
+                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
+                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
+                    PrintTxt.Print()
+                End if
             Else
 
                 Using Imprimir As New ImprimirDirecto()
@@ -1150,7 +1158,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             Dim i As Integer
             Dim car As Integer
             If detalle.Length <= 27 Then
-                car = 27 - detalle.Length
+                car= 27 - detalle.Length
                 For i = 0 To car
                     detalle &= " "
                 Next
@@ -1195,6 +1203,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         Dim font3 As New Font("Courier New", 8)
         Dim font4 As New Font("Courier New", 18)
         Dim font5 As New Font("Courier New", 6)
+        Dim fontCAE As New Font("Courier New", 5.3, FontStyle.Italic)
 
         Dim alto As Single = 0
         Dim topMargin As Double '= e.MarginBounds.Top
@@ -1217,6 +1226,16 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         Dim ivaProd As String = ""
         Dim fac As New datosfacturas
 
+        Dim facTotal As String = ""
+        Dim facSubtotal As String = ""
+        Dim FacIva21 As String = ""
+        Dim FacIva105 As String = ""
+
+        Dim facCAE As String = ""
+        Dim facVtoCAE As String = ""
+        Dim facCodBARRA As String = ""
+
+
 
         Reconectar()
 
@@ -1226,9 +1245,9 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-        '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
+        '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -1245,100 +1264,146 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 5, 100) 'RAZON SOCIAL
-        e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(4), font5, Brushes.Black, 5, 110) '
-        e.Graphics.DrawString("Ing. Brutos: " & tablaEmpresa.Rows(0).Item(5).ToString, font5, Brushes.Black, 5, 120) '
-        e.Graphics.DrawString("Domicilio: " & tablaEmpresa.Rows(0).Item(2), font5, Brushes.Black, 5, 130)
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(3), font5, Brushes.Black, 5, 140) '
-        e.Graphics.DrawString("Inicio de actividades: " & tablaEmpresa.Rows(0).Item(7), font5, Brushes.Black, 5, 150)
-        e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(6), font5, Brushes.Black, 5, 160)
+        facTotal = tablaEmpresa.Rows(0).Item(30)
+        facSubtotal = tablaEmpresa.Rows(0).Item(31)
+        FacIva21 = tablaEmpresa.Rows(0).Item(21)
+        FacIva105 = ""
 
-        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 5, 170)
-        e.Graphics.DrawString("FACTURA '" & tablaEmpresa.Rows(0).Item(26) & "' (" & tablaEmpresa.Rows(0).Item(27) & ")", font5, Brushes.Black, 5, 180)
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(10), font5, Brushes.Black, 5, 190)
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(11), font5, Brushes.Black, 5, 200)
-        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 5, 210)
+        facCAE = tablaEmpresa.Rows(0).Item(25)
+        facCodBARRA = tablaEmpresa.Rows(0).Item(29)
+        facVtoCAE = tablaEmpresa.Rows(0).Item(28)
 
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(12), font5, Brushes.Black, 5, 230)
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(13), font5, Brushes.Black, 5, 240)
-        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(14), font5, Brushes.Black, 5, 250)
-        e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(16), font5, Brushes.Black, 5, 260)
-        e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(15), font5, Brushes.Black, 5, 270)
-        e.Graphics.DrawString("CONDICION DE VENTA " & tablaEmpresa.Rows(0).Item(18), font5, Brushes.Black, 5, 280)
-        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 5, 290)
+
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 0, 100) 'RAZON SOCIAL
+        e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(4), font5, Brushes.Black, 0, 110) '
+        e.Graphics.DrawString("Ing. Brutos: " & tablaEmpresa.Rows(0).Item(5).ToString, font5, Brushes.Black, 0, 120) '
+        e.Graphics.DrawString("Domicilio: " & tablaEmpresa.Rows(0).Item(2), font5, Brushes.Black, 0, 130)
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(3), font5, Brushes.Black, 0, 140) '
+        e.Graphics.DrawString("Inicio de actividades: " & tablaEmpresa.Rows(0).Item(7), font5, Brushes.Black, 0, 150)
+        e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(6), font5, Brushes.Black, 0, 160)
+
+        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 170)
+        e.Graphics.DrawString("FACTURA '" & tablaEmpresa.Rows(0).Item(26) & "' (" & tablaEmpresa.Rows(0).Item(27) & ")", font5, Brushes.Black, 0, 180)
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(10).ToString, font5, Brushes.Black, 0, 190)
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(11).ToString, font5, Brushes.Black, 0, 200)
+        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 210)
+
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(12), font5, Brushes.Black, 0, 220)
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(13), font5, Brushes.Black, 0, 230)
+        e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(14), font5, Brushes.Black, 0, 240)
+        e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(16), font5, Brushes.Black, 0, 250)
+        e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(15), font5, Brushes.Black, 0, 260)
+        e.Graphics.DrawString("CONDICION DE VENTA " & tablaEmpresa.Rows(0).Item(18), font5, Brushes.Black, 0, 270)
+        e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 280)
 
         Dim i As Integer
+        Dim j As Integer
+        Dim car As Integer
+
         For i = 0 To tablaProd.Rows.Count - 1
-            codigo = tablaProd.Rows(i).Item(0) : unidad = tablaProd(i).Item(1) : detalle = tablaProd(i).Item(2) : valoruni = tablaProd(i).Item(4) : valortot = tablaProd(i).Item(5) : ivaProd = tablaProd(i).Item(3)
-            texto = unidad & " x " & valoruni & Chr(9)
+            codigo = tablaProd.Rows(i).Item(0)
+            unidad = tablaProd(i).Item(1)
+            detalle = tablaProd(i).Item(2)
+            valoruni = tablaProd(i).Item(4)
+            valortot = FormatNumber(tablaProd(i).Item(5), 2)
+            ivaProd = tablaProd(i).Item(3)
+            texto = unidad & " x " & valoruni & Chr(9) & "  (" & ivaProd & ")"
             yPos = 290 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea            
 
-            Dim j As Integer
-            Dim car As Integer
 
-            If detalle.Length <= 27 Then
-                car = 27 - detalle.Length
+            If detalle.Length <= 25 Then
+                car = 25 - detalle.Length
                 For j = 0 To car
                     detalle &= " "
                 Next
             Else
-                car = detalle.Length - 27
-                detalle = detalle.Remove(27, car)
+                car = detalle.Length - 25
+                detalle = detalle.Remove(26, car - 1)
+            End If
+
+            If valortot.Length <= 7 Then
+                car = 7 - valortot.Length
+                For j = 0 To car
+                    valortot = " " & valortot
+                Next
+
             End If
 
 
             'If Not row.IsNewRow Then
-            e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 5, yPos)
+            e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 0, yPos)
             count += 1
             yPos = yPos + 10
-            e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 5, yPos)
+            e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 0, yPos)
             'total += valor
             'End If
             count += 1
 
         Next
+        If FacIva21.Length <= 7 Then
+            car = 7 - FacIva21.Length
+            For j = 0 To car
+                FacIva21 = " " & FacIva21
+            Next
+
+        End If
 
 
-        For Each row As DataGridViewRow In dtproductos.Rows
-            codigo = row.Cells(0).Value.ToString : unidad = row.Cells(2).Value : detalle = row.Cells(3).Value : valoruni = row.Cells(5).Value : valortot = row.Cells(6).Value
+        If facSubtotal.Length <= 7 Then
+            car = 7 - facSubtotal.Length
+            For j = 0 To car
+                facSubtotal = " " & facSubtotal
+            Next
+        End If
 
-            texto = unidad & " x " & valoruni & Chr(9) '& "$" & valortot 'codigo & Chr(9) & Chr(9) & unidad & Chr(9) & "$" & valoruni & Chr(9) & "$" & valortot
-            '    texto2 = detalle
-            yPos = 290 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea
-            ' Imprime la línea con el objeto Graphics
-            Dim j As Integer
-            Dim car As Integer
-            If detalle.Length <= 27 Then
-                car = 27 - detalle.Length
-                For j = 0 To car
-                    detalle &= " "
-                Next
-            Else
-                car = detalle.Length - 27
-                detalle = detalle.Remove(27, car)
-            End If
+        If facTotal.Length <= 7 Then
+            car = 7 - facTotal.Length
+            For j = 0 To car
+                facTotal = " " & facTotal
+            Next
+        End If
 
 
-            If Not row.IsNewRow Then
-                e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 5, yPos)
-                count += 1
-                yPos = yPos + 10
-                e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 5, yPos)
-                'total += valor
-            End If
 
-            count += 1
 
-        Next
         yPos += 20
-        Dim lineaSep = StrDup(25, " ")
-        e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 5, yPos)
+        Dim textosub As String = "Subtotal"
+        Dim textoIva21 As String = "Alicuota 21%"
+        Dim textoTotal As String = "Total"
+
+
+
+        Dim lineaSep = StrDup(27, " ")
+        e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 0, yPos)
         Dim XXX As Integer = 0
-        XXX = Len(total.ToString)
-        lineatotal = StrDup(14 - XXX, ".")
-        yPos += 20
-        e.Graphics.DrawString("Total" & lineatotal & lblfacttotal.Text, font3, System.Drawing.Brushes.Black, 5, yPos)
+
+        XXX = 27 - (textosub.Length + facSubtotal.Length)
+        lineatotal = StrDup(XXX, ".")
+        yPos += 10
+        e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+        XXX = 27 - (textoIva21.Length + FacIva21.Length)
+        lineatotal = StrDup(XXX, ".")
+        yPos += 10
+        e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+        XXX = 27 - (textoTotal.Length + facTotal.Length)
+        lineatotal = StrDup(XXX, ".")
+        yPos += 10
+        e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
         yPos += 30
+
+        e.Graphics.DrawString("COMPROBANTE AUTORIZADO POR WEB SERVICE", fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
+        e.Graphics.DrawString("CAE: " & facCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
+        e.Graphics.DrawString("F. Vto CAE: " & facVtoCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+        e.Graphics.DrawString(facCodBARRA, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 10
+
         e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 15, yPos)
         yPos += 10
         e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 15, yPos)
@@ -1378,6 +1443,19 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                 Me.Close()
             Case Keys.F7
                 Button1.PerformClick()
+            Case Keys.F8
+                Dim idFacRap As Integer
+                idFacRap = InputBox("Igrese codigo de comprobante" & vbNewLine & vbNewLine & "1-ReciboFac || 2-Fact B || 3-Fact A", "Cambiar tipo de comprobante", 1)
+                With Me
+                    .idfacrap = idFacRap
+                    .Idcliente = 9999
+                    .cargarCliente()
+                    .cmdguardar.Enabled = False
+                    .cmdsolicitarcae.Enabled = True
+                    .txtcodPLU.Focus()
+                    .cargar_datos_factura()
+                    CalcularTotales()
+                End With
         End Select
     End Sub
 
@@ -1386,7 +1464,9 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        dtproductos.Rows.Clear()
         cargar_datos_factura()
+
 
     End Sub
 
@@ -1754,6 +1834,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                         cmdsolicitarcae.Enabled = False
                         pncaeaprobado.Visible = True
                         pncaerechazado.Visible = False
+                        cmdguardar.PerformClick()
                     End If
 
                 Else
@@ -1854,20 +1935,8 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
 
     End Sub
 
-    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
-
-    End Sub
-
     Private Sub dtproductos_RowHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dtproductos.RowHeaderMouseClick
         dtproductos.Rows(e.RowIndex).Selected = True
-    End Sub
-
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
-
-    End Sub
-
-    Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellContentClick
-
     End Sub
 
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
@@ -1884,6 +1953,30 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
 
         End Try
 
+
+    End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
+
+    Private Sub tmrcontrolarnumfact_Tick(sender As Object, e As EventArgs) Handles tmrcontrolarnumfact.Tick
+
+    End Sub
+
+    Private Sub lblcodigobarras_Click(sender As Object, e As EventArgs) Handles lblcodigobarras.Click
+
+    End Sub
+
+    Private Sub lblestadoCAE_Click(sender As Object, e As EventArgs) Handles lblestadoCAE.Click
+
+    End Sub
+
+    Private Sub lblvtoCAE_Click(sender As Object, e As EventArgs) Handles lblvtoCAE.Click
+
+    End Sub
+
+    Private Sub lblfechacae_Click(sender As Object, e As EventArgs) Handles lblfechacae.Click
 
     End Sub
 End Class

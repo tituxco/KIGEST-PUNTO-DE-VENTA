@@ -514,7 +514,7 @@ Public Class imprimirEtiquetas
     End Sub
     Private Sub ImprimirBoleta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
 
-        If ("A" & ProEtiquetaCod & "B").Length > 13 Then
+        If ("A" & ProEtiquetaCod & "B").Length > 14 Then
             MsgBox("el codigo generado es demasiado largo, verifique el codigo de producto")
             Exit Sub
         End If

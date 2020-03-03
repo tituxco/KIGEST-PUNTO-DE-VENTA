@@ -263,8 +263,8 @@
                         .AddWithValue("?idfactura", lotfact)
                         .AddWithValue("?compracant", lotcompracant)
                         .AddWithValue("?tipoprod", lottipoprod)
-                        .AddWithValue("?idalmacen", DatosAcceso.IdAlmacen)
-                    End With
+                    .AddWithValue("?idalmacen", cmbalmacen.SelectedValue)
+                End With
                     comandoadd.ExecuteNonQuery()
                 Next
                 Reconectar()
