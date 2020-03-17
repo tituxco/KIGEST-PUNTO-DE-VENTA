@@ -25,7 +25,6 @@ Partial Class manejoStock
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(manejoStock))
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dtproductos = New System.Windows.Forms.DataGridView()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -48,8 +47,8 @@ Partial Class manejoStock
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.ConsultarVentas = New System.ComponentModel.BackgroundWorker()
+        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.pntitulo.SuspendLayout()
-        CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pnnavegacion.SuspendLayout()
         Me.grpperiodo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
@@ -75,23 +74,6 @@ Partial Class manejoStock
         Me.Label1.Size = New System.Drawing.Size(309, 39)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Informes de stock"
-        '
-        'dtproductos
-        '
-        Me.dtproductos.AllowUserToAddRows = False
-        Me.dtproductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtproductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtproductos.BackgroundColor = System.Drawing.Color.White
-        Me.dtproductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtproductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtproductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtproductos.Location = New System.Drawing.Point(0, 158)
-        Me.dtproductos.MultiSelect = False
-        Me.dtproductos.Name = "dtproductos"
-        Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtproductos.Size = New System.Drawing.Size(1221, 267)
-        Me.dtproductos.TabIndex = 231
         '
         'pnnavegacion
         '
@@ -174,6 +156,7 @@ Partial Class manejoStock
         Me.Button1.TabIndex = 177
         Me.Button1.Text = "VER MAS"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'txtlimitmax
         '
@@ -185,6 +168,7 @@ Partial Class manejoStock
         Me.txtlimitmax.Size = New System.Drawing.Size(69, 22)
         Me.txtlimitmax.TabIndex = 175
         Me.txtlimitmax.Text = "500"
+        Me.txtlimitmax.Visible = False
         '
         'lblmostrando
         '
@@ -197,6 +181,7 @@ Partial Class manejoStock
         Me.lblmostrando.Size = New System.Drawing.Size(99, 17)
         Me.lblmostrando.TabIndex = 174
         Me.lblmostrando.Text = "Mostrando 0 a"
+        Me.lblmostrando.Visible = False
         '
         'grpperiodo
         '
@@ -358,13 +343,21 @@ Partial Class manejoStock
         '
         Me.ConsultarVentas.WorkerReportsProgress = True
         '
+        'DgvProductos
+        '
+        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvProductos.Location = New System.Drawing.Point(0, 158)
+        Me.DgvProductos.Name = "DgvProductos"
+        Me.DgvProductos.Size = New System.Drawing.Size(1221, 267)
+        Me.DgvProductos.TabIndex = 232
+        '
         'manejoStock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(1221, 425)
-        Me.Controls.Add(Me.dtproductos)
+        Me.Controls.Add(Me.DgvProductos)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
         Me.Name = "manejoStock"
@@ -373,7 +366,6 @@ Partial Class manejoStock
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
-        CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pnnavegacion.ResumeLayout(False)
         Me.pnnavegacion.PerformLayout()
         Me.grpperiodo.ResumeLayout(False)
@@ -386,7 +378,6 @@ Partial Class manejoStock
 
     Friend WithEvents pntitulo As Panel
     Friend WithEvents Label1 As Label
-    Friend WithEvents dtproductos As DataGridView
     Friend WithEvents pnnavegacion As Panel
     Friend WithEvents cmdbuscar As Button
     Friend WithEvents txtbuscar As TextBox
@@ -409,4 +400,5 @@ Partial Class manejoStock
     Friend WithEvents cmbalmacen As ComboBox
     Friend WithEvents Button2 As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents DgvProductos As DGVPaginado
 End Class

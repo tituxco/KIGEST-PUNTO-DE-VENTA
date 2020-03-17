@@ -344,7 +344,8 @@ Public Class productos
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
-                dtproductos.DataSource = tablaprod
+                DgvProductos.Cargar_Datos(tablaprod)
+                'dtproductos.DataSource = tablaprod
                 'dtproductos.Columns(0).Visible = False
             ElseIf imprimirlist = True Then
 
@@ -378,8 +379,8 @@ Public Class productos
                 imprimirlist = False
             End If
 
-            dtproductos.Columns(0).Width = 40
-            dtproductos.Columns(2).Width = 60
+            ' dtproductos.Columns(0).Width = 40
+            'dtproductos.Columns(2).Width = 60
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -596,12 +597,14 @@ Public Class productos
 
         End Try
     End Sub
-
-    Private Sub dtproductos_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEnter
-        'vaciarControles()
-        CargarInfoProd(dtproductos.CurrentRow.Cells(0).Value)
+    Private Sub ProductoSeleccionado(IdProducto As Integer) Handles DgvProductos.SeleccionarItem
+        CargarInfoProd(IdProducto)
         calcularPrecios()
         cargarDescuentos()
+    End Sub
+    Private Sub dtproductos_CellEnter(sender As Object, e As DataGridViewCellEventArgs)
+        'vaciarControles()
+
     End Sub
 
     Private Sub cargarDescuentos()
@@ -609,7 +612,7 @@ Public Class productos
             dtdescuentos.Rows.Clear()
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento ',' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & dtproductos.CurrentRow.Cells(0).Value, conexionPrinc)
+            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & DgvProductos.ItemSeleccionado, conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
             consultaDescProd.Fill(tablaDescProd)
@@ -850,7 +853,7 @@ Public Class productos
                 .AddWithValue("?codigo", codigo)
 
                 If modificaProd = True Then
-                    Dim idProducto As Integer = dtproductos.CurrentRow.Cells(0).Value
+                    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
                     .AddWithValue("?idp", idProducto)
                 End If
 
@@ -921,10 +924,10 @@ Public Class productos
         Try
             Dim sqlquery As String
             If MsgBox("Esta seguro que desea eliminar este producto? esta acción no se puede deshacer", vbYesNo + vbQuestion) = vbYes Then
-                sqlquery = "delete from fact_insumos where id=" & dtproductos.CurrentRow.Cells(0).Value
+                sqlquery = "delete from fact_insumos where id=" & DgvProductos.dgvVista.CurrentRow.Cells(0).Value
                 Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionPrinc)
                 comandoupd.ExecuteNonQuery()
-                dtproductos.Rows.Remove(dtproductos.CurrentRow)
+                DgvProductos.dgvVista.Rows.Remove(DgvProductos.dgvVista.CurrentRow)
                 MsgBox("Producto eliminado")
                 cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProdGral.SelectedValue)
             End If
@@ -978,7 +981,7 @@ Public Class productos
             Button4.BackColor = Color.FromArgb(RGB(64, 64, 64))
             elimColumn = False
             Me.Cursor = Cursors.Arrow
-            For Each columna As DataGridViewColumn In dtproductos.Columns
+            For Each columna As DataGridViewColumn In DgvProductos.dgvVista.Columns
                 columna.SortMode = DataGridViewColumnSortMode.NotSortable
 
             Next
@@ -986,7 +989,7 @@ Public Class productos
             Button4.BackColor = Color.Red
             Me.Cursor = Cursors.Hand
             elimColumn = True
-            For Each columna As DataGridViewColumn In dtproductos.Columns
+            For Each columna As DataGridViewColumn In DgvProductos.dgvVista.Columns
                 columna.SortMode = DataGridViewColumnSortMode.Automatic
 
             Next
@@ -1217,8 +1220,8 @@ Public Class productos
     Private Sub cmdpromocion_Click(sender As Object, e As EventArgs) Handles cmdpromocion.Click
 
         agregarpromo.categoria = cmbcatProdGral.SelectedValue
-        agregarpromo.idproducto = dtproductos.CurrentRow.Cells(0).Value
-        agregarpromo.codigo = dtproductos.CurrentRow.Cells(2).Value
+        agregarpromo.idproducto = DgvProductos.dgvVista.CurrentRow.Cells(0).Value
+        agregarpromo.codigo = DgvProductos.dgvVista.CurrentRow.Cells(2).Value
         agregarpromo.Show()
         agregarpromo.TopMost = True
 
@@ -1284,7 +1287,7 @@ Public Class productos
         End Try
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 
@@ -1316,17 +1319,13 @@ Public Class productos
         End Try
     End Sub
 
-    Private Sub TabPage1_Click(sender As Object, e As EventArgs) Handles TabPage1.Click
-
-    End Sub
-
-    Private Sub txtcosto_TextChanged(sender As Object, e As EventArgs) Handles txtcosto.TextChanged
-
-    End Sub
-
     Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
         My.Settings.calcCosto = chkcalcularcosto.CheckState
         My.Settings.Save()
+
+    End Sub
+
+    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
 
     End Sub
 End Class

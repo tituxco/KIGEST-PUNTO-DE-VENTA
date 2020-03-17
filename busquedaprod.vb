@@ -104,8 +104,12 @@ Public Class busquedaprod
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
-                dtproductos.DataSource = tablaprod
-                dtproductos.Columns(0).Width = 100
+
+                dgvProductos.Cargar_Datos(tablaprod)
+                '       dtproductos.DataSource = tablaprod
+
+
+                'dtproductos.Columns(0).Width = 100
                 'dtproductos.Columns(2).Width = 40
                 'dtproductos.Columns(3).Width = 60
             ElseIf imprimirlist = True Or imprimiretiq = True Then
@@ -245,10 +249,10 @@ Public Class busquedaprod
 
         End Try
     End Sub
-    Private Sub calcularPrecios()
+    Public Sub calcularPrecios(idProd As Integer)
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select prod.precio, (select mon.cotizacion from fact_moneda as mon where mon.id=prod.moneda) as cotizacion,  " &
-            "prod.iva, prod.ganancia,prod.utilidad1,prod.utilidad2 from fact_insumos as prod where prod.id=" & dtproductos.CurrentRow.Cells(0).Value, conexionPrinc)
+            "prod.iva, prod.ganancia,prod.utilidad1,prod.utilidad2 from fact_insumos as prod where prod.id=" & idProd, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim infoprod() As DataRow
             consultaPRod.Fill(tablaprod)
@@ -345,7 +349,7 @@ Public Class busquedaprod
     End Sub
 
     Private Sub dtproductos_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEnter
-        calcularPrecios()
+        'calcularPrecios()
     End Sub
 
     Private Sub busquedaprod_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -454,15 +458,15 @@ Public Class busquedaprod
                 Dim font4 As New Font("Arial", 10)
                 Dim font5 As New Font("Arial", 6)
 
-                Dim ProductoDesc As String = dtproductos.CurrentRow.Cells(1).Value
-                Dim ProductoCod As String = dtproductos.CurrentRow.Cells(2).Value
+                Dim ProductoDesc As String = dgvProductos.dgvVista.CurrentRow.Cells(1).Value
+                Dim ProductoCod As String = dgvProductos.dgvVista.CurrentRow.Cells(2).Value
                 Dim ProductoPrec As String = Math.Round(dtlistas.CurrentRow.Cells(2).Value, 2)
 
                 'If TextBox1.Text <> "" Then
                 '    alto = Convert.ToSingle(TextBox1.Text)
                 'End If
                 Dim bm As Bitmap = Nothing
-                bm = Codigos.codigo128(dtproductos.CurrentRow.Cells(2).Value, False, 40)
+                bm = Codigos.codigo128(dgvProductos.dgvVista.CurrentRow.Cells(2).Value, False, 40)
                 If Not IsNothing(bm) Then
                     PictureBox1.Image = bm
                 End If
@@ -488,15 +492,15 @@ Public Class busquedaprod
                 Dim font4 As New Font("Arial", 10)
                 Dim font5 As New Font("Arial", 6)
 
-                Dim ProductoDesc As String = dtproductos.CurrentRow.Cells(1).Value
-                Dim ProductoCod As String = dtproductos.CurrentRow.Cells(2).Value
+                Dim ProductoDesc As String = dgvProductos.dgvVista.CurrentRow.Cells(1).Value
+                Dim ProductoCod As String = dgvProductos.dgvVista.CurrentRow.Cells(2).Value
                 Dim ProductoPrec As String = Math.Round(dtlistas.CurrentRow.Cells(2).Value, 2)
 
                 'If TextBox1.Text <> "" Then
                 '    alto = Convert.ToSingle(TextBox1.Text)
                 'End If
                 Dim bm As Bitmap = Nothing
-                bm = Codigos.codigo128(dtproductos.CurrentRow.Cells(2).Value, False, 40)
+                bm = Codigos.codigo128(dgvProductos.dgvVista.CurrentRow.Cells(2).Value, False, 40)
                 If Not IsNothing(bm) Then
                     PictureBox1.Image = bm
                 End If
@@ -545,11 +549,13 @@ Public Class busquedaprod
         'End If
     End Sub
 
-    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-
-    End Sub
-
     Private Sub busquedaprod_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged
         chkimprimirprecio.Location = Button8.Location
     End Sub
+
+    Private Sub ItemSeleccionado(IdItem As Integer) Handles dgvProductos.SeleccionarItem
+        calcularPrecios(IdItem)
+    End Sub
+
+
 End Class

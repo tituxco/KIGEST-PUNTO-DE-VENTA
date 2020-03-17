@@ -34,6 +34,7 @@ Partial Class configuracion
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cmbdatosemptipoiva = New System.Windows.Forms.ComboBox()
         Me.Button7 = New System.Windows.Forms.Button()
+        Me.pctdatosemplogo = New System.Windows.Forms.PictureBox()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txtdatosempinicioact = New System.Windows.Forms.TextBox()
         Me.txtdatosempdrei = New System.Windows.Forms.TextBox()
@@ -103,10 +104,11 @@ Partial Class configuracion
         Me.DataGridView3 = New System.Windows.Forms.DataGridView()
         Me.Panel24 = New System.Windows.Forms.Panel()
         Me.Label51 = New System.Windows.Forms.Label()
-        Me.pctdatosemplogo = New System.Windows.Forms.PictureBox()
+        Me.lblpasscertif = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.TabControl2.SuspendLayout()
         Me.TabPage14.SuspendLayout()
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage9.SuspendLayout()
         Me.TabControl4.SuspendLayout()
         Me.TabPage8.SuspendLayout()
@@ -135,7 +137,6 @@ Partial Class configuracion
         Me.Panel25.SuspendLayout()
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel24.SuspendLayout()
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -174,11 +175,12 @@ Partial Class configuracion
         Me.TabControl2.Location = New System.Drawing.Point(0, 40)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(972, 410)
+        Me.TabControl2.Size = New System.Drawing.Size(972, 469)
         Me.TabControl2.TabIndex = 12
         '
         'TabPage14
         '
+        Me.TabPage14.Controls.Add(Me.lblpasscertif)
         Me.TabPage14.Controls.Add(Me.Button8)
         Me.TabPage14.Controls.Add(Me.lblfactelectrocertif)
         Me.TabPage14.Controls.Add(Me.lblfactelectrocuit)
@@ -208,7 +210,7 @@ Partial Class configuracion
         Me.TabPage14.Location = New System.Drawing.Point(4, 22)
         Me.TabPage14.Name = "TabPage14"
         Me.TabPage14.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage14.Size = New System.Drawing.Size(964, 384)
+        Me.TabPage14.Size = New System.Drawing.Size(964, 443)
         Me.TabPage14.TabIndex = 2
         Me.TabPage14.Text = "EMPRESA"
         Me.TabPage14.UseVisualStyleBackColor = True
@@ -279,6 +281,15 @@ Partial Class configuracion
         Me.Button7.Text = "Guardar"
         Me.Button7.UseVisualStyleBackColor = True
         Me.Button7.Visible = False
+        '
+        'pctdatosemplogo
+        '
+        Me.pctdatosemplogo.Location = New System.Drawing.Point(3, 231)
+        Me.pctdatosemplogo.Name = "pctdatosemplogo"
+        Me.pctdatosemplogo.Size = New System.Drawing.Size(330, 84)
+        Me.pctdatosemplogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.pctdatosemplogo.TabIndex = 20
+        Me.pctdatosemplogo.TabStop = False
         '
         'Label33
         '
@@ -513,7 +524,7 @@ Partial Class configuracion
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(778, 352)
+        Me.TabPage10.Size = New System.Drawing.Size(950, 352)
         Me.TabPage10.TabIndex = 1
         Me.TabPage10.Text = "CATEGORIAS DE PRODUCTOS"
         Me.TabPage10.UseVisualStyleBackColor = True
@@ -540,7 +551,7 @@ Partial Class configuracion
         Me.dtcategorias.Location = New System.Drawing.Point(3, 3)
         Me.dtcategorias.Name = "dtcategorias"
         Me.dtcategorias.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtcategorias.Size = New System.Drawing.Size(1201, 341)
+        Me.dtcategorias.Size = New System.Drawing.Size(944, 341)
         Me.dtcategorias.TabIndex = 91
         '
         'txtcategDefecto
@@ -557,7 +568,7 @@ Partial Class configuracion
         Me.TabPage11.Location = New System.Drawing.Point(4, 22)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(778, 352)
+        Me.TabPage11.Size = New System.Drawing.Size(950, 352)
         Me.TabPage11.TabIndex = 2
         Me.TabPage11.Text = "COTIZACION DE MONEDA"
         Me.TabPage11.UseVisualStyleBackColor = True
@@ -577,7 +588,7 @@ Partial Class configuracion
         Me.dtmoneda.MultiSelect = False
         Me.dtmoneda.Name = "dtmoneda"
         Me.dtmoneda.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtmoneda.Size = New System.Drawing.Size(1201, 333)
+        Me.dtmoneda.Size = New System.Drawing.Size(944, 333)
         Me.dtmoneda.TabIndex = 96
         '
         'TabPage12
@@ -586,7 +597,7 @@ Partial Class configuracion
         Me.TabPage12.Location = New System.Drawing.Point(4, 22)
         Me.TabPage12.Name = "TabPage12"
         Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage12.Size = New System.Drawing.Size(778, 352)
+        Me.TabPage12.Size = New System.Drawing.Size(950, 352)
         Me.TabPage12.TabIndex = 3
         Me.TabPage12.Text = "ALMACENES DE PRODUCTOS"
         Me.TabPage12.UseVisualStyleBackColor = True
@@ -606,7 +617,7 @@ Partial Class configuracion
         Me.DataGridView6.MultiSelect = False
         Me.DataGridView6.Name = "DataGridView6"
         Me.DataGridView6.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.DataGridView6.Size = New System.Drawing.Size(1201, 318)
+        Me.DataGridView6.Size = New System.Drawing.Size(944, 318)
         Me.DataGridView6.TabIndex = 100
         '
         'TabPage15
@@ -615,7 +626,7 @@ Partial Class configuracion
         Me.TabPage15.Location = New System.Drawing.Point(4, 22)
         Me.TabPage15.Name = "TabPage15"
         Me.TabPage15.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage15.Size = New System.Drawing.Size(778, 352)
+        Me.TabPage15.Size = New System.Drawing.Size(950, 352)
         Me.TabPage15.TabIndex = 4
         Me.TabPage15.Text = "PROMOCIONES DE PRODUCTOS"
         Me.TabPage15.UseVisualStyleBackColor = True
@@ -634,7 +645,7 @@ Partial Class configuracion
         Me.dtdescuentos.MultiSelect = False
         Me.dtdescuentos.Name = "dtdescuentos"
         Me.dtdescuentos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtdescuentos.Size = New System.Drawing.Size(1201, 308)
+        Me.dtdescuentos.Size = New System.Drawing.Size(944, 308)
         Me.dtdescuentos.TabIndex = 98
         '
         'Column1
@@ -768,7 +779,7 @@ Partial Class configuracion
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(792, 384)
+        Me.TabPage4.Size = New System.Drawing.Size(964, 384)
         Me.TabPage4.TabIndex = 5
         Me.TabPage4.Text = "CONCEPTOS EGRESOS"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -787,7 +798,7 @@ Partial Class configuracion
         Me.dtconceptosegresos.MultiSelect = False
         Me.dtconceptosegresos.Name = "dtconceptosegresos"
         Me.dtconceptosegresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtconceptosegresos.Size = New System.Drawing.Size(786, 378)
+        Me.dtconceptosegresos.Size = New System.Drawing.Size(958, 378)
         Me.dtconceptosegresos.TabIndex = 89
         '
         'TabPage5
@@ -806,7 +817,7 @@ Partial Class configuracion
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(792, 384)
+        Me.TabPage5.Size = New System.Drawing.Size(964, 384)
         Me.TabPage5.TabIndex = 6
         Me.TabPage5.Text = "CONSULTAR AFIP"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -922,7 +933,7 @@ Partial Class configuracion
         Me.tabdtostecni.Controls.Add(Me.Panel24)
         Me.tabdtostecni.Location = New System.Drawing.Point(4, 22)
         Me.tabdtostecni.Name = "tabdtostecni"
-        Me.tabdtostecni.Size = New System.Drawing.Size(792, 384)
+        Me.tabdtostecni.Size = New System.Drawing.Size(964, 384)
         Me.tabdtostecni.TabIndex = 8
         Me.tabdtostecni.Text = "DATOS F. TECNICA"
         Me.tabdtostecni.UseVisualStyleBackColor = True
@@ -1026,20 +1037,21 @@ Partial Class configuracion
         Me.Label51.Text = "Técnicos"
         Me.Label51.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'pctdatosemplogo
+        'lblpasscertif
         '
-        Me.pctdatosemplogo.Location = New System.Drawing.Point(3, 231)
-        Me.pctdatosemplogo.Name = "pctdatosemplogo"
-        Me.pctdatosemplogo.Size = New System.Drawing.Size(330, 84)
-        Me.pctdatosemplogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
-        Me.pctdatosemplogo.TabIndex = 20
-        Me.pctdatosemplogo.TabStop = False
+        Me.lblpasscertif.AutoSize = True
+        Me.lblpasscertif.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblpasscertif.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblpasscertif.Location = New System.Drawing.Point(7, 407)
+        Me.lblpasscertif.Name = "lblpasscertif"
+        Me.lblpasscertif.Size = New System.Drawing.Size(2, 19)
+        Me.lblpasscertif.TabIndex = 96
         '
         'configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(972, 450)
+        Me.ClientSize = New System.Drawing.Size(972, 509)
         Me.Controls.Add(Me.TabControl2)
         Me.Controls.Add(Me.pntitulo)
         Me.Name = "configuracion"
@@ -1049,6 +1061,7 @@ Partial Class configuracion
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage14.ResumeLayout(False)
         Me.TabPage14.PerformLayout()
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
         Me.TabControl4.ResumeLayout(False)
         Me.TabPage8.ResumeLayout(False)
@@ -1080,7 +1093,6 @@ Partial Class configuracion
         Me.Panel25.ResumeLayout(False)
         CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel24.ResumeLayout(False)
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1166,4 +1178,5 @@ Partial Class configuracion
     Friend WithEvents DataGridView3 As DataGridView
     Friend WithEvents Panel24 As Panel
     Friend WithEvents Label51 As Label
+    Friend WithEvents lblpasscertif As Label
 End Class

@@ -1087,23 +1087,6 @@ Public Class CONTABLE
 
 
     End Sub
-    'Private Sub dtlistasprecio_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs)
-    '    Try
-    '        Reconectar()
-    '        Dim sql As String
-    '        Select Case e.ColumnIndex
-    '            Case 1
-    '                sql = "update fact_listas_precio set nombre='" & dtlistasprecio.CurrentRow.Cells(1).Value & "' where id=" & dtlistasprecio.CurrentRow.Cells(0).Value
-    '            Case 2
-    '                sql = "update fact_listas_precio set utilidad='" & dtlistasprecio.CurrentRow.Cells(2).Value & "' where id=" & dtlistasprecio.CurrentRow.Cells(0).Value
-    '        End Select
-
-    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
-    '        comandoadd.ExecuteNonQuery()
-    '    Catch ex As Exception
-
-    '    End Try
-    'End Sub
 
     Private Sub TabPage13_Enter(sender As Object, e As EventArgs) Handles TabPage13.Enter
         Try
@@ -2511,6 +2494,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             lblfactelectroptovta.Text = "Punto de venta electronico: " & FacturaElectro.puntovtaelect
             lblfactelectrocuit.Text = "CUIT: " & FacturaElectro.cuit
             lblfactelectrocertif.Text = "Certificado digital: " & FacturaElectro.certificado
+            lblFacturaElectroPasscertif.Text = "Pass:" & FacturaElectro.passcertificado
+
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -3393,25 +3379,115 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim hasta As String = Format(CDate(dtpvtashishasta.Value), "yyyy-MM-dd")
             Dim tablabal As New DataTable
             tablabal.Clear()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		prov.razon,
-			round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
-			round(sum(itm.ptotal),2) as pventa, 
-            round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
-            FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
-            ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
-            itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-            fact.fecha between '" & desde & "' and '" & hasta & "' group by ins.codprov order by prov.razon asc", conexionPrinc)
-            'columna = 6
 
-            consulta.Fill(tablabal)
+            If rdInforgeneral.Checked = True Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+			    fact.fecha,  
+                round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+			    round(sum(itm.ptotal),2) as pventa, 
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact and 
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "'group by fact.fecha", conexionPrinc)
+                consulta.Fill(tablabal)
+            ElseIf rdInforProv.Checked = True Then
+                Dim provSel As String = ""
+                If cmbInforProv.SelectedIndex <> -1 And cmbInforProv.SelectedValue <> 0 Then
+                    provSel = " and ins.codprov=" & cmbInforProv.SelectedValue
+                End If
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		prov.razon,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+			    round(sum(itm.ptotal),2) as pventa, 
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
+                ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & " group by ins.codprov order by prov.razon asc", conexionPrinc)
+                consulta.Fill(tablabal)
+            ElseIf rdInforCategoria.Checked = True Then
+                Dim catSel As String = ""
+                If cmbInforCateg.SelectedIndex <> -1 And cmbInforCateg.SelectedValue <> 0 Then
+                    catSel = " and ins.categoria=" & cmbInforCateg.SelectedValue
+                End If
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		cat.nombre,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+			    round(sum(itm.ptotal),2) as pventa, 
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_categoria_insum as cat where
+                ins.id=itm.cod and fact.id=itm.id_fact and ins.categoria=cat.id and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
+                consulta.Fill(tablabal)
+            End If
+
+
+
+
+
+
             dtventashistoricas.DataSource = tablabal
-            lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
-            lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
-            lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+
+            If rdInforgeneral.Checked = True Then
+                lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
+                lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+            ElseIf rdInforProv.Checked = True Then
+                lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
+                lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+            ElseIf rdInforCategoria.Checked = True Then
+                lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
+                lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+            End If
             EnProgreso.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
             EnProgreso.Close()
         End Try
+    End Sub
+
+    Private Sub tabBalConsultas_Enter(sender As Object, e As EventArgs) Handles tabBalConsultas.Enter
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+        Dim readprov As New DataSet
+        tablaprov.Fill(readprov)
+        cmbInforProv.DataSource = readprov.Tables(0)
+        cmbInforProv.DisplayMember = readprov.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbInforProv.ValueMember = readprov.Tables(0).Columns(0).Caption.ToString
+        cmbInforProv.SelectedIndex = -1
+
+        Dim tablaCateg As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_categoria_insum", conexionPrinc)
+        Dim readCat As New DataSet
+        tablaCateg.Fill(readCat)
+        cmbInforCateg.DataSource = readCat.Tables(0)
+        cmbInforCateg.DisplayMember = readCat.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbInforCateg.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
+        cmbInforCateg.SelectedIndex = -1
+
+
+    End Sub
+
+    Private Sub rdInforProv_Click(sender As Object, e As EventArgs) Handles rdInforProv.Click
+        If rdInforProv.Checked = True Then
+            cmbInforCateg.Enabled = False
+            cmbInforProv.Enabled = True
+
+        End If
+    End Sub
+
+    Private Sub rdInforCategoria_Click(sender As Object, e As EventArgs) Handles rdInforCategoria.Click
+        If rdInforCategoria.Checked = True Then
+            cmbInforCateg.Enabled = True
+            cmbInforProv.Enabled = False
+        End If
+    End Sub
+
+    Private Sub rdInforgeneral_Click(sender As Object, e As EventArgs) Handles rdInforgeneral.Click
+        If rdInforgeneral.Checked = True Then
+            cmbInforCateg.Enabled = False
+            cmbInforProv.Enabled = False
+
+        End If
     End Sub
 End Class

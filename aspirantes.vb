@@ -13,8 +13,8 @@ Public Class frmaspirantes
         deshabilitarControles()
         cargarDtosGrales()
     End Sub
-    Private Sub dtpersonal_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellEnter
-        Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+    Private Sub ClienteSeleccionado(cliente As Integer) Handles dgvClientes.SeleccionarItem
+        Idcliente = cliente
         CargarInfoPers()
     End Sub
     Public Sub CargarPersonal(ByRef busqueda As String)
@@ -33,15 +33,17 @@ Public Class frmaspirantes
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
-            BindingSource1.DataSource = tablaPers
-            dtpersonal.DataSource = BindingSource1.DataSource
-            'pbprogresocons.Visible = False
-            'cerrar_Conexiones()
-            'dtpersonal.Columns(2).Visible = False
-            dtpersonal.Columns(0).Visible = False
+            'DgvClientes.Cargar_Datos(tablaPers)
+
+            'BindingSource1.DataSource = tablaPers
+            dgvClientes.Cargar_Datos(tablaPers) 'BindingSource1.DataSource
+            ''pbprogresocons.Visible = False
+            ''cerrar_Conexiones()
+            ''dtpersonal.Columns(2).Visible = False
+            'dtpersonal.Columns(0).Visible = False
         Catch ex As Exception
             'cerrar_Conexiones()
-            pbprogresocons.Visible = False
+            'pbprogresocons.Visible = False
             lblestado.ForeColor = Color.Red
             lblestado.Text = "Atención: " & ex.Message
         End Try
@@ -138,7 +140,7 @@ Public Class frmaspirantes
         End Try
     End Sub
 
-        
+
     Private Sub deshabilitarControles()
 
         For Each Cont As Control In TabPage1.Controls
@@ -164,9 +166,9 @@ Public Class frmaspirantes
 
     End Sub
 
-    Private Function Buscar( _
-            ByVal Columna As String, _
-            ByVal texto As String, _
+    Private Function Buscar(
+            ByVal Columna As String,
+            ByVal texto As String,
             ByVal BindingSource As BindingSource) As Integer
 
         Try
@@ -280,7 +282,8 @@ Public Class frmaspirantes
                 lblestado.Text = "Cliente Modificado correctamente"
                 'TabControl1.SelectedTab = TabPage2
                 'cmbcattrabajo.Focus()
-                dtpersonal.Enabled = False
+
+                dgvClientes.dgvVista.Enabled = False
             ElseIf modificarPers = False Then
                 lblestado.ForeColor = Color.GreenYellow
                 lblestado.Text = "Cliente agregado correctamente"
@@ -290,13 +293,13 @@ Public Class frmaspirantes
                 CargarInfoPers()
                 Idcliente = comandoadd.LastInsertedId
                 Dim i As Integer
-                For i = 0 To dtpersonal.Rows.Count - 1
-                    If dtpersonal.Item(0, i).Value = Idcliente Then
-                        dtpersonal.Rows(i).Selected = True
+                For i = 0 To dgvClientes.dgvVista.Rows.Count - 1
+                    If dgvClientes.dgvVista.Item(0, i).Value = Idcliente Then
+                        dgvClientes.dgvVista.Rows(i).Selected = True
                     End If
                 Next
 
-                dtpersonal.Enabled = False
+                dgvClientes.dgvVista.Enabled = False
             End If
             modificarPers = False
             cmdmodificar.Enabled = True
@@ -304,7 +307,7 @@ Public Class frmaspirantes
             cmdeliminar.Enabled = True
             cmdcancelar.Enabled = False
             cmdaceptar.Enabled = False
-            dtpersonal.Enabled = True
+            dgvClientes.dgvVista.Enabled = True
             txtbuscar.ReadOnly = False
             'lblestado.Text = ""
             deshabilitarControles()
@@ -396,7 +399,7 @@ Public Class frmaspirantes
                 MsgBox("No se especifico parametro de busqueda")
                 Exit Sub
             Else
-                dtpersonal.Focus()
+                dgvClientes.dgvVista.Focus()
             End If
             CargarPersonal(txtbuscar.Text)
             EnProgreso.Close()
@@ -451,7 +454,7 @@ Public Class frmaspirantes
         cmdaceptar.Enabled = True
         cmdcancelar.Enabled = True
         cmdcancelar.Enabled = True
-        dtpersonal.Enabled = False
+        dgvClientes.dgvVista.Enabled = False
         cmdnuevapers.Enabled = False
         cmdmodificar.Enabled = False
         cmdeliminar.Enabled = False
@@ -473,7 +476,7 @@ Public Class frmaspirantes
         cmdmodificar.Enabled = False
         cmdeliminar.Enabled = False
         modificarPers = True
-        dtpersonal.Enabled = False
+        dgvClientes.dgvVista.Enabled = False
         txtbuscar.ReadOnly = True
     End Sub
 
@@ -512,7 +515,7 @@ Public Class frmaspirantes
         cmdnuevapers.Enabled = True
         cmdmodificar.Enabled = True
         cmdeliminar.Enabled = True
-        dtpersonal.Enabled = True
+        dgvClientes.dgvVista.Enabled = True
         txtbuscar.ReadOnly = False
     End Sub
 
@@ -556,7 +559,7 @@ Public Class frmaspirantes
             Dim tablaPers As New DataTable
 
             consulta.Fill(tablaPers)
-            dtistaclientes.DataSource = tablaPers
+            dgvlistaClientes.Cargar_Datos(tablaPers)
 
             EnProgreso.Close()
         Catch ex As Exception
@@ -664,7 +667,7 @@ Public Class frmaspirantes
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        GenerarExcel(dtistaclientes)
+        GenerarExcel(dgvlistaClientes.dgvVista)
     End Sub
 
     Private Sub chklocalidad_CheckedChanged(sender As Object, e As EventArgs) Handles chklocalidad.CheckedChanged
@@ -675,31 +678,15 @@ Public Class frmaspirantes
         End If
     End Sub
 
-    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
-
-    End Sub
-
-    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
-
-    End Sub
-
-    Private Sub txtdomicilio_TextChanged(sender As Object, e As EventArgs) Handles txtdomicilio.TextChanged
-
-    End Sub
-
-    Private Sub TabPage3_Click(sender As Object, e As EventArgs) Handles TabPage3.Click
-
-    End Sub
-
-    Private Sub cmblistaloca_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmblistaloca.SelectedIndexChanged
-
-    End Sub
-
     Private Sub chkvendedor_CheckedChanged(sender As Object, e As EventArgs) Handles chkvendedor.CheckedChanged
         If chkvendedor.Checked = True Then
             cmbvendedor_lst.Enabled = True
         Else
             cmbvendedor_lst.Enabled = False
         End If
+    End Sub
+
+    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+
     End Sub
 End Class

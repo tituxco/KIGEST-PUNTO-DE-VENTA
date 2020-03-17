@@ -23,6 +23,7 @@ Public Class reimpresionComprobantes
         EnProgreso.Show()
         Application.DoEvents()
         Dim columna As Integer
+        Dim limite As Integer = Val(TextBox1.Text)
         Try
 
             Reconectar()
@@ -37,7 +38,7 @@ Public Class reimpresionComprobantes
             else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta
-            order by fact.id desc limit 20 ", conexionPrinc)
+            order by fact.id desc limit " & limite, conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer
@@ -63,7 +64,7 @@ Public Class reimpresionComprobantes
             IdFactura = dtfacturas.CurrentRow.Cells(0).Value
             'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
 
-            If My.Settings.ImprTikets = 1 Then
+            If My.Settings.ImprTikets = 1 And chkImprimirA4.CheckState = CheckState.Unchecked Then
                 Dim PrintTxt As New PrintDocument
                 Dim pgSize As New PaperSize
                 pgSize.RawKind = Printing.PaperKind.Custom
@@ -217,7 +218,7 @@ Public Class reimpresionComprobantes
         facCAE = tablaEmpresa.Rows(0).Item(25)
         facCodBARRA = tablaEmpresa.Rows(0).Item(29)
         facVtoCAE = tablaEmpresa.Rows(0).Item(28)
-
+        Dim TipoFact As Integer = tablaEmpresa.Rows(0).Item(24)
 
         e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 0, 100) 'RAZON SOCIAL
         e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(4), font5, Brushes.Black, 0, 110) '
@@ -322,21 +323,39 @@ Public Class reimpresionComprobantes
         e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 0, yPos)
         Dim XXX As Integer = 0
 
-        XXX = 27 - (textosub.Length + facSubtotal.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+        If TipoFact < 3 Then
 
-        XXX = 27 - (textoIva21.Length + FacIva21.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+            XXX = 27 - (textosub.Length + facSubtotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
 
-        XXX = 27 - (textoTotal.Length + facTotal.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
-        yPos += 30
+            XXX = 27 - (textoIva21.Length + FacIva21.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+            XXX = 27 - (textoTotal.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+
+        Else
+            XXX = 27 - (textosub.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textosub & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+            XXX = 27 - (textoIva21.Length + 1)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoIva21 & lineatotal & "0", font3, System.Drawing.Brushes.Black, 0, yPos)
+
+            XXX = 27 - (textoTotal.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+            yPos += 30
+        End If
 
         e.Graphics.DrawString("COMPROBANTE AUTORIZADO POR WEB SERVICE", fontCAE, System.Drawing.Brushes.Black, 0, yPos)
         yPos += 10

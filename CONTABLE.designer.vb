@@ -116,9 +116,6 @@ Partial Class CONTABLE
         Me.tabBalDiario = New System.Windows.Forms.TabPage()
         Me.lstbalancecomprobantes = New System.Windows.Forms.DataGridView()
         Me.Panel29 = New System.Windows.Forms.Panel()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.RadioButton3 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton4 = New System.Windows.Forms.RadioButton()
         Me.cmdbalanceGuardar = New System.Windows.Forms.Button()
         Me.cmdbalancebuscar = New System.Windows.Forms.Button()
         Me.grpbalancefecha = New System.Windows.Forms.GroupBox()
@@ -126,9 +123,6 @@ Partial Class CONTABLE
         Me.tabBalHistorico = New System.Windows.Forms.TabPage()
         Me.lstbalancehistorico = New System.Windows.Forms.DataGridView()
         Me.Panel28 = New System.Windows.Forms.Panel()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.cmdbalhistorbuscar = New System.Windows.Forms.Button()
         Me.grpbalanceintervalo = New System.Windows.Forms.GroupBox()
         Me.Label61 = New System.Windows.Forms.Label()
@@ -139,8 +133,11 @@ Partial Class CONTABLE
         Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.RadioButton5 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton6 = New System.Windows.Forms.RadioButton()
+        Me.cmbInforCateg = New System.Windows.Forms.ComboBox()
+        Me.cmbInforProv = New System.Windows.Forms.ComboBox()
+        Me.rdInforCategoria = New System.Windows.Forms.RadioButton()
+        Me.rdInforProv = New System.Windows.Forms.RadioButton()
+        Me.rdInforgeneral = New System.Windows.Forms.RadioButton()
         Me.Button18 = New System.Windows.Forms.Button()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -282,6 +279,7 @@ Partial Class CONTABLE
         Me.tabconfiguracion = New System.Windows.Forms.TabPage()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage14 = New System.Windows.Forms.TabPage()
+        Me.lblFacturaElectroPasscertif = New System.Windows.Forms.Label()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.lblfactelectrocertif = New System.Windows.Forms.Label()
         Me.lblfactelectrocuit = New System.Windows.Forms.Label()
@@ -440,6 +438,7 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn52 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn53 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Button24 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.tabcontable.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -461,12 +460,10 @@ Partial Class CONTABLE
         Me.tabBalDiario.SuspendLayout()
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel29.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
         Me.grpbalancefecha.SuspendLayout()
         Me.tabBalHistorico.SuspendLayout()
         CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel28.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
         Me.grpbalanceintervalo.SuspendLayout()
         Me.tabBalConsultas.SuspendLayout()
         CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -595,7 +592,7 @@ Partial Class CONTABLE
         Me.tabcontable.Location = New System.Drawing.Point(0, 40)
         Me.tabcontable.Name = "tabcontable"
         Me.tabcontable.SelectedIndex = 0
-        Me.tabcontable.Size = New System.Drawing.Size(1243, 466)
+        Me.tabcontable.Size = New System.Drawing.Size(1243, 506)
         Me.tabcontable.TabIndex = 12
         '
         'tabcomprobantes
@@ -605,7 +602,7 @@ Partial Class CONTABLE
         Me.tabcomprobantes.Location = New System.Drawing.Point(4, 22)
         Me.tabcomprobantes.Name = "tabcomprobantes"
         Me.tabcomprobantes.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabcomprobantes.Size = New System.Drawing.Size(1235, 440)
+        Me.tabcomprobantes.Size = New System.Drawing.Size(1235, 480)
         Me.tabcomprobantes.TabIndex = 6
         Me.tabcomprobantes.Text = "VENTAS"
         Me.tabcomprobantes.UseVisualStyleBackColor = True
@@ -623,7 +620,7 @@ Partial Class CONTABLE
         Me.dtfacturas.Location = New System.Drawing.Point(3, 108)
         Me.dtfacturas.Name = "dtfacturas"
         Me.dtfacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtfacturas.Size = New System.Drawing.Size(1229, 329)
+        Me.dtfacturas.Size = New System.Drawing.Size(1229, 369)
         Me.dtfacturas.TabIndex = 8
         '
         'Panel5
@@ -965,7 +962,7 @@ Partial Class CONTABLE
         Me.tabcobranzas.Controls.Add(Me.Panel6)
         Me.tabcobranzas.Location = New System.Drawing.Point(4, 22)
         Me.tabcobranzas.Name = "tabcobranzas"
-        Me.tabcobranzas.Size = New System.Drawing.Size(1235, 440)
+        Me.tabcobranzas.Size = New System.Drawing.Size(1235, 480)
         Me.tabcobranzas.TabIndex = 15
         Me.tabcobranzas.Text = "COBRANZAS"
         Me.tabcobranzas.UseVisualStyleBackColor = True
@@ -983,7 +980,7 @@ Partial Class CONTABLE
         Me.dtlistacob.Location = New System.Drawing.Point(0, 105)
         Me.dtlistacob.Name = "dtlistacob"
         Me.dtlistacob.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistacob.Size = New System.Drawing.Size(1235, 335)
+        Me.dtlistacob.Size = New System.Drawing.Size(1235, 375)
         Me.dtlistacob.TabIndex = 10
         '
         'Panel6
@@ -1217,7 +1214,7 @@ Partial Class CONTABLE
         Me.balance.Location = New System.Drawing.Point(4, 22)
         Me.balance.Name = "balance"
         Me.balance.Padding = New System.Windows.Forms.Padding(3)
-        Me.balance.Size = New System.Drawing.Size(1235, 440)
+        Me.balance.Size = New System.Drawing.Size(1235, 480)
         Me.balance.TabIndex = 20
         Me.balance.Text = "BALANCE"
         Me.balance.UseVisualStyleBackColor = True
@@ -1231,7 +1228,7 @@ Partial Class CONTABLE
         Me.TabControl1.Location = New System.Drawing.Point(3, 31)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1229, 406)
+        Me.TabControl1.Size = New System.Drawing.Size(1229, 446)
         Me.TabControl1.TabIndex = 12
         '
         'tabBalDiario
@@ -1241,7 +1238,7 @@ Partial Class CONTABLE
         Me.tabBalDiario.Location = New System.Drawing.Point(4, 22)
         Me.tabBalDiario.Name = "tabBalDiario"
         Me.tabBalDiario.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabBalDiario.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalDiario.Size = New System.Drawing.Size(1221, 420)
         Me.tabBalDiario.TabIndex = 0
         Me.tabBalDiario.Text = "Balance diario"
         Me.tabBalDiario.UseVisualStyleBackColor = True
@@ -1259,13 +1256,12 @@ Partial Class CONTABLE
         Me.lstbalancecomprobantes.Location = New System.Drawing.Point(3, 103)
         Me.lstbalancecomprobantes.Name = "lstbalancecomprobantes"
         Me.lstbalancecomprobantes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.lstbalancecomprobantes.Size = New System.Drawing.Size(1215, 274)
+        Me.lstbalancecomprobantes.Size = New System.Drawing.Size(1215, 314)
         Me.lstbalancecomprobantes.TabIndex = 13
         '
         'Panel29
         '
         Me.Panel29.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel29.Controls.Add(Me.GroupBox4)
         Me.Panel29.Controls.Add(Me.cmdbalanceGuardar)
         Me.Panel29.Controls.Add(Me.cmdbalancebuscar)
         Me.Panel29.Controls.Add(Me.grpbalancefecha)
@@ -1274,42 +1270,6 @@ Partial Class CONTABLE
         Me.Panel29.Name = "Panel29"
         Me.Panel29.Size = New System.Drawing.Size(1215, 100)
         Me.Panel29.TabIndex = 14
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.RadioButton3)
-        Me.GroupBox4.Controls.Add(Me.RadioButton4)
-        Me.GroupBox4.ForeColor = System.Drawing.Color.White
-        Me.GroupBox4.Location = New System.Drawing.Point(207, 3)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(110, 71)
-        Me.GroupBox4.TabIndex = 89
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Filtro"
-        '
-        'RadioButton3
-        '
-        Me.RadioButton3.AutoSize = True
-        Me.RadioButton3.ForeColor = System.Drawing.Color.White
-        Me.RadioButton3.Location = New System.Drawing.Point(6, 21)
-        Me.RadioButton3.Name = "RadioButton3"
-        Me.RadioButton3.Size = New System.Drawing.Size(92, 17)
-        Me.RadioButton3.TabIndex = 86
-        Me.RadioButton3.TabStop = True
-        Me.RadioButton3.Text = "Por proveedor"
-        Me.RadioButton3.UseVisualStyleBackColor = True
-        '
-        'RadioButton4
-        '
-        Me.RadioButton4.AutoSize = True
-        Me.RadioButton4.ForeColor = System.Drawing.Color.White
-        Me.RadioButton4.Location = New System.Drawing.Point(6, 44)
-        Me.RadioButton4.Name = "RadioButton4"
-        Me.RadioButton4.Size = New System.Drawing.Size(62, 17)
-        Me.RadioButton4.TabIndex = 87
-        Me.RadioButton4.TabStop = True
-        Me.RadioButton4.Text = "General"
-        Me.RadioButton4.UseVisualStyleBackColor = True
         '
         'cmdbalanceGuardar
         '
@@ -1369,7 +1329,7 @@ Partial Class CONTABLE
         Me.tabBalHistorico.Location = New System.Drawing.Point(4, 22)
         Me.tabBalHistorico.Name = "tabBalHistorico"
         Me.tabBalHistorico.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabBalHistorico.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalHistorico.Size = New System.Drawing.Size(1221, 420)
         Me.tabBalHistorico.TabIndex = 1
         Me.tabBalHistorico.Text = "Balance histórico"
         Me.tabBalHistorico.UseVisualStyleBackColor = True
@@ -1387,13 +1347,12 @@ Partial Class CONTABLE
         Me.lstbalancehistorico.Location = New System.Drawing.Point(3, 103)
         Me.lstbalancehistorico.Name = "lstbalancehistorico"
         Me.lstbalancehistorico.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.lstbalancehistorico.Size = New System.Drawing.Size(1215, 274)
+        Me.lstbalancehistorico.Size = New System.Drawing.Size(1215, 314)
         Me.lstbalancehistorico.TabIndex = 14
         '
         'Panel28
         '
         Me.Panel28.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel28.Controls.Add(Me.GroupBox3)
         Me.Panel28.Controls.Add(Me.cmdbalhistorbuscar)
         Me.Panel28.Controls.Add(Me.grpbalanceintervalo)
         Me.Panel28.Dock = System.Windows.Forms.DockStyle.Top
@@ -1401,42 +1360,6 @@ Partial Class CONTABLE
         Me.Panel28.Name = "Panel28"
         Me.Panel28.Size = New System.Drawing.Size(1215, 100)
         Me.Panel28.TabIndex = 0
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.Controls.Add(Me.RadioButton1)
-        Me.GroupBox3.Controls.Add(Me.RadioButton2)
-        Me.GroupBox3.ForeColor = System.Drawing.Color.White
-        Me.GroupBox3.Location = New System.Drawing.Point(207, 0)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(110, 71)
-        Me.GroupBox3.TabIndex = 88
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Filtro"
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.White
-        Me.RadioButton1.Location = New System.Drawing.Point(6, 21)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(92, 17)
-        Me.RadioButton1.TabIndex = 86
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Por proveedor"
-        Me.RadioButton1.UseVisualStyleBackColor = True
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.White
-        Me.RadioButton2.Location = New System.Drawing.Point(6, 44)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(62, 17)
-        Me.RadioButton2.TabIndex = 87
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "General"
-        Me.RadioButton2.UseVisualStyleBackColor = True
         '
         'cmdbalhistorbuscar
         '
@@ -1518,9 +1441,9 @@ Partial Class CONTABLE
         Me.tabBalConsultas.Location = New System.Drawing.Point(4, 22)
         Me.tabBalConsultas.Name = "tabBalConsultas"
         Me.tabBalConsultas.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabBalConsultas.Size = New System.Drawing.Size(1221, 380)
+        Me.tabBalConsultas.Size = New System.Drawing.Size(1221, 420)
         Me.tabBalConsultas.TabIndex = 2
-        Me.tabBalConsultas.Text = "Consultar ventas no guardadas"
+        Me.tabBalConsultas.Text = "Informes especiales"
         Me.tabBalConsultas.UseVisualStyleBackColor = True
         '
         'dtventashistoricas
@@ -1536,7 +1459,7 @@ Partial Class CONTABLE
         Me.dtventashistoricas.Location = New System.Drawing.Point(3, 103)
         Me.dtventashistoricas.Name = "dtventashistoricas"
         Me.dtventashistoricas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtventashistoricas.Size = New System.Drawing.Size(1215, 274)
+        Me.dtventashistoricas.Size = New System.Drawing.Size(1215, 314)
         Me.dtventashistoricas.TabIndex = 16
         '
         'Panel11
@@ -1553,39 +1476,74 @@ Partial Class CONTABLE
         '
         'GroupBox5
         '
-        Me.GroupBox5.Controls.Add(Me.RadioButton5)
-        Me.GroupBox5.Controls.Add(Me.RadioButton6)
+        Me.GroupBox5.Controls.Add(Me.Button24)
+        Me.GroupBox5.Controls.Add(Me.cmbInforCateg)
+        Me.GroupBox5.Controls.Add(Me.cmbInforProv)
+        Me.GroupBox5.Controls.Add(Me.rdInforCategoria)
+        Me.GroupBox5.Controls.Add(Me.rdInforProv)
+        Me.GroupBox5.Controls.Add(Me.rdInforgeneral)
         Me.GroupBox5.ForeColor = System.Drawing.Color.White
         Me.GroupBox5.Location = New System.Drawing.Point(207, 0)
         Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(110, 71)
+        Me.GroupBox5.Size = New System.Drawing.Size(447, 71)
         Me.GroupBox5.TabIndex = 88
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Filtro"
         '
-        'RadioButton5
+        'cmbInforCateg
         '
-        Me.RadioButton5.AutoSize = True
-        Me.RadioButton5.ForeColor = System.Drawing.Color.White
-        Me.RadioButton5.Location = New System.Drawing.Point(6, 21)
-        Me.RadioButton5.Name = "RadioButton5"
-        Me.RadioButton5.Size = New System.Drawing.Size(92, 17)
-        Me.RadioButton5.TabIndex = 86
-        Me.RadioButton5.TabStop = True
-        Me.RadioButton5.Text = "Por proveedor"
-        Me.RadioButton5.UseVisualStyleBackColor = True
+        Me.cmbInforCateg.Enabled = False
+        Me.cmbInforCateg.FormattingEnabled = True
+        Me.cmbInforCateg.Location = New System.Drawing.Point(257, 41)
+        Me.cmbInforCateg.Name = "cmbInforCateg"
+        Me.cmbInforCateg.Size = New System.Drawing.Size(184, 21)
+        Me.cmbInforCateg.TabIndex = 90
         '
-        'RadioButton6
+        'cmbInforProv
         '
-        Me.RadioButton6.AutoSize = True
-        Me.RadioButton6.ForeColor = System.Drawing.Color.White
-        Me.RadioButton6.Location = New System.Drawing.Point(6, 44)
-        Me.RadioButton6.Name = "RadioButton6"
-        Me.RadioButton6.Size = New System.Drawing.Size(62, 17)
-        Me.RadioButton6.TabIndex = 87
-        Me.RadioButton6.TabStop = True
-        Me.RadioButton6.Text = "General"
-        Me.RadioButton6.UseVisualStyleBackColor = True
+        Me.cmbInforProv.Enabled = False
+        Me.cmbInforProv.FormattingEnabled = True
+        Me.cmbInforProv.Location = New System.Drawing.Point(74, 42)
+        Me.cmbInforProv.Name = "cmbInforProv"
+        Me.cmbInforProv.Size = New System.Drawing.Size(164, 21)
+        Me.cmbInforProv.TabIndex = 89
+        '
+        'rdInforCategoria
+        '
+        Me.rdInforCategoria.AutoSize = True
+        Me.rdInforCategoria.ForeColor = System.Drawing.Color.White
+        Me.rdInforCategoria.Location = New System.Drawing.Point(257, 21)
+        Me.rdInforCategoria.Name = "rdInforCategoria"
+        Me.rdInforCategoria.Size = New System.Drawing.Size(94, 17)
+        Me.rdInforCategoria.TabIndex = 88
+        Me.rdInforCategoria.TabStop = True
+        Me.rdInforCategoria.Text = "Por Categorias"
+        Me.rdInforCategoria.UseVisualStyleBackColor = True
+        '
+        'rdInforProv
+        '
+        Me.rdInforProv.AutoSize = True
+        Me.rdInforProv.ForeColor = System.Drawing.Color.White
+        Me.rdInforProv.Location = New System.Drawing.Point(74, 21)
+        Me.rdInforProv.Name = "rdInforProv"
+        Me.rdInforProv.Size = New System.Drawing.Size(92, 17)
+        Me.rdInforProv.TabIndex = 86
+        Me.rdInforProv.TabStop = True
+        Me.rdInforProv.Text = "Por proveedor"
+        Me.rdInforProv.UseVisualStyleBackColor = True
+        '
+        'rdInforgeneral
+        '
+        Me.rdInforgeneral.AutoSize = True
+        Me.rdInforgeneral.Checked = True
+        Me.rdInforgeneral.ForeColor = System.Drawing.Color.White
+        Me.rdInforgeneral.Location = New System.Drawing.Point(6, 21)
+        Me.rdInforgeneral.Name = "rdInforgeneral"
+        Me.rdInforgeneral.Size = New System.Drawing.Size(62, 17)
+        Me.rdInforgeneral.TabIndex = 87
+        Me.rdInforgeneral.TabStop = True
+        Me.rdInforgeneral.Text = "General"
+        Me.rdInforgeneral.UseVisualStyleBackColor = True
         '
         'Button18
         '
@@ -1715,7 +1673,7 @@ Partial Class CONTABLE
         Me.tabremitos.Location = New System.Drawing.Point(4, 22)
         Me.tabremitos.Name = "tabremitos"
         Me.tabremitos.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabremitos.Size = New System.Drawing.Size(1235, 440)
+        Me.tabremitos.Size = New System.Drawing.Size(1235, 480)
         Me.tabremitos.TabIndex = 19
         Me.tabremitos.Text = "REMITOS"
         Me.tabremitos.UseVisualStyleBackColor = True
@@ -1733,7 +1691,7 @@ Partial Class CONTABLE
         Me.dtremitos.Location = New System.Drawing.Point(3, 108)
         Me.dtremitos.Name = "dtremitos"
         Me.dtremitos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtremitos.Size = New System.Drawing.Size(1229, 329)
+        Me.dtremitos.Size = New System.Drawing.Size(1229, 369)
         Me.dtremitos.TabIndex = 12
         '
         'Panel22
@@ -1852,7 +1810,7 @@ Partial Class CONTABLE
         Me.tabcheques.Controls.Add(Me.Panel8)
         Me.tabcheques.Location = New System.Drawing.Point(4, 22)
         Me.tabcheques.Name = "tabcheques"
-        Me.tabcheques.Size = New System.Drawing.Size(1235, 440)
+        Me.tabcheques.Size = New System.Drawing.Size(1235, 480)
         Me.tabcheques.TabIndex = 16
         Me.tabcheques.Text = "CHEQUES DE TERCEROS"
         Me.tabcheques.UseVisualStyleBackColor = True
@@ -1870,7 +1828,7 @@ Partial Class CONTABLE
         Me.dtcheques.Location = New System.Drawing.Point(0, 105)
         Me.dtcheques.Name = "dtcheques"
         Me.dtcheques.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtcheques.Size = New System.Drawing.Size(1235, 335)
+        Me.dtcheques.Size = New System.Drawing.Size(1235, 375)
         Me.dtcheques.TabIndex = 12
         '
         'Panel8
@@ -2094,7 +2052,7 @@ Partial Class CONTABLE
         Me.tabchequespropios.Controls.Add(Me.Panel9)
         Me.tabchequespropios.Location = New System.Drawing.Point(4, 22)
         Me.tabchequespropios.Name = "tabchequespropios"
-        Me.tabchequespropios.Size = New System.Drawing.Size(1235, 440)
+        Me.tabchequespropios.Size = New System.Drawing.Size(1235, 480)
         Me.tabchequespropios.TabIndex = 17
         Me.tabchequespropios.Text = "CHEQUES PROPIOS"
         Me.tabchequespropios.UseVisualStyleBackColor = True
@@ -2112,7 +2070,7 @@ Partial Class CONTABLE
         Me.dtchequespropios.Location = New System.Drawing.Point(0, 105)
         Me.dtchequespropios.Name = "dtchequespropios"
         Me.dtchequespropios.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtchequespropios.Size = New System.Drawing.Size(1235, 335)
+        Me.dtchequespropios.Size = New System.Drawing.Size(1235, 375)
         Me.dtchequespropios.TabIndex = 14
         '
         'Panel9
@@ -2302,7 +2260,7 @@ Partial Class CONTABLE
         Me.tabestadocuentas.Location = New System.Drawing.Point(4, 22)
         Me.tabestadocuentas.Name = "tabestadocuentas"
         Me.tabestadocuentas.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabestadocuentas.Size = New System.Drawing.Size(1235, 440)
+        Me.tabestadocuentas.Size = New System.Drawing.Size(1235, 480)
         Me.tabestadocuentas.TabIndex = 11
         Me.tabestadocuentas.Text = "RESUMEN CTA.CTE."
         Me.tabestadocuentas.UseVisualStyleBackColor = True
@@ -2322,7 +2280,7 @@ Partial Class CONTABLE
         Me.dtestadocuentas.Name = "dtestadocuentas"
         Me.dtestadocuentas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtestadocuentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtestadocuentas.Size = New System.Drawing.Size(1229, 353)
+        Me.dtestadocuentas.Size = New System.Drawing.Size(1229, 393)
         Me.dtestadocuentas.TabIndex = 85
         '
         'Panel18
@@ -2508,7 +2466,7 @@ Partial Class CONTABLE
         Me.tabcuentasclientes.Location = New System.Drawing.Point(4, 22)
         Me.tabcuentasclientes.Name = "tabcuentasclientes"
         Me.tabcuentasclientes.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabcuentasclientes.Size = New System.Drawing.Size(1235, 440)
+        Me.tabcuentasclientes.Size = New System.Drawing.Size(1235, 480)
         Me.tabcuentasclientes.TabIndex = 8
         Me.tabcuentasclientes.Text = "DETALLE CTA.CTE."
         Me.tabcuentasclientes.UseVisualStyleBackColor = True
@@ -2532,7 +2490,7 @@ Partial Class CONTABLE
         Me.dtcuentaclie.Name = "dtcuentaclie"
         Me.dtcuentaclie.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtcuentaclie.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtcuentaclie.Size = New System.Drawing.Size(1229, 250)
+        Me.dtcuentaclie.Size = New System.Drawing.Size(1229, 290)
         Me.dtcuentaclie.TabIndex = 84
         '
         'Column17
@@ -2594,7 +2552,7 @@ Partial Class CONTABLE
         Me.Panel12.Controls.Add(Me.Button5)
         Me.Panel12.Controls.Add(Me.dttotales)
         Me.Panel12.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel12.Location = New System.Drawing.Point(3, 343)
+        Me.Panel12.Location = New System.Drawing.Point(3, 383)
         Me.Panel12.Name = "Panel12"
         Me.Panel12.Size = New System.Drawing.Size(1229, 94)
         Me.Panel12.TabIndex = 83
@@ -2865,7 +2823,7 @@ Partial Class CONTABLE
         Me.tabcuentasproveedores.Location = New System.Drawing.Point(4, 22)
         Me.tabcuentasproveedores.Name = "tabcuentasproveedores"
         Me.tabcuentasproveedores.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabcuentasproveedores.Size = New System.Drawing.Size(1235, 440)
+        Me.tabcuentasproveedores.Size = New System.Drawing.Size(1235, 480)
         Me.tabcuentasproveedores.TabIndex = 9
         Me.tabcuentasproveedores.Text = "CUENTAS PROVEEDORES"
         Me.tabcuentasproveedores.UseVisualStyleBackColor = True
@@ -2886,7 +2844,7 @@ Partial Class CONTABLE
         Me.dtcuentaprov.Name = "dtcuentaprov"
         Me.dtcuentaprov.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtcuentaprov.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtcuentaprov.Size = New System.Drawing.Size(1229, 228)
+        Me.dtcuentaprov.Size = New System.Drawing.Size(1229, 268)
         Me.dtcuentaprov.TabIndex = 91
         '
         'DataGridViewTextBoxColumn7
@@ -2948,7 +2906,7 @@ Partial Class CONTABLE
         Me.Panel14.Controls.Add(Me.Button22)
         Me.Panel14.Controls.Add(Me.dttotalesprov)
         Me.Panel14.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel14.Location = New System.Drawing.Point(3, 349)
+        Me.Panel14.Location = New System.Drawing.Point(3, 389)
         Me.Panel14.Name = "Panel14"
         Me.Panel14.Size = New System.Drawing.Size(1229, 88)
         Me.Panel14.TabIndex = 90
@@ -3148,7 +3106,7 @@ Partial Class CONTABLE
         Me.tabconfiguracion.Location = New System.Drawing.Point(4, 22)
         Me.tabconfiguracion.Name = "tabconfiguracion"
         Me.tabconfiguracion.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabconfiguracion.Size = New System.Drawing.Size(1235, 440)
+        Me.tabconfiguracion.Size = New System.Drawing.Size(1235, 480)
         Me.tabconfiguracion.TabIndex = 14
         Me.tabconfiguracion.Text = "CONFIGURACION"
         Me.tabconfiguracion.UseVisualStyleBackColor = True
@@ -3167,11 +3125,12 @@ Partial Class CONTABLE
         Me.TabControl2.Location = New System.Drawing.Point(3, 3)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
-        Me.TabControl2.Size = New System.Drawing.Size(1229, 434)
+        Me.TabControl2.Size = New System.Drawing.Size(1229, 474)
         Me.TabControl2.TabIndex = 0
         '
         'TabPage14
         '
+        Me.TabPage14.Controls.Add(Me.lblFacturaElectroPasscertif)
         Me.TabPage14.Controls.Add(Me.Button8)
         Me.TabPage14.Controls.Add(Me.lblfactelectrocertif)
         Me.TabPage14.Controls.Add(Me.lblfactelectrocuit)
@@ -3201,10 +3160,20 @@ Partial Class CONTABLE
         Me.TabPage14.Location = New System.Drawing.Point(4, 22)
         Me.TabPage14.Name = "TabPage14"
         Me.TabPage14.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage14.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage14.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage14.TabIndex = 2
         Me.TabPage14.Text = "EMPRESA"
         Me.TabPage14.UseVisualStyleBackColor = True
+        '
+        'lblFacturaElectroPasscertif
+        '
+        Me.lblFacturaElectroPasscertif.AutoSize = True
+        Me.lblFacturaElectroPasscertif.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.lblFacturaElectroPasscertif.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFacturaElectroPasscertif.Location = New System.Drawing.Point(7, 408)
+        Me.lblFacturaElectroPasscertif.Name = "lblFacturaElectroPasscertif"
+        Me.lblFacturaElectroPasscertif.Size = New System.Drawing.Size(2, 19)
+        Me.lblFacturaElectroPasscertif.TabIndex = 97
         '
         'Button8
         '
@@ -3452,7 +3421,7 @@ Partial Class CONTABLE
         Me.TabPage9.Location = New System.Drawing.Point(4, 22)
         Me.TabPage9.Name = "TabPage9"
         Me.TabPage9.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage9.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage9.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage9.TabIndex = 0
         Me.TabPage9.Text = "TABLAS GENERALES"
         Me.TabPage9.UseVisualStyleBackColor = True
@@ -3468,7 +3437,7 @@ Partial Class CONTABLE
         Me.TabControl4.Location = New System.Drawing.Point(3, 3)
         Me.TabControl4.Name = "TabControl4"
         Me.TabControl4.SelectedIndex = 0
-        Me.TabControl4.Size = New System.Drawing.Size(1215, 402)
+        Me.TabControl4.Size = New System.Drawing.Size(1215, 442)
         Me.TabControl4.TabIndex = 103
         '
         'TabPage8
@@ -3478,7 +3447,7 @@ Partial Class CONTABLE
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(1207, 376)
+        Me.TabPage8.Size = New System.Drawing.Size(1207, 416)
         Me.TabPage8.TabIndex = 0
         Me.TabPage8.Text = "LISTAS DE PRECIOS"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -3515,7 +3484,7 @@ Partial Class CONTABLE
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(1207, 376)
+        Me.TabPage10.Size = New System.Drawing.Size(1207, 416)
         Me.TabPage10.TabIndex = 1
         Me.TabPage10.Text = "CATEGORIAS DE PRODUCTOS"
         Me.TabPage10.UseVisualStyleBackColor = True
@@ -3559,7 +3528,7 @@ Partial Class CONTABLE
         Me.TabPage11.Location = New System.Drawing.Point(4, 22)
         Me.TabPage11.Name = "TabPage11"
         Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(1207, 376)
+        Me.TabPage11.Size = New System.Drawing.Size(1207, 416)
         Me.TabPage11.TabIndex = 2
         Me.TabPage11.Text = "COTIZACION DE MONEDA"
         Me.TabPage11.UseVisualStyleBackColor = True
@@ -3588,7 +3557,7 @@ Partial Class CONTABLE
         Me.TabPage12.Location = New System.Drawing.Point(4, 22)
         Me.TabPage12.Name = "TabPage12"
         Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage12.Size = New System.Drawing.Size(1207, 376)
+        Me.TabPage12.Size = New System.Drawing.Size(1207, 416)
         Me.TabPage12.TabIndex = 3
         Me.TabPage12.Text = "ALMACENES DE PRODUCTOS"
         Me.TabPage12.UseVisualStyleBackColor = True
@@ -3617,7 +3586,7 @@ Partial Class CONTABLE
         Me.TabPage15.Location = New System.Drawing.Point(4, 22)
         Me.TabPage15.Name = "TabPage15"
         Me.TabPage15.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage15.Size = New System.Drawing.Size(1207, 376)
+        Me.TabPage15.Size = New System.Drawing.Size(1207, 416)
         Me.TabPage15.TabIndex = 4
         Me.TabPage15.Text = "PROMOCIONES DE PRODUCTOS"
         Me.TabPage15.UseVisualStyleBackColor = True
@@ -3671,7 +3640,7 @@ Partial Class CONTABLE
         Me.TabPage13.Location = New System.Drawing.Point(4, 22)
         Me.TabPage13.Name = "TabPage13"
         Me.TabPage13.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage13.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage13.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage13.TabIndex = 1
         Me.TabPage13.Text = "CONFIGURACION FISCAL"
         Me.TabPage13.UseVisualStyleBackColor = True
@@ -3714,7 +3683,7 @@ Partial Class CONTABLE
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage1.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage1.TabIndex = 3
         Me.TabPage1.Text = "VENDEDORES"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -3733,7 +3702,7 @@ Partial Class CONTABLE
         Me.dtvendedores.MultiSelect = False
         Me.dtvendedores.Name = "dtvendedores"
         Me.dtvendedores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtvendedores.Size = New System.Drawing.Size(1215, 402)
+        Me.dtvendedores.Size = New System.Drawing.Size(1215, 442)
         Me.dtvendedores.TabIndex = 88
         '
         'TabPage3
@@ -3742,7 +3711,7 @@ Partial Class CONTABLE
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage3.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage3.TabIndex = 4
         Me.TabPage3.Text = "CONCEPTOS INGRESOS"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -3761,7 +3730,7 @@ Partial Class CONTABLE
         Me.dtconceptosingresos.MultiSelect = False
         Me.dtconceptosingresos.Name = "dtconceptosingresos"
         Me.dtconceptosingresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtconceptosingresos.Size = New System.Drawing.Size(1215, 402)
+        Me.dtconceptosingresos.Size = New System.Drawing.Size(1215, 442)
         Me.dtconceptosingresos.TabIndex = 89
         '
         'TabPage4
@@ -3770,7 +3739,7 @@ Partial Class CONTABLE
         Me.TabPage4.Location = New System.Drawing.Point(4, 22)
         Me.TabPage4.Name = "TabPage4"
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage4.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage4.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage4.TabIndex = 5
         Me.TabPage4.Text = "CONCEPTOS EGRESOS"
         Me.TabPage4.UseVisualStyleBackColor = True
@@ -3789,7 +3758,7 @@ Partial Class CONTABLE
         Me.dtconceptosegresos.MultiSelect = False
         Me.dtconceptosegresos.Name = "dtconceptosegresos"
         Me.dtconceptosegresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtconceptosegresos.Size = New System.Drawing.Size(1215, 402)
+        Me.dtconceptosegresos.Size = New System.Drawing.Size(1215, 442)
         Me.dtconceptosegresos.TabIndex = 89
         '
         'TabPage5
@@ -3808,7 +3777,7 @@ Partial Class CONTABLE
         Me.TabPage5.Location = New System.Drawing.Point(4, 22)
         Me.TabPage5.Name = "TabPage5"
         Me.TabPage5.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage5.Size = New System.Drawing.Size(1221, 408)
+        Me.TabPage5.Size = New System.Drawing.Size(1221, 448)
         Me.TabPage5.TabIndex = 6
         Me.TabPage5.Text = "CONSULTAR AFIP"
         Me.TabPage5.UseVisualStyleBackColor = True
@@ -3924,7 +3893,7 @@ Partial Class CONTABLE
         Me.tabdtostecni.Controls.Add(Me.Panel24)
         Me.tabdtostecni.Location = New System.Drawing.Point(4, 22)
         Me.tabdtostecni.Name = "tabdtostecni"
-        Me.tabdtostecni.Size = New System.Drawing.Size(1221, 408)
+        Me.tabdtostecni.Size = New System.Drawing.Size(1221, 448)
         Me.tabdtostecni.TabIndex = 8
         Me.tabdtostecni.Text = "DATOS F. TECNICA"
         Me.tabdtostecni.UseVisualStyleBackColor = True
@@ -4035,7 +4004,7 @@ Partial Class CONTABLE
         Me.tabplancuentas.Location = New System.Drawing.Point(4, 22)
         Me.tabplancuentas.Name = "tabplancuentas"
         Me.tabplancuentas.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabplancuentas.Size = New System.Drawing.Size(1235, 440)
+        Me.tabplancuentas.Size = New System.Drawing.Size(1235, 480)
         Me.tabplancuentas.TabIndex = 13
         Me.tabplancuentas.Text = "PLAN DE CUENTAS"
         Me.tabplancuentas.UseVisualStyleBackColor = True
@@ -4056,7 +4025,7 @@ Partial Class CONTABLE
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(1229, 340)
+        Me.DataGridView1.Size = New System.Drawing.Size(1229, 380)
         Me.DataGridView1.TabIndex = 89
         '
         'Column19
@@ -4094,7 +4063,7 @@ Partial Class CONTABLE
         '
         Me.Panel20.Controls.Add(Me.DataGridView2)
         Me.Panel20.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel20.Location = New System.Drawing.Point(3, 343)
+        Me.Panel20.Location = New System.Drawing.Point(3, 383)
         Me.Panel20.Name = "Panel20"
         Me.Panel20.Size = New System.Drawing.Size(1229, 94)
         Me.Panel20.TabIndex = 88
@@ -4158,7 +4127,7 @@ Partial Class CONTABLE
         Me.tabstockvalorizado.Location = New System.Drawing.Point(4, 22)
         Me.tabstockvalorizado.Name = "tabstockvalorizado"
         Me.tabstockvalorizado.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabstockvalorizado.Size = New System.Drawing.Size(1235, 440)
+        Me.tabstockvalorizado.Size = New System.Drawing.Size(1235, 480)
         Me.tabstockvalorizado.TabIndex = 12
         Me.tabstockvalorizado.Text = "STOCK VALORIZADO"
         Me.tabstockvalorizado.UseVisualStyleBackColor = True
@@ -4178,14 +4147,14 @@ Partial Class CONTABLE
         Me.dtstockvalorizado.Name = "dtstockvalorizado"
         Me.dtstockvalorizado.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtstockvalorizado.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtstockvalorizado.Size = New System.Drawing.Size(1229, 340)
+        Me.dtstockvalorizado.Size = New System.Drawing.Size(1229, 380)
         Me.dtstockvalorizado.TabIndex = 87
         '
         'Panel19
         '
         Me.Panel19.Controls.Add(Me.dttotstock)
         Me.Panel19.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel19.Location = New System.Drawing.Point(3, 343)
+        Me.Panel19.Location = New System.Drawing.Point(3, 383)
         Me.Panel19.Name = "Panel19"
         Me.Panel19.Size = New System.Drawing.Size(1229, 94)
         Me.Panel19.TabIndex = 86
@@ -4238,7 +4207,7 @@ Partial Class CONTABLE
         Me.tablibromayor.Location = New System.Drawing.Point(4, 22)
         Me.tablibromayor.Name = "tablibromayor"
         Me.tablibromayor.Padding = New System.Windows.Forms.Padding(3)
-        Me.tablibromayor.Size = New System.Drawing.Size(1235, 440)
+        Me.tablibromayor.Size = New System.Drawing.Size(1235, 480)
         Me.tablibromayor.TabIndex = 10
         Me.tablibromayor.Text = "LIBRO MAYOR"
         Me.tablibromayor.UseVisualStyleBackColor = True
@@ -4251,7 +4220,7 @@ Partial Class CONTABLE
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(511, 57)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(552, 280)
+        Me.Panel1.Size = New System.Drawing.Size(552, 320)
         Me.Panel1.TabIndex = 10
         '
         'dtingresos
@@ -4269,7 +4238,7 @@ Partial Class CONTABLE
         Me.dtingresos.MultiSelect = False
         Me.dtingresos.Name = "dtingresos"
         Me.dtingresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtingresos.Size = New System.Drawing.Size(552, 230)
+        Me.dtingresos.Size = New System.Drawing.Size(552, 270)
         Me.dtingresos.TabIndex = 90
         '
         'Column12
@@ -4299,7 +4268,7 @@ Partial Class CONTABLE
         '
         Me.Panel15.Controls.Add(Me.lbltotaling)
         Me.Panel15.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel15.Location = New System.Drawing.Point(0, 254)
+        Me.Panel15.Location = New System.Drawing.Point(0, 294)
         Me.Panel15.Name = "Panel15"
         Me.Panel15.Size = New System.Drawing.Size(552, 26)
         Me.Panel15.TabIndex = 89
@@ -4335,7 +4304,7 @@ Partial Class CONTABLE
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel3.Location = New System.Drawing.Point(3, 57)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(508, 280)
+        Me.Panel3.Size = New System.Drawing.Size(508, 320)
         Me.Panel3.TabIndex = 9
         '
         'dtegresos
@@ -4352,7 +4321,7 @@ Partial Class CONTABLE
         Me.dtegresos.MultiSelect = False
         Me.dtegresos.Name = "dtegresos"
         Me.dtegresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtegresos.Size = New System.Drawing.Size(508, 230)
+        Me.dtegresos.Size = New System.Drawing.Size(508, 270)
         Me.dtegresos.TabIndex = 89
         '
         'Column18
@@ -4384,7 +4353,7 @@ Partial Class CONTABLE
         '
         Me.Panel16.Controls.Add(Me.lbltotaleg)
         Me.Panel16.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel16.Location = New System.Drawing.Point(0, 254)
+        Me.Panel16.Location = New System.Drawing.Point(0, 294)
         Me.Panel16.Name = "Panel16"
         Me.Panel16.Size = New System.Drawing.Size(508, 26)
         Me.Panel16.TabIndex = 88
@@ -4419,7 +4388,7 @@ Partial Class CONTABLE
         Me.Panel17.Controls.Add(Me.lblmesanterior)
         Me.Panel17.Controls.Add(Me.lbldiferenciames)
         Me.Panel17.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel17.Location = New System.Drawing.Point(3, 337)
+        Me.Panel17.Location = New System.Drawing.Point(3, 377)
         Me.Panel17.Name = "Panel17"
         Me.Panel17.Size = New System.Drawing.Size(1229, 100)
         Me.Panel17.TabIndex = 8
@@ -4506,7 +4475,7 @@ Partial Class CONTABLE
         Me.tabgraficas.Controls.Add(Me.TabControl3)
         Me.tabgraficas.Location = New System.Drawing.Point(4, 22)
         Me.tabgraficas.Name = "tabgraficas"
-        Me.tabgraficas.Size = New System.Drawing.Size(1235, 440)
+        Me.tabgraficas.Size = New System.Drawing.Size(1235, 480)
         Me.tabgraficas.TabIndex = 18
         Me.tabgraficas.Text = "GRAFICAS"
         Me.tabgraficas.UseVisualStyleBackColor = True
@@ -4518,7 +4487,7 @@ Partial Class CONTABLE
         Me.TabControl3.Location = New System.Drawing.Point(0, 0)
         Me.TabControl3.Name = "TabControl3"
         Me.TabControl3.SelectedIndex = 0
-        Me.TabControl3.Size = New System.Drawing.Size(1235, 440)
+        Me.TabControl3.Size = New System.Drawing.Size(1235, 480)
         Me.TabControl3.TabIndex = 2
         '
         'TabPage2
@@ -4528,7 +4497,7 @@ Partial Class CONTABLE
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(1227, 414)
+        Me.TabPage2.Size = New System.Drawing.Size(1227, 454)
         Me.TabPage2.TabIndex = 0
         Me.TabPage2.Text = "VENTAS/COBRANZAS"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -4547,7 +4516,7 @@ Partial Class CONTABLE
         Series1.Legend = "Legend1"
         Series1.Name = "Series1"
         Me.chrestad.Series.Add(Series1)
-        Me.chrestad.Size = New System.Drawing.Size(1221, 373)
+        Me.chrestad.Size = New System.Drawing.Size(1221, 413)
         Me.chrestad.TabIndex = 91
         Me.chrestad.Text = "Chart1"
         '
@@ -4818,11 +4787,21 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
         Me.DataGridViewTextBoxColumn54.Width = 216
         '
+        'Button24
+        '
+        Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button24.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button24.Location = New System.Drawing.Point(406, 12)
+        Me.Button24.Name = "Button24"
+        Me.Button24.Size = New System.Drawing.Size(35, 23)
+        Me.Button24.TabIndex = 91
+        Me.Button24.UseVisualStyleBackColor = True
+        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1243, 506)
+        Me.ClientSize = New System.Drawing.Size(1243, 546)
         Me.Controls.Add(Me.tabcontable)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
@@ -4859,14 +4838,10 @@ Partial Class CONTABLE
         Me.tabBalDiario.ResumeLayout(False)
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel29.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
         Me.grpbalancefecha.ResumeLayout(False)
         Me.tabBalHistorico.ResumeLayout(False)
         CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel28.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
         Me.grpbalanceintervalo.ResumeLayout(False)
         Me.grpbalanceintervalo.PerformLayout()
         Me.tabBalConsultas.ResumeLayout(False)
@@ -5334,22 +5309,21 @@ Partial Class CONTABLE
     Friend WithEvents DataGridViewTextBoxColumn26 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn27 As DataGridViewTextBoxColumn
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents GroupBox4 As GroupBox
-    Friend WithEvents RadioButton3 As RadioButton
-    Friend WithEvents RadioButton4 As RadioButton
-    Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents RadioButton1 As RadioButton
-    Friend WithEvents RadioButton2 As RadioButton
     Friend WithEvents tabBalConsultas As TabPage
     Friend WithEvents dtventashistoricas As DataGridView
     Friend WithEvents Panel11 As Panel
     Friend WithEvents GroupBox5 As GroupBox
-    Friend WithEvents RadioButton5 As RadioButton
-    Friend WithEvents RadioButton6 As RadioButton
+    Friend WithEvents rdInforProv As RadioButton
+    Friend WithEvents rdInforgeneral As RadioButton
     Friend WithEvents Button18 As Button
     Friend WithEvents GroupBox6 As GroupBox
     Friend WithEvents Label6 As Label
     Friend WithEvents dtpvtashishasta As DateTimePicker
     Friend WithEvents dtpvtashisdesde As DateTimePicker
     Friend WithEvents Label9 As Label
+    Friend WithEvents lblFacturaElectroPasscertif As Label
+    Friend WithEvents rdInforCategoria As RadioButton
+    Friend WithEvents cmbInforCateg As ComboBox
+    Friend WithEvents cmbInforProv As ComboBox
+    Friend WithEvents Button24 As Button
 End Class

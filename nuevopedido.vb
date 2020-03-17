@@ -645,8 +645,8 @@
                 cantidad = dtproductos.Rows(i).Cells(2).Value
                 descripcion = dtproductos.Rows(i).Cells(3).Value.ToString.ToUpper
                 iva = dtproductos.Rows(i).Cells(4).Value
-                punit = dtproductos.Rows(i).Cells(5).Value
-                ptotal = dtproductos.Rows(i).Cells(6).Value
+                punit = dtproductos.Rows(i).Cells(5).Value.ToString.Replace(".", "")
+                ptotal = dtproductos.Rows(i).Cells(6).Value.ToString.Replace(".", "")
                 codint = dtproductos.Rows(i).Cells(1).Value
 
                 If cod Is Nothing Then

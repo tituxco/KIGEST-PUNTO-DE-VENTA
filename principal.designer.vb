@@ -65,6 +65,7 @@ Partial Class frmprincipal
         Me.AgendaDeVencimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfiguracionDeTerminalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdtecnico = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CLOUDSERVERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevaVentaToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.VentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevaVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -75,7 +76,6 @@ Partial Class frmprincipal
         Me.FCConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.CLOUDSERVERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         Me.SuspendLayout()
@@ -368,7 +368,7 @@ Partial Class frmprincipal
         Me.facturabconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.facturabconsfinal.Name = "facturabconsfinal"
         Me.facturabconsfinal.Size = New System.Drawing.Size(275, 38)
-        Me.facturabconsfinal.Text = "Factura B Cons. final"
+        Me.facturabconsfinal.Text = "Factura B / C"
         '
         'FacturaA
         '
@@ -482,6 +482,14 @@ Partial Class frmprincipal
         Me.cmdtecnico.Size = New System.Drawing.Size(104, 36)
         Me.cmdtecnico.Text = "Tecnico"
         '
+        'CLOUDSERVERToolStripMenuItem
+        '
+        Me.CLOUDSERVERToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.CLOUDSERVERToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.CLOUDSERVERToolStripMenuItem.Name = "CLOUDSERVERToolStripMenuItem"
+        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(190, 26)
+        Me.CLOUDSERVERToolStripMenuItem.Text = "CLOUD SERVER"
+        '
         'NuevaVentaToolStripMenuItem1
         '
         Me.NuevaVentaToolStripMenuItem1.Name = "NuevaVentaToolStripMenuItem1"
@@ -551,14 +559,6 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Size = New System.Drawing.Size(123, 36)
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
-        '
-        'CLOUDSERVERToolStripMenuItem
-        '
-        Me.CLOUDSERVERToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.CLOUDSERVERToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.CLOUDSERVERToolStripMenuItem.Name = "CLOUDSERVERToolStripMenuItem"
-        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(190, 26)
-        Me.CLOUDSERVERToolStripMenuItem.Text = "CLOUD SERVER"
         '
         'frmprincipal
         '

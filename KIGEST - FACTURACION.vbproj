@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>132</ApplicationRevision>
+    <ApplicationRevision>138</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -239,6 +239,12 @@
     </Compile>
     <Compile Include="datasets\datostaller.vb">
       <DependentUpon>datostaller.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DGVPaginado.Designer.vb">
+      <DependentUpon>DGVPaginado.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DGVPaginado.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Factura.vb" />
     <Compile Include="facturas.Designer.vb">
@@ -499,6 +505,7 @@
   <ItemGroup>
     <None Include="Resources\iconos\Print_32px.png" />
     <None Include="Resources\iconos\Print_64px.png" />
+    <None Include="Resources\iconos\Sync_32px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -540,6 +547,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CONTABLE.resx">
       <DependentUpon>CONTABLE.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DGVPaginado.resx">
+      <DependentUpon>DGVPaginado.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmServiciosCloud.resx">
       <DependentUpon>frmServiciosCloud.vb</DependentUpon>

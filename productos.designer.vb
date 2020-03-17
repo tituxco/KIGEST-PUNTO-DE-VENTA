@@ -44,7 +44,7 @@ Partial Class productos
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.dtproductos = New System.Windows.Forms.DataGridView()
+        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -178,7 +178,6 @@ Partial Class productos
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
-        CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel3.SuspendLayout()
@@ -425,7 +424,7 @@ Partial Class productos
         '
         'Panel1
         '
-        Me.Panel1.Controls.Add(Me.dtproductos)
+        Me.Panel1.Controls.Add(Me.DgvProductos)
         Me.Panel1.Controls.Add(Me.txtbuscar)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(0, 129)
@@ -433,22 +432,13 @@ Partial Class productos
         Me.Panel1.Size = New System.Drawing.Size(438, 515)
         Me.Panel1.TabIndex = 75
         '
-        'dtproductos
+        'DgvProductos
         '
-        Me.dtproductos.AllowUserToAddRows = False
-        Me.dtproductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtproductos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtproductos.BackgroundColor = System.Drawing.Color.White
-        Me.dtproductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtproductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtproductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtproductos.Location = New System.Drawing.Point(0, 22)
-        Me.dtproductos.MultiSelect = False
-        Me.dtproductos.Name = "dtproductos"
-        Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtproductos.Size = New System.Drawing.Size(438, 493)
-        Me.dtproductos.TabIndex = 63
+        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
+        Me.DgvProductos.Name = "DgvProductos"
+        Me.DgvProductos.Size = New System.Drawing.Size(438, 493)
+        Me.DgvProductos.TabIndex = 64
         '
         'txtbuscar
         '
@@ -1460,8 +1450,6 @@ Partial Class productos
         'chkimportpresentacion
         '
         Me.chkimportpresentacion.AutoSize = True
-        Me.chkimportpresentacion.Checked = True
-        Me.chkimportpresentacion.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkimportpresentacion.ForeColor = System.Drawing.Color.White
         Me.chkimportpresentacion.Location = New System.Drawing.Point(187, 58)
         Me.chkimportpresentacion.Name = "chkimportpresentacion"
@@ -1511,8 +1499,6 @@ Partial Class productos
         'chkimportproveedor
         '
         Me.chkimportproveedor.AutoSize = True
-        Me.chkimportproveedor.Checked = True
-        Me.chkimportproveedor.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkimportproveedor.ForeColor = System.Drawing.Color.White
         Me.chkimportproveedor.Location = New System.Drawing.Point(49, 3)
         Me.chkimportproveedor.Name = "chkimportproveedor"
@@ -1589,9 +1575,9 @@ Partial Class productos
         Me.lblcantprod.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblcantprod.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblcantprod.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblcantprod.Location = New System.Drawing.Point(503, 0)
+        Me.lblcantprod.Location = New System.Drawing.Point(512, 0)
         Me.lblcantprod.Name = "lblcantprod"
-        Me.lblcantprod.Size = New System.Drawing.Size(131, 79)
+        Me.lblcantprod.Size = New System.Drawing.Size(122, 79)
         Me.lblcantprod.TabIndex = 2
         Me.lblcantprod.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -1910,7 +1896,6 @@ Partial Class productos
         Me.pnnavegacion.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
-        CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
@@ -1953,7 +1938,6 @@ Partial Class productos
     Friend WithEvents cmdnuevapers As System.Windows.Forms.Button
     Friend WithEvents cmdsalir As System.Windows.Forms.Button
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
-    Friend WithEvents dtproductos As System.Windows.Forms.DataGridView
     Friend WithEvents txtbuscar As System.Windows.Forms.TextBox
     Friend WithEvents TabControl1 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
@@ -2088,4 +2072,5 @@ Partial Class productos
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents DgvProductos As DGVPaginado
 End Class

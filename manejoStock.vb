@@ -39,19 +39,19 @@ Public Class manejoStock
             Dim catprod As String
             Dim proveed As String
             Dim buscnomb As String
-
+            Dim buscod As String
             If cmbalmacen.SelectedIndex = -1 Or cmbalmacen.SelectedValue = 0 Then
                 MsgBox("Debe seleccionar un almacen")
                 EnProgreso.Close()
                 Exit Sub
             End If
 
-            If cmbcatProd.SelectedIndex = -1 And cmbproveedor.SelectedIndex = -1 And txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO" Then
-                If MsgBox("esta seguro que no desea poner filtros a la busqueda? puede causar cuelgue de sistema...", vbYesNo, vbQuestion) = MsgBoxResult.No Then
-                    EnProgreso.Close()
-                    Exit Sub
-                End If
-            End If
+            'If cmbcatProd.SelectedIndex = -1 And cmbproveedor.SelectedIndex = -1 And txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO" Then
+            '    If MsgBox("esta seguro que no desea poner filtros a la busqueda? puede causar cuelgue de sistema...", vbYesNo, vbQuestion) = MsgBoxResult.No Then
+            '        EnProgreso.Close()
+            '        Exit Sub
+            '    End If
+            'End If
 
             If cmbcatProd.SelectedIndex = -1 Or cmbcatProd.SelectedValue = 0 Then
                 catprod = " pro.categoria like '%' "
@@ -66,7 +66,7 @@ Public Class manejoStock
             End If
 
             If txtbuscar.Text <> "BUSCAR NOMBRE DE PRODUCTO #CODIGO" And InStr(txtbuscar.Text, "#") = 0 Then
-                buscnomb = " pro.descripcion like '%" & Replace(txtbuscar.Text, " ", "%") & "%' " 'or pro.cod_bar like '" & txtbuscar.Text & "' "
+                buscnomb = " (pro.descripcion like '%" & Replace(txtbuscar.Text, " ", "%") & "%' or pro.cod_bar like '" & txtbuscar.Text & "') "
 
             ElseIf txtbuscar.Text <> "BUSCAR NOMBRE DE PRODUCTO #CODIGO" And InStr(txtbuscar.Text, "#") <> 0 Then
                 buscnomb = " pro.id = " & Replace(txtbuscar.Text, "#", "")
@@ -81,13 +81,13 @@ Public Class manejoStock
             FROM fact_items as fi, fact_facturas as fa , fact_insumos as pro
             where fa.id=fi.id_fact and fi.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
             and " & catprod & " and " & proveed & " and " & buscnomb & " 
-            group by fi.cod limit " & LimMin & "," & LimMax, conexionPrinc)
-            MsgBox(consulta.SelectCommand.CommandText)
+            group by fi.cod ", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaprod As New DataTable
 
             consulta.Fill(tablaprod)
-            dtproductos.DataSource = tablaprod
-            dtproductos.Columns(0).Width = 100
+            DgvProductos.Cargar_Datos(tablaprod)
+            ' dtproductos.Columns(0).Width = 100
             EnProgreso.Close()
         Catch ex As Exception
             MsgBox(ex.Message)

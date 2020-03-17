@@ -220,9 +220,9 @@ Public Class puntoventa
                 Select Case tipofact
                     Case 999, 11, 12, 13 'factura x,fc,ndc,ncc
 
-                        If producto.Cells(4).Value = "10,5" Then
+                        If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
-                        ElseIf producto.Cells(4).Value = "21" Then
+                        ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += FormatNumber(producto.Cells(6).Value)
                         Else
                             Exit Sub
@@ -231,9 +231,9 @@ Public Class puntoventa
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 1
-                        If producto.Cells(4).Value = "10,5" Then
+                        If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
-                        ElseIf producto.Cells(4).Value = "21" Then
+                        ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += FormatNumber(producto.Cells(6).Value)
 
                         Else
@@ -249,9 +249,9 @@ Public Class puntoventa
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 6
-                        If producto.Cells(4).Value = "10,5" Then
+                        If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, My.Settings.numDecimales)
-                        ElseIf producto.Cells(4).Value = "21" Then
+                        ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.21, My.Settings.numDecimales)
                         Else
                             Exit Sub
@@ -438,7 +438,7 @@ Public Class puntoventa
 
             If numOR <> "" And numOR <> "0" And Val(numOR) <> 0 Then
                 Reconectar()
-                Dim consultaorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT tall.mo_monto, tall.estado, tall.trab_estado, (select count(tcn.id) from tecni_taller_insumos as tcn where tcn.idtaller=tall.id) as insumos from tecni_taller as tall where tall.id=" & numOR, conexionPrinc)
+                Dim consultaorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT format(tall.mo_monto,2,'es_AR'), tall.estado, tall.trab_estado, (select count(tcn.id) from tecni_taller_insumos as tcn where tcn.idtaller=tall.id) as insumos from tecni_taller as tall where tall.id=" & numOR, conexionPrinc)
                 Dim tablaorden As New DataTable
                 Dim infoorden() As DataRow
                 consultaorden.Fill(tablaorden)
@@ -1037,7 +1037,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             Else
                 direccionReport = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
             End If
-            If My.Settings.ImprTikets = 1 Then
+            If My.Settings.ImprTikets = 1 And condVta = 1 Then
                 Dim PrintTxt As New PrintDocument
                 Dim pgSize As New PaperSize
                 pgSize.RawKind = Printing.PaperKind.Custom
@@ -1054,7 +1054,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                     AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
                     PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
                     PrintTxt.Print()
-                End if
+                End If
             Else
 
                 Using Imprimir As New ImprimirDirecto()
@@ -1272,7 +1272,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         facCAE = tablaEmpresa.Rows(0).Item(25)
         facCodBARRA = tablaEmpresa.Rows(0).Item(29)
         facVtoCAE = tablaEmpresa.Rows(0).Item(28)
-
+        Dim TipoFact As Integer = tablaEmpresa.Rows(0).Item(24)
 
         e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 0, 100) 'RAZON SOCIAL
         e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(4), font5, Brushes.Black, 0, 110) '
@@ -1376,22 +1376,41 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         Dim lineaSep = StrDup(27, " ")
         e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 0, yPos)
         Dim XXX As Integer = 0
+        If TipoFact < 3 Then
 
-        XXX = 27 - (textosub.Length + facSubtotal.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+            XXX = 27 - (textosub.Length + facSubtotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
 
-        XXX = 27 - (textoIva21.Length + FacIva21.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+            XXX = 27 - (textoIva21.Length + FacIva21.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
 
-        XXX = 27 - (textoTotal.Length + facTotal.Length)
-        lineatotal = StrDup(XXX, ".")
-        yPos += 10
-        e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
-        yPos += 30
+            XXX = 27 - (textoTotal.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+
+        Else
+            XXX = 27 - (textosub.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textosub & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+            XXX = 27 - (textoIva21.Length + 1)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoIva21 & lineatotal & "0", font3, System.Drawing.Brushes.Black, 0, yPos)
+
+            XXX = 27 - (textoTotal.Length + facTotal.Length)
+            lineatotal = StrDup(XXX, ".")
+            yPos += 10
+            e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+            yPos += 30
+        End If
+
+
 
         e.Graphics.DrawString("COMPROBANTE AUTORIZADO POR WEB SERVICE", fontCAE, System.Drawing.Brushes.Black, 0, yPos)
         yPos += 10
@@ -1977,6 +1996,10 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
     End Sub
 
     Private Sub lblfechacae_Click(sender As Object, e As EventArgs) Handles lblfechacae.Click
+
+    End Sub
+
+    Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
 
     End Sub
 End Class

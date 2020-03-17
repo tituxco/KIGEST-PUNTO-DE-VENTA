@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class frmaspirantes
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class frmaspirantes
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmaspirantes))
@@ -36,7 +36,6 @@ Partial Class frmaspirantes
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.pnlistaclientes = New System.Windows.Forms.Panel()
-        Me.dtpersonal = New System.Windows.Forms.DataGridView()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -69,7 +68,6 @@ Partial Class frmaspirantes
         Me.txtrazon = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.dtistaclientes = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.chkvendedor = New System.Windows.Forms.CheckBox()
         Me.cmbvendedor_lst = New System.Windows.Forms.ComboBox()
@@ -80,16 +78,16 @@ Partial Class frmaspirantes
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
+        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
+        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.pnlistaclientes.SuspendLayout()
-        CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl2.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
-        CType(Me.dtistaclientes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -258,30 +256,13 @@ Partial Class frmaspirantes
         '
         'pnlistaclientes
         '
-        Me.pnlistaclientes.Controls.Add(Me.dtpersonal)
+        Me.pnlistaclientes.Controls.Add(Me.dgvClientes)
         Me.pnlistaclientes.Controls.Add(Me.txtbuscar)
         Me.pnlistaclientes.Dock = System.Windows.Forms.DockStyle.Left
         Me.pnlistaclientes.Location = New System.Drawing.Point(3, 3)
         Me.pnlistaclientes.Name = "pnlistaclientes"
         Me.pnlistaclientes.Size = New System.Drawing.Size(372, 445)
         Me.pnlistaclientes.TabIndex = 63
-        '
-        'dtpersonal
-        '
-        Me.dtpersonal.AllowUserToAddRows = False
-        Me.dtpersonal.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtpersonal.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtpersonal.BackgroundColor = System.Drawing.Color.White
-        Me.dtpersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtpersonal.Dock = System.Windows.Forms.DockStyle.Left
-        Me.dtpersonal.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtpersonal.Location = New System.Drawing.Point(0, 22)
-        Me.dtpersonal.MultiSelect = False
-        Me.dtpersonal.Name = "dtpersonal"
-        Me.dtpersonal.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtpersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtpersonal.Size = New System.Drawing.Size(369, 423)
-        Me.dtpersonal.TabIndex = 63
         '
         'txtbuscar
         '
@@ -627,7 +608,7 @@ Partial Class frmaspirantes
         '
         'TabPage3
         '
-        Me.TabPage3.Controls.Add(Me.dtistaclientes)
+        Me.TabPage3.Controls.Add(Me.dgvlistaClientes)
         Me.TabPage3.Controls.Add(Me.Panel1)
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
@@ -636,22 +617,6 @@ Partial Class frmaspirantes
         Me.TabPage3.TabIndex = 1
         Me.TabPage3.Text = "Listados"
         Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'dtistaclientes
-        '
-        Me.dtistaclientes.AllowUserToAddRows = False
-        Me.dtistaclientes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtistaclientes.BackgroundColor = System.Drawing.Color.White
-        Me.dtistaclientes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtistaclientes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtistaclientes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtistaclientes.Location = New System.Drawing.Point(3, 77)
-        Me.dtistaclientes.MultiSelect = False
-        Me.dtistaclientes.Name = "dtistaclientes"
-        Me.dtistaclientes.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtistaclientes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtistaclientes.Size = New System.Drawing.Size(1093, 371)
-        Me.dtistaclientes.TabIndex = 64
         '
         'Panel1
         '
@@ -765,6 +730,22 @@ Partial Class frmaspirantes
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
         '
+        'dgvClientes
+        '
+        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
+        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
+        Me.dgvClientes.Name = "dgvClientes"
+        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
+        Me.dgvClientes.TabIndex = 63
+        '
+        'dgvlistaClientes
+        '
+        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
+        Me.dgvlistaClientes.Name = "dgvlistaClientes"
+        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
+        Me.dgvlistaClientes.TabIndex = 1
+        '
         'frmaspirantes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -784,14 +765,12 @@ Partial Class frmaspirantes
         Me.pntitulo.PerformLayout()
         Me.pnlistaclientes.ResumeLayout(False)
         Me.pnlistaclientes.PerformLayout()
-        CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
-        CType(Me.dtistaclientes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
@@ -808,7 +787,6 @@ Partial Class frmaspirantes
     Friend WithEvents pbprogresocons As System.Windows.Forms.ProgressBar
     Friend WithEvents cmdcancelar As System.Windows.Forms.Button
     Friend WithEvents pnlistaclientes As System.Windows.Forms.Panel
-    Friend WithEvents dtpersonal As System.Windows.Forms.DataGridView
     Friend WithEvents txtbuscar As System.Windows.Forms.TextBox
     Friend WithEvents cmdaceptar As System.Windows.Forms.Button
     Friend WithEvents cmdeliminar As System.Windows.Forms.Button
@@ -842,7 +820,6 @@ Partial Class frmaspirantes
     Friend WithEvents txtrazon As System.Windows.Forms.TextBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents TabPage3 As System.Windows.Forms.TabPage
-    Friend WithEvents dtistaclientes As System.Windows.Forms.DataGridView
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents cmblistaloca As System.Windows.Forms.ComboBox
     Friend WithEvents cmdbuscar As System.Windows.Forms.Button
@@ -854,4 +831,6 @@ Partial Class frmaspirantes
     Friend WithEvents PageSetupDialog1 As PageSetupDialog
     Friend WithEvents chkvendedor As CheckBox
     Friend WithEvents cmbvendedor_lst As ComboBox
+    Friend WithEvents dgvClientes As DGVPaginado
+    Friend WithEvents dgvlistaClientes As DGVPaginado
 End Class

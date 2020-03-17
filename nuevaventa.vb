@@ -299,7 +299,7 @@ Public Class nuevaventa
                     End Select
                 Else
                     Select Case cmbtipofac.SelectedValue
-                        Case 1, 14, 10, 16, 11, 18
+                        Case 1, 2, 3, 6, 7, 8
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += Math.Round(FormatNumber(dtproductos.Rows(i).Cells(6).Value) / 1.105, 2)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
@@ -315,7 +315,7 @@ Public Class nuevaventa
                             txtiva21.Text = iva21
                             txtsub21.Text = subtotal21
                             txtsub105.Text = subtotal105
-                        Case 2, 12, 29, 30, 31, 32
+                        Case 11, 12, 13, 991, 992, 999
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)

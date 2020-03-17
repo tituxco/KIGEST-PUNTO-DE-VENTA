@@ -29,8 +29,10 @@ Partial Class reimpresionComprobantes
         Me.tabcomprobantes = New System.Windows.Forms.TabPage()
         Me.dtfacturas = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.chkImprimirA4 = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdbuscar = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -100,6 +102,8 @@ Partial Class reimpresionComprobantes
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel5.Controls.Add(Me.TextBox1)
+        Me.Panel5.Controls.Add(Me.chkImprimirA4)
         Me.Panel5.Controls.Add(Me.Button1)
         Me.Panel5.Controls.Add(Me.cmdbuscar)
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Top
@@ -108,6 +112,16 @@ Partial Class reimpresionComprobantes
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Size = New System.Drawing.Size(1255, 70)
         Me.Panel5.TabIndex = 0
+        '
+        'chkImprimirA4
+        '
+        Me.chkImprimirA4.AutoSize = True
+        Me.chkImprimirA4.Location = New System.Drawing.Point(5, 53)
+        Me.chkImprimirA4.Name = "chkImprimirA4"
+        Me.chkImprimirA4.Size = New System.Drawing.Size(100, 17)
+        Me.chkImprimirA4.TabIndex = 58
+        Me.chkImprimirA4.Text = "No imprimir tiket"
+        Me.chkImprimirA4.UseVisualStyleBackColor = True
         '
         'Button1
         '
@@ -137,6 +151,14 @@ Partial Class reimpresionComprobantes
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdbuscar.UseVisualStyleBackColor = False
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(3, 17)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(77, 20)
+        Me.TextBox1.TabIndex = 59
+        Me.TextBox1.Text = "20"
+        '
         'reimpresionComprobantes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -155,6 +177,7 @@ Partial Class reimpresionComprobantes
         Me.tabcomprobantes.ResumeLayout(False)
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
+        Me.Panel5.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -167,4 +190,6 @@ Partial Class reimpresionComprobantes
     Friend WithEvents Panel5 As Panel
     Friend WithEvents Button1 As Button
     Friend WithEvents cmdbuscar As Button
+    Friend WithEvents chkImprimirA4 As CheckBox
+    Friend WithEvents TextBox1 As TextBox
 End Class

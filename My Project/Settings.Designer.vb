@@ -352,6 +352,18 @@ Namespace My
                 Me("numDecimales") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("50")>  _
+        Public Property paginacion() As Integer
+            Get
+                Return CType(Me("paginacion"),Integer)
+            End Get
+            Set
+                Me("paginacion") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
