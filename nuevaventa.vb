@@ -270,7 +270,7 @@ Public Class nuevaventa
             For i = 0 To dtproductos.RowCount - 2
                 If cmbtipocontr.SelectedValue = 1 Then
                     Select Case cmbtipofac.SelectedValue
-                        Case 1, 3, 2
+                        Case 1, 2, 3
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
@@ -286,13 +286,22 @@ Public Class nuevaventa
                             txtiva21.Text = iva21
                             txtsub21.Text = subtotal21
                             txtsub105.Text = subtotal105
-                        Case 6, 8, 7
+                        'Case 6, 8, 7
+                        '    If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
+                        '        subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
+                        '        'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
+                        '    ElseIf dtproductos.Rows(i).Cells(4).Value = "21" Then
+                        '        subtotal21 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
+
+                        '    Else
+                        '        Exit Sub
+                        '    End If
+                        Case 991, 992
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
                             ElseIf dtproductos.Rows(i).Cells(4).Value = "21" Then
                                 subtotal21 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
-
                             Else
                                 Exit Sub
                             End If
@@ -1714,6 +1723,10 @@ Public Class nuevaventa
     End Sub
 
     Private Sub txtrazon_TextChanged(sender As Object, e As EventArgs) Handles txtrazon.TextChanged
+
+    End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
     End Sub
 End Class

@@ -8,6 +8,8 @@ Public Class productos
     Dim elimColumn As Boolean
     Dim proveedorimport As Integer
     Dim categoriaimport As Integer
+    Dim idProductoGral As Integer
+
     '//////////////////////////////////////////////////////////////////
     Private Sub productos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -21,6 +23,7 @@ Public Class productos
         cargarunidades()
         cargarPresentacion()
         cargarProveedores()
+        If My.Settings.calcCosto = 1 Then chkcalcularcosto.CheckState = CheckState.Checked
     End Sub
     Private Sub cargarCategoriasProd()
         Try
@@ -275,7 +278,7 @@ Public Class productos
 
         txtiva.Text = My.Settings.ivaDef
         cmbmoneda.SelectedValue = My.Settings.monedaDef
-        If My.Settings.calcCosto = 1 Then chkcalcularcosto.CheckState = CheckState.Checked
+
         lblstock.Text = 0
         txtutilidad.Text = 0
         txtutilidad1.Text = 0
@@ -434,8 +437,8 @@ Public Class productos
     End Sub
     Private Sub calcularPrecios()
         Try
-            Dim precioCosto As Double = FormatNumber(txtcosto.Text)
-            Dim cotizacion As Double = FormatNumber(lblcotizacion.Text)
+            Dim precioCosto As Double = FormatNumber(txtcosto.Text, 4)
+            Dim cotizacion As Double = FormatNumber(lblcotizacion.Text, 3)
             Dim iva As Double = (FormatNumber(txtiva.Text) + 100) / 100
             Dim util As Double = (FormatNumber(txtutilidad.Text) + 100) / 100
             Dim util1 As Double = (FormatNumber(txtutilidad1.Text) + 100) / 100
@@ -448,6 +451,7 @@ Public Class productos
 
             costoFinal = precioCosto * iva * cotizacion
             'costoUtil = costoFinal * util
+            'MsgBox(precioCosto & "*" & iva & "*" & cotizacion)
             txtcostofinal.Text = Math.Round(costoFinal, 2)
 
             Dim i As Integer
@@ -456,6 +460,7 @@ Public Class productos
                 Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
                 Dim utilListSum As Double = (utilidad * 100) - 100
                 Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
+
                 If dtlistas.Rows(i).Cells(3).Value.ToString = "%" Then
                     dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
                 Else
@@ -484,7 +489,8 @@ Public Class productos
         Try
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(stock) from fact_insumos_lotes  where idproducto=pro.id)   
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(stock) from fact_insumos_lotes  where idproducto=pro.id),   
+            (select peso from cm_pesoEspecifico  where id=pro.id) 
             from fact_insumos as pro where pro.id = " & codigo, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim infoProd() As DataRow
@@ -532,6 +538,12 @@ Public Class productos
             Else
                 imgFoto.Image = Image.FromFile(Application.StartupPath & "\sinimagen.jpg")
             End If
+            If Not IsDBNull(infoProd(0)(26)) Then
+                txtPesoEspecifico.Text = infoProd(0)(26).ToString
+            Else
+                txtPesoEspecifico.Text = 0
+            End If
+
             If IsDBNull(infoProd(0)(25)) Then
                 lblstock.Text = "0"
                 dtlotesprov.DataSource = Nothing
@@ -598,7 +610,9 @@ Public Class productos
         End Try
     End Sub
     Private Sub ProductoSeleccionado(IdProducto As Integer) Handles DgvProductos.SeleccionarItem
-        CargarInfoProd(IdProducto)
+        idProductoGral = IdProducto
+
+        CargarInfoProd(idProductoGral)
         calcularPrecios()
         cargarDescuentos()
     End Sub
@@ -612,7 +626,7 @@ Public Class productos
             dtdescuentos.Rows.Clear()
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento ',' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & DgvProductos.ItemSeleccionado, conexionPrinc)
+            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & idProductoGral, conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
             consultaDescProd.Fill(tablaDescProd)
@@ -775,6 +789,13 @@ Public Class productos
             Dim calcular_precio As Integer
             Dim unidades As Integer = cmbunidades.SelectedValue
 
+            If codigo <> "" And modificaProd = False Then
+                If ExisteProducto(codigo) = True Then
+                    MsgBox("ya existe un producto con el CODIGO DE BARRA indicado, por favor verifique")
+                    Exit Sub
+                End If
+            End If
+
             If chkpreciobase.CheckState = CheckState.Checked Then
                 calcular_precio = 1
             Else
@@ -853,12 +874,25 @@ Public Class productos
                 .AddWithValue("?codigo", codigo)
 
                 If modificaProd = True Then
-                    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
-                    .AddWithValue("?idp", idProducto)
+                    '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
+                    .AddWithValue("?idp", idProductoGral)
                 End If
 
             End With
             comandoadd.ExecuteNonQuery()
+
+            If txtPesoEspecifico.Text <> "" And IsNumeric(txtPesoEspecifico.Text) Then
+                Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
+                Reconectar()
+                Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
+                on duplicate key update peso=?peso", conexionPrinc)
+                comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
+                comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
+
+                comandoPesoEsp.ExecuteNonQuery()
+            End If
+
+
             MsgBox("Operacion completada correctamente")
             deshabilitarControles()
             'TabPage2.Parent = Nothing
@@ -1326,6 +1360,10 @@ Public Class productos
     End Sub
 
     Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+
+    End Sub
+
+    Private Sub DgvProductos_Load(sender As Object, e As EventArgs) Handles DgvProductos.Load
 
     End Sub
 End Class

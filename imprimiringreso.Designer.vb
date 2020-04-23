@@ -30,8 +30,9 @@ Partial Class imprimiringreso
         Me.rptingreso.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rptingreso.Location = New System.Drawing.Point(0, 0)
         Me.rptingreso.Name = "rptingreso"
+        Me.rptingreso.ServerReport.BearerToken = Nothing
         Me.rptingreso.Size = New System.Drawing.Size(669, 459)
-        Me.rptingreso.TabIndex = 3
+        Me.rptingreso.TabIndex = 0
         '
         'imprimiringreso
         '
@@ -45,5 +46,6 @@ Partial Class imprimiringreso
         Me.ResumeLayout(False)
 
     End Sub
+
     Friend WithEvents rptingreso As Microsoft.Reporting.WinForms.ReportViewer
 End Class

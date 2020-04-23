@@ -361,7 +361,8 @@
             Reconectar()
 
             If RestringirNumerosFact(cmbtipofac.SelectedValue, num_fact, ptovta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo, por favor verifique")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
                 Exit Sub
             End If
 
@@ -526,7 +527,7 @@
 
             Next
             MsgBox("Recibo guardado satisfactoriamente")
-
+            Button1.Text = "Cerrar"
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -549,30 +550,31 @@
             MsgBox(ex.Message)
         End Try
 
-        Try 'actualizamos la caja
-            Dim sqlQuery As String
-            sqlQuery = "insert into fact_ingreso_egreso " _
-                & "(concepto,monto,comprobante,caja,tipo) values" _
-                & "(?conc,?monto,?comp,?caja,'1')"
+        If txttotalefectivo.Text <> 0 And txttotalefectivo.Text <> "" Then
+            Try 'actualizamos la caja
+                Dim sqlQuery As String
+                sqlQuery = "insert into fact_ingreso_egreso " _
+                    & "(concepto,monto,comprobante,caja,tipo) values" _
+                    & "(?conc,?monto,?comp,?caja,'1')"
 
-            Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text))
-                .AddWithValue("?comp", idfactura)
-                .AddWithValue("?caja", cmbcajas.SelectedValue)
-                .AddWithValue("?conc", cmbconceptoing.SelectedValue)
-            End With
-            comandoadd.ExecuteNonQuery()
-            'MsgBox("caja actualizada")
-            Button1.Text = "Cerrar"
+                Reconectar()
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text))
+                    .AddWithValue("?comp", idfactura)
+                    .AddWithValue("?caja", cmbcajas.SelectedValue)
+                    .AddWithValue("?conc", cmbconceptoing.SelectedValue)
+                End With
+                comandoadd.ExecuteNonQuery()
+                'MsgBox("caja actualizada")
+                Button1.Text = "Cerrar"
 
-            'Button1.Enabled = False
-            Button3.Enabled = True
-        Catch ex As Exception
+                'Button1.Enabled = False
+                Button3.Enabled = True
+            Catch ex As Exception
 
-        End Try
-
+            End Try
+        End If
     End Sub
     Public Sub cargarCuentaProv(ByRef idprov As Integer)
         Dim debegral As Double = 0
@@ -617,7 +619,8 @@
 
 
             If RestringirNumerosFact(cmbtipofac.SelectedValue, num_fact, ptovta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo, por favor verifique")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
                 Exit Sub
             End If
 
@@ -739,7 +742,8 @@
             Dim total As String = remplazarPunto(txttotalmovimiento.Text)
             Dim tipoFact As Integer = cmbtipofac.SelectedValue
             If RestringirNumerosFact(cmbtipofac.SelectedValue, num_fact, ptovta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo, por favor verifique")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
                 Exit Sub
             End If
             '********INSERTAMOS EN LA TABLA PROVEEDORES**********************
@@ -828,6 +832,7 @@
             Next
 
             MsgBox("caja actualizada")
+            Me.Close()
         Catch ex As Exception
         End Try
 

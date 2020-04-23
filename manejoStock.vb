@@ -5,12 +5,12 @@ Public Class manejoStock
     Dim LimMax As Integer = 0
     Dim constante As Integer
     Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click
-        constante = CInt(txtlimitmax.Text)
-        LimMin = 0
-        LimMax = constante
-        txtlimitmax.Text = constante
-        lblmostrando.Text = "Mostrando 0 a"
-        'ConsultarVentas.RunWorkerAsync()
+        'constante = CInt(txtlimitmax.Text)
+        'LimMin = 0
+        'LimMax = constante
+        'txtlimitmax.Text = constante
+        'lblmostrando.Text = "Mostrando 0 a"
+        ''ConsultarVentas.RunWorkerAsync()
         ConsultarVtasMes(LimMin, LimMax)
     End Sub
     Private Sub ConsultarVtasMes(ByRef limitmin, ByRef limitmax)
@@ -94,13 +94,13 @@ Public Class manejoStock
             EnProgreso.Close()
         End Try
     End Sub
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
 
-        LimMin = LimMax
-        LimMax += constante
-        txtlimitmax.Text = LimMax
-        ConsultarVtasMes(LimMin, LimMax)
-        lblmostrando.Text = "Mostrando " & LimMin & " a "
+        'LimMin = LimMax
+        'LimMax += constante
+        'txtlimitmax.Text = LimMax
+        'ConsultarVtasMes(LimMin, LimMax)
+        'lblmostrando.Text = "Mostrando " & LimMin & " a "
     End Sub
     Private Sub cargarCategoriasProd()
 

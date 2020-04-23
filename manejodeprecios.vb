@@ -238,8 +238,8 @@
             consultaPRod.Fill(tablaprod)
             infoprod = tablaprod.Select("")
 
-            Dim precioCosto As Double = FormatNumber(infoprod(0)(0))
-            Dim cotizacion As Double = FormatNumber(infoprod(0)(1))
+            Dim precioCosto As Double = FormatNumber(infoprod(0)(0), 4)
+            Dim cotizacion As Double = FormatNumber(infoprod(0)(1), 2)
             Dim iva As Double = (FormatNumber(infoprod(0)(2)) + 100) / 100
 
             Dim util As Double = (FormatNumber(infoprod(0)(3)) + 100) / 100

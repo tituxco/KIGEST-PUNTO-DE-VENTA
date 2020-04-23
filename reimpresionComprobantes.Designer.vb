@@ -29,15 +29,34 @@ Partial Class reimpresionComprobantes
         Me.tabcomprobantes = New System.Windows.Forms.TabPage()
         Me.dtfacturas = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
         Me.chkImprimirA4 = New System.Windows.Forms.CheckBox()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.dtremitos = New System.Windows.Forms.DataGridView()
+        Me.Panel22 = New System.Windows.Forms.Panel()
+        Me.cmdlistadoremitos = New System.Windows.Forms.Button()
+        Me.cmdreimprimirremitos = New System.Windows.Forms.Button()
+        Me.Label43 = New System.Windows.Forms.Label()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.dtderemitos = New System.Windows.Forms.DateTimePicker()
+        Me.dthastaremitos = New System.Windows.Forms.DateTimePicker()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtNumeroComprobante = New System.Windows.Forms.TextBox()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdbuscar = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.cmdbuscarremitos = New System.Windows.Forms.Button()
+        Me.txtrazonsocial = New System.Windows.Forms.TextBox()
+        Me.Label4 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
+        Me.TabPage1.SuspendLayout()
+        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel22.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -64,6 +83,7 @@ Partial Class reimpresionComprobantes
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.tabcomprobantes)
+        Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
@@ -80,7 +100,7 @@ Partial Class reimpresionComprobantes
         Me.tabcomprobantes.Padding = New System.Windows.Forms.Padding(3)
         Me.tabcomprobantes.Size = New System.Drawing.Size(1261, 416)
         Me.tabcomprobantes.TabIndex = 7
-        Me.tabcomprobantes.Text = "Ultimos 20 comprobantes"
+        Me.tabcomprobantes.Text = "Ultimas facturas y recibos"
         Me.tabcomprobantes.UseVisualStyleBackColor = True
         '
         'dtfacturas
@@ -102,6 +122,12 @@ Partial Class reimpresionComprobantes
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel5.Controls.Add(Me.txtrazonsocial)
+        Me.Panel5.Controls.Add(Me.Label4)
+        Me.Panel5.Controls.Add(Me.txtNumeroComprobante)
+        Me.Panel5.Controls.Add(Me.Label3)
+        Me.Panel5.Controls.Add(Me.Label2)
+        Me.Panel5.Controls.Add(Me.Button4)
         Me.Panel5.Controls.Add(Me.TextBox1)
         Me.Panel5.Controls.Add(Me.chkImprimirA4)
         Me.Panel5.Controls.Add(Me.Button1)
@@ -113,6 +139,14 @@ Partial Class reimpresionComprobantes
         Me.Panel5.Size = New System.Drawing.Size(1255, 70)
         Me.Panel5.TabIndex = 0
         '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(3, 27)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(77, 20)
+        Me.TextBox1.TabIndex = 59
+        Me.TextBox1.Text = "20"
+        '
         'chkImprimirA4
         '
         Me.chkImprimirA4.AutoSize = True
@@ -123,17 +157,168 @@ Partial Class reimpresionComprobantes
         Me.chkImprimirA4.Text = "No imprimir tiket"
         Me.chkImprimirA4.UseVisualStyleBackColor = True
         '
+        'TabPage1
+        '
+        Me.TabPage1.Controls.Add(Me.dtremitos)
+        Me.TabPage1.Controls.Add(Me.Panel22)
+        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage1.Name = "TabPage1"
+        Me.TabPage1.Size = New System.Drawing.Size(1261, 416)
+        Me.TabPage1.TabIndex = 8
+        Me.TabPage1.Text = "Remitos"
+        Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'dtremitos
+        '
+        Me.dtremitos.AllowUserToAddRows = False
+        Me.dtremitos.AllowUserToDeleteRows = False
+        Me.dtremitos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtremitos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtremitos.BackgroundColor = System.Drawing.Color.White
+        Me.dtremitos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtremitos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtremitos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtremitos.Location = New System.Drawing.Point(0, 70)
+        Me.dtremitos.Name = "dtremitos"
+        Me.dtremitos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtremitos.Size = New System.Drawing.Size(1261, 346)
+        Me.dtremitos.TabIndex = 14
+        '
+        'Panel22
+        '
+        Me.Panel22.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel22.Controls.Add(Me.cmdlistadoremitos)
+        Me.Panel22.Controls.Add(Me.cmdreimprimirremitos)
+        Me.Panel22.Controls.Add(Me.cmdbuscarremitos)
+        Me.Panel22.Controls.Add(Me.Label43)
+        Me.Panel22.Controls.Add(Me.Label44)
+        Me.Panel22.Controls.Add(Me.dtderemitos)
+        Me.Panel22.Controls.Add(Me.dthastaremitos)
+        Me.Panel22.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel22.Location = New System.Drawing.Point(0, 0)
+        Me.Panel22.Name = "Panel22"
+        Me.Panel22.Size = New System.Drawing.Size(1261, 70)
+        Me.Panel22.TabIndex = 13
+        '
+        'cmdlistadoremitos
+        '
+        Me.cmdlistadoremitos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdlistadoremitos.ForeColor = System.Drawing.Color.White
+        Me.cmdlistadoremitos.Location = New System.Drawing.Point(198, 36)
+        Me.cmdlistadoremitos.Name = "cmdlistadoremitos"
+        Me.cmdlistadoremitos.Size = New System.Drawing.Size(138, 23)
+        Me.cmdlistadoremitos.TabIndex = 58
+        Me.cmdlistadoremitos.Text = "Imprimir listado"
+        Me.cmdlistadoremitos.UseVisualStyleBackColor = True
+        '
+        'cmdreimprimirremitos
+        '
+        Me.cmdreimprimirremitos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdreimprimirremitos.ForeColor = System.Drawing.Color.White
+        Me.cmdreimprimirremitos.Location = New System.Drawing.Point(198, 12)
+        Me.cmdreimprimirremitos.Name = "cmdreimprimirremitos"
+        Me.cmdreimprimirremitos.Size = New System.Drawing.Size(138, 23)
+        Me.cmdreimprimirremitos.TabIndex = 57
+        Me.cmdreimprimirremitos.Text = "Reimprimir comprobante"
+        Me.cmdreimprimirremitos.UseVisualStyleBackColor = True
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.BackColor = System.Drawing.Color.Transparent
+        Me.Label43.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.ForeColor = System.Drawing.Color.White
+        Me.Label43.Location = New System.Drawing.Point(6, 16)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(49, 17)
+        Me.Label43.TabIndex = 44
+        Me.Label43.Text = "Desde"
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.BackColor = System.Drawing.Color.Transparent
+        Me.Label44.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.ForeColor = System.Drawing.Color.White
+        Me.Label44.Location = New System.Drawing.Point(6, 42)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(45, 17)
+        Me.Label44.TabIndex = 45
+        Me.Label44.Text = "Hasta"
+        '
+        'dtderemitos
+        '
+        Me.dtderemitos.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtderemitos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtderemitos.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtderemitos.Location = New System.Drawing.Point(61, 11)
+        Me.dtderemitos.Name = "dtderemitos"
+        Me.dtderemitos.Size = New System.Drawing.Size(117, 23)
+        Me.dtderemitos.TabIndex = 42
+        '
+        'dthastaremitos
+        '
+        Me.dthastaremitos.AccessibleName = ""
+        Me.dthastaremitos.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthastaremitos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthastaremitos.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dthastaremitos.Location = New System.Drawing.Point(61, 37)
+        Me.dthastaremitos.Name = "dthastaremitos"
+        Me.dthastaremitos.Size = New System.Drawing.Size(117, 23)
+        Me.dthastaremitos.TabIndex = 43
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Location = New System.Drawing.Point(2, 11)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(180, 13)
+        Me.Label2.TabIndex = 61
+        Me.Label2.Text = "Cantidad de comprobantes a mostrar"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(207, 11)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(134, 13)
+        Me.Label3.TabIndex = 62
+        Me.Label3.Text = "Numero de comprobante/s"
+        '
+        'txtNumeroComprobante
+        '
+        Me.txtNumeroComprobante.Location = New System.Drawing.Point(210, 27)
+        Me.txtNumeroComprobante.Name = "txtNumeroComprobante"
+        Me.txtNumeroComprobante.Size = New System.Drawing.Size(131, 20)
+        Me.txtNumeroComprobante.TabIndex = 63
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Location = New System.Drawing.Point(1032, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(78, 70)
+        Me.Button4.TabIndex = 60
+        Me.Button4.Text = "Remitar"
+        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button4.UseVisualStyleBackColor = False
+        '
         'Button1
         '
         Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_64px
-        Me.Button1.Location = New System.Drawing.Point(1125, 0)
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(1110, 0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(65, 70)
+        Me.Button1.Size = New System.Drawing.Size(80, 70)
         Me.Button1.TabIndex = 57
+        Me.Button1.Text = "Imprimir"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -148,16 +333,40 @@ Partial Class reimpresionComprobantes
         Me.cmdbuscar.Name = "cmdbuscar"
         Me.cmdbuscar.Size = New System.Drawing.Size(65, 70)
         Me.cmdbuscar.TabIndex = 48
+        Me.cmdbuscar.Text = "Buscar"
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdbuscar.UseVisualStyleBackColor = False
         '
-        'TextBox1
+        'cmdbuscarremitos
         '
-        Me.TextBox1.Location = New System.Drawing.Point(3, 17)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(77, 20)
-        Me.TextBox1.TabIndex = 59
-        Me.TextBox1.Text = "20"
+        Me.cmdbuscarremitos.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscarremitos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscarremitos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscarremitos.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscarremitos.Image = CType(resources.GetObject("cmdbuscarremitos.Image"), System.Drawing.Image)
+        Me.cmdbuscarremitos.Location = New System.Drawing.Point(1196, 0)
+        Me.cmdbuscarremitos.Name = "cmdbuscarremitos"
+        Me.cmdbuscarremitos.Size = New System.Drawing.Size(65, 70)
+        Me.cmdbuscarremitos.TabIndex = 48
+        Me.cmdbuscarremitos.Text = "Buscar"
+        Me.cmdbuscarremitos.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscarremitos.UseVisualStyleBackColor = True
+        '
+        'txtrazonsocial
+        '
+        Me.txtrazonsocial.Location = New System.Drawing.Point(367, 27)
+        Me.txtrazonsocial.Name = "txtrazonsocial"
+        Me.txtrazonsocial.Size = New System.Drawing.Size(218, 20)
+        Me.txtrazonsocial.TabIndex = 65
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(364, 11)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(144, 13)
+        Me.Label4.TabIndex = 64
+        Me.Label4.Text = "Razon social/Nombre cliente"
         '
         'reimpresionComprobantes
         '
@@ -178,6 +387,10 @@ Partial Class reimpresionComprobantes
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
         Me.Panel5.PerformLayout()
+        Me.TabPage1.ResumeLayout(False)
+        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel22.ResumeLayout(False)
+        Me.Panel22.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -192,4 +405,20 @@ Partial Class reimpresionComprobantes
     Friend WithEvents cmdbuscar As Button
     Friend WithEvents chkImprimirA4 As CheckBox
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents Button4 As Button
+    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents dtremitos As DataGridView
+    Friend WithEvents Panel22 As Panel
+    Friend WithEvents cmdlistadoremitos As Button
+    Friend WithEvents cmdreimprimirremitos As Button
+    Friend WithEvents cmdbuscarremitos As Button
+    Friend WithEvents Label43 As Label
+    Friend WithEvents Label44 As Label
+    Friend WithEvents dtderemitos As DateTimePicker
+    Friend WithEvents dthastaremitos As DateTimePicker
+    Friend WithEvents txtNumeroComprobante As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents txtrazonsocial As TextBox
+    Friend WithEvents Label4 As Label
 End Class

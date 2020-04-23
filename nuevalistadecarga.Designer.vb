@@ -23,6 +23,7 @@ Partial Class nuevalistadecarga
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(nuevalistadecarga))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -31,7 +32,6 @@ Partial Class nuevalistadecarga
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(nuevalistadecarga))
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.tmrcontrolarnumfact = New System.Windows.Forms.Timer(Me.components)
         Me.Label18 = New System.Windows.Forms.Label()
@@ -42,7 +42,10 @@ Partial Class nuevalistadecarga
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.paneltareas = New System.Windows.Forms.Panel()
+        Me.lblpesoTotal = New System.Windows.Forms.Label()
         Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.cmdimprimir = New System.Windows.Forms.Button()
+        Me.cmdguardar = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.panelencabeza = New System.Windows.Forms.Panel()
@@ -77,8 +80,6 @@ Partial Class nuevalistadecarga
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cmdimprimir = New System.Windows.Forms.Button()
-        Me.cmdguardar = New System.Windows.Forms.Button()
         CType(Me.dtenvases, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.paneltareas.SuspendLayout()
         Me.Panel6.SuspendLayout()
@@ -125,12 +126,11 @@ Partial Class nuevalistadecarga
         Me.dtenvases.BackgroundColor = System.Drawing.Color.White
         Me.dtenvases.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtenvases.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column9, Me.Column10, Me.Column11, Me.Column6, Me.Column12})
-        Me.dtenvases.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtenvases.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dtenvases.Location = New System.Drawing.Point(194, 0)
         Me.dtenvases.Name = "dtenvases"
         Me.dtenvases.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtenvases.Size = New System.Drawing.Size(551, 92)
+        Me.dtenvases.Size = New System.Drawing.Size(216, 92)
         Me.dtenvases.TabIndex = 49
         Me.dtenvases.Visible = False
         '
@@ -165,6 +165,7 @@ Partial Class nuevalistadecarga
         'paneltareas
         '
         Me.paneltareas.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.paneltareas.Controls.Add(Me.lblpesoTotal)
         Me.paneltareas.Controls.Add(Me.dtenvases)
         Me.paneltareas.Controls.Add(Me.Panel6)
         Me.paneltareas.Controls.Add(Me.cmdimprimir)
@@ -175,6 +176,17 @@ Partial Class nuevalistadecarga
         Me.paneltareas.Size = New System.Drawing.Size(1102, 92)
         Me.paneltareas.TabIndex = 83
         '
+        'lblpesoTotal
+        '
+        Me.lblpesoTotal.AutoSize = True
+        Me.lblpesoTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblpesoTotal.ForeColor = System.Drawing.Color.White
+        Me.lblpesoTotal.Location = New System.Drawing.Point(493, 38)
+        Me.lblpesoTotal.Name = "lblpesoTotal"
+        Me.lblpesoTotal.Size = New System.Drawing.Size(117, 16)
+        Me.lblpesoTotal.TabIndex = 55
+        Me.lblpesoTotal.Text = "Observaciones:"
+        '
         'Panel6
         '
         Me.Panel6.Controls.Add(Me.TextBox2)
@@ -184,6 +196,39 @@ Partial Class nuevalistadecarga
         Me.Panel6.Name = "Panel6"
         Me.Panel6.Size = New System.Drawing.Size(357, 92)
         Me.Panel6.TabIndex = 48
+        '
+        'cmdimprimir
+        '
+        Me.cmdimprimir.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdimprimir.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdimprimir.Enabled = False
+        Me.cmdimprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdimprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdimprimir.ForeColor = System.Drawing.Color.White
+        Me.cmdimprimir.Image = CType(resources.GetObject("cmdimprimir.Image"), System.Drawing.Image)
+        Me.cmdimprimir.Location = New System.Drawing.Point(97, 0)
+        Me.cmdimprimir.Name = "cmdimprimir"
+        Me.cmdimprimir.Size = New System.Drawing.Size(97, 92)
+        Me.cmdimprimir.TabIndex = 12
+        Me.cmdimprimir.Text = "Imprimir"
+        Me.cmdimprimir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdimprimir.UseVisualStyleBackColor = False
+        '
+        'cmdguardar
+        '
+        Me.cmdguardar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdguardar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdguardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdguardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdguardar.ForeColor = System.Drawing.Color.White
+        Me.cmdguardar.Image = CType(resources.GetObject("cmdguardar.Image"), System.Drawing.Image)
+        Me.cmdguardar.Location = New System.Drawing.Point(0, 0)
+        Me.cmdguardar.Name = "cmdguardar"
+        Me.cmdguardar.Size = New System.Drawing.Size(97, 92)
+        Me.cmdguardar.TabIndex = 11
+        Me.cmdguardar.Text = "Guardar"
+        Me.cmdguardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdguardar.UseVisualStyleBackColor = False
         '
         'pntitulo
         '
@@ -505,39 +550,6 @@ Partial Class nuevalistadecarga
         Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
         Me.DataGridViewTextBoxColumn11.Visible = False
         '
-        'cmdimprimir
-        '
-        Me.cmdimprimir.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdimprimir.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdimprimir.Enabled = False
-        Me.cmdimprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdimprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdimprimir.ForeColor = System.Drawing.Color.White
-        Me.cmdimprimir.Image = CType(resources.GetObject("cmdimprimir.Image"), System.Drawing.Image)
-        Me.cmdimprimir.Location = New System.Drawing.Point(97, 0)
-        Me.cmdimprimir.Name = "cmdimprimir"
-        Me.cmdimprimir.Size = New System.Drawing.Size(97, 92)
-        Me.cmdimprimir.TabIndex = 12
-        Me.cmdimprimir.Text = "Imprimir"
-        Me.cmdimprimir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdimprimir.UseVisualStyleBackColor = False
-        '
-        'cmdguardar
-        '
-        Me.cmdguardar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdguardar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdguardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdguardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdguardar.ForeColor = System.Drawing.Color.White
-        Me.cmdguardar.Image = CType(resources.GetObject("cmdguardar.Image"), System.Drawing.Image)
-        Me.cmdguardar.Location = New System.Drawing.Point(0, 0)
-        Me.cmdguardar.Name = "cmdguardar"
-        Me.cmdguardar.Size = New System.Drawing.Size(97, 92)
-        Me.cmdguardar.TabIndex = 11
-        Me.cmdguardar.Text = "Guardar"
-        Me.cmdguardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdguardar.UseVisualStyleBackColor = False
-        '
         'nuevalistadecarga
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -551,6 +563,7 @@ Partial Class nuevalistadecarga
         Me.Text = "nuevalistadecarga"
         CType(Me.dtenvases, System.ComponentModel.ISupportInitialize).EndInit()
         Me.paneltareas.ResumeLayout(False)
+        Me.paneltareas.PerformLayout()
         Me.Panel6.ResumeLayout(False)
         Me.Panel6.PerformLayout()
         Me.pntitulo.ResumeLayout(False)
@@ -606,6 +619,7 @@ Partial Class nuevalistadecarga
     Friend WithEvents Column11 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column12 As DataGridViewTextBoxColumn
+    Friend WithEvents lblpesoTotal As Label
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn

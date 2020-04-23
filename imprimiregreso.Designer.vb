@@ -23,9 +23,6 @@ Partial Class imprimiregreso
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ReportDataSource1 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
-        Dim ReportDataSource2 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
-        Dim ReportDataSource3 As Microsoft.Reporting.WinForms.ReportDataSource = New Microsoft.Reporting.WinForms.ReportDataSource()
         Me.datosEmpresaBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.datosgenerales = New SIGT__KIGEST.datosgenerales()
         Me.datosFichaIngresoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
@@ -67,18 +64,9 @@ Partial Class imprimiregreso
         'rptegreso
         '
         Me.rptegreso.Dock = System.Windows.Forms.DockStyle.Fill
-        ReportDataSource1.Name = "datosEmp"
-        ReportDataSource1.Value = Me.datosEmpresaBindingSource
-        ReportDataSource2.Name = "datosFing"
-        ReportDataSource2.Value = Me.datosFichaIngresoBindingSource
-        ReportDataSource3.Name = "datosOrden"
-        ReportDataSource3.Value = Me.fichaIngresoBindingSource
-        Me.rptegreso.LocalReport.DataSources.Add(ReportDataSource1)
-        Me.rptegreso.LocalReport.DataSources.Add(ReportDataSource2)
-        Me.rptegreso.LocalReport.DataSources.Add(ReportDataSource3)
-        Me.rptegreso.LocalReport.ReportEmbeddedResource = "SIGT__KIGEST.fichaingreso.rdlc"
         Me.rptegreso.Location = New System.Drawing.Point(0, 0)
         Me.rptegreso.Name = "rptegreso"
+        Me.rptegreso.ServerReport.BearerToken = Nothing
         Me.rptegreso.Size = New System.Drawing.Size(689, 401)
         Me.rptegreso.TabIndex = 0
         '
@@ -99,10 +87,10 @@ Partial Class imprimiregreso
         Me.ResumeLayout(False)
 
     End Sub
-    Friend WithEvents rptegreso As Microsoft.Reporting.WinForms.ReportViewer
     Friend WithEvents datosEmpresaBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents datosgenerales As SIGT__KIGEST.datosgenerales
     Friend WithEvents datosFichaIngresoBindingSource As System.Windows.Forms.BindingSource
     Friend WithEvents datostaller As SIGT__KIGEST.datostaller
     Friend WithEvents fichaIngresoBindingSource As System.Windows.Forms.BindingSource
+    Friend WithEvents rptegreso As Microsoft.Reporting.WinForms.ReportViewer
 End Class

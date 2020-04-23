@@ -25,20 +25,12 @@ Partial Class frmprincipal
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmprincipal))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
-        Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton()
-        Me.ToolStripComboBox1 = New System.Windows.Forms.ToolStripComboBox()
-        Me.CerrarConexionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ReconectarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusBDprinc = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblStatusEmp = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusgral = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel2 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.ToolStripStatusLabel5 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.tmrcomprobarConexion = New System.Windows.Forms.Timer(Me.components)
         Me.menugral = New System.Windows.Forms.MenuStrip()
         Me.cmdclientes = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,6 +50,7 @@ Partial Class frmprincipal
         Me.RemitosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReimpresiónDeComprobantesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdadministracion = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InformesDeVentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContableToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.CajaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CajaDiariaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -76,47 +69,19 @@ Partial Class frmprincipal
         Me.FCConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         Me.SuspendLayout()
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton1, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.ToolStripStatusLabel2, Me.ToolStripStatusLabel3, Me.ToolStripStatusLabel4, Me.ToolStripStatusLabel5})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 379)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1245, 24)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
-        '
-        'ToolStripDropDownButton1
-        '
-        Me.ToolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripComboBox1, Me.CerrarConexionToolStripMenuItem, Me.ReconectarToolStripMenuItem})
-        Me.ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), System.Drawing.Image)
-        Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
-        Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(29, 22)
-        Me.ToolStripDropDownButton1.Text = "ToolStripDropDownButton1"
-        Me.ToolStripDropDownButton1.ToolTipText = "Manejar Servidor"
-        '
-        'ToolStripComboBox1
-        '
-        Me.ToolStripComboBox1.Name = "ToolStripComboBox1"
-        Me.ToolStripComboBox1.Size = New System.Drawing.Size(121, 23)
-        '
-        'CerrarConexionToolStripMenuItem
-        '
-        Me.CerrarConexionToolStripMenuItem.Name = "CerrarConexionToolStripMenuItem"
-        Me.CerrarConexionToolStripMenuItem.ShowShortcutKeys = False
-        Me.CerrarConexionToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.CerrarConexionToolStripMenuItem.Text = "Corregir BD"
-        '
-        'ReconectarToolStripMenuItem
-        '
-        Me.ReconectarToolStripMenuItem.Name = "ReconectarToolStripMenuItem"
-        Me.ReconectarToolStripMenuItem.Size = New System.Drawing.Size(181, 22)
-        Me.ReconectarToolStripMenuItem.Text = "Reconectar"
         '
         'pbprincipal
         '
@@ -165,55 +130,6 @@ Partial Class frmprincipal
         '
         Me.lblstatusgral.Name = "lblstatusgral"
         Me.lblstatusgral.Size = New System.Drawing.Size(0, 19)
-        '
-        'ToolStripStatusLabel2
-        '
-        Me.ToolStripStatusLabel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ToolStripStatusLabel2.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ToolStripStatusLabel2.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust
-        Me.ToolStripStatusLabel2.ForeColor = System.Drawing.Color.White
-        Me.ToolStripStatusLabel2.LinkColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ToolStripStatusLabel2.Name = "ToolStripStatusLabel2"
-        Me.ToolStripStatusLabel2.Size = New System.Drawing.Size(206, 19)
-        Me.ToolStripStatusLabel2.Text = "<ctrl+num1> RECIBO X CONS FINAL"
-        '
-        'ToolStripStatusLabel3
-        '
-        Me.ToolStripStatusLabel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ToolStripStatusLabel3.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ToolStripStatusLabel3.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust
-        Me.ToolStripStatusLabel3.ForeColor = System.Drawing.Color.White
-        Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(229, 19)
-        Me.ToolStripStatusLabel3.Text = "<ctrl+num2> FACTURA B/C CONS FINAL"
-        '
-        'ToolStripStatusLabel4
-        '
-        Me.ToolStripStatusLabel4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ToolStripStatusLabel4.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ToolStripStatusLabel4.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust
-        Me.ToolStripStatusLabel4.ForeColor = System.Drawing.Color.White
-        Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
-        Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(147, 19)
-        Me.ToolStripStatusLabel4.Text = "<ctrl+num3> FACTURA A"
-        '
-        'ToolStripStatusLabel5
-        '
-        Me.ToolStripStatusLabel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ToolStripStatusLabel5.BorderSides = CType((((System.Windows.Forms.ToolStripStatusLabelBorderSides.Left Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Top) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Right) _
-            Or System.Windows.Forms.ToolStripStatusLabelBorderSides.Bottom), System.Windows.Forms.ToolStripStatusLabelBorderSides)
-        Me.ToolStripStatusLabel5.BorderStyle = System.Windows.Forms.Border3DStyle.Adjust
-        Me.ToolStripStatusLabel5.ForeColor = System.Drawing.Color.White
-        Me.ToolStripStatusLabel5.Name = "ToolStripStatusLabel5"
-        Me.ToolStripStatusLabel5.Size = New System.Drawing.Size(178, 19)
-        Me.ToolStripStatusLabel5.Text = "<ctrl+num4> CONSULTA PROD"
         '
         'tmrcomprobarConexion
         '
@@ -404,7 +320,7 @@ Partial Class frmprincipal
         'cmdadministracion
         '
         Me.cmdadministracion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdadministracion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ContableToolStripMenuItem1, Me.CajaToolStripMenuItem, Me.CajaDiariaToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.AgendaDeVencimientosToolStripMenuItem, Me.ConfiguracionDeTerminalToolStripMenuItem})
+        Me.cmdadministracion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InformesDeVentasToolStripMenuItem, Me.ContableToolStripMenuItem1, Me.CajaToolStripMenuItem, Me.CajaDiariaToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.AgendaDeVencimientosToolStripMenuItem, Me.ConfiguracionDeTerminalToolStripMenuItem})
         Me.cmdadministracion.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdadministracion.ForeColor = System.Drawing.Color.White
         Me.cmdadministracion.Image = CType(resources.GetObject("cmdadministracion.Image"), System.Drawing.Image)
@@ -412,6 +328,14 @@ Partial Class frmprincipal
         Me.cmdadministracion.Name = "cmdadministracion"
         Me.cmdadministracion.Size = New System.Drawing.Size(144, 36)
         Me.cmdadministracion.Text = "Administracion"
+        '
+        'InformesDeVentasToolStripMenuItem
+        '
+        Me.InformesDeVentasToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.InformesDeVentasToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.InformesDeVentasToolStripMenuItem.Name = "InformesDeVentasToolStripMenuItem"
+        Me.InformesDeVentasToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
+        Me.InformesDeVentasToolStripMenuItem.Text = "Informes de ventas"
         '
         'ContableToolStripMenuItem1
         '
@@ -560,6 +484,13 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
         '
+        'lblPrincipalDolar
+        '
+        Me.lblPrincipalDolar.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPrincipalDolar.Name = "lblPrincipalDolar"
+        Me.lblPrincipalDolar.Size = New System.Drawing.Size(60, 19)
+        Me.lblPrincipalDolar.Text = "DOLAR:"
+        '
         'frmprincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -592,9 +523,6 @@ Partial Class frmprincipal
     Friend WithEvents tmrcomprobarConexion As System.Windows.Forms.Timer
     Friend WithEvents lblstatusBDprinc As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents lblStatusEmp As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents ToolStripDropDownButton1 As System.Windows.Forms.ToolStripDropDownButton
-    Friend WithEvents CerrarConexionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ReconectarToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblstatusgral As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents menugral As System.Windows.Forms.MenuStrip
     Friend WithEvents cmdclientes As System.Windows.Forms.ToolStripMenuItem
@@ -616,7 +544,6 @@ Partial Class frmprincipal
     Friend WithEvents FXConsFinalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents FCConsFinalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NuevaVentaToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
     Friend WithEvents AgendaDeVencimientosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents reciboconsfinal As ToolStripMenuItem
     Friend WithEvents facturabconsfinal As ToolStripMenuItem
@@ -626,10 +553,6 @@ Partial Class frmprincipal
     Friend WithEvents ConsultaDeProductos As ToolStripMenuItem
     Friend WithEvents RemitosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents pbprincipal As ToolStripProgressBar
-    Friend WithEvents ToolStripStatusLabel2 As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel3 As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel4 As ToolStripStatusLabel
-    Friend WithEvents ToolStripStatusLabel5 As ToolStripStatusLabel
     Friend WithEvents ManejoDePreciosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MostradorToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents StockToolStripMenuItem As ToolStripMenuItem
@@ -638,4 +561,6 @@ Partial Class frmprincipal
     Friend WithEvents CajaDiariaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConfiguracionDeTerminalToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CLOUDSERVERToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents InformesDeVentasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents lblPrincipalDolar As ToolStripStatusLabel
 End Class

@@ -14,16 +14,6 @@ Public Class ImprimirDirecto
     Private m_currentPageIndex As Integer
     Private m_streams As IList(Of Stream)
 
-    'Private Function LoadSalesData() As DataTable
-    '    ' Create a new DataSet and read sales data file 
-    '    ' data.xml into the first DataTable.
-    '    Dim dataSet As New DataSet()
-    '    dataSet.ReadXml("..\..\data.xml")
-    '    Return dataSet.Tables(0)
-    'End Function
-
-    ' Routine to provide to the report renderer, in order to
-    ' save an image for each page of the report.
     Private Function CreateStream(ByVal name As String, ByVal fileNameExtension As String, ByVal encoding As Encoding, ByVal mimeType As String, ByVal willSeek As Boolean) As Stream
         Dim stream As Stream = New MemoryStream()
         m_streams.Add(stream)
@@ -87,7 +77,7 @@ Public Class ImprimirDirecto
     ' Create a local report for Report.rdlc, load the data,
     ' export the report to an .emf file, and print it.
     Public Sub Run(ByRef encabezado As DataTable, ByRef items As DataTable, ByRef DireccionReporte As String)
-        Dim report As New LocalReport()
+        Dim report As New LocalReport
         report.ReportPath = DireccionReporte
         report.DataSources.Add(New ReportDataSource("encabezado", encabezado))
         report.DataSources.Add(New ReportDataSource("items", items))

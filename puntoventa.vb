@@ -59,25 +59,22 @@ Public Class puntoventa
             numfact = Val(infofr(0)(3))
             lblfactnumero.Text = infofr(0)(3)
             tipofact = infofr(0)(4)
-            lblfacvendedor.Text = DatosAcceso.Vendedor
-            lblfacIdAlmacen.Text = DatosAcceso.IdAlmacen
+            If lblfacvendedor.Text = "-" Then lblfacvendedor.Text = DatosAcceso.Vendedor
+            lblfacIdAlmacen.Text = My.Settings.idAlmacen
 
             'dtproductos.Rows.Clear()
-            If tipofact <> 13 Then
-                Idcliente = 9999
-                cargarCliente()
-            End If
             If ptovta = FacturaElectro.puntovtaelect Then
-
                 cmdsolicitarcae.Enabled = True
                 cmdguardar.Enabled = False
                 cmdimprimir.Enabled = False
                 cmdcerrar.Enabled = True
+                cmdremitar.Enabled = False
             Else
                 cmdsolicitarcae.Enabled = False
                 cmdguardar.Enabled = True
                 cmdimprimir.Enabled = False
                 cmdcerrar.Enabled = True
+                cmdremitar.Enabled = False
             End If
             dtproductos.AllowUserToAddRows = True
             dtproductos.AllowUserToDeleteRows = True
@@ -85,12 +82,13 @@ Public Class puntoventa
             txtclierazon.Enabled = True
             txtcliecta.Enabled = True
             txtcliecuitcuil.Enabled = True
+            pnaddProd.Enabled = True
             txtcodPLU.Focus()
-
-            lblfactiva105.Text = 0
-            lblfactiva21.Text = 0
-            lblfactsubtotal.Text = 0
-            lblfacttotal.Text = 0
+            CalcularTotales()
+            'lblfactiva105.Text = 0
+            'lblfactiva21.Text = 0
+            'lblfactsubtotal.Text = 0
+            'lblfacttotal.Text = 0
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -216,9 +214,12 @@ Public Class puntoventa
             Dim iva21 As Double
             Dim total As Double
 
+            If dtproductos.Rows.Count = 0 Then
+                Exit Sub
+            End If
             For Each producto As DataGridViewRow In dtproductos.Rows
                 Select Case tipofact
-                    Case 999, 11, 12, 13 'factura x,fc,ndc,ncc
+                    Case 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
 
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
@@ -328,7 +329,7 @@ Public Class puntoventa
         format(replace(replace(pro.precio,'.',''),',','.')/replace(replace(pro.cantidad,'.',''),',','.'),2,'es_AR') as punit,
         format(replace(replace(pro.precio,'.',''),',','.'),2,'es_AR') as ptotal FROM 
         fact_insumos_produccion as pro, fact_insumos as ins where ins.codigo=pro.codigo_producto and facturado=0 and 
-        codigobarras='" & codigo & "'", conexionPrinc)
+        codigobarras='" & codigo & "' limit 1", conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         consulta.Fill(tablaprod)
@@ -380,8 +381,8 @@ Public Class puntoventa
         If InStr(codigo, "&") <> 0 Then
             CargarORRep(fila) 'dtproductos.CurrentRow.Index)
             Exit Sub
-        ElseIf InStr(codigo, "00") = 1 Then
-            cargarProdProduccion(codigo, fila)
+        ElseIf InStr(codigo, "A00") = 1 Then
+            cargarProdProduccion(codigo.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", ""), fila)
             Exit Sub
         End If
 
@@ -655,7 +656,7 @@ Public Class puntoventa
             End If
 
             If dtproductos.Rows.Count = 0 Then
-                cargarProdPLU(txtcodPLU.Text, -1)
+                cargarProdPLU(plutemp, -1)
             Else
                 For Each fila As DataGridViewRow In dtproductos.Rows
                     If fila.Cells(1).Value = txtcodPLU.Text Then
@@ -672,7 +673,7 @@ Public Class puntoventa
                         Exit Sub
                     End If
                 ElseIf contarprod = 0 Then
-                    cargarProdPLU(txtcodPLU.Text, -1)
+                    cargarProdPLU(plutemp, -1)
                 End If
             End If
             CalcularTotales()
@@ -720,9 +721,10 @@ Public Class puntoventa
         Dim iva105 As String = remplazarPunto(lblfactiva105.Text)
         Dim iva21 As String = remplazarPunto(lblfactiva21.Text)
         Dim total As String = remplazarPunto(lblfacttotal.Text)
-        Dim vendedor As Integer = DatosAcceso.Vendedor
+        Dim vendedor As Integer = lblfacvendedor.Text
         'Dim tipoFact As Integer = cmbtipofac.SelectedValue
         Dim obs2 As String = txtobservaciones.Text
+        Dim transp As String = txttransporte.Text
         'num_fact = CType(txtnufac.Text, Integer)
         Dim sqlQuery As String
 
@@ -744,7 +746,8 @@ Public Class puntoventa
 
         'comprobamos que el numero de factura no este en uso
         If RestringirNumerosFact(tipofact, numfact, ptovta) = True Then
-            MsgBox("El numero de comprobante ya existe para este tipo, por favor verifique")
+            MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
             EnProgreso.Close()
             Exit Sub
         End If
@@ -787,9 +790,10 @@ Public Class puntoventa
 
         Try
             'GUARDO LOS DATOS DE LA FACTURA
-            sqlQuery = "insert into fact_facturas  " _
-            & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra) values " _
-            & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra)"
+            sqlQuery = "insert into fact_facturas  
+            (tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,
+            condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,observaciones) values 
+            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?transp)"
             comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
@@ -812,6 +816,7 @@ Public Class puntoventa
                 .AddWithValue("?cae", lblestadoCAE.Text.Replace("CAE: ", ""))
                 .AddWithValue("?vtocae", lblvtoCAE.Text.Replace("Vto: ", ""))
                 .AddWithValue("?codbarra", lblcodigobarras.Text)
+                .AddWithValue("?transp", transp)
             End With
             comandoadd.Transaction = Transaccion
             comandoadd.ExecuteNonQuery()
@@ -848,22 +853,28 @@ Public Class puntoventa
 
                     Reconectar()
                     Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
-                    & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & DatosAcceso.IdAlmacen & " order by id asc", conexionPrinc)
+                    & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & My.Settings.idAlmacen & " order by id asc", conexionPrinc)
                     Dim tablastock As New DataTable
                     Dim infostock() As DataRow
                     consultastock.Fill(tablastock)
                     infostock = tablastock.Select("")
+                    'MsgBox(cant)
                     Do Until cant = 0
                         If infostock(lotes)(1) <= cant Then
-                            cant = cant - infostock(lotes)(1)
+                            Dim StockLote As Double = infostock(lotes)(1)
+                            cant = cant - StockLote
+                            '       MsgBox(cant)
                             Reconectar()
                             Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
                             updstock.Transaction = Transaccion
                             updstock.ExecuteNonQuery()
                             lotes += 1
                         ElseIf infostock(lotes)(1) > cant Then
+                            Dim stockLote As Double = infostock(lotes)(1)
+                            Dim CantUpd As Double = infostock(lotes)(1) - cant
+                            '      MsgBox(CantUpd)
                             Reconectar()
-                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=stock-" & cant & " where id=" & infostock(lotes)(0), conexionPrinc)
+                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=" & CantUpd & " where id=" & infostock(lotes)(0), conexionPrinc)
                             updstock.Transaction = Transaccion
                             updstock.ExecuteNonQuery()
                             cant = 0
@@ -898,7 +909,7 @@ Public Class puntoventa
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipofact)
-                    .AddWithValue("?ptovta", ptovta)
+                    .AddWithValue("?ptovta", My.Settings.idAlmacen) '''''ahora ponemos el almacen de donde se saco la mercaderia, se sigue llamando ptovta
                     .AddWithValue("?num_fact", numfact)
                     .AddWithValue("?id_fact", IdFactura)
                 End With
@@ -916,24 +927,26 @@ Public Class puntoventa
             Next
 
             'dependiendo de la condicion de venta hacemos distintas acciones
-            Reconectar()
-            sqlQuery = "insert into fact_cuentaclie (idclie,idcomp) values (?clie, ?idcomp)"
-            comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?clie", Idcliente)
-                .AddWithValue("?idcomp", IdFactura)
-            End With
-            comandoadd.Transaction = Transaccion
-            comandoadd.ExecuteNonQuery()
-            Dim j As Integer
-            For j = 0 To frmprincipal.MdiChildren.Length - 1
-                If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
-                    MsgBox("La ventana de movimiento de caja esta abierta")
-                    Exit Sub
-                End If
-            Next
+            If tipofact <> 998 Then
+                Reconectar()
+                sqlQuery = "insert into fact_cuentaclie (idclie,idcomp) values (?clie, ?idcomp)"
+                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?clie", Idcliente)
+                    .AddWithValue("?idcomp", IdFactura)
+                End With
+                comandoadd.Transaction = Transaccion
+                comandoadd.ExecuteNonQuery()
+                Dim j As Integer
+                For j = 0 To frmprincipal.MdiChildren.Length - 1
+                    If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
+                        MsgBox("La ventana de movimiento de caja esta abierta")
+                        Exit Sub
+                    End If
+                Next
+            End If
 
-            If condVta = 1 Then
+            If condVta = 1 And tipofact <> 998 Then
                 Dim mov As New frmpagoscompra
                 mov.NumeroFactura = ptovta & " - " & numfact
                 mov.CtaClie = txtcliecta.Text
@@ -963,20 +976,20 @@ Public Class puntoventa
 
             Transaccion.Commit()
             cmdguardar.Enabled = False
-
+            cmdremitar.Enabled = True
             cmdimprimir.Enabled = True
             cmdcerrar.Enabled = False
             txtclierazon.Enabled = False
             txtcliecta.Enabled = False
             txtcliecuitcuil.Enabled = False
             dtproductos.Enabled = False
+            pnaddProd.Enabled = False
             ' MsgBox("Factura guardada satisfactoriamente")
 
-            If My.Settings.ImprTikets = 1 Then
+            If My.Settings.ImprTikets = 1 And tipofact <> 998 Then
                 ' MsgBox("imprimirtiket")
                 cmdimprimir.PerformClick()
             End If
-
         Catch ex As Exception
             tmrcontrolarnumfact.Enabled = True
             Transaccion.Rollback()
@@ -1001,71 +1014,74 @@ Public Class puntoventa
 
         EnProgreso.Show()
         Application.DoEvents()
-        Try
-            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim fac As New datosfacturas
 
-            Reconectar()
+        ImprimirFactura(IdFactura, ptovta, condVta)
 
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
-emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
-emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-'','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
-FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+        '        Try
+        '            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '            Dim fac As New datosfacturas
 
-            tabEmp.Fill(fac.Tables("factura_enca"))
-            Reconectar()
+        '            Reconectar()
 
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            plu,
-            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
-            format(replace(iva,',','.'),2,'es_AR') as iva ,
-            format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
-            tabFac.Fill(fac.Tables("facturax"))
+        '            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+        'emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+        'emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+        'concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        'concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+        'concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+        ''','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
+        'FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
+        'where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
-            Dim direccionReport As String
-            If ptovta <> FacturaElectro.puntovtaelect Then
-                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-            Else
-                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-            End If
-            If My.Settings.ImprTikets = 1 And condVta = 1 Then
-                Dim PrintTxt As New PrintDocument
-                Dim pgSize As New PaperSize
-                pgSize.RawKind = Printing.PaperKind.Custom
-                pgSize.Width = 147 '196.8 '
-                'pgSize.Height = 173.23 '100
-                PrintTxt.DefaultPageSettings.PaperSize = pgSize
-                ' evento print
+        '            tabEmp.Fill(fac.Tables("factura_enca"))
+        '            Reconectar()
 
-                If ptovta <> FacturaElectro.puntovtaelect Then
-                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
-                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-                    PrintTxt.Print()
-                Else
-                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
-                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-                    PrintTxt.Print()
-                End If
-            Else
+        '            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+        '            plu,
+        '            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
+        '            format(replace(iva,',','.'),2,'es_AR') as iva ,
+        '            format(replace(punit,',','.'),2,'es_AR') as punit ,
+        '            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
+        '            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+        '            tabFac.Fill(fac.Tables("facturax"))
 
-                Using Imprimir As New ImprimirDirecto()
-                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-                End Using
-            End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            EnProgreso.Close()
-        End Try
+        '            Dim direccionReport As String
+        '            If ptovta <> FacturaElectro.puntovtaelect Then
+        '                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+        '            Else
+        '                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+        '            End If
+        '            If My.Settings.ImprTikets = 1 And condVta = 1 Then
+        '                Dim PrintTxt As New PrintDocument
+        '                Dim pgSize As New PaperSize
+        '                pgSize.RawKind = Printing.PaperKind.Custom
+        '                pgSize.Width = 147 '196.8 '
+        '                'pgSize.Height = 173.23 '100
+        '                PrintTxt.DefaultPageSettings.PaperSize = pgSize
+        '                ' evento print
+
+        '                If ptovta <> FacturaElectro.puntovtaelect Then
+        '                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
+        '                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
+        '                    PrintTxt.Print()
+        '                Else
+        '                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
+        '                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
+        '                    PrintTxt.Print()
+        '                End If
+        '            Else
+
+        '                Using Imprimir As New ImprimirDirecto()
+        '                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
+        '                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
+        '                End Using
+        '            End If
+        '        Catch ex As Exception
+        '            MsgBox(ex.Message)
+        '            EnProgreso.Close()
+        '        End Try
         EnProgreso.Close()
     End Sub
 
@@ -1095,21 +1111,30 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         Dim lineatotal As String
         Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
         Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-
+        Dim ivaProd As String = ""
         Dim fac As New datosfacturas
+
+        Dim facTotal As String = ""
+        Dim facSubtotal As String = ""
+        Dim FacIva21 As String = ""
+        Dim FacIva105 As String = ""
+
+        Dim facCAE As String = ""
+        Dim facVtoCAE As String = ""
+        Dim facCodBARRA As String = ""
 
 
         Reconectar()
 
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
-emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
-emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-'','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
-FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+        emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+        emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+        concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+        '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
+        FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         Dim filasProd() As DataRow
@@ -1128,8 +1153,18 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
             from fact_items where id_fact=" & IdFactura, conexionPrinc)
-        tabFac.Fill(fac.Tables("facturax"))
+        Dim tablaProd As New DataTable
+        tabFac.Fill(tablaProd)
 
+
+        facTotal = tablaEmpresa.Rows(0).Item(30)
+        facSubtotal = tablaEmpresa.Rows(0).Item(31)
+        FacIva21 = tablaEmpresa.Rows(0).Item(21)
+        FacIva105 = ""
+
+        facCAE = tablaEmpresa.Rows(0).Item(25)
+        facCodBARRA = tablaEmpresa.Rows(0).Item(29)
+        facVtoCAE = tablaEmpresa.Rows(0).Item(28)
         'e.PageSettings.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
         e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 5, 15)
         'fac.Tables("factura_enca")["empnombre"].tostring()
@@ -1146,50 +1181,104 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         'e.Graphics.DrawString("CODIGO      |    CANT    | PRE. UNI | PRE. TOTAL ", font5, Brushes.Black, 0, 190)
         'e.Graphics.DrawString("DESCRIPCION", font5, Brushes.Black, 0, 200)
         'e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 210)
+        Dim i As Integer
+        Dim j As Integer
+        Dim car As Integer
 
-        For Each row As DataGridViewRow In dtproductos.Rows
-            codigo = row.Cells(0).Value.ToString : unidad = row.Cells(2).Value : detalle = row.Cells(3).Value : valoruni = row.Cells(5).Value : valortot = row.Cells(6).Value
+
+        For i = 0 To tablaProd.Rows.Count - 1
+            codigo = tablaProd.Rows(i).Item(0)
+            unidad = tablaProd(i).Item(1)
+            detalle = tablaProd(i).Item(2)
+            valoruni = tablaProd(i).Item(4)
+            valortot = FormatNumber(tablaProd(i).Item(5), 2)
+            ivaProd = tablaProd(i).Item(3)
+            texto = unidad & " x " & valoruni & Chr(9) & "  (" & ivaProd & ")"
+            yPos = 190 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea            
 
 
-            texto = unidad & " x " & valoruni & Chr(9) '& "$" & valortot 'codigo & Chr(9) & Chr(9) & unidad & Chr(9) & "$" & valoruni & Chr(9) & "$" & valortot
-            '    texto2 = detalle
-            yPos = 180 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea
-            ' Imprime la línea con el objeto Graphics
-            Dim i As Integer
-            Dim car As Integer
-            If detalle.Length <= 27 Then
-                car= 27 - detalle.Length
-                For i = 0 To car
+            If detalle.Length <= 25 Then
+                car = 25 - detalle.Length
+                For j = 0 To car
                     detalle &= " "
                 Next
             Else
-                car = detalle.Length - 27
-                detalle = detalle.Remove(27, car)
+                car = detalle.Length - 25
+                detalle = detalle.Remove(26, car - 1)
+            End If
+
+            If valortot.Length <= 7 Then
+                car = 7 - valortot.Length
+                For j = 0 To car
+                    valortot = " " & valortot
+                Next
+
             End If
 
 
-            If Not row.IsNewRow Then
-                e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 5, yPos)
-                count += 1
-                yPos = yPos + 10
-                e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 5, yPos)
-                'total += valor
-            End If
+            'If Not row.IsNewRow Then
+            e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 0, yPos)
+            count += 1
+            yPos = yPos + 10
+            e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 0, yPos)
+            'total += valor
+            'End If
 
             count += 1
 
         Next
+
+        If FacIva21.Length <= 7 Then
+            car = 7 - FacIva21.Length
+            For j = 0 To car
+                FacIva21 = " " & FacIva21
+            Next
+
+        End If
+
+
+        If facSubtotal.Length <= 7 Then
+            car = 7 - facSubtotal.Length
+            For j = 0 To car
+                facSubtotal = " " & facSubtotal
+            Next
+        End If
+
+        If facTotal.Length <= 7 Then
+            car = 7 - facTotal.Length
+            For j = 0 To car
+                facTotal = " " & facTotal
+            Next
+        End If
+
+
         yPos += 20
-        Dim lineaSep = StrDup(25, " ")
-        e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 5, yPos)
+        Dim textosub As String = "Subtotal"
+        Dim textoIva21 As String = "Alicuota 21%"
+        Dim textoTotal As String = "Total"
+
+
+
+        Dim lineaSep = StrDup(27, " ")
+        e.Graphics.DrawString(lineaSep & "__________", printfont, System.Drawing.Brushes.Black, 0, yPos)
         Dim XXX As Integer = 0
-        XXX = Len(total.ToString)
-        lineatotal = StrDup(14 - XXX, ".")
-        yPos += 20
-        e.Graphics.DrawString("Total" & lineatotal & lblfacttotal.Text, font3, System.Drawing.Brushes.Black, 5, yPos)
-        yPos += 30
-        e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 15, yPos)
+
+        XXX = 27 - (textosub.Length + facSubtotal.Length)
+        lineatotal = StrDup(XXX, ".")
         yPos += 10
+        e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+        XXX = 27 - (textoIva21.Length + FacIva21.Length)
+        lineatotal = StrDup(XXX, ".")
+        yPos += 10
+        e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+        XXX = 27 - (textoTotal.Length + facTotal.Length)
+        lineatotal = StrDup(XXX, ".")
+        yPos += 10
+        e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+        yPos += 30
+
         e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 15, yPos)
 
 
@@ -1363,9 +1452,6 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             Next
         End If
 
-
-
-
         yPos += 20
         Dim textosub As String = "Subtotal"
         Dim textoIva21 As String = "Alicuota 21%"
@@ -1467,7 +1553,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
                 idFacRap = InputBox("Igrese codigo de comprobante" & vbNewLine & vbNewLine & "1-ReciboFac || 2-Fact B || 3-Fact A", "Cambiar tipo de comprobante", 1)
                 With Me
                     .idfacrap = idFacRap
-                    .Idcliente = 9999
+                    .Idcliente = txtcliecta.Text
                     .cargarCliente()
                     .cmdguardar.Enabled = False
                     .cmdsolicitarcae.Enabled = True
@@ -1484,48 +1570,101 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         dtproductos.Rows.Clear()
+        Select Case tipofact
+            Case 1, 2, 3
+                Idcliente = txtcliecta.Text
+                cargarCliente()
+            Case Else
+                Idcliente = 9999
+                cargarCliente()
+        End Select
         cargar_datos_factura()
-
+        CalcularTotales()
 
     End Sub
+    Public Sub CargarPedidoRemoto(NumPedido As Integer, ptovtapedido As Integer)
+        Try
+            Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("Select " _
+                & "id, condVta, vendedor from fact_facturas where observaciones Like 'PENDIENTE' 
+                AND ptovta=" & ptovtapedido & " and num_fact=" & NumPedido & " and tipofact=995", conexionPrinc)
+            Dim tablaped As New DataTable
+            Dim infoped() As DataRow
+            Dim IdPedido As Integer
+            consultapedido.Fill(tablaped)
+            infoped = tablaped.Select("")
+            'If tablaped.Rows.Count = 0 Then
+            '    MsgBox("Pedido no encontrado o ya facturado")
+            '    dtpedidosfact.CurrentCell.Value = ""
+            '    SendKeys.Send("{UP"
+            '    Exit Sub
+            'End If
+            'If dtpedidosfact.Rows.Count = 2 And Not IsNumeric(lblfacvendedor.Text) Then
+            '    MsgBox("la factura va a cambiar de vendedor >>> " & infoped(0)(2))
+            'ElseIf dtpedidosfact.Rows.Count > 2 And lblfacvendedor.Text <> infoped(0)(2) Then
+            '    MsgBox("el pedido pertenece a otro vendedor, no se lo puede agregar a esta factura")
+            '    dtpedidosfact.Rows.Remove(dtpedidosfact.CurrentRow)
+            '    Exit Sub
+            'End If
+            'dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
+            'cmbcondvta.SelectedValue = infoped(0)(1)
+            'cmbvendedor.SelectedValue = infoped(0)(2)
+            condVta = infoped(0)(1)
+            lblfacvendedor.Text = infoped(0)(2)
+            IdPedido = infoped(0)(0)
+            Reconectar()
+            Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & IdPedido, conexionPrinc)
+            Dim tablaitm As New DataTable
+            Dim infoitm() As DataRow
+            consultapedidoitems.Fill(tablaitm)
+            infoitm = tablaitm.Select("")
+            For i = 0 To infoitm.GetUpperBound(0)
+                dtproductos.Rows.Add(infoitm(i)(0), infoitm(i)(1), infoitm(i)(2), infoitm(i)(3), infoitm(i)(4), infoitm(i)(5), infoitm(i)(6))
+            Next
+            CalcularTotales()
+        Catch ex As Exception
+        End Try
+    End Sub
 
+    Public Sub CargarPedido(NumPedido As Integer)
+        Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("Select " _
+                & "id, condVta, vendedor from fact_facturas where observaciones Like 'PENDIENTE' AND ptovta=1 and num_fact=" & NumPedido & " and tipofact=995", conexionPrinc)
+        Dim tablaped As New DataTable
+        Dim infoped() As DataRow
+        consultapedido.Fill(tablaped)
+        infoped = tablaped.Select("")
+        If tablaped.Rows.Count = 0 Then
+            MsgBox("Pedido no encontrado o ya facturado")
+            dtpedidosfact.CurrentCell.Value = ""
+            SendKeys.Send("{UP}")
+            Exit Sub
+        End If
+        If dtpedidosfact.Rows.Count = 2 And Not IsNumeric(lblfacvendedor.Text) Then
+            MsgBox("la factura va a cambiar de vendedor >>> " & infoped(0)(2))
+        ElseIf dtpedidosfact.Rows.Count > 2 And lblfacvendedor.Text <> infoped(0)(2) Then
+            MsgBox("el pedido pertenece a otro vendedor, no se lo puede agregar a esta factura")
+            dtpedidosfact.Rows.Remove(dtpedidosfact.CurrentRow)
+            Exit Sub
+        End If
+        dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
+        'cmbcondvta.SelectedValue = infoped(0)(1)
+        'cmbvendedor.SelectedValue = infoped(0)(2)
+        lblfacvendedor.Text = infoped(0)(2)
+        Reconectar()
+        Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
+        Dim tablaitm As New DataTable
+        Dim infoitm() As DataRow
+        consultapedidoitems.Fill(tablaitm)
+        infoitm = tablaitm.Select("")
+        For i = 0 To infoitm.GetUpperBound(0)
+            dtproductos.Rows.Add(infoitm(i)(0), infoitm(i)(1), infoitm(i)(2), infoitm(i)(3), infoitm(i)(4), infoitm(i)(5), infoitm(i)(6))
+        Next
+    End Sub
     Private Sub dtpedidosfact_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellEndEdit
         Try
 
             If e.ColumnIndex = 1 Then
                 Reconectar()
-                Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("Select " _
-                & "id, condVta, vendedor from fact_facturas where observaciones Like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
-                Dim tablaped As New DataTable
-                Dim infoped() As DataRow
-                consultapedido.Fill(tablaped)
-                infoped = tablaped.Select("")
-                If tablaped.Rows.Count = 0 Then
-                    MsgBox("Pedido no encontrado o ya facturado")
-                    dtpedidosfact.CurrentCell.Value = ""
-                    SendKeys.Send("{UP}")
-                    Exit Sub
-                End If
-                If dtpedidosfact.Rows.Count = 2 And lblfacvendedor.Text <> infoped(0)(2) Then
-                    MsgBox("la factura va a cambiar de vendedor >>> " & infoped(0)(2))
-                ElseIf dtpedidosfact.Rows.Count > 2 And lblfacvendedor.Text <> infoped(0)(2) Then
-                    MsgBox("el pedido pertenece a otro vendedor, no se lo puede agregar a esta factura")
-                    dtpedidosfact.Rows.Remove(dtpedidosfact.CurrentRow)
-                    Exit Sub
-                End If
-                dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
-                'cmbcondvta.SelectedValue = infoped(0)(1)
-                'cmbvendedor.SelectedValue = infoped(0)(2)
-                lblfacvendedor.Text = infoped(0)(2)
-                Reconectar()
-                Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
-                Dim tablaitm As New DataTable
-                Dim infoitm() As DataRow
-                consultapedidoitems.Fill(tablaitm)
-                infoitm = tablaitm.Select("")
-                For i = 0 To infoitm.GetUpperBound(0)
-                    dtproductos.Rows.Add(infoitm(i)(0), infoitm(i)(1), infoitm(i)(2), infoitm(i)(3), infoitm(i)(4), infoitm(i)(5), infoitm(i)(6))
-                Next
+                CargarPedido(dtpedidosfact.CurrentRow.Cells(1).Value)
                 ' rdserial.Enabled = False
                 CalcularTotales()
                 'ElseIf e.ColumnIndex = 1 And rdserial.Checked = True Then
@@ -1975,31 +2114,185 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
 
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles cmdremitar.Click
+        Try
+            'Dim idFactura As Integer = idFactura             'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim fac As New datosfacturas
+            Dim fa As Boolean
 
+            Reconectar()
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+            fac.razon as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr, 
+            fac.cuit as faccuit, fac.vendedor as facvend, fac.condvta as faccondvta, fac.total, fac.ptovta, fac.id_cliente,fac.tipofact, fac.remito,fac.fecha, 
+            fac.observaciones
+            FROM fact_facturas as fac  
+            where fac.id=" & idFactura, conexionPrinc)
+            Dim encabezado As New DataTable
+            tabEmp.Fill(encabezado)
+
+            Select Case encabezado.Rows(0).Item(10)
+                Case 998, 2, 3, 7, 8, 991, 993, 994, 995, 996, 997
+                    MsgBox("el comprobante no es una factura")
+                    Exit Sub
+            End Select
+
+            If encabezado.Rows(0).Item(11) <> 0 Then
+                MsgBox("Esta factura ya esta remitada")
+                Exit Sub
+            End If
+
+            If encabezado.Rows(0).Item(10) = 1 Or encabezado.Rows(0).Item(10) = 2 Or encabezado.Rows(0).Item(10) = 3 Then
+                fa = True
+            End If
+
+            Reconectar()
+
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+            cantidad as cant, descripcion, iva ,format(punit,2,'es_AR') ,format(ptotal,2,'es_AR') as ptotal, cod as codigo,plu from fact_items where id_fact=" & idFactura, conexionPrinc)
+            Dim items As New DataTable
+            tabFac.Fill(items)
+            'tabFac.Fill(fac.Tables("facturax"))
+            'Dim items() As DataRow
+            'items = fac.Tables("facturax").Select()
+
+            Dim ptovta As String = My.Settings.idPtoVta
+            Dim tipoFact As Integer = 998
+            Dim num_remit As Integer = ObtenerNumerosFact(tipoFact, ptovta)
+            Dim idRemito As Integer
+            Dim coef As Double = 0
+            Dim SqlQuery As String
+
+            'If MsgBox("el numero de remito sera: " & ptovta & "-" & num_remit & "   esto es correcto? ", vbYesNo + vbQuestion) = vbNo Then
+            '    Exit Sub
+            'End If
+
+            Dim fecha As String = Format(CDate(Now()), "yyyy-MM-dd")
+            Dim razon As String = encabezado.Rows(0).Item(0)
+            Dim direccion As String = encabezado.Rows(0).Item(1)
+            Dim localidad As String = encabezado.Rows(0).Item(2)
+            Dim tipocontr As String = encabezado.Rows(0).Item(3)
+            Dim cuit As String = encabezado.Rows(0).Item(4)
+            Dim vendedor As String = encabezado.Rows(0).Item(5)
+            Dim condvta As Integer = encabezado.Rows(0).Item(6)
+            Dim total As String = encabezado.Rows(0).Item(7)
+            Dim idcliente As String = encabezado.Rows(0).Item(9)
+            Dim transporte As String = encabezado.Rows(0).Item(13)
+
+            Reconectar()
+            SqlQuery = "insert into fact_facturas  
+            (tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2) values 
+            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?transp)"
+
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?ptov", Val(ptovta))
+                .AddWithValue("?tipofact", tipoFact)
+                .AddWithValue("?nfac", Val(num_remit))
+                .AddWithValue("?fech", fecha)
+                .AddWithValue("?idclie", idcliente)
+                .AddWithValue("?razon", razon)
+                .AddWithValue("?dire", direccion)
+                .AddWithValue("?loca", localidad)
+                .AddWithValue("?tipocont", tipocontr)
+                .AddWithValue("?cuit", cuit)
+                .AddWithValue("?condvta", condvta)
+                .AddWithValue("?subt", 0)
+                .AddWithValue("?105", 0)
+                .AddWithValue("?21", 0)
+                .AddWithValue("?tot", total)
+                .AddWithValue("?vend", vendedor)
+                .AddWithValue("?transp", transporte)
+            End With
+            comandoadd.ExecuteNonQuery()
+            idRemito = comandoadd.LastInsertedId
+
+            Reconectar()
+            Dim lector As System.Data.IDataReader
+            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+            sql.Connection = conexionPrinc
+            sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_remit) & " where donfdesc= " & tipoFact & " and ptovta=" & ptovta
+            sql.CommandType = CommandType.Text
+            lector = sql.ExecuteReader
+            lector.Read()
+
+
+
+            'asignamos el remito a la factura
+            SqlQuery = "update fact_facturas set remito=?idremito where id=?idfactura"
+            Reconectar()
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoupd.Parameters
+                .AddWithValue("?idremito", idRemito)
+                .AddWithValue("?idfactura", idFactura)
+            End With
+            comandoupd.ExecuteNonQuery()
+
+
+
+            Dim cod As String
+            Dim cantidad As String
+            Dim descripcion As String
+            Dim iva As String
+            Dim punit As String
+            Dim ptotal As String
+            Dim codbar As String
+            Dim i As Integer
+
+            If Val(num_remit) = 0 Then
+                MsgBox("No se pueden guardar los items del remito")
+                Exit Sub
+            End If
+
+            For i = 0 To items.Rows.Count - 1
+
+                If fa = True Then
+                    coef = (items.Rows(i).Item(2) + 100) / 100
+                Else
+                    coef = 1
+                End If
+                cod = items.Rows(i).Item(5)
+                codbar = items.Rows(i).Item(6)
+                cantidad = items.Rows(i).Item(0)
+                descripcion = items.Rows(i).Item(1)
+                iva = items.Rows(i).Item(2)
+                punit = items.Rows(i).Item(3) * coef
+                ptotal = items.Rows(i).Item(4) * coef
+
+                SqlQuery = "insert into fact_items " _
+                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact,plu) values" _
+                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact,?plu)"
+
+                Reconectar()
+                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+                With comandoadditm.Parameters
+                    .AddWithValue("?cod", cod)
+                    .AddWithValue("?cant", cantidad)
+                    .AddWithValue("?desc", descripcion)
+                    .AddWithValue("?iva", iva)
+                    .AddWithValue("?punit", punit)
+                    .AddWithValue("?ptot", ptotal)
+                    .AddWithValue("?tipofact", tipoFact)
+                    .AddWithValue("?ptovta", ptovta)
+                    .AddWithValue("?num_fact", num_remit)
+                    .AddWithValue("?id_fact", idRemito)
+                    .AddWithValue("?plu", codbar)
+                End With
+                comandoadditm.ExecuteNonQuery()
+            Next
+            ImprimirRemito(idRemito)
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 
-    Private Sub tmrcontrolarnumfact_Tick(sender As Object, e As EventArgs) Handles tmrcontrolarnumfact.Tick
-
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        Idcliente = 9999
+        cargarCliente()
     End Sub
 
-    Private Sub lblcodigobarras_Click(sender As Object, e As EventArgs) Handles lblcodigobarras.Click
-
-    End Sub
-
-    Private Sub lblestadoCAE_Click(sender As Object, e As EventArgs) Handles lblestadoCAE.Click
-
-    End Sub
-
-    Private Sub lblvtoCAE_Click(sender As Object, e As EventArgs) Handles lblvtoCAE.Click
-
-    End Sub
-
-    Private Sub lblfechacae_Click(sender As Object, e As EventArgs) Handles lblfechacae.Click
-
-    End Sub
-
-    Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs)
+    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
 
     End Sub
 End Class

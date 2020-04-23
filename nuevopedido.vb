@@ -6,6 +6,7 @@
     Public tipoFac As Integer = 995
     Public ptovta As Integer = DatosAcceso.IdPtoVtaDef
     Public ImportaAPP As Boolean = False
+    Public IDApp As String
 
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
         Try
@@ -317,7 +318,7 @@
     Public Sub cargarCliente()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre," _
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(cl.nomapell_razon,' (tel:', cl.telefono, '-', cl.celular,')') as clie, cl.dir_domicilio, lc.nombre," _
             & " cl.iva_tipo, cl.cuit, cl.lista_precios from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
@@ -404,11 +405,11 @@
                     If Val(infocl(0)(3)) = 0 Then
                         ImportaAPP = True
 
-                        tmrcontrolarnumfact.Enabled = True
-                        Dim idAPP = infocl(0)(7)
+                    tmrcontrolarnumfact.Enabled = True
+                    IDApp = infocl(0)(7)
 
                     Dim consulta2 As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion, format(iva,2,'es_AR'),format(punit,2,'es_AR'), format(ptotal,2,'es_AR'),id FROM fact_items  " _
-               & " where codint like '" & idAPP & "'", conexionPrinc)
+               & " where codint like '" & IDApp & "'", conexionPrinc)
                     Dim tablaprod As New DataTable
                         Dim filasProd() As DataRow
                         consulta2.Fill(tablaprod)
@@ -623,11 +624,15 @@
             End If
             If modificar = True Then
                 Reconectar()
-                sqlQuery = "DELETE FROM  fact_items where id_fact=" & idFactura
-                Dim comandodelitm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                comandodelitm.ExecuteNonQuery()
-
-
+                If ImportaAPP = False Then
+                    sqlQuery = "DELETE FROM  fact_items where id_fact=" & idFactura
+                    Dim comandodelitm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    comandodelitm.ExecuteNonQuery()
+                Else
+                    sqlQuery = "DELETE FROM  fact_items where codint like '" & IDApp & "'"
+                    Dim comandodelitm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    comandodelitm.ExecuteNonQuery()
+                End If
 
                 Reconectar()
                 sqlQuery = "update fact_facturas set ptovta= '" & Val(txtptovta.Text) & "', num_fact='" & Val(txtnufac.Text) &

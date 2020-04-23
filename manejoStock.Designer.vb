@@ -30,9 +30,6 @@ Partial Class manejoStock
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.cmbalmacen = New System.Windows.Forms.ComboBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.txtlimitmax = New System.Windows.Forms.TextBox()
-        Me.lblmostrando = New System.Windows.Forms.Label()
         Me.grpperiodo = New System.Windows.Forms.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.dthastafact = New System.Windows.Forms.DateTimePicker()
@@ -82,9 +79,6 @@ Partial Class manejoStock
         Me.pnnavegacion.Controls.Add(Me.Button2)
         Me.pnnavegacion.Controls.Add(Me.Label3)
         Me.pnnavegacion.Controls.Add(Me.cmbalmacen)
-        Me.pnnavegacion.Controls.Add(Me.Button1)
-        Me.pnnavegacion.Controls.Add(Me.txtlimitmax)
-        Me.pnnavegacion.Controls.Add(Me.lblmostrando)
         Me.pnnavegacion.Controls.Add(Me.grpperiodo)
         Me.pnnavegacion.Controls.Add(Me.GroupBox1)
         Me.pnnavegacion.Controls.Add(Me.cmdbuscar)
@@ -100,13 +94,14 @@ Partial Class manejoStock
         '
         Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Location = New System.Drawing.Point(849, 0)
+        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
+        Me.Button3.Location = New System.Drawing.Point(941, 0)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(92, 118)
+        Me.Button3.Size = New System.Drawing.Size(70, 118)
         Me.Button3.TabIndex = 181
-        Me.Button3.Text = "Cargar Productos y stock"
+        Me.Button3.Text = "Cargar stock"
         Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button3.UseVisualStyleBackColor = True
         '
@@ -115,17 +110,18 @@ Partial Class manejoStock
         Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(941, 0)
+        Me.Button2.Location = New System.Drawing.Point(1011, 0)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(92, 118)
+        Me.Button2.Size = New System.Drawing.Size(70, 118)
         Me.Button2.TabIndex = 180
         Me.Button2.Text = "Cargar solo stock"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.Visible = False
         '
         'Label3
         '
@@ -147,41 +143,6 @@ Partial Class manejoStock
         Me.cmbalmacen.Name = "cmbalmacen"
         Me.cmbalmacen.Size = New System.Drawing.Size(247, 21)
         Me.cmbalmacen.TabIndex = 178
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(509, 57)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 23)
-        Me.Button1.TabIndex = 177
-        Me.Button1.Text = "VER MAS"
-        Me.Button1.UseVisualStyleBackColor = True
-        Me.Button1.Visible = False
-        '
-        'txtlimitmax
-        '
-        Me.txtlimitmax.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtlimitmax.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtlimitmax.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.txtlimitmax.Location = New System.Drawing.Point(406, 57)
-        Me.txtlimitmax.Name = "txtlimitmax"
-        Me.txtlimitmax.Size = New System.Drawing.Size(69, 22)
-        Me.txtlimitmax.TabIndex = 175
-        Me.txtlimitmax.Text = "500"
-        Me.txtlimitmax.Visible = False
-        '
-        'lblmostrando
-        '
-        Me.lblmostrando.AutoSize = True
-        Me.lblmostrando.BackColor = System.Drawing.Color.Transparent
-        Me.lblmostrando.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblmostrando.ForeColor = System.Drawing.Color.White
-        Me.lblmostrando.Location = New System.Drawing.Point(279, 60)
-        Me.lblmostrando.Name = "lblmostrando"
-        Me.lblmostrando.Size = New System.Drawing.Size(99, 17)
-        Me.lblmostrando.TabIndex = 174
-        Me.lblmostrando.Text = "Mostrando 0 a"
-        Me.lblmostrando.Visible = False
         '
         'grpperiodo
         '
@@ -299,12 +260,12 @@ Partial Class manejoStock
         Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
         Me.cmdbuscar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.ForeColor = System.Drawing.Color.White
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1033, 0)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1081, 0)
         Me.cmdbuscar.Name = "cmdbuscar"
-        Me.cmdbuscar.Size = New System.Drawing.Size(92, 118)
+        Me.cmdbuscar.Size = New System.Drawing.Size(70, 118)
         Me.cmdbuscar.TabIndex = 170
         Me.cmdbuscar.Text = "Buscar"
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -327,12 +288,12 @@ Partial Class manejoStock
         Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
         Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(1125, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(1151, 0)
         Me.cmdsalir.Name = "cmdsalir"
-        Me.cmdsalir.Size = New System.Drawing.Size(96, 118)
+        Me.cmdsalir.Size = New System.Drawing.Size(70, 118)
         Me.cmdsalir.TabIndex = 17
         Me.cmdsalir.Text = "Salir"
         Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -391,9 +352,6 @@ Partial Class manejoStock
     Friend WithEvents dtdesdefact As DateTimePicker
     Friend WithEvents Label8 As Label
     Friend WithEvents ConsultarVentas As System.ComponentModel.BackgroundWorker
-    Friend WithEvents txtlimitmax As TextBox
-    Friend WithEvents lblmostrando As Label
-    Friend WithEvents Button1 As Button
     Friend WithEvents cmbproveedor As ComboBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label

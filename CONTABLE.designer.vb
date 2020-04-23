@@ -68,9 +68,8 @@ Partial Class CONTABLE
         Me.chktodosfact = New System.Windows.Forms.CheckBox()
         Me.grpacciones = New System.Windows.Forms.GroupBox()
         Me.Button15 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button16 = New System.Windows.Forms.Button()
         Me.grpperiodo = New System.Windows.Forms.GroupBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.dthastafact = New System.Windows.Forms.DateTimePicker()
@@ -83,9 +82,10 @@ Partial Class CONTABLE
         Me.chktodosvendedores = New System.Windows.Forms.CheckBox()
         Me.chkctactlievtas = New System.Windows.Forms.CheckBox()
         Me.grpagrupar = New System.Windows.Forms.GroupBox()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
+        Me.cmbInforPtoVta = New System.Windows.Forms.ComboBox()
         Me.Label54 = New System.Windows.Forms.Label()
         Me.rdventadiaria = New System.Windows.Forms.RadioButton()
-        Me.Button16 = New System.Windows.Forms.Button()
         Me.rdninguno = New System.Windows.Forms.RadioButton()
         Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
@@ -94,6 +94,8 @@ Partial Class CONTABLE
         Me.dtlistacob = New System.Windows.Forms.DataGridView()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.rdtarjeta = New System.Windows.Forms.RadioButton()
         Me.Label56 = New System.Windows.Forms.Label()
         Me.rdcobranzadiaria = New System.Windows.Forms.RadioButton()
         Me.rdcobranzaintervalo = New System.Windows.Forms.RadioButton()
@@ -103,7 +105,7 @@ Partial Class CONTABLE
         Me.chkcobselvendedor = New System.Windows.Forms.CheckBox()
         Me.cmbcobvendedor = New System.Windows.Forms.ComboBox()
         Me.lbltotcob = New System.Windows.Forms.Label()
-        Me.Label15 = New System.Windows.Forms.Label()
+        Me.lbltotalnombre = New System.Windows.Forms.Label()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.Button12 = New System.Windows.Forms.Button()
         Me.cmdbuscarcomp = New System.Windows.Forms.Button()
@@ -129,21 +131,6 @@ Partial Class CONTABLE
         Me.dtpbalancehasta = New System.Windows.Forms.DateTimePicker()
         Me.dtpbalancede = New System.Windows.Forms.DateTimePicker()
         Me.Label62 = New System.Windows.Forms.Label()
-        Me.tabBalConsultas = New System.Windows.Forms.TabPage()
-        Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
-        Me.Panel11 = New System.Windows.Forms.Panel()
-        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.cmbInforCateg = New System.Windows.Forms.ComboBox()
-        Me.cmbInforProv = New System.Windows.Forms.ComboBox()
-        Me.rdInforCategoria = New System.Windows.Forms.RadioButton()
-        Me.rdInforProv = New System.Windows.Forms.RadioButton()
-        Me.rdInforgeneral = New System.Windows.Forms.RadioButton()
-        Me.Button18 = New System.Windows.Forms.Button()
-        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.dtpvtashishasta = New System.Windows.Forms.DateTimePicker()
-        Me.dtpvtashisdesde = New System.Windows.Forms.DateTimePicker()
-        Me.Label9 = New System.Windows.Forms.Label()
         Me.Panel27 = New System.Windows.Forms.Panel()
         Me.lblbalanceganancia = New System.Windows.Forms.Label()
         Me.lblbalancecosto = New System.Windows.Forms.Label()
@@ -151,6 +138,7 @@ Partial Class CONTABLE
         Me.tabremitos = New System.Windows.Forms.TabPage()
         Me.dtremitos = New System.Windows.Forms.DataGridView()
         Me.Panel22 = New System.Windows.Forms.Panel()
+        Me.Button18 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.cmdlistadoremitos = New System.Windows.Forms.Button()
         Me.cmdreimprimirremitos = New System.Windows.Forms.Button()
@@ -438,7 +426,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn52 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn53 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn54 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Button24 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.tabcontable.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -465,11 +452,6 @@ Partial Class CONTABLE
         CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel28.SuspendLayout()
         Me.grpbalanceintervalo.SuspendLayout()
-        Me.tabBalConsultas.SuspendLayout()
-        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel11.SuspendLayout()
-        Me.GroupBox5.SuspendLayout()
-        Me.GroupBox6.SuspendLayout()
         Me.Panel27.SuspendLayout()
         Me.tabremitos.SuspendLayout()
         CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -688,12 +670,11 @@ Partial Class CONTABLE
         'grpacciones
         '
         Me.grpacciones.Controls.Add(Me.Button15)
-        Me.grpacciones.Controls.Add(Me.Button1)
         Me.grpacciones.Controls.Add(Me.Button2)
-        Me.grpacciones.Controls.Add(Me.Button3)
+        Me.grpacciones.Controls.Add(Me.Button16)
         Me.grpacciones.Location = New System.Drawing.Point(379, 0)
         Me.grpacciones.Name = "grpacciones"
-        Me.grpacciones.Size = New System.Drawing.Size(260, 98)
+        Me.grpacciones.Size = New System.Drawing.Size(132, 98)
         Me.grpacciones.TabIndex = 71
         Me.grpacciones.TabStop = False
         '
@@ -701,46 +682,34 @@ Partial Class CONTABLE
         '
         Me.Button15.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button15.Location = New System.Drawing.Point(129, 21)
+        Me.Button15.Location = New System.Drawing.Point(6, 40)
         Me.Button15.Name = "Button15"
         Me.Button15.Size = New System.Drawing.Size(117, 23)
         Me.Button15.TabIndex = 60
         Me.Button15.Text = "Remitar"
         Me.Button15.UseVisualStyleBackColor = False
         '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Location = New System.Drawing.Point(6, 20)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(117, 23)
-        Me.Button1.TabIndex = 57
-        Me.Button1.Text = "Reimp. comprobante"
-        Me.Button1.UseVisualStyleBackColor = False
-        '
         'Button2
         '
         Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Location = New System.Drawing.Point(6, 44)
+        Me.Button2.Location = New System.Drawing.Point(6, 16)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(117, 23)
         Me.Button2.TabIndex = 58
         Me.Button2.Text = "Imprimir listado"
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'Button3
+        'Button16
         '
-        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button3.Enabled = False
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Location = New System.Drawing.Point(6, 68)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(117, 23)
-        Me.Button3.TabIndex = 59
-        Me.Button3.Text = "ANULAR FACTURA"
-        Me.Button3.UseVisualStyleBackColor = False
+        Me.Button16.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button16.Location = New System.Drawing.Point(6, 64)
+        Me.Button16.Name = "Button16"
+        Me.Button16.Size = New System.Drawing.Size(117, 23)
+        Me.Button16.TabIndex = 70
+        Me.Button16.Text = "Exportar a excel"
+        Me.Button16.UseVisualStyleBackColor = False
         '
         'grpperiodo
         '
@@ -806,7 +775,7 @@ Partial Class CONTABLE
         Me.grpfiltrar.Controls.Add(Me.chktodosvendedores)
         Me.grpfiltrar.Controls.Add(Me.chkctactlievtas)
         Me.grpfiltrar.Enabled = False
-        Me.grpfiltrar.Location = New System.Drawing.Point(636, 0)
+        Me.grpfiltrar.Location = New System.Drawing.Point(517, 0)
         Me.grpfiltrar.Name = "grpfiltrar"
         Me.grpfiltrar.Size = New System.Drawing.Size(200, 98)
         Me.grpfiltrar.TabIndex = 69
@@ -867,16 +836,39 @@ Partial Class CONTABLE
         '
         'grpagrupar
         '
+        Me.grpagrupar.Controls.Add(Me.RadioButton2)
+        Me.grpagrupar.Controls.Add(Me.cmbInforPtoVta)
         Me.grpagrupar.Controls.Add(Me.Label54)
         Me.grpagrupar.Controls.Add(Me.rdventadiaria)
-        Me.grpagrupar.Controls.Add(Me.Button16)
         Me.grpagrupar.Controls.Add(Me.rdninguno)
         Me.grpagrupar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.grpagrupar.Location = New System.Drawing.Point(835, 0)
+        Me.grpagrupar.Location = New System.Drawing.Point(723, 0)
         Me.grpagrupar.Name = "grpagrupar"
         Me.grpagrupar.Size = New System.Drawing.Size(198, 98)
         Me.grpagrupar.TabIndex = 68
         Me.grpagrupar.TabStop = False
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.Location = New System.Drawing.Point(94, 16)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(98, 17)
+        Me.RadioButton2.TabIndex = 75
+        Me.RadioButton2.Text = "Punto de venta"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        '
+        'cmbInforPtoVta
+        '
+        Me.cmbInforPtoVta.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmbInforPtoVta.Enabled = False
+        Me.cmbInforPtoVta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbInforPtoVta.ForeColor = System.Drawing.Color.White
+        Me.cmbInforPtoVta.FormattingEnabled = True
+        Me.cmbInforPtoVta.Location = New System.Drawing.Point(94, 32)
+        Me.cmbInforPtoVta.Name = "cmbInforPtoVta"
+        Me.cmbInforPtoVta.Size = New System.Drawing.Size(100, 23)
+        Me.cmbInforPtoVta.TabIndex = 74
         '
         'Label54
         '
@@ -890,33 +882,22 @@ Partial Class CONTABLE
         'rdventadiaria
         '
         Me.rdventadiaria.AutoSize = True
-        Me.rdventadiaria.Checked = True
         Me.rdventadiaria.Location = New System.Drawing.Point(6, 41)
         Me.rdventadiaria.Name = "rdventadiaria"
         Me.rdventadiaria.Size = New System.Drawing.Size(58, 17)
         Me.rdventadiaria.TabIndex = 71
-        Me.rdventadiaria.TabStop = True
         Me.rdventadiaria.Text = "Por dia"
         Me.rdventadiaria.UseVisualStyleBackColor = True
-        '
-        'Button16
-        '
-        Me.Button16.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button16.Location = New System.Drawing.Point(89, 69)
-        Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(98, 23)
-        Me.Button16.TabIndex = 70
-        Me.Button16.Text = "Exportar a excel"
-        Me.Button16.UseVisualStyleBackColor = False
         '
         'rdninguno
         '
         Me.rdninguno.AutoSize = True
+        Me.rdninguno.Checked = True
         Me.rdninguno.Location = New System.Drawing.Point(6, 19)
         Me.rdninguno.Name = "rdninguno"
         Me.rdninguno.Size = New System.Drawing.Size(65, 17)
         Me.rdninguno.TabIndex = 2
+        Me.rdninguno.TabStop = True
         Me.rdninguno.Text = "Ninguno"
         Me.rdninguno.UseVisualStyleBackColor = True
         '
@@ -990,7 +971,7 @@ Partial Class CONTABLE
         Me.Panel6.Controls.Add(Me.Button19)
         Me.Panel6.Controls.Add(Me.GroupBox1)
         Me.Panel6.Controls.Add(Me.lbltotcob)
-        Me.Panel6.Controls.Add(Me.Label15)
+        Me.Panel6.Controls.Add(Me.lbltotalnombre)
         Me.Panel6.Controls.Add(Me.Button11)
         Me.Panel6.Controls.Add(Me.Button12)
         Me.Panel6.Controls.Add(Me.cmdbuscarcomp)
@@ -1006,6 +987,8 @@ Partial Class CONTABLE
         '
         'GroupBox2
         '
+        Me.GroupBox2.Controls.Add(Me.RadioButton1)
+        Me.GroupBox2.Controls.Add(Me.rdtarjeta)
         Me.GroupBox2.Controls.Add(Me.Label56)
         Me.GroupBox2.Controls.Add(Me.rdcobranzadiaria)
         Me.GroupBox2.Controls.Add(Me.rdcobranzaintervalo)
@@ -1013,9 +996,29 @@ Partial Class CONTABLE
         Me.GroupBox2.ForeColor = System.Drawing.Color.White
         Me.GroupBox2.Location = New System.Drawing.Point(551, 14)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(198, 83)
+        Me.GroupBox2.Size = New System.Drawing.Size(420, 83)
         Me.GroupBox2.TabIndex = 75
         Me.GroupBox2.TabStop = False
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Location = New System.Drawing.Point(205, 19)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(64, 17)
+        Me.RadioButton1.TabIndex = 74
+        Me.RadioButton1.Text = "Efectivo"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'rdtarjeta
+        '
+        Me.rdtarjeta.AutoSize = True
+        Me.rdtarjeta.Location = New System.Drawing.Point(141, 18)
+        Me.rdtarjeta.Name = "rdtarjeta"
+        Me.rdtarjeta.Size = New System.Drawing.Size(58, 17)
+        Me.rdtarjeta.TabIndex = 73
+        Me.rdtarjeta.Text = "Tarjeta"
+        Me.rdtarjeta.UseVisualStyleBackColor = True
         '
         'Label56
         '
@@ -1029,22 +1032,22 @@ Partial Class CONTABLE
         'rdcobranzadiaria
         '
         Me.rdcobranzadiaria.AutoSize = True
-        Me.rdcobranzadiaria.Checked = True
-        Me.rdcobranzadiaria.Location = New System.Drawing.Point(6, 41)
+        Me.rdcobranzadiaria.Location = New System.Drawing.Point(77, 19)
         Me.rdcobranzadiaria.Name = "rdcobranzadiaria"
         Me.rdcobranzadiaria.Size = New System.Drawing.Size(58, 17)
         Me.rdcobranzadiaria.TabIndex = 71
-        Me.rdcobranzadiaria.TabStop = True
         Me.rdcobranzadiaria.Text = "Por dia"
         Me.rdcobranzadiaria.UseVisualStyleBackColor = True
         '
         'rdcobranzaintervalo
         '
         Me.rdcobranzaintervalo.AutoSize = True
+        Me.rdcobranzaintervalo.Checked = True
         Me.rdcobranzaintervalo.Location = New System.Drawing.Point(6, 19)
         Me.rdcobranzaintervalo.Name = "rdcobranzaintervalo"
         Me.rdcobranzaintervalo.Size = New System.Drawing.Size(65, 17)
         Me.rdcobranzaintervalo.TabIndex = 2
+        Me.rdcobranzaintervalo.TabStop = True
         Me.rdcobranzaintervalo.Text = "Ninguno"
         Me.rdcobranzaintervalo.UseVisualStyleBackColor = True
         '
@@ -1110,21 +1113,21 @@ Partial Class CONTABLE
         Me.lbltotcob.AutoSize = True
         Me.lbltotcob.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbltotcob.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lbltotcob.Location = New System.Drawing.Point(786, 36)
+        Me.lbltotcob.Location = New System.Drawing.Point(991, 29)
         Me.lbltotcob.Name = "lbltotcob"
         Me.lbltotcob.Size = New System.Drawing.Size(0, 20)
         Me.lbltotcob.TabIndex = 65
         '
-        'Label15
+        'lbltotalnombre
         '
-        Me.Label15.AutoSize = True
-        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label15.ForeColor = System.Drawing.Color.White
-        Me.Label15.Location = New System.Drawing.Point(787, 16)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(57, 16)
-        Me.Label15.TabIndex = 64
-        Me.Label15.Text = "TOTAL"
+        Me.lbltotalnombre.AutoSize = True
+        Me.lbltotalnombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalnombre.ForeColor = System.Drawing.Color.White
+        Me.lbltotalnombre.Location = New System.Drawing.Point(992, 9)
+        Me.lbltotalnombre.Name = "lbltotalnombre"
+        Me.lbltotalnombre.Size = New System.Drawing.Size(57, 16)
+        Me.lbltotalnombre.TabIndex = 64
+        Me.lbltotalnombre.Text = "TOTAL"
         '
         'Button11
         '
@@ -1216,14 +1219,13 @@ Partial Class CONTABLE
         Me.balance.Padding = New System.Windows.Forms.Padding(3)
         Me.balance.Size = New System.Drawing.Size(1235, 480)
         Me.balance.TabIndex = 20
-        Me.balance.Text = "BALANCE"
+        Me.balance.Text = "BALANCES E INFORMES"
         Me.balance.UseVisualStyleBackColor = True
         '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.tabBalDiario)
         Me.TabControl1.Controls.Add(Me.tabBalHistorico)
-        Me.TabControl1.Controls.Add(Me.tabBalConsultas)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(3, 31)
         Me.TabControl1.Name = "TabControl1"
@@ -1434,190 +1436,6 @@ Partial Class CONTABLE
         Me.Label62.TabIndex = 45
         Me.Label62.Text = "Hasta"
         '
-        'tabBalConsultas
-        '
-        Me.tabBalConsultas.Controls.Add(Me.dtventashistoricas)
-        Me.tabBalConsultas.Controls.Add(Me.Panel11)
-        Me.tabBalConsultas.Location = New System.Drawing.Point(4, 22)
-        Me.tabBalConsultas.Name = "tabBalConsultas"
-        Me.tabBalConsultas.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabBalConsultas.Size = New System.Drawing.Size(1221, 420)
-        Me.tabBalConsultas.TabIndex = 2
-        Me.tabBalConsultas.Text = "Informes especiales"
-        Me.tabBalConsultas.UseVisualStyleBackColor = True
-        '
-        'dtventashistoricas
-        '
-        Me.dtventashistoricas.AllowUserToAddRows = False
-        Me.dtventashistoricas.AllowUserToDeleteRows = False
-        Me.dtventashistoricas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtventashistoricas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtventashistoricas.BackgroundColor = System.Drawing.Color.White
-        Me.dtventashistoricas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtventashistoricas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtventashistoricas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtventashistoricas.Location = New System.Drawing.Point(3, 103)
-        Me.dtventashistoricas.Name = "dtventashistoricas"
-        Me.dtventashistoricas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtventashistoricas.Size = New System.Drawing.Size(1215, 314)
-        Me.dtventashistoricas.TabIndex = 16
-        '
-        'Panel11
-        '
-        Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel11.Controls.Add(Me.GroupBox5)
-        Me.Panel11.Controls.Add(Me.Button18)
-        Me.Panel11.Controls.Add(Me.GroupBox6)
-        Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel11.Location = New System.Drawing.Point(3, 3)
-        Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(1215, 100)
-        Me.Panel11.TabIndex = 15
-        '
-        'GroupBox5
-        '
-        Me.GroupBox5.Controls.Add(Me.Button24)
-        Me.GroupBox5.Controls.Add(Me.cmbInforCateg)
-        Me.GroupBox5.Controls.Add(Me.cmbInforProv)
-        Me.GroupBox5.Controls.Add(Me.rdInforCategoria)
-        Me.GroupBox5.Controls.Add(Me.rdInforProv)
-        Me.GroupBox5.Controls.Add(Me.rdInforgeneral)
-        Me.GroupBox5.ForeColor = System.Drawing.Color.White
-        Me.GroupBox5.Location = New System.Drawing.Point(207, 0)
-        Me.GroupBox5.Name = "GroupBox5"
-        Me.GroupBox5.Size = New System.Drawing.Size(447, 71)
-        Me.GroupBox5.TabIndex = 88
-        Me.GroupBox5.TabStop = False
-        Me.GroupBox5.Text = "Filtro"
-        '
-        'cmbInforCateg
-        '
-        Me.cmbInforCateg.Enabled = False
-        Me.cmbInforCateg.FormattingEnabled = True
-        Me.cmbInforCateg.Location = New System.Drawing.Point(257, 41)
-        Me.cmbInforCateg.Name = "cmbInforCateg"
-        Me.cmbInforCateg.Size = New System.Drawing.Size(184, 21)
-        Me.cmbInforCateg.TabIndex = 90
-        '
-        'cmbInforProv
-        '
-        Me.cmbInforProv.Enabled = False
-        Me.cmbInforProv.FormattingEnabled = True
-        Me.cmbInforProv.Location = New System.Drawing.Point(74, 42)
-        Me.cmbInforProv.Name = "cmbInforProv"
-        Me.cmbInforProv.Size = New System.Drawing.Size(164, 21)
-        Me.cmbInforProv.TabIndex = 89
-        '
-        'rdInforCategoria
-        '
-        Me.rdInforCategoria.AutoSize = True
-        Me.rdInforCategoria.ForeColor = System.Drawing.Color.White
-        Me.rdInforCategoria.Location = New System.Drawing.Point(257, 21)
-        Me.rdInforCategoria.Name = "rdInforCategoria"
-        Me.rdInforCategoria.Size = New System.Drawing.Size(94, 17)
-        Me.rdInforCategoria.TabIndex = 88
-        Me.rdInforCategoria.TabStop = True
-        Me.rdInforCategoria.Text = "Por Categorias"
-        Me.rdInforCategoria.UseVisualStyleBackColor = True
-        '
-        'rdInforProv
-        '
-        Me.rdInforProv.AutoSize = True
-        Me.rdInforProv.ForeColor = System.Drawing.Color.White
-        Me.rdInforProv.Location = New System.Drawing.Point(74, 21)
-        Me.rdInforProv.Name = "rdInforProv"
-        Me.rdInforProv.Size = New System.Drawing.Size(92, 17)
-        Me.rdInforProv.TabIndex = 86
-        Me.rdInforProv.TabStop = True
-        Me.rdInforProv.Text = "Por proveedor"
-        Me.rdInforProv.UseVisualStyleBackColor = True
-        '
-        'rdInforgeneral
-        '
-        Me.rdInforgeneral.AutoSize = True
-        Me.rdInforgeneral.Checked = True
-        Me.rdInforgeneral.ForeColor = System.Drawing.Color.White
-        Me.rdInforgeneral.Location = New System.Drawing.Point(6, 21)
-        Me.rdInforgeneral.Name = "rdInforgeneral"
-        Me.rdInforgeneral.Size = New System.Drawing.Size(62, 17)
-        Me.rdInforgeneral.TabIndex = 87
-        Me.rdInforgeneral.TabStop = True
-        Me.rdInforgeneral.Text = "General"
-        Me.rdInforgeneral.UseVisualStyleBackColor = True
-        '
-        'Button18
-        '
-        Me.Button18.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button18.ForeColor = System.Drawing.Color.White
-        Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
-        Me.Button18.Location = New System.Drawing.Point(1135, 0)
-        Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(80, 100)
-        Me.Button18.TabIndex = 85
-        Me.Button18.Text = "Buscar"
-        Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button18.UseVisualStyleBackColor = True
-        '
-        'GroupBox6
-        '
-        Me.GroupBox6.Controls.Add(Me.Label6)
-        Me.GroupBox6.Controls.Add(Me.dtpvtashishasta)
-        Me.GroupBox6.Controls.Add(Me.dtpvtashisdesde)
-        Me.GroupBox6.Controls.Add(Me.Label9)
-        Me.GroupBox6.ForeColor = System.Drawing.Color.White
-        Me.GroupBox6.Location = New System.Drawing.Point(3, 0)
-        Me.GroupBox6.Name = "GroupBox6"
-        Me.GroupBox6.Size = New System.Drawing.Size(198, 71)
-        Me.GroupBox6.TabIndex = 82
-        Me.GroupBox6.TabStop = False
-        Me.GroupBox6.Text = "Intervalo"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.Transparent
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(6, 20)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(49, 17)
-        Me.Label6.TabIndex = 44
-        Me.Label6.Text = "Desde"
-        '
-        'dtpvtashishasta
-        '
-        Me.dtpvtashishasta.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpvtashishasta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpvtashishasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpvtashishasta.Location = New System.Drawing.Point(61, 41)
-        Me.dtpvtashishasta.Name = "dtpvtashishasta"
-        Me.dtpvtashishasta.Size = New System.Drawing.Size(117, 23)
-        Me.dtpvtashishasta.TabIndex = 43
-        '
-        'dtpvtashisdesde
-        '
-        Me.dtpvtashisdesde.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpvtashisdesde.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpvtashisdesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpvtashisdesde.Location = New System.Drawing.Point(61, 15)
-        Me.dtpvtashisdesde.Name = "dtpvtashisdesde"
-        Me.dtpvtashisdesde.Size = New System.Drawing.Size(117, 23)
-        Me.dtpvtashisdesde.TabIndex = 42
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.BackColor = System.Drawing.Color.Transparent
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.ForeColor = System.Drawing.Color.White
-        Me.Label9.Location = New System.Drawing.Point(6, 46)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(45, 17)
-        Me.Label9.TabIndex = 45
-        Me.Label9.Text = "Hasta"
-        '
         'Panel27
         '
         Me.Panel27.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1697,6 +1515,7 @@ Partial Class CONTABLE
         'Panel22
         '
         Me.Panel22.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel22.Controls.Add(Me.Button18)
         Me.Panel22.Controls.Add(Me.Button13)
         Me.Panel22.Controls.Add(Me.cmdlistadoremitos)
         Me.Panel22.Controls.Add(Me.cmdreimprimirremitos)
@@ -1710,6 +1529,21 @@ Partial Class CONTABLE
         Me.Panel22.Name = "Panel22"
         Me.Panel22.Size = New System.Drawing.Size(1229, 105)
         Me.Panel22.TabIndex = 11
+        '
+        'Button18
+        '
+        Me.Button18.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button18.ForeColor = System.Drawing.Color.White
+        Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
+        Me.Button18.Location = New System.Drawing.Point(1069, 0)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(80, 105)
+        Me.Button18.TabIndex = 61
+        Me.Button18.Text = "Nuevo"
+        Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button18.UseVisualStyleBackColor = True
         '
         'Button13
         '
@@ -4787,16 +4621,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
         Me.DataGridViewTextBoxColumn54.Width = 216
         '
-        'Button24
-        '
-        Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button24.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.Button24.Location = New System.Drawing.Point(406, 12)
-        Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(35, 23)
-        Me.Button24.TabIndex = 91
-        Me.Button24.UseVisualStyleBackColor = True
-        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -4844,13 +4668,6 @@ Partial Class CONTABLE
         Me.Panel28.ResumeLayout(False)
         Me.grpbalanceintervalo.ResumeLayout(False)
         Me.grpbalanceintervalo.PerformLayout()
-        Me.tabBalConsultas.ResumeLayout(False)
-        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel11.ResumeLayout(False)
-        Me.GroupBox5.ResumeLayout(False)
-        Me.GroupBox5.PerformLayout()
-        Me.GroupBox6.ResumeLayout(False)
-        Me.GroupBox6.PerformLayout()
         Me.Panel27.ResumeLayout(False)
         Me.Panel27.PerformLayout()
         Me.tabremitos.ResumeLayout(False)
@@ -5028,7 +4845,6 @@ Partial Class CONTABLE
     Friend WithEvents DataGridViewTextBoxColumn29 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn30 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn31 As System.Windows.Forms.DataGridViewTextBoxColumn
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents tabconfiguracion As System.Windows.Forms.TabPage
     Friend WithEvents TabControl2 As System.Windows.Forms.TabControl
     Friend WithEvents TabPage9 As System.Windows.Forms.TabPage
@@ -5055,7 +4871,6 @@ Partial Class CONTABLE
     Friend WithEvents Label26 As System.Windows.Forms.Label
     Friend WithEvents Label25 As System.Windows.Forms.Label
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents Button4 As System.Windows.Forms.Button
     Friend WithEvents Button5 As System.Windows.Forms.Button
     Friend WithEvents Button6 As System.Windows.Forms.Button
@@ -5081,7 +4896,7 @@ Partial Class CONTABLE
     Friend WithEvents dtlistacob As System.Windows.Forms.DataGridView
     Friend WithEvents Panel6 As System.Windows.Forms.Panel
     Friend WithEvents lbltotcob As System.Windows.Forms.Label
-    Friend WithEvents Label15 As System.Windows.Forms.Label
+    Friend WithEvents lbltotalnombre As System.Windows.Forms.Label
     Friend WithEvents Button11 As System.Windows.Forms.Button
     Friend WithEvents Button12 As System.Windows.Forms.Button
     Friend WithEvents cmdbuscarcomp As System.Windows.Forms.Button
@@ -5309,21 +5124,10 @@ Partial Class CONTABLE
     Friend WithEvents DataGridViewTextBoxColumn26 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn27 As DataGridViewTextBoxColumn
     Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents tabBalConsultas As TabPage
-    Friend WithEvents dtventashistoricas As DataGridView
-    Friend WithEvents Panel11 As Panel
-    Friend WithEvents GroupBox5 As GroupBox
-    Friend WithEvents rdInforProv As RadioButton
-    Friend WithEvents rdInforgeneral As RadioButton
-    Friend WithEvents Button18 As Button
-    Friend WithEvents GroupBox6 As GroupBox
-    Friend WithEvents Label6 As Label
-    Friend WithEvents dtpvtashishasta As DateTimePicker
-    Friend WithEvents dtpvtashisdesde As DateTimePicker
-    Friend WithEvents Label9 As Label
     Friend WithEvents lblFacturaElectroPasscertif As Label
-    Friend WithEvents rdInforCategoria As RadioButton
-    Friend WithEvents cmbInforCateg As ComboBox
-    Friend WithEvents cmbInforProv As ComboBox
-    Friend WithEvents Button24 As Button
+    Friend WithEvents rdtarjeta As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents Button18 As Button
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents cmbInforPtoVta As ComboBox
 End Class

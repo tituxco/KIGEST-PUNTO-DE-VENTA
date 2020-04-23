@@ -153,7 +153,13 @@ Public Class frmprincipal
                         End If
                     End If
                 End If
-                ' MsgBox("los certificados y los archivos se han descargado correctamente")
+                Reconectar()
+                Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
+                Dim tablaMONEDA As New DataTable
+                consMONEDA.Fill(tablaMONEDA)
+                lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
+
+
             Catch ex As Exception
                 MsgBox(ex.Message)
             End Try
@@ -186,11 +192,11 @@ Public Class frmprincipal
         End Try
     End Sub
 
-    Private Sub CerrarConexionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CerrarConexionToolStripMenuItem.Click
+    Private Sub CerrarConexionToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub ReconectarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ReconectarToolStripMenuItem.Click
+    Private Sub ReconectarToolStripMenuItem_Click(sender As Object, e As EventArgs)
 
         Try
             Reconectar()
@@ -669,5 +675,61 @@ Public Class frmprincipal
         Dim caj As New frmServiciosCloud
         caj.MdiParent = Me
         caj.Show()
+    End Sub
+
+    Private Sub InformesDeVentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InformesDeVentasToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "informedeventas" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim caj As New informedeventas
+        caj.MdiParent = Me
+        caj.Show()
+    End Sub
+
+    Private Sub RemitosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemitosToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "puntoventa" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim vta As New puntoventa
+        vta.MdiParent = Me
+        vta.idfacrap = 5
+        vta.Idcliente = 9999
+        vta.cargarCliente()
+        vta.txtcodPLU.Focus()
+        vta.Show()
+    End Sub
+
+    Private Sub ToolStripComboBox1_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub lblPrincipalDolar_Click(sender As Object, e As EventArgs) Handles lblPrincipalDolar.Click
+        Try
+            Dim Cotizacion As String = InputBox("Ingrese nueva cotizacion de dolar", "Cambiar cotizacion")
+
+            If IsNumeric(Cotizacion) Then
+
+                Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set cotizacion = '" & Cotizacion.Replace(".", ",") & "' where id=2", conexionPrinc)
+                comandoUPD.ExecuteNonQuery()
+
+                lblPrincipalDolar.Text = "DOLAR: " & Cotizacion.Replace(".", ",")
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub lblPrincipalDolar_DoubleClick(sender As Object, e As EventArgs) Handles lblPrincipalDolar.DoubleClick
+
     End Sub
 End Class

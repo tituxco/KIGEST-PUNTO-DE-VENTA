@@ -26,6 +26,7 @@ Partial Class remitos
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.rdfacturados = New System.Windows.Forms.RadioButton()
         Me.rdpendientes = New System.Windows.Forms.RadioButton()
         Me.txtbusqCliente = New System.Windows.Forms.TextBox()
@@ -33,7 +34,6 @@ Partial Class remitos
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.dtpedidos = New System.Windows.Forms.DataGridView()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         CType(Me.dtpedidos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,6 +75,23 @@ Partial Class remitos
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1021, 91)
         Me.pnnavegacion.TabIndex = 86
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(863, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(88, 91)
+        Me.Button1.TabIndex = 40
+        Me.Button1.Text = "Actualizar/Cargar"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'rdfacturados
         '
@@ -167,23 +184,6 @@ Partial Class remitos
         Me.dtpedidos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtpedidos.Size = New System.Drawing.Size(1021, 360)
         Me.dtpedidos.TabIndex = 87
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(863, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(88, 91)
-        Me.Button1.TabIndex = 40
-        Me.Button1.Text = "Actualizar/Cargar"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
         '
         'remitos
         '

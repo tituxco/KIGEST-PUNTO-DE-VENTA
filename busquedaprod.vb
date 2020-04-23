@@ -142,7 +142,7 @@ Public Class busquedaprod
 						(((select substring(listas.utilidad from 2) from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
 				,2,'es_AR')
                 end as precio, cat.nombre as categoria
-                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp & " order by cat.nombre, pro.descripcion asc", conexionPrinc)
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
@@ -258,8 +258,8 @@ Public Class busquedaprod
             consultaPRod.Fill(tablaprod)
             infoprod = tablaprod.Select("")
             'MsgBox(infoprod(0)(0))
-            Dim precioCosto As Double = FormatNumber(infoprod(0)(0))
-            Dim cotizacion As Double = FormatNumber(infoprod(0)(1))
+            Dim precioCosto As Double = FormatNumber(infoprod(0)(0), 4)
+            Dim cotizacion As Double = FormatNumber(infoprod(0)(1), 3)
             Dim iva As Double = (FormatNumber(infoprod(0)(2)) + 100) / 100
             Dim util As Double = (FormatNumber(infoprod(0)(3)) + 100) / 100
             Dim util1 As Double = (FormatNumber(infoprod(0)(4)) + 100) / 100
@@ -557,5 +557,11 @@ Public Class busquedaprod
         calcularPrecios(IdItem)
     End Sub
 
+    Private Sub dgvProductos_Load(sender As Object, e As EventArgs) Handles dgvProductos.Load
 
+    End Sub
+
+    Private Sub dgvProductos_Enter(sender As Object, e As EventArgs) Handles dgvProductos.Enter
+
+    End Sub
 End Class

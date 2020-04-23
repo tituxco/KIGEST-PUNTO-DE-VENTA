@@ -35,6 +35,7 @@ Partial Class imprimirEtiquetas
         Me.txtcantperson = New System.Windows.Forms.TextBox()
         Me.cmblistas = New System.Windows.Forms.ComboBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.txtbuscarprod = New System.Windows.Forms.TextBox()
         Me.cmbCategoria = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -174,6 +175,7 @@ Partial Class imprimirEtiquetas
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.txtbuscarprod)
         Me.Panel1.Controls.Add(Me.cmbCategoria)
         Me.Panel1.Controls.Add(Me.Label3)
@@ -183,12 +185,25 @@ Partial Class imprimirEtiquetas
         Me.Panel1.Size = New System.Drawing.Size(559, 140)
         Me.Panel1.TabIndex = 7
         '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button2.Location = New System.Drawing.Point(498, 79)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(55, 53)
+        Me.Button2.TabIndex = 11
+        Me.Button2.UseVisualStyleBackColor = False
+        '
         'txtbuscarprod
         '
         Me.txtbuscarprod.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbuscarprod.Location = New System.Drawing.Point(9, 79)
         Me.txtbuscarprod.Name = "txtbuscarprod"
-        Me.txtbuscarprod.Size = New System.Drawing.Size(544, 53)
+        Me.txtbuscarprod.Size = New System.Drawing.Size(486, 53)
         Me.txtbuscarprod.TabIndex = 6
         '
         'cmbCategoria
@@ -288,4 +303,5 @@ Partial Class imprimirEtiquetas
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Button2 As Button
 End Class

@@ -30,19 +30,21 @@ Partial Class imprimirFX
         Me.rptfx.Dock = System.Windows.Forms.DockStyle.Fill
         Me.rptfx.Location = New System.Drawing.Point(0, 0)
         Me.rptfx.Name = "rptfx"
-        Me.rptfx.Size = New System.Drawing.Size(781, 456)
+        Me.rptfx.ServerReport.BearerToken = Nothing
+        Me.rptfx.Size = New System.Drawing.Size(800, 450)
         Me.rptfx.TabIndex = 0
         '
         'imprimirFX
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(781, 456)
+        Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.rptfx)
         Me.Name = "imprimirFX"
         Me.Text = "imprimirFX"
         Me.ResumeLayout(False)
 
     End Sub
+
     Friend WithEvents rptfx As Microsoft.Reporting.WinForms.ReportViewer
 End Class

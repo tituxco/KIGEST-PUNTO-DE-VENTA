@@ -65,10 +65,15 @@ Public Class imprimirEtiquetas
         Try
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-
-
+            Dim paramBusq As String
+            Dim catSel As Integer = cmbCategoria.SelectedValue
+            If catSel = 0 Then
+                paramBusq = "" '" limit 0," & My.Settings.paginacion
+            Else
+                paramBusq = " and pro.categoria in (" & catSel & ") " 'limit 0," & My.Settings.paginacion
+            End If
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU                
-            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id and pro.categoria in (" & cmbCategoria.SelectedValue & ")", conexionPrinc)
+            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id " & paramBusq, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
@@ -438,7 +443,7 @@ Public Class imprimirEtiquetas
             lector.Read()
 
             Dim cotizacion As Double = FormatNumber(lector("cotiza").ToString)
-            Dim precioCosto As Double = FormatNumber(filasProd(0)(0))
+            Dim precioCosto As Double = FormatNumber(filasProd(0)(0), 4)
             Dim iva As Double = (FormatNumber(filasProd(0)(2)) + 100) / 100
             Dim listaTXT As String = filaslistas(0)(0)
             Dim lista As Double
@@ -476,6 +481,7 @@ Public Class imprimirEtiquetas
                     PrecioVenta = PrecioSinIva * iva
                 End If
             End If
+            'MsgBox(precioCosto & "*" & cotizacion & "*" & SumaUtil)
             Return Math.Round(PrecioVenta, 2)
 
         Catch ex As Exception
@@ -514,14 +520,14 @@ Public Class imprimirEtiquetas
     End Sub
     Private Sub ImprimirBoleta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
 
-        If ("A" & ProEtiquetaCod & "B").Length > 14 Then
+        If ("A" & ProEtiquetaCod & "B").Length > 15 Then
             MsgBox("el codigo generado es demasiado largo, verifique el codigo de producto")
             Exit Sub
         End If
 
         If My.Settings.TipoEtiqueta = 0 Then
             ' letra
-            'Dim font1 As New Font("EAN-13", 40)
+            'Dim font1 As New Font("EAN-13", 40)er 
             Dim font2 As New Font("Arial", 8)
             Dim font3 As New Font("Arial", 8)
             Dim font4 As New Font("Arial", 18)
@@ -809,7 +815,15 @@ Public Class imprimirEtiquetas
 
     End Sub
 
-    Private Sub Panel3_Paint(sender As Object, e As PaintEventArgs) Handles Panel3.Paint
+    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+        cmbCategoria.SelectedIndex = -1
+        Try
+            cargarProductos()
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Sub cmbCategoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCategoria.SelectedIndexChanged
 
     End Sub
 End Class

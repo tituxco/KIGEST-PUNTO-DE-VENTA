@@ -4,6 +4,8 @@
     'Public modificar As Boolean
     'Public Rehacer As Boolean
     Public tipoFac As Integer = 997
+    Public ptovta As Integer = My.Settings.idPtoVta
+    Dim Pesototal As String = 0
     Private Sub nuevalistadecarga_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarDatosGrales()
         lblfecha.Text = "Fecha: " & fechagral
@@ -17,7 +19,9 @@
             dtenvases.Rows.Add("20 Litros", "0", 20)
             dtenvases.Rows.Add("10 Litros", "0", 10)
             dtenvases.Rows.Add("5 Litros", "0", 5)
+            dtenvases.Rows.Add("1 lt/uni", "0", 1)
             dtenvases.Visible = False
+            txtptovta.Text = ptovta
         Catch ex As Exception
 
         End Try
@@ -120,7 +124,7 @@
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from tipos_comprobantes where donfdesc=" & tipoFac
+            sql.CommandText = "select confnume from tipos_comprobantes where donfdesc=" & tipoFac & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -164,7 +168,7 @@
     Private Sub dtpedidosfact_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellEndEdit
         Reconectar()
         Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-        & "id, condvta, vendedor from fact_facturas where observaciones like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
+        & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
         Dim tablaped As New DataTable
         Dim infoped() As DataRow
         consultapedido.Fill(tablaped)
@@ -178,12 +182,20 @@
         dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
 
         Reconectar()
-        Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
+        Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod, itm.plu, itm.cantidad, itm.descripcion,
+         (select peso from cm_pesoEspecifico where id=itm.cod) as PE from fact_items  as itm where itm.id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
         Dim tablaitm As New DataTable
         Dim infoitm() As DataRow
         Dim existe As Boolean = False
         consultapedidoitems.Fill(tablaitm)
         infoitm = tablaitm.Select("")
+
+        Dim TablaProd As New DataTable
+        TablaProd.Columns.Add("cod")
+        TablaProd.Columns.Add("cantidad")
+        TablaProd.Columns.Add("descripcion")
+        TablaProd.Columns.Add("pesoEsp")
+
         For i = 0 To infoitm.GetUpperBound(0)
             For Each producto As DataGridViewRow In dtproductos.Rows
                 If infoitm(i)(0) = producto.Cells(0).Value Then
@@ -199,9 +211,54 @@
                 dtproductos.Rows.Add(infoitm(i)(0), infoitm(i)(1), infoitm(i)(2), infoitm(i)(3))
             End If
 
+            If TablaProd.Rows.Count = 0 Then
+                Dim NuevoProd As DataRow = TablaProd.NewRow
+                NuevoProd("cod") = infoitm(i)(0)
+                NuevoProd("cantidad") = infoitm(i)(2)
+                NuevoProd("descripcion") = infoitm(i)(3)
+                If IsDBNull(infoitm(0)(4)) Then
+                    NuevoProd("pesoEsp") = 0
+                Else
+                    NuevoProd("pesoEsp") = infoitm(i)(4)
+                End If
+                TablaProd.Rows.Add(NuevoProd)
+            Else
+                Dim existeprod As Boolean
+                Dim NuevoProd As DataRow = TablaProd.NewRow
+                For Each producto As DataRow In TablaProd.Rows
+                    If producto("cod") = infoitm(i)(0) Then
+                        existeprod = True
+                        Dim cantidad As String = infoitm(i)(2)
+                        producto("cantidad") = producto("cantidad") + cantidad
+                    Else
+                        existeprod = False
+                        NuevoProd("cod") = infoitm(i)(0)
+                        NuevoProd("cantidad") = infoitm(i)(2)
+                        NuevoProd("descripcion") = infoitm(i)(3)
+                        If IsDBNull(infoitm(0)(4)) Then
+                            NuevoProd("pesoEsp") = 0
+                        Else
+                            NuevoProd("pesoEsp") = infoitm(i)(4)
+                        End If
+                    End If
+                Next
+                If existeprod = False Then
+                    TablaProd.Rows.Add(NuevoProd)
+                End If
+
+            End If
+
+
+
         Next
         calcularEnvases()
 
+        For Each producto As DataRow In TablaProd.Rows
+            ' MsgBox(producto("cantidad") & "*" & producto("pesoEsp"))
+            Pesototal += producto("cantidad") * producto("pesoEsp")
+        Next
+
+        lblpesoTotal.Text = "Peso total de la carga:" & Pesototal & "Kg"
     End Sub
 
     Private Sub cmdguardar_Click(sender As Object, e As EventArgs) Handles cmdguardar.Click
@@ -214,7 +271,7 @@
 
             num_fact = CType(txtnufac.Text, Integer)
 
-            Dim ptovta As String = txtptovta.Text
+            'Dim ptovta As String = ptovta
 
             Dim fecha As String = Format(CDate(fechagral), "yyyy-MM-dd")
             Dim idcliente As String = "''" 'txtctaclie.Text
@@ -232,10 +289,10 @@
             Dim observa As String
 
             For Each pedido As DataGridViewRow In dtpedidosfact.Rows
-                Dim numped As String = String.Format("{0:0000}", 1) & "-" & String.Format("{0:00000000}", pedido.Cells(1).Value)
-                observa = observa & numped & vbNewLine
+                Dim numped As String = String.Format("{0:0000}", ptovta) & "-" & String.Format("{0:00000000}", pedido.Cells(1).Value)
+                observa = observa & "(" & numped & ") "
             Next
-
+            observa = "Pedidos en esta carga: " & observa & vbNewLine & vbNewLine & lblpesoTotal.Text
             Dim sqlQuery As String
 
             If RestringirNumerosFact(tipoFac, num_fact, ptovta) = True Then
@@ -274,7 +331,7 @@
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
                 sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where donfdesc= " & tipoFac
+            sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where donfdesc= " & tipoFac & " and ptovta= " & ptovta
             sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
             lector.Read()
@@ -333,7 +390,7 @@
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & tipoFac
+            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & tipoFac & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -357,7 +414,7 @@
             & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon," _
             & "concat(fac.direccion, ' - ', fac.localidad)  as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit,fac.vendedor as facvend, " _
             & "fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21 " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idFactura, conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
@@ -387,6 +444,14 @@
     End Sub
 
     Private Sub dtpedidosfact_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellContentClick
+
+    End Sub
+
+    Private Sub dtlistadecarga_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistadecarga.CellContentClick
+
+    End Sub
+
+    Private Sub dtlistadecarga_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistadecarga.CellEndEdit
 
     End Sub
 End Class

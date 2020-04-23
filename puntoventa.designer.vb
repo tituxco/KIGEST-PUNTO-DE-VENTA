@@ -45,10 +45,11 @@ Partial Class puntoventa
         Me.Button1 = New System.Windows.Forms.Button()
         Me.tmrcontrolarnumfact = New System.Windows.Forms.Timer(Me.components)
         Me.paneltareas2 = New System.Windows.Forms.Panel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.dtpedidosfact = New System.Windows.Forms.DataGridView()
         Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.cmdremitar = New System.Windows.Forms.Button()
         Me.cmdcerrar = New System.Windows.Forms.Button()
         Me.cmdimprimir = New System.Windows.Forms.Button()
         Me.chkquitarstock = New System.Windows.Forms.CheckBox()
@@ -109,9 +110,7 @@ Partial Class puntoventa
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.lblnoplu = New System.Windows.Forms.Label()
+        Me.pnaddProd = New System.Windows.Forms.Panel()
         Me.txtpreciounitPLU = New System.Windows.Forms.TextBox()
         Me.txtivaPLU = New System.Windows.Forms.TextBox()
         Me.txtdescripcionPLU = New System.Windows.Forms.TextBox()
@@ -122,8 +121,10 @@ Partial Class puntoventa
         Me.Label12 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
-        Me.chkaplicardesc = New System.Windows.Forms.CheckBox()
         Me.Label25 = New System.Windows.Forms.Label()
+        Me.lblnoplu = New System.Windows.Forms.Label()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.chkaplicardesc = New System.Windows.Forms.CheckBox()
         Me.panelcliente = New System.Windows.Forms.Panel()
         Me.Panel13 = New System.Windows.Forms.Panel()
         Me.lblfacIdAlmacen = New System.Windows.Forms.Label()
@@ -142,6 +143,7 @@ Partial Class puntoventa
         Me.lblcliedomicilio = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.txtcliecuitcuil = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
@@ -149,7 +151,6 @@ Partial Class puntoventa
         Me.txtcliecta = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.panelencabeza = New System.Windows.Forms.Panel()
-        Me.cmdReparNumeracion = New System.Windows.Forms.Button()
         Me.lblfactnumero = New System.Windows.Forms.Label()
         Me.lblfactptovta = New System.Windows.Forms.Label()
         Me.lblfactabrev = New System.Windows.Forms.Label()
@@ -167,8 +168,8 @@ Partial Class puntoventa
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.paneltareas2.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtpedidosfact, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.pncaeaprobado.SuspendLayout()
         Me.pncaerechazado.SuspendLayout()
         Me.Panel5.SuspendLayout()
@@ -180,7 +181,7 @@ Partial Class puntoventa
         Me.paneltareas.SuspendLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtproductos__bkp, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel2.SuspendLayout()
+        Me.pnaddProd.SuspendLayout()
         Me.panelcliente.SuspendLayout()
         Me.Panel13.SuspendLayout()
         Me.Panel12.SuspendLayout()
@@ -196,7 +197,7 @@ Partial Class puntoventa
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1202, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1133, 40)
         Me.pntitulo.TabIndex = 75
         '
         'Label1
@@ -216,7 +217,7 @@ Partial Class puntoventa
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(968, 0)
+        Me.Button1.Location = New System.Drawing.Point(899, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(234, 40)
         Me.Button1.TabIndex = 7
@@ -230,8 +231,9 @@ Partial Class puntoventa
         'paneltareas2
         '
         Me.paneltareas2.BackColor = System.Drawing.Color.White
-        Me.paneltareas2.Controls.Add(Me.PictureBox1)
         Me.paneltareas2.Controls.Add(Me.dtpedidosfact)
+        Me.paneltareas2.Controls.Add(Me.PictureBox1)
+        Me.paneltareas2.Controls.Add(Me.cmdremitar)
         Me.paneltareas2.Controls.Add(Me.cmdcerrar)
         Me.paneltareas2.Controls.Add(Me.cmdimprimir)
         Me.paneltareas2.Controls.Add(Me.chkquitarstock)
@@ -244,19 +246,10 @@ Partial Class puntoventa
         Me.paneltareas2.Controls.Add(Me.Panel3)
         Me.paneltareas2.Controls.Add(Me.Panel7)
         Me.paneltareas2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.paneltareas2.Location = New System.Drawing.Point(968, 40)
+        Me.paneltareas2.Location = New System.Drawing.Point(899, 40)
         Me.paneltareas2.Name = "paneltareas2"
         Me.paneltareas2.Size = New System.Drawing.Size(234, 709)
         Me.paneltareas2.TabIndex = 78
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 560)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(234, 22)
-        Me.PictureBox1.TabIndex = 75
-        Me.PictureBox1.TabStop = False
         '
         'dtpedidosfact
         '
@@ -264,7 +257,7 @@ Partial Class puntoventa
         Me.dtpedidosfact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtpedidosfact.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.Column9})
         Me.dtpedidosfact.Dock = System.Windows.Forms.DockStyle.Top
-        Me.dtpedidosfact.Location = New System.Drawing.Point(0, 399)
+        Me.dtpedidosfact.Location = New System.Drawing.Point(0, 452)
         Me.dtpedidosfact.Name = "dtpedidosfact"
         Me.dtpedidosfact.Size = New System.Drawing.Size(234, 161)
         Me.dtpedidosfact.TabIndex = 74
@@ -280,6 +273,27 @@ Partial Class puntoventa
         Me.Column9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.Column9.HeaderText = "Numero de pedido"
         Me.Column9.Name = "Column9"
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 430)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(234, 22)
+        Me.PictureBox1.TabIndex = 75
+        Me.PictureBox1.TabStop = False
+        '
+        'cmdremitar
+        '
+        Me.cmdremitar.Dock = System.Windows.Forms.DockStyle.Top
+        Me.cmdremitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdremitar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdremitar.Location = New System.Drawing.Point(0, 399)
+        Me.cmdremitar.Name = "cmdremitar"
+        Me.cmdremitar.Size = New System.Drawing.Size(234, 31)
+        Me.cmdremitar.TabIndex = 76
+        Me.cmdremitar.Text = "Remitar"
+        Me.cmdremitar.UseVisualStyleBackColor = True
         '
         'cmdcerrar
         '
@@ -651,13 +665,13 @@ Partial Class puntoventa
         Me.Panel1.Controls.Add(Me.dtproductos)
         Me.Panel1.Controls.Add(Me.paneltareas)
         Me.Panel1.Controls.Add(Me.dtproductos__bkp)
-        Me.Panel1.Controls.Add(Me.Panel2)
+        Me.Panel1.Controls.Add(Me.pnaddProd)
         Me.Panel1.Controls.Add(Me.panelcliente)
         Me.Panel1.Controls.Add(Me.panelencabeza)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 40)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(968, 709)
+        Me.Panel1.Size = New System.Drawing.Size(899, 709)
         Me.Panel1.TabIndex = 79
         '
         'dtproductos
@@ -689,7 +703,7 @@ Partial Class puntoventa
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dtproductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
-        Me.dtproductos.Size = New System.Drawing.Size(968, 503)
+        Me.dtproductos.Size = New System.Drawing.Size(899, 503)
         Me.dtproductos.TabIndex = 101
         '
         'Column12
@@ -767,7 +781,7 @@ Partial Class puntoventa
         Me.paneltareas.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.paneltareas.Location = New System.Drawing.Point(0, 625)
         Me.paneltareas.Name = "paneltareas"
-        Me.paneltareas.Size = New System.Drawing.Size(968, 84)
+        Me.paneltareas.Size = New System.Drawing.Size(899, 84)
         Me.paneltareas.TabIndex = 90
         '
         'Label21
@@ -791,9 +805,9 @@ Partial Class puntoventa
         Me.dtdescuentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtdescuentos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column13, Me.DataGridViewTextBoxColumn12, Me.Column11})
         Me.dtdescuentos.Dock = System.Windows.Forms.DockStyle.Right
-        Me.dtdescuentos.Location = New System.Drawing.Point(584, 0)
+        Me.dtdescuentos.Location = New System.Drawing.Point(577, 0)
         Me.dtdescuentos.Name = "dtdescuentos"
-        Me.dtdescuentos.Size = New System.Drawing.Size(384, 84)
+        Me.dtdescuentos.Size = New System.Drawing.Size(322, 84)
         Me.dtdescuentos.TabIndex = 75
         '
         'Column13
@@ -825,7 +839,6 @@ Partial Class puntoventa
         '
         'txttransporte
         '
-        Me.txttransporte.Enabled = False
         Me.txttransporte.Location = New System.Drawing.Point(290, 19)
         Me.txttransporte.Multiline = True
         Me.txttransporte.Name = "txttransporte"
@@ -928,50 +941,29 @@ Partial Class puntoventa
         Me.Column10.Name = "Column10"
         Me.Column10.Visible = False
         '
-        'Panel2
+        'pnaddProd
         '
-        Me.Panel2.BackColor = System.Drawing.Color.DarkGray
-        Me.Panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel2.Controls.Add(Me.CheckBox1)
-        Me.Panel2.Controls.Add(Me.lblnoplu)
-        Me.Panel2.Controls.Add(Me.txtpreciounitPLU)
-        Me.Panel2.Controls.Add(Me.txtivaPLU)
-        Me.Panel2.Controls.Add(Me.txtdescripcionPLU)
-        Me.Panel2.Controls.Add(Me.txtcodPLU)
-        Me.Panel2.Controls.Add(Me.txtcantPLU)
-        Me.Panel2.Controls.Add(Me.Label19)
-        Me.Panel2.Controls.Add(Me.Label17)
-        Me.Panel2.Controls.Add(Me.Label12)
-        Me.Panel2.Controls.Add(Me.Label10)
-        Me.Panel2.Controls.Add(Me.Label9)
-        Me.Panel2.Controls.Add(Me.chkaplicardesc)
-        Me.Panel2.Controls.Add(Me.Label25)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel2.Location = New System.Drawing.Point(0, 85)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(968, 37)
-        Me.Panel2.TabIndex = 88
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.CheckBox1.Location = New System.Drawing.Point(756, 0)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(93, 35)
-        Me.CheckBox1.TabIndex = 73
-        Me.CheckBox1.Text = "Sin decimales"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'lblnoplu
-        '
-        Me.lblnoplu.AutoSize = True
-        Me.lblnoplu.Dock = System.Windows.Forms.DockStyle.Right
-        Me.lblnoplu.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblnoplu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblnoplu.Location = New System.Drawing.Point(849, 0)
-        Me.lblnoplu.Name = "lblnoplu"
-        Me.lblnoplu.Size = New System.Drawing.Size(0, 17)
-        Me.lblnoplu.TabIndex = 72
+        Me.pnaddProd.BackColor = System.Drawing.Color.DarkGray
+        Me.pnaddProd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnaddProd.Controls.Add(Me.txtpreciounitPLU)
+        Me.pnaddProd.Controls.Add(Me.txtivaPLU)
+        Me.pnaddProd.Controls.Add(Me.txtdescripcionPLU)
+        Me.pnaddProd.Controls.Add(Me.txtcodPLU)
+        Me.pnaddProd.Controls.Add(Me.txtcantPLU)
+        Me.pnaddProd.Controls.Add(Me.Label19)
+        Me.pnaddProd.Controls.Add(Me.Label17)
+        Me.pnaddProd.Controls.Add(Me.Label12)
+        Me.pnaddProd.Controls.Add(Me.Label10)
+        Me.pnaddProd.Controls.Add(Me.Label9)
+        Me.pnaddProd.Controls.Add(Me.Label25)
+        Me.pnaddProd.Controls.Add(Me.lblnoplu)
+        Me.pnaddProd.Controls.Add(Me.CheckBox1)
+        Me.pnaddProd.Controls.Add(Me.chkaplicardesc)
+        Me.pnaddProd.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnaddProd.Location = New System.Drawing.Point(0, 85)
+        Me.pnaddProd.Name = "pnaddProd"
+        Me.pnaddProd.Size = New System.Drawing.Size(899, 37)
+        Me.pnaddProd.TabIndex = 88
         '
         'txtpreciounitPLU
         '
@@ -1056,18 +1048,6 @@ Partial Class puntoventa
         Me.Label9.TabIndex = 67
         Me.Label9.Text = "PLU"
         '
-        'chkaplicardesc
-        '
-        Me.chkaplicardesc.Checked = True
-        Me.chkaplicardesc.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkaplicardesc.Dock = System.Windows.Forms.DockStyle.Right
-        Me.chkaplicardesc.Location = New System.Drawing.Point(849, 0)
-        Me.chkaplicardesc.Name = "chkaplicardesc"
-        Me.chkaplicardesc.Size = New System.Drawing.Size(117, 35)
-        Me.chkaplicardesc.TabIndex = 63
-        Me.chkaplicardesc.Text = "Aplicar descuentos"
-        Me.chkaplicardesc.UseVisualStyleBackColor = True
-        '
         'Label25
         '
         Me.Label25.AutoSize = True
@@ -1078,6 +1058,40 @@ Partial Class puntoventa
         Me.Label25.TabIndex = 59
         Me.Label25.Text = "Ingresar PLU"
         '
+        'lblnoplu
+        '
+        Me.lblnoplu.BackColor = System.Drawing.Color.Transparent
+        Me.lblnoplu.Dock = System.Windows.Forms.DockStyle.Right
+        Me.lblnoplu.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblnoplu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblnoplu.Location = New System.Drawing.Point(459, 0)
+        Me.lblnoplu.Name = "lblnoplu"
+        Me.lblnoplu.Size = New System.Drawing.Size(279, 35)
+        Me.lblnoplu.TabIndex = 74
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox1.Location = New System.Drawing.Point(738, 0)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(93, 35)
+        Me.CheckBox1.TabIndex = 73
+        Me.CheckBox1.Text = "Sin decimales"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'chkaplicardesc
+        '
+        Me.chkaplicardesc.Checked = True
+        Me.chkaplicardesc.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkaplicardesc.Dock = System.Windows.Forms.DockStyle.Right
+        Me.chkaplicardesc.Location = New System.Drawing.Point(831, 0)
+        Me.chkaplicardesc.Name = "chkaplicardesc"
+        Me.chkaplicardesc.Size = New System.Drawing.Size(66, 35)
+        Me.chkaplicardesc.TabIndex = 63
+        Me.chkaplicardesc.Text = "Aplicar descuentos"
+        Me.chkaplicardesc.UseVisualStyleBackColor = True
+        Me.chkaplicardesc.Visible = False
+        '
         'panelcliente
         '
         Me.panelcliente.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
@@ -1087,7 +1101,7 @@ Partial Class puntoventa
         Me.panelcliente.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelcliente.Location = New System.Drawing.Point(0, 28)
         Me.panelcliente.Name = "panelcliente"
-        Me.panelcliente.Size = New System.Drawing.Size(968, 57)
+        Me.panelcliente.Size = New System.Drawing.Size(899, 57)
         Me.panelcliente.TabIndex = 87
         '
         'Panel13
@@ -1104,7 +1118,7 @@ Partial Class puntoventa
         Me.Panel13.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel13.Location = New System.Drawing.Point(0, 42)
         Me.Panel13.Name = "Panel13"
-        Me.Panel13.Size = New System.Drawing.Size(968, 17)
+        Me.Panel13.Size = New System.Drawing.Size(899, 17)
         Me.Panel13.TabIndex = 57
         '
         'lblfacIdAlmacen
@@ -1227,7 +1241,7 @@ Partial Class puntoventa
         Me.Panel12.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel12.Location = New System.Drawing.Point(0, 25)
         Me.Panel12.Name = "Panel12"
-        Me.Panel12.Size = New System.Drawing.Size(968, 17)
+        Me.Panel12.Size = New System.Drawing.Size(899, 17)
         Me.Panel12.TabIndex = 56
         '
         'lblclietipocontr
@@ -1315,6 +1329,7 @@ Partial Class puntoventa
         '
         Me.Panel8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel8.Controls.Add(Me.Button3)
         Me.Panel8.Controls.Add(Me.Button2)
         Me.Panel8.Controls.Add(Me.txtcliecuitcuil)
         Me.Panel8.Controls.Add(Me.Label11)
@@ -1324,8 +1339,24 @@ Partial Class puntoventa
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel8.Location = New System.Drawing.Point(0, 0)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(968, 25)
+        Me.Panel8.Size = New System.Drawing.Size(899, 25)
         Me.Panel8.TabIndex = 55
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button3.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Location = New System.Drawing.Point(840, 0)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(41, 23)
+        Me.Button3.TabIndex = 52
+        Me.Button3.Text = "CF"
+        Me.Button3.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button3.UseVisualStyleBackColor = False
+        Me.Button3.Visible = False
         '
         'Button2
         '
@@ -1334,7 +1365,7 @@ Partial Class puntoventa
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Location = New System.Drawing.Point(791, 0)
+        Me.Button2.Location = New System.Drawing.Point(779, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(61, 23)
         Me.Button2.TabIndex = 51
@@ -1345,7 +1376,8 @@ Partial Class puntoventa
         'txtcliecuitcuil
         '
         Me.txtcliecuitcuil.Dock = System.Windows.Forms.DockStyle.Left
-        Me.txtcliecuitcuil.Location = New System.Drawing.Point(663, 0)
+        Me.txtcliecuitcuil.Location = New System.Drawing.Point(651, 0)
+        Me.txtcliecuitcuil.MaxLength = 10
         Me.txtcliecuitcuil.Name = "txtcliecuitcuil"
         Me.txtcliecuitcuil.Size = New System.Drawing.Size(128, 20)
         Me.txtcliecuitcuil.TabIndex = 12
@@ -1355,7 +1387,7 @@ Partial Class puntoventa
         Me.Label11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.Label11.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(547, 0)
+        Me.Label11.Location = New System.Drawing.Point(535, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(116, 23)
         Me.Label11.TabIndex = 50
@@ -1367,7 +1399,7 @@ Partial Class puntoventa
         Me.txtclierazon.Dock = System.Windows.Forms.DockStyle.Left
         Me.txtclierazon.Location = New System.Drawing.Point(156, 0)
         Me.txtclierazon.Name = "txtclierazon"
-        Me.txtclierazon.Size = New System.Drawing.Size(391, 20)
+        Me.txtclierazon.Size = New System.Drawing.Size(379, 20)
         Me.txtclierazon.TabIndex = 11
         '
         'txtcliecta
@@ -1392,7 +1424,6 @@ Partial Class puntoventa
         'panelencabeza
         '
         Me.panelencabeza.BackColor = System.Drawing.Color.Gray
-        Me.panelencabeza.Controls.Add(Me.cmdReparNumeracion)
         Me.panelencabeza.Controls.Add(Me.lblfactnumero)
         Me.panelencabeza.Controls.Add(Me.lblfactptovta)
         Me.panelencabeza.Controls.Add(Me.lblfactabrev)
@@ -1401,23 +1432,8 @@ Partial Class puntoventa
         Me.panelencabeza.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelencabeza.Location = New System.Drawing.Point(0, 0)
         Me.panelencabeza.Name = "panelencabeza"
-        Me.panelencabeza.Size = New System.Drawing.Size(968, 28)
+        Me.panelencabeza.Size = New System.Drawing.Size(899, 28)
         Me.panelencabeza.TabIndex = 86
-        '
-        'cmdReparNumeracion
-        '
-        Me.cmdReparNumeracion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdReparNumeracion.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdReparNumeracion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdReparNumeracion.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdReparNumeracion.ForeColor = System.Drawing.Color.White
-        Me.cmdReparNumeracion.Location = New System.Drawing.Point(854, 0)
-        Me.cmdReparNumeracion.Name = "cmdReparNumeracion"
-        Me.cmdReparNumeracion.Size = New System.Drawing.Size(114, 28)
-        Me.cmdReparNumeracion.TabIndex = 53
-        Me.cmdReparNumeracion.Text = "Reparar numeración"
-        Me.cmdReparNumeracion.UseVisualStyleBackColor = False
-        Me.cmdReparNumeracion.Visible = False
         '
         'lblfactnumero
         '
@@ -1572,7 +1588,7 @@ Partial Class puntoventa
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1202, 749)
+        Me.ClientSize = New System.Drawing.Size(1133, 749)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.paneltareas2)
         Me.Controls.Add(Me.pntitulo)
@@ -1583,8 +1599,8 @@ Partial Class puntoventa
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
         Me.paneltareas2.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtpedidosfact, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pncaeaprobado.ResumeLayout(False)
         Me.pncaerechazado.ResumeLayout(False)
         Me.Panel5.ResumeLayout(False)
@@ -1600,8 +1616,8 @@ Partial Class puntoventa
         Me.paneltareas.PerformLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtproductos__bkp, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout()
+        Me.pnaddProd.ResumeLayout(False)
+        Me.pnaddProd.PerformLayout()
         Me.panelcliente.ResumeLayout(False)
         Me.Panel13.ResumeLayout(False)
         Me.Panel13.PerformLayout()
@@ -1664,7 +1680,7 @@ Partial Class puntoventa
     Friend WithEvents Label18 As Label
     Friend WithEvents txtobservaciones As TextBox
     Friend WithEvents dtproductos__bkp As DataGridView
-    Friend WithEvents Panel2 As Panel
+    Friend WithEvents pnaddProd As Panel
     Friend WithEvents txtcodPLU As TextBox
     Friend WithEvents chkquitarstock As CheckBox
     Friend WithEvents txtcantPLU As TextBox
@@ -1715,7 +1731,6 @@ Partial Class puntoventa
     Friend WithEvents Label9 As Label
     Friend WithEvents Label21 As Label
     Friend WithEvents Button2 As Button
-    Friend WithEvents lblnoplu As Label
     Friend WithEvents lblfacIdAlmacen As Label
     Friend WithEvents Label26 As Label
     Friend WithEvents PictureBox1 As PictureBox
@@ -1730,7 +1745,6 @@ Partial Class puntoventa
     Friend WithEvents Column10 As DataGridViewTextBoxColumn
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents dtproductos As DataGridView
-    Friend WithEvents cmdReparNumeracion As Button
     Friend WithEvents Column12 As DataGridViewTextBoxColumn
     Friend WithEvents Column14 As DataGridViewTextBoxColumn
     Friend WithEvents Column15 As DataGridViewTextBoxColumn
@@ -1739,4 +1753,7 @@ Partial Class puntoventa
     Friend WithEvents Column18 As DataGridViewTextBoxColumn
     Friend WithEvents Column19 As DataGridViewTextBoxColumn
     Friend WithEvents Column20 As DataGridViewTextBoxColumn
+    Friend WithEvents lblnoplu As Label
+    Friend WithEvents cmdremitar As Button
+    Friend WithEvents Button3 As Button
 End Class

@@ -1,5 +1,5 @@
 ﻿Public Class selListaCarga
-    Dim tipofact As Integer = 20
+    Dim tipofact As Integer = 997
     Dim idfactura As Integer
     Private Sub selListaCarga_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

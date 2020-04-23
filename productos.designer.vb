@@ -24,10 +24,10 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -48,6 +48,9 @@ Partial Class productos
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Label33 = New System.Windows.Forms.Label()
+        Me.txtPesoEspecifico = New System.Windows.Forms.TextBox()
+        Me.Label28 = New System.Windows.Forms.Label()
         Me.lblultimaMod = New System.Windows.Forms.Label()
         Me.Label26 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
@@ -470,6 +473,9 @@ Partial Class productos
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Label33)
+        Me.TabPage1.Controls.Add(Me.txtPesoEspecifico)
+        Me.TabPage1.Controls.Add(Me.Label28)
         Me.TabPage1.Controls.Add(Me.lblultimaMod)
         Me.TabPage1.Controls.Add(Me.Label26)
         Me.TabPage1.Controls.Add(Me.Label32)
@@ -504,6 +510,36 @@ Partial Class productos
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Informacion general"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Label33
+        '
+        Me.Label33.AutoSize = True
+        Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label33.ForeColor = System.Drawing.Color.Black
+        Me.Label33.Location = New System.Drawing.Point(466, 99)
+        Me.Label33.Name = "Label33"
+        Me.Label33.Size = New System.Drawing.Size(69, 16)
+        Me.Label33.TabIndex = 243
+        Me.Label33.Text = "Kg/unidad"
+        '
+        'txtPesoEspecifico
+        '
+        Me.txtPesoEspecifico.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtPesoEspecifico.Location = New System.Drawing.Point(353, 96)
+        Me.txtPesoEspecifico.Name = "txtPesoEspecifico"
+        Me.txtPesoEspecifico.Size = New System.Drawing.Size(113, 22)
+        Me.txtPesoEspecifico.TabIndex = 242
+        '
+        'Label28
+        '
+        Me.Label28.AutoSize = True
+        Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label28.ForeColor = System.Drawing.Color.Black
+        Me.Label28.Location = New System.Drawing.Point(353, 77)
+        Me.Label28.Name = "Label28"
+        Me.Label28.Size = New System.Drawing.Size(120, 16)
+        Me.Label28.TabIndex = 241
+        Me.Label28.Text = "Peso especifico"
         '
         'lblultimaMod
         '
@@ -909,7 +945,7 @@ Partial Class productos
         Me.txtinfoextra.Multiline = True
         Me.txtinfoextra.Name = "txtinfoextra"
         Me.txtinfoextra.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtinfoextra.Size = New System.Drawing.Size(500, 50)
+        Me.txtinfoextra.Size = New System.Drawing.Size(349, 50)
         Me.txtinfoextra.TabIndex = 7
         '
         'txtproducto
@@ -1730,18 +1766,18 @@ Partial Class productos
         '
         'Column4
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Format = "C2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -1837,18 +1873,18 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Format = "C2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -2073,4 +2109,7 @@ Partial Class productos
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents DgvProductos As DGVPaginado
+    Friend WithEvents Label33 As Label
+    Friend WithEvents txtPesoEspecifico As TextBox
+    Friend WithEvents Label28 As Label
 End Class

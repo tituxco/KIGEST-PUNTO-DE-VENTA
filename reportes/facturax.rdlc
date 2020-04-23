@@ -717,51 +717,6 @@
       </Tablix>
       <Rectangle Name="Rectangle29">
         <ReportItems>
-          <Rectangle Name="Rectangle4">
-            <ReportItems>
-              <Textbox Name="Textbox5">
-                <CanGrow>true</CanGrow>
-                <KeepTogether>true</KeepTogether>
-                <Paragraphs>
-                  <Paragraph>
-                    <TextRuns>
-                      <TextRun>
-                        <Value>X</Value>
-                        <Style>
-                          <FontSize>20pt</FontSize>
-                        </Style>
-                      </TextRun>
-                    </TextRuns>
-                    <Style>
-                      <TextAlign>Center</TextAlign>
-                    </Style>
-                  </Paragraph>
-                </Paragraphs>
-                <rd:DefaultName>Textbox5</rd:DefaultName>
-                <Left>0.68792cm</Left>
-                <Height>0.94396cm</Height>
-                <Width>0.66271cm</Width>
-                <Style>
-                  <Border>
-                    <Style>None</Style>
-                  </Border>
-                  <PaddingLeft>2pt</PaddingLeft>
-                  <PaddingRight>2pt</PaddingRight>
-                  <PaddingTop>2pt</PaddingTop>
-                  <PaddingBottom>2pt</PaddingBottom>
-                </Style>
-              </Textbox>
-            </ReportItems>
-            <KeepTogether>true</KeepTogether>
-            <Left>9.32447cm</Left>
-            <Height>1.11097cm</Height>
-            <Width>1.95792cm</Width>
-            <Style>
-              <Border>
-                <Style>Solid</Style>
-              </Border>
-            </Style>
-          </Rectangle>
           <Textbox Name="Textbox4">
             <CanGrow>true</CanGrow>
             <KeepTogether>true</KeepTogether>
@@ -782,7 +737,6 @@
             <Left>11.28238cm</Left>
             <Height>0.6cm</Height>
             <Width>8.0257cm</Width>
-            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -815,7 +769,7 @@
             <Left>0.03528cm</Left>
             <Height>0.50271cm</Height>
             <Width>9.25391cm</Width>
-            <ZIndex>2</ZIndex>
+            <ZIndex>1</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -847,7 +801,7 @@
             <Left>0.03528cm</Left>
             <Height>0.50475cm</Height>
             <Width>9.25391cm</Width>
-            <ZIndex>3</ZIndex>
+            <ZIndex>2</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -879,7 +833,7 @@
             <Left>0.03528cm</Left>
             <Height>0.50475cm</Height>
             <Width>9.25391cm</Width>
-            <ZIndex>4</ZIndex>
+            <ZIndex>3</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -911,7 +865,7 @@
             <Left>11.6528cm</Left>
             <Height>0.473cm</Height>
             <Width>5.08231cm</Width>
-            <ZIndex>5</ZIndex>
+            <ZIndex>4</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -943,7 +897,7 @@
             <Left>11.6528cm</Left>
             <Height>0.473cm</Height>
             <Width>5.08231cm</Width>
-            <ZIndex>6</ZIndex>
+            <ZIndex>5</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -975,7 +929,7 @@
             <Left>11.6528cm</Left>
             <Height>0.473cm</Height>
             <Width>3.69766cm</Width>
-            <ZIndex>7</ZIndex>
+            <ZIndex>6</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1007,7 +961,7 @@
             <Left>11.68808cm</Left>
             <Height>0.50475cm</Height>
             <Width>5.04704cm</Width>
-            <ZIndex>8</ZIndex>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1041,7 +995,7 @@
             <Left>11.6528cm</Left>
             <Height>0.56825cm</Height>
             <Width>4.94771cm</Width>
-            <ZIndex>9</ZIndex>
+            <ZIndex>8</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1073,7 +1027,7 @@
             <Left>0.03528cm</Left>
             <Height>0.50475cm</Height>
             <Width>9.25391cm</Width>
-            <ZIndex>10</ZIndex>
+            <ZIndex>9</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1093,7 +1047,7 @@
             <Left>0.01961cm</Left>
             <Height>1.97769cm</Height>
             <Width>9.26958cm</Width>
-            <ZIndex>11</ZIndex>
+            <ZIndex>10</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1123,6 +1077,36 @@
             <Left>11.6528cm</Left>
             <Height>0.56825cm</Height>
             <Width>7.65528cm</Width>
+            <ZIndex>11</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox2">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value />
+                    <Style />
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>2.73791cm</Top>
+            <Left>17.50009cm</Left>
+            <Height>0.79989cm</Height>
+            <Width>0.74083cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -1355,7 +1339,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Observaciones " &amp; First(Fields!facobserva.Value, "encabezado")</Value>
+                    <Value>="Observaciones: " &amp; First(Fields!facobserva.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>
@@ -1389,6 +1373,86 @@
         <Height>2.53972cm</Height>
         <Width>19.38783cm</Width>
         <ZIndex>2</ZIndex>
+        <Style>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
+        </Style>
+      </Rectangle>
+      <Rectangle Name="Rectangle4">
+        <ReportItems>
+          <Textbox Name="Textbox5">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!facletra.Value, "encabezado")</Value>
+                    <Style>
+                      <FontSize>20pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox5</rd:DefaultName>
+            <Left>0.55563cm</Left>
+            <Height>0.94396cm</Height>
+            <Width>0.795cm</Width>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox22">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=First(Fields!faccodigo.Value, "encabezado")</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Center</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox9</rd:DefaultName>
+            <Top>0.86941cm</Top>
+            <Height>0.473cm</Height>
+            <Width>1.88085cm</Width>
+            <ZIndex>1</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+        </ReportItems>
+        <KeepTogether>true</KeepTogether>
+        <Top>0.22578cm</Top>
+        <Left>9.49537cm</Left>
+        <Height>1.44824cm</Height>
+        <Width>1.95791cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1524,10 +1588,42 @@
           <DataField>iva21</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
         </Field>
+        <Field Name="total">
+          <DataField>total</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="efectivo">
+          <DataField>efectivo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="descfact">
+          <DataField>descfact</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="cae">
+          <DataField>cae</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="facletra">
+          <DataField>facletra</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="faccodigo">
+          <DataField>faccodigo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="vtocae">
+          <DataField>vtocae</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="codbarra">
+          <DataField>codbarra</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datosfacturas</rd:DataSetName>
-        <rd:SchemaPath>C:\Importante\Dropbox\desarrollos\kigest-fact_IGP\datasets\datosfacturas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\KIGEST-PUNTO DE VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
         <rd:TableName>factura_enca</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

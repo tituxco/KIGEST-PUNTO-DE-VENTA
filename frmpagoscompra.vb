@@ -1,4 +1,6 @@
-﻿Public Class frmpagoscompra
+﻿Imports System.ComponentModel
+
+Public Class frmpagoscompra
 
     Public NumeroFactura As String
     Public TipoFac As Integer = 996
@@ -31,6 +33,8 @@
         Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
         lbltotalefectivo.Text = TOTAL
         panelformaspago.Visible = False
+        panelefectivo.Visible = True
+        panelTarjetas.Visible = False
         txtefectivo.Focus()
 
     End Sub
@@ -50,15 +54,17 @@
 
             vuelto = efectivo - total
             txtvuelto.Text = vuelto
-            Me.AcceptButton = cmdfinalizar
-            cmdfinalizar.Focus()
+            Me.AcceptButton = cmdfinalizarEfectivo
+            cmdfinalizarEfectivo.Focus()
         End If
     End Sub
 
-    Private Sub cmdfinalizar_Click(sender As Object, e As EventArgs) Handles cmdfinalizar.Click
+    Private Sub cmdfinalizar_Click(sender As Object, e As EventArgs) Handles cmdfinalizarEfectivo.Click
         Try
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo, por favor verifique")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
+                panelformaspago.Visible = False
                 Exit Sub
             End If
 
@@ -134,9 +140,9 @@
             Reconectar()
             Dim comandocaj As New MySql.Data.MySqlClient.MySqlCommand(ConsultaCaj, conexionPrinc)
             With comandocaj.Parameters
-                    .AddWithValue("?monto", TOTAL)
-                    .AddWithValue("?comp", IdRecibo)
-                    .AddWithValue("?caja", My.Settings.CajaDef)
+                .AddWithValue("?monto", TOTAL)
+                .AddWithValue("?comp", IdRecibo)
+                .AddWithValue("?caja", My.Settings.CajaDef)
                 .AddWithValue("?conc", "1")
             End With
             comandocaj.ExecuteNonQuery()
@@ -164,10 +170,137 @@
         Me.Close()
     End Sub
 
-    'Private Sub frmpagoscompra_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-    '    'puntoventa.cmdimprimir.PerformClick()
-    '    If My.Settings.ImprTikets = 1 Then
-    '        puntoventa.cmdimprimir.PerformClick()
-    '    End If
-    'End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            Reconectar()
+            Dim lector As System.Data.IDataReader
+            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+            sql.Connection = conexionPrinc
+            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & TipoFac & " and ptovta= " & PtoVta
+            sql.CommandType = CommandType.Text
+            lector = sql.ExecuteReader
+            lector.Read()
+            NumRecibo = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
+            Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
+
+            panelformaspago.Visible = False
+            panelefectivo.Visible = False
+            panelTarjetas.Visible = True
+        Catch ex As Exception
+
+        End Try
+
+
+    End Sub
+
+    Private Sub cmdFinalizarTarjeta_Click(sender As Object, e As EventArgs) Handles cmdFinalizarTarjeta.Click
+        Try
+            If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
+                por favor contacte con el administrador o repare la numeración manualmente")
+                panelformaspago.Visible = False
+                Exit Sub
+            End If
+
+
+            SqlQuery = "insert into fact_facturas  " _
+                & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,total,observaciones) values " _
+                & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?tot,?observa)"
+
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?ptov", Val(PtoVta))
+                .AddWithValue("?tipofact", TipoFac)
+                .AddWithValue("?nfac", Val(NumRecibo))
+                .AddWithValue("?fech", Fecha)
+                .AddWithValue("?idclie", CtaClie)
+                .AddWithValue("?razon", RazonSocial)
+                .AddWithValue("?dire", Direccion)
+                .AddWithValue("?loca", Localidad)
+                .AddWithValue("?tipocont", tipoContr)
+                .AddWithValue("?cuit", CUIT)
+                .AddWithValue("?tot", TOTAL)
+                .AddWithValue("?observa", "VENTA MOSTRADOR")
+            End With
+            comandoadd.ExecuteNonQuery()
+            IdRecibo = comandoadd.LastInsertedId
+
+            'If Not IsNothing(tarjeta.Cells(0).Value) Then
+            SqlQuery = "insert into fact_tarjetas " _
+                & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
+                & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
+                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+                With comandoch.Parameters
+                .AddWithValue("?cliente", CtaClie)
+                .AddWithValue("?comprobante", IdRecibo)
+                .AddWithValue("?nombre", txtTarjetaNombre.Text.ToUpper)
+                .AddWithValue("?autorizacion", txtTarjetaAutoriza.Text.ToUpper)
+                .AddWithValue("?fecha", Fecha)
+                .AddWithValue("?importe", TOTAL)
+            End With
+                comandoch.ExecuteNonQuery()
+            'End If
+
+            Reconectar()
+            Dim lector As System.Data.IDataReader
+            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+            sql.Connection = conexionPrinc
+            sql.CommandText = "update fact_conffiscal set confnume=" & Val(NumRecibo) & " where donfdesc= " & TipoFac & " and ptovta=" & PtoVta
+            sql.CommandType = CommandType.Text
+            lector = sql.ExecuteReader
+            lector.Read()
+
+            Reconectar()
+            sql.Connection = conexionPrinc
+            sql.CommandText = "update fact_cuentaclie set pago=1 where id= " & IdFacturaCTA
+            sql.CommandType = CommandType.Text
+            lector = sql.ExecuteReader
+            lector.Read()
+
+            Reconectar()
+            sql.Connection = conexionPrinc
+            sql.CommandText = "update fact_facturas set observaciones2='RBO " & CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1) & "' where id= " & IdFacturaComp
+            sql.CommandType = CommandType.Text
+            lector = sql.ExecuteReader
+            lector.Read()
+
+            SqlQuery = "insert into fact_items " _
+                & "(cod, descripcion, ptotal, tipofact,ptovta,num_fact, id_fact) values" _
+                & "(?cod,?desc,?ptot,?tipofact,ptovta,?num_fact,?id_fact)"
+
+            Reconectar()
+            Dim comandoaddITM As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoaddITM.Parameters
+                .AddWithValue("?cod", "0")
+                .AddWithValue("?desc", CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)) 'DESCRIPCION
+                .AddWithValue("?ptot", TOTAL)
+                .AddWithValue("?tipofact", TipoFac)
+                .AddWithValue("?ptovta", Val(PtoVta))
+                .AddWithValue("?num_fact", Val(NumRecibo))
+                .AddWithValue("?id_fact", IdRecibo)
+            End With
+            comandoaddITM.ExecuteNonQuery()
+            puntoventa.Button1.Focus()
+            'Try 'actualizamos la caja
+
+            Me.Close()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaNombre.KeyDown
+        If e.KeyCode = Keys.Enter Then
+
+            txtTarjetaAutoriza.Focus()
+        End If
+    End Sub
+    Private Sub txtTarjetaAutoriza_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaAutoriza.KeyDown
+        If e.KeyCode = Keys.Enter Then
+
+            cmdFinalizarTarjeta.Focus()
+        End If
+    End Sub
 End Class

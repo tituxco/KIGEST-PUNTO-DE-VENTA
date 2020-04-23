@@ -9,10 +9,7 @@
               <Width>1.89152cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.145cm</Width>
-            </TablixColumn>
-            <TablixColumn>
-              <Width>16.33583cm</Width>
+              <Width>17.46512cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -39,39 +36,6 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
-                    <Textbox Name="Textbox41">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value>UNID</Value>
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                                <FontWeight>Bold</FontWeight>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox41</rd:DefaultName>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -158,38 +122,6 @@
                 </TablixCell>
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox42">
-                      <CanGrow>true</CanGrow>
-                      <KeepTogether>true</KeepTogether>
-                      <Paragraphs>
-                        <Paragraph>
-                          <TextRuns>
-                            <TextRun>
-                              <Value />
-                              <Style>
-                                <FontSize>8pt</FontSize>
-                              </Style>
-                            </TextRun>
-                          </TextRuns>
-                          <Style />
-                        </Paragraph>
-                      </Paragraphs>
-                      <rd:DefaultName>Textbox42</rd:DefaultName>
-                      <Style>
-                        <Border>
-                          <Color>LightGrey</Color>
-                          <Style>Solid</Style>
-                        </Border>
-                        <PaddingLeft>2pt</PaddingLeft>
-                        <PaddingRight>2pt</PaddingRight>
-                        <PaddingTop>2pt</PaddingTop>
-                        <PaddingBottom>2pt</PaddingBottom>
-                      </Style>
-                    </Textbox>
-                  </CellContents>
-                </TablixCell>
-                <TablixCell>
-                  <CellContents>
                     <Textbox Name="descripcion">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
@@ -258,10 +190,9 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <ColSpan>3</ColSpan>
+                    <ColSpan>2</ColSpan>
                   </CellContents>
                 </TablixCell>
-                <TablixCell />
                 <TablixCell />
               </TablixCells>
             </TablixRow>
@@ -269,7 +200,6 @@
         </TablixBody>
         <TablixColumnHierarchy>
           <TablixMembers>
-            <TablixMember />
             <TablixMember />
             <TablixMember />
           </TablixMembers>
@@ -294,7 +224,7 @@
         <Top>7.07904cm</Top>
         <Left>0.09525cm</Left>
         <Height>1.83528cm</Height>
-        <Width>19.37234cm</Width>
+        <Width>19.35664cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -509,7 +439,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Observaciones " &amp; First(Fields!facobserva.Value, "encabezado")</Value>
+                    <Value>="Observaciones: " &amp; First(Fields!facobserva.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>
@@ -521,7 +451,7 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>0.55591cm</Top>
+            <Top>0.59119cm</Top>
             <Left>10.33905cm</Left>
             <Height>1.83527cm</Height>
             <Width>9.04878cm</Width>
@@ -992,7 +922,7 @@
               </Textbox>
             </ReportItems>
             <KeepTogether>true</KeepTogether>
-            <Top>0.03528cm</Top>
+            <Top>0.00353cm</Top>
             <Left>9.32447cm</Left>
             <Height>1.41296cm</Height>
             <Width>1.95792cm</Width>
@@ -1270,10 +1200,30 @@
           <DataField>descfact</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="cae">
+          <DataField>cae</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="facletra">
+          <DataField>facletra</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="faccodigo">
+          <DataField>faccodigo</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="vtocae">
+          <DataField>vtocae</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="codbarra">
+          <DataField>codbarra</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datosfacturas</rd:DataSetName>
-        <rd:SchemaPath>D:\DRIVE\Desarrollos\KIGEST - FACT (IGP)\datasets\datosfacturas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\KIGEST-PUNTO DE VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
         <rd:TableName>factura_enca</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
