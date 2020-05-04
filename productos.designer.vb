@@ -24,14 +24,16 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.cmbOrdenarPor = New System.Windows.Forms.ComboBox()
+        Me.Label36 = New System.Windows.Forms.Label()
         Me.cmdpromocion = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.chkstock = New System.Windows.Forms.CheckBox()
@@ -236,6 +238,8 @@ Partial Class productos
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.cmbOrdenarPor)
+        Me.pnnavegacion.Controls.Add(Me.Label36)
         Me.pnnavegacion.Controls.Add(Me.cmdpromocion)
         Me.pnnavegacion.Controls.Add(Me.Button1)
         Me.pnnavegacion.Controls.Add(Me.chkstock)
@@ -252,6 +256,28 @@ Partial Class productos
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1249, 89)
         Me.pnnavegacion.TabIndex = 74
+        '
+        'cmbOrdenarPor
+        '
+        Me.cmbOrdenarPor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbOrdenarPor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbOrdenarPor.FormattingEnabled = True
+        Me.cmbOrdenarPor.Items.AddRange(New Object() {"Descripcion", "Codigo/PLU"})
+        Me.cmbOrdenarPor.Location = New System.Drawing.Point(243, 65)
+        Me.cmbOrdenarPor.Name = "cmbOrdenarPor"
+        Me.cmbOrdenarPor.Size = New System.Drawing.Size(132, 21)
+        Me.cmbOrdenarPor.TabIndex = 170
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label36.ForeColor = System.Drawing.Color.White
+        Me.Label36.Location = New System.Drawing.Point(243, 46)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(95, 16)
+        Me.Label36.TabIndex = 171
+        Me.Label36.Text = "Ordenar por:"
         '
         'cmdpromocion
         '
@@ -292,7 +318,7 @@ Partial Class productos
         Me.chkstock.AutoSize = True
         Me.chkstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkstock.ForeColor = System.Drawing.Color.White
-        Me.chkstock.Location = New System.Drawing.Point(243, 66)
+        Me.chkstock.Location = New System.Drawing.Point(654, 7)
         Me.chkstock.Name = "chkstock"
         Me.chkstock.Size = New System.Drawing.Size(121, 20)
         Me.chkstock.TabIndex = 167
@@ -305,7 +331,7 @@ Partial Class productos
         Me.cmbcatProdGral.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbcatProdGral.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbcatProdGral.FormattingEnabled = True
-        Me.cmbcatProdGral.Location = New System.Drawing.Point(243, 26)
+        Me.cmbcatProdGral.Location = New System.Drawing.Point(243, 22)
         Me.cmbcatProdGral.Name = "cmbcatProdGral"
         Me.cmbcatProdGral.Size = New System.Drawing.Size(310, 21)
         Me.cmbcatProdGral.TabIndex = 165
@@ -315,7 +341,7 @@ Partial Class productos
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.ForeColor = System.Drawing.Color.White
-        Me.Label7.Location = New System.Drawing.Point(243, 7)
+        Me.Label7.Location = New System.Drawing.Point(243, 3)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(80, 16)
         Me.Label7.TabIndex = 166
@@ -1766,18 +1792,18 @@ Partial Class productos
         '
         'Column4
         '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle6.Format = "C2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -1873,18 +1899,18 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle8.Format = "C2"
-        DataGridViewCellStyle8.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -1989,7 +2015,6 @@ Partial Class productos
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents chkstock As System.Windows.Forms.CheckBox
     Friend WithEvents cmbcatProdGral As System.Windows.Forms.ComboBox
-    Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents txtcosto As System.Windows.Forms.TextBox
     Friend WithEvents Label8 As System.Windows.Forms.Label
     Friend WithEvents Label12 As System.Windows.Forms.Label
@@ -2112,4 +2137,7 @@ Partial Class productos
     Friend WithEvents Label33 As Label
     Friend WithEvents txtPesoEspecifico As TextBox
     Friend WithEvents Label28 As Label
+    Friend WithEvents cmbOrdenarPor As ComboBox
+    Friend WithEvents Label36 As Label
+    Friend WithEvents Label7 As Label
 End Class

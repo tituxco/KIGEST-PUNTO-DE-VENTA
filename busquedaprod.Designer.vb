@@ -23,10 +23,10 @@ Partial Class busquedaprod
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(busquedaprod))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
@@ -82,6 +82,8 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cmbOrdenarPor = New System.Windows.Forms.ComboBox()
+        Me.Label36 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel4.SuspendLayout()
@@ -123,6 +125,8 @@ Partial Class busquedaprod
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.cmbOrdenarPor)
+        Me.pnnavegacion.Controls.Add(Me.Label36)
         Me.pnnavegacion.Controls.Add(Me.Panel4)
         Me.pnnavegacion.Controls.Add(Me.GroupBox1)
         Me.pnnavegacion.Controls.Add(Me.cmbproveedor)
@@ -241,7 +245,7 @@ Partial Class busquedaprod
         Me.cmbproveedor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbproveedor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbproveedor.FormattingEnabled = True
-        Me.cmbproveedor.Location = New System.Drawing.Point(422, 32)
+        Me.cmbproveedor.Location = New System.Drawing.Point(422, 22)
         Me.cmbproveedor.Name = "cmbproveedor"
         Me.cmbproveedor.Size = New System.Drawing.Size(235, 21)
         Me.cmbproveedor.TabIndex = 175
@@ -251,7 +255,7 @@ Partial Class busquedaprod
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(422, 13)
+        Me.Label2.Location = New System.Drawing.Point(422, 3)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(81, 16)
         Me.Label2.TabIndex = 176
@@ -261,7 +265,7 @@ Partial Class busquedaprod
         '
         Me.chkmantenerfiltro.AutoSize = True
         Me.chkmantenerfiltro.ForeColor = System.Drawing.Color.White
-        Me.chkmantenerfiltro.Location = New System.Drawing.Point(410, 65)
+        Me.chkmantenerfiltro.Location = New System.Drawing.Point(325, 66)
         Me.chkmantenerfiltro.Name = "chkmantenerfiltro"
         Me.chkmantenerfiltro.Size = New System.Drawing.Size(93, 17)
         Me.chkmantenerfiltro.TabIndex = 173
@@ -309,7 +313,7 @@ Partial Class busquedaprod
         Me.txtbuscar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txtbuscar.Location = New System.Drawing.Point(3, 61)
         Me.txtbuscar.Name = "txtbuscar"
-        Me.txtbuscar.Size = New System.Drawing.Size(401, 22)
+        Me.txtbuscar.Size = New System.Drawing.Size(316, 22)
         Me.txtbuscar.TabIndex = 169
         Me.txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO"
         '
@@ -502,18 +506,18 @@ Partial Class busquedaprod
         '
         'Column4
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle6.Format = "C2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -686,18 +690,18 @@ Partial Class busquedaprod
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle8.Format = "C2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -723,6 +727,28 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn7.ReadOnly = True
         Me.DataGridViewTextBoxColumn7.Visible = False
         Me.DataGridViewTextBoxColumn7.Width = 317
+        '
+        'cmbOrdenarPor
+        '
+        Me.cmbOrdenarPor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbOrdenarPor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbOrdenarPor.FormattingEnabled = True
+        Me.cmbOrdenarPor.Items.AddRange(New Object() {"Descripcion", "Codigo/PLU"})
+        Me.cmbOrdenarPor.Location = New System.Drawing.Point(422, 62)
+        Me.cmbOrdenarPor.Name = "cmbOrdenarPor"
+        Me.cmbOrdenarPor.Size = New System.Drawing.Size(132, 21)
+        Me.cmbOrdenarPor.TabIndex = 181
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label36.ForeColor = System.Drawing.Color.White
+        Me.Label36.Location = New System.Drawing.Point(422, 43)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(95, 16)
+        Me.Label36.TabIndex = 182
+        Me.Label36.Text = "Ordenar por:"
         '
         'busquedaprod
         '
@@ -815,4 +841,6 @@ Partial Class busquedaprod
     Friend WithEvents dgvProductos As DGVPaginado
     Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents cmbOrdenarPor As ComboBox
+    Friend WithEvents Label36 As Label
 End Class

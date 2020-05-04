@@ -16,7 +16,15 @@
         cmbInforCateg.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
         cmbInforCateg.SelectedIndex = -1
 
-        txtidalmacen.Text = My.Settings.idAlmacen
+        Dim tablaAlmac As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+        Dim readAlmac As New DataSet
+        tablaAlmac.Fill(readAlmac)
+        cmbAlmacenes.DataSource = readAlmac.Tables(0)
+        cmbAlmacenes.DisplayMember = readAlmac.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbAlmacenes.ValueMember = readAlmac.Tables(0).Columns(0).Caption.ToString
+
+
+        cmbAlmacenes.SelectedValue = My.Settings.idAlmacen
     End Sub
 
 
@@ -83,16 +91,17 @@
             Dim tablabal As New DataTable
             Dim consIdAlmacen As String = ""
             tablabal.Clear()
-            If txtidalmacen.Text <> "" And IsNumeric(txtidalmacen.Text) Then
-                consIdAlmacen = " and itm.ptovta=" & txtidalmacen.Text
-            End If
+            ' If cmbAlmacenes.SelectedValue <> 0 And cmbAlmacenes.SelectedIndex <> -1 Then
+            consIdAlmacen = " and itm.ptovta=" & cmbAlmacenes.SelectedValue
+            'End If
 
             If rdInforgeneral.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
 			    fact.fecha,  
-                round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+                round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * 
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    round(sum(itm.ptotal),2) as pventa, 
-                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact and 
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
@@ -105,9 +114,10 @@
                     provSel = " and ins.codprov=" & cmbInforProv.SelectedValue
                 End If
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		prov.razon,
-			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    round(sum(itm.ptotal),2) as pventa, 
-                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
@@ -120,9 +130,10 @@
                     catSel = " and ins.categoria=" & cmbInforCateg.SelectedValue
                 End If
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		cat.nombre,
-			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    round(sum(itm.ptotal),2) as pventa, 
-                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_categoria_insum as cat where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.categoria=cat.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
@@ -135,10 +146,11 @@
                     prodBusq = "and ins.descripcion like '%" & txtInforProd.Text & "%'"
                 End If
 
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
-			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    round(sum(itm.ptotal),2) as pventa, 
-                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
@@ -147,11 +159,6 @@
 
 
             End If
-
-
-
-
-
 
             dtventashistoricas.DataSource = tablabal
 
@@ -168,9 +175,9 @@
                 lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
             ElseIf rdInforProductos.Checked = True Then
-                lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
-                lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
-                lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 5), 2)
                 'ElseIf rdInforMes.Checked = True Then
                 '    lblbalancecosto.Text = "Total costo: $" & 0 'Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 '    lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)

@@ -191,7 +191,7 @@ Partial Class imprimirEtiquetas
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
         Me.Button2.Location = New System.Drawing.Point(498, 79)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(55, 53)

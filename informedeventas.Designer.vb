@@ -27,8 +27,8 @@ Partial Class informedeventas
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
         Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.cmbAlmacenes = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtidalmacen = New System.Windows.Forms.TextBox()
         Me.Panel27 = New System.Windows.Forms.Panel()
         Me.lblbalanceganancia = New System.Windows.Forms.Label()
         Me.lblbalancecosto = New System.Windows.Forms.Label()
@@ -97,8 +97,8 @@ Partial Class informedeventas
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.cmbAlmacenes)
         Me.Panel11.Controls.Add(Me.Label2)
-        Me.Panel11.Controls.Add(Me.txtidalmacen)
         Me.Panel11.Controls.Add(Me.Panel27)
         Me.Panel11.Controls.Add(Me.GroupBox5)
         Me.Panel11.Controls.Add(Me.Button18)
@@ -109,22 +109,23 @@ Partial Class informedeventas
         Me.Panel11.Size = New System.Drawing.Size(1203, 98)
         Me.Panel11.TabIndex = 18
         '
+        'cmbAlmacenes
+        '
+        Me.cmbAlmacenes.FormattingEnabled = True
+        Me.cmbAlmacenes.Location = New System.Drawing.Point(863, 21)
+        Me.cmbAlmacenes.Name = "cmbAlmacenes"
+        Me.cmbAlmacenes.Size = New System.Drawing.Size(184, 21)
+        Me.cmbAlmacenes.TabIndex = 92
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(863, 4)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(60, 13)
+        Me.Label2.Size = New System.Drawing.Size(48, 13)
         Me.Label2.TabIndex = 91
-        Me.Label2.Text = "Id Almacen"
-        '
-        'txtidalmacen
-        '
-        Me.txtidalmacen.Location = New System.Drawing.Point(863, 21)
-        Me.txtidalmacen.Name = "txtidalmacen"
-        Me.txtidalmacen.Size = New System.Drawing.Size(100, 20)
-        Me.txtidalmacen.TabIndex = 90
+        Me.Label2.Text = "Almacen"
         '
         'Panel27
         '
@@ -362,7 +363,7 @@ Partial Class informedeventas
         Me.Name = "informedeventas"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "informedeventas"
-        Me.WindowState = System.Windows.Forms.FormWindowState.Minimized
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
         CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).EndInit()
@@ -401,6 +402,6 @@ Partial Class informedeventas
     Friend WithEvents lblbalanceganancia As Label
     Friend WithEvents lblbalancecosto As Label
     Friend WithEvents lblbalanceventas As Label
-    Friend WithEvents txtidalmacen As TextBox
     Friend WithEvents Label2 As Label
+    Friend WithEvents cmbAlmacenes As ComboBox
 End Class

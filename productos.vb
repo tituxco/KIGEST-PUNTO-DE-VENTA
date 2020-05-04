@@ -302,14 +302,16 @@ Public Class productos
             Dim buscStr = nombre.Split(separador, StringSplitOptions.None)
             Dim i As Integer
 
-            'For i = 0 To buscStr.Length - 1
-            '    If i = 0 Then
-            '        busqtxt &= " descripcion like '%" & buscStr(i) & "%' or codigo like '" & buscStr(i) & "%'"
-            '    Else
-            '        busqtxt &= " and descripcion like '%" & buscStr(i) & "%' or codigo like '" & buscStr(i) & "%'"
-            '    End If
+            Dim orderBy As String = ""
+            Select Case cmbOrdenarPor.SelectedIndex
+                Case -1
+                    orderBy = " order by id asc"
+                Case 0
+                    orderBy = " order by descripcion asc"
+                Case 1
+                    orderBy = " order by codigo asc"
+            End Select
 
-            'Next
             Dim BusquedaComp As String
 
             BusquedaComp = Replace(nombre, " ", "%")
@@ -338,7 +340,7 @@ Public Class productos
                 busqCod = " and  id=" & codigo
             End If
 
-            cadenaComp = busqNomb & " And " & busqCat & busqStock & busqCod
+            cadenaComp = busqNomb & " And " & busqCat & busqStock & busqCod & orderBy
 
             'MsgBox(cadenaComp)
 
@@ -1359,11 +1361,16 @@ Public Class productos
 
     End Sub
 
-    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+    Private Sub cmbOrdenarPor_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbOrdenarPor.SelectionChangeCommitted
+        imprimirlist = False
+        cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProdGral.SelectedValue)
+    End Sub
+
+    Private Sub DgvProductos_Load(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub DgvProductos_Load(sender As Object, e As EventArgs) Handles DgvProductos.Load
+    Private Sub cmbOrdenarPor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbOrdenarPor.SelectedIndexChanged
 
     End Sub
 End Class

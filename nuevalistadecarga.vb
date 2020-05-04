@@ -254,8 +254,10 @@
         calcularEnvases()
 
         For Each producto As DataRow In TablaProd.Rows
-            ' MsgBox(producto("cantidad") & "*" & producto("pesoEsp"))
-            Pesototal += producto("cantidad") * producto("pesoEsp")
+            If Not IsDBNull(producto("pesoEsp")) Then
+                ' MsgBox(producto("cantidad") & "*" & producto("pesoEsp"))
+                Pesototal += producto("cantidad") * producto("pesoEsp")
+            End If
         Next
 
         lblpesoTotal.Text = "Peso total de la carga:" & Pesototal & "Kg"

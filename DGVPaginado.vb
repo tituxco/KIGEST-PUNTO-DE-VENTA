@@ -14,8 +14,13 @@
         dgvVista.DataSource = Split(todos_los_datos)
         dgvVista.Columns(0).Visible = False
         HabilitarBotones()
-    End Sub
 
+    End Sub
+    'Private Sub cargarOrden(dt As DataTable)
+    '    For Each columna As DataColumn In dt.Columns
+    '        cmborden.Items.Add(columna.ColumnName)
+    '    Next
+    'End Sub
     Private Function Split(dt As DataTable) As DataTable
         lblPagina.Text = pagina + 1
         HabilitarBotones()
@@ -52,7 +57,5 @@
     End Sub
     Public Event SeleccionarItem(IdItem As Integer)
 
-    Private Sub dgvVista_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvVista.CellContentClick
 
-    End Sub
 End Class

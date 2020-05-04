@@ -56,6 +56,7 @@ Public Class busquedaprod
             Dim busqtxt As String
 
             Dim cadenaComp As String
+            Dim cadenaComp2 As String
 
             Dim busqCat As String
             Dim busqCod As String
@@ -66,6 +67,16 @@ Public Class busquedaprod
             Dim separador() As String = {"-", " "}
             Dim buscStr = nombre.Split(separador, StringSplitOptions.None)
             Dim i As Integer
+
+            Dim orderBy As String = ""
+            Select Case cmbOrdenarPor.SelectedIndex
+                Case -1
+                    orderBy = " order by pro.id asc"
+                Case 0
+                    orderBy = " order by pro.descripcion asc"
+                Case 1
+                    orderBy = " order by pro.codigo asc"
+            End Select
 
             Dim BusquedaComp As String
 
@@ -93,8 +104,8 @@ Public Class busquedaprod
             Else
                 busqProv = " pro.codprov = " & cmbproveedor.SelectedValue
             End If
-            cadenaComp = busqNomb & " And " & busqCat & " And " & busqProv & busqCod
-
+            cadenaComp = busqNomb & " And " & busqCat & " And " & busqProv & busqCod & orderBy
+            cadenaComp2 = busqNomb & " And " & busqCat & " And " & busqProv & busqCod
             'MsgBox(cadenaComp)
 
             If imprimirlist = False And imprimiretiq = False Then
@@ -142,7 +153,7 @@ Public Class busquedaprod
 						(((select substring(listas.utilidad from 2) from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
 				,2,'es_AR')
                 end as precio, cat.nombre as categoria
-                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp & " order by cat.nombre, pro.descripcion asc", conexionPrinc)
+                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
@@ -557,11 +568,9 @@ Public Class busquedaprod
         calcularPrecios(IdItem)
     End Sub
 
-    Private Sub dgvProductos_Load(sender As Object, e As EventArgs) Handles dgvProductos.Load
 
-    End Sub
-
-    Private Sub dgvProductos_Enter(sender As Object, e As EventArgs) Handles dgvProductos.Enter
-
+    Private Sub cmbOrdenarPor_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbOrdenarPor.SelectionChangeCommitted
+        imprimirlist = False
+        cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProd.SelectedValue)
     End Sub
 End Class

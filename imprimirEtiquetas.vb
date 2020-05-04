@@ -26,7 +26,7 @@ Public Class imprimirEtiquetas
             cmbCategoria.DisplayMember = readcat.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbCategoria.ValueMember = readcat.Tables(0).Columns(0).Caption.ToString
             cmbCategoria.SelectedValue = My.Settings.idCatDef
-            cargarProductos()
+            cargarProductos("")
         Catch ex As Exception
 
         End Try
@@ -41,7 +41,7 @@ Public Class imprimirEtiquetas
         cmblistas.ValueMember = readlis.Tables(0).Columns(0).Caption.ToString
         cmblistas.SelectedValue = My.Settings.idListaDef
     End Sub
-    Private Sub cargarProductos()
+    Private Sub cargarProductos(prodbusq As String)
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
         EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
@@ -72,8 +72,12 @@ Public Class imprimirEtiquetas
             Else
                 paramBusq = " and pro.categoria in (" & catSel & ") " 'limit 0," & My.Settings.paginacion
             End If
+            If prodbusq <> "" Then
+                paramBusq = "and pro.descripcion like '%" & prodbusq.Replace(" ", "%") & "%'"
+            End If
+
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU                
-            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id " & paramBusq, conexionPrinc)
+            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id " & paramBusq & " limit 100", conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
@@ -310,7 +314,7 @@ Public Class imprimirEtiquetas
         Try
             My.Settings.idCatDef = cmbCategoria.SelectedValue
             My.Settings.Save()
-            cargarProductos()
+            cargarProductos("")
         Catch ex As Exception
         End Try
     End Sub
@@ -816,9 +820,12 @@ Public Class imprimirEtiquetas
     End Sub
 
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
-        cmbCategoria.SelectedIndex = -1
+        'cmbCategoria.SelectedIndex = -1
         Try
-            cargarProductos()
+            Dim BusqProd As String = InputBox("ingrese el producto a buscar", "Buscar Producto")
+            If BusqProd <> "" Then
+                cargarProductos(BusqProd)
+            End If
         Catch ex As Exception
         End Try
     End Sub
