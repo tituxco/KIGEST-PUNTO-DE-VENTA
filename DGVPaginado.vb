@@ -9,6 +9,7 @@
     Public Sub Cargar_Datos(dt As DataTable)
         todos_los_datos = dt
         total = dt.Rows.Count
+        lblregistros.Text = total
         maximo_paginas = Math.Ceiling(total / items_por_pagina)
         lblPaginasTotales.Text = maximo_paginas
         dgvVista.DataSource = Split(todos_los_datos)
@@ -22,9 +23,14 @@
     '    Next
     'End Sub
     Private Function Split(dt As DataTable) As DataTable
-        lblPagina.Text = pagina + 1
-        HabilitarBotones()
-        Return dt.Select.Skip(items_por_pagina * pagina).Take(items_por_pagina).CopyToDataTable()
+        Try
+            lblPagina.Text = pagina + 1
+            HabilitarBotones()
+            Return dt.Select.Skip(items_por_pagina * pagina).Take(items_por_pagina).CopyToDataTable()
+        Catch ex As Exception
+            ' MsgBox(ex.Message)
+        End Try
+
     End Function
 
     Private Sub btnSiguiente_Click(sender As Object, e As EventArgs) Handles btnSiguiente.Click
@@ -57,5 +63,7 @@
     End Sub
     Public Event SeleccionarItem(IdItem As Integer)
 
+    Private Sub DGVPaginado_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+    End Sub
 End Class

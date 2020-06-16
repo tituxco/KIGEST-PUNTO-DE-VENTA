@@ -28,6 +28,9 @@ Partial Class productos
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -50,6 +53,9 @@ Partial Class productos
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.txtcomision = New System.Windows.Forms.TextBox()
+        Me.Label37 = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txtPesoEspecifico = New System.Windows.Forms.TextBox()
         Me.Label28 = New System.Windows.Forms.Label()
@@ -170,15 +176,19 @@ Partial Class productos
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -291,7 +301,7 @@ Partial Class productos
         Me.cmdpromocion.Name = "cmdpromocion"
         Me.cmdpromocion.Size = New System.Drawing.Size(102, 89)
         Me.cmdpromocion.TabIndex = 169
-        Me.cmdpromocion.Text = "Prom/Desc"
+        Me.cmdpromocion.Text = "Prom/Comis"
         Me.cmdpromocion.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdpromocion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.cmdpromocion.UseVisualStyleBackColor = True
@@ -499,6 +509,9 @@ Partial Class productos
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Button5)
+        Me.TabPage1.Controls.Add(Me.txtcomision)
+        Me.TabPage1.Controls.Add(Me.Label37)
         Me.TabPage1.Controls.Add(Me.Label33)
         Me.TabPage1.Controls.Add(Me.txtPesoEspecifico)
         Me.TabPage1.Controls.Add(Me.Label28)
@@ -536,6 +549,35 @@ Partial Class productos
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Informacion general"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Button5
+        '
+        Me.Button5.Location = New System.Drawing.Point(509, 24)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(33, 23)
+        Me.Button5.TabIndex = 246
+        Me.Button5.Text = "..."
+        Me.Button5.UseVisualStyleBackColor = True
+        '
+        'txtcomision
+        '
+        Me.txtcomision.Location = New System.Drawing.Point(388, 282)
+        Me.txtcomision.Name = "txtcomision"
+        Me.txtcomision.Size = New System.Drawing.Size(115, 22)
+        Me.txtcomision.TabIndex = 245
+        Me.txtcomision.Visible = False
+        '
+        'Label37
+        '
+        Me.Label37.AutoSize = True
+        Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label37.ForeColor = System.Drawing.Color.Black
+        Me.Label37.Location = New System.Drawing.Point(390, 263)
+        Me.Label37.Name = "Label37"
+        Me.Label37.Size = New System.Drawing.Size(89, 16)
+        Me.Label37.TabIndex = 244
+        Me.Label37.Text = "Comision %"
+        Me.Label37.Visible = False
         '
         'Label33
         '
@@ -726,7 +768,7 @@ Partial Class productos
         Me.cmbmarcas.FormattingEnabled = True
         Me.cmbmarcas.Location = New System.Drawing.Point(2, 282)
         Me.cmbmarcas.Name = "cmbmarcas"
-        Me.cmbmarcas.Size = New System.Drawing.Size(236, 24)
+        Me.cmbmarcas.Size = New System.Drawing.Size(204, 24)
         Me.cmbmarcas.TabIndex = 2
         '
         'Label11
@@ -734,7 +776,7 @@ Partial Class productos
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Black
-        Me.Label11.Location = New System.Drawing.Point(268, 263)
+        Me.Label11.Location = New System.Drawing.Point(209, 263)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(60, 16)
         Me.Label11.TabIndex = 210
@@ -756,9 +798,9 @@ Partial Class productos
         Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbmodelos.FormattingEnabled = True
-        Me.cmbmodelos.Location = New System.Drawing.Point(268, 282)
+        Me.cmbmodelos.Location = New System.Drawing.Point(212, 282)
         Me.cmbmodelos.Name = "cmbmodelos"
-        Me.cmbmodelos.Size = New System.Drawing.Size(236, 24)
+        Me.cmbmodelos.Size = New System.Drawing.Size(170, 24)
         Me.cmbmodelos.TabIndex = 3
         '
         'cmbtipoprod
@@ -797,9 +839,9 @@ Partial Class productos
         Me.Panel3.Controls.Add(Me.txtgarantia)
         Me.Panel3.Controls.Add(Me.Label12)
         Me.Panel3.Controls.Add(Me.ShapeContainer2)
-        Me.Panel3.Location = New System.Drawing.Point(715, 20)
+        Me.Panel3.Location = New System.Drawing.Point(719, 6)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(35, 26)
+        Me.Panel3.Size = New System.Drawing.Size(34, 15)
         Me.Panel3.TabIndex = 222
         '
         'Label5
@@ -931,7 +973,7 @@ Partial Class productos
         Me.ShapeContainer2.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer2.Name = "ShapeContainer2"
         Me.ShapeContainer2.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape4, Me.RectangleShape1, Me.RectangleShape2})
-        Me.ShapeContainer2.Size = New System.Drawing.Size(35, 26)
+        Me.ShapeContainer2.Size = New System.Drawing.Size(34, 15)
         Me.ShapeContainer2.TabIndex = 212
         Me.ShapeContainer2.TabStop = False
         '
@@ -1102,7 +1144,7 @@ Partial Class productos
         Me.Panel5.Controls.Add(Me.txtprecioventa2)
         Me.Panel5.Controls.Add(Me.txtprecioventa1)
         Me.Panel5.Controls.Add(Me.Label21)
-        Me.Panel5.Location = New System.Drawing.Point(302, 153)
+        Me.Panel5.Location = New System.Drawing.Point(687, 6)
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Size = New System.Drawing.Size(108, 41)
         Me.Panel5.TabIndex = 236
@@ -1235,7 +1277,7 @@ Partial Class productos
         Me.txtpreciobase.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtpreciobase.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtpreciobase.ForeColor = System.Drawing.Color.Red
-        Me.txtpreciobase.Location = New System.Drawing.Point(496, 276)
+        Me.txtpreciobase.Location = New System.Drawing.Point(655, 53)
         Me.txtpreciobase.Name = "txtpreciobase"
         Me.txtpreciobase.Size = New System.Drawing.Size(140, 38)
         Me.txtpreciobase.TabIndex = 235
@@ -1846,9 +1888,9 @@ Partial Class productos
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(307, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(195, 16)
+        Me.Label6.Size = New System.Drawing.Size(196, 16)
         Me.Label6.TabIndex = 228
-        Me.Label6.Text = "Promociones y descuentos"
+        Me.Label6.Text = "Promociones y Comisiones"
         '
         'dtdescuentos
         '
@@ -1858,7 +1900,7 @@ Partial Class productos
         Me.dtdescuentos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dtdescuentos.BackgroundColor = System.Drawing.Color.White
         Me.dtdescuentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtdescuentos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn6, Me.DataGridViewTextBoxColumn7, Me.DataGridViewTextBoxColumn8, Me.DataGridViewTextBoxColumn9})
+        Me.dtdescuentos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column6, Me.Column7, Me.Column8, Me.Column9})
         Me.dtdescuentos.Location = New System.Drawing.Point(310, 19)
         Me.dtdescuentos.MultiSelect = False
         Me.dtdescuentos.Name = "dtdescuentos"
@@ -1866,35 +1908,36 @@ Partial Class productos
         Me.dtdescuentos.Size = New System.Drawing.Size(407, 117)
         Me.dtdescuentos.TabIndex = 227
         '
-        'DataGridViewTextBoxColumn6
+        'Column6
         '
-        Me.DataGridViewTextBoxColumn6.HeaderText = "idpromo"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.Visible = False
+        Me.Column6.HeaderText = "idProm"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Visible = False
         '
-        'DataGridViewTextBoxColumn7
+        'Column7
         '
-        Me.DataGridViewTextBoxColumn7.HeaderText = "DESCRIPCION"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.Column7.HeaderText = "TIPO"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
         '
-        'DataGridViewTextBoxColumn8
+        'Column8
         '
-        Me.DataGridViewTextBoxColumn8.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn8.HeaderText = "COMPRA MIN"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.Column8.FillWeight = 30.0!
+        Me.Column8.HeaderText = "MINIMO"
+        Me.Column8.Name = "Column8"
         '
-        'DataGridViewTextBoxColumn9
+        'Column9
         '
-        Me.DataGridViewTextBoxColumn9.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn9.HeaderText = "DESCUENTO %"
-        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.Column9.FillWeight = 30.0!
+        Me.Column9.HeaderText = "PORCENTAJE"
+        Me.Column9.Name = "Column9"
         '
         'DataGridViewTextBoxColumn1
         '
         Me.DataGridViewTextBoxColumn1.HeaderText = "Nombre"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
         Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Visible = False
         Me.DataGridViewTextBoxColumn1.Width = 341
         '
         'DataGridViewTextBoxColumn2
@@ -1904,7 +1947,9 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
         Me.DataGridViewTextBoxColumn2.Visible = False
+        Me.DataGridViewTextBoxColumn2.Width = 259
         '
         'DataGridViewTextBoxColumn3
         '
@@ -1914,13 +1959,19 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        Me.DataGridViewTextBoxColumn3.Visible = False
         Me.DataGridViewTextBoxColumn3.Width = 136
         '
         'DataGridViewTextBoxColumn4
         '
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn4.HeaderText = "%"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
         Me.DataGridViewTextBoxColumn4.Visible = False
         Me.DataGridViewTextBoxColumn4.Width = 71
         '
@@ -1929,7 +1980,44 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "utilAux"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Visible = False
         Me.DataGridViewTextBoxColumn5.Width = 72
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "idpromo"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Visible = False
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        DataGridViewCellStyle7.Format = "C2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle7
+        Me.DataGridViewTextBoxColumn7.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn7.HeaderText = "DESCRIPCION"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 79
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn8.HeaderText = "COMPRA MIN"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.Visible = False
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn9.HeaderText = "DESCUENTO %"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.Visible = False
         '
         'MySettingsBindingSource
         '
@@ -2140,4 +2228,11 @@ Partial Class productos
     Friend WithEvents cmbOrdenarPor As ComboBox
     Friend WithEvents Label36 As Label
     Friend WithEvents Label7 As Label
+    Friend WithEvents txtcomision As TextBox
+    Friend WithEvents Label37 As Label
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Column7 As DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As DataGridViewTextBoxColumn
+    Friend WithEvents Column9 As DataGridViewTextBoxColumn
 End Class

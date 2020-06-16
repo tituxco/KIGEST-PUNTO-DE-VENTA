@@ -49,12 +49,26 @@ Partial Class agregarpromo
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.cmbcatprod = New System.Windows.Forms.ComboBox()
+        Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.txtporcentajeComision = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtcantidadComision = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.txtcodigoComis = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtdescripcionComision = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        Me.Panel3.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -91,6 +105,7 @@ Partial Class agregarpromo
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
+        Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
@@ -359,6 +374,147 @@ Partial Class agregarpromo
         Me.cmbcatprod.Size = New System.Drawing.Size(352, 21)
         Me.cmbcatprod.TabIndex = 239
         '
+        'TabPage3
+        '
+        Me.TabPage3.Controls.Add(Me.txtcodigoComis)
+        Me.TabPage3.Controls.Add(Me.Label9)
+        Me.TabPage3.Controls.Add(Me.txtdescripcionComision)
+        Me.TabPage3.Controls.Add(Me.Label10)
+        Me.TabPage3.Controls.Add(Me.txtporcentajeComision)
+        Me.TabPage3.Controls.Add(Me.Label7)
+        Me.TabPage3.Controls.Add(Me.txtcantidadComision)
+        Me.TabPage3.Controls.Add(Me.Label8)
+        Me.TabPage3.Controls.Add(Me.Panel3)
+        Me.TabPage3.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage3.Name = "TabPage3"
+        Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage3.Size = New System.Drawing.Size(368, 320)
+        Me.TabPage3.TabIndex = 1
+        Me.TabPage3.Text = "Comision Vendedor"
+        Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel3.Controls.Add(Me.Button5)
+        Me.Panel3.Controls.Add(Me.Button6)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel3.ForeColor = System.Drawing.Color.White
+        Me.Panel3.Location = New System.Drawing.Point(3, 233)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(362, 84)
+        Me.Panel3.TabIndex = 242
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
+        Me.Button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button5.Location = New System.Drawing.Point(182, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(90, 84)
+        Me.Button5.TabIndex = 1
+        Me.Button5.Text = "Guardar"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button5.UseVisualStyleBackColor = False
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button6.Location = New System.Drawing.Point(272, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(90, 84)
+        Me.Button6.TabIndex = 0
+        Me.Button6.Text = "Cancelar"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'txtporcentajeComision
+        '
+        Me.txtporcentajeComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtporcentajeComision.Location = New System.Drawing.Point(9, 175)
+        Me.txtporcentajeComision.Name = "txtporcentajeComision"
+        Me.txtporcentajeComision.Size = New System.Drawing.Size(349, 20)
+        Me.txtporcentajeComision.TabIndex = 248
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label7.Location = New System.Drawing.Point(6, 156)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(139, 16)
+        Me.Label7.TabIndex = 249
+        Me.Label7.Text = "Comision otorgada"
+        '
+        'txtcantidadComision
+        '
+        Me.txtcantidadComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtcantidadComision.Location = New System.Drawing.Point(9, 124)
+        Me.txtcantidadComision.Name = "txtcantidadComision"
+        Me.txtcantidadComision.Size = New System.Drawing.Size(349, 20)
+        Me.txtcantidadComision.TabIndex = 246
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label8.Location = New System.Drawing.Point(6, 105)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(135, 16)
+        Me.Label8.TabIndex = 247
+        Me.Label8.Text = "Cantidad a vender"
+        '
+        'txtcodigoComis
+        '
+        Me.txtcodigoComis.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtcodigoComis.Location = New System.Drawing.Point(9, 22)
+        Me.txtcodigoComis.Name = "txtcodigoComis"
+        Me.txtcodigoComis.Size = New System.Drawing.Size(349, 20)
+        Me.txtcodigoComis.TabIndex = 252
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label9.Location = New System.Drawing.Point(6, 3)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(58, 16)
+        Me.Label9.TabIndex = 253
+        Me.Label9.Text = "Codigo"
+        '
+        'txtdescripcionComision
+        '
+        Me.txtdescripcionComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtdescripcionComision.Location = New System.Drawing.Point(9, 73)
+        Me.txtdescripcionComision.Name = "txtdescripcionComision"
+        Me.txtdescripcionComision.Size = New System.Drawing.Size(349, 20)
+        Me.txtdescripcionComision.TabIndex = 250
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label10.Location = New System.Drawing.Point(6, 54)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(153, 16)
+        Me.Label10.TabIndex = 251
+        Me.Label10.Text = "Nombre/descripcion:"
+        '
         'agregarpromo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -380,6 +536,9 @@ Partial Class agregarpromo
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.Panel2.ResumeLayout(False)
+        Me.TabPage3.ResumeLayout(False)
+        Me.TabPage3.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -410,4 +569,16 @@ Partial Class agregarpromo
     Friend WithEvents Button4 As Button
     Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
+    Friend WithEvents TabPage3 As TabPage
+    Friend WithEvents txtcodigoComis As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtdescripcionComision As TextBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents txtporcentajeComision As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txtcantidadComision As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
 End Class

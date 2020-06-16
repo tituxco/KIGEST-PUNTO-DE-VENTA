@@ -26,22 +26,21 @@ Partial Class Presupuestos
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
-        Me.rdImportar = New System.Windows.Forms.RadioButton()
-        Me.rdfacturados = New System.Windows.Forms.RadioButton()
-        Me.rdpendientes = New System.Windows.Forms.RadioButton()
-        Me.txtbusqCliente = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.cmbvendedor = New System.Windows.Forms.ComboBox()
-        Me.dtpedidos = New System.Windows.Forms.DataGridView()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.lbltotalPedidos = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.dtphasta = New System.Windows.Forms.DateTimePicker()
         Me.dtpdesde = New System.Windows.Forms.DateTimePicker()
         Me.Label62 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lbltotalPedidos = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.cmbvendedor = New System.Windows.Forms.ComboBox()
+        Me.rdImportar = New System.Windows.Forms.RadioButton()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.txtbusqCliente = New System.Windows.Forms.TextBox()
+        Me.rdpendientes = New System.Windows.Forms.RadioButton()
+        Me.rdfacturados = New System.Windows.Forms.RadioButton()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.cmdlistacarga = New System.Windows.Forms.Button()
@@ -51,11 +50,11 @@ Partial Class Presupuestos
         Me.cmdmodificar = New System.Windows.Forms.Button()
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
+        Me.dgvPedidos = New SIGT__KIGEST.DGVPaginado()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
-        CType(Me.dtpedidos, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -103,139 +102,6 @@ Partial Class Presupuestos
         Me.pnnavegacion.Size = New System.Drawing.Size(1243, 94)
         Me.pnnavegacion.TabIndex = 78
         '
-        'rdImportar
-        '
-        Me.rdImportar.AutoSize = True
-        Me.rdImportar.ForeColor = System.Drawing.Color.White
-        Me.rdImportar.Location = New System.Drawing.Point(204, 60)
-        Me.rdImportar.Name = "rdImportar"
-        Me.rdImportar.Size = New System.Drawing.Size(102, 17)
-        Me.rdImportar.TabIndex = 42
-        Me.rdImportar.Text = "Pedidos de APP"
-        Me.rdImportar.UseVisualStyleBackColor = True
-        '
-        'rdfacturados
-        '
-        Me.rdfacturados.AutoSize = True
-        Me.rdfacturados.ForeColor = System.Drawing.Color.White
-        Me.rdfacturados.Location = New System.Drawing.Point(204, 37)
-        Me.rdfacturados.Name = "rdfacturados"
-        Me.rdfacturados.Size = New System.Drawing.Size(97, 17)
-        Me.rdfacturados.TabIndex = 39
-        Me.rdfacturados.Text = "Ver Facturados"
-        Me.rdfacturados.UseVisualStyleBackColor = True
-        '
-        'rdpendientes
-        '
-        Me.rdpendientes.AutoSize = True
-        Me.rdpendientes.Checked = True
-        Me.rdpendientes.ForeColor = System.Drawing.Color.White
-        Me.rdpendientes.Location = New System.Drawing.Point(204, 13)
-        Me.rdpendientes.Name = "rdpendientes"
-        Me.rdpendientes.Size = New System.Drawing.Size(97, 17)
-        Me.rdpendientes.TabIndex = 38
-        Me.rdpendientes.TabStop = True
-        Me.rdpendientes.Text = "Ver Pendientes"
-        Me.rdpendientes.UseVisualStyleBackColor = True
-        '
-        'txtbusqCliente
-        '
-        Me.txtbusqCliente.Location = New System.Drawing.Point(6, 67)
-        Me.txtbusqCliente.Name = "txtbusqCliente"
-        Me.txtbusqCliente.Size = New System.Drawing.Size(192, 20)
-        Me.txtbusqCliente.TabIndex = 37
-        '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(6, 53)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
-        Me.Label3.TabIndex = 36
-        Me.Label3.Text = "Cliente"
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(6, 13)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(53, 13)
-        Me.Label2.TabIndex = 35
-        Me.Label2.Text = "Vendedor"
-        '
-        'cmbvendedor
-        '
-        Me.cmbvendedor.FormattingEnabled = True
-        Me.cmbvendedor.Location = New System.Drawing.Point(6, 29)
-        Me.cmbvendedor.Name = "cmbvendedor"
-        Me.cmbvendedor.Size = New System.Drawing.Size(192, 21)
-        Me.cmbvendedor.TabIndex = 34
-        '
-        'dtpedidos
-        '
-        Me.dtpedidos.AllowUserToAddRows = False
-        Me.dtpedidos.AllowUserToDeleteRows = False
-        Me.dtpedidos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtpedidos.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtpedidos.BackgroundColor = System.Drawing.Color.White
-        Me.dtpedidos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtpedidos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtpedidos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtpedidos.Location = New System.Drawing.Point(0, 134)
-        Me.dtpedidos.Name = "dtpedidos"
-        Me.dtpedidos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtpedidos.Size = New System.Drawing.Size(1243, 350)
-        Me.dtpedidos.TabIndex = 81
-        '
-        'Panel1
-        '
-        Me.Panel1.Controls.Add(Me.Label2)
-        Me.Panel1.Controls.Add(Me.cmbvendedor)
-        Me.Panel1.Controls.Add(Me.rdImportar)
-        Me.Panel1.Controls.Add(Me.Label3)
-        Me.Panel1.Controls.Add(Me.txtbusqCliente)
-        Me.Panel1.Controls.Add(Me.rdpendientes)
-        Me.Panel1.Controls.Add(Me.rdfacturados)
-        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
-        Me.Panel1.Location = New System.Drawing.Point(210, 0)
-        Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(308, 94)
-        Me.Panel1.TabIndex = 44
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.Label4)
-        Me.Panel2.Controls.Add(Me.lbltotalPedidos)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(702, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(121, 94)
-        Me.Panel2.TabIndex = 45
-        '
-        'lbltotalPedidos
-        '
-        Me.lbltotalPedidos.AutoSize = True
-        Me.lbltotalPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbltotalPedidos.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lbltotalPedidos.Location = New System.Drawing.Point(3, 24)
-        Me.lbltotalPedidos.Name = "lbltotalPedidos"
-        Me.lbltotalPedidos.Size = New System.Drawing.Size(24, 17)
-        Me.lbltotalPedidos.TabIndex = 79
-        Me.lbltotalPedidos.Text = "$0"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(3, 3)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(54, 17)
-        Me.Label4.TabIndex = 80
-        Me.Label4.Text = "TOTAL"
-        '
         'Label61
         '
         Me.Label61.AutoSize = True
@@ -279,6 +145,123 @@ Partial Class Presupuestos
         Me.Label62.Size = New System.Drawing.Size(45, 17)
         Me.Label62.TabIndex = 49
         Me.Label62.Text = "Hasta"
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Controls.Add(Me.lbltotalPedidos)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel2.Location = New System.Drawing.Point(702, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(121, 94)
+        Me.Panel2.TabIndex = 45
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label4.Location = New System.Drawing.Point(3, 3)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(54, 17)
+        Me.Label4.TabIndex = 80
+        Me.Label4.Text = "TOTAL"
+        '
+        'lbltotalPedidos
+        '
+        Me.lbltotalPedidos.AutoSize = True
+        Me.lbltotalPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalPedidos.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltotalPedidos.Location = New System.Drawing.Point(3, 24)
+        Me.lbltotalPedidos.Name = "lbltotalPedidos"
+        Me.lbltotalPedidos.Size = New System.Drawing.Size(24, 17)
+        Me.lbltotalPedidos.TabIndex = 79
+        Me.lbltotalPedidos.Text = "$0"
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.Label2)
+        Me.Panel1.Controls.Add(Me.cmbvendedor)
+        Me.Panel1.Controls.Add(Me.rdImportar)
+        Me.Panel1.Controls.Add(Me.Label3)
+        Me.Panel1.Controls.Add(Me.txtbusqCliente)
+        Me.Panel1.Controls.Add(Me.rdpendientes)
+        Me.Panel1.Controls.Add(Me.rdfacturados)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Panel1.Location = New System.Drawing.Point(210, 0)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(308, 94)
+        Me.Panel1.TabIndex = 44
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.ForeColor = System.Drawing.Color.White
+        Me.Label2.Location = New System.Drawing.Point(6, 13)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(53, 13)
+        Me.Label2.TabIndex = 35
+        Me.Label2.Text = "Vendedor"
+        '
+        'cmbvendedor
+        '
+        Me.cmbvendedor.FormattingEnabled = True
+        Me.cmbvendedor.Location = New System.Drawing.Point(6, 29)
+        Me.cmbvendedor.Name = "cmbvendedor"
+        Me.cmbvendedor.Size = New System.Drawing.Size(192, 21)
+        Me.cmbvendedor.TabIndex = 34
+        '
+        'rdImportar
+        '
+        Me.rdImportar.AutoSize = True
+        Me.rdImportar.ForeColor = System.Drawing.Color.White
+        Me.rdImportar.Location = New System.Drawing.Point(204, 60)
+        Me.rdImportar.Name = "rdImportar"
+        Me.rdImportar.Size = New System.Drawing.Size(102, 17)
+        Me.rdImportar.TabIndex = 42
+        Me.rdImportar.Text = "Pedidos de APP"
+        Me.rdImportar.UseVisualStyleBackColor = True
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(6, 53)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(39, 13)
+        Me.Label3.TabIndex = 36
+        Me.Label3.Text = "Cliente"
+        '
+        'txtbusqCliente
+        '
+        Me.txtbusqCliente.Location = New System.Drawing.Point(6, 67)
+        Me.txtbusqCliente.Name = "txtbusqCliente"
+        Me.txtbusqCliente.Size = New System.Drawing.Size(192, 20)
+        Me.txtbusqCliente.TabIndex = 37
+        '
+        'rdpendientes
+        '
+        Me.rdpendientes.AutoSize = True
+        Me.rdpendientes.Checked = True
+        Me.rdpendientes.ForeColor = System.Drawing.Color.White
+        Me.rdpendientes.Location = New System.Drawing.Point(204, 13)
+        Me.rdpendientes.Name = "rdpendientes"
+        Me.rdpendientes.Size = New System.Drawing.Size(97, 17)
+        Me.rdpendientes.TabIndex = 38
+        Me.rdpendientes.TabStop = True
+        Me.rdpendientes.Text = "Ver Pendientes"
+        Me.rdpendientes.UseVisualStyleBackColor = True
+        '
+        'rdfacturados
+        '
+        Me.rdfacturados.AutoSize = True
+        Me.rdfacturados.ForeColor = System.Drawing.Color.White
+        Me.rdfacturados.Location = New System.Drawing.Point(204, 37)
+        Me.rdfacturados.Name = "rdfacturados"
+        Me.rdfacturados.Size = New System.Drawing.Size(97, 17)
+        Me.rdfacturados.TabIndex = 39
+        Me.rdfacturados.Text = "Ver Facturados"
+        Me.rdfacturados.UseVisualStyleBackColor = True
         '
         'Button3
         '
@@ -370,7 +353,6 @@ Partial Class Presupuestos
         'cmdeliminar
         '
         Me.cmdeliminar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdeliminar.Enabled = False
         Me.cmdeliminar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
         Me.cmdeliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdeliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -436,12 +418,20 @@ Partial Class Presupuestos
         Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.cmdsalir.UseVisualStyleBackColor = True
         '
+        'dgvPedidos
+        '
+        Me.dgvPedidos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPedidos.Location = New System.Drawing.Point(0, 134)
+        Me.dgvPedidos.Name = "dgvPedidos"
+        Me.dgvPedidos.Size = New System.Drawing.Size(1243, 350)
+        Me.dgvPedidos.TabIndex = 82
+        '
         'Presupuestos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1243, 484)
-        Me.Controls.Add(Me.dtpedidos)
+        Me.Controls.Add(Me.dgvPedidos)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
         Me.Name = "Presupuestos"
@@ -451,11 +441,10 @@ Partial Class Presupuestos
         Me.pntitulo.PerformLayout()
         Me.pnnavegacion.ResumeLayout(False)
         Me.pnnavegacion.PerformLayout()
-        CType(Me.dtpedidos, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -478,7 +467,6 @@ Partial Class Presupuestos
     Friend WithEvents Button2 As Button
     Friend WithEvents rdImportar As RadioButton
     Friend WithEvents Button3 As Button
-    Public WithEvents dtpedidos As DataGridView
     Friend WithEvents Panel2 As Panel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label4 As Label
@@ -487,4 +475,5 @@ Partial Class Presupuestos
     Friend WithEvents dtphasta As DateTimePicker
     Friend WithEvents dtpdesde As DateTimePicker
     Friend WithEvents Label62 As Label
+    Friend WithEvents dgvPedidos As DGVPaginado
 End Class

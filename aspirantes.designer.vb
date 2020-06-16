@@ -36,6 +36,7 @@ Partial Class frmaspirantes
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.pnlistaclientes = New System.Windows.Forms.Panel()
+        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -68,7 +69,14 @@ Partial Class frmaspirantes
         Me.txtrazon = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.chkfecha = New System.Windows.Forms.CheckBox()
+        Me.grpperiodo = New System.Windows.Forms.GroupBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.dthasta = New System.Windows.Forms.DateTimePicker()
+        Me.dtdesde = New System.Windows.Forms.DateTimePicker()
+        Me.Label12 = New System.Windows.Forms.Label()
         Me.chkvendedor = New System.Windows.Forms.CheckBox()
         Me.cmbvendedor_lst = New System.Windows.Forms.ComboBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -78,8 +86,6 @@ Partial Class frmaspirantes
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
-        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
-        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.pnlistaclientes.SuspendLayout()
@@ -89,6 +95,7 @@ Partial Class frmaspirantes
         Me.TabPage1.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.grpperiodo.SuspendLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -263,6 +270,14 @@ Partial Class frmaspirantes
         Me.pnlistaclientes.Name = "pnlistaclientes"
         Me.pnlistaclientes.Size = New System.Drawing.Size(372, 445)
         Me.pnlistaclientes.TabIndex = 63
+        '
+        'dgvClientes
+        '
+        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
+        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
+        Me.dgvClientes.Name = "dgvClientes"
+        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
+        Me.dgvClientes.TabIndex = 63
         '
         'txtbuscar
         '
@@ -615,12 +630,22 @@ Partial Class frmaspirantes
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage3.Size = New System.Drawing.Size(1099, 451)
         Me.TabPage3.TabIndex = 1
-        Me.TabPage3.Text = "Listados"
+        Me.TabPage3.Text = "LISTADOS"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'dgvlistaClientes
+        '
+        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
+        Me.dgvlistaClientes.Name = "dgvlistaClientes"
+        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
+        Me.dgvlistaClientes.TabIndex = 1
         '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.chkfecha)
+        Me.Panel1.Controls.Add(Me.grpperiodo)
         Me.Panel1.Controls.Add(Me.chkvendedor)
         Me.Panel1.Controls.Add(Me.cmbvendedor_lst)
         Me.Panel1.Controls.Add(Me.Button2)
@@ -634,12 +659,81 @@ Partial Class frmaspirantes
         Me.Panel1.Size = New System.Drawing.Size(1093, 74)
         Me.Panel1.TabIndex = 0
         '
+        'chkfecha
+        '
+        Me.chkfecha.AutoSize = True
+        Me.chkfecha.Location = New System.Drawing.Point(450, 19)
+        Me.chkfecha.Name = "chkfecha"
+        Me.chkfecha.Size = New System.Drawing.Size(15, 14)
+        Me.chkfecha.TabIndex = 72
+        Me.chkfecha.UseVisualStyleBackColor = True
+        '
+        'grpperiodo
+        '
+        Me.grpperiodo.Controls.Add(Me.Label7)
+        Me.grpperiodo.Controls.Add(Me.dthasta)
+        Me.grpperiodo.Controls.Add(Me.dtdesde)
+        Me.grpperiodo.Controls.Add(Me.Label12)
+        Me.grpperiodo.Enabled = False
+        Me.grpperiodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.grpperiodo.ForeColor = System.Drawing.Color.White
+        Me.grpperiodo.Location = New System.Drawing.Point(442, 16)
+        Me.grpperiodo.Name = "grpperiodo"
+        Me.grpperiodo.Size = New System.Drawing.Size(370, 48)
+        Me.grpperiodo.TabIndex = 71
+        Me.grpperiodo.TabStop = False
+        Me.grpperiodo.Text = "    Fecha de Alta"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.Transparent
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(6, 27)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(49, 17)
+        Me.Label7.TabIndex = 44
+        Me.Label7.Text = "Desde"
+        '
+        'dthasta
+        '
+        Me.dthasta.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthasta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthasta.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dthasta.Location = New System.Drawing.Point(235, 22)
+        Me.dthasta.Name = "dthasta"
+        Me.dthasta.Size = New System.Drawing.Size(131, 23)
+        Me.dthasta.TabIndex = 43
+        '
+        'dtdesde
+        '
+        Me.dtdesde.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdesde.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdesde.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtdesde.Location = New System.Drawing.Point(61, 22)
+        Me.dtdesde.Name = "dtdesde"
+        Me.dtdesde.Size = New System.Drawing.Size(117, 23)
+        Me.dtdesde.TabIndex = 42
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.Transparent
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.ForeColor = System.Drawing.Color.White
+        Me.Label12.Location = New System.Drawing.Point(184, 27)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(45, 17)
+        Me.Label12.TabIndex = 45
+        Me.Label12.Text = "Hasta"
+        '
         'chkvendedor
         '
         Me.chkvendedor.AutoSize = True
         Me.chkvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkvendedor.ForeColor = System.Drawing.Color.White
-        Me.chkvendedor.Location = New System.Drawing.Point(381, 13)
+        Me.chkvendedor.Location = New System.Drawing.Point(214, 16)
         Me.chkvendedor.Name = "chkvendedor"
         Me.chkvendedor.Size = New System.Drawing.Size(106, 24)
         Me.chkvendedor.TabIndex = 69
@@ -651,9 +745,9 @@ Partial Class frmaspirantes
         Me.cmbvendedor_lst.Enabled = False
         Me.cmbvendedor_lst.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbvendedor_lst.FormattingEnabled = True
-        Me.cmbvendedor_lst.Location = New System.Drawing.Point(381, 37)
+        Me.cmbvendedor_lst.Location = New System.Drawing.Point(214, 40)
         Me.cmbvendedor_lst.Name = "cmbvendedor_lst"
-        Me.cmbvendedor_lst.Size = New System.Drawing.Size(331, 24)
+        Me.cmbvendedor_lst.Size = New System.Drawing.Size(222, 24)
         Me.cmbvendedor_lst.TabIndex = 68
         '
         'Button2
@@ -723,28 +817,12 @@ Partial Class frmaspirantes
         Me.cmblistaloca.FormattingEnabled = True
         Me.cmblistaloca.Location = New System.Drawing.Point(5, 40)
         Me.cmblistaloca.Name = "cmblistaloca"
-        Me.cmblistaloca.Size = New System.Drawing.Size(331, 24)
+        Me.cmblistaloca.Size = New System.Drawing.Size(206, 24)
         Me.cmblistaloca.TabIndex = 63
         '
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
-        '
-        'dgvClientes
-        '
-        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
-        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
-        Me.dgvClientes.Name = "dgvClientes"
-        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
-        Me.dgvClientes.TabIndex = 63
-        '
-        'dgvlistaClientes
-        '
-        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
-        Me.dgvlistaClientes.Name = "dgvlistaClientes"
-        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
-        Me.dgvlistaClientes.TabIndex = 1
         '
         'frmaspirantes
         '
@@ -773,6 +851,8 @@ Partial Class frmaspirantes
         Me.TabPage3.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
+        Me.grpperiodo.ResumeLayout(False)
+        Me.grpperiodo.PerformLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -833,4 +913,10 @@ Partial Class frmaspirantes
     Friend WithEvents cmbvendedor_lst As ComboBox
     Friend WithEvents dgvClientes As DGVPaginado
     Friend WithEvents dgvlistaClientes As DGVPaginado
+    Friend WithEvents grpperiodo As GroupBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents dthasta As DateTimePicker
+    Friend WithEvents dtdesde As DateTimePicker
+    Friend WithEvents Label12 As Label
+    Friend WithEvents chkfecha As CheckBox
 End Class

@@ -54,11 +54,14 @@ Public Class puntoventa
             lblfactnombre.Text = nombrefact
             abrevfact = infofr(0)(1)
             lblfactabrev.Text = abrevfact
+
             ptovta = Val(infofr(0)(2))
+
             lblfactptovta.Text = infofr(0)(2)
             numfact = Val(infofr(0)(3))
             lblfactnumero.Text = infofr(0)(3)
             tipofact = infofr(0)(4)
+
             If lblfacvendedor.Text = "-" Then lblfacvendedor.Text = DatosAcceso.Vendedor
             lblfacIdAlmacen.Text = My.Settings.idAlmacen
 
@@ -69,12 +72,16 @@ Public Class puntoventa
                 cmdimprimir.Enabled = False
                 cmdcerrar.Enabled = True
                 cmdremitar.Enabled = False
+                CambiarEsquemaColores(True)
             Else
                 cmdsolicitarcae.Enabled = False
                 cmdguardar.Enabled = True
                 cmdimprimir.Enabled = False
                 cmdcerrar.Enabled = True
                 cmdremitar.Enabled = False
+                pncaeaprobado.Visible = False
+                pncaerechazado.Visible = False
+                CambiarEsquemaColores(False)
             End If
             dtproductos.AllowUserToAddRows = True
             dtproductos.AllowUserToDeleteRows = True
@@ -285,9 +292,9 @@ Public Class puntoventa
             If InStr(codPLU, "#") = 1 Then
                 Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
             ElseIf IsNumeric(codPLU) Then
-                Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
+                Busq = "where id=" & codPLU '& " or codigo like '" & codPLU & "'"
             ElseIf Not IsNumeric(codPLU) Then
-                Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
+                Busq = "where cod_bar like '" & codPLU & "'"
             End If
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
@@ -392,9 +399,9 @@ Public Class puntoventa
         End If
         If InStr(codPLU, "#") = 1 Then
             Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
-        ElseIf IsNumeric(codPLU) Then
-            Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
-        ElseIf Not IsNumeric(codPLU) Then
+        Else 'IsNumeric(codPLU) Then
+            '    Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
+            'ElseIf Not IsNumeric(codPLU) Then
             Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
         End If
 
@@ -487,8 +494,8 @@ Public Class puntoventa
                 Dim porcdesc As Double
                 Reconectar()
                 'MsgBox(codprod)
-                Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento producto ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-                "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and prom.idproducto=" & codprod, conexionPrinc)
+                Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat(prom.nombrepromo,' ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
+                "From fact_promociones as prom, fact_insumos as ins where prom.nombrepromo not like 'COMISION' AND ins.id=prom.idproducto and prom.idproducto=" & codprod, conexionPrinc)
                 Dim tablaDescProd As New DataTable
                 Dim filasDescProd() As DataRow
                 consultaDescProd.Fill(tablaDescProd)
@@ -773,13 +780,13 @@ Public Class puntoventa
                     contarstock += 1 ' Exit Sub
                 End If
             Next
-            If contarstock > 0 Then
-                If MsgBox("Uno de los productos no pudo ser procesado por falta de stock o es insuficiente, desea continuar de todas formas? 
-                los elementos que no se procesaran estan resaltados en rojo", vbYesNo) = vbNo Then
-                    EnProgreso.Close()
-                    Exit Sub
-                End If
-            End If
+            'If contarstock > 0 Then
+            '    If MsgBox("Uno de los productos no pudo ser procesado por falta de stock o es insuficiente, desea continuar de todas formas? 
+            '    los elementos que no se procesaran estan resaltados en rojo", vbYesNo) = vbNo Then
+            '        EnProgreso.Close()
+            '        Exit Sub
+            '    End If
+            'End If
         End If
 
         Reconectar()
@@ -847,10 +854,10 @@ Public Class puntoventa
 
                 'para quitar de stock
                 If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
-                    Dim cant As Double = cantidad
+                    Dim cant As Double = FormatNumber(itemsFact.Cells(2).Value, 4)
                     Dim codigo As String = cod
                     Dim lotes As Integer = 0
-
+                    'MsgBox(cant)
                     Reconectar()
                     Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
                     & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & My.Settings.idAlmacen & " order by id asc", conexionPrinc)
@@ -863,21 +870,23 @@ Public Class puntoventa
                         If infostock(lotes)(1) <= cant Then
                             Dim StockLote As Double = infostock(lotes)(1)
                             cant = cant - StockLote
-                            '       MsgBox(cant)
                             Reconectar()
                             Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
-                            updstock.Transaction = Transaccion
                             updstock.ExecuteNonQuery()
-                            lotes += 1
+                            If tablastock.Rows.Count - lotes > 1 Then
+                                lotes += 1
+                            Else
+                                cant = 0
+                                'Continue For
+                            End If
                         ElseIf infostock(lotes)(1) > cant Then
                             Dim stockLote As Double = infostock(lotes)(1)
                             Dim CantUpd As Double = infostock(lotes)(1) - cant
-                            '      MsgBox(CantUpd)
                             Reconectar()
-                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=" & CantUpd & " where id=" & infostock(lotes)(0), conexionPrinc)
-                            updstock.Transaction = Transaccion
+                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), conexionPrinc)
                             updstock.ExecuteNonQuery()
                             cant = 0
+                            'ElseIf infostock(lotes)(1) > cant
                         End If
                     Loop
                 End If
@@ -1550,7 +1559,20 @@ Public Class puntoventa
                 Button1.PerformClick()
             Case Keys.F8
                 Dim idFacRap As Integer
-                idFacRap = InputBox("Igrese codigo de comprobante" & vbNewLine & vbNewLine & "1-ReciboFac || 2-Fact B || 3-Fact A", "Cambiar tipo de comprobante", 1)
+                Reconectar()
+                Dim consultaFacRap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+                concat(fr.id,': ' , fr.nombre)
+                From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta
+                Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And (fr.punto_venta=" & My.Settings.idPtoVta & " or fr.punto_venta=" & FacturaElectro.puntovtaelect & ")
+                order by fr.id asc", conexionPrinc)
+                Dim tablaFacRap As New DataTable
+                consultaFacRap.Fill(tablaFacRap)
+                Dim textoInput As String = "Ingrese codigo de comprobante: " & vbNewLine & vbNewLine
+                For Each factRap As DataRow In tablaFacRap.Rows
+                    textoInput &= factRap.Item(0) & vbNewLine
+                Next
+
+                idFacRap = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
                 With Me
                     .idfacrap = idFacRap
                     .Idcliente = txtcliecta.Text
@@ -1562,6 +1584,17 @@ Public Class puntoventa
                     CalcularTotales()
                 End With
         End Select
+    End Sub
+    Private Sub CambiarEsquemaColores(electonica As Boolean)
+        If electonica = True Then
+            pnaddProd.BackColor = Color.Teal
+            panelencabeza.BackColor = Color.Teal
+            dtproductos.BackgroundColor = Color.Teal
+        Else
+            pnaddProd.BackColor = Color.Gray
+            panelencabeza.BackColor = Color.Gray
+            dtproductos.BackgroundColor = Color.Gray
+        End If
     End Sub
 
     Private Sub cmdcerrar_Click(sender As Object, e As EventArgs) Handles cmdcerrar.Click

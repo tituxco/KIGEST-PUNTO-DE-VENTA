@@ -40,6 +40,11 @@ Partial Class puntoventa
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -166,6 +171,16 @@ Partial Class puntoventa
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.paneltareas2.SuspendLayout()
         CType(Me.dtpedidosfact, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -323,6 +338,7 @@ Partial Class puntoventa
         'chkquitarstock
         '
         Me.chkquitarstock.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.chkquitarstock.Enabled = False
         Me.chkquitarstock.Location = New System.Drawing.Point(0, 683)
         Me.chkquitarstock.Name = "chkquitarstock"
         Me.chkquitarstock.Size = New System.Drawing.Size(234, 26)
@@ -677,7 +693,7 @@ Partial Class puntoventa
         'dtproductos
         '
         Me.dtproductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtproductos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.dtproductos.BackgroundColor = System.Drawing.Color.Gray
         Me.dtproductos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -943,7 +959,7 @@ Partial Class puntoventa
         '
         'pnaddProd
         '
-        Me.pnaddProd.BackColor = System.Drawing.Color.DarkGray
+        Me.pnaddProd.BackColor = System.Drawing.Color.Gray
         Me.pnaddProd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.pnaddProd.Controls.Add(Me.txtpreciounitPLU)
         Me.pnaddProd.Controls.Add(Me.txtivaPLU)
@@ -1124,10 +1140,10 @@ Partial Class puntoventa
         'lblfacIdAlmacen
         '
         Me.lblfacIdAlmacen.AutoSize = True
-        Me.lblfacIdAlmacen.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblfacIdAlmacen.BackColor = System.Drawing.Color.Transparent
         Me.lblfacIdAlmacen.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfacIdAlmacen.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfacIdAlmacen.ForeColor = System.Drawing.Color.White
+        Me.lblfacIdAlmacen.ForeColor = System.Drawing.Color.Black
         Me.lblfacIdAlmacen.Location = New System.Drawing.Point(457, 0)
         Me.lblfacIdAlmacen.Name = "lblfacIdAlmacen"
         Me.lblfacIdAlmacen.Size = New System.Drawing.Size(13, 16)
@@ -1151,10 +1167,10 @@ Partial Class puntoventa
         'lblfacvendedor
         '
         Me.lblfacvendedor.AutoSize = True
-        Me.lblfacvendedor.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblfacvendedor.BackColor = System.Drawing.Color.Transparent
         Me.lblfacvendedor.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfacvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfacvendedor.ForeColor = System.Drawing.Color.White
+        Me.lblfacvendedor.ForeColor = System.Drawing.Color.Black
         Me.lblfacvendedor.Location = New System.Drawing.Point(361, 0)
         Me.lblfacvendedor.Name = "lblfacvendedor"
         Me.lblfacvendedor.Size = New System.Drawing.Size(13, 16)
@@ -1178,10 +1194,10 @@ Partial Class puntoventa
         'lblfactlistaprecios
         '
         Me.lblfactlistaprecios.AutoSize = True
-        Me.lblfactlistaprecios.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblfactlistaprecios.BackColor = System.Drawing.Color.Transparent
         Me.lblfactlistaprecios.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactlistaprecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfactlistaprecios.ForeColor = System.Drawing.Color.White
+        Me.lblfactlistaprecios.ForeColor = System.Drawing.Color.Black
         Me.lblfactlistaprecios.Location = New System.Drawing.Point(251, 0)
         Me.lblfactlistaprecios.Name = "lblfactlistaprecios"
         Me.lblfactlistaprecios.Size = New System.Drawing.Size(13, 16)
@@ -1205,10 +1221,10 @@ Partial Class puntoventa
         'lblfactcondvta
         '
         Me.lblfactcondvta.AutoSize = True
-        Me.lblfactcondvta.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblfactcondvta.BackColor = System.Drawing.Color.Transparent
         Me.lblfactcondvta.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactcondvta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfactcondvta.ForeColor = System.Drawing.Color.White
+        Me.lblfactcondvta.ForeColor = System.Drawing.Color.Black
         Me.lblfactcondvta.Location = New System.Drawing.Point(93, 0)
         Me.lblfactcondvta.Name = "lblfactcondvta"
         Me.lblfactcondvta.Size = New System.Drawing.Size(13, 16)
@@ -1247,10 +1263,10 @@ Partial Class puntoventa
         'lblclietipocontr
         '
         Me.lblclietipocontr.AutoSize = True
-        Me.lblclietipocontr.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblclietipocontr.BackColor = System.Drawing.Color.Transparent
         Me.lblclietipocontr.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblclietipocontr.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblclietipocontr.ForeColor = System.Drawing.Color.White
+        Me.lblclietipocontr.ForeColor = System.Drawing.Color.Black
         Me.lblclietipocontr.Location = New System.Drawing.Point(286, 0)
         Me.lblclietipocontr.Name = "lblclietipocontr"
         Me.lblclietipocontr.Size = New System.Drawing.Size(13, 16)
@@ -1274,10 +1290,10 @@ Partial Class puntoventa
         'lblclieciudad
         '
         Me.lblclieciudad.AutoSize = True
-        Me.lblclieciudad.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblclieciudad.BackColor = System.Drawing.Color.Transparent
         Me.lblclieciudad.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblclieciudad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblclieciudad.ForeColor = System.Drawing.Color.White
+        Me.lblclieciudad.ForeColor = System.Drawing.Color.Black
         Me.lblclieciudad.Location = New System.Drawing.Point(169, 0)
         Me.lblclieciudad.Name = "lblclieciudad"
         Me.lblclieciudad.Size = New System.Drawing.Size(13, 16)
@@ -1301,10 +1317,10 @@ Partial Class puntoventa
         'lblcliedomicilio
         '
         Me.lblcliedomicilio.AutoSize = True
-        Me.lblcliedomicilio.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.lblcliedomicilio.BackColor = System.Drawing.Color.Transparent
         Me.lblcliedomicilio.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblcliedomicilio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblcliedomicilio.ForeColor = System.Drawing.Color.White
+        Me.lblcliedomicilio.ForeColor = System.Drawing.Color.Black
         Me.lblcliedomicilio.Location = New System.Drawing.Point(87, 0)
         Me.lblcliedomicilio.Name = "lblcliedomicilio"
         Me.lblcliedomicilio.Size = New System.Drawing.Size(13, 16)
@@ -1327,7 +1343,7 @@ Partial Class puntoventa
         '
         'Panel8
         '
-        Me.Panel8.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Panel8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Panel8.Controls.Add(Me.Button3)
         Me.Panel8.Controls.Add(Me.Button2)
@@ -1384,7 +1400,7 @@ Partial Class puntoventa
         '
         'Label11
         '
-        Me.Label11.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Label11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label11.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(535, 0)
@@ -1477,22 +1493,24 @@ Partial Class puntoventa
         'lblfactfecha
         '
         Me.lblfactfecha.AutoSize = True
+        Me.lblfactfecha.BackColor = System.Drawing.Color.Transparent
         Me.lblfactfecha.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactfecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfactfecha.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.lblfactfecha.ForeColor = System.Drawing.Color.White
         Me.lblfactfecha.Location = New System.Drawing.Point(100, 0)
         Me.lblfactfecha.Name = "lblfactfecha"
         Me.lblfactfecha.Size = New System.Drawing.Size(92, 29)
         Me.lblfactfecha.TabIndex = 40
         Me.lblfactfecha.Text = "Fecha:"
         Me.lblfactfecha.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.lblfactfecha.Visible = False
         '
         'lblfactnombre
         '
         Me.lblfactnombre.AutoSize = True
         Me.lblfactnombre.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactnombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblfactnombre.ForeColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.lblfactnombre.ForeColor = System.Drawing.Color.White
         Me.lblfactnombre.Location = New System.Drawing.Point(0, 0)
         Me.lblfactnombre.Name = "lblfactnombre"
         Me.lblfactnombre.Size = New System.Drawing.Size(100, 29)
@@ -1508,6 +1526,7 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn2
         '
+        Me.DataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
         Me.DataGridViewTextBoxColumn2.HeaderText = "Numero"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         '
@@ -1579,9 +1598,92 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn10
         '
+        Me.DataGridViewTextBoxColumn10.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn10.HeaderText = "ganancia"
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
         Me.DataGridViewTextBoxColumn10.Visible = False
+        '
+        'DataGridViewTextBoxColumn11
+        '
+        Me.DataGridViewTextBoxColumn11.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
+        Me.DataGridViewTextBoxColumn11.Visible = False
+        '
+        'DataGridViewTextBoxColumn13
+        '
+        Me.DataGridViewTextBoxColumn13.HeaderText = "Porcentaje"
+        Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
+        '
+        'DataGridViewTextBoxColumn14
+        '
+        DataGridViewCellStyle18.Format = "N0"
+        DataGridViewCellStyle18.NullValue = "0"
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle18
+        Me.DataGridViewTextBoxColumn14.FillWeight = 10.0!
+        Me.DataGridViewTextBoxColumn14.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
+        Me.DataGridViewTextBoxColumn14.Visible = False
+        '
+        'DataGridViewTextBoxColumn15
+        '
+        Me.DataGridViewTextBoxColumn15.FillWeight = 25.0!
+        Me.DataGridViewTextBoxColumn15.HeaderText = "Codigo/#PLU"
+        Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
+        Me.DataGridViewTextBoxColumn15.Width = 68
+        '
+        'DataGridViewTextBoxColumn16
+        '
+        DataGridViewCellStyle19.Format = "N3"
+        DataGridViewCellStyle19.NullValue = "1"
+        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle19
+        Me.DataGridViewTextBoxColumn16.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn16.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
+        Me.DataGridViewTextBoxColumn16.Width = 55
+        '
+        'DataGridViewTextBoxColumn17
+        '
+        Me.DataGridViewTextBoxColumn17.FillWeight = 169.5432!
+        Me.DataGridViewTextBoxColumn17.HeaderText = "Producto"
+        Me.DataGridViewTextBoxColumn17.Name = "DataGridViewTextBoxColumn17"
+        Me.DataGridViewTextBoxColumn17.Width = 464
+        '
+        'DataGridViewTextBoxColumn18
+        '
+        DataGridViewCellStyle20.Format = "N2"
+        DataGridViewCellStyle20.NullValue = "21"
+        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle20
+        Me.DataGridViewTextBoxColumn18.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn18.HeaderText = "IVA"
+        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
+        Me.DataGridViewTextBoxColumn18.Width = 55
+        '
+        'DataGridViewTextBoxColumn19
+        '
+        DataGridViewCellStyle21.Format = "N2"
+        DataGridViewCellStyle21.NullValue = "0"
+        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle21
+        Me.DataGridViewTextBoxColumn19.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn19.HeaderText = "P. Unit"
+        Me.DataGridViewTextBoxColumn19.Name = "DataGridViewTextBoxColumn19"
+        Me.DataGridViewTextBoxColumn19.Width = 54
+        '
+        'DataGridViewTextBoxColumn20
+        '
+        DataGridViewCellStyle22.Format = "N2"
+        DataGridViewCellStyle22.NullValue = "0"
+        Me.DataGridViewTextBoxColumn20.DefaultCellStyle = DataGridViewCellStyle22
+        Me.DataGridViewTextBoxColumn20.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn20.HeaderText = "P. Total"
+        Me.DataGridViewTextBoxColumn20.Name = "DataGridViewTextBoxColumn20"
+        Me.DataGridViewTextBoxColumn20.ReadOnly = True
+        Me.DataGridViewTextBoxColumn20.Width = 55
+        '
+        'DataGridViewTextBoxColumn21
+        '
+        Me.DataGridViewTextBoxColumn21.HeaderText = "ganancia"
+        Me.DataGridViewTextBoxColumn21.Name = "DataGridViewTextBoxColumn21"
+        Me.DataGridViewTextBoxColumn21.Visible = False
         '
         'puntoventa
         '
@@ -1756,4 +1858,14 @@ Partial Class puntoventa
     Friend WithEvents lblnoplu As Label
     Friend WithEvents cmdremitar As Button
     Friend WithEvents Button3 As Button
+    Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn16 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn17 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn18 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn19 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn20 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn21 As DataGridViewTextBoxColumn
 End Class

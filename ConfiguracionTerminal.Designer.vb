@@ -44,7 +44,12 @@ Partial Class ConfiguracionTerminal
         Me.txtidfacrapdef = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtTextoPietiket = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.rdcod_bar = New System.Windows.Forms.RadioButton()
+        Me.rdIdInterno = New System.Windows.Forms.RadioButton()
         Me.pntitulo.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -211,7 +216,7 @@ Partial Class ConfiguracionTerminal
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(8, 262)
+        Me.Button18.Location = New System.Drawing.Point(7, 292)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(136, 23)
         Me.Button18.TabIndex = 117
@@ -242,12 +247,58 @@ Partial Class ConfiguracionTerminal
         Me.txtTextoPietiket.Size = New System.Drawing.Size(244, 20)
         Me.txtTextoPietiket.TabIndex = 135
         '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(8, 257)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(156, 16)
+        Me.Label3.TabIndex = 136
+        Me.Label3.Text = "ObtenerCodigoAutom"
+        '
+        'GroupBox1
+        '
+        Me.GroupBox1.Controls.Add(Me.rdIdInterno)
+        Me.GroupBox1.Controls.Add(Me.rdcod_bar)
+        Me.GroupBox1.Location = New System.Drawing.Point(170, 249)
+        Me.GroupBox1.Name = "GroupBox1"
+        Me.GroupBox1.Size = New System.Drawing.Size(141, 34)
+        Me.GroupBox1.TabIndex = 137
+        Me.GroupBox1.TabStop = False
+        '
+        'rdcod_bar
+        '
+        Me.rdcod_bar.AutoSize = True
+        Me.rdcod_bar.Checked = True
+        Me.rdcod_bar.Location = New System.Drawing.Point(1, 8)
+        Me.rdcod_bar.Name = "rdcod_bar"
+        Me.rdcod_bar.Size = New System.Drawing.Size(64, 17)
+        Me.rdcod_bar.TabIndex = 0
+        Me.rdcod_bar.TabStop = True
+        Me.rdcod_bar.Tag = "cod_bar"
+        Me.rdcod_bar.Text = "cod_bar"
+        Me.rdcod_bar.UseVisualStyleBackColor = True
+        '
+        'rdIdInterno
+        '
+        Me.rdIdInterno.AutoSize = True
+        Me.rdIdInterno.Location = New System.Drawing.Point(71, 8)
+        Me.rdIdInterno.Name = "rdIdInterno"
+        Me.rdIdInterno.Size = New System.Drawing.Size(71, 17)
+        Me.rdIdInterno.TabIndex = 1
+        Me.rdIdInterno.Tag = "id"
+        Me.rdIdInterno.Text = "id_interno"
+        Me.rdIdInterno.UseVisualStyleBackColor = True
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(497, 306)
+        Me.ClientSize = New System.Drawing.Size(497, 324)
+        Me.Controls.Add(Me.GroupBox1)
+        Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtTextoPietiket)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtcajaDef)
@@ -274,6 +325,8 @@ Partial Class ConfiguracionTerminal
         Me.Text = "ConfiguracionTerminal"
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
+        Me.GroupBox1.ResumeLayout(False)
+        Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -301,4 +354,8 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents txtidfacrapdef As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents txtTextoPietiket As TextBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents rdIdInterno As RadioButton
+    Friend WithEvents rdcod_bar As RadioButton
 End Class

@@ -70,7 +70,7 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then EtiquetasEnBlancoToolStripMenuItem.Visible = False
 
             If InStr(DatosAcceso.Moduloacc, "3") = False Then cmdfacturacion.Visible = False
-            If InStr(DatosAcceso.Moduloacc, "3a") = False Then NuevaEfacturaToolStripMenuItem.Visible = False
+            'If InStr(DatosAcceso.Moduloacc, "3a") = False Then NuevaEfacturaToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3b") = False Then NuevoPedidoToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3c") = False Then reciboconsfinal.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3d") = False Then facturabconsfinal.Visible = False
@@ -78,11 +78,13 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "3f") = False Then RemitosToolStripMenuItem.Visible = False
 
             If InStr(DatosAcceso.Moduloacc, "4") = False Then cmdadministracion.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "4ac") = False Then InformesDeVentasToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "4a") = False Then ContableToolStripMenuItem1.Visible = False
             If InStr(DatosAcceso.Moduloacc, "4ba") = False Then CajaToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "4bb") = False Then CajaDiariaToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "4c") = False Then ProveedoresToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "4d") = False Then AgendaDeVencimientosToolStripMenuItem.Visible = False
+
 
             If InStr(DatosAcceso.Moduloacc, "5") = False Then cmdtecnico.Visible = False
             If InStr(DatosAcceso.Moduloacc, "KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False

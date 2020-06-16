@@ -5,6 +5,7 @@
 
     Private Sub agregarpromo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         txtcodigo.Text = codigo
+        txtcodigoComis.Text = codigo
         cargarCategoriasProd()
         cargarinfoprod()
     End Sub
@@ -44,6 +45,7 @@
             idproducto = infocl(0)(0)
             txtcodigo.Text = infocl(0)(1)
             txtproducto.Text = infocl(0)(2)
+            txtdescripcionComision.Text = infocl(0)(2)
             cmbcatprod.SelectedValue = infocl(0)(3)
         Catch ex As Exception
 
@@ -74,8 +76,8 @@
             Dim compraminprod As String = txtcompramin.Text
             Dim descuentoprod As String = txtdescuento.Text
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,compra_min,descuento_porc) " &
-            "values (?idprod,?compra,?porc) ", conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,nombrepromo,compra_min,descuento_porc) " &
+            "values (?idprod,'DESCUENTO',?compra,?porc) ", conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idprod", productopromo)
                 .AddWithValue("?compra", compraminprod)
@@ -95,8 +97,8 @@
             Dim compramincat As String = txtcompramincat.Text
             Dim descuentocat As String = txtdescuentocat.Text
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idcategoria,compra_min,descuento_porc) " &
-            "values (?idcat,?compra,?porc) ", conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idcategoria,nombrepromo,compra_min,descuento_porc) " &
+            "values (?idcat,'DESCUENTO',?compra,?porc) ", conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idcat", catpromo)
                 .AddWithValue("?compra", compramincat)
@@ -104,6 +106,27 @@
             End With
             comandoadd.ExecuteNonQuery()
             MsgBox("promocion guardada")
+            Me.Close()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Try
+            Dim productopromo As Integer = idproducto
+            Dim compraminprod As String = txtcantidadComision.Text
+            Dim descuentoprod As String = txtporcentajeComision.Text
+
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,nombrepromo,compra_min,descuento_porc) " &
+            "values (?idprod,'COMISION',?compra,?porc) ", conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?idprod", productopromo)
+                .AddWithValue("?compra", compraminprod)
+                .AddWithValue("?porc", descuentoprod)
+            End With
+            comandoadd.ExecuteNonQuery()
+            MsgBox("comision guardada!")
             Me.Close()
         Catch ex As Exception
 

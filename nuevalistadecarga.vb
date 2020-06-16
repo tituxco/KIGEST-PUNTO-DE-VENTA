@@ -168,7 +168,7 @@
     Private Sub dtpedidosfact_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellEndEdit
         Reconectar()
         Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-        & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995", conexionPrinc)
+        & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995 and OBSERVACIONES LIKE 'PENDIENTE'", conexionPrinc)
         Dim tablaped As New DataTable
         Dim infoped() As DataRow
         consultapedido.Fill(tablaped)
@@ -178,6 +178,7 @@
             dtpedidosfact.CurrentCell.Value = ""
             SendKeys.Send("{UP}")
             Exit Sub
+
         End If
         dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
 

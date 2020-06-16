@@ -3,7 +3,8 @@
     Dim idfactura As Integer
     Private Sub selListaCarga_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, fecha,concat(lpad(ptovta,4,'0'),'-',lpad(num_fact,8,'0')) as comprobante from fact_facturas where tipofact=997", conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, fecha,concat(lpad(ptovta,4,'0'),'-',lpad(num_fact,8,'0')) as comprobante from fact_facturas where tipofact=997
+        order by fecha desc", conexionPrinc)
         Dim tablaped As New DataTable
         consulta.Fill(tablaped)
 
@@ -32,7 +33,7 @@
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idfactura, conexionPrinc)
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idfactura & " order by producto asc", conexionPrinc)
             tabFac.Fill(fac.Tables("ariel_itmlistacarga"))
 
 

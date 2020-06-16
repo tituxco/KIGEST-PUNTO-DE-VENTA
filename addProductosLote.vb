@@ -739,7 +739,43 @@
         GenerarExcel(dtproductos)
     End Sub
 
-    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim proximoNum As Integer = ObternerCodigoSiguiente()
+
+        For Each fila As DataGridViewRow In dtproductos.Rows
+            If fila.Cells(1).Value = proximoNum Then
+                proximoNum += 1
+            End If
+        Next
+        dtproductos.Rows.Add("", proximoNum)
+
+
 
     End Sub
+
+    Private Function ObternerCodigoSiguiente() As Integer
+        Try
+            Dim catsel As String = ""
+            If cmbcatprod.SelectedValue > 0 Then
+                catsel = " where categoria =" & cmbcatprod.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<7"
+            Else
+                catsel = "where length(" & My.Settings.obtCodProd & ")<7"
+            End If
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 FROM fact_insumos " & catsel, conexionPrinc)
+            Dim tablaprod As New DataTable
+            consulta.Fill(tablaprod)
+            If tablaprod.Rows.Count <> 0 Then
+                Return tablaprod(0)(0)
+            Else
+                Dim numaleat As New Random(CInt(Date.Now.Ticks And 99999))
+                Return numaleat.Next
+            End If
+            conexionPrinc.Close()
+
+        Catch ex As Exception
+            Return 0
+        End Try
+
+    End Function
 End Class

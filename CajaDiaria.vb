@@ -3,6 +3,7 @@ Public Class CajaDiaria
     Dim saldoCaja As Double = 0
     Private Sub CajaDiaria_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarCaja()
+        If InStr(DatosAcceso.Moduloacc, "4ac") = False Then cmdnuevomov.Visible = False
     End Sub
     Private Sub CargarCaja()
         Dim egresos As Double = 0

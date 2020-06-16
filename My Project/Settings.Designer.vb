@@ -364,6 +364,18 @@ Namespace My
                 Me("paginacion") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property obtCodProd() As String
+            Get
+                Return CType(Me("obtCodProd"),String)
+            End Get
+            Set
+                Me("obtCodProd") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -491,7 +491,7 @@ Public Class productos
         Try
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(stock) from fact_insumos_lotes  where idproducto=pro.id),   
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id),   
             (select peso from cm_pesoEspecifico  where id=pro.id) 
             from fact_insumos as pro where pro.id = " & codigo, conexionPrinc)
             Dim tablaprod As New DataTable
@@ -503,7 +503,7 @@ Public Class productos
             cmbcatprod.SelectedValue = infoProd(0)(8)
             cmbmarcas.SelectedValue = infoProd(0)(9)
             cmbmodelos.SelectedValue = infoProd(0)(10)
-
+            txtcomision.Text = infoProd(0)(11)
             If infoProd(0)(20) = 0 Then
                 txtpreciobase.Text = infoProd(0)(2)
                 txtcosto.Text = 0
@@ -627,7 +627,7 @@ Public Class productos
         Try
             dtdescuentos.Rows.Clear()
             Reconectar()
-            Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento ',' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
+            Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat(prom.nombrepromo,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
             "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & idProductoGral, conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
@@ -790,7 +790,8 @@ Public Class productos
             Dim tipo As String = cmbtipoprod.SelectedIndex
             Dim calcular_precio As Integer
             Dim unidades As Integer = cmbunidades.SelectedValue
-
+            Dim comision As String = ""
+            If txtcomision.Text = "" Then comision = 0 Else comision = txtcomision.Text
             If codigo <> "" And modificaProd = False Then
                 If ExisteProducto(codigo) = True Then
                     MsgBox("ya existe un producto con el CODIGO DE BARRA indicado, por favor verifique")
@@ -798,15 +799,9 @@ Public Class productos
                 End If
             End If
 
-            If chkpreciobase.CheckState = CheckState.Checked Then
-                calcular_precio = 1
-            Else
-                calcular_precio = 0
-            End If
+            If chkpreciobase.CheckState = CheckState.Checked Then calcular_precio = 1 Else calcular_precio = 0
             Dim presentacion As String = cmbpresentacion.Text
-
             Dim moneda As Integer = cmbmoneda.SelectedValue
-
             Dim foto As Byte() = Imagen_Bytes(imgFoto.Image)
 
             'Dim stock As String = txtstoked.Text
@@ -841,14 +836,16 @@ Public Class productos
             Dim sqlQuery As String
 
             If modificaProd = False Then
-
-                sqlQuery = "insert into fact_insumos " _
-                & "(descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto) values " _
-                & "(?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto)"
+                sqlQuery = "insert into fact_insumos 
+                (descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, 
+                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif) values 
+                (?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, 
+                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif)"
             ElseIf modificaProd = True Then
-                sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, " _
-                    & "codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone," &
-                "utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, presentacion=?present, foto=?foto where id=?idp"
+                sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
+                codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone,
+                utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, 
+                presentacion=?present, foto=?foto, bonif=?bonif where id=?idp"
             End If
             Reconectar()
 
@@ -874,6 +871,7 @@ Public Class productos
                 .AddWithValue("?tipo", tipo)
                 .AddWithValue("?foto", foto)
                 .AddWithValue("?codigo", codigo)
+                .AddWithValue("?bonif", comision)
 
                 If modificaProd = True Then
                     '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
@@ -1317,7 +1315,7 @@ Public Class productos
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_promociones set compra_min='" & compramin & "', descuento_porc='" & descuento & "' " &
             "where id=" & iddesc, conexionPrinc)
             comandoupd.ExecuteNonQuery()
-            MsgBox("Promocion actualizada")
+            MsgBox("actualizado correctamente")
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -1366,11 +1364,35 @@ Public Class productos
         cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProdGral.SelectedValue)
     End Sub
 
-    Private Sub DgvProductos_Load(sender As Object, e As EventArgs)
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Try
+            Dim catsel As String = ""
+            If cmbcatProdGral.SelectedValue > 0 Then
+                catsel = " where categoria =" & cmbcatProdGral.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<7"
+            Else
+                catsel = "where length(" & My.Settings.obtCodProd & ")<7"
+            End If
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd &")+1 FROM fact_insumos " & catsel, conexionPrinc)
+            Dim tablaprod As New DataTable
+            consulta.Fill(tablaprod)
+            If tablaprod.Rows.Count <> 0 Then
+                txtcodigo.Text = tablaprod(0)(0)
+            Else
+                Dim numaleat As New Random(CInt(Date.Now.Ticks And 99999))
+                txtcodigo.Text = numaleat.Next
+            End If
+            conexionPrinc.Close()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dtdescuentos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtdescuentos.CellContentClick
 
     End Sub
 
-    Private Sub cmbOrdenarPor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbOrdenarPor.SelectedIndexChanged
+    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
 
     End Sub
 End Class

@@ -22,10 +22,29 @@
         cmbAlmacenes.DataSource = readAlmac.Tables(0)
         cmbAlmacenes.DisplayMember = readAlmac.Tables(0).Columns(1).Caption.ToString.ToUpper
         cmbAlmacenes.ValueMember = readAlmac.Tables(0).Columns(0).Caption.ToString
-
-
         cmbAlmacenes.SelectedValue = My.Settings.idAlmacen
+
+        Dim tablaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ',nombre) from fact_vendedor", conexionPrinc)
+        Dim readVend As New DataSet
+        tablaVend.Fill(readVend)
+        cmbvendedor.DataSource = readVend.Tables(0)
+        cmbvendedor.DisplayMember = readVend.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbvendedor.ValueMember = readVend.Tables(0).Columns(0).Caption.ToString
+        cmbvendedor.SelectedIndex = -1
+
     End Sub
+    Private Function CalcularComisiones(idVendedor As Integer) As Double
+        Try
+            If idVendedor = 0 Or idVendedor = -1 Then
+                Reconectar()
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("", conexionPrinc)
+                Dim tablal As DataTable
+                consulta.Fill(tablal)
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Function
 
 
     Private Sub rdInforProv_Click(sender As Object, e As EventArgs) Handles rdInforProv.Click
@@ -33,6 +52,8 @@
             cmbInforCateg.Enabled = False
             cmbInforProv.Enabled = True
             txtInforProd.Enabled = False
+            rdPocaRotacion.Enabled = False
+            txtdiasventa.Enabled = False
         End If
     End Sub
 
@@ -41,6 +62,8 @@
             cmbInforCateg.Enabled = True
             cmbInforProv.Enabled = False
             txtInforProd.Enabled = False
+            rdPocaRotacion.Enabled = False
+            txtdiasventa.Enabled = False
         End If
     End Sub
 
@@ -49,6 +72,8 @@
             cmbInforCateg.Enabled = False
             cmbInforProv.Enabled = False
             txtInforProd.Enabled = False
+            rdPocaRotacion.Enabled = False
+            txtdiasventa.Enabled = False
         End If
     End Sub
 
@@ -57,12 +82,13 @@
             cmbInforCateg.Enabled = False
             cmbInforProv.Enabled = False
             txtInforProd.Enabled = True
+            rdPocaRotacion.Enabled = False
+            txtdiasventa.Enabled = False
         End If
     End Sub
 
-
-
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
+
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
         EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
@@ -90,10 +116,26 @@
             Dim hasta As String = Format(CDate(dtpvtashishasta.Value), "yyyy-MM-dd")
             Dim tablabal As New DataTable
             Dim consIdAlmacen As String = ""
+            Dim consIdVendedor As String = ""
+            Dim ComisionVendedor As Double = 0
+            Dim IdVendedorSel As Integer = 0
             tablabal.Clear()
             ' If cmbAlmacenes.SelectedValue <> 0 And cmbAlmacenes.SelectedIndex <> -1 Then
             consIdAlmacen = " and itm.ptovta=" & cmbAlmacenes.SelectedValue
-            'End If
+
+            If cmbvendedor.SelectedValue = 0 Or cmbvendedor.SelectedIndex = -1 Then
+                consIdVendedor = " "
+                IdVendedorSel = 0
+            Else
+                consIdVendedor = " and fact.vendedor=" & cmbvendedor.SelectedValue
+                IdVendedorSel = cmbvendedor.SelectedValue
+            End If
+
+            Dim consultaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+			    comision from fact_vendedor where activo=1 and id= " & IdVendedorSel, conexionPrinc)
+            Dim TablaVend As New DataTable
+            consultaVend.Fill(TablaVend)
+            If TablaVend.Rows.Count <> 0 Then ComisionVendedor = TablaVend.Rows(0)(0)
 
             If rdInforgeneral.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
@@ -105,7 +147,7 @@
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact and 
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & consIdAlmacen & " ' group by fact.fecha", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", conexionPrinc)
                 consulta.Fill(tablabal)
 
             ElseIf rdInforProv.Checked = True Then
@@ -121,7 +163,7 @@
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & " group by ins.codprov order by prov.razon asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & consIdVendedor & " group by ins.codprov order by prov.razon asc", conexionPrinc)
                 consulta.Fill(tablabal)
 
             ElseIf rdInforCategoria.Checked = True Then
@@ -137,7 +179,7 @@
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_categoria_insum as cat where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.categoria=cat.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
                 consulta.Fill(tablabal)
 
             ElseIf rdInforProductos.Checked = True Then
@@ -150,44 +192,107 @@
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
                 (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    round(sum(itm.ptotal),2) as pventa, 
-                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
+                round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia   
+        
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & " group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
+                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
                 consulta.Fill(tablabal)
-
-
+            ElseIf rdPocaRotacion.Checked = True Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, max(fact.fecha) FechaUltVta, datediff(curdate(), max(fact.fecha)) as Dias			    
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact  and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                datediff(curdate(), fact.fecha) >=" & CInt(txtdiasventa.Text) & consIdAlmacen & "
+                group by ins.codigo desc order by max(fact.fecha) asc", conexionPrinc)
+                consulta.Fill(tablabal)
             End If
 
+            Reconectar()
+            Dim consultaComis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
+			    round(sum(itm.ptotal),2) as MontoVenta,
+                promo.compra_min as VentaObjetivo, promo.descuento_porc as ProcComision,
+                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as MontoComision
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_promociones as promo where
+                ins.id=itm.cod and fact.id=itm.id_fact  and itm.cod=promo.idproducto and promo.nombrepromo like 'COMISION' and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                itm.cod in(select idproducto from fact_promociones where nombrepromo like 'COMISION') and
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
+                group by ins.descripcion 
+                having sum(itm.cantidad)>promo.compra_min
+                order by ins.descripcion asc", conexionPrinc)
+            Dim tablaComis As New DataTable
+            consultaComis.Fill(tablaComis)
+
             dtventashistoricas.DataSource = tablabal
+            dtgcomisiones.DataSource = tablaComis
+
+            Dim TotalVentas As Double = 0
+            Dim TotalVentasObjetivo As Double = 0
+            Dim TotalVentasNoCodif As Double = 0
+            Reconectar()
+            Dim consultaNoCodif As New MySql.Data.MySqlClient.MySqlDataAdapter("
+                SELECT  ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,			    
+			    round(sum(itm.ptotal),2) as pventa                
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact  and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod=0 and
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
+                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+            Dim tablaNoCodif As New DataTable
+            consultaNoCodif.Fill(tablaNoCodif)
+
+            If tablaNoCodif.Rows.Count <> 0 Then
+                TotalVentasNoCodif = tablaNoCodif(0)(2)
+            End If
 
             If rdInforgeneral.Checked = True Then
                 lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
                 lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                lblBalanProdNodCod.Text = "Total Prod. no Cod: $" & TotalVentasNoCodif
             ElseIf rdInforProv.Checked = True Then
                 lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
                 lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                lblBalanProdNodCod.Text = "Total Prod. no Cod: $" & TotalVentasNoCodif
             ElseIf rdInforCategoria.Checked = True Then
                 lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
                 lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                lblBalanProdNodCod.Text = "Total Prod. no Cod: $" & TotalVentasNoCodif
             ElseIf rdInforProductos.Checked = True Then
                 lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
                 lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 4), 2)
                 lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(dtventashistoricas, 5), 2)
-                'ElseIf rdInforMes.Checked = True Then
-                '    lblbalancecosto.Text = "Total costo: $" & 0 'Math.Round(SumarTotal(dtventashistoricas, 2), 2)
-                '    lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
-                '    lblbalanceganancia.Text = "Total ganancia: $" & 0 '& Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                lblBalanProdNodCod.Text = "Total Prod. no Cod: $" & TotalVentasNoCodif
             End If
+
+            lblcomisiones.Text = "Comisiones por productos objetivos: $" & Math.Round(SumarTotal(dtgcomisiones, 6), 2) &
+                " Comision por ventas: $" & Math.Round(TotalVentas * (ComisionVendedor / 100), 2) &
+                " Total: $" & Math.Round(SumarTotal(dtgcomisiones, 6), 2) + Math.Round(TotalVentas * (ComisionVendedor / 100), 2)
             EnProgreso.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
             EnProgreso.Close()
         End Try
+    End Sub
+
+    Private Sub CalcularComisiones()
+        If cmbvendedor.SelectedValue = 0 Or cmbvendedor.SelectedIndex = -1 Then
+
+        End If
     End Sub
     Private Function SumarTotal(ByRef list As DataGridView, ByVal columna As Integer) As Double
         Try
@@ -248,4 +353,110 @@
         End Try
     End Function
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        For Each fila As DataGridViewRow In dtventashistoricas.Rows
+
+
+            Dim cant As Double = FormatNumber(fila.Cells(2).Value, 4)
+            Dim codigo As String = fila.Cells(6).Value
+            Dim lotes As Integer = 0
+
+            Reconectar()
+            Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
+            & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & cmbAlmacenes.SelectedValue & " order by id asc", conexionPrinc)
+            Dim tablastock As New DataTable
+            Dim infostock() As DataRow
+            consultastock.Fill(tablastock)
+            infostock = tablastock.Select("")
+            'MsgBox(cant)
+            If tablastock.Rows.Count = 0 Then
+                Continue For
+            End If
+
+            Do Until cant = 0
+                If infostock(lotes)(1) <= cant Then
+                    Dim StockLote As Double = infostock(lotes)(1)
+                    cant = cant - StockLote
+                    Reconectar()
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
+                    updstock.ExecuteNonQuery()
+                    If tablastock.Rows.Count - lotes > 1 Then
+                        lotes += 1
+                    Else
+                        cant = 0
+                        'Continue For
+                    End If
+                ElseIf infostock(lotes)(1) > cant Then
+                    Dim stockLote As Double = infostock(lotes)(1)
+                    Dim CantUpd As Double = infostock(lotes)(1) - cant
+                    Reconectar()
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), conexionPrinc)
+                    updstock.ExecuteNonQuery()
+                    cant = 0
+                    'ElseIf infostock(lotes)(1) > cant
+                End If
+            Loop
+        Next
+    End Sub
+
+
+    Private Sub Button24_Click(sender As Object, e As EventArgs) Handles Button24.Click
+        cmbvendedor.SelectedIndex = -1
+        cmbInforCateg.SelectedIndex = -1
+        cmbInforProv.SelectedIndex = -1
+
+    End Sub
+
+    Private Sub rdPocaRotacion_Click(sender As Object, e As EventArgs) Handles rdPocaRotacion.Click
+        If rdPocaRotacion.Checked = True Then
+            cmbInforCateg.Enabled = False
+            cmbInforProv.Enabled = False
+            txtInforProd.Enabled = False
+            rdPocaRotacion.Enabled = True
+            txtdiasventa.Enabled = True
+        End If
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        MsgBox("funcion no disponible aún")
+    End Sub
+    'Private Function ExisteBalance() As Boolean
+    '    Try
+    '        Reconectar()
+    '        Dim fecha As String = Format(CDate(dtpbalancefecha.Value), "yyyy-MM-dd")
+    '        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_balances_diarios where fecha like '" & fecha & "'", conexionPrinc)
+    '        Dim tablacl As New DataTable
+    '        Dim infocl() As DataRow
+    '        consulta.Fill(tablacl)
+    '        If tablacl.Rows.Count <> 0 Then
+    '            Return True
+    '        Else
+    '            Return False
+    '        End If
+    '    Catch ex As Exception
+    '        Return True
+    '    End Try
+    'End Function
+
+    'Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+    '    Try
+    '        Reconectar()
+    '        If ExisteBalance() = True Then
+    '            MsgBox("No se puede guardar este balance, puede que exista ya en la base de datos. por favor verifique")
+    '            Exit Sub
+    '        End If
+    '        Dim fecha As String = Format(CDate(dtpbalancefecha.Value), "yyyy-MM-dd")
+    '        Dim total_ventas As String = SumarTotal(lstbalancecomprobantes, 3)
+    '        Dim total_costo As String = SumarTotal(lstbalancecomprobantes, 2)
+    '        Dim total_ganancia As String = SumarTotal(lstbalancecomprobantes, 4)
+    '        Dim sqlQuery As String = "insert into fact_balances_diarios (fecha,total_ventas, total_costo, total_ganancia) values
+    '        ('" & fecha & "','" & total_ventas & "','" & total_costo & "','" & total_ganancia & "')"
+    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+    '        comandoadd.ExecuteNonQuery()
+
+    '        MsgBox("el balance ha sido guardado")
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '    End Try
+    'End Sub
 End Class

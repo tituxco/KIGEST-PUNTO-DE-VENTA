@@ -32,7 +32,7 @@
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, descripcion, " _
-            & "(select if (isnull(stock),0,sum(stock)) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD from fact_insumos as ins " _
+            & "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD from fact_insumos as ins " _
             & " where " & busqtxt & "and eliminado=0", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
@@ -80,8 +80,8 @@
                         CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
                         CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdCod(fila)
                     Else
-                        CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                        CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
+                        'CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+                        'CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
                     End If
 
                     CType(frmprincipal.ActiveMdiChild, puntoventa).CalcularTotales()

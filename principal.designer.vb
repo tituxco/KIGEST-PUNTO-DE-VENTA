@@ -25,6 +25,7 @@ Partial Class frmprincipal
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmprincipal))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusBDprinc = New System.Windows.Forms.ToolStripStatusLabel()
@@ -69,7 +70,6 @@ Partial Class frmprincipal
         Me.FCConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         Me.SuspendLayout()
@@ -82,6 +82,13 @@ Partial Class frmprincipal
         Me.StatusStrip1.Size = New System.Drawing.Size(1245, 24)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'lblPrincipalDolar
+        '
+        Me.lblPrincipalDolar.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblPrincipalDolar.Name = "lblPrincipalDolar"
+        Me.lblPrincipalDolar.Size = New System.Drawing.Size(60, 19)
+        Me.lblPrincipalDolar.Text = "DOLAR:"
         '
         'pbprincipal
         '
@@ -251,7 +258,7 @@ Partial Class frmprincipal
         Me.NuevaEfacturaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevaEfacturaToolStripMenuItem.Name = "NuevaEfacturaToolStripMenuItem"
         Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
-        Me.NuevaEfacturaToolStripMenuItem.Text = "Nueva Factura"
+        Me.NuevaEfacturaToolStripMenuItem.Text = "Rec. Comp. Aut / NC-ND"
         '
         'NuevoPedidoToolStripMenuItem
         '
@@ -483,13 +490,6 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Size = New System.Drawing.Size(123, 36)
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
-        '
-        'lblPrincipalDolar
-        '
-        Me.lblPrincipalDolar.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
-        Me.lblPrincipalDolar.Name = "lblPrincipalDolar"
-        Me.lblPrincipalDolar.Size = New System.Drawing.Size(60, 19)
-        Me.lblPrincipalDolar.Text = "DOLAR:"
         '
         'frmprincipal
         '

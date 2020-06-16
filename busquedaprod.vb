@@ -111,7 +111,7 @@ Public Class busquedaprod
             If imprimirlist = False And imprimiretiq = False Then
                 'MsgBox(cadenaComp)
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU, " &
-                "(select sum(stock) from fact_insumos_lotes  where idproducto=pro.id) as Stock from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                "(select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
@@ -128,7 +128,7 @@ Public Class busquedaprod
                 Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
                 Dim fac As New datosfacturas
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.id as CodInterno, pro.descripcion, pro.codigo as PLU,
-                (select sum(stock) from fact_insumos_lotes  where idproducto=pro.id) as Stock,   
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock,   
                 case (select position('%' in listas.utilidad) from fact_listas_precio as listas where listas.id=@idlst)
                 when 0 then
                 format(

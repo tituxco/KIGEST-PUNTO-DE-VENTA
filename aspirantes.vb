@@ -8,8 +8,9 @@ Public Class frmaspirantes
     Dim agregarPers As Boolean
     Private BindingSource1 As Windows.Forms.BindingSource = New BindingSource
     Dim idsub As String
-    
-    Private Sub frmpersonal_Load(sender As Object, e As EventArgs) Handles MyBase.Load        
+
+    Private Sub frmpersonal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dtdesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         deshabilitarControles()
         cargarDtosGrales()
     End Sub
@@ -539,8 +540,10 @@ Public Class frmaspirantes
         'EnProgreso.Controls.Add(Barra)
         Dim filtraloca As String
         Dim filtravendedor As String
-        Dim filtors As String
+        Dim filtroFecha As String
 
+        Dim desde As String = Format(CDate(dtdesde.Value), "yyyy-MM-dd")
+        Dim hasta As String = Format(CDate(dthasta.Value), "yyyy-MM-dd")
 
         If chklocalidad.Checked = True Then
             filtraloca = " and dir_localidad=" & cmblistaloca.SelectedValue
@@ -548,13 +551,18 @@ Public Class frmaspirantes
         If chkvendedor.Checked = True Then
             filtravendedor = " and  vendedor= " & cmbvendedor_lst.SelectedValue
         End If
+        If chkfecha.Checked = True Then
+            filtroFecha = " and f_alta between '" & desde & " %%:%%:%%' and '" & hasta & " %%:%%:%%'"
+        End If
         EnProgreso.Show()
         Application.DoEvents()
         Try
             Reconectar()
 
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-            & "idclientes as Cuenta, nomapell_razon as Cliente,contacto,telefono,celular,dir_domicilio,cuit  from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+            idclientes as Cuenta, nomapell_razon as Cliente,contacto,telefono,celular,dir_domicilio,cuit,date_format(f_alta,'%d-%m-%Y')  
+            from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor & filtroFecha & " order by f_alta desc", conexionPrinc)
+
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaPers As New DataTable
 
@@ -688,5 +696,17 @@ Public Class frmaspirantes
 
     Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
 
+    End Sub
+
+    Private Sub dgvClientes_Load(sender As Object, e As EventArgs) Handles dgvClientes.Load
+
+    End Sub
+
+    Private Sub chkfecha_CheckedChanged(sender As Object, e As EventArgs) Handles chkfecha.CheckedChanged
+        If chkfecha.Checked = True Then
+            grpperiodo.Enabled = True
+        Else
+            grpperiodo.Enabled = False
+        End If
     End Sub
 End Class

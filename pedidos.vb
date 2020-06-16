@@ -1,5 +1,5 @@
 ﻿Public Class Presupuestos
-
+    Dim IDPedidoSeleccionado As Integer
     Private Sub cmdnuevapers_Click(sender As Object, e As EventArgs) Handles cmdnuevapers.Click
         Dim i As Integer
         For i = 0 To Me.MdiChildren.Length - 1
@@ -33,10 +33,10 @@
                 cmdnvalistacarga.Visible = True
                 cmdlistacarga.Visible = True
             End If
-            dtpedidos.Columns(9).DefaultCellStyle.WrapMode = DataGridViewTriState.True
-            dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
-            dtpedidos.Columns(8).DefaultCellStyle.WrapMode = DataGridViewTriState.True
-
+            dgvPedidos.dgvVista.Columns(9).DefaultCellStyle.WrapMode = DataGridViewTriState.True
+            dgvPedidos.dgvVista.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+            dgvPedidos.dgvVista.Columns(8).DefaultCellStyle.WrapMode = DataGridViewTriState.True
+            dgvPedidos.dgvVista.MultiSelect = True
         Catch ex As Exception
         End Try
     End Sub
@@ -73,8 +73,16 @@
             Dim tablaped As New DataTable
             consulta.Fill(tablaped)
 
-            dtpedidos.DataSource = tablaped
-            dtpedidos.Columns(0).Visible = False
+            'dtpedidos.DataSource = tablaped
+            'dtpedidos.Columns(0).Visible = False
+            dgvPedidos.Cargar_Datos(tablaped)
+            Dim totalSuma As Double = 0
+
+            For Each fila As DataRow In tablaped.Rows
+                totalSuma += FormatNumber(fila.Item(7), 2)
+            Next
+
+            lbltotalPedidos.Text = "$" & totalSuma 'SumarTotal(dgvPedidos.dgvVista, 7)
         Catch ex As Exception
 
         End Try
@@ -94,7 +102,7 @@
             Dim tec As New nuevopedido
             tec.MdiParent = Me.MdiParent
             tec.modificar = True
-            tec.idFactura = dtpedidos.CurrentRow.Cells(0).Value
+            tec.idFactura = IDPedidoSeleccionado 'dtpedidos.CurrentRow.Cells(0).Value
             tec.Show()
             'For Each fila As DataGridViewRow In dtpedidos.Rows
             '    Dim tec As New nuevopedido
@@ -150,9 +158,11 @@
             If MsgBox("Esta seguro que desa eliminar este pedido?", vbQuestion + vbYesNo) = vbNo Then
                 Exit Sub
             End If
-            Dim idped As Integer = dtpedidos.CurrentRow.Cells(0).Value
-            Dim delItm As String = "delete from fact_items where id_fact=" & idped
-            Dim delPed As String = "delete from fact_facturas where id=" & idped
+            Dim idped As Integer = IDPedidoSeleccionado 'dtpedidos.CurrentRow.Cells(0).Value
+            Dim delItm As String = "delete from fact_items where id_fact=" & IDPedidoSeleccionado
+
+            Dim delPed As String = "delete from fact_facturas where id=" & IDPedidoSeleccionado
+
             Reconectar()
             Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, conexionPrinc)
             comandoDelItm.ExecuteNonQuery()
@@ -251,7 +261,7 @@
             where fis.donfdesc = fac.tipofact And con.id = fac.condvta And fis.ptovta = fac.ptovta 
             And fac.tipofact=995 
             And fac.fecha between '" & desde & "' and '" & hasta & "' " & parambusq, conexionPrinc)
-            MsgBox(tabFac.SelectCommand.CommandText)
+            'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
@@ -281,12 +291,12 @@
         Try
             If rdImportar.Checked = True Then
                 cmdmodificar.Text = "Importar"
-                dtpedidos.Columns(8).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
-                dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.White
+                dgvPedidos.dgvVista.Columns(8).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+                dgvPedidos.dgvVista.Columns(9).DefaultCellStyle.BackColor = Color.White
             Else
                 cmdmodificar.Text = "Modificar"
-                dtpedidos.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
-                dtpedidos.Columns(8).DefaultCellStyle.BackColor = Color.White
+                dgvPedidos.dgvVista.Columns(9).DefaultCellStyle.BackColor = Color.FromArgb(255, 128, 0)
+                dgvPedidos.dgvVista.Columns(8).DefaultCellStyle.BackColor = Color.White
             End If
         Catch ex As Exception
         End Try
@@ -308,7 +318,7 @@
 
     Private Function CantFilasSel() As Integer
         Dim filasSel As Integer
-        For Each filas As DataGridViewRow In dtpedidos.Rows
+        For Each filas As DataGridViewRow In dgvPedidos.dgvVista.Rows
             If filas.Selected = True Then
                 filasSel += 1
             End If
@@ -321,7 +331,7 @@
             Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim fac As DataTable
             Dim pedidosList As String = ""
-            For Each pedido As DataGridViewRow In dtpedidos.Rows
+            For Each pedido As DataGridViewRow In dgvPedidos.dgvVista.Rows
                 If pedido.Selected = True And pedidosList = "" Then
                     pedidosList = pedido.Cells(0).Value
                 ElseIf pedido.Selected = True And pedidosList <> "" Then
@@ -343,7 +353,7 @@
     End Function
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        If dtpedidos.CurrentRow.Cells(8).Value = "FACTURADO" Then
+        If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
             MsgBox("El pedido ya fue facturado")
             Exit Sub
         End If
@@ -371,7 +381,7 @@
             Dim itemPedido As String
             Dim ptovtapedido As String
             vta.Idcliente = 9999
-            For Each filas As DataGridViewRow In dtpedidos.Rows
+            For Each filas As DataGridViewRow In dgvPedidos.dgvVista.Rows
                 If filas.Selected = True Then
                     itemPedido = CInt(Strings.Right(filas.Cells(1).Value, 8))
                     ptovtapedido = CInt(Strings.Left(filas.Cells(1).Value, 4))
@@ -382,12 +392,12 @@
             vta.Show()
 
         ElseIf CantFilasSel() = 1 Then
-            Dim ptovtapedido As String = CInt(Strings.Left(dtpedidos.CurrentRow.Cells(1).Value, 4))
-            Dim itemPedido As String = CInt(Strings.Right(dtpedidos.CurrentRow.Cells(1).Value, 8))
-            vta.Idcliente = ObtenerIdCliente(dtpedidos.CurrentRow.Cells(3).Value)
+            Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
+            Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))
+            vta.Idcliente = ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
             vta.cargarCliente()
             vta.txtcodPLU.Focus()
-            vta.dtpedidosfact.Rows.Add(dtpedidos.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
+            vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
             vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
             vta.Show()
         End If
@@ -399,5 +409,17 @@
 
     Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
 
+    End Sub
+
+    Private Sub dtpdesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpdesde.ValueChanged
+        cargarPedidos()
+    End Sub
+
+    Private Sub dtphasta_ValueChanged(sender As Object, e As EventArgs) Handles dtphasta.ValueChanged
+        cargarPedidos()
+    End Sub
+    Private Sub PedidoSeleccionado(IdPedido As Integer) Handles dgvPedidos.SeleccionarItem
+        IDPedidoSeleccionado = IdPedido 
+        'CargarInfoPers()
     End Sub
 End Class

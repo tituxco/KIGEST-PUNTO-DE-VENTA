@@ -12,6 +12,8 @@
             chkimprimirtikets.CheckState = CheckState.Checked
             txtimptiketsnombre.Text = My.Settings.ImprTiketsNombre
         End If
+        If My.Settings.obtCodProd = "cod_bar" Then rdcod_bar.Checked = True Else rdIdInterno.Checked = True
+
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
@@ -29,7 +31,8 @@
         My.Settings.EtiquetadoraNmb = txtEtiquetaNombre.Text
         My.Settings.CajaDef = txtcajaDef.Text
         My.Settings.TextoPieTiket = txtTextoPietiket.Text
+        If rdcod_bar.Checked = True Then My.Settings.obtCodProd ="cod_bar" Else My.Settings.obtCodProd ="id"
         My.Settings.Save()
-        MsgBox("Configuración Guardada")
+            MsgBox("Configuración Guardada")
     End Sub
 End Class

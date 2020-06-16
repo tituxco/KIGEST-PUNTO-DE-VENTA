@@ -818,7 +818,7 @@
   <Width>19.79407cm</Width>
   <Page>
     <PageFooter>
-      <Height>2.54cm</Height>
+      <Height>3.38667cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -830,7 +830,9 @@
               <TextRuns>
                 <TextRun>
                   <Value>=First(Fields!facobserva.Value, "encabezado")</Value>
-                  <Style />
+                  <Style>
+                    <FontSize>6pt</FontSize>
+                  </Style>
                 </TextRun>
               </TextRuns>
               <Style />
@@ -839,7 +841,7 @@
           <rd:DefaultName>Textbox19</rd:DefaultName>
           <Top>0.14111cm</Top>
           <Left>0.20618cm</Left>
-          <Height>2.09374cm</Height>
+          <Height>3.08681cm</Height>
           <Width>19.33685cm</Width>
           <Style>
             <Border>
