@@ -54,7 +54,7 @@ Partial Class productos
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.Button5 = New System.Windows.Forms.Button()
-        Me.txtcomision = New System.Windows.Forms.TextBox()
+        Me.txtbonificacionMax = New System.Windows.Forms.TextBox()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txtPesoEspecifico = New System.Windows.Forms.TextBox()
@@ -106,6 +106,10 @@ Partial Class productos
         Me.tabstock = New System.Windows.Forms.TabPage()
         Me.dtlotesprov = New System.Windows.Forms.DataGridView()
         Me.tabcostos = New System.Windows.Forms.TabPage()
+        Me.txtutilidad4 = New System.Windows.Forms.TextBox()
+        Me.lblutilidad4 = New System.Windows.Forms.Label()
+        Me.txtutilidad3 = New System.Windows.Forms.TextBox()
+        Me.lblutilidad3 = New System.Windows.Forms.Label()
         Me.chkcalcularcosto = New System.Windows.Forms.CheckBox()
         Me.Panel5 = New System.Windows.Forms.Panel()
         Me.Label18 = New System.Windows.Forms.Label()
@@ -122,14 +126,14 @@ Partial Class productos
         Me.txtutilidad2 = New System.Windows.Forms.TextBox()
         Me.lblformula = New System.Windows.Forms.Label()
         Me.cmbmoneda = New System.Windows.Forms.ComboBox()
-        Me.Label25 = New System.Windows.Forms.Label()
+        Me.lblutilidad2 = New System.Windows.Forms.Label()
         Me.Label23 = New System.Windows.Forms.Label()
         Me.txtutilidad1 = New System.Windows.Forms.TextBox()
-        Me.Label16 = New System.Windows.Forms.Label()
+        Me.lblutilidad0 = New System.Windows.Forms.Label()
         Me.lblcotizacion = New System.Windows.Forms.Label()
-        Me.txtutilidad = New System.Windows.Forms.TextBox()
+        Me.txtutilidad0 = New System.Windows.Forms.TextBox()
         Me.txtcostofinal = New System.Windows.Forms.TextBox()
-        Me.Label22 = New System.Windows.Forms.Label()
+        Me.lblutilidad1 = New System.Windows.Forms.Label()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtiva = New System.Windows.Forms.TextBox()
@@ -510,7 +514,7 @@ Partial Class productos
         'TabPage1
         '
         Me.TabPage1.Controls.Add(Me.Button5)
-        Me.TabPage1.Controls.Add(Me.txtcomision)
+        Me.TabPage1.Controls.Add(Me.txtbonificacionMax)
         Me.TabPage1.Controls.Add(Me.Label37)
         Me.TabPage1.Controls.Add(Me.Label33)
         Me.TabPage1.Controls.Add(Me.txtPesoEspecifico)
@@ -559,13 +563,13 @@ Partial Class productos
         Me.Button5.Text = "..."
         Me.Button5.UseVisualStyleBackColor = True
         '
-        'txtcomision
+        'txtbonificacionMax
         '
-        Me.txtcomision.Location = New System.Drawing.Point(388, 282)
-        Me.txtcomision.Name = "txtcomision"
-        Me.txtcomision.Size = New System.Drawing.Size(115, 22)
-        Me.txtcomision.TabIndex = 245
-        Me.txtcomision.Visible = False
+        Me.txtbonificacionMax.Location = New System.Drawing.Point(388, 282)
+        Me.txtbonificacionMax.Name = "txtbonificacionMax"
+        Me.txtbonificacionMax.Size = New System.Drawing.Size(144, 22)
+        Me.txtbonificacionMax.TabIndex = 245
+        Me.txtbonificacionMax.Text = "0"
         '
         'Label37
         '
@@ -574,10 +578,9 @@ Partial Class productos
         Me.Label37.ForeColor = System.Drawing.Color.Black
         Me.Label37.Location = New System.Drawing.Point(390, 263)
         Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(89, 16)
+        Me.Label37.Size = New System.Drawing.Size(142, 16)
         Me.Label37.TabIndex = 244
-        Me.Label37.Text = "Comision %"
-        Me.Label37.Visible = False
+        Me.Label37.Text = "Bonificacion max %"
         '
         'Label33
         '
@@ -1094,20 +1097,24 @@ Partial Class productos
         '
         'tabcostos
         '
+        Me.tabcostos.Controls.Add(Me.txtutilidad4)
+        Me.tabcostos.Controls.Add(Me.lblutilidad4)
+        Me.tabcostos.Controls.Add(Me.txtutilidad3)
+        Me.tabcostos.Controls.Add(Me.lblutilidad3)
         Me.tabcostos.Controls.Add(Me.chkcalcularcosto)
         Me.tabcostos.Controls.Add(Me.Panel5)
         Me.tabcostos.Controls.Add(Me.txtpreciobase)
         Me.tabcostos.Controls.Add(Me.txtutilidad2)
         Me.tabcostos.Controls.Add(Me.lblformula)
         Me.tabcostos.Controls.Add(Me.cmbmoneda)
-        Me.tabcostos.Controls.Add(Me.Label25)
+        Me.tabcostos.Controls.Add(Me.lblutilidad2)
         Me.tabcostos.Controls.Add(Me.Label23)
         Me.tabcostos.Controls.Add(Me.txtutilidad1)
-        Me.tabcostos.Controls.Add(Me.Label16)
+        Me.tabcostos.Controls.Add(Me.lblutilidad0)
         Me.tabcostos.Controls.Add(Me.lblcotizacion)
-        Me.tabcostos.Controls.Add(Me.txtutilidad)
+        Me.tabcostos.Controls.Add(Me.txtutilidad0)
         Me.tabcostos.Controls.Add(Me.txtcostofinal)
-        Me.tabcostos.Controls.Add(Me.Label22)
+        Me.tabcostos.Controls.Add(Me.lblutilidad1)
         Me.tabcostos.Controls.Add(Me.Label17)
         Me.tabcostos.Controls.Add(Me.Label15)
         Me.tabcostos.Controls.Add(Me.txtiva)
@@ -1121,6 +1128,50 @@ Partial Class productos
         Me.tabcostos.TabIndex = 2
         Me.tabcostos.Text = "Calculo de precio"
         Me.tabcostos.UseVisualStyleBackColor = True
+        '
+        'txtutilidad4
+        '
+        Me.txtutilidad4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtutilidad4.Location = New System.Drawing.Point(112, 236)
+        Me.txtutilidad4.Name = "txtutilidad4"
+        Me.txtutilidad4.Size = New System.Drawing.Size(97, 22)
+        Me.txtutilidad4.TabIndex = 240
+        Me.txtutilidad4.Text = "0"
+        Me.txtutilidad4.Visible = False
+        '
+        'lblutilidad4
+        '
+        Me.lblutilidad4.AutoSize = True
+        Me.lblutilidad4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad4.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad4.Location = New System.Drawing.Point(109, 217)
+        Me.lblutilidad4.Name = "lblutilidad4"
+        Me.lblutilidad4.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad4.TabIndex = 241
+        Me.lblutilidad4.Text = "Utilidad 4: %"
+        Me.lblutilidad4.Visible = False
+        '
+        'txtutilidad3
+        '
+        Me.txtutilidad3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtutilidad3.Location = New System.Drawing.Point(112, 192)
+        Me.txtutilidad3.Name = "txtutilidad3"
+        Me.txtutilidad3.Size = New System.Drawing.Size(97, 22)
+        Me.txtutilidad3.TabIndex = 238
+        Me.txtutilidad3.Text = "0"
+        Me.txtutilidad3.Visible = False
+        '
+        'lblutilidad3
+        '
+        Me.lblutilidad3.AutoSize = True
+        Me.lblutilidad3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad3.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad3.Location = New System.Drawing.Point(109, 173)
+        Me.lblutilidad3.Name = "lblutilidad3"
+        Me.lblutilidad3.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad3.TabIndex = 239
+        Me.lblutilidad3.Text = "Utilidad 3: %"
+        Me.lblutilidad3.Visible = False
         '
         'chkcalcularcosto
         '
@@ -1293,6 +1344,7 @@ Partial Class productos
         Me.txtutilidad2.Size = New System.Drawing.Size(97, 22)
         Me.txtutilidad2.TabIndex = 232
         Me.txtutilidad2.Text = "0"
+        Me.txtutilidad2.Visible = False
         '
         'lblformula
         '
@@ -1315,16 +1367,17 @@ Partial Class productos
         Me.cmbmoneda.Size = New System.Drawing.Size(123, 24)
         Me.cmbmoneda.TabIndex = 7
         '
-        'Label25
+        'lblutilidad2
         '
-        Me.Label25.AutoSize = True
-        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label25.ForeColor = System.Drawing.Color.Black
-        Me.Label25.Location = New System.Drawing.Point(6, 264)
-        Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(95, 16)
-        Me.Label25.TabIndex = 233
-        Me.Label25.Text = "Utilidad 2: %"
+        Me.lblutilidad2.AutoSize = True
+        Me.lblutilidad2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad2.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad2.Location = New System.Drawing.Point(6, 264)
+        Me.lblutilidad2.Name = "lblutilidad2"
+        Me.lblutilidad2.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad2.TabIndex = 233
+        Me.lblutilidad2.Text = "Utilidad 2: %"
+        Me.lblutilidad2.Visible = False
         '
         'Label23
         '
@@ -1345,17 +1398,19 @@ Partial Class productos
         Me.txtutilidad1.Size = New System.Drawing.Size(97, 22)
         Me.txtutilidad1.TabIndex = 230
         Me.txtutilidad1.Text = "0"
+        Me.txtutilidad1.Visible = False
         '
-        'Label16
+        'lblutilidad0
         '
-        Me.Label16.AutoSize = True
-        Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.ForeColor = System.Drawing.Color.Black
-        Me.Label16.Location = New System.Drawing.Point(6, 173)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(95, 16)
-        Me.Label16.TabIndex = 210
-        Me.Label16.Text = "Utilidad 0: %"
+        Me.lblutilidad0.AutoSize = True
+        Me.lblutilidad0.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad0.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad0.Location = New System.Drawing.Point(6, 173)
+        Me.lblutilidad0.Name = "lblutilidad0"
+        Me.lblutilidad0.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad0.TabIndex = 210
+        Me.lblutilidad0.Text = "Utilidad 0: %"
+        Me.lblutilidad0.Visible = False
         '
         'lblcotizacion
         '
@@ -1368,14 +1423,15 @@ Partial Class productos
         Me.lblcotizacion.TabIndex = 218
         Me.lblcotizacion.Text = "0"
         '
-        'txtutilidad
+        'txtutilidad0
         '
-        Me.txtutilidad.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtutilidad.Location = New System.Drawing.Point(9, 192)
-        Me.txtutilidad.Name = "txtutilidad"
-        Me.txtutilidad.Size = New System.Drawing.Size(97, 22)
-        Me.txtutilidad.TabIndex = 6
-        Me.txtutilidad.Text = "0"
+        Me.txtutilidad0.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtutilidad0.Location = New System.Drawing.Point(9, 192)
+        Me.txtutilidad0.Name = "txtutilidad0"
+        Me.txtutilidad0.Size = New System.Drawing.Size(97, 22)
+        Me.txtutilidad0.TabIndex = 6
+        Me.txtutilidad0.Text = "0"
+        Me.txtutilidad0.Visible = False
         '
         'txtcostofinal
         '
@@ -1385,20 +1441,21 @@ Partial Class productos
         Me.txtcostofinal.Location = New System.Drawing.Point(9, 123)
         Me.txtcostofinal.Name = "txtcostofinal"
         Me.txtcostofinal.ReadOnly = True
-        Me.txtcostofinal.Size = New System.Drawing.Size(193, 47)
+        Me.txtcostofinal.Size = New System.Drawing.Size(200, 47)
         Me.txtcostofinal.TabIndex = 211
         Me.txtcostofinal.Text = "0"
         '
-        'Label22
+        'lblutilidad1
         '
-        Me.Label22.AutoSize = True
-        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.ForeColor = System.Drawing.Color.Black
-        Me.Label22.Location = New System.Drawing.Point(6, 217)
-        Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(95, 16)
-        Me.Label22.TabIndex = 231
-        Me.Label22.Text = "Utilidad 1: %"
+        Me.lblutilidad1.AutoSize = True
+        Me.lblutilidad1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad1.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad1.Location = New System.Drawing.Point(6, 217)
+        Me.lblutilidad1.Name = "lblutilidad1"
+        Me.lblutilidad1.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad1.TabIndex = 231
+        Me.lblutilidad1.Text = "Utilidad 1: %"
+        Me.lblutilidad1.Visible = False
         '
         'Label17
         '
@@ -2110,8 +2167,8 @@ Partial Class productos
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txtiva As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents txtutilidad As System.Windows.Forms.TextBox
-    Friend WithEvents Label16 As System.Windows.Forms.Label
+    Friend WithEvents txtutilidad0 As System.Windows.Forms.TextBox
+    Friend WithEvents lblutilidad0 As System.Windows.Forms.Label
     Friend WithEvents txtcostofinal As System.Windows.Forms.TextBox
     Friend WithEvents Label17 As System.Windows.Forms.Label
     Friend WithEvents lblcotizacion As System.Windows.Forms.Label
@@ -2125,9 +2182,9 @@ Partial Class productos
     Friend WithEvents tabstock As System.Windows.Forms.TabPage
     Friend WithEvents dtlotesprov As System.Windows.Forms.DataGridView
     Friend WithEvents txtutilidad2 As System.Windows.Forms.TextBox
-    Friend WithEvents Label25 As System.Windows.Forms.Label
+    Friend WithEvents lblutilidad2 As System.Windows.Forms.Label
     Friend WithEvents txtutilidad1 As System.Windows.Forms.TextBox
-    Friend WithEvents Label22 As System.Windows.Forms.Label
+    Friend WithEvents lblutilidad1 As System.Windows.Forms.Label
     Friend WithEvents lbllista2 As System.Windows.Forms.Label
     Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents lbllista1 As System.Windows.Forms.Label
@@ -2228,11 +2285,15 @@ Partial Class productos
     Friend WithEvents cmbOrdenarPor As ComboBox
     Friend WithEvents Label36 As Label
     Friend WithEvents Label7 As Label
-    Friend WithEvents txtcomision As TextBox
+    Friend WithEvents txtbonificacionMax As TextBox
     Friend WithEvents Label37 As Label
     Friend WithEvents Button5 As Button
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
     Friend WithEvents Column8 As DataGridViewTextBoxColumn
     Friend WithEvents Column9 As DataGridViewTextBoxColumn
+    Friend WithEvents txtutilidad4 As TextBox
+    Friend WithEvents lblutilidad4 As Label
+    Friend WithEvents txtutilidad3 As TextBox
+    Friend WithEvents lblutilidad3 As Label
 End Class

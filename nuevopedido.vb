@@ -147,65 +147,13 @@
 
             dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
             dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
-            dtproductos.Rows(fila).Cells(5).Value = calcularPrecio(dtproductos.Rows(fila).Cells(0).Value)
+            dtproductos.Rows(fila).Cells(5).Value = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, cmblistas.SelectedValue, tipoFac)
 
-            dtproductos.Rows(fila).Cells(6).Value = calcularPrecio(dtproductos.Rows(fila).Cells(0).Value)
+            dtproductos.Rows(fila).Cells(6).Value = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, cmblistas.SelectedValue, tipoFac) * CDbl(dtproductos.Rows(fila).Cells(2).Value)
             dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.GreenYellow
         Next
     End Sub
-    Private Function calcularPrecio(ByRef codProd As String) As Double
-        Try
-            Dim ganancia As Double
 
-            Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda FROM fact_insumos where id=" & codProd, conexionPrinc)
-            Dim tablaprod As New DataTable
-            Dim filasProd() As DataRow
-            consulta.Fill(tablaprod)
-            filasProd = tablaprod.Select("")
-
-            'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad FROM fact_listas_precio where id=" & cmblistas.SelectedValue, conexionPrinc)
-            Dim tablalistas As New DataTable
-            Dim filaslistas() As DataRow
-            consultalis.Fill(tablalistas)
-            filaslistas = tablalistas.Select("")
-
-            'cargamos la moneda perteneciente a este producto
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "select (select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") as cotiza, (select valor from fact_configuraciones where  id =1) as lista"
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-            Dim cotizacion As Double = FormatNumber(lector("cotiza").ToString)
-            'Dim coeflista As Double = (FormatNumber(lector("lista").ToString) + 100) / 100
-
-
-            Dim precioCosto As Double = FormatNumber(filasProd(0)(0))
-            Dim iva As Double = (FormatNumber(filasProd(0)(2)) + 100) / 100
-            Dim utilidad As Double = (FormatNumber(filasProd(0)(1)) + 100) / 100
-            Dim lista As Double = (FormatNumber(filaslistas(0)(0)) + 100) / 100
-            'Dim InteresLista As Double = (FormatNumber(filasProd(0)(0)) + 100) / 100
-
-            Dim PrecioSinIva As Double
-            Dim PrecioVenta As Double
-
-            PrecioSinIva = precioCosto * cotizacion * utilidad * lista
-            PrecioVenta = PrecioSinIva * iva
-
-            'Select Case tipoFac
-            '    Case 9
-            Return Math.Round(PrecioVenta, 2)
-            '    Case Else
-            '        Return Math.Round(PrecioSinIva, 2)
-            'End Select
-        Catch ex As Exception
-            Return 0
-        End Try
-    End Function
 
     Public Sub CalcularTotales()
         Try

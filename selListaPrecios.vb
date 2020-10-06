@@ -6,6 +6,8 @@
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtlistas.DataSource = tablalistas
+            dtlistas.Columns(2).Visible = False
+            dtlistas.Columns(3).Visible = False
         Catch ex As Exception
 
         End Try

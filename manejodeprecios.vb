@@ -269,9 +269,7 @@
                             dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
                         Case 2
                             dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
-                            ' MsgBox(costoFinal & "*(" & sumaUtil & ")")
                     End Select
-
                 End If
             Next
 

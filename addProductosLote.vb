@@ -392,12 +392,12 @@
                     producto.Cells(0).Value = idProd
                 Else
                     'MsgBox("Producto existe, no se agrega")
-                    producto.Cells(0).Value = IdProducto(codbar)
+                    producto.Cells(0).Value = IdProductoObtener(codbar)
                     Dim sqlQuery = "update fact_insumos set precio=?precio, ganancia=?util0, utilidad1=?util1,utilidad2=?util2 where id=?idProducto"
 
                     Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                     With comandoadd.Parameters
-                        .AddWithValue("?idProducto", IdProducto(codbar))
+                        .AddWithValue("?idProducto", IdProductoObtener(codbar))
                         .AddWithValue("?precio", precio)
                         .AddWithValue("?util0", util0)
                         .AddWithValue("?util1", util1)

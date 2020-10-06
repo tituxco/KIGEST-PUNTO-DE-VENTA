@@ -6,7 +6,111 @@ Imports System.Drawing.Printing
 'Imports Excel = Microsoft.Office.Interop.Excel
 'Imports System.Runtime.InteropServices
 Module funciones_Globales
+
     Public idFactura As Integer
+
+    Public Function ObtenerReferenciaControl_tabpage(ByVal nombreControl As String, ByVal Formulario As TabPage) As Control
+
+        ' Recorremos la colección de controles del formulario
+        '
+        For Each ctrl As Control In Formulario.Controls
+
+            If ctrl.Name.ToLower = nombreControl.ToLower Then
+                ' Devolvemos la referencia y abandonamos la función
+                Return ctrl
+            End If
+
+        Next
+
+        Return Nothing
+
+    End Function
+    Public Function calcularPrecioProducto(IdProd As String, listaPrecios As Integer, tipofact As Integer) As Double
+        Try
+            Dim ganancia As Double
+
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2,utilidad3,utilidad4 FROM fact_insumos where id=" & IdProd, conexionPrinc)
+            Dim tablaprod As New DataTable
+            Dim filasProd() As DataRow
+            consulta.Fill(tablaprod)
+            filasProd = tablaprod.Select("")
+
+            'cargamos listas de precios
+            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR'),auxcol FROM fact_listas_precio where id=" & listaPrecios, conexionPrinc)
+            Dim tablalistas As New DataTable
+            Dim filaslistas() As DataRow
+            consultalis.Fill(tablalistas)
+            filaslistas = tablalistas.Select("")
+
+            'cargamos la moneda perteneciente a este producto
+            Reconectar()
+            Dim lector As System.Data.IDataReader
+            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+            sql.Connection = conexionPrinc
+            sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") As cotiza, (Select valor from fact_configuraciones where  id =1) As lista"
+            sql.CommandType = CommandType.Text
+            'MsgBox(sql.CommandText)
+            lector = sql.ExecuteReader
+            lector.Read()
+            Dim cotizacion As Double = FormatNumber(lector("cotiza").ToString)
+            Dim precioCosto As Double = FormatNumber(filasProd(0)(0))
+            Dim iva As Double = (FormatNumber(filasProd(0)(2)) + 100) / 100
+            Dim listaTXT As String = filaslistas(0)(2)
+            Dim lista As Double
+            Dim utilidad As Double
+            Dim codaux As Integer = filaslistas(0)(3)
+
+            Dim utilSum As Double = FormatNumber(filasProd(0)(5))
+            Dim listaSum As Double = FormatNumber(filaslistas(0)(2))
+
+            Dim SumaUtil As Double = (utilSum + listaSum + 100) / 100
+
+            Select Case codaux
+                Case 0
+                    utilidad = (FormatNumber(filasProd(0)(1)) + 100) / 100
+                Case 1
+                    utilidad = (FormatNumber(filasProd(0)(4)) + 100) / 100
+                Case 2
+                    utilidad = (FormatNumber(filasProd(0)(5)) + 100) / 100
+                Case 3
+                    utilidad = (FormatNumber(filasProd(0)(6)) + 100) / 100
+                Case 4
+                    utilidad = (FormatNumber(filasProd(0)(7)) + 100) / 100
+            End Select
+
+            Dim PrecioSinIva As Double
+            Dim PrecioVenta As Double
+
+            If InStr(listaTXT, "%") <> 0 Then
+                lista = (FormatNumber(listaTXT.Replace("%", "") + 100) / 100)
+                PrecioSinIva = precioCosto * cotizacion * lista
+                PrecioVenta = PrecioSinIva * iva
+            Else
+                If codaux = 2 Then
+                    lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
+                    PrecioSinIva = precioCosto * cotizacion * SumaUtil
+                    PrecioVenta = PrecioSinIva * iva
+                Else
+                    lista = (FormatNumber(listaTXT + 100) / 100)
+                    'MsgBox(precioCosto & "-" & cotizacion & "-" & utilidad & "-" & lista)
+                    PrecioSinIva = precioCosto * cotizacion * utilidad * lista
+                    PrecioVenta = PrecioSinIva * iva
+                End If
+            End If
+
+            Select Case tipofact
+                Case 999, 991, 992, 995, 0
+                    Return Math.Round(PrecioVenta, 2)
+                Case 6, 8, 11
+                    Return Math.Round(PrecioVenta, 2)
+                Case Else
+                    Return Math.Round(PrecioSinIva, 2)
+            End Select
+        Catch ex As Exception
+            Return 0
+        End Try
+    End Function
     Private Sub ImprimirTiketVenta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
         ' letra
         'Dim font1 As New Font("EAN-13", 40)
@@ -58,7 +162,7 @@ Module funciones_Globales
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & idFactura, conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -71,7 +175,7 @@ Module funciones_Globales
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & idFactura, conexionPrinc)
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
@@ -590,7 +694,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         End If
 
     End Function
-    Public Function IdProducto(ByVal codigo As String) As Integer
+    Public Function IdProductoObtener(ByVal codigo As String) As Integer
         Reconectar()
 
         Dim sqlQuery As String = "select id from fact_insumos where cod_bar like '" & codigo & "' or codigo like '" & codigo & "' limit 0,1"
@@ -602,6 +706,23 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
         If readProd.Rows.Count <> 0 Then
             Return filasProd(0)(0)
         End If
+
+    End Function
+    Public Function CodProductoObtener(ByVal idProd As String) As Integer
+        Try
+            Reconectar()
+
+            Dim sqlQuery As String = "select cod_bar from fact_insumos where id =" & idProd
+            Dim ConsultaProd As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+            Dim readProd As New DataTable
+            ConsultaProd.Fill(readProd)
+            Dim filasProd() As DataRow
+            filasProd = readProd.Select("")
+            If readProd.Rows.Count <> 0 Then
+                Return filasProd(0)(0)
+            End If
+        Catch ex As Exception
+        End Try
 
     End Function
 
@@ -698,7 +819,6 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
             Return Nothing
         End Try
     End Function
-
     'convertir imagen a binario
     Public Function Imagen_Bytes(ByVal Imagen As Image) As Byte()
         'si hay imagen

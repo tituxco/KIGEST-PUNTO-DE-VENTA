@@ -259,6 +259,7 @@ Partial Class frmprincipal
         Me.NuevaEfacturaToolStripMenuItem.Name = "NuevaEfacturaToolStripMenuItem"
         Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
         Me.NuevaEfacturaToolStripMenuItem.Text = "Rec. Comp. Aut / NC-ND"
+        Me.NuevaEfacturaToolStripMenuItem.Visible = False
         '
         'NuevoPedidoToolStripMenuItem
         '

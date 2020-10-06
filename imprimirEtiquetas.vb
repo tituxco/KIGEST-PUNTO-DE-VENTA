@@ -515,8 +515,8 @@ Public Class imprimirEtiquetas
 
         promocion = calcularPromociones(ProId, ProCant)
 
-
-            Dim precioUnit As Double = calcularPrecio(ProId) / promocion
+        'MsgBox(ProId & "    " & cmblistas.SelectedValue & "            " & 0)
+        Dim precioUnit As Double = calcularPrecioProducto(IdProductoObtener(ProId), cmblistas.SelectedValue, 0) / promocion ' calcularPrecio(ProId) / promocion
         lblprecios.Text = "$" & Math.Round(ProCant * precioUnit, 2)
         ProPrecio = Math.Round(ProCant * precioUnit, 2)
         ProEtiquetaCod = "00" & ProId & ObtenerSiguienteCodigo()

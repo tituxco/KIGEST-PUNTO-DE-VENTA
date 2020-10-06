@@ -226,7 +226,7 @@ Public Class puntoventa
             End If
             For Each producto As DataGridViewRow In dtproductos.Rows
                 Select Case tipofact
-                    Case 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
+                    Case 991, 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
 
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
@@ -238,7 +238,7 @@ Public Class puntoventa
                         subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
-                    Case 1
+                    Case 1, 3
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
@@ -256,7 +256,7 @@ Public Class puntoventa
                         subtotal = Math.Round(subtotal21 + subtotal105, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
-                    Case 6
+                    Case 6, 8
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, My.Settings.numDecimales)
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
@@ -316,7 +316,7 @@ Public Class puntoventa
                     dtproductos.Rows(fila).Cells(2).Value = 1
                 End If
                 descuento = calcularPromociones(filasProd(i)(0), FormatNumber(dtproductos.Rows(fila).Cells(2).Value))
-                precio = calcularPrecio(dtproductos.Rows(fila).Cells(0).Value) / descuento
+                precio = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, listaPrecios, tipofact) / descuento
 
                 dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
                 dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
@@ -421,7 +421,7 @@ Public Class puntoventa
         Dim precio As Double
         For i = 0 To filasProd.GetUpperBound(0)
             promocion = calcularPromociones(filasProd(i)(0), FormatNumber(txtcantPLU.Text))
-            precio = calcularPrecio(filasProd(i)(0)) / promocion
+            precio = calcularPrecioProducto(filasProd(i)(0), listaPrecios, tipofact) / promocion
             If fila = -1 Then
                 dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), txtcantPLU.Text, filasProd(i)(3), filasProd(i)(2),
                 precio, FormatNumber(txtcantPLU.Text) * precio)
@@ -564,130 +564,53 @@ Public Class puntoventa
             Return 1
         End Try
     End Function
-    Private Function calcularPrecio(ByRef codProd As String) As Double
-        Try
-            Dim ganancia As Double
 
-            Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2 FROM fact_insumos where id=" & codProd, conexionPrinc)
-            Dim tablaprod As New DataTable
-            Dim filasProd() As DataRow
-            consulta.Fill(tablaprod)
-            filasProd = tablaprod.Select("")
-
-            'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR'),auxcol FROM fact_listas_precio where id=" & listaPrecios, conexionPrinc)
-            Dim tablalistas As New DataTable
-            Dim filaslistas() As DataRow
-            consultalis.Fill(tablalistas)
-            filaslistas = tablalistas.Select("")
-
-            'cargamos la moneda perteneciente a este producto
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") As cotiza, (Select valor from fact_configuraciones where  id =1) As lista"
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-            Dim cotizacion As Double = FormatNumber(lector("cotiza").ToString)
-            Dim precioCosto As Double = FormatNumber(filasProd(0)(0))
-            Dim iva As Double = (FormatNumber(filasProd(0)(2)) + 100) / 100
-            Dim listaTXT As String = filaslistas(0)(2)
-            Dim lista As Double
-            Dim utilidad As Double
-            Dim codaux As Integer = filaslistas(0)(3)
-
-            Dim utilSum As Double = FormatNumber(filasProd(0)(5))
-            Dim listaSum As Double = FormatNumber(filaslistas(0)(2))
-
-            Dim SumaUtil As Double = (utilSum + listaSum + 100) / 100
-
-            Select Case codaux
-                Case 0
-                    utilidad = (FormatNumber(filasProd(0)(1)) + 100) / 100
-                Case 1
-                    utilidad = (FormatNumber(filasProd(0)(4)) + 100) / 100
-                Case 2
-                    utilidad = (FormatNumber(filasProd(0)(5)) + 100) / 100
-            End Select
-
-            Dim PrecioSinIva As Double
-            Dim PrecioVenta As Double
-
-            If InStr(listaTXT, "%") <> 0 Then
-                lista = (FormatNumber(listaTXT.Replace("%", "") + 100) / 100)
-                PrecioSinIva = precioCosto * cotizacion * lista
-                PrecioVenta = PrecioSinIva * iva
-            Else
-                If codaux = 2 Then
-                    lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
-                    PrecioSinIva = precioCosto * cotizacion * SumaUtil
-                    PrecioVenta = PrecioSinIva * iva
-                Else
-                    lista = (FormatNumber(listaTXT + 100) / 100)
-                    'MsgBox(precioCosto & "-" & cotizacion & "-" & utilidad & "-" & lista)
-                    PrecioSinIva = precioCosto * cotizacion * utilidad * lista
-                    PrecioVenta = PrecioSinIva * iva
-                End If
-            End If
-
-
-            'PrecioSinIva = precioCosto * cotizacion * utilidad * lista
-            'PrecioVenta = PrecioSinIva * iva
-
-            Select Case tipofact
-                Case 999, 991, 992
-                    Return Math.Round(PrecioVenta, 2)
-                Case 6, 8, 11
-                    Return Math.Round(PrecioVenta, 2)
-                Case Else
-                    Return Math.Round(PrecioSinIva, 2)
-            End Select
-        Catch ex As Exception
-            Return 0
-        End Try
-    End Function
 
     Private Sub txtcodPLU_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcodPLU.KeyUp
-        If e.KeyCode = Keys.Enter Then
-            Dim encuentraprod As Integer
-            Dim contarprod As Integer = 0
-            Dim plutemp As String = txtcodPLU.Text
-            txtcodPLU.Text = txtcodPLU.Text.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", "")
+        Try
+            If e.KeyCode = Keys.Enter Then
+                Dim encuentraprod As Integer
+                Dim contarprod As Integer = 0
+                Dim plutemp As String = txtcodPLU.Text
+                txtcodPLU.Text = txtcodPLU.Text.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", "")
 
-            If txtcodPLU.Text = "" Then
-                txtdescripcionPLU.Focus()
-                Exit Sub
-            End If
-
-            If dtproductos.Rows.Count = 0 Then
-                cargarProdPLU(plutemp, -1)
-            Else
-                For Each fila As DataGridViewRow In dtproductos.Rows
-                    If fila.Cells(1).Value = txtcodPLU.Text Then
-                        contarprod += 1
-                        encuentraprod = fila.Index
-                    End If
-                Next
-                If contarprod <> 0 Then
-                    If InStr(plutemp, "A00") = 0 Then
-                        dtproductos.Rows(encuentraprod).Cells(2).Value += CType(txtcantPLU.Text, Double)
-                        dtproductos.Rows(encuentraprod).Cells(6).Value = dtproductos.Rows(encuentraprod).Cells(5).Value * dtproductos.Rows(encuentraprod).Cells(2).Value
-                    Else
-                        lblnoplu.Text = "el producto ya fue escaneado"
-                        Exit Sub
-                    End If
-                ElseIf contarprod = 0 Then
-                    cargarProdPLU(plutemp, -1)
+                If txtcodPLU.Text = "" Then
+                    txtdescripcionPLU.Focus()
+                    Exit Sub
                 End If
+
+                If dtproductos.Rows.Count = 0 Then
+                    cargarProdPLU(plutemp, -1)
+                Else
+                    For Each fila As DataGridViewRow In dtproductos.Rows
+                        If InStr(txtcodPLU.Text, "&") = 1 Then
+                            Continue For
+                        End If
+
+                        If fila.Cells(1).Value = txtcodPLU.Text Then
+                            contarprod += 1
+                            encuentraprod = fila.Index
+                        End If
+                    Next
+                    If contarprod <> 0 Then
+                        If InStr(plutemp, "A00") = 0 Then
+                            dtproductos.Rows(encuentraprod).Cells(2).Value += CType(txtcantPLU.Text, Double)
+                            dtproductos.Rows(encuentraprod).Cells(6).Value = dtproductos.Rows(encuentraprod).Cells(5).Value * dtproductos.Rows(encuentraprod).Cells(2).Value
+                        Else
+                            lblnoplu.Text = "el producto ya fue escaneado"
+                            Exit Sub
+                        End If
+                    ElseIf contarprod = 0 Then
+                        cargarProdPLU(plutemp, -1)
+                    End If
+                End If
+                CalcularTotales()
+                txtcodPLU.Text = ""
+                txtcantPLU.Text = 1
+                txtcodPLU.Focus()
             End If
-            CalcularTotales()
-            txtcodPLU.Text = ""
-            txtcantPLU.Text = 1
-            txtcodPLU.Focus()
-        End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub cmdguardar_Click(sender As Object, e As EventArgs) Handles cmdguardar.Click
@@ -1527,63 +1450,77 @@ Public Class puntoventa
     End Sub
 
     Private Sub puntoventa_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        Select Case e.KeyCode
-            Case Keys.F1
-                If condVta = 1 Then
-                    condVta = 2
-                    lblfactcondvta.Text = "CTA. CTE."
-                Else
-                    condVta = 1
-                    lblfactcondvta.Text = "CONTADO"
-                End If
-            Case Keys.F2
+        Try
+            Select Case e.KeyCode
+                Case Keys.F1
+                    If condVta = 1 Then
+                        condVta = 2
+                        lblfactcondvta.Text = "CTA. CTE."
+                    Else
+                        condVta = 1
+                        lblfactcondvta.Text = "CONTADO"
+                    End If
+                Case Keys.F2
 
-                selListaPrecios.Show()
-                selListaPrecios.TopMost = True
+                    selListaPrecios.Show()
+                    selListaPrecios.TopMost = True
 
-            Case Keys.F3
-                If cmdsolicitarcae.Enabled = True Then
-                    cmdsolicitarcae.PerformClick()
-                End If
-            Case Keys.F4
-                If cmdguardar.Enabled = True Then
-                    cmdguardar.PerformClick()
-                End If
-            Case Keys.F5
-                If cmdimprimir.Enabled = True Then
-                    cmdimprimir.PerformClick()
-                End If
-            Case Keys.F6
-                Me.Close()
-            Case Keys.F7
-                Button1.PerformClick()
-            Case Keys.F8
-                Dim idFacRap As Integer
-                Reconectar()
-                Dim consultaFacRap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+                Case Keys.F3
+                    If cmdsolicitarcae.Enabled = True Then
+                        cmdsolicitarcae.PerformClick()
+                    End If
+                Case Keys.F4
+                    If cmdguardar.Enabled = True Then
+                        cmdguardar.PerformClick()
+                    End If
+                Case Keys.F5
+                    If cmdimprimir.Enabled = True Then
+                        cmdimprimir.PerformClick()
+                    End If
+                Case Keys.F6
+                    Me.Close()
+                Case Keys.F7
+                    Button1.PerformClick()
+                Case Keys.F8
+                    Dim idFacRap As Integer
+                    Reconectar()
+                    Dim consultaFacRap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
                 concat(fr.id,': ' , fr.nombre)
                 From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta
                 Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And (fr.punto_venta=" & My.Settings.idPtoVta & " or fr.punto_venta=" & FacturaElectro.puntovtaelect & ")
                 order by fr.id asc", conexionPrinc)
-                Dim tablaFacRap As New DataTable
-                consultaFacRap.Fill(tablaFacRap)
-                Dim textoInput As String = "Ingrese codigo de comprobante: " & vbNewLine & vbNewLine
-                For Each factRap As DataRow In tablaFacRap.Rows
-                    textoInput &= factRap.Item(0) & vbNewLine
-                Next
+                    Dim tablaFacRap As New DataTable
+                    consultaFacRap.Fill(tablaFacRap)
+                    Dim textoInput As String = "Ingrese codigo de comprobante: " & vbNewLine & vbNewLine
+                    For Each factRap As DataRow In tablaFacRap.Rows
+                        textoInput &= factRap.Item(0) & vbNewLine
+                    Next
 
-                idFacRap = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
-                With Me
-                    .idfacrap = idFacRap
-                    .Idcliente = txtcliecta.Text
-                    .cargarCliente()
-                    .cmdguardar.Enabled = False
-                    .cmdsolicitarcae.Enabled = True
-                    .txtcodPLU.Focus()
-                    .cargar_datos_factura()
-                    CalcularTotales()
-                End With
-        End Select
+                    idFacRap = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
+                    With Me
+                        .idfacrap = idFacRap
+                        .Idcliente = txtcliecta.Text
+                        .cargarCliente()
+                        .cmdguardar.Enabled = False
+                        .cmdsolicitarcae.Enabled = True
+                        .txtcodPLU.Focus()
+                        .cargar_datos_factura()
+                        CalcularTotales()
+                    End With
+                Case Keys.F12
+                    Dim nvafech As String = InputBox("ingrese nueva fecha", "cambio de fecha de factura")
+                    If nvafech <> "" And IsDate(nvafech) Then
+                        fechagral = nvafech
+                        lblfactfecha.Text = Format(CDate(nvafech), "dd-MMMM-yyyy")
+                        lblfactfecha.Visible = True
+                        'tmrcontrolarnumfact.Enabled = False
+                        'txtnufac.ReadOnly = False
+                        'rehacerfact = True
+                        'cmbsolicitarcae.Text = "Recuperar Info"
+                    End If
+            End Select
+        Catch ex As Exception
+        End Try
     End Sub
     Private Sub CambiarEsquemaColores(electonica As Boolean)
         If electonica = True Then
@@ -1613,7 +1550,11 @@ Public Class puntoventa
         End Select
         cargar_datos_factura()
         CalcularTotales()
-
+        pncaerechazado.Visible = False
+        pncaeaprobado.Visible = False
+        lblfactfecha.Visible = False
+        fechagral = Format(Now, "dd-MM-yyyy")
+        lblfactfecha.Text = fechagral
     End Sub
     Public Sub CargarPedidoRemoto(NumPedido As Integer, ptovtapedido As Integer)
         Try
@@ -2325,7 +2266,88 @@ Public Class puntoventa
         cargarCliente()
     End Sub
 
-    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
+    Private Sub cmbdescuentoRecargo_Click(sender As Object, e As EventArgs) Handles cmbdescuentoRecargo.Click
+        Try
+            Dim signo As String
+            Dim porcentaje As Double
+
+            Dim texto As String = InputBox("ingrese el monto del descuento o el recargo anteponiendo el signo, por ej: +10 ó -10",
+            "Aplicar descuento o recargo", -10)
+            If texto = "" Then
+                Exit Sub
+            End If
+
+            If InStr(texto, "+") = 1 Or InStr(texto, "-") = 1 Then
+                signo = Strings.Left(texto, 1)
+            Else
+                MsgBox("Debe ingresar singo para establecer si es recargo o descuento")
+                Exit Sub
+            End If
+
+            texto = Strings.Mid(texto, 1, texto.Length)
+            porcentaje = Math.Round((CDbl(texto)) / 100, 2)
+
+            Dim descripcion As String
+            If signo = "+" Then
+                descripcion = "RECARGO " & porcentaje * 100 & " %"
+            Else
+                descripcion = "DESCUENTO " & porcentaje * 100 & " %"
+            End If
+
+            Dim monto As Double = CDbl(lblfactsubtotal.Text) * porcentaje
+
+            dtproductos.Rows.Add(0, 0, 1, descripcion, 21, monto, monto)
+            txtcantPLU.Text = "1"
+            txtdescripcionPLU.Text = ""
+            txtpreciounitPLU.Text = ""
+            txtcodPLU.Text = ""
+            txtcodPLU.Focus()
+            CalcularTotales()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub txtcantPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcantPLU.TextChanged
+
+    End Sub
+
+    Private Sub txtpreciounitPLU_TextChanged(sender As Object, e As EventArgs) Handles txtpreciounitPLU.TextChanged
+
+    End Sub
+
+    Private Sub tmrcontrolarnumfact_Tick(sender As Object, e As EventArgs) Handles tmrcontrolarnumfact.Tick
+        Try
+            Reconectar()
+            Dim consfactrap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fr.nombre, fis.abrev, lpad(fr.punto_venta, 4, 0) As ptovta, lpad(fis.confnume + 1, 8, 0) As numfact, fr.tipofact 
+            From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta
+            Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And fr.id = " & idfacrap, conexionPrinc)
+            Dim tablafr As New DataTable
+            Dim infofr() As DataRow
+            consfactrap.Fill(tablafr)
+            'If tablafr.Rows.Count = 0 Then
+            '    MsgBox("No se encuentra la referencia a la factura o punto de venta")
+            '    'Me.Close()
+            '    Exit Sub
+            'End If
+            infofr = tablafr.Select("")
+            nombrefact = infofr(0)(0)
+            lblfactnombre.Text = nombrefact
+            abrevfact = infofr(0)(1)
+            lblfactabrev.Text = abrevfact
+
+            ptovta = Val(infofr(0)(2))
+
+            lblfactptovta.Text = infofr(0)(2)
+            numfact = Val(infofr(0)(3))
+            lblfactnumero.Text = infofr(0)(3)
+            tipofact = infofr(0)(4)
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub lblobservacionescae_Click(sender As Object, e As EventArgs) Handles lblobservacionescae.Click
 
     End Sub
 End Class

@@ -20,11 +20,17 @@
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
-            tablacatprod.Fill(readcat2)
+            'tablacatprod.Fill(readcat2)
             cmbcatprod.DataSource = readcat.Tables(0)
             cmbcatprod.DisplayMember = readcat.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbcatprod.ValueMember = readcat.Tables(0).Columns(0).Caption.ToString
             cmbcatprod.SelectedValue = categoria
+
+            cmbCatComis.DataSource = readcat.Tables(0)
+            cmbCatComis.DisplayMember = readcat.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbCatComis.ValueMember = readcat.Tables(0).Columns(0).Caption.ToString
+            cmbCatComis.SelectedValue = categoria
+
         Catch ex As Exception
 
         End Try
@@ -119,11 +125,30 @@
             Dim descuentoprod As String = txtporcentajeComision.Text
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,nombrepromo,compra_min,descuento_porc) " &
-            "values (?idprod,'COMISION',?compra,?porc) ", conexionPrinc)
+            "values (?idprod,'COMISION PRODUCTO',?compra,?porc) ", conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idprod", productopromo)
                 .AddWithValue("?compra", compraminprod)
                 .AddWithValue("?porc", descuentoprod)
+            End With
+            comandoadd.ExecuteNonQuery()
+            MsgBox("comision guardada!")
+            Me.Close()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Try
+            Dim Idcategoria As Integer = cmbCatComis.SelectedValue
+            Dim descuentocat As String = txtComisCat.Text
+
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idcategoria,compra_min,nombrepromo,descuento_porc) " &
+            "values (?idcat,'0','COMISION CATEGORIA',?porc) ", conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?idcat", Idcategoria)
+                .AddWithValue("?porc", descuentocat)
             End With
             comandoadd.ExecuteNonQuery()
             MsgBox("comision guardada!")

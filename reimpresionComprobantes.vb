@@ -42,8 +42,9 @@ Public Class reimpresionComprobantes
             concat('-',FORMAT(fact.total,2,'es_AR')) 
             else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
-            where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998)" & numComprobante &
-            Razonsoc & " order by fact.id desc limit " & limite, conexionPrinc)
+            where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998)" & numComprobante & Razonsoc &
+            " and fact.ptovta=" & cmbInforPtoVta.SelectedValue &
+            " order by fact.id desc limit " & limite, conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer
@@ -581,6 +582,13 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub reimpresionComprobantes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
+        Dim readptovta As New DataSet
+        tablaptovta.Fill(readptovta)
+        cmbInforPtoVta.DataSource = readptovta.Tables(0)
+        cmbInforPtoVta.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbInforPtoVta.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
+        cmbInforPtoVta.SelectedValue = My.Settings.idPtoVta
         cmdbuscar.PerformClick()
     End Sub
 
@@ -810,5 +818,39 @@ Public Class reimpresionComprobantes
 
     Private Sub cmdreimprimirremitos_Click(sender As Object, e As EventArgs) Handles cmdreimprimirremitos.Click
         ImprimirRemito(dtremitos.CurrentRow.Cells(0).Value)
+    End Sub
+
+    Private Sub cmbInforPtoVta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbInforPtoVta.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbInforPtoVta_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbInforPtoVta.SelectedValueChanged
+
+    End Sub
+
+    Private Sub txtNumeroComprobante_TextChanged(sender As Object, e As EventArgs) Handles txtNumeroComprobante.TextChanged
+
+    End Sub
+
+    Private Sub txtNumeroComprobante_KeyUp(sender As Object, e As KeyEventArgs) Handles txtNumeroComprobante.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            cmdbuscar.PerformClick()
+        End If
+    End Sub
+
+    Private Sub txtrazonsocial_KeyUp(sender As Object, e As KeyEventArgs) Handles txtrazonsocial.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            cmdbuscar.PerformClick()
+        End If
+    End Sub
+
+    Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            cmdbuscar.PerformClick()
+        End If
+    End Sub
+
+    Private Sub cmbInforPtoVta_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbInforPtoVta.SelectionChangeCommitted
+        cmdbuscar.PerformClick()
     End Sub
 End Class

@@ -67,7 +67,7 @@
             (select concat(idclientes,'(',nomapell_razon,')') from fact_clientes where idclientes= fac.id_cliente) as razon, 
             (select direccion from fact_clientes where idclientes= fac.id_cliente) as direccion, 
             (select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
-            con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones 
+            con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones, f_alta as FEnviado 
             from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
             " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id desc", conexionPrinc)
             Dim tablaped As New DataTable
@@ -353,6 +353,7 @@
     End Function
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+
         If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
             MsgBox("El pedido ya fue facturado")
             Exit Sub
@@ -421,5 +422,27 @@
     Private Sub PedidoSeleccionado(IdPedido As Integer) Handles dgvPedidos.SeleccionarItem
         IDPedidoSeleccionado = IdPedido 
         'CargarInfoPers()
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        If cmbvendedor.SelectedValue = 0 Then
+            MsgBox("debe seleccionar un vendedor para proceder a la devolucion")
+            Exit Sub
+        End If
+        Dim vta As New puntoventa
+        vta.MdiParent = Me.MdiParent
+        vta.idfacrap = 8 'es el codigo de nota de credito x de este punto de venta
+
+        'Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
+        'Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))
+        vta.Idcliente = 9999 'ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
+        vta.lblfacIdAlmacen.Text = My.Settings.idAlmacen
+        vta.lblfacvendedor.Text = cmbvendedor.SelectedValue
+        vta.cargarCliente()
+        vta.txtcodPLU.Focus()
+        'vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
+        'vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
+        vta.Show()
+
     End Sub
 End Class

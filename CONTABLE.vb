@@ -26,9 +26,10 @@ Public Class CONTABLE
         If InStr(DatosAcceso.Moduloacc, "4ad") = False Then tabremitos.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ae") = False Then tabcheques.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4af") = False Then tabchequespropios.Parent = Nothing
-        If InStr(DatosAcceso.Moduloacc, "4ag") = False Then tabestadocuentas.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ag-----") = False Then tabestadocuentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ah") = False Then tabcuentasclientes.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ai") = False Then tabcuentasproveedores.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4aj") = False Then ivaVentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "2d") = False Then tabstockvalorizado.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aa-4ab") = False Then tabgraficas.Parent = Nothing
 
@@ -134,6 +135,26 @@ Public Class CONTABLE
             cmbcobvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
             'cmbcobvendedor.SelectedIndex = -1
 
+            Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
+            Dim readptovta As New DataSet
+            tablaptovta.Fill(readptovta)
+            cmbInforPtoVta.DataSource = readptovta.Tables(0)
+            cmbInforPtoVta.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbInforPtoVta.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
+
+            cmbInforPtoVta2.DataSource = readptovta.Tables(0)
+            cmbInforPtoVta2.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbInforPtoVta2.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
+
+            Dim tablaAlmacen As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+            Dim readAlmacen As New DataSet
+            tablaAlmacen.Fill(readAlmacen)
+            cmbinforalmacen.DataSource = readAlmacen.Tables(0)
+            cmbinforalmacen.DisplayMember = readAlmacen.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbinforalmacen.ValueMember = readAlmacen.Tables(0).Columns(0).Caption.ToString
+
+            'cmbvendedor.SelectedIndex = -1
+
 
         Catch ex As Exception
 
@@ -167,6 +188,8 @@ Public Class CONTABLE
             Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
             Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
             Dim parambusq As String = ""
+            Dim consAlmacen As String
+            Dim consPtovta As String
 
             If cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = False Then
                 MsgBox("No selecciono tipo de factura")
@@ -179,6 +202,15 @@ Public Class CONTABLE
             ElseIf cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = True Then
                 parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where debcred like 'D')"
             End If
+            If cmbinforalmacen.SelectedValue = 0 Then
+                consAlmacen = " and itm.ptovta like '%' " 'es el almacen no el punto de venta, esta mal el nombre
+            Else
+                consAlmacen = " and itm.ptovta = " & cmbinforalmacen.SelectedValue & " "
+            End If
+
+
+
+
             If grpagrupar.Enabled = True Then
                 If chktodosvendedores.Checked = False And cmbvendedor.SelectedValue = 0 Then
                     MsgBox("debe seleccionar un vendedor")
@@ -206,15 +238,19 @@ Public Class CONTABLE
             'Dim filasProd() As DataRow
             If rdninguno.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-                fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum ,fact.fecha,fact.razon,fact.direccion, 
+                fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
+                fact.fecha,fact.razon,fact.direccion, 
                 fact.localidad, con.condicion, 
                 case when fis.debcred='C' then 
                 concat('-',FORMAT(fact.total,2,'es_AR')) 
-                else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta
-                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
-                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta
-                and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+                else FORMAT(fact.total,2,'es_AR') end as total, 
+                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta
+                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
+                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
+                and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
+                "group by fact.id", conexionPrinc)
                 columna = 7
+                'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.Fill(tablaprod)
                 'MsgBox(consulta.SelectCommand.CommandText)
             End If
@@ -230,8 +266,6 @@ Public Class CONTABLE
                 and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " group by fact.fecha", conexionPrinc)
                 columna = 7
                 consulta.Fill(tablaprod)
-
-
             End If
 
 
@@ -1626,34 +1660,34 @@ Public Class CONTABLE
             'End If
 
             For Each fila As DataGridViewRow In dtfacturas.Rows
-                total += fila.Cells(columna).Value
+                total += FormatNumber(fila.Cells(columna).Value, 2)
             Next
 
             lbltotalfact.Text = total
 
 
             For Each fila As DataGridViewRow In dtlistacob.Rows
-                total += fila.Cells(columna).Value
+                total += FormatNumber(fila.Cells(columna).Value, 2)
             Next
             lbltotcob.Text = total
 
             total = 0
 
             For Each fila As DataGridViewRow In dtestadocuentas.Rows
-                total += fila.Cells(columna).Value
+                total += FormatNumber(fila.Cells(columna).Value, 2)
             Next
             lbltotctacte.Text = total
 
             total = 0
 
             For Each fila As DataGridViewRow In dtcheques.Rows
-                total += fila.Cells(columna).Value
+                total += FormatNumber(fila.Cells(columna).Value, 2)
             Next
             lbltotalcheques.Text = total
 
             total = 0
             For Each fila As DataGridViewRow In dtchequespropios.Rows
-                total += fila.Cells(columna).Value
+                total += FormatNumber(fila.Cells(columna).Value, 2)
             Next
             lbltotalchequespropios.Text = total
 
@@ -1729,47 +1763,67 @@ Public Class CONTABLE
             Dim desde As String = Format(CDate(dtpdecob.Value), "yyyy-MM-dd")
             Dim hasta As String = Format(CDate(dtphastacob.Value), "yyyy-MM-dd")
             Dim tablacob As New DataTable
+            Dim consPtovta As String
+
+            If cmbInforPtoVta2.SelectedValue = 0 Then
+                consPtovta = " and fact.ptovta like '%' "
+            Else
+                consPtovta = " and fact.ptovta = " & cmbInforPtoVta2.SelectedValue & " "
+            End If
             tablacob.Clear()
             ' Dim parambusq As String = " and fac.tipofact in ('5') "
             If rdcobranzadiaria.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fecha, 
-                format(sum(replace(replace(efectivo,'.',''),',','.')),2,'es_AR') as EFECTIVO, 
-                format(sum(replace(replace(tarjetas,'.',''),',','.')),2,'es_AR') AS TARJETAS, 
-                format(sum(replace(replace(cheque,'.',''),',','.')),2,'es_AR') AS CHEQUES,
-                format(sum(replace(replace(transferencias,'.',''),',','.')),2,'es_AR') AS TRANSFERENCIAS,
-                format(sum(replace(replace(retenciones,'.',''),',','.')),2,'es_AR') AS RETENCIONES,
-                format(sum(replace(replace(total,'.',''),',','.')),2,'es_AR') AS TOTAL 
-                FROM cobranzas 
-                where fecha between '" & desde & "' and '" & hasta & "'
-                group by fecha order by fecha desc", conexionPrinc)
-                columna = 6
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.fecha, 
+                format(sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalTarjeta, 
+                format(sum(replace(total,',','.')) -
+                sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalEfectivo, 
+                format(sum(replace(total,',','.')),2,'es_AR') as totalRecibo
+                FROM fact_facturas as fact                 
+                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
+                "group by fecha order by fecha desc", conexionPrinc)
+                columna = 3
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
             End If
             If rdcobranzaintervalo.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 
                 format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
-                format((select replace(importe,',','.') from fact_retenciones where comprobante=fact.id),2,'es_AR') as totalRetenciones,
-                format((select replace(importe,',','.') from fact_cheques where comprobante=fact.id),2,'es_AR') as totalCheques,
-                format((select replace(importe,',','.') from fact_transferencias where comprobante=fact.id),2,'es_AR') as totalTransferencias,
-                format(replace(total,',','.'),2,'es_AR') as totalRecibo
+                if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
+                format(replace(total,',','.') -
+                (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo,
+                
+                format(replace(total,',','.'),2,'es_AR') as totalRecibo			
+                
                 FROM fact_facturas as fact 
-                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' order by id desc", conexionPrinc)
-                columna = 8
+                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
+                "order by id desc", conexionPrinc)
+                columna = 6
 
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
             If rdtarjeta.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 
-                format(total,2,'es_AR') as totalRecibo,
-                format((select importe from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
-                format(total-(select importe from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalEfectivo	
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
+                format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta			
                 FROM fact_facturas as fact 
-                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' 
-                and fact.id in (select comprobante from fact_tarjetas) order by id desc", conexionPrinc)
-                columna = 5
+                where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' 
+                and fact.id in (select comprobante from fact_tarjetas) " & consPtovta &
+                "order by id desc", conexionPrinc)
+                columna = 4
+                consulta.Fill(tablacob)
+                dtlistacob.DataSource = tablacob
+                dtlistacob.Columns(0).Visible = False
+            End If
+            If rdefectivo.Checked = True Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 			
+                if (fact.id not in (select comprobante from fact_tarjetas),
+                format(replace(total,',','.'),2,'es_AR'),format(replace(total,',','.') -
+                (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo	
+                FROM fact_facturas as fact 
+                where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
+                "order by id desc", conexionPrinc)
+                columna = 4
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
@@ -3461,8 +3515,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             round(fact.iva105,2) as iva105, round(fact.otroiva,2) as otroiva, 'ret_iva','ret_ib','ret_gan',round(fact.total,2)as total, 
             fact.observaciones as observa, fact.id
             FROM fact_facturas as fact, tipos_comprobantes as tip
-            where fact.tipofact in (select donfdesc from tipos_comprobantes whe re leg=1) and
-            tip.donfdesc=fact.tipofact and 
+            where fact.tipofact in (select donfdesc from tipos_comprobantes where leg=1) and
+            tip.donfdesc=fact.tipofact and tip.ptovta=fact.ptovta and 
             fecha like '" & cmbperiodocarg.Text & "-%%'
             order by fact.ptovta,fact.num_fact", conexionPrinc)
             Dim tablaIVAVENTAS As New DataTable
@@ -3659,12 +3713,26 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
 
+
     Private Sub ivaVentas_Enter(sender As Object, e As EventArgs) Handles ivaVentas.Enter
         Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_facturas order by fecha desc", conexionPrinc)
+
         Dim readPeriodo As New DataSet
         TablaPeriodo.Fill(readPeriodo)
         cmbperiodocarg.DataSource = readPeriodo.Tables(0)
         cmbperiodocarg.DisplayMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
         'cmbvendedor.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString
+    End Sub
+
+    Private Sub Label34_Click(sender As Object, e As EventArgs) Handles Label34.Click
+
+    End Sub
+
+    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
+
+    End Sub
+
+    Private Sub tabestadocuentas_Click(sender As Object, e As EventArgs) Handles tabestadocuentas.Click
+
     End Sub
 End Class

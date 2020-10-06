@@ -23,8 +23,8 @@ Partial Class CajaDiaria
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CajaDiaria))
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CajaDiaria))
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -48,6 +48,7 @@ Partial Class CajaDiaria
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.dtpfechacaja = New System.Windows.Forms.DateTimePicker()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -139,6 +140,7 @@ Partial Class CajaDiaria
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.Button2)
         Me.Panel2.Controls.Add(Me.cmdsalir)
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
         Me.Panel2.Controls.Add(Me.cmdcerrarcaja)
@@ -291,6 +293,21 @@ Partial Class CajaDiaria
         Me.Button1.TabIndex = 47
         Me.Button1.UseVisualStyleBackColor = False
         '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Location = New System.Drawing.Point(185, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(90, 103)
+        Me.Button2.TabIndex = 19
+        Me.Button2.Text = "Exportar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
         'CajaDiaria
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -337,4 +354,5 @@ Partial Class CajaDiaria
     Friend WithEvents Button1 As Button
     Friend WithEvents dtpfechacaja As DateTimePicker
     Friend WithEvents cmdsalir As Button
+    Friend WithEvents Button2 As Button
 End Class

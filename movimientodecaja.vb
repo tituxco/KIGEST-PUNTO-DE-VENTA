@@ -61,12 +61,12 @@
             cmbcajas.DataSource = readcajas.Tables(0)
             cmbcajas.DisplayMember = readcajas.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbcajas.ValueMember = readcajas.Tables(0).Columns(0).Caption.ToString
-            cmbcajas.SelectedIndex = -1
+            cmbcajas.SelectedValue = My.Settings.CajaDef
 
             cmbcajaeg.DataSource = readcajas.Tables(0)
             cmbcajaeg.DisplayMember = readcajas.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbcajaeg.ValueMember = readcajas.Tables(0).Columns(0).Caption.ToString
-            cmbcajaeg.SelectedIndex = -1
+            cmbcajaeg.SelectedValue = My.Settings.CajaDef
 
             cmbctade.DataSource = readcajas.Tables(0)
             cmbctade.DisplayMember = readcajas.Tables(0).Columns(1).Caption.ToString.ToUpper

@@ -3,7 +3,7 @@ Public Class CajaDiaria
     Dim saldoCaja As Double = 0
     Private Sub CajaDiaria_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CargarCaja()
-        If InStr(DatosAcceso.Moduloacc, "4ac") = False Then cmdnuevomov.Visible = False
+        If InStr(DatosAcceso.Moduloacc, "4bba") = False Then cmdnuevomov.Visible = False
     End Sub
     Private Sub CargarCaja()
         Dim egresos As Double = 0
@@ -116,5 +116,14 @@ and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         CargarCaja()
+    End Sub
+
+    Private Sub cmdsalir_Click(sender As Object, e As EventArgs) Handles cmdsalir.Click
+        Me.Close()
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        GenerarExcel(dtcaja)
     End Sub
 End Class

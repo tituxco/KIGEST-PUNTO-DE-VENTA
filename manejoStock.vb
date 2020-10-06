@@ -40,11 +40,13 @@ Public Class manejoStock
             Dim proveed As String
             Dim buscnomb As String
             Dim buscod As String
-            If cmbalmacen.SelectedIndex = -1 Or cmbalmacen.SelectedValue = 0 Then
-                MsgBox("Debe seleccionar un almacen")
-                EnProgreso.Close()
-                Exit Sub
-            End If
+            Dim buscAlm As String
+            Dim buscAlm2 As String
+            'If cmbalmacen.SelectedIndex = -1 Or cmbalmacen.SelectedValue = 0 Then
+            '    MsgBox("Debe seleccionar un almacen")
+            '    EnProgreso.Close()
+            '    Exit Sub
+            'End If
 
             'If cmbcatProd.SelectedIndex = -1 And cmbproveedor.SelectedIndex = -1 And txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO" Then
             '    If MsgBox("esta seguro que no desea poner filtros a la busqueda? puede causar cuelgue de sistema...", vbYesNo, vbQuestion) = MsgBoxResult.No Then
@@ -74,13 +76,21 @@ Public Class manejoStock
                 buscnomb = " pro.descripcion like '%' "
             End If
 
+            If cmbalmacen.SelectedValue = 0 Then
+                buscAlm = " fi.ptovta like '%' "
+                buscAlm2 = " idalmacen like '%' "
+            Else
+                buscAlm = " fi.ptovta = " & cmbalmacen.SelectedValue
+                buscAlm2 = " idalmacen = " & cmbalmacen.SelectedValue
+            End If
 
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fi.cod as CodInterno, pro.descripcion, sum(fi.cantidad) as ventasTotalesPeriodo,
-            (select sum(stock) from fact_insumos_lotes where idproducto=pro.id and idalmacen=" & cmbalmacen.SelectedValue & ") as StockActualEnAlmacen
+            (select sum(stock) from fact_insumos_lotes where idproducto=pro.id and " & buscAlm2 & " ) as StockActualEnAlmacen
             FROM fact_items as fi, fact_facturas as fa , fact_insumos as pro
             where fa.id=fi.id_fact and fi.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
-            and " & catprod & " and " & proveed & " and " & buscnomb & " 
+            and fi.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D')
+            and " & catprod & " and " & proveed & " and " & buscnomb & " and " & buscAlm & " 
             group by fi.cod ", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaprod As New DataTable

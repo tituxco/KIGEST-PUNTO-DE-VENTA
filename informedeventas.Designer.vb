@@ -25,7 +25,6 @@ Partial Class informedeventas
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(informedeventas))
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button18 = New System.Windows.Forms.Button()
@@ -34,13 +33,10 @@ Partial Class informedeventas
         Me.cmbAlmacenes = New System.Windows.Forms.ComboBox()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel27 = New System.Windows.Forms.Panel()
-        Me.lblBalanProdNodCod = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.lblbalanceganancia = New System.Windows.Forms.Label()
-        Me.lblbalancecosto = New System.Windows.Forms.Label()
         Me.Button24 = New System.Windows.Forms.Button()
-        Me.lblbalanceventas = New System.Windows.Forms.Label()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.chkproductos = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.txtdiasventa = New System.Windows.Forms.TextBox()
         Me.rdPocaRotacion = New System.Windows.Forms.RadioButton()
@@ -56,19 +52,52 @@ Partial Class informedeventas
         Me.dtpvtashishasta = New System.Windows.Forms.DateTimePicker()
         Me.dtpvtashisdesde = New System.Windows.Forms.DateTimePicker()
         Me.Label9 = New System.Windows.Forms.Label()
+        Me.pnTotales = New System.Windows.Forms.Panel()
+        Me.Panel6 = New System.Windows.Forms.Panel()
+        Me.lblcomistotal = New System.Windows.Forms.Label()
+        Me.Label22 = New System.Windows.Forms.Label()
+        Me.lblcomisobjetivos = New System.Windows.Forms.Label()
+        Me.Label20 = New System.Windows.Forms.Label()
+        Me.lblComisvtas = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.lblvendedor = New System.Windows.Forms.Label()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.lblbalanceganancia = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.lblBalanProdNodCod = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lblbalancecosto = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.lblvalDevoluciones = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.lblbalanceventas = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.dtdevoluciones = New System.Windows.Forms.DataGridView()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtgcomisiones = New System.Windows.Forms.DataGridView()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.lblcomisiones = New System.Windows.Forms.Label()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.dtventashistoricas = New System.Windows.Forms.DataGridView()
         Me.pntitulo.SuspendLayout()
-        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel11.SuspendLayout()
         Me.Panel27.SuspendLayout()
         Me.GroupBox5.SuspendLayout()
         Me.GroupBox6.SuspendLayout()
+        Me.pnTotales.SuspendLayout()
+        Me.Panel6.SuspendLayout()
+        Me.Panel3.SuspendLayout()
+        CType(Me.dtdevoluciones, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.dtgcomisiones, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        Me.Panel5.SuspendLayout()
+        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -79,7 +108,7 @@ Partial Class informedeventas
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1047, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1116, 40)
         Me.pntitulo.TabIndex = 17
         '
         'Label1
@@ -93,38 +122,18 @@ Partial Class informedeventas
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "Informe de ventas"
         '
-        'dtventashistoricas
-        '
-        Me.dtventashistoricas.AllowUserToAddRows = False
-        Me.dtventashistoricas.AllowUserToDeleteRows = False
-        Me.dtventashistoricas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtventashistoricas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtventashistoricas.BackgroundColor = System.Drawing.Color.White
-        Me.dtventashistoricas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtventashistoricas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtventashistoricas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtventashistoricas.Location = New System.Drawing.Point(0, 161)
-        Me.dtventashistoricas.Name = "dtventashistoricas"
-        Me.dtventashistoricas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtventashistoricas.Size = New System.Drawing.Size(1047, 169)
-        Me.dtventashistoricas.TabIndex = 19
-        '
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Panel11.Controls.Add(Me.Button2)
         Me.Panel11.Controls.Add(Me.Button18)
-        Me.Panel11.Controls.Add(Me.cmbvendedor)
-        Me.Panel11.Controls.Add(Me.Label3)
-        Me.Panel11.Controls.Add(Me.cmbAlmacenes)
-        Me.Panel11.Controls.Add(Me.Label2)
         Me.Panel11.Controls.Add(Me.Panel27)
         Me.Panel11.Controls.Add(Me.GroupBox5)
         Me.Panel11.Controls.Add(Me.GroupBox6)
         Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel11.Location = New System.Drawing.Point(0, 40)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(1047, 121)
+        Me.Panel11.Size = New System.Drawing.Size(1116, 123)
         Me.Panel11.TabIndex = 18
         '
         'Button2
@@ -134,9 +143,9 @@ Partial Class informedeventas
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(887, 0)
+        Me.Button2.Location = New System.Drawing.Point(956, 0)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(80, 94)
+        Me.Button2.Size = New System.Drawing.Size(80, 91)
         Me.Button2.TabIndex = 98
         Me.Button2.Text = "Guardar"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -149,9 +158,9 @@ Partial Class informedeventas
         Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button18.ForeColor = System.Drawing.Color.White
         Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
-        Me.Button18.Location = New System.Drawing.Point(967, 0)
+        Me.Button18.Location = New System.Drawing.Point(1036, 0)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(80, 94)
+        Me.Button18.Size = New System.Drawing.Size(80, 91)
         Me.Button18.TabIndex = 97
         Me.Button18.Text = "Buscar"
         Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -160,7 +169,7 @@ Partial Class informedeventas
         'cmbvendedor
         '
         Me.cmbvendedor.FormattingEnabled = True
-        Me.cmbvendedor.Location = New System.Drawing.Point(236, 72)
+        Me.cmbvendedor.Location = New System.Drawing.Point(236, 6)
         Me.cmbvendedor.Name = "cmbvendedor"
         Me.cmbvendedor.Size = New System.Drawing.Size(119, 21)
         Me.cmbvendedor.TabIndex = 94
@@ -169,7 +178,7 @@ Partial Class informedeventas
         '
         Me.Label3.AutoSize = True
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(182, 75)
+        Me.Label3.Location = New System.Drawing.Point(182, 9)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(53, 13)
         Me.Label3.TabIndex = 93
@@ -178,7 +187,7 @@ Partial Class informedeventas
         'cmbAlmacenes
         '
         Me.cmbAlmacenes.FormattingEnabled = True
-        Me.cmbAlmacenes.Location = New System.Drawing.Point(57, 72)
+        Me.cmbAlmacenes.Location = New System.Drawing.Point(57, 6)
         Me.cmbAlmacenes.Name = "cmbAlmacenes"
         Me.cmbAlmacenes.Size = New System.Drawing.Size(119, 21)
         Me.cmbAlmacenes.TabIndex = 92
@@ -187,7 +196,7 @@ Partial Class informedeventas
         '
         Me.Label2.AutoSize = True
         Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(3, 75)
+        Me.Label2.Location = New System.Drawing.Point(3, 9)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(48, 13)
         Me.Label2.TabIndex = 91
@@ -196,90 +205,43 @@ Partial Class informedeventas
         'Panel27
         '
         Me.Panel27.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel27.Controls.Add(Me.lblBalanProdNodCod)
         Me.Panel27.Controls.Add(Me.Button1)
-        Me.Panel27.Controls.Add(Me.lblbalanceganancia)
-        Me.Panel27.Controls.Add(Me.lblbalancecosto)
         Me.Panel27.Controls.Add(Me.Button24)
-        Me.Panel27.Controls.Add(Me.lblbalanceventas)
+        Me.Panel27.Controls.Add(Me.cmbvendedor)
+        Me.Panel27.Controls.Add(Me.Label2)
+        Me.Panel27.Controls.Add(Me.Label3)
+        Me.Panel27.Controls.Add(Me.cmbAlmacenes)
         Me.Panel27.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel27.Location = New System.Drawing.Point(0, 94)
+        Me.Panel27.Location = New System.Drawing.Point(0, 91)
         Me.Panel27.Name = "Panel27"
-        Me.Panel27.Size = New System.Drawing.Size(1047, 27)
+        Me.Panel27.Size = New System.Drawing.Size(1116, 32)
         Me.Panel27.TabIndex = 89
-        '
-        'lblBalanProdNodCod
-        '
-        Me.lblBalanProdNodCod.AutoSize = True
-        Me.lblBalanProdNodCod.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblBalanProdNodCod.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblBalanProdNodCod.ForeColor = System.Drawing.Color.Yellow
-        Me.lblBalanProdNodCod.Location = New System.Drawing.Point(102, 0)
-        Me.lblBalanProdNodCod.Name = "lblBalanProdNodCod"
-        Me.lblBalanProdNodCod.Size = New System.Drawing.Size(34, 25)
-        Me.lblBalanProdNodCod.TabIndex = 92
-        Me.lblBalanProdNodCod.Text = "$0"
         '
         'Button1
         '
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.Location = New System.Drawing.Point(823, 0)
+        Me.Button1.Location = New System.Drawing.Point(892, 0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(191, 27)
+        Me.Button1.Size = New System.Drawing.Size(191, 32)
         Me.Button1.TabIndex = 95
         Me.Button1.Text = "BALANCEO DE STOCK (invis)"
         Me.Button1.UseVisualStyleBackColor = True
         Me.Button1.Visible = False
-        '
-        'lblbalanceganancia
-        '
-        Me.lblbalanceganancia.AutoSize = True
-        Me.lblbalanceganancia.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblbalanceganancia.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblbalanceganancia.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblbalanceganancia.Location = New System.Drawing.Point(68, 0)
-        Me.lblbalanceganancia.Name = "lblbalanceganancia"
-        Me.lblbalanceganancia.Size = New System.Drawing.Size(34, 25)
-        Me.lblbalanceganancia.TabIndex = 78
-        Me.lblbalanceganancia.Text = "$0"
-        '
-        'lblbalancecosto
-        '
-        Me.lblbalancecosto.AutoSize = True
-        Me.lblbalancecosto.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblbalancecosto.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblbalancecosto.ForeColor = System.Drawing.Color.Cyan
-        Me.lblbalancecosto.Location = New System.Drawing.Point(34, 0)
-        Me.lblbalancecosto.Name = "lblbalancecosto"
-        Me.lblbalancecosto.Size = New System.Drawing.Size(34, 25)
-        Me.lblbalancecosto.TabIndex = 77
-        Me.lblbalancecosto.Text = "$0"
         '
         'Button24
         '
         Me.Button24.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button24.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.Button24.Location = New System.Drawing.Point(1014, 0)
+        Me.Button24.Location = New System.Drawing.Point(1083, 0)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(33, 27)
+        Me.Button24.Size = New System.Drawing.Size(33, 32)
         Me.Button24.TabIndex = 91
         Me.Button24.UseVisualStyleBackColor = True
         '
-        'lblbalanceventas
-        '
-        Me.lblbalanceventas.AutoSize = True
-        Me.lblbalanceventas.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblbalanceventas.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblbalanceventas.ForeColor = System.Drawing.Color.White
-        Me.lblbalanceventas.Location = New System.Drawing.Point(0, 0)
-        Me.lblbalanceventas.Name = "lblbalanceventas"
-        Me.lblbalanceventas.Size = New System.Drawing.Size(34, 25)
-        Me.lblbalanceventas.TabIndex = 76
-        Me.lblbalanceventas.Text = "$0"
-        '
         'GroupBox5
         '
+        Me.GroupBox5.Controls.Add(Me.chkproductos)
         Me.GroupBox5.Controls.Add(Me.Label4)
         Me.GroupBox5.Controls.Add(Me.txtdiasventa)
         Me.GroupBox5.Controls.Add(Me.rdPocaRotacion)
@@ -291,12 +253,22 @@ Partial Class informedeventas
         Me.GroupBox5.Controls.Add(Me.rdInforProv)
         Me.GroupBox5.Controls.Add(Me.rdInforgeneral)
         Me.GroupBox5.ForeColor = System.Drawing.Color.White
-        Me.GroupBox5.Location = New System.Drawing.Point(207, 0)
+        Me.GroupBox5.Location = New System.Drawing.Point(207, 9)
         Me.GroupBox5.Name = "GroupBox5"
         Me.GroupBox5.Size = New System.Drawing.Size(650, 71)
         Me.GroupBox5.TabIndex = 88
         Me.GroupBox5.TabStop = False
         Me.GroupBox5.Text = "Filtro"
+        '
+        'chkproductos
+        '
+        Me.chkproductos.AutoSize = True
+        Me.chkproductos.Location = New System.Drawing.Point(288, 20)
+        Me.chkproductos.Name = "chkproductos"
+        Me.chkproductos.Size = New System.Drawing.Size(92, 17)
+        Me.chkproductos.TabIndex = 97
+        Me.chkproductos.Text = "Por productos"
+        Me.chkproductos.UseVisualStyleBackColor = True
         '
         'Label4
         '
@@ -340,13 +312,14 @@ Partial Class informedeventas
         '
         Me.rdInforProductos.AutoSize = True
         Me.rdInforProductos.ForeColor = System.Drawing.Color.White
-        Me.rdInforProductos.Location = New System.Drawing.Point(288, 19)
+        Me.rdInforProductos.Location = New System.Drawing.Point(518, 46)
         Me.rdInforProductos.Name = "rdInforProductos"
         Me.rdInforProductos.Size = New System.Drawing.Size(92, 17)
         Me.rdInforProductos.TabIndex = 92
         Me.rdInforProductos.TabStop = True
         Me.rdInforProductos.Text = "Por Productos"
         Me.rdInforProductos.UseVisualStyleBackColor = True
+        Me.rdInforProductos.Visible = False
         '
         'cmbInforCateg
         '
@@ -411,7 +384,7 @@ Partial Class informedeventas
         Me.GroupBox6.Controls.Add(Me.dtpvtashisdesde)
         Me.GroupBox6.Controls.Add(Me.Label9)
         Me.GroupBox6.ForeColor = System.Drawing.Color.White
-        Me.GroupBox6.Location = New System.Drawing.Point(3, 0)
+        Me.GroupBox6.Location = New System.Drawing.Point(3, 9)
         Me.GroupBox6.Name = "GroupBox6"
         Me.GroupBox6.Size = New System.Drawing.Size(198, 71)
         Me.GroupBox6.TabIndex = 82
@@ -462,15 +435,329 @@ Partial Class informedeventas
         Me.Label9.TabIndex = 45
         Me.Label9.Text = "Hasta"
         '
+        'pnTotales
+        '
+        Me.pnTotales.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnTotales.Controls.Add(Me.Panel6)
+        Me.pnTotales.Controls.Add(Me.lblbalanceganancia)
+        Me.pnTotales.Controls.Add(Me.Label13)
+        Me.pnTotales.Controls.Add(Me.lblBalanProdNodCod)
+        Me.pnTotales.Controls.Add(Me.Label14)
+        Me.pnTotales.Controls.Add(Me.lblbalancecosto)
+        Me.pnTotales.Controls.Add(Me.Label12)
+        Me.pnTotales.Controls.Add(Me.lblvalDevoluciones)
+        Me.pnTotales.Controls.Add(Me.Label11)
+        Me.pnTotales.Controls.Add(Me.lblbalanceventas)
+        Me.pnTotales.Controls.Add(Me.Label8)
+        Me.pnTotales.Dock = System.Windows.Forms.DockStyle.Right
+        Me.pnTotales.Location = New System.Drawing.Point(852, 163)
+        Me.pnTotales.Name = "pnTotales"
+        Me.pnTotales.Size = New System.Drawing.Size(264, 473)
+        Me.pnTotales.TabIndex = 20
+        '
+        'Panel6
+        '
+        Me.Panel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel6.Controls.Add(Me.lblcomistotal)
+        Me.Panel6.Controls.Add(Me.Label22)
+        Me.Panel6.Controls.Add(Me.lblcomisobjetivos)
+        Me.Panel6.Controls.Add(Me.Label20)
+        Me.Panel6.Controls.Add(Me.lblComisvtas)
+        Me.Panel6.Controls.Add(Me.Label17)
+        Me.Panel6.Controls.Add(Me.lblvendedor)
+        Me.Panel6.Controls.Add(Me.Label15)
+        Me.Panel6.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel6.Location = New System.Drawing.Point(0, 250)
+        Me.Panel6.Name = "Panel6"
+        Me.Panel6.Size = New System.Drawing.Size(264, 211)
+        Me.Panel6.TabIndex = 95
+        '
+        'lblcomistotal
+        '
+        Me.lblcomistotal.AutoSize = True
+        Me.lblcomistotal.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblcomistotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcomistotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblcomistotal.Location = New System.Drawing.Point(0, 177)
+        Me.lblcomistotal.Name = "lblcomistotal"
+        Me.lblcomistotal.Size = New System.Drawing.Size(34, 25)
+        Me.lblcomistotal.TabIndex = 90
+        Me.lblcomistotal.Text = "$0"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label22.Location = New System.Drawing.Point(0, 152)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(186, 25)
+        Me.Label22.TabIndex = 89
+        Me.Label22.Text = "TOTAL COMISION"
+        '
+        'lblcomisobjetivos
+        '
+        Me.lblcomisobjetivos.AutoSize = True
+        Me.lblcomisobjetivos.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblcomisobjetivos.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcomisobjetivos.ForeColor = System.Drawing.Color.White
+        Me.lblcomisobjetivos.Location = New System.Drawing.Point(0, 127)
+        Me.lblcomisobjetivos.Name = "lblcomisobjetivos"
+        Me.lblcomisobjetivos.Size = New System.Drawing.Size(34, 25)
+        Me.lblcomisobjetivos.TabIndex = 88
+        Me.lblcomisobjetivos.Text = "$0"
+        '
+        'Label20
+        '
+        Me.Label20.AutoSize = True
+        Me.Label20.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label20.ForeColor = System.Drawing.Color.White
+        Me.Label20.Location = New System.Drawing.Point(0, 102)
+        Me.Label20.Name = "Label20"
+        Me.Label20.Size = New System.Drawing.Size(209, 25)
+        Me.Label20.TabIndex = 87
+        Me.Label20.Text = "Comision por objetivos"
+        '
+        'lblComisvtas
+        '
+        Me.lblComisvtas.AutoSize = True
+        Me.lblComisvtas.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblComisvtas.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblComisvtas.ForeColor = System.Drawing.Color.White
+        Me.lblComisvtas.Location = New System.Drawing.Point(0, 77)
+        Me.lblComisvtas.Name = "lblComisvtas"
+        Me.lblComisvtas.Size = New System.Drawing.Size(34, 25)
+        Me.lblComisvtas.TabIndex = 86
+        Me.lblComisvtas.Text = "$0"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.ForeColor = System.Drawing.Color.White
+        Me.Label17.Location = New System.Drawing.Point(0, 52)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(258, 25)
+        Me.Label17.TabIndex = 85
+        Me.Label17.Text = "Comision por ventas totales:"
+        '
+        'lblvendedor
+        '
+        Me.lblvendedor.AutoSize = True
+        Me.lblvendedor.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblvendedor.ForeColor = System.Drawing.Color.White
+        Me.lblvendedor.Location = New System.Drawing.Point(0, 27)
+        Me.lblvendedor.Name = "lblvendedor"
+        Me.lblvendedor.Size = New System.Drawing.Size(104, 25)
+        Me.lblvendedor.TabIndex = 84
+        Me.lblvendedor.Text = "Vendedor:"
+        '
+        'Label15
+        '
+        Me.Label15.BackColor = System.Drawing.Color.Black
+        Me.Label15.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label15.ForeColor = System.Drawing.Color.White
+        Me.Label15.Location = New System.Drawing.Point(0, 0)
+        Me.Label15.Name = "Label15"
+        Me.Label15.Size = New System.Drawing.Size(262, 27)
+        Me.Label15.TabIndex = 78
+        Me.Label15.Text = "Calculo de comisiones"
+        '
+        'lblbalanceganancia
+        '
+        Me.lblbalanceganancia.AutoSize = True
+        Me.lblbalanceganancia.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblbalanceganancia.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblbalanceganancia.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblbalanceganancia.Location = New System.Drawing.Point(0, 225)
+        Me.lblbalanceganancia.Name = "lblbalanceganancia"
+        Me.lblbalanceganancia.Size = New System.Drawing.Size(34, 25)
+        Me.lblbalanceganancia.TabIndex = 97
+        Me.lblbalanceganancia.Text = "$0"
+        '
+        'Label13
+        '
+        Me.Label13.AutoSize = True
+        Me.Label13.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label13.Location = New System.Drawing.Point(0, 200)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(189, 25)
+        Me.Label13.TabIndex = 96
+        Me.Label13.Text = "TOTAL GANANCIA"
+        '
+        'lblBalanProdNodCod
+        '
+        Me.lblBalanProdNodCod.AutoSize = True
+        Me.lblBalanProdNodCod.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblBalanProdNodCod.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblBalanProdNodCod.ForeColor = System.Drawing.Color.White
+        Me.lblBalanProdNodCod.Location = New System.Drawing.Point(0, 175)
+        Me.lblBalanProdNodCod.Name = "lblBalanProdNodCod"
+        Me.lblBalanProdNodCod.Size = New System.Drawing.Size(34, 25)
+        Me.lblBalanProdNodCod.TabIndex = 94
+        Me.lblBalanProdNodCod.Text = "$0"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.White
+        Me.Label14.Location = New System.Drawing.Point(0, 150)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(197, 25)
+        Me.Label14.TabIndex = 93
+        Me.Label14.Text = "TOTAL Prod NOCod"
+        '
+        'lblbalancecosto
+        '
+        Me.lblbalancecosto.AutoSize = True
+        Me.lblbalancecosto.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblbalancecosto.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblbalancecosto.ForeColor = System.Drawing.Color.White
+        Me.lblbalancecosto.Location = New System.Drawing.Point(0, 125)
+        Me.lblbalancecosto.Name = "lblbalancecosto"
+        Me.lblbalancecosto.Size = New System.Drawing.Size(34, 25)
+        Me.lblbalancecosto.TabIndex = 82
+        Me.lblbalancecosto.Text = "$0"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.ForeColor = System.Drawing.Color.White
+        Me.Label12.Location = New System.Drawing.Point(0, 100)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(158, 25)
+        Me.Label12.TabIndex = 81
+        Me.Label12.Text = "TOTAL COSTO"
+        '
+        'lblvalDevoluciones
+        '
+        Me.lblvalDevoluciones.AutoSize = True
+        Me.lblvalDevoluciones.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblvalDevoluciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblvalDevoluciones.ForeColor = System.Drawing.Color.White
+        Me.lblvalDevoluciones.Location = New System.Drawing.Point(0, 75)
+        Me.lblvalDevoluciones.Name = "lblvalDevoluciones"
+        Me.lblvalDevoluciones.Size = New System.Drawing.Size(34, 25)
+        Me.lblvalDevoluciones.TabIndex = 80
+        Me.lblvalDevoluciones.Text = "$0"
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.ForeColor = System.Drawing.Color.White
+        Me.Label11.Location = New System.Drawing.Point(0, 50)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(243, 25)
+        Me.Label11.TabIndex = 79
+        Me.Label11.Text = "TOTAL DEVOLUCIONES"
+        '
+        'lblbalanceventas
+        '
+        Me.lblbalanceventas.AutoSize = True
+        Me.lblbalanceventas.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lblbalanceventas.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblbalanceventas.ForeColor = System.Drawing.Color.White
+        Me.lblbalanceventas.Location = New System.Drawing.Point(0, 25)
+        Me.lblbalanceventas.Name = "lblbalanceventas"
+        Me.lblbalanceventas.Size = New System.Drawing.Size(34, 25)
+        Me.lblbalanceventas.TabIndex = 78
+        Me.lblbalanceventas.Text = "$0"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.White
+        Me.Label8.Location = New System.Drawing.Point(0, 0)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(166, 25)
+        Me.Label8.TabIndex = 77
+        Me.Label8.Text = "TOTAL VENTAS"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(3, 0)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(112, 17)
+        Me.Label5.TabIndex = 2
+        Me.Label5.Text = "Ventas totales"
+        '
+        'Panel3
+        '
+        Me.Panel3.AutoScroll = True
+        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel3.Controls.Add(Me.Label5)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel3.Location = New System.Drawing.Point(0, 0)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(852, 22)
+        Me.Panel3.TabIndex = 21
+        '
+        'dtdevoluciones
+        '
+        Me.dtdevoluciones.AllowUserToAddRows = False
+        Me.dtdevoluciones.AllowUserToDeleteRows = False
+        Me.dtdevoluciones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtdevoluciones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtdevoluciones.BackgroundColor = System.Drawing.Color.White
+        Me.dtdevoluciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtdevoluciones.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.dtdevoluciones.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtdevoluciones.Location = New System.Drawing.Point(0, 206)
+        Me.dtdevoluciones.Name = "dtdevoluciones"
+        Me.dtdevoluciones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtdevoluciones.Size = New System.Drawing.Size(852, 137)
+        Me.dtdevoluciones.TabIndex = 23
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.White
+        Me.Label7.Location = New System.Drawing.Point(3, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(105, 17)
+        Me.Label7.TabIndex = 2
+        Me.Label7.Text = "Devoluciones"
+        '
+        'Panel4
+        '
+        Me.Panel4.AutoScroll = True
+        Me.Panel4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel4.Controls.Add(Me.Label7)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel4.Location = New System.Drawing.Point(0, 187)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(852, 19)
+        Me.Panel4.TabIndex = 22
+        '
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.dtgcomisiones)
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 330)
+        Me.Panel1.Location = New System.Drawing.Point(0, 506)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1047, 129)
-        Me.Panel1.TabIndex = 20
+        Me.Panel1.Size = New System.Drawing.Size(852, 130)
+        Me.Panel1.TabIndex = 26
         '
         'dtgcomisiones
         '
@@ -482,11 +769,11 @@ Partial Class informedeventas
         Me.dtgcomisiones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtgcomisiones.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtgcomisiones.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtgcomisiones.Location = New System.Drawing.Point(0, 20)
+        Me.dtgcomisiones.Location = New System.Drawing.Point(0, 21)
         Me.dtgcomisiones.Name = "dtgcomisiones"
         Me.dtgcomisiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtgcomisiones.Size = New System.Drawing.Size(1047, 109)
-        Me.dtgcomisiones.TabIndex = 20
+        Me.dtgcomisiones.Size = New System.Drawing.Size(852, 109)
+        Me.dtgcomisiones.TabIndex = 27
         '
         'Panel2
         '
@@ -496,8 +783,8 @@ Partial Class informedeventas
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(0, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1047, 20)
-        Me.Panel2.TabIndex = 18
+        Me.Panel2.Size = New System.Drawing.Size(852, 21)
+        Me.Panel2.TabIndex = 26
         '
         'lblcomisiones
         '
@@ -510,14 +797,43 @@ Partial Class informedeventas
         Me.lblcomisiones.TabIndex = 2
         Me.lblcomisiones.Text = "Comisiones por productos objetivos"
         '
+        'Panel5
+        '
+        Me.Panel5.Controls.Add(Me.dtventashistoricas)
+        Me.Panel5.Controls.Add(Me.Panel4)
+        Me.Panel5.Controls.Add(Me.dtdevoluciones)
+        Me.Panel5.Controls.Add(Me.Panel3)
+        Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel5.Location = New System.Drawing.Point(0, 163)
+        Me.Panel5.Name = "Panel5"
+        Me.Panel5.Size = New System.Drawing.Size(852, 343)
+        Me.Panel5.TabIndex = 27
+        '
+        'dtventashistoricas
+        '
+        Me.dtventashistoricas.AllowUserToAddRows = False
+        Me.dtventashistoricas.AllowUserToDeleteRows = False
+        Me.dtventashistoricas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtventashistoricas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtventashistoricas.BackgroundColor = System.Drawing.Color.White
+        Me.dtventashistoricas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtventashistoricas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtventashistoricas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtventashistoricas.Location = New System.Drawing.Point(0, 22)
+        Me.dtventashistoricas.Name = "dtventashistoricas"
+        Me.dtventashistoricas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtventashistoricas.Size = New System.Drawing.Size(852, 165)
+        Me.dtventashistoricas.TabIndex = 24
+        '
         'informedeventas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1047, 459)
-        Me.Controls.Add(Me.dtventashistoricas)
+        Me.ClientSize = New System.Drawing.Size(1116, 636)
+        Me.Controls.Add(Me.Panel5)
         Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.pnTotales)
         Me.Controls.Add(Me.Panel11)
         Me.Controls.Add(Me.pntitulo)
         Me.Name = "informedeventas"
@@ -526,26 +842,34 @@ Partial Class informedeventas
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
-        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel11.ResumeLayout(False)
-        Me.Panel11.PerformLayout()
         Me.Panel27.ResumeLayout(False)
         Me.Panel27.PerformLayout()
         Me.GroupBox5.ResumeLayout(False)
         Me.GroupBox5.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox6.PerformLayout()
+        Me.pnTotales.ResumeLayout(False)
+        Me.pnTotales.PerformLayout()
+        Me.Panel6.ResumeLayout(False)
+        Me.Panel6.PerformLayout()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
+        CType(Me.dtdevoluciones, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
+        Me.Panel4.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         CType(Me.dtgcomisiones, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
+        Me.Panel5.ResumeLayout(False)
+        CType(Me.dtventashistoricas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents pntitulo As Panel
     Friend WithEvents Label1 As Label
-    Friend WithEvents dtventashistoricas As DataGridView
     Friend WithEvents Panel11 As Panel
     Friend WithEvents GroupBox5 As GroupBox
     Friend WithEvents txtInforProd As TextBox
@@ -562,22 +886,46 @@ Partial Class informedeventas
     Friend WithEvents dtpvtashisdesde As DateTimePicker
     Friend WithEvents Label9 As Label
     Friend WithEvents Panel27 As Panel
-    Friend WithEvents lblbalanceganancia As Label
-    Friend WithEvents lblbalancecosto As Label
-    Friend WithEvents lblbalanceventas As Label
     Friend WithEvents Label2 As Label
     Friend WithEvents cmbAlmacenes As ComboBox
     Friend WithEvents cmbvendedor As ComboBox
     Friend WithEvents Label3 As Label
     Friend WithEvents Button1 As Button
-    Friend WithEvents Panel1 As Panel
-    Friend WithEvents dtgcomisiones As DataGridView
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents lblcomisiones As Label
-    Friend WithEvents lblBalanProdNodCod As Label
+    Friend WithEvents pnTotales As Panel
     Friend WithEvents Label4 As Label
     Friend WithEvents txtdiasventa As TextBox
     Friend WithEvents rdPocaRotacion As RadioButton
     Friend WithEvents Button18 As Button
     Friend WithEvents Button2 As Button
+    Friend WithEvents chkproductos As CheckBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents dtdevoluciones As DataGridView
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents dtgcomisiones As DataGridView
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents lblcomisiones As Label
+    Friend WithEvents Panel5 As Panel
+    Friend WithEvents lblbalanceventas As Label
+    Friend WithEvents Label8 As Label
+    Friend WithEvents dtventashistoricas As DataGridView
+    Friend WithEvents Label12 As Label
+    Friend WithEvents lblvalDevoluciones As Label
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Panel6 As Panel
+    Friend WithEvents lblcomistotal As Label
+    Friend WithEvents Label22 As Label
+    Friend WithEvents lblcomisobjetivos As Label
+    Friend WithEvents Label20 As Label
+    Friend WithEvents lblComisvtas As Label
+    Friend WithEvents Label17 As Label
+    Friend WithEvents lblvendedor As Label
+    Friend WithEvents Label15 As Label
+    Friend WithEvents lblBalanProdNodCod As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents lblbalancecosto As Label
+    Friend WithEvents lblbalanceganancia As Label
+    Friend WithEvents Label13 As Label
 End Class

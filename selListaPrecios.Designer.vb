@@ -32,7 +32,7 @@ Partial Class selListaPrecios
         'dtlistas
         '
         Me.dtlistas.AllowUserToAddRows = False
-        Me.dtlistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells
+        Me.dtlistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dtlistas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dtlistas.BackgroundColor = System.Drawing.Color.White
         Me.dtlistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
@@ -43,7 +43,7 @@ Partial Class selListaPrecios
         Me.dtlistas.Name = "dtlistas"
         Me.dtlistas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtlistas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistas.Size = New System.Drawing.Size(477, 223)
+        Me.dtlistas.Size = New System.Drawing.Size(464, 226)
         Me.dtlistas.TabIndex = 66
         '
         'Label1
@@ -64,14 +64,14 @@ Partial Class selListaPrecios
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(477, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(464, 40)
         Me.pntitulo.TabIndex = 65
         '
         'selListaPrecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(477, 263)
+        Me.ClientSize = New System.Drawing.Size(464, 266)
         Me.Controls.Add(Me.dtlistas)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True

@@ -347,7 +347,7 @@ Partial Class nuevalistadecarga
         Me.dtlistadecarga.Name = "dtlistadecarga"
         Me.dtlistadecarga.ReadOnly = True
         Me.dtlistadecarga.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtlistadecarga.Size = New System.Drawing.Size(953, 215)
+        Me.dtlistadecarga.Size = New System.Drawing.Size(959, 215)
         Me.dtlistadecarga.TabIndex = 92
         '
         'Column4
@@ -401,7 +401,7 @@ Partial Class nuevalistadecarga
         Me.dtproductos.MultiSelect = False
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.Size = New System.Drawing.Size(953, 124)
+        Me.dtproductos.Size = New System.Drawing.Size(959, 124)
         Me.dtproductos.TabIndex = 91
         Me.dtproductos.Visible = False
         '
@@ -438,9 +438,9 @@ Partial Class nuevalistadecarga
         Me.dtpedidosfact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtpedidosfact.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.DataGridViewTextBoxColumn12})
         Me.dtpedidosfact.Dock = System.Windows.Forms.DockStyle.Right
-        Me.dtpedidosfact.Location = New System.Drawing.Point(953, 0)
+        Me.dtpedidosfact.Location = New System.Drawing.Point(959, 0)
         Me.dtpedidosfact.Name = "dtpedidosfact"
-        Me.dtpedidosfact.Size = New System.Drawing.Size(149, 339)
+        Me.dtpedidosfact.Size = New System.Drawing.Size(143, 339)
         Me.dtpedidosfact.TabIndex = 90
         '
         'Column8

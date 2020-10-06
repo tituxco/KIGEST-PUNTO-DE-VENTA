@@ -50,17 +50,25 @@ Partial Class agregarpromo
         Me.Label13 = New System.Windows.Forms.Label()
         Me.cmbcatprod = New System.Windows.Forms.ComboBox()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.txtporcentajeComision = New System.Windows.Forms.TextBox()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.txtcantidadComision = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
         Me.txtcodigoComis = New System.Windows.Forms.TextBox()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txtdescripcionComision = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.txtporcentajeComision = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txtcantidadComision = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.TabPage5 = New System.Windows.Forms.TabPage()
+        Me.txtComisCat = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.cmbCatComis = New System.Windows.Forms.ComboBox()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
@@ -69,6 +77,8 @@ Partial Class agregarpromo
         Me.Panel2.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel3.SuspendLayout()
+        Me.Panel4.SuspendLayout()
+        Me.TabPage5.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -78,7 +88,7 @@ Partial Class agregarpromo
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(376, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(387, 40)
         Me.pntitulo.TabIndex = 32
         '
         'Label1
@@ -106,11 +116,12 @@ Partial Class agregarpromo
         Me.TabControl1.Controls.Add(Me.TabPage1)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage5)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(376, 346)
+        Me.TabControl1.Size = New System.Drawing.Size(387, 347)
         Me.TabControl1.TabIndex = 0
         '
         'TabPage1
@@ -126,9 +137,9 @@ Partial Class agregarpromo
         Me.TabPage1.Controls.Add(Me.Label4)
         Me.TabPage1.Location = New System.Drawing.Point(4, 22)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Size = New System.Drawing.Size(368, 320)
+        Me.TabPage1.Size = New System.Drawing.Size(379, 321)
         Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "De producto"
+        Me.TabPage1.Text = "Promo Producto"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
         'Panel1
@@ -138,9 +149,9 @@ Partial Class agregarpromo
         Me.Panel1.Controls.Add(Me.Button4)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.ForeColor = System.Drawing.Color.White
-        Me.Panel1.Location = New System.Drawing.Point(0, 236)
+        Me.Panel1.Location = New System.Drawing.Point(0, 237)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(368, 84)
+        Me.Panel1.Size = New System.Drawing.Size(379, 84)
         Me.Panel1.TabIndex = 242
         '
         'Button3
@@ -152,7 +163,7 @@ Partial Class agregarpromo
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
         Me.Button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button3.Location = New System.Drawing.Point(188, 0)
+        Me.Button3.Location = New System.Drawing.Point(199, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(90, 84)
         Me.Button3.TabIndex = 1
@@ -169,7 +180,7 @@ Partial Class agregarpromo
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
         Me.Button4.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button4.Location = New System.Drawing.Point(278, 0)
+        Me.Button4.Location = New System.Drawing.Point(289, 0)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(90, 84)
         Me.Button4.TabIndex = 0
@@ -264,9 +275,9 @@ Partial Class agregarpromo
         Me.TabPage2.Controls.Add(Me.cmbcatprod)
         Me.TabPage2.Location = New System.Drawing.Point(4, 22)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Size = New System.Drawing.Size(368, 320)
+        Me.TabPage2.Size = New System.Drawing.Size(379, 321)
         Me.TabPage2.TabIndex = 0
-        Me.TabPage2.Text = "De categoria"
+        Me.TabPage2.Text = "Promo Categoria"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'txtdescuentocat
@@ -314,9 +325,9 @@ Partial Class agregarpromo
         Me.Panel2.Controls.Add(Me.Button1)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel2.ForeColor = System.Drawing.Color.White
-        Me.Panel2.Location = New System.Drawing.Point(0, 236)
+        Me.Panel2.Location = New System.Drawing.Point(0, 237)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(368, 84)
+        Me.Panel2.Size = New System.Drawing.Size(379, 84)
         Me.Panel2.TabIndex = 241
         '
         'Button2
@@ -328,7 +339,7 @@ Partial Class agregarpromo
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
         Me.Button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button2.Location = New System.Drawing.Point(188, 0)
+        Me.Button2.Location = New System.Drawing.Point(199, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(90, 84)
         Me.Button2.TabIndex = 1
@@ -345,7 +356,7 @@ Partial Class agregarpromo
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button1.Location = New System.Drawing.Point(278, 0)
+        Me.Button1.Location = New System.Drawing.Point(289, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(90, 84)
         Me.Button1.TabIndex = 0
@@ -388,94 +399,10 @@ Partial Class agregarpromo
         Me.TabPage3.Location = New System.Drawing.Point(4, 22)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(368, 320)
+        Me.TabPage3.Size = New System.Drawing.Size(379, 321)
         Me.TabPage3.TabIndex = 1
-        Me.TabPage3.Text = "Comision Vendedor"
+        Me.TabPage3.Text = "Comision Producto"
         Me.TabPage3.UseVisualStyleBackColor = True
-        '
-        'Panel3
-        '
-        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel3.Controls.Add(Me.Button5)
-        Me.Panel3.Controls.Add(Me.Button6)
-        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel3.ForeColor = System.Drawing.Color.White
-        Me.Panel3.Location = New System.Drawing.Point(3, 233)
-        Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(362, 84)
-        Me.Panel3.TabIndex = 242
-        '
-        'Button5
-        '
-        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.ForeColor = System.Drawing.Color.White
-        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
-        Me.Button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button5.Location = New System.Drawing.Point(182, 0)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(90, 84)
-        Me.Button5.TabIndex = 1
-        Me.Button5.Text = "Guardar"
-        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button5.UseVisualStyleBackColor = False
-        '
-        'Button6
-        '
-        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.ForeColor = System.Drawing.Color.White
-        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
-        Me.Button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter
-        Me.Button6.Location = New System.Drawing.Point(272, 0)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(90, 84)
-        Me.Button6.TabIndex = 0
-        Me.Button6.Text = "Cancelar"
-        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button6.UseVisualStyleBackColor = False
-        '
-        'txtporcentajeComision
-        '
-        Me.txtporcentajeComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtporcentajeComision.Location = New System.Drawing.Point(9, 175)
-        Me.txtporcentajeComision.Name = "txtporcentajeComision"
-        Me.txtporcentajeComision.Size = New System.Drawing.Size(349, 20)
-        Me.txtporcentajeComision.TabIndex = 248
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label7.Location = New System.Drawing.Point(6, 156)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(139, 16)
-        Me.Label7.TabIndex = 249
-        Me.Label7.Text = "Comision otorgada"
-        '
-        'txtcantidadComision
-        '
-        Me.txtcantidadComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtcantidadComision.Location = New System.Drawing.Point(9, 124)
-        Me.txtcantidadComision.Name = "txtcantidadComision"
-        Me.txtcantidadComision.Size = New System.Drawing.Size(349, 20)
-        Me.txtcantidadComision.TabIndex = 246
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label8.Location = New System.Drawing.Point(6, 105)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(135, 16)
-        Me.Label8.TabIndex = 247
-        Me.Label8.Text = "Cantidad a vender"
         '
         'txtcodigoComis
         '
@@ -515,11 +442,195 @@ Partial Class agregarpromo
         Me.Label10.TabIndex = 251
         Me.Label10.Text = "Nombre/descripcion:"
         '
+        'txtporcentajeComision
+        '
+        Me.txtporcentajeComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtporcentajeComision.Location = New System.Drawing.Point(9, 175)
+        Me.txtporcentajeComision.Name = "txtporcentajeComision"
+        Me.txtporcentajeComision.Size = New System.Drawing.Size(349, 20)
+        Me.txtporcentajeComision.TabIndex = 248
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label7.Location = New System.Drawing.Point(6, 156)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(139, 16)
+        Me.Label7.TabIndex = 249
+        Me.Label7.Text = "Comision otorgada"
+        '
+        'txtcantidadComision
+        '
+        Me.txtcantidadComision.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtcantidadComision.Location = New System.Drawing.Point(9, 124)
+        Me.txtcantidadComision.Name = "txtcantidadComision"
+        Me.txtcantidadComision.Size = New System.Drawing.Size(349, 20)
+        Me.txtcantidadComision.TabIndex = 246
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label8.Location = New System.Drawing.Point(6, 105)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(135, 16)
+        Me.Label8.TabIndex = 247
+        Me.Label8.Text = "Cantidad a vender"
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel3.Controls.Add(Me.Button5)
+        Me.Panel3.Controls.Add(Me.Button6)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel3.ForeColor = System.Drawing.Color.White
+        Me.Panel3.Location = New System.Drawing.Point(3, 234)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(373, 84)
+        Me.Panel3.TabIndex = 242
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
+        Me.Button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button5.Location = New System.Drawing.Point(193, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(90, 84)
+        Me.Button5.TabIndex = 1
+        Me.Button5.Text = "Guardar"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button5.UseVisualStyleBackColor = False
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button6.Location = New System.Drawing.Point(283, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(90, 84)
+        Me.Button6.TabIndex = 0
+        Me.Button6.Text = "Cancelar"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel4.Controls.Add(Me.Button7)
+        Me.Panel4.Controls.Add(Me.Button8)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel4.ForeColor = System.Drawing.Color.White
+        Me.Panel4.Location = New System.Drawing.Point(0, 237)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(379, 84)
+        Me.Panel4.TabIndex = 241
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button7.ForeColor = System.Drawing.Color.White
+        Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
+        Me.Button7.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button7.Location = New System.Drawing.Point(199, 0)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(90, 84)
+        Me.Button7.TabIndex = 1
+        Me.Button7.Text = "Guardar"
+        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button7.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
+        Me.Button8.ImageAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button8.Location = New System.Drawing.Point(289, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(90, 84)
+        Me.Button8.TabIndex = 0
+        Me.Button8.Text = "Cancelar"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'TabPage5
+        '
+        Me.TabPage5.Controls.Add(Me.txtComisCat)
+        Me.TabPage5.Controls.Add(Me.Label11)
+        Me.TabPage5.Controls.Add(Me.Panel4)
+        Me.TabPage5.Controls.Add(Me.Label14)
+        Me.TabPage5.Controls.Add(Me.cmbCatComis)
+        Me.TabPage5.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage5.Name = "TabPage5"
+        Me.TabPage5.Size = New System.Drawing.Size(379, 321)
+        Me.TabPage5.TabIndex = 3
+        Me.TabPage5.Text = "Comision Categoria"
+        Me.TabPage5.UseVisualStyleBackColor = True
+        '
+        'txtComisCat
+        '
+        Me.txtComisCat.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtComisCat.Location = New System.Drawing.Point(6, 72)
+        Me.txtComisCat.Name = "txtComisCat"
+        Me.txtComisCat.Size = New System.Drawing.Size(349, 20)
+        Me.txtComisCat.TabIndex = 244
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label11.Location = New System.Drawing.Point(3, 53)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(173, 16)
+        Me.Label11.TabIndex = 245
+        Me.Label11.Text = "Porcentaje de Comision"
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label14.Location = New System.Drawing.Point(3, 10)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(80, 16)
+        Me.Label14.TabIndex = 240
+        Me.Label14.Text = "Categoria:"
+        '
+        'cmbCatComis
+        '
+        Me.cmbCatComis.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbCatComis.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbCatComis.FormattingEnabled = True
+        Me.cmbCatComis.Location = New System.Drawing.Point(3, 29)
+        Me.cmbCatComis.Name = "cmbCatComis"
+        Me.cmbCatComis.Size = New System.Drawing.Size(352, 21)
+        Me.cmbCatComis.TabIndex = 239
+        '
         'agregarpromo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(376, 386)
+        Me.ClientSize = New System.Drawing.Size(387, 387)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.pntitulo)
         Me.MaximizeBox = False
@@ -539,6 +650,9 @@ Partial Class agregarpromo
         Me.TabPage3.ResumeLayout(False)
         Me.TabPage3.PerformLayout()
         Me.Panel3.ResumeLayout(False)
+        Me.Panel4.ResumeLayout(False)
+        Me.TabPage5.ResumeLayout(False)
+        Me.TabPage5.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -581,4 +695,12 @@ Partial Class agregarpromo
     Friend WithEvents Panel3 As Panel
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button
+    Friend WithEvents TabPage5 As TabPage
+    Friend WithEvents txtComisCat As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents Panel4 As Panel
+    Friend WithEvents Button7 As Button
+    Friend WithEvents Button8 As Button
+    Friend WithEvents Label14 As Label
+    Friend WithEvents cmbCatComis As ComboBox
 End Class
