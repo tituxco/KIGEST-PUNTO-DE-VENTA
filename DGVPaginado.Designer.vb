@@ -29,9 +29,9 @@ Partial Class DGVPaginado
         Me.lblPaginasTotales = New System.Windows.Forms.Label()
         Me.dgvVista = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.lblregistros = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblregistros = New System.Windows.Forms.Label()
         CType(Me.dgvVista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -101,7 +101,6 @@ Partial Class DGVPaginado
         Me.dgvVista.MultiSelect = False
         Me.dgvVista.Name = "dgvVista"
         Me.dgvVista.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dgvVista.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvVista.Size = New System.Drawing.Size(503, 394)
         Me.dgvVista.TabIndex = 65
         '
@@ -119,17 +118,15 @@ Partial Class DGVPaginado
         Me.Panel1.Size = New System.Drawing.Size(186, 31)
         Me.Panel1.TabIndex = 67
         '
-        'lblregistros
+        'Label3
         '
-        Me.lblregistros.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lblregistros.AutoSize = True
-        Me.lblregistros.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblregistros.Location = New System.Drawing.Point(3, 18)
-        Me.lblregistros.Name = "lblregistros"
-        Me.lblregistros.Size = New System.Drawing.Size(14, 13)
-        Me.lblregistros.TabIndex = 68
-        Me.lblregistros.Text = "0"
+        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(123, 5)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(48, 13)
+        Me.Label3.TabIndex = 70
+        Me.Label3.Text = "Paginas:"
         '
         'Label1
         '
@@ -143,15 +140,17 @@ Partial Class DGVPaginado
         Me.Label1.TabIndex = 69
         Me.Label1.Text = "Registros"
         '
-        'Label3
+        'lblregistros
         '
-        Me.Label3.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(123, 5)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(48, 13)
-        Me.Label3.TabIndex = 70
-        Me.Label3.Text = "Paginas:"
+        Me.lblregistros.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.lblregistros.AutoSize = True
+        Me.lblregistros.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblregistros.Location = New System.Drawing.Point(3, 18)
+        Me.lblregistros.Name = "lblregistros"
+        Me.lblregistros.Size = New System.Drawing.Size(14, 13)
+        Me.lblregistros.TabIndex = 68
+        Me.lblregistros.Text = "0"
         '
         'DGVPaginado
         '

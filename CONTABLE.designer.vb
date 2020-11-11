@@ -336,7 +336,7 @@ Partial Class CONTABLE
         Me.Label58 = New System.Windows.Forms.Label()
         Me.dtcategorias = New System.Windows.Forms.DataGridView()
         Me.txtcategDefecto = New System.Windows.Forms.TextBox()
-        Me.TabPage11 = New System.Windows.Forms.TabPage()
+        Me.tabmoneda = New System.Windows.Forms.TabPage()
         Me.dtmoneda = New System.Windows.Forms.DataGridView()
         Me.TabPage12 = New System.Windows.Forms.TabPage()
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
@@ -525,7 +525,7 @@ Partial Class CONTABLE
         CType(Me.dtlistasprecio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage10.SuspendLayout()
         CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TabPage11.SuspendLayout()
+        Me.tabmoneda.SuspendLayout()
         CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage12.SuspendLayout()
         CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -3688,7 +3688,7 @@ Partial Class CONTABLE
         '
         Me.TabControl4.Controls.Add(Me.TabPage8)
         Me.TabControl4.Controls.Add(Me.TabPage10)
-        Me.TabControl4.Controls.Add(Me.TabPage11)
+        Me.TabControl4.Controls.Add(Me.tabmoneda)
         Me.TabControl4.Controls.Add(Me.TabPage12)
         Me.TabControl4.Controls.Add(Me.TabPage15)
         Me.TabControl4.Dock = System.Windows.Forms.DockStyle.Fill
@@ -3780,16 +3780,16 @@ Partial Class CONTABLE
         Me.txtcategDefecto.TabIndex = 101
         Me.txtcategDefecto.Text = "0"
         '
-        'TabPage11
+        'tabmoneda
         '
-        Me.TabPage11.Controls.Add(Me.dtmoneda)
-        Me.TabPage11.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage11.Name = "TabPage11"
-        Me.TabPage11.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage11.Size = New System.Drawing.Size(1207, 416)
-        Me.TabPage11.TabIndex = 2
-        Me.TabPage11.Text = "COTIZACION DE MONEDA"
-        Me.TabPage11.UseVisualStyleBackColor = True
+        Me.tabmoneda.Controls.Add(Me.dtmoneda)
+        Me.tabmoneda.Location = New System.Drawing.Point(4, 22)
+        Me.tabmoneda.Name = "tabmoneda"
+        Me.tabmoneda.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabmoneda.Size = New System.Drawing.Size(1207, 416)
+        Me.tabmoneda.TabIndex = 2
+        Me.tabmoneda.Text = "COTIZACION DE MONEDA"
+        Me.tabmoneda.UseVisualStyleBackColor = True
         '
         'dtmoneda
         '
@@ -5162,7 +5162,7 @@ Partial Class CONTABLE
         Me.TabPage10.ResumeLayout(False)
         Me.TabPage10.PerformLayout()
         CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TabPage11.ResumeLayout(False)
+        Me.tabmoneda.ResumeLayout(False)
         CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage12.ResumeLayout(False)
         CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
@@ -5569,7 +5569,7 @@ Partial Class CONTABLE
     Friend WithEvents TabControl4 As TabControl
     Friend WithEvents TabPage8 As TabPage
     Friend WithEvents TabPage10 As TabPage
-    Friend WithEvents TabPage11 As TabPage
+    Friend WithEvents tabmoneda As TabPage
     Friend WithEvents TabPage12 As TabPage
     Friend WithEvents TabPage15 As TabPage
     Friend WithEvents DataGridViewTextBoxColumn26 As DataGridViewTextBoxColumn

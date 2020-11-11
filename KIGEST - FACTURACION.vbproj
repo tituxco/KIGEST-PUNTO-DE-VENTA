@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>203</ApplicationRevision>
+    <ApplicationRevision>218</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -259,6 +259,14 @@
     <Compile Include="datasets\datosgenerales.vb">
       <DependentUpon>datosgenerales.xsd</DependentUpon>
     </Compile>
+    <Compile Include="datasets\datosPrestamo.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>datosPrestamo.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="datasets\datosPrestamo.vb">
+      <DependentUpon>datosPrestamo.xsd</DependentUpon>
+    </Compile>
     <Compile Include="datasets\datostaller.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -367,6 +375,12 @@
     <Compile Include="inicializar2.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="listadoPrestamos.Designer.vb">
+      <DependentUpon>listadoPrestamos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="listadoPrestamos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="manejodeprecios.Designer.vb">
       <DependentUpon>manejodeprecios.vb</DependentUpon>
     </Compile>
@@ -410,6 +424,19 @@
       <DependentUpon>nuevoremito.vb</DependentUpon>
     </Compile>
     <Compile Include="nuevoremito.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Operaciones.vb" />
+    <Compile Include="pagosForm.designer.vb">
+      <DependentUpon>pagosForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="pagosForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PrestamosForm.designer.vb">
+      <DependentUpon>PrestamosForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PrestamosForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="puntoventa.designer.vb">
@@ -479,6 +506,12 @@
     <Compile Include="remitos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ReporteForm.designer.vb">
+      <DependentUpon>ReporteForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ReporteForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="romaneo.designer.vb">
       <DependentUpon>romaneo.vb</DependentUpon>
     </Compile>
@@ -530,11 +563,33 @@
     <Compile Include="variables_globales.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="datasets\datosPrestamo.xsc">
+      <DependentUpon>datosPrestamo.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosPrestamo.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datosPrestamo.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="datasets\datosPrestamo.xss">
+      <DependentUpon>datosPrestamo.xsd</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Resources\iconos\Print_32px.png" />
     <None Include="Resources\iconos\Print_64px.png" />
     <None Include="Resources\iconos\Sync_32px.png" />
     <None Include="Resources\iconos\Search_32px.png" />
+    <None Include="Resources\iconos\Bank Building_32px.png" />
+    <None Include="Resources\iconos\Bank Building_64px.png" />
+    <None Include="Resources\iconos\Graph Report_32px.png" />
+    <None Include="Resources\iconos\Automation_32px.png" />
+    <None Include="Resources\iconos\Paper_32px.png" />
+    <None Include="Resources\iconos\Cloud Storage_32px.png" />
+    <None Include="Resources\iconos\Computer Support_32px.png" />
+    <None Include="Resources\iconos\Refund_32px.png" />
+    <None Include="Resources\iconos\Search Property_32px.png" />
+    <None Include="Resources\iconos\Eye_32px.png" />
+    <None Include="Resources\iconos\Eye_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -603,6 +658,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="informedeventas.resx">
       <DependentUpon>informedeventas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="listadoPrestamos.resx">
+      <DependentUpon>listadoPrestamos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="manejodeprecios.resx">
       <DependentUpon>manejodeprecios.vb</DependentUpon>
@@ -688,6 +746,12 @@
     <Content Include="reportes\listacarga.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="pagosForm.resx">
+      <DependentUpon>pagosForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PrestamosForm.resx">
+      <DependentUpon>PrestamosForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="puntoventa.resx">
       <DependentUpon>puntoventa.vb</DependentUpon>
     </EmbeddedResource>
@@ -748,6 +812,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Report1.rdlc" />
+    <EmbeddedResource Include="ReporteForm.resx">
+      <DependentUpon>ReporteForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <Content Include="reportes\prestamo_visualizacion.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="reportes\listadofacturas_old.rdlc" />
     <EmbeddedResource Include="romaneo.resx">
       <DependentUpon>romaneo.vb</DependentUpon>

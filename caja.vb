@@ -176,7 +176,7 @@
     End Sub
 
     Private Sub chkfiltrofecha_CheckedChanged(sender As Object, e As EventArgs) Handles chkfiltrofecha.CheckedChanged
-        If dtpfechacaja.Enabled = False Then
+        If CType(sender, CheckBox).Checked = True Then
             dtpfechacaja.Enabled = True
         Else
             dtpfechacaja.Enabled = False

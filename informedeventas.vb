@@ -589,8 +589,10 @@
             End If
 
 
+            'MsgBox("COMISION TOTAL" & TotalVentas & "-" & TotalDevoluciones & " * " & ComisionVendedor & "/ 100")
+
             lblvendedor.Text = cmbvendedor.Text
-            lblComisvtas.Text = Math.Round((TotalVentas - TotalDevoluciones) * (ComisionVendedor / 100), 2)
+            lblComisvtas.Text = Math.Round((TotalVentas) * (ComisionVendedor / 100), 2)
             lblcomisobjetivos.Text = Math.Round(SumarTotal(dtgcomisiones, 6), 2)
             lblcomistotal.Text = Math.Round(SumarTotal(dtgcomisiones, 6) + (TotalVentas - TotalDevoluciones) * (ComisionVendedor / 100), 2)
 

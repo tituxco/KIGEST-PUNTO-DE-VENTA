@@ -22,7 +22,7 @@ Public Class proveedores
         Try
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores order by razon asc", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 

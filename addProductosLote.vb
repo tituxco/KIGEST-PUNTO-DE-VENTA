@@ -656,6 +656,7 @@
 
             Select Case AuxCol
                 Case 0
+
                     dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd
                 Case 1
                     dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd
@@ -723,11 +724,26 @@
 
             Select Case AuxCol
                 Case 0
-                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                    If My.Settings.metodoCalculo = 1 Then
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                    Else
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * ((utilgral2 + UtilProd) - 1)
+                    End If
+
                 Case 1
-                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                    If My.Settings.metodoCalculo = 1 Then
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                    Else
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * ((utilgral2 + UtilProd) - 1)
+                    End If
+
                 Case 2
-                    dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilGralSum
+                    If My.Settings.metodoCalculo = 1 Then
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * utilgral2 * UtilProd
+                    Else
+                        dtproductos.CurrentRow.Cells(7).Value = costoFinal * ((utilgral2 + UtilProd) - 1)
+                    End If
+
             End Select
 
         Catch ex As Exception

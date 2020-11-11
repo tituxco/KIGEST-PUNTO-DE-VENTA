@@ -285,6 +285,7 @@ Public Class productos
         txtutilidad2.Text = 0
         txtutilidad3.Text = 0
         txtutilidad4.Text = 0
+        txtutilidad5.Text = 0
     End Sub
 
     Private Sub cargarProductos(ByRef codigo As String, ByRef nombre As String, ByRef categoria As String)
@@ -320,9 +321,9 @@ Public Class productos
             busqtxt = " descripcion like '%" & BusquedaComp & "%' or codigo like '" & nombre & "'"
 
             If chkstock.CheckState = CheckState.Checked Then
-                busqStock = "and stock >=1"
+                busqStock = " having stock>0 "
             Else
-                busqStock = "and stock >=0"
+                busqStock = "  "
 
             End If
 
@@ -342,20 +343,22 @@ Public Class productos
                 busqCod = " and  id=" & codigo
             End If
 
-            cadenaComp = busqNomb & " And " & busqCat & busqStock & busqCod & orderBy
+            cadenaComp = busqNomb & " And " & busqCat & busqCod & busqStock & orderBy
 
             'MsgBox(cadenaComp)
 
             If imprimirlist = False Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as CodInterno, descripcion as Producto, codigo as Codigo FROM fact_insumos " & cadenaComp, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as CodInterno, descripcion as Producto, codigo as Codigo, 
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & My.Settings.idAlmacen & ") as stock 
+                FROM fact_insumos as pro " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
+                'MsgBox(consulta.SelectCommand.CommandText)
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
                 DgvProductos.Cargar_Datos(tablaprod)
                 'dtproductos.DataSource = tablaprod
                 'dtproductos.Columns(0).Visible = False
             ElseIf imprimirlist = True Then
-
                 Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
                 Dim fac As New datosfacturas
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as codigo, descripcion FROM fact_insumos " & cadenaComp, conexionPrinc)
@@ -454,6 +457,7 @@ Public Class productos
             Dim util2 As Double = (FormatNumber(txtutilidad2.Text) + 100) / 100
             Dim util3 As Double = (FormatNumber(txtutilidad3.Text) + 100) / 100
             Dim util4 As Double = (FormatNumber(txtutilidad4.Text) + 100) / 100
+            Dim util5 As Double = (FormatNumber(txtutilidad5.Text) + 100) / 100
 
             Dim util2sum As Double = FormatNumber(txtutilidad2.Text)
 
@@ -477,17 +481,42 @@ Public Class productos
                 Else
                     Select Case dtlistas.Rows(i).Cells(4).Value
                         Case 0
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util) - 1)
+                            End If
                         Case 1
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util1) - 1)
+                            End If
                         Case 2
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util2) - 1)
+                            End If
                         Case 3
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util3
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util3
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util3) - 1)
+                            End If
                         Case 4
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util4
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util4
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util4) - 1)
+                            End If
+                        Case 5
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util5
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util5) - 1)
+                            End If
                     End Select
-
                 End If
             Next
 
@@ -507,6 +536,8 @@ Public Class productos
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as stock,   
             (select peso from cm_pesoEspecifico  where id=pro.id) as PEspecifico
             from fact_insumos as pro where pro.id = " & codigo, conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+
             Dim tablaprod As New DataTable
             Dim infoProd() As DataRow
             consulta.Fill(tablaprod)
@@ -531,6 +562,7 @@ Public Class productos
             txtutilidad2.Text = infoProd(0)("utilidad2")
             txtutilidad3.Text = infoProd(0)("utilidad3")
             txtutilidad4.Text = infoProd(0)("utilidad4")
+            txtutilidad5.Text = infoProd(0)("utilidad5")
             txtiva.Text = infoProd(0)("iva")
 
             txtplu.Text = infoProd(0)("cod_bar")
@@ -545,7 +577,7 @@ Public Class productos
             txtinfoextra.Text = infoProd(0)("detalles")
             txtcodigo.Text = infoProd(0)("codigo")
             cmbtipoprod.SelectedIndex = infoProd(0)("tipo")
-            txtutilidad0.Text = infoProd(0)("ganancia")
+            'txtutilidad0.Text = infoProd(0)("ganancia")
             cmbunidades.SelectedValue = infoProd(0)("unidades")
             ' MsgBox(infoProd(0)(24))
             lblultimaMod.Text = infoProd(0)("fechaMod").ToString
@@ -561,13 +593,15 @@ Public Class productos
                 txtPesoEspecifico.Text = 0
             End If
 
-            If IsDBNull(infoProd(0)(27)) Then
+            If IsDBNull(infoProd(0)(28)) Then
+                ' MsgBox("nada")
 
                 lblstock.Text = "0"
                 dtlotesprov.DataSource = Nothing
             Else
+                'MsgBox(infoProd(0)("id") & "_____" & infoProd(0)("stock"))
                 'MsgBox("haystock--" & infoProd(0)(27))
-                lblstock.Text = infoProd(0)(27).ToString
+                lblstock.Text = infoProd(0)(28) '.ToString
                 Reconectar()
                 dtlotesprov.DataSource = Nothing
                 If cmbtipoprod.SelectedIndex = 0 Then
@@ -575,6 +609,7 @@ Public Class productos
                     from fact_insumos_lotes as lt, fact_proveedores as pro, fact_proveedores_fact as pfac 
                     where  pro.id = pfac.idproveedor and lt.idfactura=pfac.id and idproducto='" & codigo & "'			
                     order by lt.id  desc", conexionPrinc)
+                    'MsgBox(consProv.SelectCommand.CommandText)
                     Dim tablaprov As New DataTable
 
                     consProv.Fill(tablaprov)
@@ -750,7 +785,7 @@ Public Class productos
     Private Sub txtiva_KeyUp(sender As Object, e As KeyEventArgs) Handles txtiva.KeyUp
         Try
             If e.KeyCode = Keys.Enter Then
-                txtiva.Text = txtiva.Text 'remplazarcoma(txtiva.Text)
+                '  txtiva.Text = txtiva.Text 'remplazarcoma(txtiva.Text)
                 calcularPrecios()
             End If
         Catch ex As Exception
@@ -761,7 +796,7 @@ Public Class productos
     Private Sub txtutilidad_KeyUp(sender As Object, e As KeyEventArgs) Handles txtutilidad0.KeyUp
         Try
             If e.KeyCode = Keys.Enter Then
-                DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
+                '   DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
                 calcularPrecios()
             End If
         Catch ex As Exception
@@ -772,7 +807,7 @@ Public Class productos
     Private Sub txtutilidad_Leave(sender As Object, e As EventArgs) Handles txtutilidad0.Leave
         Try
 
-            DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
+            'DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
             calcularPrecios()
 
         Catch ex As Exception
@@ -817,6 +852,7 @@ Public Class productos
             Dim utilidad2 As String = txtutilidad2.Text
             Dim utilidad3 As String = txtutilidad3.Text
             Dim utilidad4 As String = txtutilidad4.Text
+            Dim utilidad5 As String = txtutilidad5.Text
 
             Dim codigo As String = txtcodigo.Text
             Dim tipo As String = cmbtipoprod.SelectedIndex
@@ -839,7 +875,13 @@ Public Class productos
             'Dim stock As String = txtstoked.Text
             Reconectar()
             If categoria = 0 And cmbcatprod.Text <> "" Then
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_categoria_insum (nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
+                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
+                    "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
+                '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
+                '   insert into  fact_categoria_insum (id,nombre) values 
+                '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
+                '   ON DUPLICATE KEY UPDATE 
+                'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
                 comandoad.ExecuteNonQuery()
                 categoria = comandoad.LastInsertedId
             End If
@@ -870,14 +912,14 @@ Public Class productos
             If modificaProd = False Then
                 sqlQuery = "insert into fact_insumos 
                 (descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, 
-                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,utilidad4) values 
+                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,utilidad4,utilidad5) values 
                 (?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, 
-                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4)"
+                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4,?util5)"
             ElseIf modificaProd = True Then
                 sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
                 codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone,
                 utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, 
-                presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4 where id=?idp"
+                presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4, utilidad5=?util5 where id=?idp"
             End If
             Reconectar()
 
@@ -906,6 +948,7 @@ Public Class productos
                 .AddWithValue("?bonif", bonificacion)
                 .AddWithValue("?util3", utilidad3)
                 .AddWithValue("?util4", utilidad4)
+                .AddWithValue("?util5", utilidad5)
                 If modificaProd = True Then
                     '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
                     .AddWithValue("?idp", idProductoGral)
@@ -1424,35 +1467,6 @@ Public Class productos
 
         End Try
     End Sub
-
-    Private Sub dtdescuentos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtdescuentos.CellContentClick
-
-    End Sub
-
-    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
-
-    End Sub
-
-    Private Sub DgvProductos_Load(sender As Object, e As EventArgs) Handles DgvProductos.Load
-
-    End Sub
-
-    Private Sub dtlistas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistas.CellContentClick
-
-    End Sub
-
-    Private Sub Label38_Click(sender As Object, e As EventArgs) Handles lblutilidad4.Click
-
-    End Sub
-
-    Private Sub txtutilidad2_TextChanged(sender As Object, e As EventArgs) Handles txtutilidad2.TextChanged
-
-    End Sub
-
-    Private Sub txtutilidad3_TextChanged(sender As Object, e As EventArgs) Handles txtutilidad3.TextChanged
-
-    End Sub
-
     Private Sub txtutilidad3_KeyUp(sender As Object, e As KeyEventArgs) Handles txtutilidad3.KeyUp
         Try
             If e.KeyCode = Keys.Enter Then
@@ -1474,5 +1488,9 @@ Public Class productos
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+
     End Sub
 End Class

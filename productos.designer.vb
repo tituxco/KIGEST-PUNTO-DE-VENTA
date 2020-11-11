@@ -24,13 +24,13 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -49,10 +49,10 @@ Partial Class productos
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.lblstock = New System.Windows.Forms.Label()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.txtbonificacionMax = New System.Windows.Forms.TextBox()
         Me.Label37 = New System.Windows.Forms.Label()
@@ -94,18 +94,16 @@ Partial Class productos
         Me.Label12 = New System.Windows.Forms.Label()
         Me.ShapeContainer2 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.RectangleShape4 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
-        Me.RectangleShape1 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.RectangleShape2 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtinfoextra = New System.Windows.Forms.TextBox()
         Me.txtproducto = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
-        Me.RectangleShape3 = New Microsoft.VisualBasic.PowerPacks.RectangleShape()
-        Me.lblstock = New System.Windows.Forms.Label()
         Me.tabstock = New System.Windows.Forms.TabPage()
         Me.dtlotesprov = New System.Windows.Forms.DataGridView()
         Me.tabcostos = New System.Windows.Forms.TabPage()
+        Me.txtutilidad5 = New System.Windows.Forms.TextBox()
+        Me.lblutilidad5 = New System.Windows.Forms.Label()
         Me.txtutilidad4 = New System.Windows.Forms.TextBox()
         Me.lblutilidad4 = New System.Windows.Forms.Label()
         Me.txtutilidad3 = New System.Windows.Forms.TextBox()
@@ -169,21 +167,12 @@ Partial Class productos
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Button3 = New System.Windows.Forms.Button()
-        Me.Label34 = New System.Windows.Forms.Label()
-        Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ImportarListaPrecios = New System.ComponentModel.BackgroundWorker()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Label34 = New System.Windows.Forms.Label()
+        Me.dtlistas = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -193,6 +182,16 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -213,9 +212,9 @@ Partial Class productos
         Me.TabPage3.SuspendLayout()
         Me.Panel7.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel4.SuspendLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -332,13 +331,12 @@ Partial Class productos
         Me.chkstock.AutoSize = True
         Me.chkstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkstock.ForeColor = System.Drawing.Color.White
-        Me.chkstock.Location = New System.Drawing.Point(654, 7)
+        Me.chkstock.Location = New System.Drawing.Point(395, 65)
         Me.chkstock.Name = "chkstock"
         Me.chkstock.Size = New System.Drawing.Size(121, 20)
         Me.chkstock.TabIndex = 167
         Me.chkstock.Text = "Solo en stock"
         Me.chkstock.UseVisualStyleBackColor = True
-        Me.chkstock.Visible = False
         '
         'cmbcatProdGral
         '
@@ -472,16 +470,8 @@ Partial Class productos
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(0, 129)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(438, 515)
+        Me.Panel1.Size = New System.Drawing.Size(389, 515)
         Me.Panel1.TabIndex = 75
-        '
-        'DgvProductos
-        '
-        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
-        Me.DgvProductos.Name = "DgvProductos"
-        Me.DgvProductos.Size = New System.Drawing.Size(438, 493)
-        Me.DgvProductos.TabIndex = 64
         '
         'txtbuscar
         '
@@ -491,7 +481,7 @@ Partial Class productos
         Me.txtbuscar.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txtbuscar.Location = New System.Drawing.Point(0, 0)
         Me.txtbuscar.Name = "txtbuscar"
-        Me.txtbuscar.Size = New System.Drawing.Size(438, 22)
+        Me.txtbuscar.Size = New System.Drawing.Size(389, 22)
         Me.txtbuscar.TabIndex = 62
         Me.txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO"
         '
@@ -505,14 +495,15 @@ Partial Class productos
         Me.TabControl1.Controls.Add(Me.TabPage3)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TabControl1.Location = New System.Drawing.Point(438, 129)
+        Me.TabControl1.Location = New System.Drawing.Point(389, 129)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(811, 376)
+        Me.TabControl1.Size = New System.Drawing.Size(860, 337)
         Me.TabControl1.TabIndex = 76
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.lblstock)
         Me.TabPage1.Controls.Add(Me.Button5)
         Me.TabPage1.Controls.Add(Me.txtbonificacionMax)
         Me.TabPage1.Controls.Add(Me.Label37)
@@ -544,15 +535,25 @@ Partial Class productos
         Me.TabPage1.Controls.Add(Me.txtinfoextra)
         Me.TabPage1.Controls.Add(Me.txtproducto)
         Me.TabPage1.Controls.Add(Me.Label4)
-        Me.TabPage1.Controls.Add(Me.ShapeContainer1)
-        Me.TabPage1.Controls.Add(Me.lblstock)
         Me.TabPage1.Location = New System.Drawing.Point(4, 25)
         Me.TabPage1.Name = "TabPage1"
         Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(803, 347)
+        Me.TabPage1.Size = New System.Drawing.Size(852, 308)
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Informacion general"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'lblstock
+        '
+        Me.lblstock.AutoSize = True
+        Me.lblstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblstock.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.lblstock.Location = New System.Drawing.Point(573, 77)
+        Me.lblstock.Name = "lblstock"
+        Me.lblstock.Size = New System.Drawing.Size(37, 39)
+        Me.lblstock.TabIndex = 247
+        Me.lblstock.Text = "0"
+        Me.lblstock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Button5
         '
@@ -565,7 +566,7 @@ Partial Class productos
         '
         'txtbonificacionMax
         '
-        Me.txtbonificacionMax.Location = New System.Drawing.Point(388, 282)
+        Me.txtbonificacionMax.Location = New System.Drawing.Point(383, 190)
         Me.txtbonificacionMax.Name = "txtbonificacionMax"
         Me.txtbonificacionMax.Size = New System.Drawing.Size(144, 22)
         Me.txtbonificacionMax.TabIndex = 245
@@ -576,7 +577,7 @@ Partial Class productos
         Me.Label37.AutoSize = True
         Me.Label37.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label37.ForeColor = System.Drawing.Color.Black
-        Me.Label37.Location = New System.Drawing.Point(390, 263)
+        Me.Label37.Location = New System.Drawing.Point(385, 171)
         Me.Label37.Name = "Label37"
         Me.Label37.Size = New System.Drawing.Size(142, 16)
         Me.Label37.TabIndex = 244
@@ -652,7 +653,7 @@ Partial Class productos
         Me.cmbproveedor.FormattingEnabled = True
         Me.cmbproveedor.Location = New System.Drawing.Point(3, 236)
         Me.cmbproveedor.Name = "cmbproveedor"
-        Me.cmbproveedor.Size = New System.Drawing.Size(309, 24)
+        Me.cmbproveedor.Size = New System.Drawing.Size(208, 24)
         Me.cmbproveedor.TabIndex = 236
         '
         'Label30
@@ -747,7 +748,7 @@ Partial Class productos
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.ForeColor = System.Drawing.Color.Black
-        Me.Label9.Location = New System.Drawing.Point(2, 263)
+        Me.Label9.Location = New System.Drawing.Point(217, 217)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(55, 16)
         Me.Label9.TabIndex = 208
@@ -769,9 +770,9 @@ Partial Class productos
         Me.cmbmarcas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbmarcas.FormattingEnabled = True
-        Me.cmbmarcas.Location = New System.Drawing.Point(2, 282)
+        Me.cmbmarcas.Location = New System.Drawing.Point(217, 236)
         Me.cmbmarcas.Name = "cmbmarcas"
-        Me.cmbmarcas.Size = New System.Drawing.Size(204, 24)
+        Me.cmbmarcas.Size = New System.Drawing.Size(141, 24)
         Me.cmbmarcas.TabIndex = 2
         '
         'Label11
@@ -779,7 +780,7 @@ Partial Class productos
         Me.Label11.AutoSize = True
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.ForeColor = System.Drawing.Color.Black
-        Me.Label11.Location = New System.Drawing.Point(209, 263)
+        Me.Label11.Location = New System.Drawing.Point(362, 217)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(60, 16)
         Me.Label11.TabIndex = 210
@@ -801,7 +802,7 @@ Partial Class productos
         Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbmodelos.FormattingEnabled = True
-        Me.cmbmodelos.Location = New System.Drawing.Point(212, 282)
+        Me.cmbmodelos.Location = New System.Drawing.Point(365, 236)
         Me.cmbmodelos.Name = "cmbmodelos"
         Me.cmbmodelos.Size = New System.Drawing.Size(170, 24)
         Me.cmbmodelos.TabIndex = 3
@@ -823,9 +824,9 @@ Partial Class productos
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(3, 49)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(126, 16)
+        Me.Label10.Size = New System.Drawing.Size(66, 16)
         Me.Label10.TabIndex = 198
-        Me.Label10.Text = "Informacion extra"
+        Me.Label10.Text = "Detalles"
         '
         'Panel3
         '
@@ -975,7 +976,7 @@ Partial Class productos
         Me.ShapeContainer2.Location = New System.Drawing.Point(0, 0)
         Me.ShapeContainer2.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer2.Name = "ShapeContainer2"
-        Me.ShapeContainer2.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape4, Me.RectangleShape1, Me.RectangleShape2})
+        Me.ShapeContainer2.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape4, Me.RectangleShape2})
         Me.ShapeContainer2.Size = New System.Drawing.Size(34, 15)
         Me.ShapeContainer2.TabIndex = 212
         Me.ShapeContainer2.TabStop = False
@@ -985,12 +986,6 @@ Partial Class productos
         Me.RectangleShape4.Location = New System.Drawing.Point(206, 290)
         Me.RectangleShape4.Name = "RectangleShape4"
         Me.RectangleShape4.Size = New System.Drawing.Size(121, 66)
-        '
-        'RectangleShape1
-        '
-        Me.RectangleShape1.Location = New System.Drawing.Point(80, 290)
-        Me.RectangleShape1.Name = "RectangleShape1"
-        Me.RectangleShape1.Size = New System.Drawing.Size(121, 66)
         '
         'RectangleShape2
         '
@@ -1003,7 +998,7 @@ Partial Class productos
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.ForeColor = System.Drawing.Color.Black
-        Me.Label24.Location = New System.Drawing.Point(459, 189)
+        Me.Label24.Location = New System.Drawing.Point(563, 58)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(47, 16)
         Me.Label24.TabIndex = 212
@@ -1038,41 +1033,13 @@ Partial Class productos
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Nombre/descripcion:"
         '
-        'ShapeContainer1
-        '
-        Me.ShapeContainer1.Location = New System.Drawing.Point(3, 3)
-        Me.ShapeContainer1.Margin = New System.Windows.Forms.Padding(0)
-        Me.ShapeContainer1.Name = "ShapeContainer1"
-        Me.ShapeContainer1.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape3})
-        Me.ShapeContainer1.Size = New System.Drawing.Size(797, 341)
-        Me.ShapeContainer1.TabIndex = 217
-        Me.ShapeContainer1.TabStop = False
-        '
-        'RectangleShape3
-        '
-        Me.RectangleShape3.Location = New System.Drawing.Point(360, 209)
-        Me.RectangleShape3.Name = "RectangleShape3"
-        Me.RectangleShape3.Size = New System.Drawing.Size(139, 37)
-        '
-        'lblstock
-        '
-        Me.lblstock.AutoSize = True
-        Me.lblstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblstock.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.lblstock.Location = New System.Drawing.Point(462, 213)
-        Me.lblstock.Name = "lblstock"
-        Me.lblstock.Size = New System.Drawing.Size(37, 39)
-        Me.lblstock.TabIndex = 216
-        Me.lblstock.Text = "0"
-        Me.lblstock.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
         'tabstock
         '
         Me.tabstock.Controls.Add(Me.dtlotesprov)
         Me.tabstock.Location = New System.Drawing.Point(4, 25)
         Me.tabstock.Name = "tabstock"
         Me.tabstock.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabstock.Size = New System.Drawing.Size(803, 347)
+        Me.tabstock.Size = New System.Drawing.Size(885, 308)
         Me.tabstock.TabIndex = 3
         Me.tabstock.Text = "Stock"
         Me.tabstock.UseVisualStyleBackColor = True
@@ -1092,11 +1059,13 @@ Partial Class productos
         Me.dtlotesprov.Name = "dtlotesprov"
         Me.dtlotesprov.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtlotesprov.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlotesprov.Size = New System.Drawing.Size(797, 341)
+        Me.dtlotesprov.Size = New System.Drawing.Size(879, 302)
         Me.dtlotesprov.TabIndex = 64
         '
         'tabcostos
         '
+        Me.tabcostos.Controls.Add(Me.txtutilidad5)
+        Me.tabcostos.Controls.Add(Me.lblutilidad5)
         Me.tabcostos.Controls.Add(Me.txtutilidad4)
         Me.tabcostos.Controls.Add(Me.lblutilidad4)
         Me.tabcostos.Controls.Add(Me.txtutilidad3)
@@ -1124,15 +1093,37 @@ Partial Class productos
         Me.tabcostos.Location = New System.Drawing.Point(4, 25)
         Me.tabcostos.Name = "tabcostos"
         Me.tabcostos.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabcostos.Size = New System.Drawing.Size(803, 347)
+        Me.tabcostos.Size = New System.Drawing.Size(885, 308)
         Me.tabcostos.TabIndex = 2
         Me.tabcostos.Text = "Calculo de precio"
         Me.tabcostos.UseVisualStyleBackColor = True
         '
+        'txtutilidad5
+        '
+        Me.txtutilidad5.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtutilidad5.Location = New System.Drawing.Point(430, 264)
+        Me.txtutilidad5.Name = "txtutilidad5"
+        Me.txtutilidad5.Size = New System.Drawing.Size(97, 22)
+        Me.txtutilidad5.TabIndex = 242
+        Me.txtutilidad5.Text = "0"
+        Me.txtutilidad5.Visible = False
+        '
+        'lblutilidad5
+        '
+        Me.lblutilidad5.AutoSize = True
+        Me.lblutilidad5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblutilidad5.ForeColor = System.Drawing.Color.Black
+        Me.lblutilidad5.Location = New System.Drawing.Point(427, 245)
+        Me.lblutilidad5.Name = "lblutilidad5"
+        Me.lblutilidad5.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad5.TabIndex = 243
+        Me.lblutilidad5.Text = "Utilidad 5: %"
+        Me.lblutilidad5.Visible = False
+        '
         'txtutilidad4
         '
         Me.txtutilidad4.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtutilidad4.Location = New System.Drawing.Point(112, 236)
+        Me.txtutilidad4.Location = New System.Drawing.Point(220, 192)
         Me.txtutilidad4.Name = "txtutilidad4"
         Me.txtutilidad4.Size = New System.Drawing.Size(97, 22)
         Me.txtutilidad4.TabIndex = 240
@@ -1144,7 +1135,7 @@ Partial Class productos
         Me.lblutilidad4.AutoSize = True
         Me.lblutilidad4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblutilidad4.ForeColor = System.Drawing.Color.Black
-        Me.lblutilidad4.Location = New System.Drawing.Point(109, 217)
+        Me.lblutilidad4.Location = New System.Drawing.Point(217, 173)
         Me.lblutilidad4.Name = "lblutilidad4"
         Me.lblutilidad4.Size = New System.Drawing.Size(95, 16)
         Me.lblutilidad4.TabIndex = 241
@@ -1154,7 +1145,7 @@ Partial Class productos
         'txtutilidad3
         '
         Me.txtutilidad3.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtutilidad3.Location = New System.Drawing.Point(112, 192)
+        Me.txtutilidad3.Location = New System.Drawing.Point(112, 239)
         Me.txtutilidad3.Name = "txtutilidad3"
         Me.txtutilidad3.Size = New System.Drawing.Size(97, 22)
         Me.txtutilidad3.TabIndex = 238
@@ -1166,7 +1157,7 @@ Partial Class productos
         Me.lblutilidad3.AutoSize = True
         Me.lblutilidad3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblutilidad3.ForeColor = System.Drawing.Color.Black
-        Me.lblutilidad3.Location = New System.Drawing.Point(109, 173)
+        Me.lblutilidad3.Location = New System.Drawing.Point(109, 220)
         Me.lblutilidad3.Name = "lblutilidad3"
         Me.lblutilidad3.Size = New System.Drawing.Size(95, 16)
         Me.lblutilidad3.TabIndex = 239
@@ -1339,7 +1330,7 @@ Partial Class productos
         'txtutilidad2
         '
         Me.txtutilidad2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtutilidad2.Location = New System.Drawing.Point(9, 283)
+        Me.txtutilidad2.Location = New System.Drawing.Point(112, 192)
         Me.txtutilidad2.Name = "txtutilidad2"
         Me.txtutilidad2.Size = New System.Drawing.Size(97, 22)
         Me.txtutilidad2.TabIndex = 232
@@ -1350,7 +1341,7 @@ Partial Class productos
         '
         Me.lblformula.AutoSize = True
         Me.lblformula.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.lblformula.Location = New System.Drawing.Point(3, 328)
+        Me.lblformula.Location = New System.Drawing.Point(3, 289)
         Me.lblformula.Name = "lblformula"
         Me.lblformula.Size = New System.Drawing.Size(52, 16)
         Me.lblformula.TabIndex = 223
@@ -1372,7 +1363,7 @@ Partial Class productos
         Me.lblutilidad2.AutoSize = True
         Me.lblutilidad2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblutilidad2.ForeColor = System.Drawing.Color.Black
-        Me.lblutilidad2.Location = New System.Drawing.Point(6, 264)
+        Me.lblutilidad2.Location = New System.Drawing.Point(109, 173)
         Me.lblutilidad2.Name = "lblutilidad2"
         Me.lblutilidad2.Size = New System.Drawing.Size(95, 16)
         Me.lblutilidad2.TabIndex = 233
@@ -1526,7 +1517,7 @@ Partial Class productos
         Me.tabimporlista.Location = New System.Drawing.Point(4, 25)
         Me.tabimporlista.Name = "tabimporlista"
         Me.tabimporlista.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabimporlista.Size = New System.Drawing.Size(803, 347)
+        Me.tabimporlista.Size = New System.Drawing.Size(885, 308)
         Me.tabimporlista.TabIndex = 4
         Me.tabimporlista.Text = "Importar lista de precios"
         Me.tabimporlista.UseVisualStyleBackColor = True
@@ -1540,7 +1531,7 @@ Partial Class productos
         Me.dtimportados.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtimportados.Location = New System.Drawing.Point(3, 82)
         Me.dtimportados.Name = "dtimportados"
-        Me.dtimportados.Size = New System.Drawing.Size(797, 262)
+        Me.dtimportados.Size = New System.Drawing.Size(879, 223)
         Me.dtimportados.TabIndex = 13
         '
         'Panel2
@@ -1566,7 +1557,7 @@ Partial Class productos
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(3, 3)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(797, 79)
+        Me.Panel2.Size = New System.Drawing.Size(879, 79)
         Me.Panel2.TabIndex = 0
         '
         'chkutilidad
@@ -1736,7 +1727,7 @@ Partial Class productos
         Me.lblcantprod.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblcantprod.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblcantprod.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblcantprod.Location = New System.Drawing.Point(512, 0)
+        Me.lblcantprod.Location = New System.Drawing.Point(594, 0)
         Me.lblcantprod.Name = "lblcantprod"
         Me.lblcantprod.Size = New System.Drawing.Size(122, 79)
         Me.lblcantprod.TabIndex = 2
@@ -1748,7 +1739,7 @@ Partial Class productos
         Me.cmdimportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdimportar.ForeColor = System.Drawing.Color.White
         Me.cmdimportar.Image = CType(resources.GetObject("cmdimportar.Image"), System.Drawing.Image)
-        Me.cmdimportar.Location = New System.Drawing.Point(634, 0)
+        Me.cmdimportar.Location = New System.Drawing.Point(716, 0)
         Me.cmdimportar.Name = "cmdimportar"
         Me.cmdimportar.Size = New System.Drawing.Size(80, 79)
         Me.cmdimportar.TabIndex = 1
@@ -1760,7 +1751,7 @@ Partial Class productos
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(714, 0)
+        Me.Button2.Location = New System.Drawing.Point(796, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(83, 79)
         Me.Button2.TabIndex = 0
@@ -1774,7 +1765,7 @@ Partial Class productos
         Me.TabPage2.Location = New System.Drawing.Point(4, 25)
         Me.TabPage2.Name = "TabPage2"
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage2.Size = New System.Drawing.Size(803, 347)
+        Me.TabPage2.Size = New System.Drawing.Size(885, 308)
         Me.TabPage2.TabIndex = 5
         Me.TabPage2.Text = "Imagen de producto"
         Me.TabPage2.UseVisualStyleBackColor = True
@@ -1822,7 +1813,7 @@ Partial Class productos
         Me.TabPage3.Location = New System.Drawing.Point(4, 25)
         Me.TabPage3.Name = "TabPage3"
         Me.TabPage3.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage3.Size = New System.Drawing.Size(803, 347)
+        Me.TabPage3.Size = New System.Drawing.Size(885, 308)
         Me.TabPage3.TabIndex = 6
         Me.TabPage3.Text = "Promo producto ecomerce"
         Me.TabPage3.UseVisualStyleBackColor = True
@@ -1855,72 +1846,6 @@ Partial Class productos
         Me.Button3.Text = "Seleccionar imagen"
         Me.Button3.UseVisualStyleBackColor = True
         '
-        'Label34
-        '
-        Me.Label34.AutoSize = True
-        Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label34.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label34.Location = New System.Drawing.Point(3, 0)
-        Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(61, 16)
-        Me.Label34.TabIndex = 226
-        Me.Label34.Text = "Precios"
-        '
-        'dtlistas
-        '
-        Me.dtlistas.AllowUserToAddRows = False
-        Me.dtlistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtlistas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtlistas.BackgroundColor = System.Drawing.Color.White
-        Me.dtlistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtlistas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5, Me.Column1, Me.Column2})
-        Me.dtlistas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtlistas.Location = New System.Drawing.Point(3, 19)
-        Me.dtlistas.MultiSelect = False
-        Me.dtlistas.Name = "dtlistas"
-        Me.dtlistas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtlistas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistas.Size = New System.Drawing.Size(301, 117)
-        Me.dtlistas.TabIndex = 225
-        '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Nombre"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        '
-        'Column4
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle2.Format = "C2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 30.0!
-        Me.Column2.HeaderText = "utilAux"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Visible = False
-        '
         'ImportarListaPrecios
         '
         Me.ImportarListaPrecios.WorkerReportsProgress = True
@@ -1933,9 +1858,9 @@ Partial Class productos
         Me.Panel4.Controls.Add(Me.Label34)
         Me.Panel4.Controls.Add(Me.dtlistas)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel4.Location = New System.Drawing.Point(438, 505)
+        Me.Panel4.Location = New System.Drawing.Point(389, 466)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(811, 139)
+        Me.Panel4.Size = New System.Drawing.Size(860, 178)
         Me.Panel4.TabIndex = 77
         '
         'Label6
@@ -1962,32 +1887,36 @@ Partial Class productos
         Me.dtdescuentos.MultiSelect = False
         Me.dtdescuentos.Name = "dtdescuentos"
         Me.dtdescuentos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtdescuentos.Size = New System.Drawing.Size(407, 117)
+        Me.dtdescuentos.Size = New System.Drawing.Size(380, 156)
         Me.dtdescuentos.TabIndex = 227
         '
-        'Column6
+        'Label34
         '
-        Me.Column6.HeaderText = "idProm"
-        Me.Column6.Name = "Column6"
-        Me.Column6.Visible = False
+        Me.Label34.AutoSize = True
+        Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label34.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label34.Location = New System.Drawing.Point(3, 0)
+        Me.Label34.Name = "Label34"
+        Me.Label34.Size = New System.Drawing.Size(61, 16)
+        Me.Label34.TabIndex = 226
+        Me.Label34.Text = "Precios"
         '
-        'Column7
+        'dtlistas
         '
-        Me.Column7.HeaderText = "TIPO"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 30.0!
-        Me.Column8.HeaderText = "MINIMO"
-        Me.Column8.Name = "Column8"
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 30.0!
-        Me.Column9.HeaderText = "PORCENTAJE"
-        Me.Column9.Name = "Column9"
+        Me.dtlistas.AllowUserToAddRows = False
+        Me.dtlistas.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtlistas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtlistas.BackgroundColor = System.Drawing.Color.White
+        Me.dtlistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtlistas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5, Me.Column1, Me.Column2})
+        Me.dtlistas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtlistas.Location = New System.Drawing.Point(3, 19)
+        Me.dtlistas.MultiSelect = False
+        Me.dtlistas.Name = "dtlistas"
+        Me.dtlistas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dtlistas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtlistas.Size = New System.Drawing.Size(301, 156)
+        Me.dtlistas.TabIndex = 225
         '
         'DataGridViewTextBoxColumn1
         '
@@ -2076,6 +2005,76 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
         Me.DataGridViewTextBoxColumn9.Visible = False
         '
+        'Column6
+        '
+        Me.Column6.HeaderText = "idProm"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Visible = False
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "TIPO"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 30.0!
+        Me.Column8.HeaderText = "MINIMO"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 30.0!
+        Me.Column9.HeaderText = "PORCENTAJE"
+        Me.Column9.Name = "Column9"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Nombre"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle2.Format = "C2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        Me.Column2.HeaderText = "utilAux"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Visible = False
+        '
+        'DgvProductos
+        '
+        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
+        Me.DgvProductos.Name = "DgvProductos"
+        Me.DgvProductos.Size = New System.Drawing.Size(389, 493)
+        Me.DgvProductos.TabIndex = 64
+        '
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
@@ -2125,10 +2124,10 @@ Partial Class productos
         Me.TabPage3.ResumeLayout(False)
         Me.Panel7.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -2177,7 +2176,6 @@ Partial Class productos
     Friend WithEvents Label24 As System.Windows.Forms.Label
     Friend WithEvents lblformula As System.Windows.Forms.Label
     Friend WithEvents lbllista As System.Windows.Forms.Label
-    Friend WithEvents lblstock As System.Windows.Forms.Label
     Friend WithEvents txtcodprov As System.Windows.Forms.TextBox
     Friend WithEvents tabstock As System.Windows.Forms.TabPage
     Friend WithEvents dtlotesprov As System.Windows.Forms.DataGridView
@@ -2189,8 +2187,6 @@ Partial Class productos
     Friend WithEvents Label29 As System.Windows.Forms.Label
     Friend WithEvents lbllista1 As System.Windows.Forms.Label
     Friend WithEvents lbll As System.Windows.Forms.Label
-    Friend WithEvents Label34 As System.Windows.Forms.Label
-    Friend WithEvents dtlistas As System.Windows.Forms.DataGridView
     Friend WithEvents Label31 As System.Windows.Forms.Label
     Friend WithEvents cmbtipoprod As System.Windows.Forms.ComboBox
     Friend WithEvents Panel3 As System.Windows.Forms.Panel
@@ -2201,11 +2197,8 @@ Partial Class productos
     Friend WithEvents tabimporlista As System.Windows.Forms.TabPage
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Private WithEvents ShapeContainer1 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
-    Private WithEvents RectangleShape3 As Microsoft.VisualBasic.PowerPacks.RectangleShape
     Private WithEvents RectangleShape2 As Microsoft.VisualBasic.PowerPacks.RectangleShape
     Private WithEvents RectangleShape4 As Microsoft.VisualBasic.PowerPacks.RectangleShape
-    Private WithEvents RectangleShape1 As Microsoft.VisualBasic.PowerPacks.RectangleShape
     Private WithEvents ShapeContainer2 As Microsoft.VisualBasic.PowerPacks.ShapeContainer
     Friend WithEvents lblcantprod As System.Windows.Forms.Label
     Friend WithEvents cmdimportar As System.Windows.Forms.Button
@@ -2273,11 +2266,6 @@ Partial Class productos
     Friend WithEvents Label26 As Label
     Friend WithEvents Label13 As Label
     Friend WithEvents chkcalcularcosto As CheckBox
-    Friend WithEvents Column3 As DataGridViewTextBoxColumn
-    Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents Column5 As DataGridViewTextBoxColumn
-    Friend WithEvents Column1 As DataGridViewTextBoxColumn
-    Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents DgvProductos As DGVPaginado
     Friend WithEvents Label33 As Label
     Friend WithEvents txtPesoEspecifico As TextBox
@@ -2296,4 +2284,14 @@ Partial Class productos
     Friend WithEvents lblutilidad4 As Label
     Friend WithEvents txtutilidad3 As TextBox
     Friend WithEvents lblutilidad3 As Label
+    Friend WithEvents txtutilidad5 As TextBox
+    Friend WithEvents lblutilidad5 As Label
+    Friend WithEvents Label34 As Label
+    Friend WithEvents dtlistas As DataGridView
+    Friend WithEvents Column3 As DataGridViewTextBoxColumn
+    Friend WithEvents Column4 As DataGridViewTextBoxColumn
+    Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column1 As DataGridViewTextBoxColumn
+    Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents lblstock As Label
 End Class

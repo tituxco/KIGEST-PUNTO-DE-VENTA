@@ -32,7 +32,7 @@ Public Class puntoventa
         cargar_datos_factura()
         txtcodPLU.Focus()
         If InStr(DatosAcceso.Moduloacc, "1") = False Then Button2.Enabled = False
-
+        If InStr(DatosAcceso.Moduloacc, "3z") = False Then chkquitarstock.Enabled = False
 
     End Sub
     Public Sub cargar_datos_factura()
@@ -221,9 +221,14 @@ Public Class puntoventa
             Dim iva21 As Double
             Dim total As Double
 
+            lblfactiva105.Text = 0
+            lblfactiva21.Text = 0
+            lblfactsubtotal.Text = 0
+            lblfacttotal.Text = 0
             If dtproductos.Rows.Count = 0 Then
                 Exit Sub
             End If
+
             For Each producto As DataGridViewRow In dtproductos.Rows
                 Select Case tipofact
                     Case 991, 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
@@ -477,7 +482,8 @@ Public Class puntoventa
                     consultaprodorden.Fill(tablaprodorden)
                     infoprodorden = tablaprodorden.Select("")
                     For i = 0 To infoprodorden.GetUpperBound(0)
-                        dtproductos.Rows.Add(infoprodorden(i)(0), infoprodorden(i)(0), infoprodorden(i)(1), infoprodorden(i)(2), infoprodorden(i)(3), infoprodorden(i)(4), infoprodorden(i)(5))
+                        dtproductos.Rows.Add(infoprodorden(i)("codigo"), infoprodorden(i)("codigo"), infoprodorden(i)("cantidad"), infoprodorden(i)("descripcion"),
+                        infoprodorden(i)("iva").ToString.Replace(".", ","), FormatNumber(infoprodorden(i)("punit").ToString.Replace(".", ","), 2), FormatNumber(infoprodorden(i)("ptotal").ToString.Replace(".", ","), 2))
                     Next
                 End If
                 CalcularTotales()
@@ -2348,6 +2354,10 @@ Public Class puntoventa
     End Sub
 
     Private Sub lblobservacionescae_Click(sender As Object, e As EventArgs) Handles lblobservacionescae.Click
+
+    End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
     End Sub
 End Class

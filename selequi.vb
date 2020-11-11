@@ -55,10 +55,18 @@
     End Sub
 
     Private Sub dtequipos_KeyDown(sender As Object, e As KeyEventArgs) Handles dtequipos.KeyDown
+
+    End Sub
+
+    Private Sub dtequipos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtequipos.CellContentClick
+
+    End Sub
+
+    Private Sub dtequipos_KeyUp(sender As Object, e As KeyEventArgs) Handles dtequipos.KeyUp
         If e.KeyCode = Keys.Enter Then
             Select Case llama
                 Case "ingresoequipo"
-                    MsgBox("   ")
+                    'MsgBox("   ")
                     With CType(frmprincipal.ActiveMdiChild, ingresoequipo)
                         .txtcodint.Text = dtequipos.CurrentRow.Cells.Item(0).Value
                         If cliente = 0 Then
@@ -72,9 +80,5 @@
                     Me.Close()
             End Select
         End If
-    End Sub
-
-    Private Sub dtequipos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtequipos.CellContentClick
-
     End Sub
 End Class

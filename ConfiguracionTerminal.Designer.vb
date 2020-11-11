@@ -46,10 +46,15 @@ Partial Class ConfiguracionTerminal
         Me.txtTextoPietiket = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.rdcod_bar = New System.Windows.Forms.RadioButton()
         Me.rdIdInterno = New System.Windows.Forms.RadioButton()
+        Me.rdcod_bar = New System.Windows.Forms.RadioButton()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.rdcalculo1 = New System.Windows.Forms.RadioButton()
+        Me.rdcalculo2 = New System.Windows.Forms.RadioButton()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -216,7 +221,7 @@ Partial Class ConfiguracionTerminal
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(7, 292)
+        Me.Button18.Location = New System.Drawing.Point(7, 352)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(136, 23)
         Me.Button18.TabIndex = 117
@@ -267,6 +272,17 @@ Partial Class ConfiguracionTerminal
         Me.GroupBox1.TabIndex = 137
         Me.GroupBox1.TabStop = False
         '
+        'rdIdInterno
+        '
+        Me.rdIdInterno.AutoSize = True
+        Me.rdIdInterno.Location = New System.Drawing.Point(71, 8)
+        Me.rdIdInterno.Name = "rdIdInterno"
+        Me.rdIdInterno.Size = New System.Drawing.Size(71, 17)
+        Me.rdIdInterno.TabIndex = 1
+        Me.rdIdInterno.Tag = "id"
+        Me.rdIdInterno.Text = "id_interno"
+        Me.rdIdInterno.UseVisualStyleBackColor = True
+        '
         'rdcod_bar
         '
         Me.rdcod_bar.AutoSize = True
@@ -280,23 +296,58 @@ Partial Class ConfiguracionTerminal
         Me.rdcod_bar.Text = "cod_bar"
         Me.rdcod_bar.UseVisualStyleBackColor = True
         '
-        'rdIdInterno
+        'Label4
         '
-        Me.rdIdInterno.AutoSize = True
-        Me.rdIdInterno.Location = New System.Drawing.Point(71, 8)
-        Me.rdIdInterno.Name = "rdIdInterno"
-        Me.rdIdInterno.Size = New System.Drawing.Size(71, 17)
-        Me.rdIdInterno.TabIndex = 1
-        Me.rdIdInterno.Tag = "id"
-        Me.rdIdInterno.Text = "id_interno"
-        Me.rdIdInterno.UseVisualStyleBackColor = True
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(4, 291)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(222, 16)
+        Me.Label4.TabIndex = 138
+        Me.Label4.Text = "Formula de calculo de precios:"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.Controls.Add(Me.rdcalculo1)
+        Me.GroupBox2.Controls.Add(Me.rdcalculo2)
+        Me.GroupBox2.Location = New System.Drawing.Point(228, 282)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(165, 54)
+        Me.GroupBox2.TabIndex = 139
+        Me.GroupBox2.TabStop = False
+        '
+        'rdcalculo1
+        '
+        Me.rdcalculo1.AutoSize = True
+        Me.rdcalculo1.Checked = True
+        Me.rdcalculo1.Location = New System.Drawing.Point(4, 9)
+        Me.rdcalculo1.Name = "rdcalculo1"
+        Me.rdcalculo1.Size = New System.Drawing.Size(146, 17)
+        Me.rdcalculo1.TabIndex = 1
+        Me.rdcalculo1.TabStop = True
+        Me.rdcalculo1.Tag = "id"
+        Me.rdcalculo1.Text = "costo * iva * lista * utilidad"
+        Me.rdcalculo1.UseVisualStyleBackColor = True
+        '
+        'rdcalculo2
+        '
+        Me.rdcalculo2.AutoSize = True
+        Me.rdcalculo2.Location = New System.Drawing.Point(4, 31)
+        Me.rdcalculo2.Name = "rdcalculo2"
+        Me.rdcalculo2.Size = New System.Drawing.Size(154, 17)
+        Me.rdcalculo2.TabIndex = 0
+        Me.rdcalculo2.Tag = "cod_bar"
+        Me.rdcalculo2.Text = "costo * iva * (lista + utilidad)"
+        Me.rdcalculo2.UseVisualStyleBackColor = True
         '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(497, 324)
+        Me.ClientSize = New System.Drawing.Size(497, 387)
+        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.txtTextoPietiket)
@@ -327,6 +378,8 @@ Partial Class ConfiguracionTerminal
         Me.pntitulo.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -358,4 +411,8 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents GroupBox1 As GroupBox
     Friend WithEvents rdIdInterno As RadioButton
     Friend WithEvents rdcod_bar As RadioButton
+    Friend WithEvents Label4 As Label
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents rdcalculo1 As RadioButton
+    Friend WithEvents rdcalculo2 As RadioButton
 End Class

@@ -232,7 +232,7 @@
     Private Sub calcularPrecios()
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select prod.precio, (select mon.cotizacion from fact_moneda as mon where mon.id=prod.moneda) as cotizacion,  " &
-            "prod.iva, prod.ganancia as utilidad0, prod.utilidad1, prod.utilidad2 from fact_insumos as prod where prod.id=" & dtproductos.CurrentRow.Cells(0).Value, conexionPrinc)
+            "prod.iva, prod.ganancia as utilidad0, prod.utilidad1, prod.utilidad2,prod.utilidad3,prod.utilidad4,prod.utilidad5 from fact_insumos as prod where prod.id=" & dtproductos.CurrentRow.Cells(0).Value, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim infoprod() As DataRow
             consultaPRod.Fill(tablaprod)
@@ -245,6 +245,9 @@
             Dim util As Double = (FormatNumber(infoprod(0)(3)) + 100) / 100
             Dim util1 As Double = (FormatNumber(infoprod(0)(4)) + 100) / 100
             Dim util2 As Double = (FormatNumber(infoprod(0)(5)) + 100) / 100
+            Dim util3 As Double = (FormatNumber(infoprod(0)(6)) + 100) / 100
+            Dim util4 As Double = (FormatNumber(infoprod(0)(7)) + 100) / 100
+            Dim util5 As Double = (FormatNumber(infoprod(0)(8)) + 100) / 100
 
 
             Dim util2sum As Double = FormatNumber(infoprod(0)(5))
@@ -264,11 +267,41 @@
                 Else
                     Select Case dtlistas.Rows(i).Cells(5).Value
                         Case 0
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util) - 1)
+                            End If
                         Case 1
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util1) - 1)
+                            End If
                         Case 2
-                            dtlistas.Rows(i).Cells(2).Value = costoFinal * sumaUtil
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util2) - 1)
+                            End If
+                        Case 3
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util3
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util3) - 1)
+                            End If
+                        Case 4
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util4
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util4) - 1)
+                            End If
+                        Case 5
+                            If My.Settings.metodoCalculo = 1 Then
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util5
+                            Else
+                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util5) - 1)
+                            End If
                     End Select
                 End If
             Next
@@ -364,11 +397,11 @@
         End Try
     End Sub
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
-
-        Dim idprod As Integer = dtproductos.CurrentRow.Cells(0).Value
         SendKeys.Send("{UP}")
         SendKeys.Send("{TAB}")
+        Dim idprod As Integer = dtproductos.CurrentRow.Cells(0).Value
         'cerrar_Conexiones()
+        Reconectar()
         If e.ColumnIndex = 3 Then
             If IsNumeric(dtproductos.CurrentRow.Cells(3).Value) Then
                 Dim costo As String = dtproductos.CurrentRow.Cells(3).Value
@@ -400,7 +433,7 @@
             End If
 
         End If
-
+        calcularPrecios()
     End Sub
 
     Private Sub manejodeprecios_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -410,11 +443,13 @@
         End If
     End Sub
 
-    Private Sub dtproductos_KeyDown(sender As Object, e As KeyEventArgs) Handles dtproductos.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            e.Handled = True
-        End If
-    End Sub
+    'Private Sub dtproductos_KeyDown(sender As Object, e As KeyEventArgs) Handles dtproductos.KeyDown
+    '    If e.KeyCode = Keys.Enter Then
+    '        e.Handled = True
+    '        SendKeys.Send("{UP}")
+    '        SendKeys.Send("{TAB}")
+    '    End If
+    'End Sub
 
     Private Sub cmdAumProv_Click(sender As Object, e As EventArgs) Handles cmdAumProv.Click
         If MsgBox("Esta seguro que desea realizar esta actualizacion masiva de precios? esta acción no se puede deshacer", vbYesNoCancel + vbQuestion) = MsgBoxResult.Yes Then
@@ -530,7 +565,4 @@
         My.Settings.Save()
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
-
-    End Sub
 End Class

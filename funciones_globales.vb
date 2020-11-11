@@ -30,7 +30,7 @@ Module funciones_Globales
             Dim ganancia As Double
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2,utilidad3,utilidad4 FROM fact_insumos where id=" & IdProd, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2,utilidad3,utilidad4, utilidad5 FROM fact_insumos where id=" & IdProd, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
@@ -77,6 +77,8 @@ Module funciones_Globales
                     utilidad = (FormatNumber(filasProd(0)(6)) + 100) / 100
                 Case 4
                     utilidad = (FormatNumber(filasProd(0)(7)) + 100) / 100
+                Case 5
+                    utilidad = (FormatNumber(filasProd(0)(8)) + 100) / 100
             End Select
 
             Dim PrecioSinIva As Double
@@ -87,16 +89,15 @@ Module funciones_Globales
                 PrecioSinIva = precioCosto * cotizacion * lista
                 PrecioVenta = PrecioSinIva * iva
             Else
-                If codaux = 2 Then
-                    lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
-                    PrecioSinIva = precioCosto * cotizacion * SumaUtil
+                lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
+                If My.Settings.metodoCalculo = 1 Then
+                    PrecioSinIva = precioCosto * cotizacion * lista * utilidad
                     PrecioVenta = PrecioSinIva * iva
                 Else
-                    lista = (FormatNumber(listaTXT + 100) / 100)
-                    'MsgBox(precioCosto & "-" & cotizacion & "-" & utilidad & "-" & lista)
-                    PrecioSinIva = precioCosto * cotizacion * utilidad * lista
+                    PrecioSinIva = precioCosto * cotizacion * ((lista + utilidad) - 1)
                     PrecioVenta = PrecioSinIva * iva
                 End If
+
             End If
 
             Select Case tipofact

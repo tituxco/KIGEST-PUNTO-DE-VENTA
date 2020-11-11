@@ -302,7 +302,7 @@
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & ptovta
+            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=z" & ptovta
 
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader

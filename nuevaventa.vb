@@ -517,6 +517,8 @@ Public Class nuevaventa
         lblfecha.Text = "Fecha: " & fechagral
         panelcliente.Enabled = False
         dtproductos.ReadOnly = True
+        txtptovta.SelectedValue = FacturaElectro.puntovtaelect
+
         'If DatosAcceso.StockPpref = 1 Then
         '    chkquitarstock.Checked = True
         'End If
@@ -1727,6 +1729,10 @@ Public Class nuevaventa
     End Sub
 
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
+
+    Private Sub lblfecha_Click(sender As Object, e As EventArgs) Handles lblfecha.Click
 
     End Sub
 End Class

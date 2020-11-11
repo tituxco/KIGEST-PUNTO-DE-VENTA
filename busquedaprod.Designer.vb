@@ -30,6 +30,9 @@ Partial Class busquedaprod
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.chkstock = New System.Windows.Forms.CheckBox()
+        Me.cmbOrdenarPor = New System.Windows.Forms.ComboBox()
+        Me.Label36 = New System.Windows.Forms.Label()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.chkimprimirprecio = New System.Windows.Forms.CheckBox()
@@ -58,32 +61,30 @@ Partial Class busquedaprod
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.grplistasImprimir = New System.Windows.Forms.GroupBox()
         Me.dtlistasImprimir = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.cmdListasImprimir = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.dgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
         Me.ShapeContainer1 = New Microsoft.VisualBasic.PowerPacks.ShapeContainer()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cmbOrdenarPor = New System.Windows.Forms.ComboBox()
-        Me.Label36 = New System.Windows.Forms.Label()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvProductos = New SIGT__KIGEST.DGVPaginado()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel4.SuspendLayout()
@@ -125,6 +126,7 @@ Partial Class busquedaprod
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.chkstock)
         Me.pnnavegacion.Controls.Add(Me.cmbOrdenarPor)
         Me.pnnavegacion.Controls.Add(Me.Label36)
         Me.pnnavegacion.Controls.Add(Me.Panel4)
@@ -142,6 +144,40 @@ Partial Class busquedaprod
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1204, 89)
         Me.pnnavegacion.TabIndex = 75
+        '
+        'chkstock
+        '
+        Me.chkstock.AutoSize = True
+        Me.chkstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkstock.ForeColor = System.Drawing.Color.White
+        Me.chkstock.Location = New System.Drawing.Point(560, 63)
+        Me.chkstock.Name = "chkstock"
+        Me.chkstock.Size = New System.Drawing.Size(121, 20)
+        Me.chkstock.TabIndex = 183
+        Me.chkstock.Text = "Solo en stock"
+        Me.chkstock.UseVisualStyleBackColor = True
+        '
+        'cmbOrdenarPor
+        '
+        Me.cmbOrdenarPor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbOrdenarPor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbOrdenarPor.FormattingEnabled = True
+        Me.cmbOrdenarPor.Items.AddRange(New Object() {"Descripcion", "Codigo/PLU"})
+        Me.cmbOrdenarPor.Location = New System.Drawing.Point(422, 62)
+        Me.cmbOrdenarPor.Name = "cmbOrdenarPor"
+        Me.cmbOrdenarPor.Size = New System.Drawing.Size(132, 21)
+        Me.cmbOrdenarPor.TabIndex = 181
+        '
+        'Label36
+        '
+        Me.Label36.AutoSize = True
+        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label36.ForeColor = System.Drawing.Color.White
+        Me.Label36.Location = New System.Drawing.Point(422, 43)
+        Me.Label36.Name = "Label36"
+        Me.Label36.Size = New System.Drawing.Size(95, 16)
+        Me.Label36.TabIndex = 182
+        Me.Label36.Text = "Ordenar por:"
         '
         'Panel4
         '
@@ -247,7 +283,7 @@ Partial Class busquedaprod
         Me.cmbproveedor.FormattingEnabled = True
         Me.cmbproveedor.Location = New System.Drawing.Point(422, 22)
         Me.cmbproveedor.Name = "cmbproveedor"
-        Me.cmbproveedor.Size = New System.Drawing.Size(235, 21)
+        Me.cmbproveedor.Size = New System.Drawing.Size(259, 21)
         Me.cmbproveedor.TabIndex = 175
         '
         'Label2
@@ -499,47 +535,6 @@ Partial Class busquedaprod
         Me.dtlistas.Size = New System.Drawing.Size(323, 136)
         Me.dtlistas.TabIndex = 227
         '
-        'Column3
-        '
-        Me.Column3.HeaderText = "Lista"
-        Me.Column3.Name = "Column3"
-        '
-        'Column4
-        '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle6.Format = "C2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
-        '
-        'id
-        '
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.ReadOnly = True
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "utilAux"
-        Me.Column2.Name = "Column2"
-        '
         'grplistasImprimir
         '
         Me.grplistasImprimir.Controls.Add(Me.dtlistasImprimir)
@@ -571,21 +566,6 @@ Partial Class busquedaprod
         Me.dtlistasImprimir.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dtlistasImprimir.Size = New System.Drawing.Size(323, 88)
         Me.dtlistasImprimir.TabIndex = 229
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        Me.DataGridViewTextBoxColumn8.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn8.HeaderText = "id"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        Me.DataGridViewTextBoxColumn8.ReadOnly = True
-        Me.DataGridViewTextBoxColumn8.Visible = False
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Lista"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
         '
         'Panel3
         '
@@ -648,14 +628,6 @@ Partial Class busquedaprod
         Me.Panel2.Size = New System.Drawing.Size(1204, 492)
         Me.Panel2.TabIndex = 77
         '
-        'dgvProductos
-        '
-        Me.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvProductos.Location = New System.Drawing.Point(0, 0)
-        Me.dgvProductos.Name = "dgvProductos"
-        Me.dgvProductos.Size = New System.Drawing.Size(852, 492)
-        Me.dgvProductos.TabIndex = 77
-        '
         'dtproductos
         '
         Me.dtproductos.AllowUserToAddRows = False
@@ -690,18 +662,18 @@ Partial Class busquedaprod
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.Visible = False
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle8.Format = "C2"
-        DataGridViewCellStyle8.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle6.Format = "C2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle6
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -712,6 +684,13 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn4.HeaderText = "id"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.Visible = False
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Lista"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
         '
         'DataGridViewTextBoxColumn6
         '
@@ -728,27 +707,62 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn7.Visible = False
         Me.DataGridViewTextBoxColumn7.Width = 317
         '
-        'cmbOrdenarPor
+        'DataGridViewTextBoxColumn8
         '
-        Me.cmbOrdenarPor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbOrdenarPor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbOrdenarPor.FormattingEnabled = True
-        Me.cmbOrdenarPor.Items.AddRange(New Object() {"Descripcion", "Codigo/PLU"})
-        Me.cmbOrdenarPor.Location = New System.Drawing.Point(422, 62)
-        Me.cmbOrdenarPor.Name = "cmbOrdenarPor"
-        Me.cmbOrdenarPor.Size = New System.Drawing.Size(132, 21)
-        Me.cmbOrdenarPor.TabIndex = 181
+        Me.DataGridViewTextBoxColumn8.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn8.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.ReadOnly = True
+        Me.DataGridViewTextBoxColumn8.Visible = False
         '
-        'Label36
+        'dgvProductos
         '
-        Me.Label36.AutoSize = True
-        Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label36.ForeColor = System.Drawing.Color.White
-        Me.Label36.Location = New System.Drawing.Point(422, 43)
-        Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(95, 16)
-        Me.Label36.TabIndex = 182
-        Me.Label36.Text = "Ordenar por:"
+        Me.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvProductos.Location = New System.Drawing.Point(0, 0)
+        Me.dgvProductos.Name = "dgvProductos"
+        Me.dgvProductos.Size = New System.Drawing.Size(852, 492)
+        Me.dgvProductos.TabIndex = 77
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Lista"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle7
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle8.Format = "C2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle8
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'id
+        '
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.ReadOnly = True
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "utilAux"
+        Me.Column2.Name = "Column2"
         '
         'busquedaprod
         '
@@ -843,4 +857,5 @@ Partial Class busquedaprod
     Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
     Friend WithEvents cmbOrdenarPor As ComboBox
     Friend WithEvents Label36 As Label
+    Friend WithEvents chkstock As CheckBox
 End Class

@@ -291,9 +291,11 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
             Dim PrecioVenta As Double
 
             PrecioSinIva = precioCosto * cotizacion * utilidad * lista
+
+
             PrecioVenta = PrecioSinIva * iva
 
-            
+
             Return Math.Round(PrecioVenta, 2)
 
         Catch ex As Exception
@@ -514,9 +516,9 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
             Dim infoDtosMail() As DataRow
             consultaDtosMail.Fill(tablaDtosMail)
             infoDtosMail = tablaDtosMail.Select("")
-
-            'enviar mail a la casilla
-            Dim mail As String = infoDtosMail(0)(0) & txtrazon.Text & vbNewLine _
+            If infoDtosMail.Count > 2 Then
+                'enviar mail a la casilla
+                Dim mail As String = infoDtosMail(0)(0) & txtrazon.Text & vbNewLine _
                                  & infoDtosMail(1)(0) & " " & txtnumor.Text & vbNewLine _
                                  & infoDtosMail(2)(0) & " " & cmbtipoequ.Text & "-" & cmbmarcas.Text & "-" & cmbmodelos.Text & " Serie: " & txtnumeroSerie.Text.ToUpper & vbNewLine _
                                  & infoDtosMail(3)(0) & " " & txtfalla.Text & vbNewLine _
@@ -527,13 +529,13 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
                                  & infoDtosMail(8)(0) & " " & vbNewLine _
                                  & infoDtosMail(9)(0) & " " & vbNewLine _
                                  & infoDtosMail(10)(0) & " "
-            Dim para As String = txtmail.Text.Replace(",", ".").ToLower
-            Dim asunto As String = infoDtosMail(11)(0) & " " & txtnumor.Text & "  " & txtrazon.Text & "(" & txtinfoextra.Text & ")"
+                Dim para As String = txtmail.Text.Replace(",", ".").ToLower
+                Dim asunto As String = infoDtosMail(11)(0) & " " & txtnumor.Text & "  " & txtrazon.Text & "(" & txtinfoextra.Text & ")"
 
-            If chkenviamail.Checked = True And cmbestadotrab.SelectedValue <> 8 Then
-                EnviarMail(mail, para, asunto)
+                If chkenviamail.Checked = True And cmbestadotrab.SelectedValue <> 8 Then
+                    EnviarMail(mail, para, asunto)
+                End If
             End If
-
 
             cargarOrden()
         Catch ex As Exception
@@ -801,6 +803,10 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
     End Sub
 
     Private Sub dtproductos_CellErrorTextNeeded(sender As Object, e As DataGridViewCellErrorTextNeededEventArgs) Handles dtproductos.CellErrorTextNeeded
+
+    End Sub
+
+    Private Sub txtobservaciones_TextChanged(sender As Object, e As EventArgs) Handles txtobservaciones.TextChanged
 
     End Sub
 End Class

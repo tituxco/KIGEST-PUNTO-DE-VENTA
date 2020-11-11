@@ -82,6 +82,13 @@
                         .txtcodPLU.Focus()
                     End With
                     Me.Close()
+                Case "prestamosform"
+                    With CType(frmprincipal.ActiveMdiChild, PrestamosForm)
+                        .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                    End With
+                    Me.Close()
             End Select
         Catch ex As Exception
 
@@ -141,7 +148,14 @@
                             .txtcodPLU.Focus()
                         End With
                         Me.Close()
-
+                    Case "prestamosform"
+                        With CType(frmprincipal.ActiveMdiChild, PrestamosForm)
+                            .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                            .txtmonto.Focus()
+                        End With
+                        Me.Close()
 
                 End Select
 

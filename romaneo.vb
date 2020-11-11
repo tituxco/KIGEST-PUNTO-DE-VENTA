@@ -65,11 +65,12 @@
             txtcomprobanteFcompra.Text = infocl(0)(2).ToString
             txtcomprobanteFvencimiento.Text = infocl(0)(3).ToString
             txtcomprobanteImporte.Text = infocl(0)(4)
-            txtcomprobanteObservaciones.Text = infocl(0)(6)
+            txtcomprobanteObservaciones.Text = infocl(0)(6).ToString
+
             'lblproveedor.Text = "Proveedor: " & infocl(0)(0)
             'lblcomprobante.Text = "Comprobante: NUM " & infocl(0)(1) & "      FECHA " & infocl(0)(2).ToString & "       MONTO: " & infocl(0)(3)
             If infocl(0)(5) = 1 Then
-                MsgBox("ya se cargaron los productos de esta factura, no se puede agregar mas")
+                'MsgBox("ya se cargaron los productos de esta factura, no se puede agregar mas")
                 cerrada = True
             End If
 

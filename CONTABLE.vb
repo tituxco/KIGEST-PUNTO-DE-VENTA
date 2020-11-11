@@ -32,8 +32,8 @@ Public Class CONTABLE
         If InStr(DatosAcceso.Moduloacc, "4aj") = False Then ivaVentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "2d") = False Then tabstockvalorizado.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aa-4ab") = False Then tabgraficas.Parent = Nothing
-
         If InStr(DatosAcceso.Moduloacc, "5") = False Then tabdtostecni.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ea") = False Then tabmoneda.Parent = Nothing
 
         ' tabgraficas.Parent = Nothing
         cargarDatosGrales()
@@ -255,15 +255,11 @@ Public Class CONTABLE
                 'MsgBox(consulta.SelectCommand.CommandText)
             End If
             If rdventadiaria.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-                '' as factid, 'TOTAL DIARIO' as factnum ,fact.fecha,'-' as razon,'-' as direccion, 
-                '-' as localidad, '-' as condicion, 
-                case when fis.debcred='C' then 
-                concat('-',FORMAT(sum(fact.total),2,'es_AR')) 
-                else FORMAT(sum(fact.total),2,'es_AR') end as total, 
-                '' as observaciones2, fact.tipofact from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
-                where fis.donfdesc=fact.tipofact and con.id=fact.condvta  
-                and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " group by fact.fecha", conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT '' as factid, 'TOTAL DIARIO' as factnum ,fact.fecha as fecha,'-' as razon,'-' as direccion, 
+                '-' as localidad, '-' as condicion,  FORMAT(sum(itm.ptotal),2,'es_AR') as total, '' as observaciones2, ' ' as tipofact, '' as ptovta                 
+                FROM fact_items as itm, fact_facturas as fact
+                where itm.id_fact=fact.id and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
+                and fact.fecha between '" & desde & "' and '" & hasta & "'" & consAlmacen & " group by fact.fecha", conexionPrinc)
                 columna = 7
                 consulta.Fill(tablaprod)
             End If
@@ -3366,7 +3362,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         cargarCategorias()
     End Sub
 
-    Private Sub TabPage11_Enter(sender As Object, e As EventArgs) Handles TabPage11.Enter
+    Private Sub TabPage11_Enter(sender As Object, e As EventArgs) Handles tabmoneda.Enter
         cargarMoneda()
     End Sub
 

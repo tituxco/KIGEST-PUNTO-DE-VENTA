@@ -70,7 +70,7 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then EtiquetasEnBlancoToolStripMenuItem.Visible = False
 
             If InStr(DatosAcceso.Moduloacc, "3") = False Then cmdfacturacion.Visible = False
-            'If InStr(DatosAcceso.Moduloacc, "3a") = False Then NuevaEfacturaToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "3") = False Then NuevaEfacturaToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3b") = False Then NuevoPedidoToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3c") = False Then reciboconsfinal.Visible = False
             If InStr(DatosAcceso.Moduloacc, "3d") = False Then facturabconsfinal.Visible = False
@@ -88,6 +88,8 @@ Public Class frmprincipal
 
             If InStr(DatosAcceso.Moduloacc, "5") = False Then cmdtecnico.Visible = False
             If InStr(DatosAcceso.Moduloacc, "KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "RYM") = False Then cmdPrestamos.Visible = False
+
 
             FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
@@ -419,25 +421,6 @@ Public Class frmprincipal
         vta.fxINIC = True
         vta.Show()
     End Sub
-
-    Private Sub NuevaVentaToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles NuevaVentaToolStripMenuItem1.Click
-        'If InStrRev(DatosAcceso.Moduloacc, 4) = 0 Then
-        '    MsgBox("NO esta autorizado")
-        '    Exit Sub
-        'End If
-        Dim i As Integer
-        For i = 0 To Me.MdiChildren.Length - 1
-            If MdiChildren(i).Name = "nuevaventa" Then
-                Me.MdiChildren(i).BringToFront()
-                Exit Sub
-            End If
-        Next
-
-        Dim vta As New nuevaventa
-        vta.MdiParent = Me
-        vta.Show()
-    End Sub
-
     Private Sub NuevaEfacturaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaEfacturaToolStripMenuItem.Click
         Dim i As Integer
         For i = 0 To Me.MdiChildren.Length - 1
@@ -527,21 +510,7 @@ Public Class frmprincipal
     End Sub
 
     Private Sub TecnicoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cmdtecnico.Click
-        Dim i As Integer
-        For i = 0 To Me.MdiChildren.Length - 1
-            If MdiChildren(i).Name = "buscarequipos" Then
-                Me.MdiChildren(i).BringToFront()
-                Exit Sub
-            End If
-        Next
 
-        Dim tec As New buscarequipos
-        tec.MdiParent = Me
-        'tec.idfacrap = 3
-        'tec.cmdguardar.Enabled = False
-        'tec.cmdsolicitarcae.Enabled = True
-        'tec.txtclierazon.Focus()
-        tec.Show()
     End Sub
 
     Private Sub ABMProductosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ABMProductosToolStripMenuItem.Click
@@ -717,6 +686,8 @@ Public Class frmprincipal
 
     Private Sub lblPrincipalDolar_Click(sender As Object, e As EventArgs) Handles lblPrincipalDolar.Click
         Try
+            If InStr(DatosAcceso.Moduloacc, "4ea") = False Then Exit Sub
+
             Dim Cotizacion As String = InputBox("Ingrese nueva cotizacion de dolar", "Cambiar cotizacion")
 
             If IsNumeric(Cotizacion) Then
@@ -732,6 +703,65 @@ Public Class frmprincipal
     End Sub
 
     Private Sub lblPrincipalDolar_DoubleClick(sender As Object, e As EventArgs) Handles lblPrincipalDolar.DoubleClick
+
+    End Sub
+
+    Private Sub SIMULADORToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SIMULADORToolStripMenuItem.Click
+        'If InStrRev(DatosAcceso.Moduloacc, 4) = 0 Then
+        '    MsgBox("NO esta autorizado")
+        '    Exit Sub
+        'End If
+        'Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "prestamosForm" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim vta As New PrestamosForm
+        vta.MdiParent = Me
+        vta.Show()
+    End Sub
+
+    Private Sub TALLERToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TALLERToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "buscarequipos" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New buscarequipos
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+
+    End Sub
+
+    Private Sub LISTADOToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LISTADOToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "listadoPrestamos" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New listadoPrestamos
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+    End Sub
+
+    Private Sub ProducciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProducciónToolStripMenuItem.Click
 
     End Sub
 End Class

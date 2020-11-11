@@ -476,12 +476,12 @@ Public Class imprimirEtiquetas
                 PrecioSinIva = precioCosto * cotizacion * lista
                 PrecioVenta = PrecioSinIva * iva
             Else
-                lista = (FormatNumber(filaslistas(0)(0) + 100) / 100)
-                If codaux = 2 Then
-                    PrecioSinIva = precioCosto * cotizacion * SumaUtil
+                lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
+                If My.Settings.metodoCalculo = 1 Then
+                    PrecioSinIva = precioCosto * cotizacion * lista * utilidad
                     PrecioVenta = PrecioSinIva * iva
                 Else
-                    PrecioSinIva = precioCosto * cotizacion * utilidad * lista
+                    PrecioSinIva = precioCosto * cotizacion * ((lista + utilidad) - 1)
                     PrecioVenta = PrecioSinIva * iva
                 End If
             End If

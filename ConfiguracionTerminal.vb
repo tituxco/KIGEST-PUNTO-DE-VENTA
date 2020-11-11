@@ -13,7 +13,7 @@
             txtimptiketsnombre.Text = My.Settings.ImprTiketsNombre
         End If
         If My.Settings.obtCodProd = "cod_bar" Then rdcod_bar.Checked = True Else rdIdInterno.Checked = True
-
+        If My.Settings.metodoCalculo = 1 Then rdcalculo1.Checked = True Else rdcalculo2.Checked = True
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
@@ -32,7 +32,11 @@
         My.Settings.CajaDef = txtcajaDef.Text
         My.Settings.TextoPieTiket = txtTextoPietiket.Text
         If rdcod_bar.Checked = True Then My.Settings.obtCodProd ="cod_bar" Else My.Settings.obtCodProd ="id"
+
+        If rdcalculo2.Checked = True Then My.Settings.metodoCalculo = 0 Else My.Settings.metodoCalculo = 1
+
         My.Settings.Save()
-            MsgBox("Configuración Guardada")
+        MsgBox("Configuración Guardada")
+
     End Sub
 End Class
