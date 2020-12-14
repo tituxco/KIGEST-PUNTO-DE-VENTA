@@ -261,10 +261,6 @@
     End Sub
 
     Private Sub txtcodint_KeyDown(sender As Object, e As KeyEventArgs) Handles txtcodint.KeyDown
-        'VaciarInfoEquipo()
-    End Sub
-
-    Private Sub txtcodint_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcodint.KeyUp
         Try
             If e.KeyCode = Keys.Enter Then
                 If Val(txtctaclie.Text) = 0 And Val(txtcodint.Text) = 0 Then
@@ -288,6 +284,10 @@
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub txtcodint_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcodint.KeyUp
+
     End Sub
 
     Private Sub cmdaceptar_Click(sender As Object, e As EventArgs) Handles cmdimprimir.Click

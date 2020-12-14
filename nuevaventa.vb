@@ -1676,22 +1676,7 @@ Public Class nuevaventa
 
 
     Private Sub txtptovta_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles txtptovta.SelectionChangeCommitted
-        Try
-            Reconectar()
-            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from tipos_comprobantes where ptovta=" & txtptovta.SelectedValue & " and tip=1", conexionPrinc)
-            Dim readftipo As New DataSet
-            'MsgBox(tablaftipo.SelectCommand.CommandText)
-            tablaftipo.Fill(readftipo)
-            cmbtipofac.DataSource = readftipo.Tables(0)
-            cmbtipofac.DisplayMember = readftipo.Tables(0).Columns(1).Caption.ToString.ToUpper
-            cmbtipofac.ValueMember = readftipo.Tables(0).Columns(0).Caption.ToString
-            cmbtipofac.SelectedIndex = -1
-            'If fxINIC = True Then
-            '    cmbtipofac.SelectedValue = 23
-            'End If
-        Catch ex As Exception
 
-        End Try
     End Sub
     Private Sub RecalcularPreciosLista()
         For Each filasprod As DataGridViewRow In dtproductos.Rows
@@ -1734,5 +1719,28 @@ Public Class nuevaventa
 
     Private Sub lblfecha_Click(sender As Object, e As EventArgs) Handles lblfecha.Click
 
+    End Sub
+
+    Private Sub txtptovta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles txtptovta.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub txtptovta_SelectedValueChanged(sender As Object, e As EventArgs) Handles txtptovta.SelectedValueChanged
+        Try
+            Reconectar()
+            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from tipos_comprobantes where ptovta=" & txtptovta.SelectedValue & " and tip=1", conexionPrinc)
+            Dim readftipo As New DataSet
+            'MsgBox(tablaftipo.SelectCommand.CommandText)
+            tablaftipo.Fill(readftipo)
+            cmbtipofac.DataSource = readftipo.Tables(0)
+            cmbtipofac.DisplayMember = readftipo.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbtipofac.ValueMember = readftipo.Tables(0).Columns(0).Caption.ToString
+            cmbtipofac.SelectedIndex = -1
+            'If fxINIC = True Then
+            '    cmbtipofac.SelectedValue = 23
+            'End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

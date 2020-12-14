@@ -603,7 +603,7 @@ where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis
 
                 Using Imprimir As New ImprimirDirecto()
                     Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
+                    '    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
                 End Using
             End If
         Catch ex As Exception

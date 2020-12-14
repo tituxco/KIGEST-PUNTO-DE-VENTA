@@ -68,6 +68,14 @@ Partial Class frmaspirantes
         Me.Label13 = New System.Windows.Forms.Label()
         Me.txtrazon = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.tabHistorialVentasCliente = New System.Windows.Forms.TabPage()
+        Me.dgvHistorialCliente = New System.Windows.Forms.DataGridView()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.chkHistorialPorProductos = New System.Windows.Forms.CheckBox()
+        Me.txtmesesvtasCliente = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -84,8 +92,17 @@ Partial Class frmaspirantes
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
-        Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.tabSeguimientoVendedores = New System.Windows.Forms.TabPage()
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
+        Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.cmbVendedorHistorial = New System.Windows.Forms.ComboBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.Label17 = New System.Windows.Forms.Label()
+        Me.txtmeseshistorial = New System.Windows.Forms.TextBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.DgvHistorialVtasCliente = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.pnlistaclientes.SuspendLayout()
@@ -93,10 +110,15 @@ Partial Class frmaspirantes
         Me.TabPage2.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.tabHistorialVentasCliente.SuspendLayout()
+        CType(Me.dgvHistorialCliente, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.grpperiodo.SuspendLayout()
+        Me.tabSeguimientoVendedores.SuspendLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnnavegacion
@@ -295,6 +317,7 @@ Partial Class frmaspirantes
         '
         Me.TabControl2.Controls.Add(Me.TabPage2)
         Me.TabControl2.Controls.Add(Me.TabPage3)
+        Me.TabControl2.Controls.Add(Me.tabSeguimientoVendedores)
         Me.TabControl2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl2.Location = New System.Drawing.Point(0, 129)
         Me.TabControl2.Name = "TabControl2"
@@ -317,6 +340,7 @@ Partial Class frmaspirantes
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.tabHistorialVentasCliente)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.Location = New System.Drawing.Point(375, 3)
@@ -621,6 +645,113 @@ Partial Class frmaspirantes
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Apellido y nombres / Razon social:"
         '
+        'tabHistorialVentasCliente
+        '
+        Me.tabHistorialVentasCliente.Controls.Add(Me.dgvHistorialCliente)
+        Me.tabHistorialVentasCliente.Controls.Add(Me.Panel3)
+        Me.tabHistorialVentasCliente.Location = New System.Drawing.Point(4, 25)
+        Me.tabHistorialVentasCliente.Name = "tabHistorialVentasCliente"
+        Me.tabHistorialVentasCliente.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabHistorialVentasCliente.Size = New System.Drawing.Size(713, 416)
+        Me.tabHistorialVentasCliente.TabIndex = 1
+        Me.tabHistorialVentasCliente.Text = "Historial de ventas"
+        Me.tabHistorialVentasCliente.UseVisualStyleBackColor = True
+        '
+        'dgvHistorialCliente
+        '
+        Me.dgvHistorialCliente.AllowUserToAddRows = False
+        Me.dgvHistorialCliente.AllowUserToDeleteRows = False
+        Me.dgvHistorialCliente.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvHistorialCliente.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvHistorialCliente.BackgroundColor = System.Drawing.Color.White
+        Me.dgvHistorialCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvHistorialCliente.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvHistorialCliente.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dgvHistorialCliente.Location = New System.Drawing.Point(3, 77)
+        Me.dgvHistorialCliente.Name = "dgvHistorialCliente"
+        Me.dgvHistorialCliente.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvHistorialCliente.Size = New System.Drawing.Size(707, 336)
+        Me.dgvHistorialCliente.TabIndex = 25
+        '
+        'Panel3
+        '
+        Me.Panel3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel3.Controls.Add(Me.chkHistorialPorProductos)
+        Me.Panel3.Controls.Add(Me.txtmesesvtasCliente)
+        Me.Panel3.Controls.Add(Me.Label18)
+        Me.Panel3.Controls.Add(Me.Button6)
+        Me.Panel3.Controls.Add(Me.Button8)
+        Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel3.Location = New System.Drawing.Point(3, 3)
+        Me.Panel3.Name = "Panel3"
+        Me.Panel3.Size = New System.Drawing.Size(707, 74)
+        Me.Panel3.TabIndex = 3
+        '
+        'chkHistorialPorProductos
+        '
+        Me.chkHistorialPorProductos.AutoSize = True
+        Me.chkHistorialPorProductos.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkHistorialPorProductos.ForeColor = System.Drawing.Color.White
+        Me.chkHistorialPorProductos.Location = New System.Drawing.Point(126, 37)
+        Me.chkHistorialPorProductos.Name = "chkHistorialPorProductos"
+        Me.chkHistorialPorProductos.Size = New System.Drawing.Size(140, 24)
+        Me.chkHistorialPorProductos.TabIndex = 74
+        Me.chkHistorialPorProductos.Text = "Por productos"
+        Me.chkHistorialPorProductos.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.chkHistorialPorProductos.UseVisualStyleBackColor = True
+        '
+        'txtmesesvtasCliente
+        '
+        Me.txtmesesvtasCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtmesesvtasCliente.Location = New System.Drawing.Point(7, 35)
+        Me.txtmesesvtasCliente.Name = "txtmesesvtasCliente"
+        Me.txtmesesvtasCliente.Size = New System.Drawing.Size(100, 26)
+        Me.txtmesesvtasCliente.TabIndex = 73
+        Me.txtmesesvtasCliente.Text = "3"
+        '
+        'Label18
+        '
+        Me.Label18.AutoSize = True
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label18.ForeColor = System.Drawing.Color.White
+        Me.Label18.Location = New System.Drawing.Point(3, 12)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(61, 20)
+        Me.Label18.TabIndex = 72
+        Me.Label18.Text = "Meses"
+        '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.Location = New System.Drawing.Point(551, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(75, 74)
+        Me.Button6.TabIndex = 67
+        Me.Button6.Text = "Exportar"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
+        Me.Button8.Location = New System.Drawing.Point(626, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(81, 74)
+        Me.Button8.TabIndex = 64
+        Me.Button8.Text = "Buscar"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.UseVisualStyleBackColor = False
+        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.dgvlistaClientes)
@@ -820,9 +951,116 @@ Partial Class frmaspirantes
         Me.cmblistaloca.Size = New System.Drawing.Size(206, 24)
         Me.cmblistaloca.TabIndex = 63
         '
+        'tabSeguimientoVendedores
+        '
+        Me.tabSeguimientoVendedores.Controls.Add(Me.DgvHistorialVtasCliente)
+        Me.tabSeguimientoVendedores.Controls.Add(Me.Panel2)
+        Me.tabSeguimientoVendedores.Location = New System.Drawing.Point(4, 22)
+        Me.tabSeguimientoVendedores.Name = "tabSeguimientoVendedores"
+        Me.tabSeguimientoVendedores.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabSeguimientoVendedores.Size = New System.Drawing.Size(1099, 451)
+        Me.tabSeguimientoVendedores.TabIndex = 2
+        Me.tabSeguimientoVendedores.Text = "SEGUIMIENTO DE VENDEDORES"
+        Me.tabSeguimientoVendedores.UseVisualStyleBackColor = True
+        '
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
+        Me.Button5.Location = New System.Drawing.Point(1012, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(81, 74)
+        Me.Button5.TabIndex = 64
+        Me.Button5.Text = "Buscar"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button5.UseVisualStyleBackColor = False
+        '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
+        Me.Button3.Location = New System.Drawing.Point(937, 0)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 74)
+        Me.Button3.TabIndex = 67
+        Me.Button3.Text = "Exportar"
+        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button3.UseVisualStyleBackColor = False
+        '
+        'cmbVendedorHistorial
+        '
+        Me.cmbVendedorHistorial.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbVendedorHistorial.FormattingEnabled = True
+        Me.cmbVendedorHistorial.Location = New System.Drawing.Point(5, 37)
+        Me.cmbVendedorHistorial.Name = "cmbVendedorHistorial"
+        Me.cmbVendedorHistorial.Size = New System.Drawing.Size(222, 24)
+        Me.cmbVendedorHistorial.TabIndex = 68
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.ForeColor = System.Drawing.Color.White
+        Me.Label14.Location = New System.Drawing.Point(5, 14)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(92, 20)
+        Me.Label14.TabIndex = 71
+        Me.Label14.Text = "Vendedor:"
+        '
+        'Label17
+        '
+        Me.Label17.AutoSize = True
+        Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label17.ForeColor = System.Drawing.Color.White
+        Me.Label17.Location = New System.Drawing.Point(240, 14)
+        Me.Label17.Name = "Label17"
+        Me.Label17.Size = New System.Drawing.Size(61, 20)
+        Me.Label17.TabIndex = 72
+        Me.Label17.Text = "Meses"
+        '
+        'txtmeseshistorial
+        '
+        Me.txtmeseshistorial.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtmeseshistorial.Location = New System.Drawing.Point(244, 37)
+        Me.txtmeseshistorial.Name = "txtmeseshistorial"
+        Me.txtmeseshistorial.Size = New System.Drawing.Size(100, 26)
+        Me.txtmeseshistorial.TabIndex = 73
+        Me.txtmeseshistorial.Text = "3"
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.txtmeseshistorial)
+        Me.Panel2.Controls.Add(Me.Label17)
+        Me.Panel2.Controls.Add(Me.Label14)
+        Me.Panel2.Controls.Add(Me.cmbVendedorHistorial)
+        Me.Panel2.Controls.Add(Me.Button3)
+        Me.Panel2.Controls.Add(Me.Button5)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel2.Location = New System.Drawing.Point(3, 3)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(1093, 74)
+        Me.Panel2.TabIndex = 1
+        '
+        'DgvHistorialVtasCliente
+        '
+        Me.DgvHistorialVtasCliente.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvHistorialVtasCliente.Location = New System.Drawing.Point(3, 77)
+        Me.DgvHistorialVtasCliente.Name = "DgvHistorialVtasCliente"
+        Me.DgvHistorialVtasCliente.Size = New System.Drawing.Size(1093, 371)
+        Me.DgvHistorialVtasCliente.TabIndex = 2
         '
         'frmaspirantes
         '
@@ -848,12 +1086,19 @@ Partial Class frmaspirantes
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.tabHistorialVentasCliente.ResumeLayout(False)
+        CType(Me.dgvHistorialCliente, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel3.ResumeLayout(False)
+        Me.Panel3.PerformLayout()
         Me.TabPage3.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.grpperiodo.ResumeLayout(False)
         Me.grpperiodo.PerformLayout()
+        Me.tabSeguimientoVendedores.ResumeLayout(False)
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -919,4 +1164,21 @@ Partial Class frmaspirantes
     Friend WithEvents dtdesde As DateTimePicker
     Friend WithEvents Label12 As Label
     Friend WithEvents chkfecha As CheckBox
+    Friend WithEvents tabSeguimientoVendedores As TabPage
+    Friend WithEvents tabHistorialVentasCliente As TabPage
+    Friend WithEvents Panel3 As Panel
+    Friend WithEvents txtmesesvtasCliente As TextBox
+    Friend WithEvents Label18 As Label
+    Friend WithEvents Button6 As Button
+    Friend WithEvents Button8 As Button
+    Friend WithEvents chkHistorialPorProductos As CheckBox
+    Friend WithEvents dgvHistorialCliente As DataGridView
+    Friend WithEvents DgvHistorialVtasCliente As DGVPaginado
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents txtmeseshistorial As TextBox
+    Friend WithEvents Label17 As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents cmbVendedorHistorial As ComboBox
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button5 As Button
 End Class

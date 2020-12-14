@@ -42,6 +42,7 @@ Partial Class frmprincipal
         Me.MostradorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StockToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EtiquetasEnBlancoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmdProduccion = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdfacturacion = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevaEfacturaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevoPedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -73,7 +74,7 @@ Partial Class frmprincipal
         Me.FCConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ProducciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         Me.SuspendLayout()
@@ -81,9 +82,9 @@ Partial Class frmprincipal
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 379)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1245, 24)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1211, 24)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -151,10 +152,10 @@ Partial Class frmprincipal
         '
         Me.menugral.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.menugral.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdtecnico, Me.cmdPrestamos, Me.VentasToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.SincronizacionToolStripMenuItem})
+        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdtecnico, Me.cmdPrestamos, Me.VentasToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.SincronizacionToolStripMenuItem, Me.SALIRToolStripMenuItem})
         Me.menugral.Location = New System.Drawing.Point(0, 0)
         Me.menugral.Name = "menugral"
-        Me.menugral.Size = New System.Drawing.Size(1245, 40)
+        Me.menugral.Size = New System.Drawing.Size(1211, 40)
         Me.menugral.TabIndex = 15
         Me.menugral.Text = "MenuStrip1"
         '
@@ -170,7 +171,7 @@ Partial Class frmprincipal
         '
         'cmdproductos
         '
-        Me.cmdproductos.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ABMProductosToolStripMenuItem, Me.ConsultaDeProductos, Me.ManejoDePreciosToolStripMenuItem, Me.MostradorToolStripMenuItem, Me.StockToolStripMenuItem, Me.EtiquetasEnBlancoToolStripMenuItem, Me.ProducciónToolStripMenuItem})
+        Me.cmdproductos.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ABMProductosToolStripMenuItem, Me.ConsultaDeProductos, Me.ManejoDePreciosToolStripMenuItem, Me.MostradorToolStripMenuItem, Me.StockToolStripMenuItem, Me.EtiquetasEnBlancoToolStripMenuItem, Me.cmdProduccion})
         Me.cmdproductos.Font = New System.Drawing.Font("Segoe UI", 12.0!)
         Me.cmdproductos.ForeColor = System.Drawing.Color.White
         Me.cmdproductos.Image = CType(resources.GetObject("cmdproductos.Image"), System.Drawing.Image)
@@ -244,6 +245,14 @@ Partial Class frmprincipal
         Me.EtiquetasEnBlancoToolStripMenuItem.Name = "EtiquetasEnBlancoToolStripMenuItem"
         Me.EtiquetasEnBlancoToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
         Me.EtiquetasEnBlancoToolStripMenuItem.Text = "Etiquetas en blanco"
+        '
+        'cmdProduccion
+        '
+        Me.cmdProduccion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdProduccion.ForeColor = System.Drawing.Color.White
+        Me.cmdProduccion.Name = "cmdProduccion"
+        Me.cmdProduccion.Size = New System.Drawing.Size(234, 38)
+        Me.cmdProduccion.Text = "Producción"
         '
         'cmdfacturacion
         '
@@ -461,8 +470,8 @@ Partial Class frmprincipal
         Me.SIMULADORToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Refund_32px
         Me.SIMULADORToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.SIMULADORToolStripMenuItem.Name = "SIMULADORToolStripMenuItem"
-        Me.SIMULADORToolStripMenuItem.Size = New System.Drawing.Size(185, 38)
-        Me.SIMULADORToolStripMenuItem.Text = "SIMULADOR"
+        Me.SIMULADORToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.SIMULADORToolStripMenuItem.Text = "Simulador"
         '
         'LISTADOToolStripMenuItem
         '
@@ -471,8 +480,8 @@ Partial Class frmprincipal
         Me.LISTADOToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_Property_32px
         Me.LISTADOToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.LISTADOToolStripMenuItem.Name = "LISTADOToolStripMenuItem"
-        Me.LISTADOToolStripMenuItem.Size = New System.Drawing.Size(185, 38)
-        Me.LISTADOToolStripMenuItem.Text = "LISTADO"
+        Me.LISTADOToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.LISTADOToolStripMenuItem.Text = "Listado"
         '
         'VentasToolStripMenuItem
         '
@@ -537,13 +546,14 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
         '
-        'ProducciónToolStripMenuItem
+        'SALIRToolStripMenuItem
         '
-        Me.ProducciónToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ProducciónToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.ProducciónToolStripMenuItem.Name = "ProducciónToolStripMenuItem"
-        Me.ProducciónToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
-        Me.ProducciónToolStripMenuItem.Text = "Producción"
+        Me.SALIRToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.SALIRToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Export_32px_WHITE
+        Me.SALIRToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.SALIRToolStripMenuItem.Name = "SALIRToolStripMenuItem"
+        Me.SALIRToolStripMenuItem.Size = New System.Drawing.Size(95, 36)
+        Me.SALIRToolStripMenuItem.Text = "SALIR"
         '
         'frmprincipal
         '
@@ -552,7 +562,7 @@ Partial Class frmprincipal
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(1245, 403)
+        Me.ClientSize = New System.Drawing.Size(1211, 412)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.menugral)
         Me.DoubleBuffered = True
@@ -620,5 +630,6 @@ Partial Class frmprincipal
     Friend WithEvents SIMULADORToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LISTADOToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TALLERToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ProducciónToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents cmdProduccion As ToolStripMenuItem
+    Friend WithEvents SALIRToolStripMenuItem As ToolStripMenuItem
 End Class

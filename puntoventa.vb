@@ -231,7 +231,7 @@ Public Class puntoventa
 
             For Each producto As DataGridViewRow In dtproductos.Rows
                 Select Case tipofact
-                    Case 991, 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
+                    Case 991, 992, 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
 
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
@@ -243,7 +243,7 @@ Public Class puntoventa
                         subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
-                    Case 1, 3
+                    Case 1, 2, 3
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
@@ -261,7 +261,7 @@ Public Class puntoventa
                         subtotal = Math.Round(subtotal21 + subtotal105, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
-                    Case 6, 8
+                    Case 6, 7, 8
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, My.Settings.numDecimales)
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then

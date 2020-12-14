@@ -169,7 +169,7 @@ Public Class busquedaprod
                 
                 cat.nombre as categoria
                 from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
-                'MsgBox(consulta.SelectCommand.CommandText)
+                MsgBox(consulta.SelectCommand.CommandText)
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
                 Dim tablaprod As New DataTable
@@ -220,14 +220,7 @@ Public Class busquedaprod
     End Sub
 
     Private Sub txtbuscar_KeyUp(sender As Object, e As KeyEventArgs) Handles txtbuscar.KeyUp
-        Try
-            If e.KeyCode = Keys.Enter Then
-                cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProd.SelectedValue)
 
-            End If
-        Catch ex As Exception
-
-        End Try
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -623,16 +616,15 @@ Public Class busquedaprod
         cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProd.SelectedValue)
     End Sub
 
-    Private Sub chkstock_CheckedChanged(sender As Object, e As EventArgs) Handles chkstock.CheckedChanged
-        'imprimirlist = False
-        'cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProd.SelectedValue)
+    Private Sub txtbuscar_KeyDown(sender As Object, e As KeyEventArgs) Handles txtbuscar.KeyDown
+        Try
+            If e.KeyCode = Keys.Enter Then
+                cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProd.SelectedValue)
+
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 
-    Private Sub chkmantenerfiltro_CheckedChanged(sender As Object, e As EventArgs) Handles chkmantenerfiltro.CheckedChanged
-
-    End Sub
-
-    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
-
-    End Sub
 End Class

@@ -7,19 +7,19 @@
             Reconectar()
             Dim consulta As String
             If rdcliente.Checked = True Then
-                consulta = " cli.nomapell_razon like '%" & txtequiposclieBusqueda.Text & "%'"
+                consulta = " and cli.nomapell_razon like '%" & txtequiposclieBusqueda.Text & "%'"
             End If
             If rdgarantias.Checked = True Then
-                consulta = " tall.infoextra like '%" & txtequiposclieBusqueda.Text & "%'"
+                consulta = " and tall.infoextra like '%" & txtequiposclieBusqueda.Text & "%'"
             End If
             If rdserie.Checked = True Then
-                consulta = " tall.serie like '%" & txtequiposclieBusqueda.Text & "%'"
+                consulta = " and tall.serie like '%" & txtequiposclieBusqueda.Text & "%'"
             End If
             If rdcodint.Checked = True Then
-                consulta = " tall.equipo =" & txtequiposclieBusqueda.Text
+                consulta = " and tall.equipo =" & txtequiposclieBusqueda.Text
             End If
             If rdorden.Checked = True Then
-                consulta = " tall.id =" & txtequiposclieBusqueda.Text
+                consulta = " and tall.id =" & txtequiposclieBusqueda.Text
             End If
 
             If chkterminadostrab.Checked = True Then
@@ -27,6 +27,10 @@
             End If
             If chksinfacturartrab.Checked = True Then
                 consulta &= " and tall.trab_estado=3 "
+            End If
+
+            If rdequipo.Checked = True Then
+                consulta &= " HAVING EQUIPO LIKE '%" & txtequiposclieBusqueda.Text.Replace(" ", "%") & "%'"
             End If
             'MsgBox(consulta)
 
@@ -43,7 +47,7 @@
             & "when 5 then (select 'de baja') end as factur " _
             & "from tecni_taller as tall,  fact_clientes as cli, tecni_taller_estado as te where " _
             & "fecha_ing between '" & Format(dtpdesdetrab.Value, "yyyy-MM-dd") & "' and '" & Format(dtphastatrab.Value, "yyyy-MM-dd") & "' and " _
-            & "cli.idclientes=tall.cliente and tall.estado=te.id and " _
+            & "cli.idclientes=tall.cliente and tall.estado=te.id " _
             & consulta, conexionPrinc)
 
             'MsgBox(tabla.SelectCommand)

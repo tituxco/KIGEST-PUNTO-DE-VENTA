@@ -13,6 +13,9 @@ Public Class frmaspirantes
         dtdesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         deshabilitarControles()
         cargarDtosGrales()
+        tabSeguimientoVendedores.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4f") = False Then tabHistorialVentasCliente.Parent = Nothing
+
     End Sub
     Private Sub ClienteSeleccionado(cliente As Integer) Handles dgvClientes.SeleccionarItem
         Idcliente = cliente
@@ -136,6 +139,10 @@ Public Class frmaspirantes
             cmbvendedor_lst.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
             cmbvendedor_lst.SelectedIndex = -1
 
+            cmbVendedorHistorial.DataSource = readvend.Tables(0)
+            cmbVendedorHistorial.DisplayMember = readvend.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbVendedorHistorial.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
+            cmbVendedorHistorial.SelectedIndex = -1
         Catch ex As Exception
 
         End Try
@@ -708,5 +715,122 @@ Public Class frmaspirantes
         Else
             grpperiodo.Enabled = False
         End If
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+
+        EnProgreso.Show()
+        Application.DoEvents()
+        If cmbvendedor.SelectedIndex = -1 Or Val(txtmesesvtasCliente.Text) = 0 Or Idcliente = 0 Then
+            MsgBox("Debe seleccionar un cliente y establecer una cantidad de meses para ver")
+            Exit Sub
+        End If
+        dgvHistorialCliente.DataSource = Nothing
+        Dim SqLCons As String
+        Try
+            Reconectar()
+            If chkHistorialPorProductos.Checked = True Then
+                SqLCons = "select itm.cod,itm.descripcion, 
+                concat('(',format(sum(itm.cantidad),2,'es_AR'),')',format(sum(itm.ptotal),2,'es_AR'))as totalVenta,
+                concat(monthname(fact.fecha),'-',YEAR(fact.fecha)) as Periodo
+                from fact_facturas as fact, fact_clientes as cli,fact_items as itm
+                where fact.id_cliente= cli.idclientes and fact.id=itm.id_fact
+                and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
+                and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txtmesesvtasCliente.Text) & " month) and date_format(now(),'%Y-%m-%d')
+                and cli.vendedor=" & cmbvendedor.SelectedValue & " and cli.idclientes=" & Idcliente & "
+                group by month(fact.fecha),itm.cod order by month(fact.fecha) asc"
+            Else
+
+
+                SqLCons = "select cli.idclientes as cod,cli.nomapell_razon as descripcion, format(sum(fact.total),2,'es_AR')as totalVenta,
+            concat(monthname(fact.fecha),'-',YEAR(fact.fecha)) as Periodo
+            from fact_facturas as fact, fact_clientes as cli
+            where fact.id_cliente= cli.idclientes
+            and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
+            and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txtmesesvtasCliente.Text) & " month) and date_format(now(),'%Y-%m-%d')
+            and cli.vendedor=" & cmbvendedor.SelectedValue & " and cli.idclientes=" & Idcliente & " 
+            group by month(fact.fecha),fact.id_cliente order by month(fact.fecha) asc"
+            End If
+
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqLCons, conexionPrinc)
+            Dim tablaDatosHistorial As New DataTable
+            consulta.Fill(tablaDatosHistorial)
+            Dim HistorialCliente As New DataTable
+
+            HistorialCliente.Columns.Add("id")
+            HistorialCliente.Columns.Add("desc")
+            Dim textocol As String
+            Dim existecol As Boolean = False
+            For Each datos As DataRow In tablaDatosHistorial.Rows
+                textocol = datos.Item(3)
+                For Each columna As DataColumn In HistorialCliente.Columns
+                    If textocol = columna.ColumnName Then
+                        existecol = True
+                        Exit For
+                    Else
+                        existecol = False
+                    End If
+                Next
+                If existecol = False Then
+                    HistorialCliente.Columns.Add(textocol)
+                End If
+            Next
+
+            Dim idclie As String
+            Dim nomapell As String
+            Dim totalvta As String
+            Dim periodo As String
+            Dim AgregarFila As Boolean
+            tablaDatosHistorial.DefaultView.Sort = "cod asc"
+            tablaDatosHistorial = tablaDatosHistorial.DefaultView.ToTable
+            For Each datos As DataRow In tablaDatosHistorial.Rows
+                idclie = datos.Item(0)
+                nomapell = datos.Item(1)
+                totalvta = datos.Item(2)
+                periodo = datos.Item(3)
+
+                If HistorialCliente.Rows.Count = 0 Then
+                    AgregarFila = True
+                Else
+                    For Each dtosHistorial As DataRow In HistorialCliente.Rows
+                        If dtosHistorial.Item("id") = idclie Then
+                            dtosHistorial.Item(periodo) = totalvta
+                            AgregarFila = False
+                        Else
+                            AgregarFila = True
+                        End If
+                    Next
+                End If
+
+                If AgregarFila = True Then
+                    Dim fila As DataRow = HistorialCliente.NewRow()
+                    fila("id") = idclie
+                    fila("desc") = nomapell
+                    fila(periodo) = totalvta
+                    HistorialCliente.Rows.Add(fila)
+                End If
+            Next
+
+            dgvHistorialCliente.DataSource = HistorialCliente
+            EnProgreso.Close()
+        Catch ex As Exception
+            EnProgreso.Close()
+
+        End Try
     End Sub
 End Class

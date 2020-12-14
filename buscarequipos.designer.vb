@@ -46,6 +46,7 @@ Partial Class buscarequipos
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.dtresultado = New System.Windows.Forms.DataGridView()
+        Me.rdequipo = New System.Windows.Forms.RadioButton()
         Me.Panel11.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel12.SuspendLayout()
@@ -55,6 +56,7 @@ Partial Class buscarequipos
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.rdequipo)
         Me.Panel11.Controls.Add(Me.lblresultados)
         Me.Panel11.Controls.Add(Me.Button2)
         Me.Panel11.Controls.Add(Me.chksinfacturartrab)
@@ -245,7 +247,7 @@ Partial Class buscarequipos
         Me.rdgarantias.AutoSize = True
         Me.rdgarantias.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.rdgarantias.ForeColor = System.Drawing.Color.White
-        Me.rdgarantias.Location = New System.Drawing.Point(511, 12)
+        Me.rdgarantias.Location = New System.Drawing.Point(589, 12)
         Me.rdgarantias.Name = "rdgarantias"
         Me.rdgarantias.Size = New System.Drawing.Size(81, 17)
         Me.rdgarantias.TabIndex = 76
@@ -363,6 +365,18 @@ Partial Class buscarequipos
         Me.dtresultado.Size = New System.Drawing.Size(1267, 327)
         Me.dtresultado.TabIndex = 11
         '
+        'rdequipo
+        '
+        Me.rdequipo.AutoSize = True
+        Me.rdequipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.rdequipo.ForeColor = System.Drawing.Color.White
+        Me.rdequipo.Location = New System.Drawing.Point(511, 12)
+        Me.rdequipo.Name = "rdequipo"
+        Me.rdequipo.Size = New System.Drawing.Size(72, 17)
+        Me.rdequipo.TabIndex = 89
+        Me.rdequipo.Text = "EQUIPO"
+        Me.rdequipo.UseVisualStyleBackColor = True
+        '
         'buscarequipos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -407,4 +421,5 @@ Partial Class buscarequipos
     Friend WithEvents chkterminadostrab As System.Windows.Forms.CheckBox
     Friend WithEvents Button2 As System.Windows.Forms.Button
     Friend WithEvents lblresultados As System.Windows.Forms.Label
+    Friend WithEvents rdequipo As RadioButton
 End Class

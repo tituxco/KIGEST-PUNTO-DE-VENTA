@@ -471,6 +471,7 @@
                 MsgBox("Debe ingresar un numero")
                 Exit Sub
             End If
+            txtPorcProv.Text = 0
         Else
             Exit Sub
         End If
@@ -496,6 +497,7 @@
                 MsgBox("Debe ingresar un numero")
                 Exit Sub
             End If
+            txtPorcCateg.Text = 0
         Else
             Exit Sub
         End If
@@ -517,6 +519,7 @@
                 MsgBox("Debe ingresar un numero")
                 Exit Sub
             End If
+            txtPorcTodos.Text = 0
         Else
             Exit Sub
         End If
@@ -541,6 +544,7 @@
                 MsgBox("Debe ingresar un numero")
                 Exit Sub
             End If
+            txtporcBusq.Text = 0
         Else
             Exit Sub
         End If

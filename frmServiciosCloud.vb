@@ -87,7 +87,7 @@
 
         cadena = ""
         ObtenerCadenaTreeView(trvmodulos.Nodes)
-        MsgBox(cadena)
+        '        MsgBox(cadena)
 
         If MsgBox("esta seguro que desea actualizar los privilegios de este cliente?", vbYesNo + vbQuestion) = vbNo Then
             Exit Sub

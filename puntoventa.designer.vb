@@ -158,6 +158,7 @@ Partial Class puntoventa
         Me.txtcliecta = New System.Windows.Forms.TextBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.panelencabeza = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.lblfactnumero = New System.Windows.Forms.Label()
         Me.lblfactptovta = New System.Windows.Forms.Label()
         Me.lblfactabrev = New System.Windows.Forms.Label()
@@ -1453,6 +1454,7 @@ Partial Class puntoventa
         'panelencabeza
         '
         Me.panelencabeza.BackColor = System.Drawing.Color.Gray
+        Me.panelencabeza.Controls.Add(Me.Button4)
         Me.panelencabeza.Controls.Add(Me.lblfactnumero)
         Me.panelencabeza.Controls.Add(Me.lblfactptovta)
         Me.panelencabeza.Controls.Add(Me.lblfactabrev)
@@ -1463,6 +1465,15 @@ Partial Class puntoventa
         Me.panelencabeza.Name = "panelencabeza"
         Me.panelencabeza.Size = New System.Drawing.Size(899, 28)
         Me.panelencabeza.TabIndex = 86
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(589, 4)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
+        Me.Button4.TabIndex = 50
+        Me.Button4.Text = "Button4"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'lblfactnumero
         '
@@ -1882,4 +1893,5 @@ Partial Class puntoventa
     Friend WithEvents DataGridViewTextBoxColumn20 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn21 As DataGridViewTextBoxColumn
     Friend WithEvents cmbdescuentoRecargo As Button
+    Friend WithEvents Button4 As Button
 End Class

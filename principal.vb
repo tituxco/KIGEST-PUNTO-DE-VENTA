@@ -66,6 +66,10 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "2b") = False Then ConsultaDeProductos.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2c") = False Then ManejoDePreciosToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2d") = False Then StockToolStripMenuItem.Visible = False
+
+            If InStr(DatosAcceso.Moduloacc, "2e") = False Then cmdProduccion.Visible = False
+
+
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then MostradorToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then EtiquetasEnBlancoToolStripMenuItem.Visible = False
 
@@ -761,7 +765,9 @@ Public Class frmprincipal
         tec.Show()
     End Sub
 
-    Private Sub ProducciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProducciónToolStripMenuItem.Click
+    Private Sub SALIRToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SALIRToolStripMenuItem.Click
+        Application.Restart()
+        Application.ExitThread()
 
     End Sub
 End Class
