@@ -32,6 +32,7 @@ Partial Class DGVPaginado
         Me.Label3 = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.lblregistros = New System.Windows.Forms.Label()
+        Me.btnTodo = New System.Windows.Forms.Button()
         CType(Me.dgvVista, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
@@ -39,7 +40,7 @@ Partial Class DGVPaginado
         'btnSiguiente
         '
         Me.btnSiguiente.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnSiguiente.Location = New System.Drawing.Point(468, 403)
+        Me.btnSiguiente.Location = New System.Drawing.Point(423, 416)
         Me.btnSiguiente.Name = "btnSiguiente"
         Me.btnSiguiente.Size = New System.Drawing.Size(38, 23)
         Me.btnSiguiente.TabIndex = 1
@@ -49,7 +50,7 @@ Partial Class DGVPaginado
         'btnAnterior
         '
         Me.btnAnterior.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.btnAnterior.Location = New System.Drawing.Point(3, 403)
+        Me.btnAnterior.Location = New System.Drawing.Point(3, 416)
         Me.btnAnterior.Name = "btnAnterior"
         Me.btnAnterior.Size = New System.Drawing.Size(34, 23)
         Me.btnAnterior.TabIndex = 2
@@ -95,13 +96,13 @@ Partial Class DGVPaginado
         Me.dgvVista.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvVista.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvVista.BackgroundColor = System.Drawing.Color.White
+        Me.dgvVista.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised
         Me.dgvVista.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvVista.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dgvVista.Location = New System.Drawing.Point(3, 3)
-        Me.dgvVista.MultiSelect = False
         Me.dgvVista.Name = "dgvVista"
         Me.dgvVista.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dgvVista.Size = New System.Drawing.Size(503, 394)
+        Me.dgvVista.Size = New System.Drawing.Size(458, 407)
         Me.dgvVista.TabIndex = 65
         '
         'Panel1
@@ -113,7 +114,7 @@ Partial Class DGVPaginado
         Me.Panel1.Controls.Add(Me.lblPagina)
         Me.Panel1.Controls.Add(Me.Label2)
         Me.Panel1.Controls.Add(Me.lblPaginasTotales)
-        Me.Panel1.Location = New System.Drawing.Point(160, 403)
+        Me.Panel1.Location = New System.Drawing.Point(138, 416)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(186, 31)
         Me.Panel1.TabIndex = 67
@@ -152,16 +153,27 @@ Partial Class DGVPaginado
         Me.lblregistros.TabIndex = 68
         Me.lblregistros.Text = "0"
         '
+        'btnTodo
+        '
+        Me.btnTodo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnTodo.Location = New System.Drawing.Point(342, 416)
+        Me.btnTodo.Name = "btnTodo"
+        Me.btnTodo.Size = New System.Drawing.Size(75, 23)
+        Me.btnTodo.TabIndex = 68
+        Me.btnTodo.Text = "Mostrar todo"
+        Me.btnTodo.UseVisualStyleBackColor = True
+        '
         'DGVPaginado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.btnTodo)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.dgvVista)
         Me.Controls.Add(Me.btnAnterior)
         Me.Controls.Add(Me.btnSiguiente)
         Me.Name = "DGVPaginado"
-        Me.Size = New System.Drawing.Size(509, 434)
+        Me.Size = New System.Drawing.Size(464, 447)
         CType(Me.dgvVista, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -179,4 +191,5 @@ Partial Class DGVPaginado
     Friend WithEvents lblregistros As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label1 As Label
+    Friend WithEvents btnTodo As Button
 End Class

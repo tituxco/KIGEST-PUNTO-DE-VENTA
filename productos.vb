@@ -593,6 +593,7 @@ Public Class productos
             Else
                 txtPesoEspecifico.Text = 0
             End If
+            txtmultiplStock.Text = infoProd(0)("desc_cantidad")
 
             If IsDBNull(infoProd(0)(28)) Then
                 ' MsgBox("nada")
@@ -858,6 +859,7 @@ Public Class productos
             Dim calcular_precio As Integer
             Dim unidades As Integer = cmbunidades.SelectedValue
             Dim bonificacion As String = ""
+            Dim desc_cantidad As String = txtmultiplStock.Text
             If txtbonificacionMax.Text = "" Then bonificacion = 0 Else bonificacion = txtbonificacionMax.Text
             If codigo <> "" And modificaProd = False Then
                 If ExisteProducto(codigo) = True Then
@@ -865,9 +867,14 @@ Public Class productos
                     Exit Sub
                 End If
             End If
-
+            Dim presentacion As String
             If chkpreciobase.CheckState = CheckState.Checked Then calcular_precio = 1 Else calcular_precio = 0
-            Dim presentacion As String = cmbpresentacion.Text
+            If cmbpresentacion.Text = 0 Or cmbpresentacion.Text = "" Then
+                presentacion = 1
+            Else
+                presentacion = cmbpresentacion.Text
+            End If
+
             Dim moneda As Integer = cmbmoneda.SelectedValue
             Dim foto As Byte() = Imagen_Bytes(imgFoto.Image)
 
@@ -911,14 +918,14 @@ Public Class productos
             If modificaProd = False Then
                 sqlQuery = "insert into fact_insumos 
                 (descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, 
-                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,utilidad4,utilidad5) values 
+                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,utilidad4,utilidad5,desc_cantidad) values 
                 (?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, 
-                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4,?util5)"
+                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4,?util5,?desc_cantidad)"
             ElseIf modificaProd = True Then
                 sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
                 codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone,
                 utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, 
-                presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4, utilidad5=?util5 where id=?idp"
+                presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4, utilidad5=?util5,desc_cantidad=?desc_cantidad where id=?idp"
             End If
             Reconectar()
 
@@ -948,6 +955,7 @@ Public Class productos
                 .AddWithValue("?util3", utilidad3)
                 .AddWithValue("?util4", utilidad4)
                 .AddWithValue("?util5", utilidad5)
+                .AddWithValue("?desc_cantidad", desc_cantidad)
                 If modificaProd = True Then
                     '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
                     .AddWithValue("?idp", idProductoGral)
@@ -1017,6 +1025,8 @@ Public Class productos
         modificaProd = False
         vaciarControles()
         cmbproveedor.SelectedValue = 0
+        txtmultiplStock.Text = 1
+
     End Sub
 
     Private Sub txtcodigo_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtcodigo.KeyPress

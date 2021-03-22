@@ -114,6 +114,35 @@ Public Class PrestamosForm
         ) AS ESTADO,
         DTP.* 
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
+        Reconectar()
+        Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, cli.nomapell_razon,pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA
+        FROM rym_prestamo as pre, fact_clientes as cli
+        where cli.idclientes=pre.ID_CLIENTE
+        and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
+        Dim DatosPrestamo As New DataTable
+        ConsultaPrestamo.Fill(DatosPrestamo)
+        If DatosPrestamo.Rows.Count <> 0 Then
+            txtclientecuenta.Text = DatosPrestamo(0).Item("idclientes")
+            txtclientenombre.Text = DatosPrestamo(0).Item("nomapell_razon")
+            txtCuota.Text = DatosPrestamo(0).Item("CUOTA")
+            txtmonto.Text = DatosPrestamo(0).Item("MONTO_PRESTAMO")
+            txtPlazo.Text = DatosPrestamo(0).Item("PLAZO")
+            txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
+
+            txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
+            For Each cont As Control In Me.Controls
+                If TypeOf cont Is TextBox Then
+                    Dim tex As TextBox
+                    tex = cont
+                    tex.ReadOnly = True
+                ElseIf TypeOf cont Is DateTimePicker Then
+                    Dim dt As DateTimePicker
+                    dt = cont
+                    dt.Enabled = False
+                End If
+                cmdclientebuscar.Enabled = False
+            Next
+        End If
     End Sub
 
     Private Sub txtTasaAnual_Leave(sender As Object, e As EventArgs) Handles txtTasaAnual.Leave
@@ -209,5 +238,9 @@ Public Class PrestamosForm
             MsgBox("Se otorgo el prestamo al cliente indicado")
             Button1.Enabled = False
         End If
+    End Sub
+
+    Private Sub txtTasaAnual_TextChanged(sender As Object, e As EventArgs) Handles txtTasaAnual.TextChanged
+
     End Sub
 End Class

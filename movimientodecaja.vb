@@ -475,6 +475,8 @@
 
             Dim sqlQuery As String
             Dim i As Integer
+            Dim idAlmacen As Integer = My.Settings.idAlmacen
+            Dim idCaja As Integer = My.Settings.CajaDef
             'num_fact = idfactura
             If Val(num_fact) = 0 Then
                 MsgBox("No se pueden guardar los items del recibo")
@@ -509,8 +511,8 @@
                 lector.Read()
 
                 sqlQuery = "insert into fact_items " _
-                & "(cod, descripcion, ptotal, tipofact,ptovta,num_fact, id_fact) values" _
-                & "(?cod,?desc,?ptot,?tipofact,ptovta,?num_fact,?id_fact)"
+                & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
+                & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 Reconectar()
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -519,8 +521,8 @@
                     .AddWithValue("?desc", descripcion)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", cmbtipofac.SelectedValue)
-                    .AddWithValue("?ptovta", Val(txtptovta.Text))
-                    .AddWithValue("?num_fact", num_fact)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idfactura)
                 End With
                 comandoadd.ExecuteNonQuery()

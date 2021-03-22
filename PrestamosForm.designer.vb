@@ -232,7 +232,6 @@ Partial Class PrestamosForm
         Me.btnPagar.TabIndex = 67
         Me.btnPagar.Text = "Realizar pago"
         Me.btnPagar.UseVisualStyleBackColor = True
-        Me.btnPagar.Visible = False
         '
         'txtBuscaPrestamo
         '

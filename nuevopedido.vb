@@ -3,6 +3,7 @@
     Public idFactura As Integer
     Public modificar As Boolean
     Public Rehacer As Boolean
+    Public ReadOnlyPedido As Boolean
     Public tipoFac As Integer = 995
     Public ptovta As Integer = DatosAcceso.IdPtoVtaDef
     Public ImportaAPP As Boolean = False
@@ -304,7 +305,7 @@
     Private Sub nuevaventa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarDatosGrales()
         lblfecha.Text = "Fecha: " & fechagral
-        If modificar = True Or Rehacer = True Then
+        If modificar = True Then
             cmdguardar.Enabled = True
             dtproductos.ReadOnly = False
             cmdimprimir.Enabled = True
@@ -314,6 +315,19 @@
             CargarPedido()
             CalcularTotales()
             'calcularEnvases()
+        ElseIf ReadOnlyPedido = True Then
+            CargarPedido()
+            CalcularTotales()
+            dtproductos.ReadOnly = True
+            dtproductos.AllowUserToDeleteRows = False
+            panelcliente.Enabled = False
+            cmdguardar.Enabled = False
+            cmdimprimir.Enabled = True
+            paneltareas.Enabled = True
+            cmbvendedor.Enabled = False
+            tmrcontrolarnumfact.Enabled = False
+
+            'MsgBox(idFactura)
         Else
             dtproductos.ReadOnly = True
             tipoFac = 995
@@ -326,15 +340,26 @@
 
     Private Sub CargarPedido()
         Try
-            If modificar = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-                & "id_cliente,tipofact,lpad(ptovta,4,'0'),lpad(num_fact,8,'0'), fecha, condvta, vendedor,observaciones2, observaciones from fact_facturas where id=" & idFactura, conexionPrinc)
+            If modificar = True Or ReadOnlyPedido = True Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+                id_cliente,tipofact,lpad(ptovta,4,'0'),lpad(num_fact,8,'0'), fecha, condvta, vendedor,observaciones2, observaciones, 
+                razon,direccion,localidad
+                from fact_facturas where id=" & idFactura, conexionPrinc)
                 Dim tablacl As New DataTable
                 Dim infocl() As DataRow
                 consulta.Fill(tablacl)
                 infocl = tablacl.Select("")
                 txtctaclie.Text = infocl(0)(0)
-                cargarCliente()
+
+                If infocl(0)(0) = 9999 Then
+                    cargarCliente()
+                    txtrazon.Text = infocl(0)("razon")
+                    txtdomicilio.Text = infocl(0)("direccion")
+                    txtciudad.Text = infocl(0)("localidad")
+                Else
+                    cargarCliente()
+                End If
+
                 tipoFac = 995
                 txtptovta.Text = infocl(0)(2)
                 txtnufac.Text = infocl(0)(3)
@@ -350,8 +375,8 @@
 
                 Reconectar()
 
-                    If Val(infocl(0)(3)) = 0 Then
-                        ImportaAPP = True
+                If Val(infocl(0)(3)) = 0 Then
+                    ImportaAPP = True
 
                     tmrcontrolarnumfact.Enabled = True
                     IDApp = infocl(0)(7)
@@ -359,32 +384,32 @@
                     Dim consulta2 As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion, format(iva,2,'es_AR'),format(punit,2,'es_AR'), format(ptotal,2,'es_AR'),id FROM fact_items  " _
                & " where codint like '" & IDApp & "'", conexionPrinc)
                     Dim tablaprod As New DataTable
-                        Dim filasProd() As DataRow
-                        consulta2.Fill(tablaprod)
-                        filasProd = tablaprod.Select("")
-                        panelencabeza.Enabled = False
-                        dtproductos.Rows.Clear()
-                        For i = 0 To filasProd.GetUpperBound(0)
-                            dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), filasProd(i)(2), filasProd(i)(3), filasProd(i)(4), filasProd(i)(5), filasProd(i)(6), filasProd(i)(7))
-                        Next
-                    Else
+                    Dim filasProd() As DataRow
+                    consulta2.Fill(tablaprod)
+                    filasProd = tablaprod.Select("")
+                    panelencabeza.Enabled = False
+                    dtproductos.Rows.Clear()
+                    For i = 0 To filasProd.GetUpperBound(0)
+                        dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), filasProd(i)(2), filasProd(i)(3), filasProd(i)(4), filasProd(i)(5), filasProd(i)(6), filasProd(i)(7))
+                    Next
+                Else
                     Dim consulta2 As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod, plu, cantidad, descripcion, format(iva,2,'es_AR'),format(punit,2,'es_AR'), format(ptotal,2,'es_AR'), id FROM fact_items  " _
                 & " where id_fact=" & idFactura, conexionPrinc)
                     Dim tablaprod As New DataTable
-                        Dim filasProd() As DataRow
-                        consulta2.Fill(tablaprod)
-                        filasProd = tablaprod.Select("")
-                        panelencabeza.Enabled = False
-                        dtproductos.Rows.Clear()
-                        For i = 0 To filasProd.GetUpperBound(0)
-                            dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), filasProd(i)(2), filasProd(i)(3), filasProd(i)(4), filasProd(i)(5), filasProd(i)(6), filasProd(i)(7))
-                        Next
-                    End If
+                    Dim filasProd() As DataRow
+                    consulta2.Fill(tablaprod)
+                    filasProd = tablaprod.Select("")
+                    panelencabeza.Enabled = False
+                    dtproductos.Rows.Clear()
+                    For i = 0 To filasProd.GetUpperBound(0)
+                        dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), filasProd(i)(2), filasProd(i)(3), filasProd(i)(4), filasProd(i)(5), filasProd(i)(6), filasProd(i)(7))
+                    Next
+                End If
 
 
 
-                ElseIf Rehacer = True Then
-                    Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
+            ElseIf Rehacer = True Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
                     & "id_cliente,tipofact,lpad(ptovta,4,'0'),lpad(num_fact,8,'0'), fecha, condvta, vendedor from fact_facturas where id=" & idFactura, conexionPrinc)
                     Dim tablacl As New DataTable
                     Dim infocl() As DataRow
@@ -602,13 +627,16 @@
                 ptotal = dtproductos.Rows(i).Cells(6).Value.ToString.Replace(".", "")
                 codint = dtproductos.Rows(i).Cells(1).Value
 
+
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 If cod Is Nothing Then
                     cod = 0
                 End If
 
                 sqlQuery = "insert into fact_items " _
-                & "(cod,codint,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,plu,id_fact) values" _
-                & "(?cod,?codint, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?plu,?id_fact)"
+                & "(cod,codint,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,plu,id_fact) values" _
+                & "(?cod,?codint, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?plu,?id_fact)"
 
                 Reconectar()
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -620,8 +648,8 @@
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipoFac)
-                    .AddWithValue("?ptovta", Val(txtptovta.Text))
-                    .AddWithValue("?num_fact", num_fact)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idFactura)
                     .AddWithValue("?codint", codint)
                     .AddWithValue("?plu", codint)

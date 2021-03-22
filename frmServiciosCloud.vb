@@ -1,5 +1,6 @@
 ﻿Public Class frmServiciosCloud
     Dim cadena As String
+    'Private BindingSourceemp As Windows.Forms.BindingSource = New BindingSource
     Private Sub CargaServiciosCloud()
         Try
             dtcloud.Rows.Clear()
@@ -10,10 +11,12 @@
             Dim infocloud() As DataRow
             consultacloud.Fill(tablacloud)
             infocloud = tablacloud.Select()
+
             Dim i As Integer
             For i = 0 To infocloud.GetUpperBound(0)
                 dtcloud.Rows.Add(infocloud(i)(0), infocloud(i)(1), infocloud(i)(2).ToString, infocloud(i)(3).ToString, infocloud(i)(4).ToString, infocloud(i)(5).ToString, infocloud(i)(6).ToString, infocloud(i)(7).ToString)
                 If infocloud(i)(7) = 0 Then
+
                     dtcloud.Rows(dtcloud.RowCount - 2).DefaultCellStyle.BackColor = Color.OrangeRed
                 End If
             Next
@@ -107,6 +110,28 @@
     End Sub
 
     Private Sub dtcloud_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellContentClick
+
+    End Sub
+
+    Private Sub txtbuscaemp_TextChanged(sender As Object, e As EventArgs) Handles txtbuscaemp.TextChanged
+        Dim filaEncontrada As Integer = 0
+        Try
+            For Each fila As DataGridViewRow In dtcloud.Rows
+
+                If InStr(fila.Cells(1).Value.ToString.ToLower, txtbuscaemp.Text.ToLower) <> 0 Then
+                    'MsgBox(fila.Cells(1).Value)
+                    fila.Selected = True
+                    filaEncontrada = fila.Index
+                    Exit For
+                End If
+            Next
+            dtcloud.Rows(filaEncontrada).Selected = True
+            dtcloud.FirstDisplayedScrollingRowIndex = filaEncontrada
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Sub Panel20_Paint(sender As Object, e As PaintEventArgs) Handles Panel20.Paint
 
     End Sub
 End Class

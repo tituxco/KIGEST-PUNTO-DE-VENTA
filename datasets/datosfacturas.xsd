@@ -45,6 +45,7 @@
               <xs:element name="faccodigo" msprop:Generator_ColumnVarNameInTable="columnfaccodigo" msprop:Generator_ColumnPropNameInRow="faccodigo" msprop:Generator_ColumnPropNameInTable="faccodigoColumn" msprop:Generator_UserColumnName="faccodigo" type="xs:string" minOccurs="0" />
               <xs:element name="vtocae" msprop:Generator_ColumnVarNameInTable="columnvtocae" msprop:Generator_ColumnPropNameInRow="vtocae" msprop:Generator_ColumnPropNameInTable="vtocaeColumn" msprop:Generator_UserColumnName="vtocae" type="xs:string" minOccurs="0" />
               <xs:element name="codbarra" msprop:Generator_ColumnVarNameInTable="columncodbarra" msprop:Generator_ColumnPropNameInRow="codbarra" msprop:Generator_ColumnPropNameInTable="codbarraColumn" msprop:Generator_UserColumnName="codbarra" type="xs:string" minOccurs="0" />
+              <xs:element name="codigo_qr" msprop:Generator_ColumnVarNameInTable="columncodigo_qr" msprop:Generator_ColumnPropNameInRow="codigo_qr" msprop:Generator_ColumnPropNameInTable="codigo_qrColumn" msprop:Generator_UserColumnName="codigo_qr" type="xs:base64Binary" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -199,7 +200,6 @@
         <xs:element name="totalesrecibo" msprop:Generator_TableClassName="totalesreciboDataTable" msprop:Generator_TableVarName="tabletotalesrecibo" msprop:Generator_TablePropName="totalesrecibo" msprop:Generator_RowDeletingName="totalesreciboRowDeleting" msprop:Generator_RowChangingName="totalesreciboRowChanging" msprop:Generator_RowEvHandlerName="totalesreciboRowChangeEventHandler" msprop:Generator_RowDeletedName="totalesreciboRowDeleted" msprop:Generator_UserTableName="totalesrecibo" msprop:Generator_RowChangedName="totalesreciboRowChanged" msprop:Generator_RowEvArgName="totalesreciboRowChangeEvent" msprop:Generator_RowClassName="totalesreciboRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="efectivo" msprop:Generator_ColumnVarNameInTable="columnefectivo" msprop:Generator_ColumnPropNameInRow="efectivo" msprop:Generator_ColumnPropNameInTable="efectivoColumn" msprop:Generator_UserColumnName="efectivo" type="xs:decimal" minOccurs="0" />
               <xs:element name="cheque" msprop:Generator_ColumnVarNameInTable="columncheque" msprop:Generator_ColumnPropNameInRow="cheque" msprop:Generator_ColumnPropNameInTable="chequeColumn" msprop:Generator_UserColumnName="cheque" type="xs:decimal" minOccurs="0" />
               <xs:element name="transferencias" msdata:Caption="transferencia" msprop:Generator_ColumnVarNameInTable="columntransferencias" msprop:Generator_ColumnPropNameInRow="transferencias" msprop:Generator_ColumnPropNameInTable="transferenciasColumn" msprop:Generator_UserColumnName="transferencias" type="xs:decimal" minOccurs="0" />
               <xs:element name="retenciones" msprop:Generator_ColumnVarNameInTable="columnretenciones" msprop:Generator_ColumnPropNameInRow="retenciones" msprop:Generator_ColumnPropNameInTable="retencionesColumn" msprop:Generator_UserColumnName="retenciones" type="xs:decimal" minOccurs="0" />

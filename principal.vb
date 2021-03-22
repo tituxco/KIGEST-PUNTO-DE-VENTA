@@ -67,7 +67,7 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "2c") = False Then ManejoDePreciosToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2d") = False Then StockToolStripMenuItem.Visible = False
 
-            If InStr(DatosAcceso.Moduloacc, "2e") = False Then cmdProduccion.Visible = False
+            'If InStr(DatosAcceso.Moduloacc, "2e") = False Then cmdProduccion.Visible = False
 
 
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then MostradorToolStripMenuItem.Visible = False
@@ -93,7 +93,7 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "5") = False Then cmdtecnico.Visible = False
             If InStr(DatosAcceso.Moduloacc, "KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "RYM") = False Then cmdPrestamos.Visible = False
-
+            If InStr(DatosAcceso.Moduloacc, "6") = False Then EmpleadosToolStripMenuItem.Visible = False
 
             FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
@@ -101,7 +101,7 @@ Public Class frmprincipal
             FacturaElectro.passcertificado = infocl(3)(2)
             FacturaElectro.licencia = infocl(5)(2)
 
-            Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico, idAlmacen from cm_usuarios where id=" & DatosAcceso.UsuarioINT, conexionPrinc)
+            Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico from cm_usuarios where id=" & DatosAcceso.UsuarioINT, conexionPrinc)
             Dim tabla2 As New DataTable
             Dim info2() As DataRow
             cons2.Fill(tabla2)
@@ -109,7 +109,7 @@ Public Class frmprincipal
 
             DatosAcceso.Vendedor = info2(0)(0)
             DatosAcceso.Tecnico = info2(0)(1)
-            DatosAcceso.IdAlmacen = My.Settings.idAlmacen
+            'DatosAcceso.IdAlmacen = My.Settings.idAlmacen
             DatosAcceso.StockPpref = infocl(4)(2)
             DatosAcceso.idFacRap = My.Settings.idfacRap
             DatosAcceso.IdPtoVtaDef = My.Settings.idPtoVta
@@ -165,8 +165,11 @@ Public Class frmprincipal
                 Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
                 Dim tablaMONEDA As New DataTable
                 consMONEDA.Fill(tablaMONEDA)
-                lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
-
+                If tablaMONEDA.Rows.Count > 1 Then
+                    lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
+                Else
+                    lblPrincipalDolar.Text = ""
+                End If
 
             Catch ex As Exception
                 MsgBox(ex.Message)
@@ -249,7 +252,7 @@ Public Class frmprincipal
 
     End Sub
 
-    Private Sub NuevaVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaVentaToolStripMenuItem.Click
+    Private Sub NuevaVentaToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'If InStrRev(DatosAcceso.Moduloacc, 4) = 0 Then
         '    MsgBox("NO esta autorizado")
         '    Exit Sub
@@ -342,7 +345,7 @@ Public Class frmprincipal
         tec.Show()
     End Sub
 
-    Private Sub PedidosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PedidosToolStripMenuItem.Click
+    Private Sub PedidosToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'If InStrRev(DatosAcceso.Moduloacc, 3) = 0 Then
         '    MsgBox("NO esta autorizado")
         '    Exit Sub
@@ -407,7 +410,7 @@ Public Class frmprincipal
         vta.Show()
     End Sub
 
-    Private Sub FXConsFinalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles FXConsFinalToolStripMenuItem.Click
+    Private Sub FXConsFinalToolStripMenuItem_Click(sender As Object, e As EventArgs)
         'If InStrRev(DatosAcceso.Moduloacc, 4) = 0 Then
         '    MsgBox("NO esta autorizado")
         '    Exit Sub
@@ -769,5 +772,81 @@ Public Class frmprincipal
         Application.Restart()
         Application.ExitThread()
 
+    End Sub
+
+    Private Sub cmdProduccion_Click(sender As Object, e As EventArgs)
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "produccion" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New produccion
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+    End Sub
+
+    Private Sub VentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles EmpleadosToolStripMenuItem.Click
+
+    End Sub
+
+    Private Sub ListaDeEmpleadosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListaDeEmpleadosToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "empleados" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New empleados
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+    End Sub
+
+    Private Sub LiquidaciónDeSueldosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LiquidaciónDeSueldosToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "sueldos" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New sueldos
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+    End Sub
+
+    Private Sub MantenimientoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MantenimientoToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "mantenimiento" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New mantenimiento
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
     End Sub
 End Class

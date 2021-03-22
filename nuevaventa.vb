@@ -739,7 +739,8 @@ Public Class nuevaventa
                 iva = remplazarPunto(itemsFact.Cells(4).Value)
                 punit = remplazarPunto(itemsFact.Cells(5).Value)
                 ptotal = remplazarPunto(itemsFact.Cells(6).Value)
-
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 'para quitar de stock
                 If chkquitarstock.Checked = True Then
                     Dim cant As Double = cantidad
@@ -774,8 +775,8 @@ Public Class nuevaventa
                 'guardamos los items
                 Reconectar()
                 sqlQuery = "insert into fact_items " _
-                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact) values" _
-                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact)"
+                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact) values" _
+                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 With comandoadd.Parameters
@@ -787,8 +788,8 @@ Public Class nuevaventa
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", cmbtipofac.SelectedValue)
-                    .AddWithValue("?ptovta", Val(txtptovta.Text))
-                    .AddWithValue("?num_fact", num_fact)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idFactura)
                 End With
                 comandoadd.Transaction = Transaccion
@@ -1172,6 +1173,8 @@ Public Class nuevaventa
                 punit = dtproductos.Rows(i).Cells(5).Value * coef
                 ptotal = dtproductos.Rows(i).Cells(6).Value * coef
 
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 If chkquitarstock.Checked = True Then
                     If Val(cod) <> 0 Then
                         'If QuitarStock(cod, cantidad) = False Then
@@ -1183,8 +1186,8 @@ Public Class nuevaventa
                 End If
 
                 sqlQuery = "insert into fact_items " _
-                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact) values" _
-                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact)"
+                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact) values" _
+                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 Reconectar()
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -1197,8 +1200,8 @@ Public Class nuevaventa
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", cmbtipofac.SelectedValue)
-                    .AddWithValue("?ptovta", Val(txtptovta.Text))
-                    .AddWithValue("?num_fact", num_fact)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idRemito)
                 End With
                 comandoadd.ExecuteNonQuery()

@@ -664,7 +664,7 @@
             <Top>3.89465cm</Top>
             <Left>14.79036cm</Left>
             <Height>0.473cm</Height>
-            <Width>13.5cm</Width>
+            <Width>7.75044cm</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -696,7 +696,7 @@
             <Top>4.41351cm</Top>
             <Left>14.79036cm</Left>
             <Height>1.09742cm</Height>
-            <Width>13.5cm</Width>
+            <Width>10.40438cm</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -1226,6 +1226,100 @@
               </Border>
             </Style>
           </Line>
+          <Rectangle Name="Rectangle3">
+            <ReportItems>
+              <Line Name="Line5">
+                <Top>1.93332cm</Top>
+                <Left>1.36606cm</Left>
+                <Height>-1.93332cm</Height>
+                <Width>0cm</Width>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Line Name="Line7">
+                <Top>0.66685cm</Top>
+                <Left>0.05292cm</Left>
+                <Height>0cm</Height>
+                <Width>2.07591cm</Width>
+                <ZIndex>1</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Line Name="Line8">
+                <Top>1.32649cm</Top>
+                <Left>0.02646cm</Left>
+                <Height>0cm</Height>
+                <Width>2.07591cm</Width>
+                <ZIndex>2</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+              <Line Name="Line4">
+                <Top>1.9633cm</Top>
+                <Left>0.67733cm</Left>
+                <Height>-1.93332cm</Height>
+                <Width>0cm</Width>
+                <ZIndex>3</ZIndex>
+                <Style>
+                  <Border>
+                    <Style>Solid</Style>
+                  </Border>
+                </Style>
+              </Line>
+            </ReportItems>
+            <KeepTogether>true</KeepTogether>
+            <Top>4.47877cm</Top>
+            <Left>25.74078cm</Left>
+            <Height>1.9633cm</Height>
+            <Width>2.12883cm</Width>
+            <ZIndex>30</ZIndex>
+            <Style>
+              <Border>
+                <Style>Solid</Style>
+              </Border>
+            </Style>
+          </Rectangle>
+          <Textbox Name="Textbox30">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>Contraseña:</Value>
+                    <Style>
+                      <FontSize>8pt</FontSize>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox2</rd:DefaultName>
+            <Top>3.87701cm</Top>
+            <Left>22.5408cm</Left>
+            <Height>0.473cm</Height>
+            <Width>5.74956cm</Width>
+            <ZIndex>31</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
         </ReportItems>
         <Height>17.6505cm</Height>
         <Style />

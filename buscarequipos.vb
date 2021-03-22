@@ -40,7 +40,7 @@
             & "cli.nomapell_razon as Cliente, tall.infoextra as extra,  tall.equipo as codint, " _
             & "te.nombre as estado,  case tall.trab_estado " _
             & "when 0 then (select 'Sin terminar') " _
-            & "when 1 then (select concat (fis.abrev, ' ', fa.ptovta,'-', fa.num_fact) from fact_facturas as fa, fact_conffiscal as fis where fis.id=fa.tipofact and tall.factura=fa.id) " _
+            & "when 1 then (select concat (fis.abrev, ' ', fa.ptovta,'-', fa.num_fact) from fact_facturas as fa, tipos_comprobantes as fis where fis.donfdesc=fa.tipofact and fis.ptovta=fa.ptovta and tall.factura=fa.id) " _
             & "when 2 then (select 'CtaCte') " _
             & "when 3 then (select 'Sin facturar') " _
             & "when 4 then (select 'En deposito') " _

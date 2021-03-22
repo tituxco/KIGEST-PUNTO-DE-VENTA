@@ -1474,6 +1474,7 @@ Partial Class puntoventa
         Me.Button4.TabIndex = 50
         Me.Button4.Text = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
+        Me.Button4.Visible = False
         '
         'lblfactnumero
         '
@@ -1871,14 +1872,6 @@ Partial Class puntoventa
     Friend WithEvents Column10 As DataGridViewTextBoxColumn
     Friend WithEvents CheckBox1 As CheckBox
     Friend WithEvents dtproductos As DataGridView
-    Friend WithEvents Column12 As DataGridViewTextBoxColumn
-    Friend WithEvents Column14 As DataGridViewTextBoxColumn
-    Friend WithEvents Column15 As DataGridViewTextBoxColumn
-    Friend WithEvents Column16 As DataGridViewTextBoxColumn
-    Friend WithEvents Column17 As DataGridViewTextBoxColumn
-    Friend WithEvents Column18 As DataGridViewTextBoxColumn
-    Friend WithEvents Column19 As DataGridViewTextBoxColumn
-    Friend WithEvents Column20 As DataGridViewTextBoxColumn
     Friend WithEvents lblnoplu As Label
     Friend WithEvents cmdremitar As Button
     Friend WithEvents Button3 As Button
@@ -1894,4 +1887,12 @@ Partial Class puntoventa
     Friend WithEvents DataGridViewTextBoxColumn21 As DataGridViewTextBoxColumn
     Friend WithEvents cmbdescuentoRecargo As Button
     Friend WithEvents Button4 As Button
+    Friend WithEvents Column12 As DataGridViewTextBoxColumn
+    Friend WithEvents Column14 As DataGridViewTextBoxColumn
+    Friend WithEvents Column15 As DataGridViewTextBoxColumn
+    Friend WithEvents Column16 As DataGridViewTextBoxColumn
+    Friend WithEvents Column17 As DataGridViewTextBoxColumn
+    Friend WithEvents Column18 As DataGridViewTextBoxColumn
+    Friend WithEvents Column19 As DataGridViewTextBoxColumn
+    Friend WithEvents Column20 As DataGridViewTextBoxColumn
 End Class

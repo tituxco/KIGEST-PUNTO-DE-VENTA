@@ -2,7 +2,7 @@
     Public moduloIVA_Act As Boolean = False
     Public moduloSUELDO_Act As Boolean = False
     Public UltimoPathIMG As String = "c:\"
-
+    Public EmpDB As String = DatosAcceso.bd
     Public Structure Encuesta
         Public Property Pregunta As String
         Public Property Respuesta As String

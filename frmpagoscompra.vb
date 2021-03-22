@@ -61,6 +61,9 @@ Public Class frmpagoscompra
 
     Private Sub cmdfinalizar_Click(sender As Object, e As EventArgs) Handles cmdfinalizarEfectivo.Click
         Try
+
+            Dim idAlmacen As Integer = My.Settings.idAlmacen
+            Dim idCaja As Integer = My.Settings.CajaDef
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
                 MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
                 por favor contacte con el administrador o repare la numeración manualmente")
@@ -115,8 +118,8 @@ Public Class frmpagoscompra
             lector.Read()
 
             SqlQuery = "insert into fact_items " _
-                & "(cod, descripcion, ptotal, tipofact,ptovta,num_fact, id_fact) values" _
-                & "(?cod,?desc,?ptot,?tipofact,ptovta,?num_fact,?id_fact)"
+                & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
+                & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
             Reconectar()
             Dim comandoaddITM As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -125,8 +128,8 @@ Public Class frmpagoscompra
                 .AddWithValue("?desc", CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)) 'DESCRIPCION
                 .AddWithValue("?ptot", TOTAL)
                 .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?ptovta", Val(PtoVta))
-                .AddWithValue("?num_fact", Val(NumRecibo))
+                .AddWithValue("?idAlmacen", idAlmacen)
+                .AddWithValue("?idCaja", idCaja)
                 .AddWithValue("?id_fact", IdRecibo)
             End With
             comandoaddITM.ExecuteNonQuery()
@@ -196,6 +199,8 @@ Public Class frmpagoscompra
 
     Private Sub cmdFinalizarTarjeta_Click(sender As Object, e As EventArgs) Handles cmdFinalizarTarjeta.Click
         Try
+            Dim idAlmacen As Integer = My.Settings.idAlmacen
+            Dim idCaja As Integer = My.Settings.CajaDef
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
                 MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
                 por favor contacte con el administrador o repare la numeración manualmente")
@@ -230,8 +235,8 @@ Public Class frmpagoscompra
             SqlQuery = "insert into fact_tarjetas " _
                 & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
                 & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
-                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-                With comandoch.Parameters
+            Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoch.Parameters
                 .AddWithValue("?cliente", CtaClie)
                 .AddWithValue("?comprobante", IdRecibo)
                 .AddWithValue("?nombre", txtTarjetaNombre.Text.ToUpper)
@@ -239,7 +244,7 @@ Public Class frmpagoscompra
                 .AddWithValue("?fecha", Fecha)
                 .AddWithValue("?importe", TOTAL)
             End With
-                comandoch.ExecuteNonQuery()
+            comandoch.ExecuteNonQuery()
             'End If
 
             Reconectar()
@@ -266,8 +271,8 @@ Public Class frmpagoscompra
             lector.Read()
 
             SqlQuery = "insert into fact_items " _
-                & "(cod, descripcion, ptotal, tipofact,ptovta,num_fact, id_fact) values" _
-                & "(?cod,?desc,?ptot,?tipofact,ptovta,?num_fact,?id_fact)"
+                & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
+                & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
             Reconectar()
             Dim comandoaddITM As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -276,8 +281,8 @@ Public Class frmpagoscompra
                 .AddWithValue("?desc", CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)) 'DESCRIPCION
                 .AddWithValue("?ptot", TOTAL)
                 .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?ptovta", Val(PtoVta))
-                .AddWithValue("?num_fact", Val(NumRecibo))
+                .AddWithValue("?idAlmacen", idAlmacen)
+                .AddWithValue("?idCaja", idCaja)
                 .AddWithValue("?id_fact", IdRecibo)
             End With
             comandoaddITM.ExecuteNonQuery()

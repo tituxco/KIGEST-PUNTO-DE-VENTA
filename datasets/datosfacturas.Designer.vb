@@ -868,6 +868,8 @@ Partial Public Class datosfacturas
         
         Private columncodbarra As Global.System.Data.DataColumn
         
+        Private columncodigo_qr As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -1144,6 +1146,14 @@ Partial Public Class datosfacturas
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property codigo_qrColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columncodigo_qr
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1210,9 +1220,10 @@ Partial Public Class datosfacturas
                     ByVal facletra As String,  _
                     ByVal faccodigo As String,  _
                     ByVal vtocae As String,  _
-                    ByVal codbarra As String) As factura_encaRow
+                    ByVal codbarra As String,  _
+                    ByVal codigo_qr() As Byte) As factura_encaRow
             Dim rowfactura_encaRow As factura_encaRow = CType(Me.NewRow,factura_encaRow)
-            Dim columnValuesArray() As Object = New Object() {empnombre, emprazon, empdire, emploca, empcuit, empib, empcontr, empinicioact, empdrei, emplogo, facnum, facfech, facrazon, facdire, facloca, factipocontr, faccuit, facvend, faccondvta, facobserva, iva105, iva21, total, efectivo, descfact, cae, facletra, faccodigo, vtocae, codbarra}
+            Dim columnValuesArray() As Object = New Object() {empnombre, emprazon, empdire, emploca, empcuit, empib, empcontr, empinicioact, empdrei, emplogo, facnum, facfech, facrazon, facdire, facloca, factipocontr, faccuit, facvend, faccondvta, facobserva, iva105, iva21, total, efectivo, descfact, cae, facletra, faccodigo, vtocae, codbarra, codigo_qr}
             rowfactura_encaRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowfactura_encaRow)
             Return rowfactura_encaRow
@@ -1265,6 +1276,7 @@ Partial Public Class datosfacturas
             Me.columnfaccodigo = MyBase.Columns("faccodigo")
             Me.columnvtocae = MyBase.Columns("vtocae")
             Me.columncodbarra = MyBase.Columns("codbarra")
+            Me.columncodigo_qr = MyBase.Columns("codigo_qr")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1330,6 +1342,8 @@ Partial Public Class datosfacturas
             MyBase.Columns.Add(Me.columnvtocae)
             Me.columncodbarra = New Global.System.Data.DataColumn("codbarra", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncodbarra)
+            Me.columncodigo_qr = New Global.System.Data.DataColumn("codigo_qr", GetType(Byte()), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columncodigo_qr)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5325,8 +5339,6 @@ Partial Public Class datosfacturas
     Partial Public Class totalesreciboDataTable
         Inherits Global.System.Data.TypedTableBase(Of totalesreciboRow)
         
-        Private columnefectivo As Global.System.Data.DataColumn
-        
         Private columncheque As Global.System.Data.DataColumn
         
         Private columntransferencias As Global.System.Data.DataColumn
@@ -5371,14 +5383,6 @@ Partial Public Class datosfacturas
             MyBase.New(info, context)
             Me.InitVars
         End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property efectivoColumn() As Global.System.Data.DataColumn
-            Get
-                Return Me.columnefectivo
-            End Get
-        End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -5457,9 +5461,9 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddtotalesreciboRow(ByVal efectivo As Decimal, ByVal cheque As Decimal, ByVal transferencias As Decimal, ByVal retenciones As Decimal, ByVal tarjetas As Decimal, ByVal total As Decimal) As totalesreciboRow
+        Public Overloads Function AddtotalesreciboRow(ByVal cheque As Decimal, ByVal transferencias As Decimal, ByVal retenciones As Decimal, ByVal tarjetas As Decimal, ByVal total As Decimal) As totalesreciboRow
             Dim rowtotalesreciboRow As totalesreciboRow = CType(Me.NewRow,totalesreciboRow)
-            Dim columnValuesArray() As Object = New Object() {efectivo, cheque, transferencias, retenciones, tarjetas, total}
+            Dim columnValuesArray() As Object = New Object() {cheque, transferencias, retenciones, tarjetas, total}
             rowtotalesreciboRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowtotalesreciboRow)
             Return rowtotalesreciboRow
@@ -5482,7 +5486,6 @@ Partial Public Class datosfacturas
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Friend Sub InitVars()
-            Me.columnefectivo = MyBase.Columns("efectivo")
             Me.columncheque = MyBase.Columns("cheque")
             Me.columntransferencias = MyBase.Columns("transferencias")
             Me.columnretenciones = MyBase.Columns("retenciones")
@@ -5493,8 +5496,6 @@ Partial Public Class datosfacturas
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnefectivo = New Global.System.Data.DataColumn("efectivo", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnefectivo)
             Me.columncheque = New Global.System.Data.DataColumn("cheque", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncheque)
             Me.columntransferencias = New Global.System.Data.DataColumn("transferencias", GetType(Decimal), Nothing, Global.System.Data.MappingType.Element)
@@ -6671,6 +6672,21 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property codigo_qr() As Byte()
+            Get
+                Try 
+                    Return CType(Me(Me.tablefactura_enca.codigo_qrColumn),Byte())
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'codigo_qr' de la tabla 'factura_enca' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablefactura_enca.codigo_qrColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsempnombreNull() As Boolean
             Return Me.IsNull(Me.tablefactura_enca.empnombreColumn)
         End Function
@@ -7027,6 +7043,18 @@ Partial Public Class datosfacturas
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetcodbarraNull()
             Me(Me.tablefactura_enca.codbarraColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function Iscodigo_qrNull() As Boolean
+            Return Me.IsNull(Me.tablefactura_enca.codigo_qrColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub Setcodigo_qrNull()
+            Me(Me.tablefactura_enca.codigo_qrColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -9291,21 +9319,6 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property efectivo() As Decimal
-            Get
-                Try 
-                    Return CType(Me(Me.tabletotalesrecibo.efectivoColumn),Decimal)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'efectivo' de la tabla 'totalesrecibo' es DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tabletotalesrecibo.efectivoColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property cheque() As Decimal
             Get
                 Try 
@@ -9378,18 +9391,6 @@ Partial Public Class datosfacturas
                 Me(Me.tabletotalesrecibo.totalColumn) = value
             End Set
         End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsefectivoNull() As Boolean
-            Return Me.IsNull(Me.tabletotalesrecibo.efectivoColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetefectivoNull()
-            Me(Me.tabletotalesrecibo.efectivoColumn) = Global.System.Convert.DBNull
-        End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _

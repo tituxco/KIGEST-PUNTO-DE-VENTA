@@ -53,6 +53,9 @@ Partial Class productos
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Label25 = New System.Windows.Forms.Label()
+        Me.txtmultiplStock = New System.Windows.Forms.TextBox()
+        Me.Label22 = New System.Windows.Forms.Label()
         Me.lblstock = New System.Windows.Forms.Label()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.txtbonificacionMax = New System.Windows.Forms.TextBox()
@@ -522,6 +525,9 @@ Partial Class productos
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.Label25)
+        Me.TabPage1.Controls.Add(Me.txtmultiplStock)
+        Me.TabPage1.Controls.Add(Me.Label22)
         Me.TabPage1.Controls.Add(Me.lblstock)
         Me.TabPage1.Controls.Add(Me.Button5)
         Me.TabPage1.Controls.Add(Me.txtbonificacionMax)
@@ -561,6 +567,37 @@ Partial Class productos
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Informacion general"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.ForeColor = System.Drawing.Color.Black
+        Me.Label25.Location = New System.Drawing.Point(291, 96)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(71, 16)
+        Me.Label25.TabIndex = 250
+        Me.Label25.Text = "unid/Stock"
+        '
+        'txtmultiplStock
+        '
+        Me.txtmultiplStock.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtmultiplStock.Location = New System.Drawing.Point(212, 91)
+        Me.txtmultiplStock.Name = "txtmultiplStock"
+        Me.txtmultiplStock.Size = New System.Drawing.Size(78, 22)
+        Me.txtmultiplStock.TabIndex = 249
+        Me.txtmultiplStock.Text = "1"
+        '
+        'Label22
+        '
+        Me.Label22.AutoSize = True
+        Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label22.ForeColor = System.Drawing.Color.Black
+        Me.Label22.Location = New System.Drawing.Point(214, 74)
+        Me.Label22.Name = "Label22"
+        Me.Label22.Size = New System.Drawing.Size(112, 16)
+        Me.Label22.TabIndex = 248
+        Me.Label22.Text = "Multip de stock"
         '
         'lblstock
         '
@@ -616,9 +653,9 @@ Partial Class productos
         'txtPesoEspecifico
         '
         Me.txtPesoEspecifico.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtPesoEspecifico.Location = New System.Drawing.Point(353, 93)
+        Me.txtPesoEspecifico.Location = New System.Drawing.Point(388, 93)
         Me.txtPesoEspecifico.Name = "txtPesoEspecifico"
-        Me.txtPesoEspecifico.Size = New System.Drawing.Size(113, 22)
+        Me.txtPesoEspecifico.Size = New System.Drawing.Size(78, 22)
         Me.txtPesoEspecifico.TabIndex = 242
         '
         'Label28
@@ -626,7 +663,7 @@ Partial Class productos
         Me.Label28.AutoSize = True
         Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label28.ForeColor = System.Drawing.Color.Black
-        Me.Label28.Location = New System.Drawing.Point(353, 74)
+        Me.Label28.Location = New System.Drawing.Point(385, 74)
         Me.Label28.Name = "Label28"
         Me.Label28.Size = New System.Drawing.Size(120, 16)
         Me.Label28.TabIndex = 241
@@ -862,10 +899,11 @@ Partial Class productos
         Me.Panel3.Controls.Add(Me.txtgarantia)
         Me.Panel3.Controls.Add(Me.Label12)
         Me.Panel3.Controls.Add(Me.ShapeContainer2)
-        Me.Panel3.Location = New System.Drawing.Point(719, 6)
+        Me.Panel3.Location = New System.Drawing.Point(735, 6)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(34, 15)
+        Me.Panel3.Size = New System.Drawing.Size(91, 296)
         Me.Panel3.TabIndex = 222
+        Me.Panel3.Visible = False
         '
         'Label5
         '
@@ -996,7 +1034,7 @@ Partial Class productos
         Me.ShapeContainer2.Margin = New System.Windows.Forms.Padding(0)
         Me.ShapeContainer2.Name = "ShapeContainer2"
         Me.ShapeContainer2.Shapes.AddRange(New Microsoft.VisualBasic.PowerPacks.Shape() {Me.RectangleShape4, Me.RectangleShape2})
-        Me.ShapeContainer2.Size = New System.Drawing.Size(34, 15)
+        Me.ShapeContainer2.Size = New System.Drawing.Size(91, 296)
         Me.ShapeContainer2.TabIndex = 212
         Me.ShapeContainer2.TabStop = False
         '
@@ -1026,11 +1064,12 @@ Partial Class productos
         'txtinfoextra
         '
         Me.txtinfoextra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtinfoextra.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtinfoextra.Location = New System.Drawing.Point(3, 65)
         Me.txtinfoextra.Multiline = True
         Me.txtinfoextra.Name = "txtinfoextra"
         Me.txtinfoextra.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtinfoextra.Size = New System.Drawing.Size(349, 50)
+        Me.txtinfoextra.Size = New System.Drawing.Size(203, 50)
         Me.txtinfoextra.TabIndex = 7
         '
         'txtproducto
@@ -2403,4 +2442,7 @@ Partial Class productos
     Friend WithEvents Label16 As Label
     Friend WithEvents Button8 As Button
     Friend WithEvents txtProductoDescripicionHistorial As Label
+    Friend WithEvents Label25 As Label
+    Friend WithEvents txtmultiplStock As TextBox
+    Friend WithEvents Label22 As Label
 End Class

@@ -134,7 +134,7 @@ Public Class pagosForm
             CapitalAmortizado = CDbl(ds.Tables(0).Rows(0).Item("CAPITAL_AMORTIZADO").ToString)
         End If
 
-        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select top 1 * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
+        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
         ds = New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -176,7 +176,7 @@ Public Class pagosForm
                 CapitalAmortizado = CDbl(ds.Tables(0).Rows(0).Item("CAPITAL_AMORTIZADO").ToString)
             End If
 
-            da = New MySql.Data.MySqlClient.MySqlDataAdapter("select top 1 * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
+            da = New MySql.Data.MySqlClient.MySqlDataAdapter("select  * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
             ds = New DataSet
             da.Fill(ds)
             If ds.Tables(0).Rows.Count > 0 Then

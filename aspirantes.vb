@@ -3,7 +3,7 @@ Public Class frmaspirantes
 
     Inherits System.Windows.Forms.Form
     'Public HC As New verhc()
-    Dim Idcliente As Integer
+    Public Idcliente As Integer
     Dim modificarPers As Boolean
     Dim agregarPers As Boolean
     Private BindingSource1 As Windows.Forms.BindingSource = New BindingSource
@@ -101,7 +101,7 @@ Public Class frmaspirantes
             cmblistas.DataSource = readlis.Tables(0)
             cmblistas.DisplayMember = readlis.Tables(0).Columns(1).Caption.ToString
             cmblistas.ValueMember = readlis.Tables(0).Columns(0).Caption.ToString
-            cmblistas.SelectedIndex = -1
+            cmblistas.SelectedValue = My.Settings.idListaDef
 
             'cargamos localidades
             Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", conexionPrinc)
@@ -132,7 +132,7 @@ Public Class frmaspirantes
             cmbvendedor.DataSource = readvend.Tables(0)
             cmbvendedor.DisplayMember = readvend.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
-            cmbvendedor.SelectedIndex = -1
+            cmbvendedor.SelectedValue = DatosAcceso.Vendedor
 
             cmbvendedor_lst.DataSource = readvend.Tables(0)
             cmbvendedor_lst.DisplayMember = readvend.Tables(0).Columns(1).Caption.ToString.ToUpper
@@ -381,7 +381,7 @@ Public Class frmaspirantes
         End If
     End Sub
 
-    Private Sub txtbuscar_KeyUp(sender As Object, e As KeyEventArgs) Handles txtbuscar.KeyUp
+    Public Sub txtbuscar_KeyUp(sender As Object, e As KeyEventArgs) Handles txtbuscar.KeyUp
 
         If e.KeyCode = Keys.Enter Then
             Dim EnProgreso As New Form
@@ -467,7 +467,10 @@ Public Class frmaspirantes
         cmdmodificar.Enabled = False
         cmdeliminar.Enabled = False
         modificarPers = False
+
         deshabilitarControles()
+        cmbvendedor.SelectedValue = DatosAcceso.Vendedor
+        cmblistas.SelectedValue = My.Settings.idListaDef
     End Sub
 
     Private Sub cmdmodificar_Click(sender As Object, e As EventArgs) Handles cmdmodificar.Click
@@ -721,7 +724,7 @@ Public Class frmaspirantes
 
     End Sub
 
-    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+    Public Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
         EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
@@ -736,7 +739,7 @@ Public Class frmaspirantes
 
         EnProgreso.Show()
         Application.DoEvents()
-        If cmbvendedor.SelectedIndex = -1 Or Val(txtmesesvtasCliente.Text) = 0 Or Idcliente = 0 Then
+        If Val(txtmesesvtasCliente.Text) = 0 Or Idcliente = 0 Then
             MsgBox("Debe seleccionar un cliente y establecer una cantidad de meses para ver")
             Exit Sub
         End If
@@ -752,7 +755,7 @@ Public Class frmaspirantes
                 where fact.id_cliente= cli.idclientes and fact.id=itm.id_fact
                 and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
                 and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txtmesesvtasCliente.Text) & " month) and date_format(now(),'%Y-%m-%d')
-                and cli.vendedor=" & cmbvendedor.SelectedValue & " and cli.idclientes=" & Idcliente & "
+                and cli.idclientes=" & Idcliente & "
                 group by month(fact.fecha),itm.cod order by month(fact.fecha) asc"
             Else
 
@@ -763,7 +766,7 @@ Public Class frmaspirantes
             where fact.id_cliente= cli.idclientes
             and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
             and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txtmesesvtasCliente.Text) & " month) and date_format(now(),'%Y-%m-%d')
-            and cli.vendedor=" & cmbvendedor.SelectedValue & " and cli.idclientes=" & Idcliente & " 
+            and cli.idclientes=" & Idcliente & " 
             group by month(fact.fecha),fact.id_cliente order by month(fact.fecha) asc"
             End If
 

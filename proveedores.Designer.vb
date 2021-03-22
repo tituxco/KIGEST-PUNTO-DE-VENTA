@@ -23,12 +23,12 @@ Partial Class proveedores
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(proveedores))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
@@ -55,6 +55,13 @@ Partial Class proveedores
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.dtcomprobantes = New System.Windows.Forms.DataGridView()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -67,13 +74,6 @@ Partial Class proveedores
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -423,6 +423,56 @@ Partial Class proveedores
         Me.dtcomprobantes.Size = New System.Drawing.Size(1018, 267)
         Me.dtcomprobantes.TabIndex = 89
         '
+        'Column7
+        '
+        Me.Column7.HeaderText = "id"
+        Me.Column7.Name = "Column7"
+        Me.Column7.Visible = False
+        '
+        'Column8
+        '
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column8.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column8.FillWeight = 20.0!
+        Me.Column8.HeaderText = "Fecha"
+        Me.Column8.Name = "Column8"
+        '
+        'Column11
+        '
+        Me.Column11.FillWeight = 20.0!
+        Me.Column11.HeaderText = "Tipo"
+        Me.Column11.Name = "Column11"
+        Me.Column11.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "Numero"
+        Me.Column9.Name = "Column9"
+        '
+        'Column10
+        '
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column10.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column10.FillWeight = 20.0!
+        Me.Column10.HeaderText = "Monto"
+        Me.Column10.Name = "Column10"
+        '
+        'Column12
+        '
+        DataGridViewCellStyle3.Format = "d"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle3
+        Me.Column12.FillWeight = 20.0!
+        Me.Column12.HeaderText = "Vencimiento"
+        Me.Column12.Name = "Column12"
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Observaciones"
+        Me.Column1.Name = "Column1"
+        '
         'Panel3
         '
         Me.Panel3.Controls.Add(Me.Label2)
@@ -469,9 +519,8 @@ Partial Class proveedores
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(70, 60)
         Me.Button6.TabIndex = 88
-        Me.Button6.Text = "Nvo Mov"
+        Me.Button6.Text = "Cargar info Fiscal"
         Me.Button6.UseVisualStyleBackColor = True
-        Me.Button6.Visible = False
         '
         'DataGridViewTextBoxColumn1
         '
@@ -528,56 +577,6 @@ Partial Class proveedores
         Me.DataGridViewTextBoxColumn7.HeaderText = "Observaciones"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.Width = 348
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "id"
-        Me.Column7.Name = "Column7"
-        Me.Column7.Visible = False
-        '
-        'Column8
-        '
-        DataGridViewCellStyle1.Format = "d"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column8.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column8.FillWeight = 20.0!
-        Me.Column8.HeaderText = "Fecha"
-        Me.Column8.Name = "Column8"
-        '
-        'Column11
-        '
-        Me.Column11.FillWeight = 20.0!
-        Me.Column11.HeaderText = "Tipo"
-        Me.Column11.Name = "Column11"
-        Me.Column11.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "Numero"
-        Me.Column9.Name = "Column9"
-        '
-        'Column10
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column10.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column10.FillWeight = 20.0!
-        Me.Column10.HeaderText = "Monto"
-        Me.Column10.Name = "Column10"
-        '
-        'Column12
-        '
-        DataGridViewCellStyle3.Format = "d"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.Column12.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Column12.FillWeight = 20.0!
-        Me.Column12.HeaderText = "Vencimiento"
-        Me.Column12.Name = "Column12"
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Observaciones"
-        Me.Column1.Name = "Column1"
         '
         'proveedores
         '

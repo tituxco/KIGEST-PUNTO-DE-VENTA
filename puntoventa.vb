@@ -217,6 +217,7 @@ Public Class puntoventa
             Dim subtotal As Double
             Dim subtotal105 As Double
             Dim subtotal21 As Double
+            Dim subtotal00 As Double = 0
             Dim iva105 As Double
             Dim iva21 As Double
             Dim total As Double
@@ -225,7 +226,7 @@ Public Class puntoventa
             lblfactiva21.Text = 0
             lblfactsubtotal.Text = 0
             lblfacttotal.Text = 0
-            If dtproductos.Rows.Count = 0 Then
+            If dtproductos.Rows.Count = 1 Then
                 Exit Sub
             End If
 
@@ -238,9 +239,13 @@ Public Class puntoventa
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += FormatNumber(producto.Cells(6).Value)
                         Else
-                            Exit Sub
+                            If producto.Cells(4).Value = "0" And producto.Cells(6).Value <> "0" Then
+                                subtotal00 += FormatNumber(producto.Cells(6).Value)
+                            Else
+                                Exit Sub
+                            End If
                         End If
-                        subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
+                        subtotal = Math.Round(subtotal105 + subtotal21 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 1, 2, 3
@@ -248,9 +253,12 @@ Public Class puntoventa
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += FormatNumber(producto.Cells(6).Value)
-
                         Else
-                            Exit Sub
+                            If producto.Cells(4).Value = "0" And producto.Cells(6).Value <> "0" Then
+                                subtotal00 += FormatNumber(producto.Cells(6).Value)
+                            Else
+                                Exit Sub
+                            End If
                         End If
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
@@ -258,7 +266,8 @@ Public Class puntoventa
                         lblfactiva21.Text = iva21
                         txtsub21.Text = subtotal21
                         txtsub105.Text = subtotal105
-                        subtotal = Math.Round(subtotal21 + subtotal105, My.Settings.numDecimales)
+                        txtsub0.Text = subtotal00
+                        subtotal = Math.Round(subtotal21 + subtotal105 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                     Case 6, 7, 8
@@ -267,7 +276,11 @@ Public Class puntoventa
                         ElseIf producto.Cells(4).Value = "21" Or producto.Cells(4).Value = "21,00" Then
                             subtotal21 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.21, My.Settings.numDecimales)
                         Else
-                            Exit Sub
+                            If producto.Cells(4).Value = "0" And producto.Cells(6).Value <> "0" Then
+                                subtotal00 += FormatNumber(producto.Cells(6).Value)
+                            Else
+                                Exit Sub
+                            End If
                         End If
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
@@ -275,7 +288,8 @@ Public Class puntoventa
                         lblfactiva21.Text = iva21
                         txtsub21.Text = subtotal21
                         txtsub105.Text = subtotal105
-                        subtotal = Math.Round(subtotal105 + subtotal21, My.Settings.numDecimales)
+                        txtsub0.Text = subtotal00
+                        subtotal = Math.Round(subtotal105 + subtotal21 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
                 End Select
@@ -329,12 +343,47 @@ Public Class puntoventa
 
                 dtproductos.Rows(fila).Cells(6).Value = precio * FormatNumber(dtproductos.Rows(fila).Cells(2).Value)
                 dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.GreenYellow
+
             Next
 
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
     End Sub
+    Public Function GuardarHistorialProducto(fila As Integer) As Boolean
+        Try
+            Reconectar()
+            Dim tmp_caja As String = My.Settings.CajaDef
+            Dim tmp_numFact As String = ptovta & "-" & numfact
+            Dim tmp_cod As String = dtproductos.Rows(fila).Cells(0).Value
+            Dim tmp_plu As String = dtproductos.Rows(fila).Cells(1).Value
+            Dim tmp_cant As String = dtproductos.Rows(fila).Cells(2).Value
+            Dim tmp_producto As String = dtproductos.Rows(fila).Cells(3).Value
+            Dim tmp_ptotal As String = dtproductos.Rows(fila).Cells(6).Value
+            Dim tmp_clie As String = Idcliente
+            ' MsgBox("fila agregada")
+
+            Dim sqlQuery As String = "insert into fact_insumos_historial_lectura  
+            (tmp_caja,tmp_numFact,codProd,PLU,cant,producto,ptotal,codClie) values 
+            (?caja,?numfact,?codProd,?plu,?cant,?producto,?ptotal,?codclie)"
+            Dim comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?caja", tmp_caja)
+                .AddWithValue("?numfact", tmp_numFact)
+                .AddWithValue("?codProd", tmp_cod)
+                .AddWithValue("?plu", tmp_plu)
+                .AddWithValue("?cant", tmp_cant)
+                .AddWithValue("?producto", tmp_producto)
+                .AddWithValue("?ptotal", tmp_ptotal)
+                .AddWithValue("?codclie", tmp_clie)
+            End With
+
+            comandoadd.ExecuteNonQuery()
+            Return True
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
     Public Sub cargarProdProduccion(ByRef codigo As String, ByRef fila As Integer)
         Reconectar()
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT ins.id,pro.codigobarras,format(replace(replace(pro.cantidad,'.',''),',','.'),3,'es_AR'),pro.producto, ins.iva,
@@ -430,6 +479,7 @@ Public Class puntoventa
             If fila = -1 Then
                 dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), txtcantPLU.Text, filasProd(i)(3), filasProd(i)(2),
                 precio, FormatNumber(txtcantPLU.Text) * precio)
+                ' GuardarHistorialProducto(dtproductos.Rows.Count - 1)
             Else
                 dtproductos.Rows(fila).Cells(0).Value = filasProd(i)(0)
                 dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(1)
@@ -438,9 +488,20 @@ Public Class puntoventa
                 dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
                 dtproductos.Rows(fila).Cells(5).Value = precio
                 dtproductos.Rows(fila).Cells(6).Value = FormatNumber(txtcantPLU.Text) * precio
+                GuardarHistorialProducto(fila)
             End If
-
         Next
+        If fila = -1 Then
+
+        Else
+
+        End If
+
+        'If GuardarHistorialProducto(fila) Then
+        '    MsgBox("se guardo historial")
+        'Else
+        '    MsgBox("no se pudo guardar")
+        'End If
     End Sub
 
 
@@ -600,8 +661,9 @@ Public Class puntoventa
                     Next
                     If contarprod <> 0 Then
                         If InStr(plutemp, "A00") = 0 Then
-                            dtproductos.Rows(encuentraprod).Cells(2).Value += CType(txtcantPLU.Text, Double)
-                            dtproductos.Rows(encuentraprod).Cells(6).Value = dtproductos.Rows(encuentraprod).Cells(5).Value * dtproductos.Rows(encuentraprod).Cells(2).Value
+                            cargarProdPLU(plutemp, -1)
+                            'dtproductos.Rows(encuentraprod).Cells(2).Value += CType(txtcantPLU.Text, Double)
+                            'dtproductos.Rows(encuentraprod).Cells(6).Value = dtproductos.Rows(encuentraprod).Cells(5).Value * dtproductos.Rows(encuentraprod).Cells(2).Value
                         Else
                             lblnoplu.Text = "el producto ya fue escaneado"
                             Exit Sub
@@ -673,7 +735,10 @@ Public Class puntoventa
         Dim ptotal As String
         Dim codbar As String
         Dim i As Integer
-
+        Dim codigo_qr As Byte()
+        If ptovta = FacturaElectro.puntovtaelect Then
+            codigo_qr = Imagen_Bytes(Image.FromFile(Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"))
+        End If
         'comprobamos que se seleccione un vendedor
         'If cmbvendedor.SelectedValue = 0 Then
         '    MsgBox("Seleccione vendedor")
@@ -707,6 +772,8 @@ Public Class puntoventa
                     ' MsgBox("Uno de los productos no pudo ser procesado por falta de stock o es insuficiente, por favor compruebe")
                     productoscomp.DefaultCellStyle.BackColor = Color.Red
                     contarstock += 1 ' Exit Sub
+                Else
+                    productoscomp.DefaultCellStyle.BackColor = Color.LightGreen
                 End If
             Next
             'If contarstock > 0 Then
@@ -728,8 +795,8 @@ Public Class puntoventa
             'GUARDO LOS DATOS DE LA FACTURA
             sqlQuery = "insert into fact_facturas  
             (tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,
-            condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,observaciones) values 
-            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?transp)"
+            condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,observaciones,codigo_qr) values 
+            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?transp,?codigo_qr)"
             comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
@@ -753,6 +820,7 @@ Public Class puntoventa
                 .AddWithValue("?vtocae", lblvtoCAE.Text.Replace("Vto: ", ""))
                 .AddWithValue("?codbarra", lblcodigobarras.Text)
                 .AddWithValue("?transp", transp)
+                .AddWithValue("?codigo_qr", codigo_qr)
             End With
             comandoadd.Transaction = Transaccion
             comandoadd.ExecuteNonQuery()
@@ -834,8 +902,8 @@ Public Class puntoventa
                 'guardamos los items
                 Reconectar()
                 sqlQuery = "insert into fact_items " _
-                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact) values" _
-                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact)"
+                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact) values" _
+                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 With comandoadd.Parameters
@@ -847,8 +915,8 @@ Public Class puntoventa
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipofact)
-                    .AddWithValue("?ptovta", My.Settings.idAlmacen) '''''ahora ponemos el almacen de donde se saco la mercaderia, se sigue llamando ptovta
-                    .AddWithValue("?num_fact", numfact)
+                    .AddWithValue("?idAlmacen", My.Settings.idAlmacen) '''''ahora ponemos el almacen de donde se saco la mercaderia, se sigue llamando ptovta
+                    .AddWithValue("?idCaja", My.Settings.CajaDef)
                     .AddWithValue("?id_fact", IdFactura)
                 End With
                 comandoadd.Transaction = Transaccion
@@ -1501,6 +1569,7 @@ Public Class puntoventa
                     For Each factRap As DataRow In tablaFacRap.Rows
                         textoInput &= factRap.Item(0) & vbNewLine
                     Next
+                    textoInput &= vbNewLine
 
                     idFacRap = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
                     With Me
@@ -1682,8 +1751,8 @@ Public Class puntoventa
                     txtpreciounitPLU.Text = ""
                     txtcodPLU.Text = ""
                     txtcodPLU.Focus()
-
                     CalcularTotales()
+                    GuardarHistorialProducto(dtproductos.Rows.Count - 1)
                 Else
                     MsgBox("No se puede agregar el item, por favor verifique los datos ingresados")
                 End If
@@ -1742,6 +1811,7 @@ Public Class puntoventa
             Dim subtotal As Double = 0
             Dim ivatotal As Double = 0
             Dim total As Double = 0
+            Dim codigo_qr As Byte()
 
             Select Case tipofact
             ' If tipofact <> 30 Then,31,32' Or tipofact <> 31 Or tipofact <> 32 Then
@@ -1754,11 +1824,12 @@ Public Class puntoventa
                 Case Else
                     ' MsgBox("otro ")
                     iva0 = 0
-                    subtotal = Math.Round(sub21 + sub105, 2)
+                    subtotal = Math.Round(sub21 + sub105 + sub0, 2)
                     ivatotal = Math.Round(iva21 + iva105, 2)
                     total = Math.Round(subtotal + ivatotal, 2)
             End Select
             'MsgBox(total)
+            ' Exit Sub
             Select Case tipofact
                 Case 1
                     cbtetipo = WSAFIPFE.Factura.TipoComprobante.FacturaA
@@ -1874,6 +1945,7 @@ Public Class puntoventa
                     ElseIf iva105 <> 0 And iva21 = 0 And sub0 = 0 Then
                         '      MsgBox("3")
                         fe.F1DetalleIvaItemCantidad = 1
+
                         fe.f1IndiceItem = 0
                         fe.F1DetalleIvaId = 4
                         fe.F1DetalleIvaBaseImp = sub105
@@ -1926,7 +1998,14 @@ Public Class puntoventa
                         fe.F1DetalleIvaId = 3
                         fe.F1DetalleIvaBaseImp = sub0
                         fe.F1DetalleIvaImporte = 0
+                    ElseIf iva105 = 0 And iva21 = 0 And sub0 <> 0 Then
+                        '   MsgBox("6")
+                        fe.F1DetalleIvaItemCantidad = 1
 
+                        fe.f1IndiceItem = 0
+                        fe.F1DetalleIvaId = 3
+                        fe.F1DetalleIvaBaseImp = sub0
+                        fe.F1DetalleIvaImporte = 0
                     End If
                 End If
                 'MsgBox("4")
@@ -1934,56 +2013,68 @@ Public Class puntoventa
                 fe.F1DetalleImpTotalConc = 0
                 fe.F1DetalleImpNeto = subtotal
                 fe.F1DetalleImpIva = ivatotal
+
+                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"
+                fe.f1detalleqrtolerancia = 1
+                fe.f1detalleqrresolucion = 4
+                fe.f1detalleqrformato = 6
+                If fe.f1qrGenerar(99) = False Then
+                    '    MsgBox("gráfico generado con los datos. " + fe.f1qrmanualTexto)
+                    'Else
+                    MsgBox("error al generar el codigo QR " + fe.ArchivoQRError + " " + fe.UltimoMensajeError)
+                    Exit Sub
+                End If
                 'If MsgBox("total: " & total & vbNewLine & "Neto: " & subtotal & vbNewLine & "ImpIVA: " & ivatotal & vbNewLine & vbNewLine & "esta correcto?", vbYesNoCancel) = MsgBoxResult.Yes Then
                 lresultado = fe.F1CAESolicitar()
-                'Else
-                'Exit Sub
-                'End If
+                    'Else
+                    'Exit Sub
+                    'End If
 
-                If lresultado = True Then
-                    If fe.F1RespuestaResultado = "R" Then
-                        MsgBox("Solicitud rechazada " & fe.UltimoMensajeError & " - " & fe.UltimoNumeroError)
-                        lblobservacionescae.Text = "Resultado: " & fe.F1RespuestaResultado & vbNewLine
-                        lblobservacionescae.Text &= "Observaciones: " & fe.F1RespuestaDetalleObservacionMsg1 & fe.F1RespuestaDetalleObservacionMsg
-                        lblobservacionescae.Text &= "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
+                    If lresultado = True Then
+                        If fe.F1RespuestaResultado = "R" Then
+                            MsgBox("Solicitud rechazada " & fe.UltimoMensajeError & " - " & fe.UltimoNumeroError)
+                            lblobservacionescae.Text = "Resultado: " & fe.F1RespuestaResultado & vbNewLine
+                            lblobservacionescae.Text &= "Observaciones: " & fe.F1RespuestaDetalleObservacionMsg1 & fe.F1RespuestaDetalleObservacionMsg
+                            lblobservacionescae.Text &= "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
+                            lblobservacionescae.Text &= "Ultimo otorgado: " & fe.F1CompUltimoAutorizado(Val(lblfactptovta.Text), cbtetipo)
+                            pncaerechazado.Visible = True
+                            pncaeaprobado.Visible = False
+                            EnProgreso.Close()
+                            Exit Sub
+                        ElseIf fe.F1RespuestaResultado = "A" Then
+
+                            lblestadoCAE.Text = "CAE: " & fe.F1RespuestaDetalleCae
+                            lblvtoCAE.Text = "Vto: " & fe.F1RespuestaDetalleCAEFchVto
+                            lblobservacionescae.Text = "Resultado: " & fe.F1RespuestaResultado & vbNewLine
+                            lblobservacionescae.Text &= "Observaciones: " & fe.F1RespuestaDetalleObservacionMsg1 & vbNewLine
+                            lblobservacionescae.Text &= "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
+                            lblobservacionescae.Text &= "Ultimo otorgado: " & fe.F1CompUltimoAutorizado(Val(lblfactptovta.Text), cbtetipo)
+                            lblcodigobarras.Text = fe.f1CodigoDeBarraAFIP
+
+                            Reconectar()
+                            Dim lector As System.Data.IDataReader
+                            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+                            sql.Connection = conexionPrinc
+                            sql.CommandText = "update fact_conffiscal set confnume=" & Val(lblfactnumero.Text) & " where donfdesc= " & tipofact & " and ptovta=" & ptovta
+                            sql.CommandType = CommandType.Text
+                            lector = sql.ExecuteReader
+                            lector.Read()
+                            cmdguardar.Enabled = True
+                            cmdsolicitarcae.Enabled = False
+                            pncaeaprobado.Visible = True
+                            pncaerechazado.Visible = False
+                            cmdguardar.PerformClick()
+                        End If
+
+                    Else
+                        lblobservacionescae.Text = "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
                         lblobservacionescae.Text &= "Ultimo otorgado: " & fe.F1CompUltimoAutorizado(Val(lblfactptovta.Text), cbtetipo)
+                        cmdguardar.Enabled = False
                         pncaerechazado.Visible = True
                         pncaeaprobado.Visible = False
-                        EnProgreso.Close()
-                        Exit Sub
-                    ElseIf fe.F1RespuestaResultado = "A" Then
-
-                        lblestadoCAE.Text = "CAE: " & fe.F1RespuestaDetalleCae
-                        lblvtoCAE.Text = "Vto: " & fe.F1RespuestaDetalleCAEFchVto
-                        lblobservacionescae.Text = "Resultado: " & fe.F1RespuestaResultado & vbNewLine
-                        lblobservacionescae.Text &= "Observaciones: " & fe.F1RespuestaDetalleObservacionMsg1 & vbNewLine
-                        lblobservacionescae.Text &= "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
-                        lblobservacionescae.Text &= "Ultimo otorgado: " & fe.F1CompUltimoAutorizado(Val(lblfactptovta.Text), cbtetipo)
-                        lblcodigobarras.Text = fe.f1CodigoDeBarraAFIP
-                        Reconectar()
-                        Dim lector As System.Data.IDataReader
-                        Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                        sql.Connection = conexionPrinc
-                        sql.CommandText = "update fact_conffiscal set confnume=" & Val(lblfactnumero.Text) & " where donfdesc= " & tipofact & " and ptovta=" & ptovta
-                        sql.CommandType = CommandType.Text
-                        lector = sql.ExecuteReader
-                        lector.Read()
-                        cmdguardar.Enabled = True
-                        cmdsolicitarcae.Enabled = False
-                        pncaeaprobado.Visible = True
-                        pncaerechazado.Visible = False
-                        cmdguardar.PerformClick()
                     End If
-
                 Else
-                    lblobservacionescae.Text = "error: " & fe.F1RespuestaDetalleObservacionMsg & fe.UltimoMensajeError & vbNewLine
-                    lblobservacionescae.Text &= "Ultimo otorgado: " & fe.F1CompUltimoAutorizado(Val(lblfactptovta.Text), cbtetipo)
-                    cmdguardar.Enabled = False
-                    pncaerechazado.Visible = True
-                    pncaeaprobado.Visible = False
-                End If
-            Else
-                MsgBox("Error en el tiket " & vbNewLine & "Error: " & fe.UltimoMensajeError)
+                    MsgBox("Error en el tiket " & vbNewLine & "Error: " & fe.UltimoMensajeError)
             End If
         Catch ex As Exception
             tmrcontrolarnumfact.Enabled = True
@@ -1993,10 +2084,6 @@ Public Class puntoventa
         EnProgreso.Close()
     End Sub
 
-    Private Sub dtproductos_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles dtproductos.RowsAdded
-        'dtproductos.CurrentCell = dtproductos.Rows(e.RowIndex).Cells(1)
-
-    End Sub
 
     Private Sub txtdescripcionPLU_KeyUp(sender As Object, e As KeyEventArgs) Handles txtdescripcionPLU.KeyUp
         If e.KeyCode = Keys.Enter Then
@@ -2240,9 +2327,11 @@ Public Class puntoventa
                 punit = items.Rows(i).Item(3) * coef
                 ptotal = items.Rows(i).Item(4) * coef
 
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 SqlQuery = "insert into fact_items " _
-                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact,plu) values" _
-                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact,?plu)"
+                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact,plu) values" _
+                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?plu)"
 
                 Reconectar()
                 Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -2254,8 +2343,8 @@ Public Class puntoventa
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipoFact)
-                    .AddWithValue("?ptovta", ptovta)
-                    .AddWithValue("?num_fact", num_remit)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idRemito)
                     .AddWithValue("?plu", codbar)
                 End With
@@ -2313,15 +2402,6 @@ Public Class puntoventa
 
         End Try
     End Sub
-
-    Private Sub txtcantPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcantPLU.TextChanged
-
-    End Sub
-
-    Private Sub txtpreciounitPLU_TextChanged(sender As Object, e As EventArgs) Handles txtpreciounitPLU.TextChanged
-
-    End Sub
-
     Private Sub tmrcontrolarnumfact_Tick(sender As Object, e As EventArgs) Handles tmrcontrolarnumfact.Tick
         Try
             Reconectar()
@@ -2353,11 +2433,9 @@ Public Class puntoventa
         End Try
     End Sub
 
-    Private Sub lblobservacionescae_Click(sender As Object, e As EventArgs) Handles lblobservacionescae.Click
-
+    Private Sub dtproductos_RowsAdded(sender As Object, e As DataGridViewRowsAddedEventArgs) Handles dtproductos.RowsAdded
+        GuardarHistorialProducto(e.RowIndex)
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
-    End Sub
 End Class

@@ -42,7 +42,6 @@ Partial Class frmprincipal
         Me.MostradorToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StockToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EtiquetasEnBlancoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.cmdProduccion = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdfacturacion = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevaEfacturaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevoPedidoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -62,19 +61,16 @@ Partial Class frmprincipal
         Me.cmdtecnico = New System.Windows.Forms.ToolStripMenuItem()
         Me.CLOUDSERVERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TALLERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.EmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ListaDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LiquidaciónDeSueldosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdPrestamos = New System.Windows.Forms.ToolStripMenuItem()
         Me.SIMULADORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LISTADOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.VentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NuevaVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.PedidosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RecibosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FacturasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FXConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.FCConsFinalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MantenimientoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         Me.SuspendLayout()
@@ -152,7 +148,7 @@ Partial Class frmprincipal
         '
         Me.menugral.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.menugral.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdtecnico, Me.cmdPrestamos, Me.VentasToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.SincronizacionToolStripMenuItem, Me.SALIRToolStripMenuItem})
+        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdtecnico, Me.EmpleadosToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.SincronizacionToolStripMenuItem})
         Me.menugral.Location = New System.Drawing.Point(0, 0)
         Me.menugral.Name = "menugral"
         Me.menugral.Size = New System.Drawing.Size(1211, 40)
@@ -161,23 +157,23 @@ Partial Class frmprincipal
         '
         'cmdclientes
         '
-        Me.cmdclientes.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.cmdclientes.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdclientes.ForeColor = System.Drawing.Color.White
         Me.cmdclientes.Image = CType(resources.GetObject("cmdclientes.Image"), System.Drawing.Image)
         Me.cmdclientes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdclientes.Name = "cmdclientes"
-        Me.cmdclientes.Size = New System.Drawing.Size(105, 36)
+        Me.cmdclientes.Size = New System.Drawing.Size(98, 36)
         Me.cmdclientes.Text = "Cientes"
         '
         'cmdproductos
         '
-        Me.cmdproductos.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ABMProductosToolStripMenuItem, Me.ConsultaDeProductos, Me.ManejoDePreciosToolStripMenuItem, Me.MostradorToolStripMenuItem, Me.StockToolStripMenuItem, Me.EtiquetasEnBlancoToolStripMenuItem, Me.cmdProduccion})
-        Me.cmdproductos.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.cmdproductos.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ABMProductosToolStripMenuItem, Me.ConsultaDeProductos, Me.ManejoDePreciosToolStripMenuItem, Me.MostradorToolStripMenuItem, Me.StockToolStripMenuItem, Me.EtiquetasEnBlancoToolStripMenuItem})
+        Me.cmdproductos.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdproductos.ForeColor = System.Drawing.Color.White
         Me.cmdproductos.Image = CType(resources.GetObject("cmdproductos.Image"), System.Drawing.Image)
         Me.cmdproductos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdproductos.Name = "cmdproductos"
-        Me.cmdproductos.Size = New System.Drawing.Size(124, 36)
+        Me.cmdproductos.Size = New System.Drawing.Size(115, 36)
         Me.cmdproductos.Text = "Productos"
         '
         'ABMProductosToolStripMenuItem
@@ -188,7 +184,7 @@ Partial Class frmprincipal
         Me.ABMProductosToolStripMenuItem.Image = CType(resources.GetObject("ABMProductosToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ABMProductosToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ABMProductosToolStripMenuItem.Name = "ABMProductosToolStripMenuItem"
-        Me.ABMProductosToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
+        Me.ABMProductosToolStripMenuItem.Size = New System.Drawing.Size(233, 38)
         Me.ABMProductosToolStripMenuItem.Text = "ABM Productos"
         '
         'ConsultaDeProductos
@@ -199,7 +195,7 @@ Partial Class frmprincipal
         Me.ConsultaDeProductos.Image = CType(resources.GetObject("ConsultaDeProductos.Image"), System.Drawing.Image)
         Me.ConsultaDeProductos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ConsultaDeProductos.Name = "ConsultaDeProductos"
-        Me.ConsultaDeProductos.Size = New System.Drawing.Size(234, 38)
+        Me.ConsultaDeProductos.Size = New System.Drawing.Size(233, 38)
         Me.ConsultaDeProductos.Text = "Consulta de productos"
         '
         'ManejoDePreciosToolStripMenuItem
@@ -210,7 +206,7 @@ Partial Class frmprincipal
         Me.ManejoDePreciosToolStripMenuItem.Image = CType(resources.GetObject("ManejoDePreciosToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ManejoDePreciosToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ManejoDePreciosToolStripMenuItem.Name = "ManejoDePreciosToolStripMenuItem"
-        Me.ManejoDePreciosToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
+        Me.ManejoDePreciosToolStripMenuItem.Size = New System.Drawing.Size(233, 38)
         Me.ManejoDePreciosToolStripMenuItem.Text = "Manejo de precios"
         '
         'MostradorToolStripMenuItem
@@ -221,7 +217,7 @@ Partial Class frmprincipal
         Me.MostradorToolStripMenuItem.Image = CType(resources.GetObject("MostradorToolStripMenuItem.Image"), System.Drawing.Image)
         Me.MostradorToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.MostradorToolStripMenuItem.Name = "MostradorToolStripMenuItem"
-        Me.MostradorToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
+        Me.MostradorToolStripMenuItem.Size = New System.Drawing.Size(233, 38)
         Me.MostradorToolStripMenuItem.Text = "Despacho Mostrador"
         '
         'StockToolStripMenuItem
@@ -233,35 +229,29 @@ Partial Class frmprincipal
         Me.StockToolStripMenuItem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.StockToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.StockToolStripMenuItem.Name = "StockToolStripMenuItem"
-        Me.StockToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
+        Me.StockToolStripMenuItem.Size = New System.Drawing.Size(233, 38)
         Me.StockToolStripMenuItem.Text = "Stock"
         '
         'EtiquetasEnBlancoToolStripMenuItem
         '
         Me.EtiquetasEnBlancoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.EtiquetasEnBlancoToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.EtiquetasEnBlancoToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.EtiquetasEnBlancoToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Paper_32px
         Me.EtiquetasEnBlancoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.EtiquetasEnBlancoToolStripMenuItem.Name = "EtiquetasEnBlancoToolStripMenuItem"
-        Me.EtiquetasEnBlancoToolStripMenuItem.Size = New System.Drawing.Size(234, 38)
+        Me.EtiquetasEnBlancoToolStripMenuItem.Size = New System.Drawing.Size(233, 38)
         Me.EtiquetasEnBlancoToolStripMenuItem.Text = "Etiquetas en blanco"
-        '
-        'cmdProduccion
-        '
-        Me.cmdProduccion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdProduccion.ForeColor = System.Drawing.Color.White
-        Me.cmdProduccion.Name = "cmdProduccion"
-        Me.cmdProduccion.Size = New System.Drawing.Size(234, 38)
-        Me.cmdProduccion.Text = "Producción"
         '
         'cmdfacturacion
         '
         Me.cmdfacturacion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaEfacturaToolStripMenuItem, Me.NuevoPedidoToolStripMenuItem, Me.reciboconsfinal, Me.facturabconsfinal, Me.FacturaA, Me.RemitosToolStripMenuItem, Me.ReimpresiónDeComprobantesToolStripMenuItem})
+        Me.cmdfacturacion.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdfacturacion.ForeColor = System.Drawing.Color.White
         Me.cmdfacturacion.Image = CType(resources.GetObject("cmdfacturacion.Image"), System.Drawing.Image)
         Me.cmdfacturacion.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdfacturacion.Name = "cmdfacturacion"
-        Me.cmdfacturacion.Size = New System.Drawing.Size(133, 36)
+        Me.cmdfacturacion.Size = New System.Drawing.Size(123, 36)
         Me.cmdfacturacion.Text = "Facturación"
         '
         'NuevaEfacturaToolStripMenuItem
@@ -272,7 +262,7 @@ Partial Class frmprincipal
         Me.NuevaEfacturaToolStripMenuItem.Image = CType(resources.GetObject("NuevaEfacturaToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevaEfacturaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevaEfacturaToolStripMenuItem.Name = "NuevaEfacturaToolStripMenuItem"
-        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
+        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
         Me.NuevaEfacturaToolStripMenuItem.Text = "Recuperar facturas Elect."
         '
         'NuevoPedidoToolStripMenuItem
@@ -283,7 +273,7 @@ Partial Class frmprincipal
         Me.NuevoPedidoToolStripMenuItem.Image = CType(resources.GetObject("NuevoPedidoToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevoPedidoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevoPedidoToolStripMenuItem.Name = "NuevoPedidoToolStripMenuItem"
-        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
+        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
         Me.NuevoPedidoToolStripMenuItem.Text = "Presupuestos/Pedidos"
         '
         'reciboconsfinal
@@ -294,7 +284,7 @@ Partial Class frmprincipal
         Me.reciboconsfinal.Image = CType(resources.GetObject("reciboconsfinal.Image"), System.Drawing.Image)
         Me.reciboconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.reciboconsfinal.Name = "reciboconsfinal"
-        Me.reciboconsfinal.Size = New System.Drawing.Size(275, 38)
+        Me.reciboconsfinal.Size = New System.Drawing.Size(280, 38)
         Me.reciboconsfinal.Text = "Recibo Cons. final"
         '
         'facturabconsfinal
@@ -305,7 +295,7 @@ Partial Class frmprincipal
         Me.facturabconsfinal.Image = CType(resources.GetObject("facturabconsfinal.Image"), System.Drawing.Image)
         Me.facturabconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.facturabconsfinal.Name = "facturabconsfinal"
-        Me.facturabconsfinal.Size = New System.Drawing.Size(275, 38)
+        Me.facturabconsfinal.Size = New System.Drawing.Size(280, 38)
         Me.facturabconsfinal.Text = "Factura B / C"
         '
         'FacturaA
@@ -316,7 +306,7 @@ Partial Class frmprincipal
         Me.FacturaA.Image = CType(resources.GetObject("FacturaA.Image"), System.Drawing.Image)
         Me.FacturaA.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FacturaA.Name = "FacturaA"
-        Me.FacturaA.Size = New System.Drawing.Size(275, 38)
+        Me.FacturaA.Size = New System.Drawing.Size(280, 38)
         Me.FacturaA.Text = "Factura A"
         '
         'RemitosToolStripMenuItem
@@ -325,212 +315,209 @@ Partial Class frmprincipal
         Me.RemitosToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.RemitosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.RemitosToolStripMenuItem.Name = "RemitosToolStripMenuItem"
-        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
+        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
         Me.RemitosToolStripMenuItem.Text = "Remitos"
         '
         'ReimpresiónDeComprobantesToolStripMenuItem
         '
         Me.ReimpresiónDeComprobantesToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ReimpresiónDeComprobantesToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ReimpresiónDeComprobantesToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ReimpresiónDeComprobantesToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
         Me.ReimpresiónDeComprobantesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Name = "ReimpresiónDeComprobantesToolStripMenuItem"
-        Me.ReimpresiónDeComprobantesToolStripMenuItem.Size = New System.Drawing.Size(275, 38)
+        Me.ReimpresiónDeComprobantesToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Text = "Reimpresión de comprobantes"
         '
         'cmdadministracion
         '
         Me.cmdadministracion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.cmdadministracion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InformesDeVentasToolStripMenuItem, Me.ContableToolStripMenuItem1, Me.CajaToolStripMenuItem, Me.CajaDiariaToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.AgendaDeVencimientosToolStripMenuItem, Me.ConfiguracionDeTerminalToolStripMenuItem})
-        Me.cmdadministracion.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.cmdadministracion.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdadministracion.ForeColor = System.Drawing.Color.White
         Me.cmdadministracion.Image = CType(resources.GetObject("cmdadministracion.Image"), System.Drawing.Image)
         Me.cmdadministracion.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdadministracion.Name = "cmdadministracion"
-        Me.cmdadministracion.Size = New System.Drawing.Size(159, 36)
+        Me.cmdadministracion.Size = New System.Drawing.Size(144, 36)
         Me.cmdadministracion.Text = "Administracion"
         '
         'InformesDeVentasToolStripMenuItem
         '
         Me.InformesDeVentasToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.InformesDeVentasToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.InformesDeVentasToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.InformesDeVentasToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Graph_Report_32px
         Me.InformesDeVentasToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.InformesDeVentasToolStripMenuItem.Name = "InformesDeVentasToolStripMenuItem"
-        Me.InformesDeVentasToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
-        Me.InformesDeVentasToolStripMenuItem.Text = "Informes de ventas"
+        Me.InformesDeVentasToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
+        Me.InformesDeVentasToolStripMenuItem.Text = "Informes"
         '
         'ContableToolStripMenuItem1
         '
         Me.ContableToolStripMenuItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ContableToolStripMenuItem1.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.ContableToolStripMenuItem1.ForeColor = System.Drawing.Color.White
         Me.ContableToolStripMenuItem1.Image = CType(resources.GetObject("ContableToolStripMenuItem1.Image"), System.Drawing.Image)
         Me.ContableToolStripMenuItem1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ContableToolStripMenuItem1.Name = "ContableToolStripMenuItem1"
-        Me.ContableToolStripMenuItem1.Size = New System.Drawing.Size(277, 38)
+        Me.ContableToolStripMenuItem1.Size = New System.Drawing.Size(252, 38)
         Me.ContableToolStripMenuItem1.Text = "Contable"
         '
         'CajaToolStripMenuItem
         '
         Me.CajaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.CajaToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.CajaToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.CajaToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CajaToolStripMenuItem.Image = CType(resources.GetObject("CajaToolStripMenuItem.Image"), System.Drawing.Image)
         Me.CajaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CajaToolStripMenuItem.Name = "CajaToolStripMenuItem"
-        Me.CajaToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
+        Me.CajaToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.CajaToolStripMenuItem.Text = "Cajas"
         '
         'CajaDiariaToolStripMenuItem
         '
         Me.CajaDiariaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.CajaDiariaToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.CajaDiariaToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CajaDiariaToolStripMenuItem.Name = "CajaDiariaToolStripMenuItem"
-        Me.CajaDiariaToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
+        Me.CajaDiariaToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.CajaDiariaToolStripMenuItem.Text = "Caja Diaria"
         '
         'ProveedoresToolStripMenuItem
         '
         Me.ProveedoresToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.ProveedoresToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.ProveedoresToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.ProveedoresToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ProveedoresToolStripMenuItem.Image = CType(resources.GetObject("ProveedoresToolStripMenuItem.Image"), System.Drawing.Image)
         Me.ProveedoresToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ProveedoresToolStripMenuItem.Name = "ProveedoresToolStripMenuItem"
-        Me.ProveedoresToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
+        Me.ProveedoresToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.ProveedoresToolStripMenuItem.Text = "Proveedores"
         '
         'AgendaDeVencimientosToolStripMenuItem
         '
         Me.AgendaDeVencimientosToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.AgendaDeVencimientosToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.AgendaDeVencimientosToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.AgendaDeVencimientosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.AgendaDeVencimientosToolStripMenuItem.Image = CType(resources.GetObject("AgendaDeVencimientosToolStripMenuItem.Image"), System.Drawing.Image)
         Me.AgendaDeVencimientosToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.AgendaDeVencimientosToolStripMenuItem.Name = "AgendaDeVencimientosToolStripMenuItem"
-        Me.AgendaDeVencimientosToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
+        Me.AgendaDeVencimientosToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.AgendaDeVencimientosToolStripMenuItem.Text = "Agenda de vencimientos"
         '
         'ConfiguracionDeTerminalToolStripMenuItem
         '
         Me.ConfiguracionDeTerminalToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ConfiguracionDeTerminalToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.ConfiguracionDeTerminalToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.ConfiguracionDeTerminalToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Automation_32px
         Me.ConfiguracionDeTerminalToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ConfiguracionDeTerminalToolStripMenuItem.Name = "ConfiguracionDeTerminalToolStripMenuItem"
-        Me.ConfiguracionDeTerminalToolStripMenuItem.Size = New System.Drawing.Size(277, 38)
+        Me.ConfiguracionDeTerminalToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.ConfiguracionDeTerminalToolStripMenuItem.Text = "Configuracion de terminal"
         '
         'cmdtecnico
         '
         Me.cmdtecnico.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CLOUDSERVERToolStripMenuItem, Me.TALLERToolStripMenuItem})
+        Me.cmdtecnico.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdtecnico.ForeColor = System.Drawing.Color.White
         Me.cmdtecnico.Image = CType(resources.GetObject("cmdtecnico.Image"), System.Drawing.Image)
         Me.cmdtecnico.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdtecnico.Name = "cmdtecnico"
-        Me.cmdtecnico.Size = New System.Drawing.Size(104, 36)
+        Me.cmdtecnico.Size = New System.Drawing.Size(97, 36)
         Me.cmdtecnico.Text = "Tecnico"
         '
         'CLOUDSERVERToolStripMenuItem
         '
         Me.CLOUDSERVERToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.CLOUDSERVERToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.CLOUDSERVERToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.CLOUDSERVERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cloud_Storage_32px
         Me.CLOUDSERVERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CLOUDSERVERToolStripMenuItem.Name = "CLOUDSERVERToolStripMenuItem"
-        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(206, 38)
+        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.CLOUDSERVERToolStripMenuItem.Text = "CLOUD SERVER"
         '
         'TALLERToolStripMenuItem
         '
         Me.TALLERToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.TALLERToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.TALLERToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.TALLERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Computer_Support_32px
         Me.TALLERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.TALLERToolStripMenuItem.Name = "TALLERToolStripMenuItem"
-        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(206, 38)
+        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.TALLERToolStripMenuItem.Text = "TALLER"
+        '
+        'EmpleadosToolStripMenuItem
+        '
+        Me.EmpleadosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ListaDeEmpleadosToolStripMenuItem, Me.LiquidaciónDeSueldosToolStripMenuItem, Me.MantenimientoToolStripMenuItem})
+        Me.EmpleadosToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.EmpleadosToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.User_Groups_32px
+        Me.EmpleadosToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.EmpleadosToolStripMenuItem.Name = "EmpleadosToolStripMenuItem"
+        Me.EmpleadosToolStripMenuItem.Size = New System.Drawing.Size(130, 36)
+        Me.EmpleadosToolStripMenuItem.Text = "Empleados"
+        '
+        'ListaDeEmpleadosToolStripMenuItem
+        '
+        Me.ListaDeEmpleadosToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ListaDeEmpleadosToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ListaDeEmpleadosToolStripMenuItem.Name = "ListaDeEmpleadosToolStripMenuItem"
+        Me.ListaDeEmpleadosToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
+        Me.ListaDeEmpleadosToolStripMenuItem.Text = "Lista de empleados"
+        '
+        'LiquidaciónDeSueldosToolStripMenuItem
+        '
+        Me.LiquidaciónDeSueldosToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LiquidaciónDeSueldosToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.LiquidaciónDeSueldosToolStripMenuItem.Name = "LiquidaciónDeSueldosToolStripMenuItem"
+        Me.LiquidaciónDeSueldosToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
+        Me.LiquidaciónDeSueldosToolStripMenuItem.Text = "Liquidación de sueldos"
         '
         'cmdPrestamos
         '
         Me.cmdPrestamos.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SIMULADORToolStripMenuItem, Me.LISTADOToolStripMenuItem})
+        Me.cmdPrestamos.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdPrestamos.ForeColor = System.Drawing.Color.White
         Me.cmdPrestamos.Image = Global.SIGT__KIGEST.My.Resources.Resources.Bank_Building_32px
         Me.cmdPrestamos.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.cmdPrestamos.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdPrestamos.Name = "cmdPrestamos"
-        Me.cmdPrestamos.Size = New System.Drawing.Size(127, 36)
+        Me.cmdPrestamos.Size = New System.Drawing.Size(117, 36)
         Me.cmdPrestamos.Text = "Prestamos"
         '
         'SIMULADORToolStripMenuItem
         '
         Me.SIMULADORToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.SIMULADORToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.SIMULADORToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.SIMULADORToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Refund_32px
         Me.SIMULADORToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.SIMULADORToolStripMenuItem.Name = "SIMULADORToolStripMenuItem"
-        Me.SIMULADORToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.SIMULADORToolStripMenuItem.Size = New System.Drawing.Size(155, 38)
         Me.SIMULADORToolStripMenuItem.Text = "Simulador"
         '
         'LISTADOToolStripMenuItem
         '
         Me.LISTADOToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.LISTADOToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.LISTADOToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.LISTADOToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_Property_32px
         Me.LISTADOToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.LISTADOToolStripMenuItem.Name = "LISTADOToolStripMenuItem"
-        Me.LISTADOToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.LISTADOToolStripMenuItem.Size = New System.Drawing.Size(155, 38)
         Me.LISTADOToolStripMenuItem.Text = "Listado"
         '
-        'VentasToolStripMenuItem
+        'SALIRToolStripMenuItem
         '
-        Me.VentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaVentaToolStripMenuItem, Me.PedidosToolStripMenuItem, Me.RecibosToolStripMenuItem, Me.FacturasToolStripMenuItem, Me.FXConsFinalToolStripMenuItem, Me.FCConsFinalToolStripMenuItem})
-        Me.VentasToolStripMenuItem.Name = "VentasToolStripMenuItem"
-        Me.VentasToolStripMenuItem.Size = New System.Drawing.Size(68, 36)
-        Me.VentasToolStripMenuItem.Text = "Ventas"
-        Me.VentasToolStripMenuItem.Visible = False
-        '
-        'NuevaVentaToolStripMenuItem
-        '
-        Me.NuevaVentaToolStripMenuItem.Name = "NuevaVentaToolStripMenuItem"
-        Me.NuevaVentaToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.NuevaVentaToolStripMenuItem.Text = "Nueva venta"
-        '
-        'PedidosToolStripMenuItem
-        '
-        Me.PedidosToolStripMenuItem.Name = "PedidosToolStripMenuItem"
-        Me.PedidosToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.PedidosToolStripMenuItem.Text = "Pedidos"
-        Me.PedidosToolStripMenuItem.Visible = False
-        '
-        'RecibosToolStripMenuItem
-        '
-        Me.RecibosToolStripMenuItem.Name = "RecibosToolStripMenuItem"
-        Me.RecibosToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.RecibosToolStripMenuItem.Text = "Recibos"
-        Me.RecibosToolStripMenuItem.Visible = False
-        '
-        'FacturasToolStripMenuItem
-        '
-        Me.FacturasToolStripMenuItem.Name = "FacturasToolStripMenuItem"
-        Me.FacturasToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.FacturasToolStripMenuItem.Text = "Facturas"
-        Me.FacturasToolStripMenuItem.Visible = False
-        '
-        'FXConsFinalToolStripMenuItem
-        '
-        Me.FXConsFinalToolStripMenuItem.Name = "FXConsFinalToolStripMenuItem"
-        Me.FXConsFinalToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.FXConsFinalToolStripMenuItem.Text = "FX Cons. Final"
-        Me.FXConsFinalToolStripMenuItem.Visible = False
-        '
-        'FCConsFinalToolStripMenuItem
-        '
-        Me.FCConsFinalToolStripMenuItem.Name = "FCConsFinalToolStripMenuItem"
-        Me.FCConsFinalToolStripMenuItem.Size = New System.Drawing.Size(177, 26)
-        Me.FCConsFinalToolStripMenuItem.Text = "FC Cons. Final"
-        Me.FCConsFinalToolStripMenuItem.Visible = False
+        Me.SALIRToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.SALIRToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.SALIRToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Export_32px_WHITE
+        Me.SALIRToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.SALIRToolStripMenuItem.Name = "SALIRToolStripMenuItem"
+        Me.SALIRToolStripMenuItem.Size = New System.Drawing.Size(88, 36)
+        Me.SALIRToolStripMenuItem.Text = "SALIR"
         '
         'ProduccionToolStripMenuItem
         '
@@ -546,14 +533,13 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
         '
-        'SALIRToolStripMenuItem
+        'MantenimientoToolStripMenuItem
         '
-        Me.SALIRToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.SALIRToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Export_32px_WHITE
-        Me.SALIRToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.SALIRToolStripMenuItem.Name = "SALIRToolStripMenuItem"
-        Me.SALIRToolStripMenuItem.Size = New System.Drawing.Size(95, 36)
-        Me.SALIRToolStripMenuItem.Text = "SALIR"
+        Me.MantenimientoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MantenimientoToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.MantenimientoToolStripMenuItem.Name = "MantenimientoToolStripMenuItem"
+        Me.MantenimientoToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
+        Me.MantenimientoToolStripMenuItem.Text = "Mantenimiento"
         '
         'frmprincipal
         '
@@ -591,22 +577,16 @@ Partial Class frmprincipal
     Friend WithEvents menugral As System.Windows.Forms.MenuStrip
     Friend WithEvents cmdclientes As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmdproductos As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents VentasToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents NuevaVentaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents PedidosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents EmpleadosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmdadministracion As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ProduccionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ContableToolStripMenuItem1 As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents CajaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ProveedoresToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents RecibosToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FacturasToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmdfacturacion As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NuevaEfacturaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NuevoPedidoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SincronizacionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FXConsFinalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents FCConsFinalToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmdPrestamos As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AgendaDeVencimientosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents reciboconsfinal As ToolStripMenuItem
@@ -630,6 +610,8 @@ Partial Class frmprincipal
     Friend WithEvents SIMULADORToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LISTADOToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents TALLERToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents cmdProduccion As ToolStripMenuItem
     Friend WithEvents SALIRToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ListaDeEmpleadosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents LiquidaciónDeSueldosToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MantenimientoToolStripMenuItem As ToolStripMenuItem
 End Class

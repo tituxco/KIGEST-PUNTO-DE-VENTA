@@ -667,7 +667,7 @@
             <Source>Database</Source>
             <Value>=First(Fields!emplogo.Value, "encabezado")</Value>
             <MIMEType>image/jpeg</MIMEType>
-            <Sizing>Fit</Sizing>
+            <Sizing>FitProportional</Sizing>
             <Left>0.04057cm</Left>
             <Height>1.94241cm</Height>
             <Width>9.26958cm</Width>
@@ -1234,14 +1234,14 @@
                 <TablixCell />
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox32">
+                    <Textbox Name="totValores">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>=Sum(Fields!importe.Value)</Value>
+                              <Value>=Sum(Fields!importe.Value, "valores")</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>ExtraBold</FontWeight>
@@ -1251,7 +1251,6 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox16</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1339,14 +1338,14 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox45">
+      <Textbox Name="totEfectivo">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!efectivo.Value, "totalesrecibo")</Value>
+                <Value>=ReportItems("totRecibo").Value-((ReportItems("totValores").Value + ReportItems("totTarjeta").Value + ReportItems("totTransferencias").Value)-ReportItems("totRetenciones").Value)</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>ExtraBold</FontWeight>
@@ -1358,7 +1357,6 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox45</rd:DefaultName>
         <Top>19.62696cm</Top>
         <Left>15.91534cm</Left>
         <Height>0.6cm</Height>
@@ -1374,7 +1372,7 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox47">
+      <Textbox Name="totRecibo">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
@@ -1392,7 +1390,6 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox45</rd:DefaultName>
         <Top>20.40335cm</Top>
         <Left>15.91534cm</Left>
         <Height>0.6cm</Height>
@@ -1735,7 +1732,7 @@
                 <TablixCell />
                 <TablixCell>
                   <CellContents>
-                    <Textbox Name="Textbox36">
+                    <Textbox Name="totTarjeta">
                       <CanGrow>true</CanGrow>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
@@ -1752,7 +1749,6 @@
                           <Style />
                         </Paragraph>
                       </Paragraphs>
-                      <rd:DefaultName>Textbox16</rd:DefaultName>
                       <Style>
                         <Border>
                           <Style>Solid</Style>
@@ -1872,14 +1868,14 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox52">
+      <Textbox Name="totRetenciones">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!retenciones.Value, "totalesrecibo")</Value>
+                <Value>=Sum(Fields!retenciones.Value, "totalesrecibo")</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>ExtraBold</FontWeight>
@@ -1891,7 +1887,6 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox45</rd:DefaultName>
         <Top>18.85057cm</Top>
         <Left>15.91534cm</Left>
         <Height>0.6cm</Height>
@@ -1942,14 +1937,14 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox54">
+      <Textbox Name="totTransferencias">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
         <Paragraphs>
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=First(Fields!transferencias.Value, "totalesrecibo")</Value>
+                <Value>=Sum(Fields!transferencias.Value, "totalesrecibo")</Value>
                 <Style>
                   <FontSize>8pt</FontSize>
                   <FontWeight>ExtraBold</FontWeight>
@@ -1961,7 +1956,6 @@
             </Style>
           </Paragraph>
         </Paragraphs>
-        <rd:DefaultName>Textbox45</rd:DefaultName>
         <Top>18.04278cm</Top>
         <Left>15.91534cm</Left>
         <Height>0.6cm</Height>
@@ -2280,10 +2274,6 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
-        <Field Name="efectivo">
-          <DataField>efectivo</DataField>
-          <rd:TypeName>System.Decimal</rd:TypeName>
-        </Field>
         <Field Name="cheque">
           <DataField>cheque</DataField>
           <rd:TypeName>System.Decimal</rd:TypeName>
@@ -2307,7 +2297,7 @@
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datosfacturas</rd:DataSetName>
-        <rd:SchemaPath>D:\Importante\Desarrollos\KIGEST - FACT PUNTO VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>D:\KIGEST-PUNTO DE VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
         <rd:TableName>totalesrecibo</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

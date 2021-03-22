@@ -102,7 +102,7 @@ Public Class reimpresionComprobantes
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
             concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,format(fac.total,2,'es_AR')  
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
@@ -159,7 +159,7 @@ Public Class reimpresionComprobantes
 
         Dim alto As Single = 0
         Dim topMargin As Double '= e.MarginBounds.Top
-        Dim yPos As Double = 0
+        Dim yPos As Integer = 0
         Dim count As Integer = 0
         Dim texto As String = ""
 
@@ -197,7 +197,7 @@ Public Class reimpresionComprobantes
         concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-        '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
+        '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   , fac.codigo_qr
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
         where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
 
@@ -247,6 +247,14 @@ Public Class reimpresionComprobantes
         e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(15), font5, Brushes.Black, 0, 260)
         e.Graphics.DrawString("CONDICION DE VENTA " & tablaEmpresa.Rows(0).Item(18), font5, Brushes.Black, 0, 270)
         e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 280)
+
+
+        Dim codigoQRBOX As New PictureBox
+        codigoQRBOX.SizeMode = PictureBoxSizeMode.StretchImage
+        codigoQRBOX.Width = 100
+        codigoQRBOX.Height = 100
+        codigoQRBOX.Image = Bytes_Imagen(tablaEmpresa.Rows(0).Item(32))
+        'Me.Controls.Add(codigoQRBOX)
 
         Dim i As Integer
         Dim j As Integer
@@ -371,9 +379,17 @@ Public Class reimpresionComprobantes
 
         e.Graphics.DrawString("F. Vto CAE: " & facVtoCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
         yPos += 10
-        e.Graphics.DrawString(facCodBARRA, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
-        yPos += 10
 
+        Dim bm_source As New Bitmap(codigoQRBOX.Image)
+        Dim bm_dest As New Bitmap(190, 190)
+        Dim gr_dest As Graphics = Graphics.FromImage(bm_dest)
+        gr_dest.DrawImage(bm_source, 0, 0,
+        bm_dest.Width + 1,
+        bm_dest.Height + 1)
+        codigoQRBOX.Image = bm_dest
+
+        e.Graphics.DrawImage(codigoQRBOX.Image, 0, yPos)
+        yPos += 190
         e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 15, yPos)
         yPos += 10
         e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 15, yPos)
@@ -739,8 +755,10 @@ Public Class reimpresionComprobantes
                 punit = items.Rows(i).Item(3) * coef
                 ptotal = items.Rows(i).Item(4) * coef
 
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 SqlQuery = "insert into fact_items " _
-                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact,plu) values" _
+                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact,plu) values" _
                 & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact,?plu)"
 
                 Reconectar()
@@ -753,8 +771,8 @@ Public Class reimpresionComprobantes
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipoFact)
-                    .AddWithValue("?ptovta", ptovta)
-                    .AddWithValue("?num_fact", num_remit)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idRemito)
                     .AddWithValue("?plu", codbar)
                 End With

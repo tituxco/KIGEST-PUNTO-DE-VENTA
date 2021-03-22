@@ -24,7 +24,7 @@
         If idcomprobante <> 0 Then
             CargarFactCompra()
         Else
-            cmbalmacen.SelectedValue = DatosAcceso.IdAlmacen
+            cmbalmacen.SelectedValue = My.Settings.idAlmacen
         End If
     End Sub
 

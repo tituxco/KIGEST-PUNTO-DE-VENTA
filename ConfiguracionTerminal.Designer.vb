@@ -52,6 +52,8 @@ Partial Class ConfiguracionTerminal
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.rdcalculo1 = New System.Windows.Forms.RadioButton()
         Me.rdcalculo2 = New System.Windows.Forms.RadioButton()
+        Me.txtidmoneda = New System.Windows.Forms.TextBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -221,7 +223,7 @@ Partial Class ConfiguracionTerminal
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(7, 352)
+        Me.Button18.Location = New System.Drawing.Point(7, 386)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(136, 23)
         Me.Button18.TabIndex = 117
@@ -340,12 +342,32 @@ Partial Class ConfiguracionTerminal
         Me.rdcalculo2.Text = "costo * iva * (lista + utilidad)"
         Me.rdcalculo2.UseVisualStyleBackColor = True
         '
+        'txtidmoneda
+        '
+        Me.txtidmoneda.Location = New System.Drawing.Point(114, 342)
+        Me.txtidmoneda.Name = "txtidmoneda"
+        Me.txtidmoneda.Size = New System.Drawing.Size(54, 20)
+        Me.txtidmoneda.TabIndex = 141
+        Me.txtidmoneda.Text = "1"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(7, 343)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(101, 16)
+        Me.Label5.TabIndex = 140
+        Me.Label5.Text = "IdMonedaDef"
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(497, 387)
+        Me.ClientSize = New System.Drawing.Size(497, 421)
+        Me.Controls.Add(Me.txtidmoneda)
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.GroupBox1)
@@ -415,4 +437,6 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents GroupBox2 As GroupBox
     Friend WithEvents rdcalculo1 As RadioButton
     Friend WithEvents rdcalculo2 As RadioButton
+    Friend WithEvents txtidmoneda As TextBox
+    Friend WithEvents Label5 As Label
 End Class

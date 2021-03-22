@@ -62,8 +62,28 @@
 
         If idcomprobante <> 0 Then
             CargarFactCompra()
+            For Each Cont As Control In pnDatosFact.Controls
+                If TypeOf Cont Is TextBox Then
+                    Dim tex As TextBox
+                    tex = Cont
+                    If tex.ReadOnly = True Then
+                        tex.ReadOnly = False
+                    Else
+                        tex.ReadOnly = True
+                    End If
+                ElseIf TypeOf Cont Is ComboBox Then
+                    Dim cbo As ComboBox
+                    cbo = Cont
+                    If cbo.Enabled = False Then
+                        cbo.Enabled = True
+                    Else
+                        cbo.Enabled = False
+                    End If
+                End If
+
+            Next
         Else
-            cmbalmacen.SelectedValue = DatosAcceso.IdAlmacen
+            cmbalmacen.SelectedValue = My.Settings.idAlmacen
         End If
     End Sub
 
@@ -126,6 +146,7 @@
                 cmbalmacen.SelectedValue = tablaprod.Rows(0).Item(6)
                 For i = 0 To tablaprod.Rows.Count - 1
                     dtproductos.Rows.Add(tablaprod.Rows(i).Item(0), tablaprod.Rows(i).Item(1), tablaprod.Rows(i).Item(2), tablaprod.Rows(i).Item(3), tablaprod.Rows(i).Item(4), tablaprod.Rows(i).Item(5))
+                    cmbalmacen.SelectedValue = tablaprod.Rows(i).Item("idalmacen")
                 Next
 
                 dtproductos.AllowUserToAddRows = False
@@ -205,12 +226,12 @@
         If contarprod <> 0 And idfila = -1 Then
             dtproductos.Rows(encuentraprod).Cells(2).Value += 1
         ElseIf contarprod <> 0 And idfila <> -1 Then
-            dtproductos.CurrentRow.Cells(0).Value = filasProd(0)(0)
-            dtproductos.CurrentRow.Cells(1).Value = filasProd(0)(1)
+            dtproductos.CurrentRow.Cells(0).Value = filasProd(0)("id")
+            dtproductos.CurrentRow.Cells(1).Value = filasProd(0)("codigo")
             dtproductos.CurrentRow.Cells(2).Value = txtcantPLU.Text
-            dtproductos.CurrentRow.Cells(3).Value = filasProd(0)(3)
-            dtproductos.CurrentRow.Cells(4).Value = filasProd(0)(2)
-            dtproductos.CurrentRow.Cells(5).Value = FormatNumber(filasProd(0)(4), 2)
+            dtproductos.CurrentRow.Cells(3).Value = filasProd(0)("descripcion")
+            dtproductos.CurrentRow.Cells(4).Value = filasProd(0)("iva")
+            dtproductos.CurrentRow.Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
             dtproductos.CurrentRow.Cells(6).Value = utilidadAux
             dtproductos.CurrentRow.Cells(7).Value = 0
 
@@ -218,9 +239,10 @@
             'dtproductos.Rows.Add(filasProd(0)(0), codigo, txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
             'filasProd(0)(4), utilidadAux, 0)
         Else contarprod = 0 And
-            dtproductos.Rows.Add(filasProd(0)(0), filasProd(0)(1), txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
-                                    filasProd(0)(4), utilidadAux, 0)
+            dtproductos.Rows.Add(filasProd(0)("id"), filasProd(0)("codigo"), txtcantPLU.Text, filasProd(0)("descripcion"), filasProd(0)("iva"),
+                                    filasProd(0)("precio"), utilidadAux, 0)
         End If
+
         calcularPrecios2(dtproductos.Rows.Count - 2)
 
     End Sub
@@ -618,8 +640,8 @@
             consultaMoneda.Fill(tablamoneda)
             filasmoneda = tablamoneda.Select("")
 
-            UtilGral = FormatNumber(filasList(0)(0), 3)
-            AuxCol = filasList(0)(1)
+            UtilGral = FormatNumber(filasList(0)("utilidad"), 3)
+            AuxCol = filasList(0)("auxcol")
             Dim precioCosto As Double
 
             If dtproductos.Rows(idFila).Cells(5).Value = "" Then
@@ -628,7 +650,7 @@
                 precioCosto = FormatNumber(dtproductos.Rows(idFila).Cells(5).Value, 2)
             End If
 
-            Dim cotizacion As Double = FormatNumber(filasmoneda(0)(0), 2)
+            Dim cotizacion As Double = FormatNumber(filasmoneda(0)("cotizacion"), 2)
 
             Dim iva As Double = FormatNumber(dtproductos.Rows(idFila).Cells(4).Value, 2)
 
@@ -651,12 +673,11 @@
 
             UtilProd = (UtilProd + 100) / 100
             utilgral2 = (UtilGral + 100) / 100
-
-            'MsgBox("costo:" & precioCosto & " ___final:" & costoFinal & "utilprod:" & UtilProd & " Gral: " & UtilGral & "-----" & utilGralSum)
+            'MsgBox("costo:" & precioCosto & " ___iva:" & iva & "cotizacion:" & cotizacion)
+            'MsgBox("costo:" & precioCosto & " ___final:" & costoFinal & "utilprod:" & UtilProd & " Gral: " & utilgral2 & "-----" & utilGralSum)
 
             Select Case AuxCol
                 Case 0
-
                     dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd
                 Case 1
                     dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd

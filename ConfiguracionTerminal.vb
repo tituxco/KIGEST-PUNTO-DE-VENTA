@@ -8,6 +8,7 @@
         txtcajaDef.Text = My.Settings.CajaDef
         txtEtiquetaNombre.Text = My.Settings.EtiquetadoraNmb
         txtTextoPietiket.Text = My.Settings.TextoPieTiket
+        txtidmoneda.Text = My.Settings.monedaDef
         If My.Settings.ImprTikets = 1 Then
             chkimprimirtikets.CheckState = CheckState.Checked
             txtimptiketsnombre.Text = My.Settings.ImprTiketsNombre
@@ -31,6 +32,7 @@
         My.Settings.EtiquetadoraNmb = txtEtiquetaNombre.Text
         My.Settings.CajaDef = txtcajaDef.Text
         My.Settings.TextoPieTiket = txtTextoPietiket.Text
+        My.Settings.monedaDef = txtidmoneda.Text
         If rdcod_bar.Checked = True Then My.Settings.obtCodProd ="cod_bar" Else My.Settings.obtCodProd ="id"
 
         If rdcalculo2.Checked = True Then My.Settings.metodoCalculo = 0 Else My.Settings.metodoCalculo = 1

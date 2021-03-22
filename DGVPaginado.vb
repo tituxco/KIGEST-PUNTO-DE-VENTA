@@ -61,9 +61,48 @@
         RaiseEvent SeleccionarItem(dgvVista.CurrentRow.Cells(0).Value)
         ItemSeleccionado = dgvVista.CurrentRow.Cells(0).Value
     End Sub
+
+    Private Sub dgvVista_SelectionChanged(sender As Object, e As EventArgs) Handles dgvVista.SelectionChanged
+        Dim i As Integer = 0
+        For Each fila As DataGridViewRow In dgvVista.Rows
+            If fila.Selected = True Then
+                i += 1
+            End If
+        Next
+        If i > 1 Then
+            RaiseEvent Multiseleccion(True)
+        Else
+            RaiseEvent Multiseleccion(False)
+        End If
+    End Sub
+
     Public Event SeleccionarItem(IdItem As Integer)
+    Public Event Multiseleccion(multiple As Boolean)
 
-    Private Sub DGVPaginado_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnTodo.Click
+        items_por_pagina = total
+        maximo_paginas = Math.Ceiling(total / items_por_pagina)
+        lblPaginasTotales.Text = maximo_paginas
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        'Dim Barra As New ProgressBar
+        'Barra.Style = ProgressBarStyle.Marquee
+        'Barra.Size = New Point(270, 40)
+        'Barra.Location = New Point(10, 30)
+        'Barra.Value = 100
+        'EnProgreso.Controls.Add(Barra)
+        EnProgreso.Show()
+        Application.DoEvents()
+        dgvVista.DataSource = Split(todos_los_datos)
+        EnProgreso.Close()
     End Sub
 End Class

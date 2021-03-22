@@ -88,5 +88,5 @@ Partial Class selprod
     End Sub
     Friend WithEvents pntitulo As System.Windows.Forms.Panel
     Friend WithEvents Label1 As System.Windows.Forms.Label
-    Friend WithEvents dtproductos As System.Windows.Forms.DataGridView
+    Friend WithEvents dtproductos As DataGridView
 End Class

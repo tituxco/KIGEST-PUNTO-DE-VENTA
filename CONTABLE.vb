@@ -4,29 +4,33 @@ Imports System.Windows.Forms.DataVisualization.Charting
 
 
 Public Class CONTABLE
+    Dim ModificaPlanDeCuentas As Boolean = False
+    Public DtPlanCuentas As New DataTable
 
 
     Private Sub CONTABLE_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         dtdesdefact.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtpdecob.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        dtpdeestado.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
+        'dtpdeestado.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtpchequesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtpdesdedetallecta.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtdesdecuentaprov.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        tabplancuentas.Parent = Nothing
+        'tabplancuentas.Parent = Nothing
         balance.Parent = Nothing
         'tabdtostecni.Parent = Nothing
-        tablibromayor.Parent = Nothing
+        'tablibromayor.Parent = Nothing
         'tabgraficas.Parent = Nothing
-
+        cmbMovimientosHistoricos.SelectedIndex = 1
+        If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabplancuentas.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tablibromayor.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aa") = False Then tabcomprobantes.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ab") = False Then tabcobranzas.Parent = Nothing
         ''If InStr(DatosAcceso.Moduloacc, "4ac") = False Then balance.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ad") = False Then tabremitos.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ae") = False Then tabcheques.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4af") = False Then tabchequespropios.Parent = Nothing
-        If InStr(DatosAcceso.Moduloacc, "4ag-----") = False Then tabestadocuentas.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ah") = False Then tabestadocuentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ah") = False Then tabcuentasclientes.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ai") = False Then tabcuentasproveedores.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aj") = False Then ivaVentas.Parent = Nothing
@@ -203,9 +207,9 @@ Public Class CONTABLE
                 parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where debcred like 'D')"
             End If
             If cmbinforalmacen.SelectedValue = 0 Then
-                consAlmacen = " and itm.ptovta like '%' " 'es el almacen no el punto de venta, esta mal el nombre
+                consAlmacen = " and itm.idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
             Else
-                consAlmacen = " and itm.ptovta = " & cmbinforalmacen.SelectedValue & " "
+                consAlmacen = " and itm.idAlmacen = " & cmbinforalmacen.SelectedValue & " "
             End If
 
 
@@ -319,10 +323,27 @@ Public Class CONTABLE
             lblclientecta.Text = dtocli(0)(0)
             lbldtoscliecta.Text = dtocli(0)(1)
 
+            Dim consultaSTR As String = ""
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cuentaclie where id_cliente=" & Val(txtcuentabus.Text) & " order by fecha asc", conexionPrinc)
-
+            'MsgBox(cmbMovimientosHistoricos.SelectedIndex)
+            If cmbMovimientosHistoricos.SelectedIndex = 0 Or cmbMovimientosHistoricos.SelectedIndex = -1 Then
+                consultaSTR = "
+            SELECT 
+            fact.id,fact.fecha,tip.abrev, LPAD(fact.ptovta, 4, '0'),LPAD(fact.num_fact, 8, '0'), format((fact.total),2,'es_AR') AS total,
+            fact.tipofact,fact.pago,fact.id as idfactura,fact.id_cliente from
+            tipos_comprobantes as tip, fact_facturas as fact where         
+            tip.donfdesc = fact.tipofact AND 
+            tip.ptovta = fact.ptovta and 
+            fact.id_cliente<>9999 and
+            fact.tipofact in (select donfdesc from tipos_comprobantes where debcred ='D' or debcred ='C')
+            and fact.id_cliente=" & idcliente & "
+            order by fecha,id asc"
+            Else
+                consultaSTR = "SELECT * FROM cuentaclie where id_cliente=" & idcliente & " order by fecha,id asc"
+            End If
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(consultaSTR, conexionPrinc)
+            ' MsgBox(consulta.SelectCommand.CommandText)
             Dim tabla As New DataTable
             consulta.Fill(tabla)
             Dim tablacta() As DataRow
@@ -339,7 +360,8 @@ Public Class CONTABLE
                         If dias <= 0 Then
                             debegral += FormatNumber(tablacta(i)(5), 2)
                             saldo = FormatNumber(debegral - habergral, 2)
-                            dtcuentaclie.Rows.Add(tablacta(i)(0), tablacta(i)(1).ToString, tablacta(i)(2) & " " & tablacta(i)(3) & "-" & tablacta(i)(4), tablacta(i)(5), "0", saldo, tablacta(i)(8), tablacta(i)(6))
+                            dtcuentaclie.Rows.Add(
+                            tablacta(i)(0), tablacta(i)(1).ToString, tablacta(i)(2) & " " & tablacta(i)(3) & "-" & tablacta(i)(4), tablacta(i)("total"), "0", saldo, tablacta(i)(8), tablacta(i)(6))
                             If tablacta(i)(7) = 1 Then
                                 dtcuentaclie.Rows(dtcuentaclie.RowCount - 1).DefaultCellStyle.BackColor = Color.GreenYellow
                             End If
@@ -481,119 +503,6 @@ Public Class CONTABLE
         cargarCuentaProv(cmbproveedores.SelectedValue)
     End Sub
 
-    Private Sub cargarIngresosMensuales()
-        Try
-            dtingresos.Rows.Clear()
-            Dim totaling As Double
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("Select sum(replace(ie.monto,',','.')),ie.concepto, ie.caja, ca.descripcion, ic.concepto " _
-            & "FROM kigest_fact.fact_ingreso_egreso as ie, fact_ingresos_concepto as ic, fact_cajas as ca " _
-            & "where ie.tipo=1 and ca.id=ie.caja and ic.id=ie.concepto and ie.fecha like '" & cmbano.Text & "-" & cmbperiodo.Text & "-%%' group by ie.caja, ie.concepto", conexionPrinc)
-            Dim tablacl As New DataTable
-            Dim infocl() As DataRow
-            consulta.Fill(tablacl)
-            infocl = tablacl.Select("")
-            Dim i As Integer
-
-            For i = 0 To infocl.GetUpperBound(0)
-                dtingresos.Rows.Add(infocl(i)(3), infocl(i)(4), infocl(i)(0))
-                totaling += infocl(i)(0)
-            Next
-            lbltotaling.Text = totaling
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub cargarEgresosMensuales()
-        Try
-            dtegresos.Rows.Clear()
-            Dim totaleg As Double
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT sum(replace(ie.monto,',','.')),ie.concepto, ie.caja, ca.descripcion, ec.concepto " _
-            & "FROM kigest_fact.fact_ingreso_egreso as ie, fact_egresos_concepto as ec, fact_cajas as ca " _
-            & "where ie.tipo=2 and ca.id=ie.caja and ec.id=ie.concepto and ie.fecha like '" & cmbano.Text & "-" & cmbperiodo.Text & "-%%' group by ie.caja, ie.concepto", conexionPrinc)
-            Dim tablacl As New DataTable
-            Dim infocl() As DataRow
-            consulta.Fill(tablacl)
-            infocl = tablacl.Select("")
-            Dim i As Integer
-
-            For i = 0 To infocl.GetUpperBound(0)
-                dtegresos.Rows.Add(infocl(i)(3), infocl(i)(4), infocl(i)(0))
-                totaleg += infocl(i)(0)
-            Next
-            lbltotaleg.Text = totaleg
-        Catch ex As Exception
-
-        End Try
-    End Sub
-
-    Private Sub cmbperiodo_TextChanged(sender As Object, e As EventArgs) Handles cmbperiodo.TextChanged
-        dtingresos.Rows.Clear()
-        dtegresos.Rows.Clear()
-        cargarIngresosMensuales()
-        cargarEgresosMensuales()
-    End Sub
-
-    Private Sub dtingresos_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs)
-        'el e.columnindex son las columnas que checara para ver si se pueden combinar las celdas iguales
-        ' en este caso checara las 4
-        Try
-            If e.ColumnIndex = 0 Or e.ColumnIndex = 1 Or e.ColumnIndex = 2 Or e.ColumnIndex = 3 AndAlso e.RowIndex <> -1 Then
-
-                Using gridBrush As Brush = New SolidBrush(Me.dtingresos.GridColor), backColorBrush As Brush = New SolidBrush(e.CellStyle.BackColor)
-
-                    Using gridLinePen As Pen = New Pen(gridBrush)
-                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds)
-
-                        If e.RowIndex < dtingresos.RowCount - 1 AndAlso dtingresos.Rows(e.RowIndex + 1).Cells(e.ColumnIndex).Value.ToString() <> e.Value.ToString() Then
-                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1)
-                        End If
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1, e.CellBounds.Top, e.CellBounds.Right - 1, e.CellBounds.Bottom)
-                        If Not e.Value Is Nothing Then
-                            If e.RowIndex > 0 AndAlso dtingresos.Rows(e.RowIndex - 1).Cells(e.ColumnIndex).Value.ToString() = e.Value.ToString() Then
-                            Else
-                                e.Graphics.DrawString(CType(e.Value, String), e.CellStyle.Font, Brushes.Black, e.CellBounds.X + 2, e.CellBounds.Y + 5, StringFormat.GenericDefault)
-                            End If
-                        End If
-
-                        e.Handled = True
-                    End Using
-                End Using
-            End If
-        Catch ex As Exception
-        End Try
-    End Sub
-
-    Private Sub dtegresos_CellPainting(sender As Object, e As DataGridViewCellPaintingEventArgs)
-        'el e.columnindex son las columnas que checara para ver si se pueden combinar las celdas iguales
-        ' en este caso checara las 4
-        Try
-            If e.ColumnIndex = 0 Or e.ColumnIndex = 1 Or e.ColumnIndex = 2 Or e.ColumnIndex = 3 AndAlso e.RowIndex <> -1 Then
-
-                Using gridBrush As Brush = New SolidBrush(Me.dtegresos.GridColor), backColorBrush As Brush = New SolidBrush(e.CellStyle.BackColor)
-
-                    Using gridLinePen As Pen = New Pen(gridBrush)
-                        e.Graphics.FillRectangle(backColorBrush, e.CellBounds)
-
-                        If e.RowIndex < dtegresos.RowCount - 1 AndAlso dtegresos.Rows(e.RowIndex + 1).Cells(e.ColumnIndex).Value.ToString() <> e.Value.ToString() Then
-                            e.Graphics.DrawLine(gridLinePen, e.CellBounds.Left, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1)
-                        End If
-                        e.Graphics.DrawLine(gridLinePen, e.CellBounds.Right - 1, e.CellBounds.Top, e.CellBounds.Right - 1, e.CellBounds.Bottom)
-                        If Not e.Value Is Nothing Then
-                            If e.RowIndex > 0 AndAlso dtegresos.Rows(e.RowIndex - 1).Cells(e.ColumnIndex).Value.ToString() = e.Value.ToString() Then
-                            Else
-                                e.Graphics.DrawString(CType(e.Value, String), e.CellStyle.Font, Brushes.Black, e.CellBounds.X + 2, e.CellBounds.Y + 5, StringFormat.GenericDefault)
-                            End If
-                        End If
-
-                        e.Handled = True
-                    End Using
-                End Using
-            End If
-        Catch ex As Exception
-        End Try
-    End Sub
-
     Private Sub cargarEstadodeCuentas()
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
@@ -617,13 +526,7 @@ Public Class CONTABLE
         Dim desde As String
         Dim hasta As String
         Dim vendedor As String
-        If CheckBox1.Checked = False Then
-            desde = Format(CDate(dtpdeestado.Value), "yyyy-MM-dd")
-            hasta = Format(CDate(dtphastaestado.Value), "yyyy-MM-dd")
-        Else
-            desde = "%%%%-%%-%%"
-            hasta = Format(CDate(dtphastaestado.Value), "yyyy-MM-dd")
-        End If
+
 
         If chkvendedorctacte.Checked = True Then
             vendedor = "%"
@@ -632,67 +535,67 @@ Public Class CONTABLE
         End If
 
         Try
-            Dim consultaComp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from debe_cliente", conexionPrinc)
+            Dim consultaResumenCtaCte As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from resumen_cta_cte where vendedor LIKE '" & vendedor & "'", conexionPrinc)
 
 
-            Dim consultaCobr As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from haber_cliente", conexionPrinc)
 
 
-            Dim tablacomp As New DataTable
-            Dim tablacobr As New DataTable
 
-            consultaComp.Fill(tablacomp)
-            consultaCobr.Fill(tablacobr)
+            Dim tablaResumenCtaCte As New DataTable
 
-            Dim filaComp() As DataRow = tablacomp.Select()
-            Dim filaCobr() As DataRow = tablacobr.Select()
+
+            consultaResumenCtaCte.Fill(tablaResumenCtaCte)
+
+            dtestadocuentas.DataSource = tablaResumenCtaCte
+            'Dim filaComp() As DataRow = tablaResumenCtaCte.Select()
+
 
             'creamos la tabla de datos para las cuentas
-            Dim estadocuentas As New DataTable
-            Dim columestado As DataColumn
-            Dim filaestado As DataRow
+            'Dim estadocuentas As New DataTable
+            'Dim columestado As DataColumn
+            'Dim filaestado As DataRow
 
-            columestado = New DataColumn
-            columestado.DataType = System.Type.GetType("System.String")
-            columestado.ColumnName = "Cuenta"
-            estadocuentas.Columns.Add(columestado)
+            'columestado = New DataColumn
+            'columestado.DataType = System.Type.GetType("System.String")
+            'columestado.ColumnName = "Cuenta"
+            'estadocuentas.Columns.Add(columestado)
 
-            columestado = New DataColumn
-            columestado.DataType = System.Type.GetType("System.String")
-            columestado.ColumnName = "Razon Social"
-            estadocuentas.Columns.Add(columestado)
+            'columestado = New DataColumn
+            'columestado.DataType = System.Type.GetType("System.String")
+            'columestado.ColumnName = "Razon Social"
+            'estadocuentas.Columns.Add(columestado)
 
-            columestado = New DataColumn
-            columestado.DataType = System.Type.GetType("System.Decimal")
-            columestado.ColumnName = "Saldo"
-            estadocuentas.Columns.Add(columestado)
+            'columestado = New DataColumn
+            'columestado.DataType = System.Type.GetType("System.Decimal")
+            'columestado.ColumnName = "Saldo"
+            'estadocuentas.Columns.Add(columestado)
 
-            For Each fila As DataRow In tablacomp.Rows
+            'For Each fila As DataRow In tablaResumenCtaCte.Rows
 
 
-                'MsgBox(filapago(0).Item(2))
-                filaestado = estadocuentas.NewRow
-                filaestado(0) = fila.Item(0)
-                filaestado(1) = fila.Item(1)
-                Dim saldo As Double
-                Dim filapago() As Data.DataRow
-                filapago = tablacobr.Select("cuenta like '" & fila(0) & "'")
-                If filapago.Length = 0 Then
-                    saldo = fila.Item(2)
-                Else
-                    saldo = Math.Round(fila.Item(2) - filapago(0).Item(2), 2)
-                End If
-                filaestado(2) = saldo
-                If chknegativos.Checked = True And saldo > 0 Then
-                    estadocuentas.Rows.Add(filaestado)
-                ElseIf chknegativos.Checked = False And saldo <> 0 Then
-                    estadocuentas.Rows.Add(filaestado)
-                End If
-            Next
-            dtestadocuentas.DataSource = estadocuentas
-            dtestadocuentas.Columns(0).FillWeight = 30
-            dtestadocuentas.Columns(2).FillWeight = 30
-            SumarTotal(dtestadocuentas, 2)
+            '    'MsgBox(filapago(0).Item(2))
+            '    filaestado = estadocuentas.NewRow
+            '    filaestado(0) = fila.Item(0)
+            '    filaestado(1) = fila.Item(1)
+            '    Dim saldo As Double
+            '    Dim filapago() As Data.DataRow
+            '    filapago = tablacobr.Select("cuenta like '" & fila(0) & "'")
+            '    If filapago.Length = 0 Then
+            '        saldo = fila.Item(2)
+            '    Else
+            '        saldo = Math.Round(fila.Item(2) - filapago(0).Item(2), 2)
+            '    End If
+            '    filaestado(2) = saldo
+            '    If chknegativos.Checked = True And saldo > 0 Then
+            '        estadocuentas.Rows.Add(filaestado)
+            '    ElseIf chknegativos.Checked = False And saldo <> 0 Then
+            '        estadocuentas.Rows.Add(filaestado)
+            '    End If
+            'Next
+            'dtestadocuentas.DataSource = estadocuentas
+            'dtestadocuentas.Columns(0).FillWeight = 30
+            'dtestadocuentas.Columns(2).FillWeight = 30
+            SumarTotal(dtestadocuentas, 4)
             EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()
@@ -779,7 +682,7 @@ Public Class CONTABLE
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & idFactura, conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -792,7 +695,7 @@ Public Class CONTABLE
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & idFactura, conexionPrinc)
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
@@ -1207,7 +1110,7 @@ Public Class CONTABLE
         End Try
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) 
+    Private Sub Button3_Click(sender As Object, e As EventArgs)
         Try
             Select Case dtfacturas.CurrentRow.Cells(9).Value
                 Case 9, 6, 3, 12, 15, 18
@@ -1286,9 +1189,7 @@ Public Class CONTABLE
 
 
                     Reconectar()
-                    tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-                    & "descripcion,format(ptotal,2,'es_AR') as ptotal from fact_items where " _
-                    & "id_fact=" & idfactura, conexionPrinc)
+                    tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select descripcion,ptotal as ptotal from fact_items where id_fact=" & idfactura, conexionPrinc)
                     tabFac.Fill(fac.Tables("reciboitems"))
 
                     Reconectar()
@@ -1297,8 +1198,14 @@ Public Class CONTABLE
                     tabtarj.Fill(fac.Tables(("tarjetarecbo")))
 
                     Reconectar()
-                    totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-                    & "efectivo,cheque,transferencias,retenciones,tarjetas,total FROM cobranzas where id= " & idfactura, conexionPrinc)
+                    totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+                    fact.id,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
+                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total  
+                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
                     totrec.Fill(fac.Tables("totalesrecibo"))
 
                     Dim imprimirx As New imprimirFX
@@ -1444,13 +1351,7 @@ Public Class CONTABLE
             Dim vendedor As String
             Dim vendedor2 As String
 
-            If CheckBox1.Checked = False Then
-                desde = Format(CDate(dtpdeestado.Value), "yyyy-MM-dd")
-                hasta = Format(CDate(dtphastaestado.Value), "yyyy-MM-dd")
-            Else
-                desde = "%%%%-%%-%%"
-                hasta = Format(CDate(dtphastaestado.Value), "yyyy-MM-dd")
-            End If
+
 
             If chkvendedorctacte.Checked = True Then
                 vendedor = "%"
@@ -1696,16 +1597,7 @@ Public Class CONTABLE
         cargarEstadodeCuentas()
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles CheckBox1.CheckedChanged
-        If CheckBox1.Checked = True Then
-            dtpdeestado.Enabled = False
-            dtphastaestado.Enabled = False
-            dtphastaestado.Value = Now()
-        Else
-            dtpdeestado.Enabled = True
-            dtphastaestado.Enabled = True
-        End If
-    End Sub
+
 
     Private Sub chkvendedorctacte_CheckedChanged(sender As Object, e As EventArgs) Handles chkvendedorctacte.CheckedChanged
         Try
@@ -2401,13 +2293,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             Reconectar()
             tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "banco, serie as numero, fecha_cobro as fcobro, format(importe,2,'es_AR') as importe from fact_cheques where comprobante = " & idfactura, conexionPrinc)
+            & "banco, serie as numero, fecha_cobro as fcobro, importe as importe from fact_cheques where comprobante = " & idfactura, conexionPrinc)
             tabVal.Fill(fac.Tables("valoresrecibo"))
 
 
             Reconectar()
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "descripcion,format(ptotal,2,'es_AR') as ptotal from fact_items where " _
+            & "descripcion,ptotal as ptotal from fact_items where " _
             & "id_fact=" & idfactura, conexionPrinc)
             tabFac.Fill(fac.Tables("reciboitems"))
 
@@ -2417,8 +2309,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             tabtarj.Fill(fac.Tables(("tarjetarecbo")))
 
             Reconectar()
-            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-             & "efectivo,cheque,transferencias,retenciones,tarjetas,total FROM cobranzas where id= " & idfactura, conexionPrinc)
+            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+                    fact.id,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
+                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
+                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
             totrec.Fill(fac.Tables("totalesrecibo"))
 
             Dim imprimirx As New imprimirFX
@@ -2939,10 +2837,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 iva = items.Rows(i).Item(2)
                 punit = items.Rows(i).Item(3) * coef
                 ptotal = items.Rows(i).Item(4) * coef
-
+                Dim idAlmacen As Integer = My.Settings.idAlmacen
+                Dim idCaja As Integer = My.Settings.CajaDef
                 SqlQuery = "insert into fact_items " _
-                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,ptovta,num_fact,id_fact,plu) values" _
-                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact,?plu)"
+                & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact,plu) values" _
+                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?plu)"
 
                 Reconectar()
                 Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -2954,8 +2853,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipoFact)
-                    .AddWithValue("?ptovta", ptovta)
-                    .AddWithValue("?num_fact", num_remit)
+                    .AddWithValue("?idAlmacen", idAlmacen)
+                    .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idRemito)
                     .AddWithValue("?plu", codbar)
                 End With
@@ -3157,58 +3056,58 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub cmdbalancebuscar_Click(sender As Object, e As EventArgs) Handles cmdbalancebuscar.Click
-        Dim EnProgreso As New Form
-        EnProgreso.ControlBox = False
-        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
-        EnProgreso.Size = New Point(430, 30)
-        EnProgreso.StartPosition = FormStartPosition.CenterScreen
-        EnProgreso.TopMost = True
-        Dim Etiqueta As New Label
-        Etiqueta.AutoSize = True
-        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
-        Etiqueta.Location = New Point(5, 5)
-        EnProgreso.Controls.Add(Etiqueta)
-        'Dim Barra As New ProgressBar
-        'Barra.Style = ProgressBarStyle.Marquee
-        'Barra.Size = New Point(270, 40)
-        'Barra.Location = New Point(10, 30)
-        'Barra.Value = 100
-        'EnProgreso.Controls.Add(Barra)
-        EnProgreso.Show()
-        Application.DoEvents()
+        '     Dim EnProgreso As New Form
+        '     EnProgreso.ControlBox = False
+        '     EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        '     EnProgreso.Size = New Point(430, 30)
+        '     EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        '     EnProgreso.TopMost = True
+        '     Dim Etiqueta As New Label
+        '     Etiqueta.AutoSize = True
+        '     Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        '     Etiqueta.Location = New Point(5, 5)
+        '     EnProgreso.Controls.Add(Etiqueta)
+        '     'Dim Barra As New ProgressBar
+        '     'Barra.Style = ProgressBarStyle.Marquee
+        '     'Barra.Size = New Point(270, 40)
+        '     'Barra.Location = New Point(10, 30)
+        '     'Barra.Value = 100
+        '     'EnProgreso.Controls.Add(Barra)
+        '     EnProgreso.Show()
+        '     Application.DoEvents()
 
-        Try
-            Reconectar()
-            Dim columna As Integer
-            Dim fecha As String = Format(CDate(dtpbalancefecha.Value), "yyyy-MM-dd")
-            'Dim hasta As String = Format(CDate(dtpbalancehasta.Value), "yyyy-MM-dd")
-            Dim tablabal As New DataTable
-            tablabal.Clear()
-            ' Dim parambusq As String = " and fac.tipofact in ('5') "
-            'If rdbalancediario.Checked = True Then
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-			concat(lpad(itm.ptovta,4,'0'),'-', lpad(itm.num_fact,8,'0')) as factura,
-            fact.fecha,  
-            round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
-			round(sum(itm.ptotal),2) as pventa, 
-            round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
-            FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
-            ins.id=itm.cod and fact.id=itm.id_fact and 
-            itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-            fact.fecha like '" & fecha & "' group by itm.num_fact", conexionPrinc)
-            'columna = 6
+        '     Try
+        '         Reconectar()
+        '         Dim columna As Integer
+        '         Dim fecha As String = Format(CDate(dtpbalancefecha.Value), "yyyy-MM-dd")
+        '         'Dim hasta As String = Format(CDate(dtpbalancehasta.Value), "yyyy-MM-dd")
+        '         Dim tablabal As New DataTable
+        '         tablabal.Clear()
+        '         ' Dim parambusq As String = " and fac.tipofact in ('5') "
+        '         'If rdbalancediario.Checked = True Then
+        '         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+        'concat(lpad(itm.idAlmacen,4,'0'),'-', lpad(itm.num_fact,8,'0')) as factura,
+        '         fact.fecha,  
+        '         round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2) as pcosto,
+        'round(sum(itm.ptotal),2) as pventa, 
+        '         round(sum(itm.ptotal) - sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad),2)  as ganancia      
+        '         FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+        '         ins.id=itm.cod and fact.id=itm.id_fact and 
+        '         itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+        '         fact.fecha like '" & fecha & "' group by itm.num_fact", conexionPrinc)
+        '         'columna = 6
 
-            consulta.Fill(tablabal)
-            'MsgBox(consulta.SelectCommand.CommandText)
-            lstbalancecomprobantes.DataSource = tablabal
-            lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 2), 2)
-            lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 3), 2)
-            lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 4), 2)
-            EnProgreso.Close()
-        Catch ex As Exception
-            MsgBox(ex.Message)
-            EnProgreso.Close()
-        End Try
+        '         consulta.Fill(tablabal)
+        '         'MsgBox(consulta.SelectCommand.CommandText)
+        '         lstbalancecomprobantes.DataSource = tablabal
+        '         lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 2), 2)
+        '         lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 3), 2)
+        '         lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(lstbalancecomprobantes, 4), 2)
+        '         EnProgreso.Close()
+        '     Catch ex As Exception
+        '         MsgBox(ex.Message)
+        '         EnProgreso.Close()
+        '     End Try
     End Sub
 
     Private Sub dtpbalancefecha_ValueChanged(sender As Object, e As EventArgs) Handles dtpbalancefecha.ValueChanged
@@ -3720,15 +3619,468 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         'cmbvendedor.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString
     End Sub
 
-    Private Sub Label34_Click(sender As Object, e As EventArgs) Handles Label34.Click
+
+    Private Sub Button24_Click(sender As Object, e As EventArgs) Handles Button24.Click
+        Try
+            If txtbdSincronizar.Text = "" Then
+                MsgBox("debe ingresar una base de datos")
+                Exit Sub
+            End If
+            conexionSEC.ChangeDatabase(txtbdSincronizar.Text)
+            Reconectar()
+            Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("
+            SELECT id, concat(mes,'-', ano) FROM iv_periodos
+            order by id desc", conexionSEC)
+
+            Dim readPeriodo As New DataSet
+            TablaPeriodo.Fill(readPeriodo)
+            cmbperiodosincronizar.DataSource = readPeriodo.Tables(0)
+            cmbperiodosincronizar.DisplayMember = readPeriodo.Tables(0).Columns(1).Caption.ToString.ToUpper
+
+
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        'Try
+
+        '    Dim fecha As String = Format(dtpfechacomp.Value, "yyyy-MM-dd")
+        '    Dim tipocomp As String = lblabrev.Text
+        '    Dim numfac As String = txtfaciz.Text & "-" & txtfacder.Text
+        '    Dim razon As String = cmbrazonComp.Text
+        '    Dim cuit As String = txtcuitComp.Text
+        '    Dim conIVA As String = cmbcondivaComp.Text
+        '    Dim neto21 As String = txtnetoComp.Text
+        '    Dim neto105 As String = txtnetocom105.Text
+        '    Dim neto27 As String = txtnetocom27.Text
+        '    Dim iva As String = txtivamontoComp.Text
+        '    Dim monot As String = txtmontmonotComp.Text
+        '    Dim pcuenta As String = txtpagoacuentaComp.Text
+        '    Dim nogrex As String = txtnogrComp.Text
+        '    Dim periv As String = txtpercivComp.Text
+        '    Dim perib As String = txtperibComp.Text
+        '    Dim total As String = txttotalComp.Text
+        '    Dim observa As String = txtobservacionesComp.Text
+        '    Dim bienuso As Integer = chkcomprabiendeuso.CheckState
+        '    Dim sqlQuery As String
+
+        '    If comprobarComprobanteCompra(numfac, cuit) = True Then
+        '        MsgBox("el comprobante ya fue cargado, por favor verifique")
+        '        Exit Sub
+        '    End If
+
+        '    If tipocomp = "NC" Then
+        '        If neto21 <> 0 Then neto21 = "-" & neto21
+        '        If neto105 <> 0 Then neto105 = "-" & neto105
+        '        If neto27 <> 0 Then neto27 = "-" & neto27
+        '        If iva <> 0 Then iva = "-" & iva
+        '        If monot <> 0 Then monot = "-" & monot
+        '        If pcuenta <> 0 Then pcuenta = "-" & pcuenta
+        '        If nogrex <> 0 Then nogrex = "-" & nogrex
+        '        If periv <> 0 Then periv = "-" & periv
+        '        If perib <> 0 Then perib = "-" & perib
+        '        If perib <> 0 Then total = "-" & total
+        '    End If
+
+        '    If cmbrazonComp.SelectedValue = 0 And cmbrazonComp.Text <> "" Then
+
+        '        Reconectar()
+        '        sqlQuery = "insert into iv_proveedores(razon, cuit,cond_iva) values(?razon,?cuit,?iva)"
+        '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionEmp)
+        '        With comandoadd.Parameters
+        '            .AddWithValue("?razon", cmbrazonComp.Text.ToUpper)
+        '            .AddWithValue("?cuit", txtcuitComp.Text.ToUpper)
+        '            .AddWithValue("?iva", cmbcondivaComp.SelectedValue)
+        '        End With
+        '        comandoadd.ExecuteNonQuery()
+
+        '    End If
+
+        '    Dim lector As System.Data.IDataReader
+        '    Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+        '    sql.Connection = conexionPrinc
+        '    sql.CommandText = "SELECT abrev from cm_condicion_iva where id = " & cmbcondivaComp.SelectedValue
+        '    sql.CommandType = CommandType.Text
+        '    lector = sql.ExecuteReader
+        '    lector.Read()
+        '    conIVA = lector("abrev").ToString
+        '    If chkcomprabiendeuso.CheckState = 1 Then
+        '        observa = "BIEN DE USO"
+        '    End If
+        '    Reconectar()
+        '    sqlQuery = "insert into iv_items_compras(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
+        '        & "acuenta,nogr,perciva,percib,total,obs,bien_uso) " _
+        '        & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien)"
+        '    Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionEmp)
+        '    With additem.Parameters
+        '        .AddWithValue("?per", IDperiodo)
+        '        .AddWithValue("?fech", fecha)
+        '        .AddWithValue("?tcomp", tipocomp)
+        '        .AddWithValue("?nfac", numfac)
+        '        .AddWithValue("?raz", razon)
+        '        .AddWithValue("?cuit", cuit)
+        '        .AddWithValue("?tcontr", conIVA)
+        '        .AddWithValue("?neto21", neto21)
+        '        .AddWithValue("?neto105", neto105)
+        '        .AddWithValue("?neto27", neto27)
+        '        .AddWithValue("?iva", iva)
+        '        .AddWithValue("?mon", monot)
+        '        .AddWithValue("?acuenta", pcuenta)
+        '        .AddWithValue("?nogr", nogrex)
+        '        .AddWithValue("?periva", periv)
+        '        .AddWithValue("?perib", perib)
+        '        .AddWithValue("?tot", total)
+        '        .AddWithValue("?obs", observa.ToUpper)
+        '        .AddWithValue("?bien", bienuso)
+        '    End With
+        '    additem.ExecuteNonQuery()
+        '    dtlibrocomp.Rows.Add(fecha, tipocomp, numfac, razon, cuit, conIVA, neto21, neto105, neto27, iva, monot, pcuenta, nogrex, periv, perib, total, observa.ToUpper, additem.LastInsertedId)
+        '    If tipocomp = "NC" Then
+        '        dtlibrocomp.Rows(dtlibrocomp.RowCount - 1).DefaultCellStyle.BackColor = Color.Red
+        '    End If
+        '    CargarDtosGrales()
+        '    'cargarDtosComp()
+        '    VaciarControles()
+        '    dtpfechacomp.Focus()
+        'Catch ex As Exception
+        'End Try
+    End Sub
+
+    Private Sub tablibromayor_Click(sender As Object, e As EventArgs) Handles tablibromayor.Click
 
     End Sub
 
-    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
+    Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
 
     End Sub
 
-    Private Sub tabestadocuentas_Click(sender As Object, e As EventArgs) Handles tabestadocuentas.Click
+    Private Sub dtlistacob_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistacob.CellContentClick
 
     End Sub
+
+    Private Sub Button26_Click(sender As Object, e As EventArgs) Handles btnBuscarPlanCta.Click
+        Try
+            CargarPlanDeCuentas()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub CargarPlanDeCuentas()
+        Reconectar()
+        Dim ConsultaPlanCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("
+            SELECT * FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionSEC)
+
+        Dim TablaPlanCuenta As New DataTable
+        ConsultaPlanCuenta.Fill(TablaPlanCuenta)
+        dgvPlanCuentas.Rows.Clear()
+        For Each cuenta As DataRow In TablaPlanCuenta.Rows
+            dgvPlanCuentas.Rows.Add(
+                cuenta.Item("id"),
+                cuenta.Item("nombreCuenta"),
+                cuenta.Item("grupo"),
+                cuenta.Item("subGrupo"),
+                cuenta.Item("cuenta"),
+                cuenta.Item("subCuenta"),
+                cuenta.Item("cuentaDetalle"),
+                cuenta.Item("cuentaMovimiento"),
+                cuenta.Item("cuentaResultado")
+                   )
+        Next
+
+
+        'dgvPlanCuentas.DataSource = TablaPlanCuenta
+        'dgvPlanCuentas.Columns(0).Visible = False
+        'dgvPlanCuentas.Columns(7).Visible = False
+        'dgvPlanCuentas.Columns(8).Visible = False
+
+        grpMantenimientoCuenta.Enabled = False
+    End Sub
+
+    Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
+        grpMantenimientoCuenta.Enabled = True
+
+    End Sub
+
+
+    Private Sub Button27_Click(sender As Object, e As EventArgs) Handles Button27.Click
+        Try
+            Dim CuentaNombre As String = txtCuentaNombre.Text
+            Dim CuentaGrupo As Integer = CInt(txtCuentaGrupo.Text)
+            Dim CuentaSubGrupo As Integer = CInt(txtCuentaSubGrupo.Text)
+            Dim CuentaCta As Integer = CInt(txtCuentaCta.Text)
+            Dim CuentaSubCuenta As Integer = CInt(txtCuentaSubCuenta.Text)
+            Dim CuentaCtaDetalle As Integer = CInt(txtCuentaCtaDetalle.Text)
+            Dim ctaMovimiento As Integer = 0
+            Dim ctaResultado As Integer = 0
+            If chkCuentaMovimiento.Checked = True Then ctaMovimiento = 1
+            If chkCuentaResultados.Checked = True Then ctaResultado = 1
+
+            If ModificaPlanDeCuentas = False Then
+                If existeCuenta(CuentaGrupo, CuentaSubGrupo, CuentaCta, CuentaSubCuenta, CuentaCtaDetalle) = True Then
+                    MsgBox("ya existe una cuenta con el mismo codigo, por favor corrija")
+                    Exit Sub
+                End If
+            End If
+            Dim SqlQuery As String = ""
+            Reconectar()
+            If ModificaPlanDeCuentas = False Then
+                SqlQuery = "insert into cm_planDeCuentas  " _
+                & "(nombreCuenta,grupo,subGrupo,cuenta,subCuenta,cuentaDetalle,cuentaMovimiento,cuentaResultado) values " _
+                & "(?nombreCuenta,?grupo,?subGrupo,?cuenta,?subCuenta,?cuentaDetalle,?cuentaMovimiento,?cuentaResultado)"
+            End If
+
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?nombreCuenta", CuentaNombre)
+                .AddWithValue("?grupo", CuentaGrupo)
+                .AddWithValue("?subGrupo", CuentaSubGrupo)
+                .AddWithValue("?cuenta", CuentaCta)
+                .AddWithValue("?subCuenta", CuentaSubCuenta)
+                .AddWithValue("?cuentaDetalle", CuentaCtaDetalle)
+                .AddWithValue("?cuentaMovimiento", ctaMovimiento)
+                .AddWithValue("?cuentaResultado", ctaResultado)
+            End With
+
+            comandoadd.ExecuteNonQuery()
+            btnBuscarPlanCta.PerformClick()
+
+            Dim filaEncontrada = 0
+            For Each fila As DataGridViewRow In dgvPlanCuentas.Rows
+
+                If fila.Cells(0).Value = comandoadd.LastInsertedId Then
+                    'MsgBox(fila.Cells(1).Value)
+                    fila.Selected = True
+                    filaEncontrada = fila.Index
+                    Exit For
+                End If
+            Next
+            dgvPlanCuentas.Rows(filaEncontrada).Selected = True
+            ' dgvPlanCuentas.CurrentCell = dgvPlanCuentas.Rows(filaEncontrada).Cells(0)
+            dgvPlanCuentas.FirstDisplayedScrollingRowIndex = filaEncontrada
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Function existeCuenta(G As Integer, sG As Integer, C As Integer, sC As Integer, cD As Integer) As Boolean
+        Try
+            Dim ConsultaPlanCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("
+            SELECT * FROM cm_planDeCuentas 
+            where grupo=" & G & " and  subGrupo=" & sG & " and cuenta=" & C & " and subCuenta= " & sC & " and cuentaDetalle=" & cD, conexionSEC)
+
+            Dim TablaPlanCuenta As New DataTable
+            ConsultaPlanCuenta.Fill(TablaPlanCuenta)
+
+            If TablaPlanCuenta.Rows.Count > 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+
+    Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
+        addAsiento.Show()
+    End Sub
+
+    Private Sub tablibromayor_Enter(sender As Object, e As EventArgs) Handles tablibromayor.Enter
+        Try
+            cargarLibros
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Public Sub CargarLibros()
+        Try
+            dgvLibroDiario.Rows.Clear()
+            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario", conexionPrinc)
+            Dim tabLibroDiario As New DataTable
+            consLibroDiario.Fill(tabLibroDiario)
+            For Each asientoContable As DataRow In tabLibroDiario.Rows
+                dgvLibroDiario.Rows.Add(
+                                        asientoContable.Item("comprobanteInterno"),
+                                        asientoContable.Item("codigoAsiento"),
+                                        asientoContable.Item("fecha"),
+                                        asientoContable.Item("concepto"),
+                                        asientoContable.Item("totalDebe"),
+                                        asientoContable.Item("totalHaber"),
+                                        asientoContable.Item("numPartidas")
+                                        )
+            Next
+
+            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle), ' <> ',nombreCuenta) as nombreCuenta
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            Dim dsPlanCuentas As New DataSet
+            consPlanCuentas.Fill(dsPlanCuentas)
+
+            cmbCuentas.DataSource = dsPlanCuentas.Tables(0)
+            cmbCuentas.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
+            cmbCuentas.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
+        CargarLibros()
+    End Sub
+
+
+    Private Sub cmbCuentas_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbCuentas.SelectionChangeCommitted
+
+    End Sub
+
+    Private Sub Button29_Click(sender As Object, e As EventArgs) Handles Button29.Click
+        Try
+            addAsiento.ModificarAsiento = True
+            addAsiento.IdAsiento = dgvLibroDiario.CurrentRow.Cells(1).Value
+            addAsiento.Show()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dgvPlanCuentas_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPlanCuentas.CellEnter
+        Try
+            txtCuentaNombre.Text = dgvPlanCuentas.CurrentRow.Cells("nombreCuenta").Value
+            txtCuentaGrupo.Text = dgvPlanCuentas.CurrentRow.Cells("grupo").Value
+            txtCuentaSubGrupo.Text = dgvPlanCuentas.CurrentRow.Cells("subGrupo").Value
+            txtCuentaCta.Text = dgvPlanCuentas.CurrentRow.Cells("cuenta").Value
+            txtCuentaSubCuenta.Text = dgvPlanCuentas.CurrentRow.Cells("subCuenta").Value
+            txtCuentaCtaDetalle.Text = dgvPlanCuentas.CurrentRow.Cells("cuentaDetalle").Value
+
+            'MsgBox(dgvPlanCuentas.CurrentRow.Cells("cuentaMovimiento").Value)
+
+            'If dgvPlanCuentas.CurrentRow.Cells("cuentaMovimiento").Value = 1 Then
+            chkCuentaMovimiento.Checked = dgvPlanCuentas.CurrentRow.Cells("cuentaMovimiento").Value
+            'Else
+            '    chkCuentaMovimiento.Checked = False
+            'End If
+
+            'If dgvPlanCuentas.CurrentRow.Cells("cuentaResultado").Value = 1 Then
+            chkCuentaResultados.Checked = dgvPlanCuentas.CurrentRow.Cells("cuentaResultado").Value
+            'Else
+            '    chkCuentaResultados.Checked = False
+            'End If
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button34_Click(sender As Object, e As EventArgs) Handles Button34.Click
+        Try
+            ModificaPlanDeCuentas = True
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub tabplancuentas_Enter(sender As Object, e As EventArgs) Handles tabplancuentas.Enter
+        CargarPlanDeCuentas()
+    End Sub
+
+    Private Sub cmbCuentas_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedValueChanged
+        Try
+            dgvLibroMayor.Rows.Clear()
+            Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
+            Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
+            FROM cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
+            where LM.codigoAsiento=asi.codigoAsiento and
+            LD.codigoAsiento=LM.codigoAsiento and
+            (asi.cuentaDebeId= " & idCuentaSel & " or 
+            asi.cuentaHaberId=" & idCuentaSel & ")", conexionPrinc)
+            Dim tabLibroMayor As New DataTable
+            consLibroMayor.Fill(tabLibroMayor)
+            For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
+                dgvLibroMayor.Rows.Add(
+                                        movimientoCuenta.Item("comprobanteInterno"),
+                                        movimientoCuenta.Item("fecha"),
+                                        movimientoCuenta.Item("concepto"),
+                                        movimientoCuenta.Item("importeDebe"),
+                                        movimientoCuenta.Item("importeHaber")
+                                        )
+            Next
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    'Private Sub cmbCuentas_KeyUp(sender As Object, e As KeyEventArgs) Handles cmbCuentas.KeyUp
+    '    Dim strText As String
+
+    '    strText = cmbCuentas.Text
+
+    '    If cmbCuentas.Text = "" Then
+
+    '        cmbCuentas.DataSource = DtPlanCuentas
+
+    '        'cmbCuentas.ValueMember = "id"
+
+    '        'cmbCuentas.DisplayMember = "nombreCuenta"
+
+    '        cmbCuentas.SelectedIndex = -1
+
+    '        cmbCuentas.DroppedDown = False
+
+    '    End If
+
+    '    If Len(strText) > 2 Then
+
+    '        cmbCuentas.DataSource = DtPlanCuentas.Select("nombreCuenta LIKE '%" & strText & "%'")
+
+
+    '        'cmbCuentas.ValueMember = "id"
+
+    '        'cmbCuentas.DisplayMember = "nombreCuenta"
+
+    '        If cmbCuentas.Items.Count <> 0 Then
+
+    '            cmbCuentas.DroppedDown = True
+
+    '            cmbCuentas.SelectedIndex = -1
+
+    '            cmbCuentas.Text = ""
+
+    '            cmbCuentas.SelectedText = strText
+
+    '            strText = ""
+
+    '            Cursor.Current = Cursors.Default
+
+
+
+    '        Else
+
+    '            cmbCuentas.DataSource = DtPlanCuentas
+
+    '            'cmbCuentas.ValueMember = "id"
+
+    '            'cmbCuentas.DisplayMember = "nombreCuenta"
+
+    '            cmbCuentas.SelectedIndex = -1
+
+    '            cmbCuentas.Text = ""
+
+    '            cmbCuentas.SelectedText = strText
+
+    '            strText = ""
+
+    '            cmbCuentas.DroppedDown = False
+
+
+
+    '        End If
+
+    '    End If
+    'End Sub
 End Class

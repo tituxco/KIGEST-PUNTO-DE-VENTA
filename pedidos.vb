@@ -1,5 +1,6 @@
 ﻿Public Class Presupuestos
     Dim IDPedidoSeleccionado As Integer
+    Dim SeleccionMultiple As Boolean
     Private Sub cmdnuevapers_Click(sender As Object, e As EventArgs) Handles cmdnuevapers.Click
         Dim i As Integer
         For i = 0 To Me.MdiChildren.Length - 1
@@ -56,6 +57,9 @@
             End If
             If rdfacturados.Checked = True Then
                 ConsultaEXT &= " and observaciones like 'FACTURADO'"
+                cmdmodificar.Enabled = False
+            Else
+                cmdmodificar.Enabled = True
             End If
             If rdImportar.Checked = True Then
                 ConsultaEXT &= " and observaciones <> 'FACTURADO' and observaciones <> 'PENDIENTE'"
@@ -64,12 +68,17 @@
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, 
             concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,fac.fecha,
-            (select concat(idclientes,'(',nomapell_razon,')') from fact_clientes where idclientes= fac.id_cliente) as razon, 
+            (select if 
+            (idclientes=9999,
+				concat(idclientes,'(',fac.razon,')'),
+				concat(idclientes,'(',nomapell_razon,')')
+			)
+            from fact_clientes where idclientes= fac.id_cliente) as razon, 
             (select direccion from fact_clientes where idclientes= fac.id_cliente) as direccion, 
             (select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
             con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones, f_alta as FEnviado 
             from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
-            " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id desc", conexionPrinc)
+            " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", conexionPrinc)
             Dim tablaped As New DataTable
             consulta.Fill(tablaped)
 
@@ -101,7 +110,13 @@
 
             Dim tec As New nuevopedido
             tec.MdiParent = Me.MdiParent
-            tec.modificar = True
+
+            If rdfacturados.Checked = True Then
+                tec.ReadOnlyPedido = True
+            Else
+                tec.modificar = True
+            End If
+
             tec.idFactura = IDPedidoSeleccionado 'dtpedidos.CurrentRow.Cells(0).Value
             tec.Show()
             'For Each fila As DataGridViewRow In dtpedidos.Rows
@@ -220,9 +235,11 @@
 
             Dim desde As String = Format(CDate(dtpdesde.Value), "yyyy-MM-dd")
             Dim hasta As String = Format(CDate(dtphasta.Value), "yyyy-MM-dd")
+
             Dim parambusq As String = ""
             Dim tipopedTEXT As String = ""
             Dim vendedor As String
+
             If cmbvendedor.SelectedValue = 0 Then
                 vendedor = "TODOS"
                 parambusq = " and fac.vendedor like '%'"
@@ -233,10 +250,24 @@
 
             If rdfacturados.Checked = True Then
                 tipopedTEXT = "Tipo de pedido: FACTURADOS"
+                parambusq &= " and fac.observaciones LIKE 'FACTURADO' "
             End If
             If rdpendientes.Checked = True Then
                 tipopedTEXT = "Tipo de pedido: PENDIENTES"
+                parambusq &= " and fac.observaciones LIKE 'PENDIENTE' "
             End If
+
+            If SeleccionMultiple = True Then
+                tipopedTEXT &= " - SELECCIONADOS"
+                Dim pedidosSel As String = ""
+                For Each pedido As DataGridViewRow In dgvPedidos.dgvVista.Rows
+                    If pedido.Selected = True Then
+                        If pedidosSel = "" Then pedidosSel = pedido.Cells(0).Value Else pedidosSel &= "," & pedido.Cells(0).Value
+                    End If
+                Next
+                parambusq &= " and fac.id in(" & pedidosSel & ") "
+            End If
+
             If rdImportar.Checked = True Then
                 MsgBox("no se puede imprimir lista de pedidos a importar")
                 Exit Sub
@@ -260,7 +291,7 @@
             fac.observaciones from fact_conffiscal As fis, fact_facturas As fac, fact_condventas as con 
             where fis.donfdesc = fac.tipofact And con.id = fac.condvta And fis.ptovta = fac.ptovta 
             And fac.tipofact=995 
-            And fac.fecha between '" & desde & "' and '" & hasta & "' " & parambusq, conexionPrinc)
+            And fac.fecha between '" & desde & "' and '" & hasta & "' " & parambusq & " order by fac.id asc", conexionPrinc)
             'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
@@ -420,9 +451,24 @@
         cargarPedidos()
     End Sub
     Private Sub PedidoSeleccionado(IdPedido As Integer) Handles dgvPedidos.SeleccionarItem
-        IDPedidoSeleccionado = IdPedido 
+        IDPedidoSeleccionado = IdPedido
         'CargarInfoPers()
     End Sub
+    Private Sub Multiseleccion(multi As Boolean) Handles dgvPedidos.Multiseleccion
+        If multi = True Then
+            cmdmodificar.Enabled = False
+            Button2.Text = "Imprimir selección"
+            Button3.Enabled = False
+            SeleccionMultiple = True
+        Else
+            cmdmodificar.Enabled = True
+            If rdfacturados.Checked = True Then cmdmodificar.Text = "Ver pedido"
+            Button2.Text = "Imprimir listado"
+            Button3.Enabled = True
+            SeleccionMultiple = False
+        End If
+    End Sub
+
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If cmbvendedor.SelectedValue = 0 Then
@@ -443,6 +489,10 @@
         'vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
         'vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
         vta.Show()
+
+    End Sub
+
+    Private Sub dgvPedidos_Load(sender As Object, e As EventArgs) Handles dgvPedidos.Load
 
     End Sub
 End Class

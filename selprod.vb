@@ -33,7 +33,7 @@
             conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, descripcion, " _
             & "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD from fact_insumos as ins " _
-            & " where " & busqtxt & "and eliminado=0", conexionPrinc)
+            & " where " & busqtxt & "and eliminado=0 order by stock desc limit 20", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
@@ -47,7 +47,7 @@
         End Try
     End Sub
 
-    Private Sub dtpersonal_DoubleClick(sender As Object, e As EventArgs) Handles dtproductos.DoubleClick
+    Private Sub dtpersonal_DoubleClick(sender As Object, e As EventArgs) Handles dtproductos.DoubleClick, dtproductos.DoubleClick
         Try
             Select Case LLAMA
                 Case "nuevaventa"
@@ -72,9 +72,9 @@
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).cargarProdCod(fila)
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).CalcularTotales()
-                Case "produccion"
-                    CType(frmprincipal.ActiveMdiChild, produccion).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                    CType(frmprincipal.ActiveMdiChild, produccion).cargarProdCod(fila)
+                'Case "produccion"
+                '    CType(frmprincipal.ActiveMdiChild, produccion).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+                '    CType(frmprincipal.ActiveMdiChild, produccion).cargarProdCod(fila)
                 Case "ptovta"
                     If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
                         CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
@@ -92,7 +92,7 @@
         End Try
     End Sub
 
-    Private Sub dtproductos_KeyDown(sender As Object, e As KeyEventArgs) Handles dtproductos.KeyDown
+    Private Sub dtproductos_KeyDown(sender As Object, e As KeyEventArgs) Handles  dtproductos.KeyDown
         Try
             If e.KeyCode = Keys.Enter Then
                 Select Case LLAMA
@@ -119,9 +119,9 @@
                         CType(frmprincipal.ActiveMdiChild, fichaequipo).cargarProdCod(fila)
                         CType(frmprincipal.ActiveMdiChild, fichaequipo).CalcularTotales()
 
-                    Case "produccion"
-                        CType(frmprincipal.ActiveMdiChild, produccion).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                        CType(frmprincipal.ActiveMdiChild, produccion).cargarProdCod(fila)
+                    'Case "produccion"
+                    '    CType(frmprincipal.ActiveMdiChild, produccion).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+                    '    CType(frmprincipal.ActiveMdiChild, produccion).cargarProdCod(fila)
                     Case "ptovta"
                         If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
                             CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
@@ -140,15 +140,15 @@
         End Try
     End Sub
 
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles  dtproductos.CellContentClick
 
     End Sub
 
-    Private Sub dtproductos_KeyUp(sender As Object, e As KeyEventArgs) Handles dtproductos.KeyUp
+    Private Sub dtproductos_KeyUp(sender As Object, e As KeyEventArgs) Handles  dtproductos.KeyUp
 
     End Sub
 
-    Private Sub dtproductos_MouseCaptureChanged(sender As Object, e As EventArgs) Handles dtproductos.MouseCaptureChanged
+    Private Sub dtproductos_MouseCaptureChanged(sender As Object, e As EventArgs) Handles  dtproductos.MouseCaptureChanged
 
     End Sub
 End Class

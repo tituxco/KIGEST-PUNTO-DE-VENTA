@@ -26,13 +26,14 @@ Partial Class Presupuestos
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lbltotalPedidos = New System.Windows.Forms.Label()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.dtphasta = New System.Windows.Forms.DateTimePicker()
         Me.dtpdesde = New System.Windows.Forms.DateTimePicker()
         Me.Label62 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.lbltotalPedidos = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.cmbvendedor = New System.Windows.Forms.ComboBox()
@@ -51,7 +52,6 @@ Partial Class Presupuestos
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.dgvPedidos = New SIGT__KIGEST.DGVPaginado()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -104,6 +104,55 @@ Partial Class Presupuestos
         Me.pnnavegacion.Size = New System.Drawing.Size(1243, 137)
         Me.pnnavegacion.TabIndex = 78
         '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Controls.Add(Me.lbltotalPedidos)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel2.Location = New System.Drawing.Point(546, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(201, 137)
+        Me.Panel2.TabIndex = 45
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label4.Location = New System.Drawing.Point(3, 3)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(54, 17)
+        Me.Label4.TabIndex = 80
+        Me.Label4.Text = "TOTAL"
+        '
+        'lbltotalPedidos
+        '
+        Me.lbltotalPedidos.AutoSize = True
+        Me.lbltotalPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalPedidos.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltotalPedidos.Location = New System.Drawing.Point(3, 24)
+        Me.lbltotalPedidos.Name = "lbltotalPedidos"
+        Me.lbltotalPedidos.Size = New System.Drawing.Size(24, 17)
+        Me.lbltotalPedidos.TabIndex = 79
+        Me.lbltotalPedidos.Text = "$0"
+        '
+        'Button4
+        '
+        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Location = New System.Drawing.Point(747, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(73, 137)
+        Me.Button4.TabIndex = 50
+        Me.Button4.Text = "Devolucion"
+        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button4.UseVisualStyleBackColor = True
+        '
         'Label61
         '
         Me.Label61.AutoSize = True
@@ -147,38 +196,6 @@ Partial Class Presupuestos
         Me.Label62.Size = New System.Drawing.Size(45, 17)
         Me.Label62.TabIndex = 49
         Me.Label62.Text = "Hasta"
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.Label4)
-        Me.Panel2.Controls.Add(Me.lbltotalPedidos)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(546, 0)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(201, 137)
-        Me.Panel2.TabIndex = 45
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.Label4.Location = New System.Drawing.Point(3, 3)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(54, 17)
-        Me.Label4.TabIndex = 80
-        Me.Label4.Text = "TOTAL"
-        '
-        'lbltotalPedidos
-        '
-        Me.lbltotalPedidos.AutoSize = True
-        Me.lbltotalPedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbltotalPedidos.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lbltotalPedidos.Location = New System.Drawing.Point(3, 24)
-        Me.lbltotalPedidos.Name = "lbltotalPedidos"
-        Me.lbltotalPedidos.Size = New System.Drawing.Size(24, 17)
-        Me.lbltotalPedidos.TabIndex = 79
-        Me.lbltotalPedidos.Text = "$0"
         '
         'Panel1
         '
@@ -427,23 +444,6 @@ Partial Class Presupuestos
         Me.dgvPedidos.Name = "dgvPedidos"
         Me.dgvPedidos.Size = New System.Drawing.Size(1243, 307)
         Me.dgvPedidos.TabIndex = 82
-        '
-        'Button4
-        '
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(747, 0)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(73, 137)
-        Me.Button4.TabIndex = 50
-        Me.Button4.Text = "Devolucion"
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button4.UseVisualStyleBackColor = True
         '
         'Presupuestos
         '

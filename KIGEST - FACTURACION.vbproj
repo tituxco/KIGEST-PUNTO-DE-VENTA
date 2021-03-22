@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>228</ApplicationRevision>
+    <ApplicationRevision>251</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -48,7 +48,7 @@
     <OutputPath>bin\Debug\</OutputPath>
     <DocumentationFile>SIGT - FACT.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -88,7 +88,14 @@
   <PropertyGroup>
     <SignManifests>false</SignManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Interop.MSScriptControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>obj\Debug\Interop.MSScriptControl.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\itextsharp.dll</HintPath>
@@ -149,7 +156,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="WSAFIPFE, Version=31.0.0.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\WSAFIPFE.dll</HintPath>
+      <HintPath>..\CODIGOS DE EJEMPLO\WSAFIPFE\WSAFIPFE.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +173,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="addAsiento.Designer.vb">
+      <DependentUpon>addAsiento.vb</DependentUpon>
+    </Compile>
+    <Compile Include="addAsiento.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="addProductosLote.Designer.vb">
       <DependentUpon>addProductosLote.vb</DependentUpon>
     </Compile>
@@ -228,6 +241,31 @@
       <DependentUpon>configuracion.vb</DependentUpon>
     </Compile>
     <Compile Include="configuracion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="datasets\DatasetRecibos.designer.vb">
+      <DependentUpon>DatasetRecibos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="datasets\DatasetRecibos.vb">
+      <DependentUpon>DatasetRecibos.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="datasets\datosimprimir.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>datosimprimir.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="datasets\datosContables.Designer.vb">
+      <DependentUpon>datosContables.xsd</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="datasets\datosContables.vb">
+      <DependentUpon>datosContables.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="empleados.designer.vb">
+      <DependentUpon>empleados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="empleados.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ConfiguracionTerminal.Designer.vb">
@@ -345,6 +383,12 @@
     <Compile Include="imprimiringreso.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="imprimirrecibo.designer.vb">
+      <DependentUpon>imprimirrecibo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="imprimirrecibo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="informedeventas.Designer.vb">
       <DependentUpon>informedeventas.vb</DependentUpon>
     </Compile>
@@ -391,6 +435,12 @@
       <DependentUpon>manejoStock.vb</DependentUpon>
     </Compile>
     <Compile Include="manejoStock.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="mantenimiento.designer.vb">
+      <DependentUpon>mantenimiento.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mantenimiento.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="movimientodecaja.Designer.vb">
@@ -488,10 +538,16 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="rawImpresora.vb" />
-    <Compile Include="recibos.Designer.vb">
-      <DependentUpon>recibos.vb</DependentUpon>
+    <Compile Include="selprod.designer.vb">
+      <DependentUpon>selprod.vb</DependentUpon>
     </Compile>
-    <Compile Include="recibos.vb">
+    <Compile Include="selprod.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="sueldos.designer.vb">
+      <DependentUpon>sueldos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="sueldos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="reimpresionComprobantes.Designer.vb">
@@ -548,12 +604,6 @@
     <Compile Include="selListaPrecios.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="selprod.designer.vb">
-      <DependentUpon>selprod.vb</DependentUpon>
-    </Compile>
-    <Compile Include="selprod.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="tecnico.designer.vb">
       <DependentUpon>tecnico.vb</DependentUpon>
     </Compile>
@@ -563,6 +613,17 @@
     <Compile Include="variables_globales.vb" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="datasets\DatasetRecibos.xsc">
+      <DependentUpon>DatasetRecibos.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\DatasetRecibos.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DatasetRecibos1.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="datasets\DatasetRecibos.xss">
+      <DependentUpon>DatasetRecibos.xsd</DependentUpon>
+    </None>
     <None Include="datasets\datosPrestamo.xsc">
       <DependentUpon>datosPrestamo.xsd</DependentUpon>
     </None>
@@ -574,6 +635,29 @@
     <None Include="datasets\datosPrestamo.xss">
       <DependentUpon>datosPrestamo.xsd</DependentUpon>
     </None>
+    <None Include="datasets\datosimprimir.xsc">
+      <DependentUpon>datosimprimir.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosimprimir.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datosimprimir.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="datasets\datosimprimir.xss">
+      <DependentUpon>datosimprimir.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosContables.xsc">
+      <DependentUpon>datosContables.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosContables.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datosContables.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="datasets\datosContables.xss">
+      <DependentUpon>datosContables.xsd</DependentUpon>
+    </None>
+    <None Include="My Project\app.manifest" />
     <None Include="packages.config" />
     <None Include="Resources\iconos\Print_32px.png" />
     <None Include="Resources\iconos\Print_64px.png" />
@@ -592,11 +676,24 @@
     <None Include="Resources\iconos\Eye_64px.png" />
     <None Include="Resources\iconos\Export_32px.png" />
     <None Include="Resources\iconos\Export_32px_WHITE.png" />
+    <None Include="Resources\iconos\Synchronize_64px.png" />
+    <None Include="Resources\iconos\User Groups_64px.png" />
+    <None Include="Resources\iconos\User Groups_32px.png" />
+    <None Include="Resources\iconos\Plus_64px.png" />
+    <None Include="Resources\iconos\Plus_32px.png" />
+    <None Include="Resources\iconos\Edit_32px.png" />
+    <None Include="Resources\iconos\Minus_32px.png" />
+    <None Include="Resources\iconos\Save_32px.png" />
+    <None Include="Resources\iconos\Cancel_64px.png" />
+    <None Include="Resources\iconos\Edit_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\iconos\Accounting_48px.png" />
     <None Include="Resources\Accounting_32px.png" />
+    <EmbeddedResource Include="addAsiento.resx">
+      <DependentUpon>addAsiento.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="addProductosLote.resx">
       <DependentUpon>addProductosLote.vb</DependentUpon>
     </EmbeddedResource>
@@ -628,6 +725,9 @@
     <EmbeddedResource Include="configuracion.resx">
       <DependentUpon>configuracion.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="empleados.resx">
+      <DependentUpon>empleados.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ConfiguracionTerminal.resx">
       <DependentUpon>ConfiguracionTerminal.vb</DependentUpon>
     </EmbeddedResource>
@@ -657,6 +757,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="imprimiringreso.resx">
       <DependentUpon>imprimiringreso.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="imprimirrecibo.resx">
+      <DependentUpon>imprimirrecibo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="informedeventas.resx">
       <DependentUpon>informedeventas.vb</DependentUpon>
@@ -722,6 +825,9 @@
     </Content>
     <EmbeddedResource Include="manejoStock.resx">
       <DependentUpon>manejoStock.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mantenimiento.resx">
+      <DependentUpon>mantenimiento.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="movimientodecaja.resx">
       <DependentUpon>movimientodecaja.vb</DependentUpon>
@@ -793,12 +899,25 @@
     <Content Include="reportes\recibo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="recibos.resx">
-      <DependentUpon>recibos.vb</DependentUpon>
-    </EmbeddedResource>
     <Content Include="reportes\remito.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="reportes\ReciboDetalle.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\ReciboEncabezado.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\libroDiario.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="selprod.resx">
+      <DependentUpon>selprod.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="sueldos.resx">
+      <DependentUpon>sueldos.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="reimpresionComprobantes.resx">
       <DependentUpon>reimpresionComprobantes.vb</DependentUpon>
     </EmbeddedResource>
@@ -813,7 +932,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="Report1.rdlc" />
     <EmbeddedResource Include="ReporteForm.resx">
       <DependentUpon>ReporteForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -822,6 +940,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="reportes\listadofacturas_old.rdlc" />
+    <Content Include="reportes\recibosueldo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="romaneo.resx">
       <DependentUpon>romaneo.vb</DependentUpon>
     </EmbeddedResource>
@@ -839,9 +960,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="selListaPrecios.resx">
       <DependentUpon>selListaPrecios.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="selprod.resx">
-      <DependentUpon>selprod.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="tecnico.resx">
       <DependentUpon>tecnico.vb</DependentUpon>
@@ -935,22 +1053,22 @@
   <ItemGroup>
     <PublishFile Include="SIGT - FACT.pdb">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="SIGT - FACT.xml">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

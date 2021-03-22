@@ -51,6 +51,14 @@
 
         If InStr(DatosAcceso.Moduloacc, "4f") = False Then tabseguimientoVendedores.Parent = Nothing
 
+        Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
+        Dim readcajas As New DataSet
+        tablaCajas.Fill(readcajas)
+        cmbcajas.DataSource = readcajas.Tables(0)
+        cmbcajas.DisplayMember = readcajas.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbcajas.ValueMember = readcajas.Tables(0).Columns(0).Caption.ToString
+
+
 
     End Sub
     Private Function CalcularComisiones(idVendedor As Integer) As Double
@@ -137,9 +145,9 @@
             tablaDev.Columns.Clear()
             ' If cmbAlmacenes.SelectedValue <> 0 And cmbAlmacenes.SelectedIndex <> -1 Then
             If cmbAlmacenes.SelectedValue = 0 Then
-                consIdAlmacen = " and itm.ptovta like '%'"
+                consIdAlmacen = " and itm.idAlmacen like '%'"
             Else
-                consIdAlmacen = " and itm.ptovta=" & cmbAlmacenes.SelectedValue
+                consIdAlmacen = " and itm.idAlmacen=" & cmbAlmacenes.SelectedValue
             End If
 
 
@@ -796,7 +804,7 @@
             MsgBox("Debe seleccionar un vendedor y establecer una cantidad de meses para ver")
             Exit Sub
         End If
-        DgvHistorialVtasCliente.dgvVista.DataSource = Nothing
+        dgvHistorialVtasCliente.DataSource = Nothing
         'DgvHistorialVtasCliente.dgvVista.Columns.Clear()
 
         Try
@@ -876,7 +884,7 @@
                 End If
             Next
 
-            DgvHistorialVtasCliente.Cargar_Datos(HistorialCliente)
+            dgvHistorialVtasCliente.DataSource = HistorialCliente
             EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()
@@ -901,9 +909,16 @@
         Application.DoEvents()
 
         Dim almacenHistorial As String = ""
-        If cmbhistorialProductosAlmacen.SelectedIndex <> -1 Or cmbhistorialProductosAlmacen.SelectedValue <> 0 Then
-            almacenHistorial = " and itm.ptovta=" & cmbhistorialProductosAlmacen.SelectedValue
+        Dim vendedorHistorial As String = ""
+
+        If cmbhistorialProductosAlmacen.SelectedIndex <> -1 And cmbhistorialProductosAlmacen.SelectedValue <> 0 Then
+            almacenHistorial = " and itm.idAlmacen= " & cmbhistorialProductosAlmacen.SelectedValue
         End If
+
+        If cmbVendedorHistorial.SelectedIndex <> -1 And cmbVendedorHistorial.SelectedValue <> 0 Then
+            vendedorHistorial = " and fact.vendedor= " & cmbVendedorHistorial.SelectedValue
+        End If
+
         dgvSeguimientoProductos.dgvVista.DataSource = Nothing
         'DgvHistorialVtasCliente.dgvVista.Columns.Clear()
 
@@ -917,7 +932,8 @@
             where fact.id_cliente= cli.idclientes and fact.id=itm.id_fact
             and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
             and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txthistorialProductosMeses.Text) & " month) and date_format(now(),'%Y-%m-%d')
-            and itm.descripcion like '%" & txthistorialProductosBusqueda.Text.Replace(" ", "%") & "%'" & almacenHistorial & "
+            and itm.descripcion like '%" & txthistorialProductosBusqueda.Text.Replace(" ", "%") & "%'" & almacenHistorial & vendedorHistorial & "
+
             
             group by month(fact.fecha),itm.cod order by month(fact.fecha) asc", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
@@ -995,4 +1011,113 @@
         End Try
     End Sub
 
+    Private Sub DgvHistorialVtasCliente_Load(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "frmaspirantes" Then
+                Me.MdiChildren(i).BringToFront()
+
+                Exit Sub
+            End If
+        Next
+
+        Dim clientes As New frmaspirantes
+        clientes.txtbuscar.Text = dgvHistorialVtasCliente.CurrentRow.Cells(1).Value
+        clientes.CargarPersonal(dgvHistorialVtasCliente.CurrentRow.Cells(1).Value)
+        clientes.Idcliente = dgvHistorialVtasCliente.CurrentRow.Cells(0).Value
+        clientes.Button8.PerformClick()
+        clientes.MdiParent = Me.MdiParent
+
+        clientes.Show()
+    End Sub
+
+    Private Sub dtdevoluciones_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtdevoluciones.CellContentClick
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Try
+            Dim fecha As String = Format(CDate(dtpFecha.Value), "yyyy-MM-dd")
+            If cmbcajas.SelectedValue = -1 Then
+                MsgBox("No selecciono caja")
+                Exit Sub
+            End If
+
+            Reconectar()
+            Dim consultaLectura As New MySql.Data.MySqlClient.MySqlDataAdapter("select codProd, producto, sum(replace(cant,',','.')) 
+            from fact_insumos_historial_lectura where fecha like '" & fecha & " %%:%%:%%'
+            and tmp_caja=" & cmbcajas.SelectedValue & "
+            group by codProd
+            order by producto asc    ", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+            Dim tablaLectura As New DataTable
+            consultaLectura.Fill(tablaLectura)
+            dgvLecturas.DataSource = tablaLectura
+
+            Reconectar()
+            Dim consultaSalida As New MySql.Data.MySqlClient.MySqlDataAdapter("select cod,descripcion,sum(cantidad) 
+            from fact_items where fecha_alta like '" & fecha & " %%:%%:%%'
+            and idCaja=" & cmbcajas.SelectedValue & " 
+            and tipofact in(select donfdesc from tipos_comprobantes where debcred like 'D')
+            group by cod
+            order by descripcion asc", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+            Dim tablaSalida As New DataTable
+            consultaSalida.Fill(tablaSalida)
+            dgvSalidas.DataSource = tablaSalida
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dgvLecturas_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLecturas.CellEnter
+        Try
+            'MsgBox(dgvLecturas.Rows(e.RowIndex).Cells(0).Value)
+            Dim existeProd As Boolean = False
+            For Each fila As DataGridViewRow In dgvSalidas.Rows
+                If fila.Cells(0).Value = dgvLecturas.Rows(e.RowIndex).Cells(0).Value Then
+                    fila.Selected = True
+                    lbldiferencia.Text = dgvLecturas.Rows(e.RowIndex).Cells(2).Value - fila.Cells(2).Value
+                    existeProd = True
+                    dgvSalidas.FirstDisplayedScrollingRowIndex = fila.Index
+                    'Exit For
+                Else
+                    fila.Selected = False
+                    'lbldiferencia.Text = "Producto no facturado"
+                End If
+            Next
+            If existeProd = False Then
+                lbldiferencia.Text = "Producto no facturado"
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click
+        Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
+        Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
+
+        Dim BusqFacturados As String = ""
+        If chkfacturado.Checked = True Then
+            BusqFacturados = " and facturado=0 "
+        End If
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM 
+            fact_insumos_produccion where 
+            fecha_alta between '" & desde & "' and '" & hasta & "'" &
+            BusqFacturados, conexionPrinc)
+        Dim TablaEnvasados As New DataTable
+
+        consulta.Fill(TablaEnvasados)
+        dgvProduccionEnvasados.DataSource = TablaEnvasados
+    End Sub
+
+    Private Sub dgvLecturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLecturas.CellContentClick
+
+    End Sub
 End Class

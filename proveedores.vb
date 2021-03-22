@@ -399,9 +399,10 @@ Public Class proveedores
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        romaneo.idcomprobante = dtcomprobantes.CurrentRow.Cells(0).Value
-        romaneo.Show()
-        romaneo.TopMost = True
+        addProductosLote.idcomprobante = dtcomprobantes.CurrentRow.Cells(0).Value
+        addProductosLote.Show()
+        addProductosLote.TopMost = True
+        addProductosLote.cmdaceptar.Enabled = False
     End Sub
 
     Private Sub dtcomprobantes_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcomprobantes.CellEndEdit

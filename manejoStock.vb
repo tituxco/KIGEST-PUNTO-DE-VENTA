@@ -77,21 +77,21 @@ Public Class manejoStock
             End If
 
             If cmbalmacen.SelectedValue = 0 Then
-                buscAlm = " fi.ptovta like '%' "
+                buscAlm = " itm.idAlmacen like '%' "
                 buscAlm2 = " idalmacen like '%' "
             Else
-                buscAlm = " fi.ptovta = " & cmbalmacen.SelectedValue
+                buscAlm = " itm.idAlmacen = " & cmbalmacen.SelectedValue
                 buscAlm2 = " idalmacen = " & cmbalmacen.SelectedValue
             End If
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fi.cod as CodInterno, pro.descripcion, sum(fi.cantidad) as ventasTotalesPeriodo,
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod as CodInterno, pro.descripcion, sum(itm.cantidad) as ventasTotalesPeriodo,
             (select sum(stock) from fact_insumos_lotes where idproducto=pro.id and " & buscAlm2 & " ) as StockActualEnAlmacen
-            FROM fact_items as fi, fact_facturas as fa , fact_insumos as pro
-            where fa.id=fi.id_fact and fi.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
-            and fi.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D')
+            FROM fact_items as itm, fact_facturas as fa , fact_insumos as pro
+            where fa.id=itm.id_fact and itm.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
+            and itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D')
             and " & catprod & " and " & proveed & " and " & buscnomb & " and " & buscAlm & " 
-            group by fi.cod ", conexionPrinc)
+            group by itm.cod ", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaprod As New DataTable
 
