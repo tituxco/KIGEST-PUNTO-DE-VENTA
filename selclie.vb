@@ -89,6 +89,13 @@
                         .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
                     End With
                     Me.Close()
+                Case "nvaPublicidad"
+                    With CType(frmprincipal.ActiveMdiChild, NvaPublicidad)
+                        .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                    End With
+                    Me.Close()
             End Select
         Catch ex As Exception
 
@@ -154,6 +161,13 @@
                             .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
                             .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
                             .txtmonto.Focus()
+                        End With
+                        Me.Close()
+                    Case "nvaPublicidad"
+                        With CType(frmprincipal.ActiveMdiChild, NvaPublicidad)
+                            .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
                         End With
                         Me.Close()
 

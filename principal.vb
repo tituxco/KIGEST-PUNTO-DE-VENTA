@@ -1,8 +1,8 @@
 ﻿Imports System.IO
+Imports System.Net
 
 Public Class frmprincipal
     Public loged As Boolean
-    'Public Pac As New frmaspirantes()
     Private Sub frmprincipal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         End
     End Sub
@@ -20,19 +20,25 @@ Public Class frmprincipal
                 FacturaA.PerformClick()
             ElseIf e.Control And e.KeyCode = Keys.NumPad4 Then
                 ConsultaDeProductos.PerformClick()
+            ElseIf e.Control And e.KeyCode = Keys.F12 Then
+                Reconectar()
+                Dim consultaconex As New MySql.Data.MySqlClient.MySqlDataAdapter("
+                SELECT SUBSTRING_INDEX(host, ':', 1) AS IPConexion,db,
+                GROUP_CONCAT(DISTINCT USER)   AS users,
+                COUNT(*) as conexiones
+                FROM   information_schema.processlist
+                GROUP  BY IPConexion,db
+                ORDER  BY IPConexion,db;", conexionPrinc)
+                Dim tablaconex As New DataTable
+                'Dim infoconex As Datata
+                consultaconex.Fill(tablaconex)
+                dtconexiones.DataSource = tablaconex
+                If dtconexiones.Visible = True Then dtconexiones.Visible = False Else dtconexiones.Visible = True
             End If
         Catch ex As Exception
 
         End Try
 
-        'Select Case e.KeyCode
-        '    Case Keys.ControlKey + Keys.NumPad1
-        '        reciboconsfinal.PerformClick()
-        '    Case Keys.F11
-        '        facturabconsfinal.PerformClick()
-        '    Case Keys.F12
-        '        FacturaA.PerformClick()
-        'End Select
     End Sub
 
     Private Sub frmprincipal_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -58,6 +64,10 @@ Public Class frmprincipal
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
+
+
+            'listaConexiones.DropDownItems.Add()
+
             infocl = tablacl.Select("")
             If InStr(DatosAcceso.Moduloacc, "1") = False Then cmdclientes.Visible = False
 
@@ -66,6 +76,8 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "2b") = False Then ConsultaDeProductos.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2c") = False Then ManejoDePreciosToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2d") = False Then StockToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "CONFTERM") = False Then ConfiguracionDeTerminalToolStripMenuItem.Visible = False
+
 
             'If InStr(DatosAcceso.Moduloacc, "2e") = False Then cmdProduccion.Visible = False
 
@@ -90,10 +102,12 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "4d") = False Then AgendaDeVencimientosToolStripMenuItem.Visible = False
 
 
-            If InStr(DatosAcceso.Moduloacc, "5") = False Then cmdtecnico.Visible = False
-            If InStr(DatosAcceso.Moduloacc, "KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False
-            If InStr(DatosAcceso.Moduloacc, "RYM") = False Then cmdPrestamos.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5") = False Then cmdServicios.Visible = False 'SERVICIOS
+            If InStr(DatosAcceso.Moduloacc, "5KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5RYM") = False Then cmdPrestamos.Visible = False
             If InStr(DatosAcceso.Moduloacc, "6") = False Then EmpleadosToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5PUBLICIDAD") = False Then PublicidadToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
 
             FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
@@ -165,7 +179,7 @@ Public Class frmprincipal
                 Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
                 Dim tablaMONEDA As New DataTable
                 consMONEDA.Fill(tablaMONEDA)
-                If tablaMONEDA.Rows.Count > 1 Then
+                If tablaMONEDA.Rows.Count > 0 Then
                     lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
                 Else
                     lblPrincipalDolar.Text = ""
@@ -516,7 +530,7 @@ Public Class frmprincipal
 
     End Sub
 
-    Private Sub TecnicoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cmdtecnico.Click
+    Private Sub TecnicoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles cmdServicios.Click
 
     End Sub
 
@@ -842,6 +856,24 @@ Public Class frmprincipal
         Next
 
         Dim tec As New mantenimiento
+        tec.MdiParent = Me
+        'tec.idfacrap = 3
+        'tec.cmdguardar.Enabled = False
+        'tec.cmdsolicitarcae.Enabled = True
+        'tec.txtclierazon.Focus()
+        tec.Show()
+    End Sub
+
+    Private Sub PublicidadToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles PublicidadToolStripMenuItem.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "listadoPublicidades" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New listadoPublicidades
         tec.MdiParent = Me
         'tec.idfacrap = 3
         'tec.cmdguardar.Enabled = False

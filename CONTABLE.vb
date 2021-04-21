@@ -6,6 +6,9 @@ Imports System.Windows.Forms.DataVisualization.Charting
 Public Class CONTABLE
     Dim ModificaPlanDeCuentas As Boolean = False
     Public DtPlanCuentas As New DataTable
+    Dim saldoAnteriorCuenta As Double = 0
+    Dim tabCuentasConSaldos As New DataTable
+    Dim idPLanCuenta As String
 
 
     Private Sub CONTABLE_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -16,12 +19,11 @@ Public Class CONTABLE
         dtpchequesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtpdesdedetallecta.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         dtdesdecuentaprov.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        'tabplancuentas.Parent = Nothing
         balance.Parent = Nothing
-        'tabdtostecni.Parent = Nothing
-        'tablibromayor.Parent = Nothing
-        'tabgraficas.Parent = Nothing
         cmbMovimientosHistoricos.SelectedIndex = 1
+        If InStr(DatosAcceso.Moduloacc, "CONFVAR") = False Then tabconfiguracion.Parent = Nothing
+
+        If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabBalanceCtas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabplancuentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tablibromayor.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aa") = False Then tabcomprobantes.Parent = Nothing
@@ -159,7 +161,14 @@ Public Class CONTABLE
 
             'cmbvendedor.SelectedIndex = -1
 
-
+            tabCuentasConSaldos.Columns.Add("id")
+            tabCuentasConSaldos.Columns.Add("numCuenta")
+            tabCuentasConSaldos.Columns.Add("nombreCuenta")
+            tabCuentasConSaldos.Columns.Add("saldoAnterior")
+            tabCuentasConSaldos.Columns.Add("debitosMes")
+            tabCuentasConSaldos.Columns.Add("creditosMes")
+            tabCuentasConSaldos.Columns.Add("saldoMes")
+            tabCuentasConSaldos.Columns.Add("saldoFinal")
         Catch ex As Exception
 
         End Try
@@ -1856,9 +1865,10 @@ Public Class CONTABLE
             & "(select pro.razon from fact_proveedores as pro, fact_proveedores_fact as fac where pro.id=fac.idproveedor and fac.id=che.comprobante_eg) as PagadoA, " _
             & "(select fecha from fact_proveedores_fact where id=che.comprobante_eg) as FechaPago,  " _
             & "che.banco, che.serie, " _
-            & "che.fecha_cobro,format(che.importe,2,'es_AR'),che.observaciones" _
+            & "che.fecha_cobro,format(che.importe,2,'es_AR') as importe, che.observaciones " _
             & "from fact_cheques as che " _
             & "where che.tipo_cheque=2 " & consul, conexionPrinc)
+            MsgBox(consulta.SelectCommand.CommandText)
             Dim tablacheques As New DataTable
 
             consulta.Fill(tablacheques)
@@ -3789,6 +3799,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 cuenta.Item("cuentaMovimiento"),
                 cuenta.Item("cuentaResultado")
                    )
+            dgvPlanCuentas.Rows(dgvPlanCuentas.Rows.Count - 1).DefaultCellStyle.BackColor = ColorearPorNumero(cuenta.Item("grupo"))
+            'dgvPlanCuentas.Rows(dgvPlanCuentas.Rows.Count - 1).DefaultCellStyle.BackColor = ColorearPorNumero(cuenta.Item("subGrupo"))
+            'dgvPlanCuentas.Rows(dgvPlanCuentas.Rows.Count - 1).DefaultCellStyle.BackColor = ColorearPorNumero(cuenta.Item("cuenta"))
+            'dgvPlanCuentas.Rows(dgvPlanCuentas.Rows.Count - 1).DefaultCellStyle.BackColor = ColorearPorNumero(cuenta.Item("subCuenta"))
+
         Next
 
 
@@ -3799,6 +3814,26 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
         grpMantenimientoCuenta.Enabled = False
     End Sub
+    Private Function ColorearPorNumero(codigo As Integer) As Color
+        'Select Case codigo
+        '    Case 1
+        '        Return Color.FromKnownColor(KnownColor.Red)
+        '    Case 2
+        '        Return Color.FromKnownColor(KnownColor.YellowGreen)
+        '    Case 3
+        '        Return Color.FromKnownColor(KnownColor.BlueViolet)
+        '    Case 4
+        '        Return Color.FromKnownColor(KnownColor.Aqua)
+        '    Case 5
+        '        Return Color.FromKnownColor(KnownColor.Coral)
+
+        '    Case 6
+        Return Color.FromKnownColor(codigo + 50)
+
+
+        'End Select
+
+    End Function
 
     Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
         grpMantenimientoCuenta.Enabled = True
@@ -3808,6 +3843,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub Button27_Click(sender As Object, e As EventArgs) Handles Button27.Click
         Try
+
             Dim CuentaNombre As String = txtCuentaNombre.Text
             Dim CuentaGrupo As Integer = CInt(txtCuentaGrupo.Text)
             Dim CuentaSubGrupo As Integer = CInt(txtCuentaSubGrupo.Text)
@@ -3831,6 +3867,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 SqlQuery = "insert into cm_planDeCuentas  " _
                 & "(nombreCuenta,grupo,subGrupo,cuenta,subCuenta,cuentaDetalle,cuentaMovimiento,cuentaResultado) values " _
                 & "(?nombreCuenta,?grupo,?subGrupo,?cuenta,?subCuenta,?cuentaDetalle,?cuentaMovimiento,?cuentaResultado)"
+            ElseIf ModificaPlanDeCuentas = True Then
+                SqlQuery = "update cm_planDeCuentas set nombreCuenta=?nombreCuenta ,grupo=?grupo ,
+                subGrupo= ?subGrupo,cuenta= ?cuenta,subCuenta=?subCuenta ,cuentaDetalle=?cuentaDetalle , 
+                cuentaMovimiento=?cuentaMovimiento ,cuentaResultado=?cuentaResultado where id=?idCuenta"
             End If
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -3843,6 +3883,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 .AddWithValue("?cuentaDetalle", CuentaCtaDetalle)
                 .AddWithValue("?cuentaMovimiento", ctaMovimiento)
                 .AddWithValue("?cuentaResultado", ctaResultado)
+                If ModificaPlanDeCuentas = True Then
+                    .AddWithValue("?idCuenta", idCuenta)
+                End If
             End With
 
             comandoadd.ExecuteNonQuery()
@@ -3851,11 +3894,17 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim filaEncontrada = 0
             For Each fila As DataGridViewRow In dgvPlanCuentas.Rows
 
-                If fila.Cells(0).Value = comandoadd.LastInsertedId Then
+                If fila.Cells(0).Value = comandoadd.LastInsertedId And ModificaPlanDeCuentas = False Then
                     'MsgBox(fila.Cells(1).Value)
                     fila.Selected = True
                     filaEncontrada = fila.Index
                     Exit For
+                ElseIf fila.Cells(0).value = idPLanCuenta And ModificaPlanDeCuentas = True Then
+
+                    'If ModificaPlanDeCuentas = True Then
+                    fila.Selected = True
+                    filaEncontrada = idPLanCuenta
+                    'End If
                 End If
             Next
             dgvPlanCuentas.Rows(filaEncontrada).Selected = True
@@ -3891,15 +3940,52 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub tablibromayor_Enter(sender As Object, e As EventArgs) Handles tablibromayor.Enter
         Try
-            cargarLibros
+            Reconectar()
+            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle), ' <> ',nombreCuenta) as nombreCuenta
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            Dim dsPlanCuentas As New DataSet
+            consPlanCuentas.Fill(dsPlanCuentas)
+
+            cmbCuentas.DataSource = dsPlanCuentas.Tables(0)
+            cmbCuentas.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
+            cmbCuentas.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
+
+            CargarPeriodos()
+
+            CargarLibroDiario()
+            CargarLibroMayor()
+
         Catch ex As Exception
 
         End Try
     End Sub
-    Public Sub CargarLibros()
+
+    Private Sub CargarPeriodos()
         Try
+            Reconectar()
+            Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from cm_libroDiario order by fecha desc", conexionPrinc)
+
+            Dim readPeriodo As New DataSet
+            TablaPeriodo.Fill(readPeriodo)
+            cmbperiodoLibroDiario.DataSource = readPeriodo.Tables(0)
+            cmbperiodoLibroDiario.DisplayMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
+
+            cmbPeriodoLibroMayor.DataSource = readPeriodo.Tables(0)
+            cmbPeriodoLibroMayor.DisplayMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
+
+            cmbBalCtasPeriodo.DataSource = readPeriodo.Tables(0)
+            cmbBalCtasPeriodo.DisplayMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Public Sub CargarLibroDiario()
+        Try
+
+            Reconectar()
             dgvLibroDiario.Rows.Clear()
-            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario", conexionPrinc)
+            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  where fecha like '" & cmbperiodoLibroDiario.Text & "-%%'", conexionPrinc)
             Dim tabLibroDiario As New DataTable
             consLibroDiario.Fill(tabLibroDiario)
             For Each asientoContable As DataRow In tabLibroDiario.Rows
@@ -3914,23 +4000,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                         )
             Next
 
-            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle), ' <> ',nombreCuenta) as nombreCuenta
-            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
-            Dim dsPlanCuentas As New DataSet
-            consPlanCuentas.Fill(dsPlanCuentas)
-
-            cmbCuentas.DataSource = dsPlanCuentas.Tables(0)
-            cmbCuentas.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
-            cmbCuentas.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
-
-
         Catch ex As Exception
 
         End Try
     End Sub
 
     Private Sub Button31_Click(sender As Object, e As EventArgs) Handles Button31.Click
-        CargarLibros()
+        CargarLibroDiario()
     End Sub
 
 
@@ -3979,6 +4055,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub Button34_Click(sender As Object, e As EventArgs) Handles Button34.Click
         Try
             ModificaPlanDeCuentas = True
+            grpMantenimientoCuenta.Enabled = True
+            idPLanCuenta = dgvPlanCuentas.CurrentRow.Cells(0).Value
+            txtCuentaGrupo.Enabled = False
+            txtCuentaSubGrupo.Enabled = False
+            txtCuentaCta.Enabled = False
+            txtCuentaSubCuenta.Enabled = False
+            txtCuentaCtaDetalle.Enabled = False
+
         Catch ex As Exception
 
         End Try
@@ -3989,24 +4073,104 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub cmbCuentas_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedValueChanged
+        cargarLibroMayor
+
+    End Sub
+    Private Sub CargarLibroMayor()
         Try
+
             dgvLibroMayor.Rows.Clear()
+            Reconectar()
             Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
+            Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
+            from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
+            where LM.fecha < '" & cmbPeriodoLibroMayor.Text & "-%%' and
+            LM.codigoAsiento=stos.codigoAsiento and
+            LD.codigoAsiento=stos.codigoAsiento and
+            PC.id=" & idCuentaSel & " and
+            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
+            order by stos.id asc", conexionPrinc)
+            Dim tabSaldoCuenta As New DataTable
+            consSaldoCuenta.Fill(tabSaldoCuenta)
+            If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
+                saldoAnteriorCuenta = 0
+            Else
+                saldoAnteriorCuenta = tabSaldoCuenta.Rows(0).Item(0)
+            End If
+
+            lblSaldoCtaLibroMayor.Text = FormatNumber(saldoAnteriorCuenta, 2)
+
+            Reconectar()
             Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
-            FROM cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
+            From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
             where LM.codigoAsiento=asi.codigoAsiento and
+            LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
             LD.codigoAsiento=LM.codigoAsiento and
             (asi.cuentaDebeId= " & idCuentaSel & " or 
             asi.cuentaHaberId=" & idCuentaSel & ")", conexionPrinc)
             Dim tabLibroMayor As New DataTable
             consLibroMayor.Fill(tabLibroMayor)
+            Dim saldoDeudor As Double = 0
+            Dim saldoAcreedor As Double = 0
+
+            If saldoAnteriorCuenta > 0 Then
+                saldoDeudor = saldoAnteriorCuenta
+                saldoAcreedor = 0
+            ElseIf saldoAnteriorCuenta < 0 Then
+                saldoDeudor = 0
+                saldoAcreedor = saldoAnteriorCuenta * -1
+            Else
+                saldoDeudor = 0
+                saldoAcreedor =0
+            End If
+
+            dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", saldoDeudor, saldoAcreedor)
+
             For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
+                Dim debeActual As Double = movimientoCuenta.Item("importeDebe")
+                Dim haberActual As Double = movimientoCuenta.Item("importeHaber")
+                Dim saldoActual As Double = 0
+
+                If saldoAcreedor > 0 Then
+
+                    saldoActual = saldoAcreedor - (debeActual - haberActual)
+                    saldoDeudor = 0
+
+                    If saldoActual > 0 Then
+
+                        saldoAcreedor = saldoActual
+                        saldoDeudor = 0
+                    Else
+                        saldoDeudor = saldoActual * -1
+                        saldoAcreedor = 0
+                    End If
+
+                ElseIf saldoDeudor > 0 Then
+
+                    saldoActual = saldoDeudor + (debeActual - haberActual)
+                    saldoAcreedor = 0
+
+                    If saldoActual > 0 Then
+                        saldoDeudor = saldoActual
+                        saldoAcreedor = 0
+                    Else
+                        saldoAcreedor = saldoActual * -1
+                        saldoDeudor = 0
+                    End If
+                Else
+                    saldoAcreedor = haberActual
+                    saldoDeudor = debeActual
+
+                End If
+
                 dgvLibroMayor.Rows.Add(
                                         movimientoCuenta.Item("comprobanteInterno"),
                                         movimientoCuenta.Item("fecha"),
                                         movimientoCuenta.Item("concepto"),
                                         movimientoCuenta.Item("importeDebe"),
-                                        movimientoCuenta.Item("importeHaber")
+                                        movimientoCuenta.Item("importeHaber"),
+                                        saldoDeudor,
+                                        saldoAcreedor
                                         )
             Next
 
@@ -4015,72 +4179,282 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
         End Try
     End Sub
-    'Private Sub cmbCuentas_KeyUp(sender As Object, e As KeyEventArgs) Handles cmbCuentas.KeyUp
-    '    Dim strText As String
+    Private Sub Button32_Click(sender As Object, e As EventArgs) Handles Button32.Click
+        Dim EnProgreso As New Form
+        Try
+            EnProgreso.ControlBox = False
+            EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+            EnProgreso.Size = New Point(430, 30)
+            EnProgreso.StartPosition = FormStartPosition.CenterScreen
+            EnProgreso.TopMost = True
+            Dim Etiqueta As New Label
+            Etiqueta.AutoSize = True
+            Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+            Etiqueta.Location = New Point(5, 5)
+            EnProgreso.Controls.Add(Etiqueta)
+            'Dim Barra As New ProgressBar
+            'Barra.Style = ProgressBarStyle.Marquee
+            'Barra.Size = New Point(270, 40)
+            'Barra.Location = New Point(10, 30)
+            'Barra.Value = 100
+            'EnProgreso.Controls.Add(Barra)
+            EnProgreso.Show()
+            Application.DoEvents()
 
-    '    strText = cmbCuentas.Text
+            Dim datosContables As New datosContable
+            Dim desde As String = Format(CDate(dtpdecob.Value), "yyyy-MM-dd")
+            Dim hasta As String = Format(CDate(dtphastacob.Value), "yyyy-MM-dd")
 
-    '    If cmbCuentas.Text = "" Then
+            Dim tabContable As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Reconectar()
 
-    '        cmbCuentas.DataSource = DtPlanCuentas
+            tabContable.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select LD.fecha,stos.codigoAsiento,LD.comprobanteInterno, LD.concepto, 
+            concat(PC.grupo,PC.subgrupo,PC.cuenta,'.',PC.subcuenta,PC.cuentadetalle) as numCta,
+            PC.nombreCuenta,
+            stos.importeDebe,stos.importeHaber   
+            from cm_libroDiario as LD, cm_Asientos as stos, cm_planDeCuentas as PC 
+            where
+            LD.codigoAsiento=stos.codigoAsiento and
+            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
+            LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%'
+            order by stos.id asc", conexionPrinc)
 
-    '        'cmbCuentas.ValueMember = "id"
+            tabContable.Fill(datosContables.Tables("libroDiario"))
+            'Reconectar()
 
-    '        'cmbCuentas.DisplayMember = "nombreCuenta"
+            'tabContable.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select * from cobranzas where fecha between '" & desde & "' and '" & hasta & "'", conexionPrinc)
+            'tabContable.Fill(datosContables.Tables("listadorecibos"))
+            'End If
+            Dim imprimirx As New imprimirFX
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\libroDiario.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("libroDiario", datosContables.Tables("libroDiario")))
+                '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+            EnProgreso.Close()
+        Catch ex As Exception
+            EnProgreso.Close()
+            MsgBox(ex.Message)
+        End Try
+    End Sub
 
-    '        cmbCuentas.SelectedIndex = -1
+    Private Sub Button36_Click(sender As Object, e As EventArgs) Handles Button36.Click
+        Try
+            CargarLibroMayor()
+        Catch ex As Exception
 
-    '        cmbCuentas.DroppedDown = False
-
-    '    End If
-
-    '    If Len(strText) > 2 Then
-
-    '        cmbCuentas.DataSource = DtPlanCuentas.Select("nombreCuenta LIKE '%" & strText & "%'")
-
-
-    '        'cmbCuentas.ValueMember = "id"
-
-    '        'cmbCuentas.DisplayMember = "nombreCuenta"
-
-    '        If cmbCuentas.Items.Count <> 0 Then
-
-    '            cmbCuentas.DroppedDown = True
-
-    '            cmbCuentas.SelectedIndex = -1
-
-    '            cmbCuentas.Text = ""
-
-    '            cmbCuentas.SelectedText = strText
-
-    '            strText = ""
-
-    '            Cursor.Current = Cursors.Default
-
-
-
-    '        Else
-
-    '            cmbCuentas.DataSource = DtPlanCuentas
-
-    '            'cmbCuentas.ValueMember = "id"
-
-    '            'cmbCuentas.DisplayMember = "nombreCuenta"
-
-    '            cmbCuentas.SelectedIndex = -1
-
-    '            cmbCuentas.Text = ""
-
-    '            cmbCuentas.SelectedText = strText
-
-    '            strText = ""
-
-    '            cmbCuentas.DroppedDown = False
+        End Try
+    End Sub
 
 
+    Private Sub Button41_Click(sender As Object, e As EventArgs) Handles Button41.Click
+        Try
 
-    '        End If
+            dgvListadoCuentaConSaldos.Rows.Clear()
+            Reconectar()
 
-    '    End If
-    'End Sub
+            Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id, concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta,
+				(select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'                
+                ) as saldoAnterior, 
+                
+                (select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'                
+                ) as debitosMes,
+                
+                (select sum(stos.importeHaber)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'                
+                ) as creditosMes
+                                
+                from cm_planDeCuentas as CTA 
+                where CTA.cuentaMovimiento=1
+                order by CTA.cuentaResultado desc", conexionPrinc)
+            Dim tabSaldoCuenta As New DataTable
+            consSaldoCuenta.Fill(tabSaldoCuenta)
+
+            'Dim col As New DataColumn
+
+
+            For Each saldocuenta As DataRow In tabSaldoCuenta.Rows
+                Dim saldAnterior As Double = 0
+                Dim debMes As Double = 0
+                Dim credMes As Double = 0
+                Dim saldMes As Double = 0
+                Dim saldFinal As Double = 0
+
+                If IsDBNull(saldocuenta.Item("saldoAnterior")) Then saldAnterior = 0 Else saldAnterior = saldocuenta.Item("saldoAnterior")
+                If IsDBNull(saldocuenta.Item("debitosMes")) Then debMes = 0 Else debMes = saldocuenta.Item("debitosMes")
+                If IsDBNull(saldocuenta.Item("creditosMes")) Then credMes = 0 Else credMes = saldocuenta.Item("creditosMes")
+
+                saldMes = debMes - credMes
+                saldFinal = saldMes + saldAnterior
+
+                dgvListadoCuentaConSaldos.Rows.Add(
+                                    saldocuenta.Item("id"),
+                                    saldocuenta.Item("numCuenta"),
+                                    saldocuenta.Item("nombreCuenta"),
+                                    saldAnterior,
+                                    debMes,
+                                    credMes,
+                                    saldMes,
+                                    saldFinal
+                                    )
+            Next
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button35_Click(sender As Object, e As EventArgs) Handles Button35.Click
+        Try
+            Dim datosContables As New datosContable
+
+            For Each movimiento As DataGridViewRow In dgvLibroMayor.Rows
+                datosContables.Tables("libroMayor").Rows.Add(
+                                    movimiento.Cells("fecha").Value,
+                                    movimiento.Cells("comprobante").Value,
+                                    movimiento.Cells("concepto").Value,
+                                    movimiento.Cells("debe").Value,
+                                    movimiento.Cells("haber").Value,
+                                    movimiento.Cells("saldoDeudor").Value,
+                                    movimiento.Cells("saldoAcreedor").Value
+                                    )
+
+            Next
+            Dim imprimirx As New imprimirFX
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            ' parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\libroMayor.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("libroMayor", datosContables.Tables("libroMayor")))
+                '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                '    .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button37_Click(sender As Object, e As EventArgs) Handles Button37.Click
+        Try
+
+            Dim datosContables As New datosContable
+
+            For Each cuenta As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+                datosContables.Tables("cuentasConSaldo").Rows.Add(
+                                    cuenta.Cells("idCuenta").Value,
+                                    cuenta.Cells("numCuenta").Value,
+                                    cuenta.Cells(2).Value,
+                                    cuenta.Cells("saldoAnterior").Value,
+                                    cuenta.Cells("debitosMes").Value,
+                                    cuenta.Cells("creditosMes").Value,
+                                    cuenta.Cells("saldoMes").Value,
+                                    cuenta.Cells("saldoFinal").Value
+                                    )
+
+            Next
+            Dim imprimirx As New imprimirFX
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            ' parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoCuentasConSaldos.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("cuentasConSaldo", datosContables.Tables("cuentasConSaldo")))
+                '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                '    .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub tabBalanceCtas_Enter(sender As Object, e As EventArgs) Handles tabBalanceCtas.Enter
+        CargarPeriodos()
+
+    End Sub
+
+    Private Sub Button38_Click(sender As Object, e As EventArgs) Handles Button38.Click
+        Try
+            Dim datosContables As New datosContable
+            dgvListadoCuentaConSaldos.Rows.Clear()
+            Reconectar()
+
+
+            Dim consBalance As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id,CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle, CTA.nombreCuenta, ifnull(
+				(select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha<'2021-03-%%'                
+                ),0) as saldoAnterior, 
+                
+                ifnull((select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '2021-03-%%'                
+                ),0) -
+                
+                ifnull((select sum(stos.importeHaber)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '2021-03-%%'               
+                ),0) as MES
+                                
+                from cm_planDeCuentas as CTA 	
+                order by CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle desc", conexionPrinc)
+
+            consBalance.Fill(datosContables.Tables("balanceCuentas"))
+
+            Dim imprimirx As New imprimirFX
+            'Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            ' parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\balanceCuentas.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("balanceCuentas", datosContables.Tables("balanceCuentas")))
+                '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                '    .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+
+
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

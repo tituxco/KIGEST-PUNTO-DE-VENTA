@@ -22,10 +22,14 @@ Partial Class fichaequipo
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(fichaequipo))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.lblalerta = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -74,6 +78,8 @@ Partial Class fichaequipo
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtpresupuesto = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtespecificaciones = New System.Windows.Forms.TextBox()
+        Me.Label25 = New System.Windows.Forms.Label()
         Me.cmblistaprecio = New System.Windows.Forms.ComboBox()
         Me.Label22 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -86,14 +92,6 @@ Partial Class fichaequipo
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Label16 = New System.Windows.Forms.Label()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtresolucion = New System.Windows.Forms.TextBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.txtfalla = New System.Windows.Forms.TextBox()
@@ -104,6 +102,24 @@ Partial Class fichaequipo
         Me.Label13 = New System.Windows.Forms.Label()
         Me.txtaccesorios = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.lblcodexistente = New System.Windows.Forms.Label()
+        Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.pntitulo.SuspendLayout()
         Me.panelingreso.SuspendLayout()
         Me.panelcliente.SuspendLayout()
@@ -122,7 +138,7 @@ Partial Class fichaequipo
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1151, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1368, 40)
         Me.pntitulo.TabIndex = 97
         '
         'lblalerta
@@ -130,7 +146,7 @@ Partial Class fichaequipo
         Me.lblalerta.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblalerta.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblalerta.ForeColor = System.Drawing.Color.Red
-        Me.lblalerta.Location = New System.Drawing.Point(504, 0)
+        Me.lblalerta.Location = New System.Drawing.Point(721, 0)
         Me.lblalerta.Name = "lblalerta"
         Me.lblalerta.Size = New System.Drawing.Size(647, 40)
         Me.lblalerta.TabIndex = 3
@@ -166,7 +182,7 @@ Partial Class fichaequipo
         Me.panelingreso.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelingreso.Location = New System.Drawing.Point(0, 40)
         Me.panelingreso.Name = "panelingreso"
-        Me.panelingreso.Size = New System.Drawing.Size(1151, 60)
+        Me.panelingreso.Size = New System.Drawing.Size(1368, 60)
         Me.panelingreso.TabIndex = 102
         '
         'lblfechafin
@@ -201,7 +217,7 @@ Partial Class fichaequipo
         Me.cmbbaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbbaja.ForeColor = System.Drawing.Color.White
         Me.cmbbaja.Image = CType(resources.GetObject("cmbbaja.Image"), System.Drawing.Image)
-        Me.cmbbaja.Location = New System.Drawing.Point(1083, 0)
+        Me.cmbbaja.Location = New System.Drawing.Point(1300, 0)
         Me.cmbbaja.Name = "cmbbaja"
         Me.cmbbaja.Size = New System.Drawing.Size(68, 60)
         Me.cmbbaja.TabIndex = 64
@@ -321,7 +337,7 @@ Partial Class fichaequipo
         Me.panelcliente.ForeColor = System.Drawing.Color.White
         Me.panelcliente.Location = New System.Drawing.Point(0, 100)
         Me.panelcliente.Name = "panelcliente"
-        Me.panelcliente.Size = New System.Drawing.Size(1151, 72)
+        Me.panelcliente.Size = New System.Drawing.Size(1368, 72)
         Me.panelcliente.TabIndex = 104
         '
         'chkenviamail
@@ -402,7 +418,7 @@ Partial Class fichaequipo
         Me.cmdguardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdguardar.ForeColor = System.Drawing.Color.White
         Me.cmdguardar.Image = CType(resources.GetObject("cmdguardar.Image"), System.Drawing.Image)
-        Me.cmdguardar.Location = New System.Drawing.Point(949, 0)
+        Me.cmdguardar.Location = New System.Drawing.Point(1166, 0)
         Me.cmdguardar.Name = "cmdguardar"
         Me.cmdguardar.Size = New System.Drawing.Size(68, 72)
         Me.cmdguardar.TabIndex = 60
@@ -420,7 +436,7 @@ Partial Class fichaequipo
         Me.cmdfinalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdfinalizar.ForeColor = System.Drawing.Color.White
         Me.cmdfinalizar.Image = CType(resources.GetObject("cmdfinalizar.Image"), System.Drawing.Image)
-        Me.cmdfinalizar.Location = New System.Drawing.Point(1017, 0)
+        Me.cmdfinalizar.Location = New System.Drawing.Point(1234, 0)
         Me.cmdfinalizar.Name = "cmdfinalizar"
         Me.cmdfinalizar.Size = New System.Drawing.Size(67, 72)
         Me.cmdfinalizar.TabIndex = 58
@@ -439,7 +455,7 @@ Partial Class fichaequipo
         Me.cmdimprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdimprimir.ForeColor = System.Drawing.Color.White
         Me.cmdimprimir.Image = CType(resources.GetObject("cmdimprimir.Image"), System.Drawing.Image)
-        Me.cmdimprimir.Location = New System.Drawing.Point(1084, 0)
+        Me.cmdimprimir.Location = New System.Drawing.Point(1301, 0)
         Me.cmdimprimir.Name = "cmdimprimir"
         Me.cmdimprimir.Size = New System.Drawing.Size(67, 72)
         Me.cmdimprimir.TabIndex = 59
@@ -523,6 +539,7 @@ Partial Class fichaequipo
         '
         'panelequipo
         '
+        Me.panelequipo.Controls.Add(Me.lblcodexistente)
         Me.panelequipo.Controls.Add(Me.lblmodelo)
         Me.panelequipo.Controls.Add(Me.txtnumeroSerie)
         Me.panelequipo.Controls.Add(Me.Label11)
@@ -536,7 +553,7 @@ Partial Class fichaequipo
         Me.panelequipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.panelequipo.Location = New System.Drawing.Point(0, 172)
         Me.panelequipo.Name = "panelequipo"
-        Me.panelequipo.Size = New System.Drawing.Size(1151, 48)
+        Me.panelequipo.Size = New System.Drawing.Size(1368, 48)
         Me.panelequipo.TabIndex = 105
         '
         'lblmodelo
@@ -648,11 +665,12 @@ Partial Class fichaequipo
         Me.paneldatosadicionales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.paneldatosadicionales.Location = New System.Drawing.Point(0, 220)
         Me.paneldatosadicionales.Name = "paneldatosadicionales"
-        Me.paneldatosadicionales.Size = New System.Drawing.Size(1151, 369)
+        Me.paneldatosadicionales.Size = New System.Drawing.Size(1368, 369)
         Me.paneldatosadicionales.TabIndex = 106
         '
         'Label24
         '
+        Me.Label24.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label24.Location = New System.Drawing.Point(675, 81)
@@ -663,16 +681,20 @@ Partial Class fichaequipo
         '
         'txtpresupuesto
         '
+        Me.txtpresupuesto.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtpresupuesto.BackColor = System.Drawing.Color.White
-        Me.txtpresupuesto.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtpresupuesto.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtpresupuesto.ForeColor = System.Drawing.Color.Red
         Me.txtpresupuesto.Location = New System.Drawing.Point(678, 100)
         Me.txtpresupuesto.Name = "txtpresupuesto"
-        Me.txtpresupuesto.Size = New System.Drawing.Size(384, 20)
+        Me.txtpresupuesto.Size = New System.Drawing.Size(322, 35)
         Me.txtpresupuesto.TabIndex = 238
+        Me.txtpresupuesto.Text = "0"
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.txtespecificaciones)
+        Me.Panel1.Controls.Add(Me.Label25)
         Me.Panel1.Controls.Add(Me.cmblistaprecio)
         Me.Panel1.Controls.Add(Me.Label22)
         Me.Panel1.Controls.Add(Me.Panel2)
@@ -684,13 +706,33 @@ Partial Class fichaequipo
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 137)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1134, 256)
+        Me.Panel1.Size = New System.Drawing.Size(1351, 256)
         Me.Panel1.TabIndex = 237
+        '
+        'txtespecificaciones
+        '
+        Me.txtespecificaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.txtespecificaciones.Location = New System.Drawing.Point(648, 19)
+        Me.txtespecificaciones.Multiline = True
+        Me.txtespecificaciones.Name = "txtespecificaciones"
+        Me.txtespecificaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtespecificaciones.Size = New System.Drawing.Size(352, 107)
+        Me.txtespecificaciones.TabIndex = 251
+        '
+        'Label25
+        '
+        Me.Label25.AutoSize = True
+        Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.Location = New System.Drawing.Point(645, 4)
+        Me.Label25.Name = "Label25"
+        Me.Label25.Size = New System.Drawing.Size(237, 16)
+        Me.Label25.TabIndex = 252
+        Me.Label25.Text = "ESPECIFICACIONES DE EQUIPO"
         '
         'cmblistaprecio
         '
         Me.cmblistaprecio.FormattingEnabled = True
-        Me.cmblistaprecio.Location = New System.Drawing.Point(688, 104)
+        Me.cmblistaprecio.Location = New System.Drawing.Point(791, 131)
         Me.cmblistaprecio.Name = "cmblistaprecio"
         Me.cmblistaprecio.Size = New System.Drawing.Size(209, 21)
         Me.cmblistaprecio.TabIndex = 250
@@ -699,7 +741,7 @@ Partial Class fichaequipo
         '
         Me.Label22.AutoSize = True
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label22.Location = New System.Drawing.Point(553, 107)
+        Me.Label22.Location = New System.Drawing.Point(656, 134)
         Me.Label22.Name = "Label22"
         Me.Label22.Size = New System.Drawing.Size(129, 16)
         Me.Label22.TabIndex = 249
@@ -714,25 +756,27 @@ Partial Class fichaequipo
         Me.Panel2.Controls.Add(Me.txtmanoobra)
         Me.Panel2.Controls.Add(Me.Label4)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(925, 0)
+        Me.Panel2.Location = New System.Drawing.Point(1073, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(209, 256)
+        Me.Panel2.Size = New System.Drawing.Size(278, 256)
         Me.Panel2.TabIndex = 248
         '
         'txttotaltrabajo
         '
+        Me.txttotaltrabajo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txttotaltrabajo.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txttotaltrabajo.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txttotaltrabajo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txttotaltrabajo.Location = New System.Drawing.Point(6, 195)
         Me.txttotaltrabajo.Name = "txttotaltrabajo"
         Me.txttotaltrabajo.ReadOnly = True
-        Me.txttotaltrabajo.Size = New System.Drawing.Size(200, 47)
+        Me.txttotaltrabajo.Size = New System.Drawing.Size(269, 47)
         Me.txttotaltrabajo.TabIndex = 247
         Me.txttotaltrabajo.Text = "0"
         '
         'Label8
         '
+        Me.Label8.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.Black
@@ -744,18 +788,20 @@ Partial Class fichaequipo
         '
         'txttotalinsumos
         '
+        Me.txttotalinsumos.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txttotalinsumos.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txttotalinsumos.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txttotalinsumos.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txttotalinsumos.Location = New System.Drawing.Point(6, 117)
         Me.txttotalinsumos.Name = "txttotalinsumos"
         Me.txttotalinsumos.ReadOnly = True
-        Me.txttotalinsumos.Size = New System.Drawing.Size(200, 47)
+        Me.txttotalinsumos.Size = New System.Drawing.Size(271, 47)
         Me.txttotalinsumos.TabIndex = 245
         Me.txttotalinsumos.Text = "0"
         '
         'Label5
         '
+        Me.Label5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.Black
@@ -767,17 +813,19 @@ Partial Class fichaequipo
         '
         'txtmanoobra
         '
+        Me.txtmanoobra.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtmanoobra.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtmanoobra.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtmanoobra.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txtmanoobra.Location = New System.Drawing.Point(6, 38)
         Me.txtmanoobra.Name = "txtmanoobra"
-        Me.txtmanoobra.Size = New System.Drawing.Size(200, 47)
+        Me.txtmanoobra.Size = New System.Drawing.Size(272, 47)
         Me.txtmanoobra.TabIndex = 243
         Me.txtmanoobra.Text = "0"
         '
         'Label4
         '
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.Black
@@ -789,7 +837,7 @@ Partial Class fichaequipo
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(112, -1)
+        Me.Button1.Location = New System.Drawing.Point(507, -1)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(61, 19)
         Me.Button1.TabIndex = 247
@@ -801,7 +849,7 @@ Partial Class fichaequipo
         '
         Me.Label16.AutoSize = True
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label16.Location = New System.Drawing.Point(3, 107)
+        Me.Label16.Location = New System.Drawing.Point(3, 139)
         Me.Label16.Name = "Label16"
         Me.Label16.Size = New System.Drawing.Size(267, 16)
         Me.Label16.TabIndex = 246
@@ -814,70 +862,12 @@ Partial Class fichaequipo
         Me.dtproductos.BackgroundColor = System.Drawing.Color.White
         Me.dtproductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtproductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column7, Me.Column1, Me.Column3, Me.Column2, Me.Column6, Me.Column4, Me.Column5, Me.Column8})
-        Me.dtproductos.Location = New System.Drawing.Point(6, 126)
+        Me.dtproductos.Location = New System.Drawing.Point(6, 158)
         Me.dtproductos.MultiSelect = False
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.Size = New System.Drawing.Size(891, 117)
+        Me.dtproductos.Size = New System.Drawing.Size(994, 85)
         Me.dtproductos.TabIndex = 245
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "id"
-        Me.Column7.Name = "Column7"
-        Me.Column7.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 25.0!
-        Me.Column1.HeaderText = "Codigo/#PLU"
-        Me.Column1.Name = "Column1"
-        '
-        'Column3
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column3.FillWeight = 20.0!
-        Me.Column3.HeaderText = "Cantidad"
-        Me.Column3.Name = "Column3"
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 169.5432!
-        Me.Column2.HeaderText = "Producto"
-        Me.Column2.Name = "Column2"
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 20.0!
-        Me.Column6.HeaderText = "IVA"
-        Me.Column6.Name = "Column6"
-        '
-        'Column4
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column4.FillWeight = 20.0!
-        Me.Column4.HeaderText = "P/U"
-        Me.Column4.Name = "Column4"
-        '
-        'Column5
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Column5.FillWeight = 20.0!
-        Me.Column5.HeaderText = "P/T"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.HeaderText = "ganancia"
-        Me.Column8.Name = "Column8"
-        Me.Column8.Visible = False
         '
         'txtresolucion
         '
@@ -886,7 +876,7 @@ Partial Class fichaequipo
         Me.txtresolucion.Multiline = True
         Me.txtresolucion.Name = "txtresolucion"
         Me.txtresolucion.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtresolucion.Size = New System.Drawing.Size(888, 85)
+        Me.txtresolucion.Size = New System.Drawing.Size(631, 117)
         Me.txtresolucion.TabIndex = 243
         '
         'Label15
@@ -895,9 +885,9 @@ Partial Class fichaequipo
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(3, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(105, 16)
+        Me.Label15.Size = New System.Drawing.Size(268, 16)
         Me.Label15.TabIndex = 244
-        Me.Label15.Text = "RESOLUCIÓN"
+        Me.Label15.Text = "RESOLUCIÓN/TRABAJO REALIZADO"
         '
         'txtfalla
         '
@@ -921,16 +911,18 @@ Partial Class fichaequipo
         '
         'txtobservaciones
         '
+        Me.txtobservaciones.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtobservaciones.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtobservaciones.Location = New System.Drawing.Point(678, 22)
         Me.txtobservaciones.Multiline = True
         Me.txtobservaciones.Name = "txtobservaciones"
         Me.txtobservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtobservaciones.Size = New System.Drawing.Size(384, 56)
+        Me.txtobservaciones.Size = New System.Drawing.Size(322, 56)
         Me.txtobservaciones.TabIndex = 13
         '
         'Label14
         '
+        Me.Label14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(675, 3)
@@ -966,7 +958,7 @@ Partial Class fichaequipo
         Me.txtaccesorios.Name = "txtaccesorios"
         Me.txtaccesorios.ReadOnly = True
         Me.txtaccesorios.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtaccesorios.Size = New System.Drawing.Size(284, 56)
+        Me.txtaccesorios.Size = New System.Drawing.Size(287, 56)
         Me.txtaccesorios.TabIndex = 11
         '
         'Label12
@@ -979,11 +971,143 @@ Partial Class fichaequipo
         Me.Label12.TabIndex = 219
         Me.Label12.Text = "ACCESORIOS"
         '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.FillWeight = 25.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Codigo/#PLU"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 86
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle7
+        Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 69
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.FillWeight = 169.5432!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Producto"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Width = 587
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "IVA"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.Width = 69
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        DataGridViewCellStyle8.Format = "N2"
+        DataGridViewCellStyle8.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle8
+        Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "P/U"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Width = 70
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        DataGridViewCellStyle9.Format = "N2"
+        DataGridViewCellStyle9.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle9
+        Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn7.HeaderText = "P/T"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 69
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.HeaderText = "ganancia"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.Visible = False
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "id"
+        Me.Column7.Name = "Column7"
+        Me.Column7.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 25.0!
+        Me.Column1.HeaderText = "Codigo/#PLU"
+        Me.Column1.Name = "Column1"
+        '
+        'Column3
+        '
+        DataGridViewCellStyle10.Format = "N2"
+        DataGridViewCellStyle10.NullValue = Nothing
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle10
+        Me.Column3.FillWeight = 20.0!
+        Me.Column3.HeaderText = "Cantidad"
+        Me.Column3.Name = "Column3"
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 169.5432!
+        Me.Column2.HeaderText = "Producto"
+        Me.Column2.Name = "Column2"
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 20.0!
+        Me.Column6.HeaderText = "IVA"
+        Me.Column6.Name = "Column6"
+        '
+        'Column4
+        '
+        DataGridViewCellStyle11.Format = "N2"
+        DataGridViewCellStyle11.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle11
+        Me.Column4.FillWeight = 20.0!
+        Me.Column4.HeaderText = "P/U"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        DataGridViewCellStyle12.Format = "N2"
+        DataGridViewCellStyle12.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle12
+        Me.Column5.FillWeight = 20.0!
+        Me.Column5.HeaderText = "P/T"
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "ganancia"
+        Me.Column8.Name = "Column8"
+        Me.Column8.Visible = False
+        '
+        'lblcodexistente
+        '
+        Me.lblcodexistente.AutoSize = True
+        Me.lblcodexistente.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcodexistente.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.lblcodexistente.Location = New System.Drawing.Point(673, 2)
+        Me.lblcodexistente.Name = "lblcodexistente"
+        Me.lblcodexistente.Size = New System.Drawing.Size(0, 17)
+        Me.lblcodexistente.TabIndex = 227
+        '
         'fichaequipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1151, 589)
+        Me.ClientSize = New System.Drawing.Size(1368, 589)
         Me.Controls.Add(Me.paneldatosadicionales)
         Me.Controls.Add(Me.panelequipo)
         Me.Controls.Add(Me.panelcliente)
@@ -1089,4 +1213,16 @@ Partial Class fichaequipo
     Friend WithEvents Column4 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Column8 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents txtespecificaciones As TextBox
+    Friend WithEvents Label25 As Label
+    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn7 As DataGridViewTextBoxColumn
+    Friend WithEvents DataGridViewTextBoxColumn8 As DataGridViewTextBoxColumn
+    Friend WithEvents lblcodexistente As Label
+    Friend WithEvents Timer1 As Timer
 End Class

@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>251</ApplicationRevision>
+    <ApplicationRevision>255</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -100,6 +100,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -154,9 +155,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="WSAFIPFE, Version=31.0.0.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
+    <Reference Include="WSAFIPFE, Version=94.8.0.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\CODIGOS DE EJEMPLO\WSAFIPFE\WSAFIPFE.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -195,6 +197,12 @@
       <DependentUpon>agregarpromo.vb</DependentUpon>
     </Compile>
     <Compile Include="agregarpromo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="agregarUsuarioCloud.Designer.vb">
+      <DependentUpon>agregarUsuarioCloud.vb</DependentUpon>
+    </Compile>
+    <Compile Include="agregarUsuarioCloud.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="aspirantes.designer.vb">
@@ -249,18 +257,15 @@
     <Compile Include="datasets\DatasetRecibos.vb">
       <DependentUpon>DatasetRecibos.xsd</DependentUpon>
     </Compile>
+    <Compile Include="datasets\datosContable.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>datosContable.xsd</DependentUpon>
+    </Compile>
     <Compile Include="datasets\datosimprimir.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>datosimprimir.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="datasets\datosContables.Designer.vb">
-      <DependentUpon>datosContables.xsd</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="datasets\datosContables.vb">
-      <DependentUpon>datosContables.xsd</DependentUpon>
     </Compile>
     <Compile Include="empleados.designer.vb">
       <DependentUpon>empleados.vb</DependentUpon>
@@ -425,6 +430,12 @@
     <Compile Include="listadoPrestamos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="listadoPublicidades.Designer.vb">
+      <DependentUpon>listadoPublicidades.vb</DependentUpon>
+    </Compile>
+    <Compile Include="listadoPublicidades.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="manejodeprecios.Designer.vb">
       <DependentUpon>manejodeprecios.vb</DependentUpon>
     </Compile>
@@ -474,6 +485,12 @@
       <DependentUpon>nuevoremito.vb</DependentUpon>
     </Compile>
     <Compile Include="nuevoremito.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NvaPublicidad.Designer.vb">
+      <DependentUpon>NvaPublicidad.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NvaPublicidad.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Operaciones.vb" />
@@ -624,6 +641,17 @@
     <None Include="datasets\DatasetRecibos.xss">
       <DependentUpon>DatasetRecibos.xsd</DependentUpon>
     </None>
+    <None Include="datasets\datosContable.xsc">
+      <DependentUpon>datosContable.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosContable.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datosContable.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="datasets\datosContable.xss">
+      <DependentUpon>datosContable.xsd</DependentUpon>
+    </None>
     <None Include="datasets\datosPrestamo.xsc">
       <DependentUpon>datosPrestamo.xsd</DependentUpon>
     </None>
@@ -645,17 +673,6 @@
     </None>
     <None Include="datasets\datosimprimir.xss">
       <DependentUpon>datosimprimir.xsd</DependentUpon>
-    </None>
-    <None Include="datasets\datosContables.xsc">
-      <DependentUpon>datosContables.xsd</DependentUpon>
-    </None>
-    <None Include="datasets\datosContables.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>datosContables.Designer.vb</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="datasets\datosContables.xss">
-      <DependentUpon>datosContables.xsd</DependentUpon>
     </None>
     <None Include="My Project\app.manifest" />
     <None Include="packages.config" />
@@ -686,6 +703,15 @@
     <None Include="Resources\iconos\Save_32px.png" />
     <None Include="Resources\iconos\Cancel_64px.png" />
     <None Include="Resources\iconos\Edit_64px.png" />
+    <None Include="Resources\iconos\Commercial_32px.png" />
+    <None Include="Resources\iconos\services_32px.png" />
+    <None Include="Resources\iconos\Maintenance_32px.png" />
+    <None Include="Resources\iconos\Cash Register_32px.png" />
+    <None Include="Resources\iconos\history 64px.png" />
+    <None Include="Resources\iconos\Commercial_64px.png" />
+    <None Include="Resources\iconos\New Copy_64px2.png" />
+    <None Include="Resources\iconos\New Copy_32px.png" />
+    <None Include="Resources\iconos\Add User Male_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -703,6 +729,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="agregarpromo.resx">
       <DependentUpon>agregarpromo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="agregarUsuarioCloud.resx">
+      <DependentUpon>agregarUsuarioCloud.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="aspirantes.resx">
       <DependentUpon>aspirantes.vb</DependentUpon>
@@ -766,6 +795,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="listadoPrestamos.resx">
       <DependentUpon>listadoPrestamos.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="listadoPublicidades.resx">
+      <DependentUpon>listadoPublicidades.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="manejodeprecios.resx">
       <DependentUpon>manejodeprecios.vb</DependentUpon>
@@ -854,6 +886,9 @@
     <Content Include="reportes\listacarga.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="NvaPublicidad.resx">
+      <DependentUpon>NvaPublicidad.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="pagosForm.resx">
       <DependentUpon>pagosForm.vb</DependentUpon>
     </EmbeddedResource>
@@ -909,6 +944,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="reportes\libroDiario.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\listadoCuentasConSaldos.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\libroMayor.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\balanceCuentas.rdlc">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1053,22 +1100,22 @@
   <ItemGroup>
     <PublishFile Include="SIGT - FACT.pdb">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="SIGT - FACT.xml">
       <Visible>False</Visible>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

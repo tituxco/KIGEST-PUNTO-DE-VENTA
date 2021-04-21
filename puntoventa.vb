@@ -26,9 +26,6 @@ Public Class puntoventa
             dtproductos.Columns(5).DefaultCellStyle.Format = "N2"
             dtproductos.Columns(6).DefaultCellStyle.Format = "N2"
         End If
-        If DatosAcceso.StockPpref = 1 Then
-            chkquitarstock.CheckState = CheckState.Checked
-        End If
         cargar_datos_factura()
         txtcodPLU.Focus()
         If InStr(DatosAcceso.Moduloacc, "1") = False Then Button2.Enabled = False
@@ -61,9 +58,24 @@ Public Class puntoventa
             numfact = Val(infofr(0)(3))
             lblfactnumero.Text = infofr(0)(3)
             tipofact = infofr(0)(4)
+            'MsgBox(tipofact)
+
+            If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Or tipofact = 12 Or tipofact = 13 Or tipofact = 991 Or tipofact = 992 Then
+                '   MsgBox("no quitar")
+                chkquitarstock.CheckState = CheckState.Unchecked
+                chkquitarstock.Enabled = False
+            ElseIf tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Then
+                '  MsgBox("quitar")
+                If DatosAcceso.StockPpref = 1 Then
+                    chkquitarstock.CheckState = CheckState.Checked
+                End If
+
+            End If
 
             If lblfacvendedor.Text = "-" Then lblfacvendedor.Text = DatosAcceso.Vendedor
             lblfacIdAlmacen.Text = My.Settings.idAlmacen
+
+
 
             'dtproductos.Rows.Clear()
             If ptovta = FacturaElectro.puntovtaelect Then
@@ -92,10 +104,7 @@ Public Class puntoventa
             pnaddProd.Enabled = True
             txtcodPLU.Focus()
             CalcularTotales()
-            'lblfactiva105.Text = 0
-            'lblfactiva21.Text = 0
-            'lblfactsubtotal.Text = 0
-            'lblfacttotal.Text = 0
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -1574,12 +1583,12 @@ Public Class puntoventa
                     idFacRap = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
                     With Me
                         .idfacrap = idFacRap
-                        .Idcliente = txtcliecta.Text
-                        .cargarCliente()
                         .cmdguardar.Enabled = False
                         .cmdsolicitarcae.Enabled = True
                         .txtcodPLU.Focus()
                         .cargar_datos_factura()
+                        .Idcliente = txtcliecta.Text
+                        .cargarCliente()
                         CalcularTotales()
                     End With
                 Case Keys.F12
@@ -1919,7 +1928,7 @@ Public Class puntoventa
                 Dim cantiva As Integer
 
                 If tipofact <> 11 Or tipofact <> 12 Or tipofact <> 13 Then
-                    'Else
+                    'Else                 
                     If iva105 = 0 And iva21 <> 0 And sub0 = 0 Then
                         '        MsgBox("1")
                         fe.F1DetalleIvaItemCantidad = 1
@@ -1928,79 +1937,80 @@ Public Class puntoventa
                         fe.F1DetalleIvaBaseImp = sub21
                         fe.F1DetalleIvaImporte = iva21
 
+
                     ElseIf iva105 <> 0 And iva21 <> 0 And sub0 = 0 Then
-                        '       MsgBox("2")
-                        fe.F1DetalleIvaItemCantidad = 2
+                            '       MsgBox("2")
+                            fe.F1DetalleIvaItemCantidad = 2
 
-                        fe.f1IndiceItem = 0
-                        fe.F1DetalleIvaId = 5
-                        fe.F1DetalleIvaBaseImp = sub21
-                        fe.F1DetalleIvaImporte = iva21
+                            fe.f1IndiceItem = 0
+                            fe.F1DetalleIvaId = 5
+                            fe.F1DetalleIvaBaseImp = sub21
+                            fe.F1DetalleIvaImporte = iva21
 
-                        fe.f1IndiceItem = 1
-                        fe.F1DetalleIvaId = 4
-                        fe.F1DetalleIvaBaseImp = sub105
-                        fe.F1DetalleIvaImporte = iva105
+                            fe.f1IndiceItem = 1
+                            fe.F1DetalleIvaId = 4
+                            fe.F1DetalleIvaBaseImp = sub105
+                            fe.F1DetalleIvaImporte = iva105
 
-                    ElseIf iva105 <> 0 And iva21 = 0 And sub0 = 0 Then
-                        '      MsgBox("3")
-                        fe.F1DetalleIvaItemCantidad = 1
+                        ElseIf iva105 <> 0 And iva21 = 0 And sub0 = 0 Then
+                            '      MsgBox("3")
+                            fe.F1DetalleIvaItemCantidad = 1
 
-                        fe.f1IndiceItem = 0
-                        fe.F1DetalleIvaId = 4
-                        fe.F1DetalleIvaBaseImp = sub105
-                        fe.F1DetalleIvaImporte = iva105
+                            fe.f1IndiceItem = 0
+                            fe.F1DetalleIvaId = 4
+                            fe.F1DetalleIvaBaseImp = sub105
+                            fe.F1DetalleIvaImporte = iva105
 
-                    ElseIf iva105 = 0 And iva21 <> 0 And sub0 <> 0 Then
-                        '     MsgBox("4")
-                        fe.F1DetalleIvaItemCantidad = 2
+                        ElseIf iva105 = 0 And iva21 <> 0 And sub0 <> 0 Then
+                            '     MsgBox("4")
+                            fe.F1DetalleIvaItemCantidad = 2
 
-                        fe.f1IndiceItem = 0
-                        fe.F1DetalleIvaId = 5
-                        fe.F1DetalleIvaBaseImp = sub21
-                        fe.F1DetalleIvaImporte = iva21
+                            fe.f1IndiceItem = 0
+                            fe.F1DetalleIvaId = 5
+                            fe.F1DetalleIvaBaseImp = sub21
+                            fe.F1DetalleIvaImporte = iva21
 
-                        fe.f1IndiceItem = 1
-                        fe.F1DetalleIvaId = 3
-                        fe.F1DetalleIvaBaseImp = sub0
-                        fe.F1DetalleIvaImporte = 0
+                            fe.f1IndiceItem = 1
+                            fe.F1DetalleIvaId = 3
+                            fe.F1DetalleIvaBaseImp = sub0
+                            fe.F1DetalleIvaImporte = 0
 
-                    ElseIf iva105 <> 0 And iva21 <> 0 And sub0 <> 0 Then
-                        '    MsgBox("5")
-                        fe.F1DetalleIvaItemCantidad = 3
+                        ElseIf iva105 <> 0 And iva21 <> 0 And sub0 <> 0 Then
+                            '    MsgBox("5")
+                            fe.F1DetalleIvaItemCantidad = 3
 
-                        fe.f1IndiceItem = 0
-                        fe.F1DetalleIvaId = 5
-                        fe.F1DetalleIvaBaseImp = sub21
-                        fe.F1DetalleIvaImporte = iva21
+                            fe.f1IndiceItem = 0
+                            fe.F1DetalleIvaId = 5
+                            fe.F1DetalleIvaBaseImp = sub21
+                            fe.F1DetalleIvaImporte = iva21
 
-                        fe.f1IndiceItem = 1
-                        fe.F1DetalleIvaId = 4
-                        fe.F1DetalleIvaBaseImp = sub105
-                        fe.F1DetalleIvaImporte = iva105
+                            fe.f1IndiceItem = 1
+                            fe.F1DetalleIvaId = 4
+                            fe.F1DetalleIvaBaseImp = sub105
+                            fe.F1DetalleIvaImporte = iva105
 
-                        fe.f1IndiceItem = 2
-                        fe.F1DetalleIvaId = 3
-                        fe.F1DetalleIvaBaseImp = sub0
-                        fe.F1DetalleIvaImporte = 0
+                            fe.f1IndiceItem = 2
+                            fe.F1DetalleIvaId = 3
+                            fe.F1DetalleIvaBaseImp = sub0
+                            fe.F1DetalleIvaImporte = 0
 
 
-                    ElseIf iva105 <> 0 And iva21 = 0 And sub0 <> 0 Then
-                        '   MsgBox("6")
-                        fe.F1DetalleIvaItemCantidad = 2
+                        ElseIf iva105 <> 0 And iva21 = 0 And sub0 <> 0 Then
+                            '   MsgBox("6")
+                            fe.F1DetalleIvaItemCantidad = 2
 
-                        fe.f1IndiceItem = 0
-                        fe.F1DetalleIvaId = 4
-                        fe.F1DetalleIvaBaseImp = sub105
-                        fe.F1DetalleIvaImporte = iva105
+                            fe.f1IndiceItem = 0
+                            fe.F1DetalleIvaId = 4
+                            fe.F1DetalleIvaBaseImp = sub105
+                            fe.F1DetalleIvaImporte = iva105
 
-                        fe.f1IndiceItem = 1
-                        fe.F1DetalleIvaId = 3
-                        fe.F1DetalleIvaBaseImp = sub0
-                        fe.F1DetalleIvaImporte = 0
-                    ElseIf iva105 = 0 And iva21 = 0 And sub0 <> 0 Then
-                        '   MsgBox("6")
-                        fe.F1DetalleIvaItemCantidad = 1
+                            fe.f1IndiceItem = 1
+                            fe.F1DetalleIvaId = 3
+                            fe.F1DetalleIvaBaseImp = sub0
+                            fe.F1DetalleIvaImporte = 0
+                        ElseIf iva105 = 0 And iva21 = 0 And sub0 <> 0 Then
+                            '   MsgBox("6")
+                            fe.F1DetalleIvaItemCantidad = 1
 
                         fe.f1IndiceItem = 0
                         fe.F1DetalleIvaId = 3
@@ -2008,24 +2018,55 @@ Public Class puntoventa
                         fe.F1DetalleIvaImporte = 0
                     End If
                 End If
-                'MsgBox("4")
-                fe.F1DetalleImpTotal = total
-                fe.F1DetalleImpTotalConc = 0
-                fe.F1DetalleImpNeto = subtotal
-                fe.F1DetalleImpIva = ivatotal
-
-                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"
-                fe.f1detalleqrtolerancia = 1
-                fe.f1detalleqrresolucion = 4
-                fe.f1detalleqrformato = 6
-                If fe.f1qrGenerar(99) = False Then
-                    '    MsgBox("gráfico generado con los datos. " + fe.f1qrmanualTexto)
-                    'Else
-                    MsgBox("error al generar el codigo QR " + fe.ArchivoQRError + " " + fe.UltimoMensajeError)
-                    Exit Sub
+                'EN CASO DE NOTAS DE CREDITO O DEBITO SOLICITO COMPROBANTE ASOCIADO
+                If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Then
+                    Dim tipoCompAsoc = 0
+                    fe.F1DetalleCbtesAsocItemCantidad = 1
+                    fe.f1IndiceItem = 0
+                    fe.F1DetalleCbtesAsocCUIT = txtcliecuitcuil.Text.Replace("-", "")
+                    fe.F1DetalleCbtesAsocPtoVta = FacturaElectro.puntovtaelect
+                    Select Case tipofact
+                        Case 2
+                            tipoCompAsoc = 1
+                        Case 3
+                            tipoCompAsoc = 1
+                        Case 7
+                            tipoCompAsoc = 6
+                        Case 8
+                            tipoCompAsoc = 6
+                    End Select
+                    fe.F1DetalleCbtesAsocTipo = tipoCompAsoc
+                    Dim cbteAsoc As String = InputBox("Ingrese comprobante asociado")
+                    If cbteAsoc <> "" Or IsNumeric(cbteAsoc) Then
+                        fe.F1DetalleCbtesAsocNro = CInt(cbteAsoc)
+                    Else
+                        MsgBox("NO INGRESO CORRECTAMENTE EL NUMERO DE COMPROBANTE ASOCIADO")
+                        Exit Sub
+                    End If
+                    If ObtenerFechaFacturaElectro(cbteAsoc, tipoCompAsoc) = "" Then
+                        MsgBox("No se pudo encontrar el comprobante asociado solicitado, por favor verifique el comprobante haya sido autorizado previamente")
+                        Exit Sub
+                    End If
+                    fe.F1DetalleCbtesAsocFecha = ObtenerFechaFacturaElectro(cbteAsoc, tipoCompAsoc)
                 End If
-                'If MsgBox("total: " & total & vbNewLine & "Neto: " & subtotal & vbNewLine & "ImpIVA: " & ivatotal & vbNewLine & vbNewLine & "esta correcto?", vbYesNoCancel) = MsgBoxResult.Yes Then
-                lresultado = fe.F1CAESolicitar()
+                fe.F1DetalleImpTotal = total
+                    fe.F1DetalleImpTotalConc = 0
+                    fe.F1DetalleImpNeto = subtotal
+                    fe.F1DetalleImpIva = ivatotal
+
+                    fe.F1DetalleQRArchivo = Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"
+                    fe.f1detalleqrtolerancia = 1
+                    fe.f1detalleqrresolucion = 4
+                    fe.f1detalleqrformato = 6
+
+                    If fe.f1qrGenerar(99) = False Then
+                        '    MsgBox("gráfico generado con los datos. " + fe.f1qrmanualTexto)
+                        'Else
+                        MsgBox("error al generar el codigo QR " + fe.ArchivoQRError + " " + fe.UltimoMensajeError)
+                        Exit Sub
+                    End If
+                    'If MsgBox("total: " & total & vbNewLine & "Neto: " & subtotal & vbNewLine & "ImpIVA: " & ivatotal & vbNewLine & vbNewLine & "esta correcto?", vbYesNoCancel) = MsgBoxResult.Yes Then
+                    lresultado = fe.F1CAESolicitar()
                     'Else
                     'Exit Sub
                     'End If
@@ -2437,5 +2478,7 @@ Public Class puntoventa
         GuardarHistorialProducto(e.RowIndex)
     End Sub
 
+    Private Sub txtclierazon_TextChanged(sender As Object, e As EventArgs) Handles txtclierazon.TextChanged
 
+    End Sub
 End Class

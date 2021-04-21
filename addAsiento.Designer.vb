@@ -22,10 +22,10 @@ Partial Class addAsiento
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.txtAsientoNumero = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -38,17 +38,17 @@ Partial Class addAsiento
         Me.txtAsientoConcepto = New System.Windows.Forms.TextBox()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.dgvPartidas = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cmbBusquedaCuenta = New System.Windows.Forms.ComboBox()
         Me.idCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dgvCuenta = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.buscar = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.DEBE = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.HABER = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cmbBusquedaCuenta = New System.Windows.Forms.ComboBox()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvPartidas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -111,7 +111,7 @@ Partial Class addAsiento
         Me.txtAsientoComprobante.Location = New System.Drawing.Point(8, 27)
         Me.txtAsientoComprobante.Name = "txtAsientoComprobante"
         Me.txtAsientoComprobante.Size = New System.Drawing.Size(113, 29)
-        Me.txtAsientoComprobante.TabIndex = 81
+        Me.txtAsientoComprobante.TabIndex = 0
         Me.txtAsientoComprobante.Text = "0"
         '
         'Label3
@@ -136,7 +136,7 @@ Partial Class addAsiento
         Me.cmdGuardar.Location = New System.Drawing.Point(710, 0)
         Me.cmdGuardar.Name = "cmdGuardar"
         Me.cmdGuardar.Size = New System.Drawing.Size(75, 59)
-        Me.cmdGuardar.TabIndex = 79
+        Me.cmdGuardar.TabIndex = 5
         Me.cmdGuardar.Text = "Guardar"
         Me.cmdGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdGuardar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
@@ -150,7 +150,7 @@ Partial Class addAsiento
         Me.fchAsientoFecha.Location = New System.Drawing.Point(476, 27)
         Me.fchAsientoFecha.Name = "fchAsientoFecha"
         Me.fchAsientoFecha.Size = New System.Drawing.Size(117, 29)
-        Me.fchAsientoFecha.TabIndex = 78
+        Me.fchAsientoFecha.TabIndex = 2
         '
         'Label2
         '
@@ -170,7 +170,7 @@ Partial Class addAsiento
         Me.txtAsientoConcepto.Location = New System.Drawing.Point(131, 27)
         Me.txtAsientoConcepto.Name = "txtAsientoConcepto"
         Me.txtAsientoConcepto.Size = New System.Drawing.Size(335, 29)
-        Me.txtAsientoConcepto.TabIndex = 76
+        Me.txtAsientoConcepto.TabIndex = 1
         '
         'Label68
         '
@@ -197,53 +197,7 @@ Partial Class addAsiento
         Me.dgvPartidas.MultiSelect = False
         Me.dgvPartidas.Name = "dgvPartidas"
         Me.dgvPartidas.Size = New System.Drawing.Size(785, 295)
-        Me.dgvPartidas.TabIndex = 68
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Codigo"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Visible = False
-        Me.DataGridViewTextBoxColumn1.Width = 104
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn2.HeaderText = "DEBE"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        Me.DataGridViewTextBoxColumn2.Width = 105
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        DataGridViewCellStyle13.Format = "C2"
-        DataGridViewCellStyle13.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle13
-        Me.DataGridViewTextBoxColumn3.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn3.HeaderText = "HABER"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.Width = 104
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        DataGridViewCellStyle14.Format = "C2"
-        DataGridViewCellStyle14.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle14
-        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "HABER"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.Width = 70
-        '
-        'cmbBusquedaCuenta
-        '
-        Me.cmbBusquedaCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple
-        Me.cmbBusquedaCuenta.FormattingEnabled = True
-        Me.cmbBusquedaCuenta.Location = New System.Drawing.Point(155, 138)
-        Me.cmbBusquedaCuenta.Name = "cmbBusquedaCuenta"
-        Me.cmbBusquedaCuenta.Size = New System.Drawing.Size(384, 229)
-        Me.cmbBusquedaCuenta.TabIndex = 69
-        Me.cmbBusquedaCuenta.Visible = False
+        Me.dgvPartidas.TabIndex = 3
         '
         'idCuenta
         '
@@ -277,21 +231,67 @@ Partial Class addAsiento
         '
         'DEBE
         '
-        DataGridViewCellStyle15.Format = "N2"
-        DataGridViewCellStyle15.NullValue = "0"
-        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle1
         Me.DEBE.FillWeight = 30.0!
         Me.DEBE.HeaderText = "DEBE"
         Me.DEBE.Name = "DEBE"
         '
         'HABER
         '
-        DataGridViewCellStyle16.Format = "N2"
-        DataGridViewCellStyle16.NullValue = "0"
-        Me.HABER.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.HABER.DefaultCellStyle = DataGridViewCellStyle2
         Me.HABER.FillWeight = 30.0!
         Me.HABER.HeaderText = "HABER"
         Me.HABER.Name = "HABER"
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Codigo"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        Me.DataGridViewTextBoxColumn1.Width = 104
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "DEBE"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 105
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridViewTextBoxColumn3.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "HABER"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 104
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "HABER"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Width = 70
+        '
+        'cmbBusquedaCuenta
+        '
+        Me.cmbBusquedaCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple
+        Me.cmbBusquedaCuenta.FormattingEnabled = True
+        Me.cmbBusquedaCuenta.Location = New System.Drawing.Point(155, 138)
+        Me.cmbBusquedaCuenta.Name = "cmbBusquedaCuenta"
+        Me.cmbBusquedaCuenta.Size = New System.Drawing.Size(384, 229)
+        Me.cmbBusquedaCuenta.TabIndex = 4
+        Me.cmbBusquedaCuenta.Visible = False
         '
         'addAsiento
         '

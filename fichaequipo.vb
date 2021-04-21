@@ -11,16 +11,44 @@
     Private Sub fichaequipo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Try
-            'lblfecha.Text = "Fecha actual: " & Format(Now, "dd-MMMM-yyyy")
-            CargarCategoriastrab()
-            CargarTipoEquipo()
-            cargarMarcas()
-            CargarUsuarios()
-            CargarTecnicos()
-            CargarEstadoTall()
-            CargarListas()
-            cargarOrden()
+            If ORden = 0 Then
+                CargarCategoriastrab()
+                CargarTipoEquipo()
+                cargarMarcas()
+                CargarUsuarios()
+                CargarTecnicos()
+                CargarEstadoTall()
+                CargarListas()
 
+                'habilitamos los controles para cargar un trabajo sin haber cargado ficha de ingreso
+                cmbcattrab.Enabled = True
+                txtctaclie.ReadOnly = False
+                txtrazon.ReadOnly = False
+                cmbrecibeusuario.Enabled = True
+                txtmail.ReadOnly = False
+                txttelefono.ReadOnly = False
+                cmbtipoequ.Enabled = True
+                cmbmodelos.Enabled = True
+                cmbmarcas.Enabled = True
+                txtnumeroSerie.ReadOnly = False
+                txtaccesorios.ReadOnly = False
+                txtmotivo.ReadOnly = False
+
+
+
+
+                'MsgBox("No hay orden que cargar")
+            Else
+                'lblfecha.Text = "Fecha actual: " & Format(Now, "dd-MMMM-yyyy")
+                CargarCategoriastrab()
+                CargarTipoEquipo()
+                cargarMarcas()
+                CargarUsuarios()
+                CargarTecnicos()
+                CargarEstadoTall()
+                CargarListas()
+                cargarOrden()
+            End If
         Catch ex As Exception
 
         End Try
@@ -325,6 +353,20 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
         End Try
     End Sub
 
+    'Private Sub GuardarEspecificaciones()
+    '    Try
+    '        Dim sqlQuery As String
+    '        sqlQuery = "update tecni_equipos_clientes set especificaciones = " & txtespecificaciones.Text.ToUpper & " where id= " & codint
+
+    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+    '        With comandoadd.Parameters
+
+
+    '        End With
+    '    Catch ex As Exception
+
+    '    End Try
+    'End Sub
     Private Sub GuardarOrden(ByRef estado As Integer)
         Try
             Dim tecnico As Integer = cmbtecnico.SelectedValue
@@ -338,7 +380,11 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
             Dim sqlQuery As String
             Dim codInt As String = txtcodint.Text
             Reconectar()
-            sqlQuery = "update tecni_taller set  equipo=?codint, trab_estado=?trabest, tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, telefono=?telefono, serie=?serie where id=" & ORden
+            sqlQuery = "update tecni_taller set  equipo=?codint, trab_estado=?trabest, 
+            tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, 
+            observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, 
+            mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, 
+            telefono=?telefono, serie=?serie where id=" & ORden
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
@@ -363,6 +409,13 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
                 End If
             End With
             comandoadd.ExecuteNonQuery()
+
+            If codInt = 0 And txtespecificaciones.Text <> "" Then
+                MsgBox("no se puede guardar las especificaciones hasta que se finalice la orden")
+            Else
+                ' guardarEspecificaciones
+            End If
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -430,11 +483,11 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
             Dim propietario As Integer = Val(txtctaclie.Text)
             Dim serie As String = txtnumeroSerie.Text
             Dim modelo As Integer = Val(lblmodelo.Text)
-
+            Dim especificaciones As String = txtespecificaciones.Text.ToUpper
             Dim sqlQuery
             sqlQuery = "insert into tecni_equipos_clientes " _
-            & "(propietario,serie,estado,modelo ) values" _
-            & "(?prop,?ser,'1',?modelo)"
+            & "(propietario,serie,estado,modelo, especificaciones ) values" _
+            & "(?prop,?ser,'1',?modelo,?especificaciones)"
 
             Reconectar()
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -442,7 +495,7 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
                 .AddWithValue("?prop", propietario)
                 .AddWithValue("?ser", serie)
                 .AddWithValue("?modelo", modelo)
-
+                .AddWithValue("?especificaciones", especificaciones)
             End With
             comandoadd.ExecuteNonQuery()
         Catch ex As Exception
@@ -548,7 +601,7 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
         Try
             Dim codint As Integer
             Dim numsig As Integer
-            GuardarOrden(cmbestadotrab.SelectedValue)
+
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
@@ -580,6 +633,9 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
             Else
                 codint = Val(txtcodint.Text)
             End If
+
+            GuardarOrden(cmbestadotrab.SelectedValue)
+
 
             Reconectar()
             sql.Connection = conexionPrinc
@@ -808,5 +864,39 @@ from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
 
     Private Sub txtobservaciones_TextChanged(sender As Object, e As EventArgs) Handles txtobservaciones.TextChanged
 
+    End Sub
+
+    Private Sub paneldatosadicionales_Paint(sender As Object, e As PaintEventArgs) Handles paneldatosadicionales.Paint
+
+    End Sub
+
+    Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
+
+    End Sub
+
+    Private Sub txtnumeroSerie_TextChanged(sender As Object, e As EventArgs) Handles txtnumeroSerie.TextChanged
+        If ORden = 0 Then
+            Try
+                If txtnumeroSerie.Text = "" Then
+                    Exit Sub
+                End If
+                lblcodexistente.Text = ""
+                Dim sqlQuery As String = "select id from tecni_equipos_clientes where serie like '" & txtnumeroSerie.Text & "'"
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+                Dim tablaequ As New DataTable
+                Dim infoequ() As DataRow
+                consulta.Fill(tablaequ)
+                infoequ = tablaequ.Select("")
+                If infoequ.Count <> 0 Then
+                    Timer1.Enabled = True
+                    lblcodexistente.Text = "COD. EXISTENTE:" & infoequ(0)(0)
+                Else
+                    Timer1.Enabled = False
+                    lblcodexistente.Text = ""
+                End If
+            Catch ex As Exception
+
+            End Try
+        End If
     End Sub
 End Class

@@ -276,7 +276,7 @@ Partial Class puntoventa
         Me.dtpedidosfact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtpedidosfact.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.Column9})
         Me.dtpedidosfact.Dock = System.Windows.Forms.DockStyle.Top
-        Me.dtpedidosfact.Location = New System.Drawing.Point(0, 452)
+        Me.dtpedidosfact.Location = New System.Drawing.Point(0, 609)
         Me.dtpedidosfact.Name = "dtpedidosfact"
         Me.dtpedidosfact.Size = New System.Drawing.Size(234, 161)
         Me.dtpedidosfact.TabIndex = 74
@@ -296,7 +296,7 @@ Partial Class puntoventa
         'PictureBox1
         '
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 430)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 587)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(234, 22)
         Me.PictureBox1.TabIndex = 75
@@ -307,7 +307,7 @@ Partial Class puntoventa
         Me.cmdremitar.Dock = System.Windows.Forms.DockStyle.Top
         Me.cmdremitar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdremitar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdremitar.Location = New System.Drawing.Point(0, 399)
+        Me.cmdremitar.Location = New System.Drawing.Point(0, 556)
         Me.cmdremitar.Name = "cmdremitar"
         Me.cmdremitar.Size = New System.Drawing.Size(234, 31)
         Me.cmdremitar.TabIndex = 76
@@ -319,7 +319,7 @@ Partial Class puntoventa
         Me.cmdcerrar.Dock = System.Windows.Forms.DockStyle.Top
         Me.cmdcerrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdcerrar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdcerrar.Location = New System.Drawing.Point(0, 368)
+        Me.cmdcerrar.Location = New System.Drawing.Point(0, 525)
         Me.cmdcerrar.Name = "cmdcerrar"
         Me.cmdcerrar.Size = New System.Drawing.Size(234, 31)
         Me.cmdcerrar.TabIndex = 73
@@ -332,7 +332,7 @@ Partial Class puntoventa
         Me.cmdimprimir.Enabled = False
         Me.cmdimprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdimprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdimprimir.Location = New System.Drawing.Point(0, 336)
+        Me.cmdimprimir.Location = New System.Drawing.Point(0, 493)
         Me.cmdimprimir.Name = "cmdimprimir"
         Me.cmdimprimir.Size = New System.Drawing.Size(234, 32)
         Me.cmdimprimir.TabIndex = 6
@@ -354,7 +354,7 @@ Partial Class puntoventa
         Me.cmdguardar.Dock = System.Windows.Forms.DockStyle.Top
         Me.cmdguardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdguardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdguardar.Location = New System.Drawing.Point(0, 302)
+        Me.cmdguardar.Location = New System.Drawing.Point(0, 459)
         Me.cmdguardar.Name = "cmdguardar"
         Me.cmdguardar.Size = New System.Drawing.Size(234, 34)
         Me.cmdguardar.TabIndex = 5
@@ -371,7 +371,7 @@ Partial Class puntoventa
         Me.pncaeaprobado.Controls.Add(Me.lblestadoCAE)
         Me.pncaeaprobado.Controls.Add(Me.lblcodigobarras)
         Me.pncaeaprobado.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pncaeaprobado.Location = New System.Drawing.Point(0, 184)
+        Me.pncaeaprobado.Location = New System.Drawing.Point(0, 341)
         Me.pncaeaprobado.Name = "pncaeaprobado"
         Me.pncaeaprobado.Size = New System.Drawing.Size(234, 118)
         Me.pncaeaprobado.TabIndex = 70
@@ -462,7 +462,7 @@ Partial Class puntoventa
         Me.pncaerechazado.Dock = System.Windows.Forms.DockStyle.Top
         Me.pncaerechazado.Location = New System.Drawing.Point(0, 122)
         Me.pncaerechazado.Name = "pncaerechazado"
-        Me.pncaerechazado.Size = New System.Drawing.Size(234, 62)
+        Me.pncaerechazado.Size = New System.Drawing.Size(234, 219)
         Me.pncaerechazado.TabIndex = 66
         Me.pncaerechazado.Visible = False
         '
@@ -475,7 +475,7 @@ Partial Class puntoventa
         Me.lblobservacionescae.ForeColor = System.Drawing.Color.Red
         Me.lblobservacionescae.Location = New System.Drawing.Point(0, 0)
         Me.lblobservacionescae.Name = "lblobservacionescae"
-        Me.lblobservacionescae.Size = New System.Drawing.Size(234, 62)
+        Me.lblobservacionescae.Size = New System.Drawing.Size(234, 219)
         Me.lblobservacionescae.TabIndex = 61
         Me.lblobservacionescae.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '

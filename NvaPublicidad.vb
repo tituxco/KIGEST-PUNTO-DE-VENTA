@@ -1,6 +1,4 @@
-﻿Imports System.Data.OleDb
-
-Public Class PrestamosForm
+﻿Public Class NvaPublicidad
     Private cmd As MySql.Data.MySqlClient.MySqlCommand
     Private da As MySql.Data.MySqlClient.MySqlDataAdapter
     Private ds As DataSet
@@ -8,14 +6,85 @@ Public Class PrestamosForm
 
     Private Sub btnCalcular_Click(sender As Object, e As EventArgs) Handles btnCalcular.Click
         txtCuota.Text = Operaciones.Calculacuota(CDbl(txtmonto.Text), CDbl(txtTasaAnual.Text), CInt(txtPlazo.Text))
-        GeneraPrestamo()
-        btnCalcular.Enabled = False
+        PrevisualizarPrestamo()
+
+
+
+        'GeneraPrestamo()
+        ' btnCalcular.Enabled = False
 
     End Sub
 
-    Private Sub GeneraPrestamo()
-        Dim NoPrestamo As String
+    Private Sub PrevisualizarPrestamo()
 
+        dgvPublicidad.Columns.Clear()
+        dgvPublicidad.Rows.Clear()
+
+        dgvPublicidad.Columns.Add("Fechavencimiento", "Fecha Vencimiento")
+        dgvPublicidad.Columns.Add("Montomensual", "Monto Mensual")
+
+
+        'tablaPrestamo.Columns.Add(New DataColumn("Fecha vencimiento", GetType(String)))
+        'tablaPrestamo.Columns.Add(New DataColumn("Monto mensual", GetType(String)))
+
+        'Dim NoPrestamo As String
+
+        'NoPrestamo = "1"
+
+        Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+
+        Dim Plazo As Integer = txtPlazo.Text
+        Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
+        Dim InteresAnual As Double = FormatNumber(txtTasaAnual.Text, 2)
+        Dim capitalAmortizado As Double = 0
+        Dim FechaPago As Date = DateTimePicker1.Value
+        Dim MiCuota As Double = 0
+
+        Dim SaldoInicial As Double = FormatNumber(txtmonto.Text, 2)
+        Dim CapitalPagado As Double = 0
+        Dim InteresPagado As Double = 0
+        Dim capitalRestante As Double = FormatNumber(txtmonto.Text, 2)
+
+        If txtCuota.Text = "" Or txtCuota.Text = "0" Then
+            MsgBox("debe calcular primero la cuota")
+            Exit Sub
+        End If
+
+        For i As Integer = 1 To Plazo
+            '    MsgBox(fecha)
+            MiCuota = txtCuota.Text
+            InteresPagado = SaldoInicial * InteresMensual
+            CapitalPagado = MiCuota - InteresPagado
+            capitalRestante = capitalRestante - CapitalPagado
+            capitalAmortizado = capitalAmortizado + CapitalPagado
+
+            'cuotaPrestamo = tablaPrestamo.NewRow
+            dgvPublicidad.Rows.Add(fecha, MiCuota)
+
+            FechaPago = FechaPago.AddMonths(1)
+            fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
+            SaldoInicial = SaldoInicial - CapitalPagado
+        Next
+
+        'dgvPublicidad.DataSource = tablaPrestamo
+        'txtBuscaPrestamo.Text = NoPrestamo
+    End Sub
+
+    Private Sub GeneraPrestamo()
+
+        If txtclientecuenta.Text = "" Or txtclientecuenta.Text = "9999" Then
+            MsgBox("Debe seleccionar un cliente para guardar el plan de publicidad")
+            Exit Sub
+        End If
+
+        If txtdetallePublicidad.Text = "" Then
+            MsgBox("Debe ingresar detalle de publicidad")
+            Exit Sub
+        End If
+
+        Dim NoPrestamo As String
+        Dim idCliente As Integer = CInt(txtclientecuenta.Text)
+        Dim detallePrestamo As String = txtdetallePublicidad.Text.ToUpper
         NoPrestamo = "1"
 
         Consultas("select IF(MAX(ID) IS NULL,0,MAX(ID)) AS ID from  rym_prestamo")
@@ -26,9 +95,9 @@ Public Class PrestamosForm
         txtPrestamo.Text = NoPrestamo
         Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
 
-        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual) 
-        values('" & NoPrestamo & "','" & fecha & "','" & 0 & "','" & txtPlazo.Text & "','" &
-        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "')", Today.Date)
+        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion) 
+        values('" & NoPrestamo & "','" & fecha & "','" & idCliente & "','" & txtPlazo.Text & "','" &
+        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "')", Today.Date)
 
 
         Dim Plazo As Integer = txtPlazo.Text
@@ -49,18 +118,18 @@ Public Class PrestamosForm
             MsgBox("debe calcular primero la cuota")
             Exit Sub
         End If
-        For i As Integer = 0 To Plazo
-            Operaciones.Guardar("insert into rym_detalle_prestamo(id_prestamo,periodo,fecha,cuota,interes,amortizacion,capital_restante,capital_amortizado,
-            amortizacion_anticipada) 
-            values('" & NoPrestamo & "','" & i & "','" & fecha & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
-            FormatNumber(CapitalPagado, 2) & "','" & FormatNumber(capitalRestante, 2) & "','" & FormatNumber(capitalAmortizado, 2) & "',0)", Today.Date)
 
-
+        For i As Integer = 1 To Plazo
             MiCuota = txtCuota.Text
             InteresPagado = SaldoInicial * InteresMensual
             CapitalPagado = MiCuota - InteresPagado
             capitalRestante = capitalRestante - CapitalPagado
             capitalAmortizado = capitalAmortizado + CapitalPagado
+
+            Operaciones.Guardar("insert into rym_detalle_prestamo(id_prestamo,periodo,fecha,cuota,interes,amortizacion,capital_restante,capital_amortizado,
+            amortizacion_anticipada) 
+            values('" & NoPrestamo & "','" & i & "','" & fecha & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
+            FormatNumber(CapitalPagado, 2) & "','" & FormatNumber(capitalRestante, 2) & "','" & FormatNumber(capitalAmortizado, 2) & "',0)", Today.Date)
 
             FechaPago = FechaPago.AddMonths(1)
             fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
@@ -84,9 +153,9 @@ Public Class PrestamosForm
         da.Fill(ds)
 
         If ds.Tables(0).Rows.Count > 0 Then
-            DataGridView1.DataSource = ds.Tables(0)
+            dgvPublicidad.DataSource = ds.Tables(0)
         Else
-            DataGridView1.DataSource = Nothing
+            dgvPublicidad.DataSource = Nothing
         End If
 
     End Sub
@@ -199,16 +268,12 @@ Public Class PrestamosForm
 
     End Sub
 
-   
-    Private Sub btnImprimirPagos_Click(sender As Object, e As EventArgs) Handles btnImprimirPagos.Click
-        ReporteForm.IDPrestamo = txtBuscaPrestamo.Text
-        ReporteForm.Show()
-        ReporteForm.ReportePagos()
-    End Sub
 
-    Private Sub PrestamosForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
+    'Private Sub btnImprimirPagos_Click(sender As Object, e As EventArgs) Handles btnImprimirPagos.Click
+    '    ReporteForm.IDPrestamo = txtBuscaPrestamo.Text
+    '    ReporteForm.Show()
+    '    ReporteForm.ReportePagos()
+    'End Sub
 
     Private Sub PrestamosForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If txtPrestamo.Text <> "" And txtclientecuenta.Text = "" And txtclientecuenta.Text = "9999" Then
@@ -218,33 +283,18 @@ Public Class PrestamosForm
 
     End Sub
 
-    Private Sub TextBox1_KeyUp(sender As Object, e As KeyEventArgs) Handles txtclientenombre.KeyUp
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        GeneraPrestamo()
+
+    End Sub
+
+    Private Sub txtclientenombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtclientenombre.KeyDown
         If e.KeyCode = Keys.Enter Then
             selclie.busqueda = txtclientenombre.Text
-            selclie.llama = "prestamosform"
+            selclie.llama = "nvaPublicidad"
             selclie.dtpersonal.Focus()
             selclie.Show()
             selclie.TopMost = True
         End If
-    End Sub
-
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If txtclientecuenta.Text = "" Or txtclientecuenta.Text = "9999" Then
-            MsgBox("Debe seleccionar un cliente para guardar el prestamo")
-        Else
-            Reconectar()
-            cmd = New MySql.Data.MySqlClient.MySqlCommand("update rym_prestamo set ID_CLIENTE='" & txtclientecuenta.Text & "' where ID_PRESTAMO=" & txtBuscaPrestamo.Text, conexionPrinc)
-            cmd.ExecuteNonQuery()
-            MsgBox("Se otorgo el prestamo al cliente indicado")
-            Button1.Enabled = False
-        End If
-    End Sub
-
-    Private Sub txtTasaAnual_TextChanged(sender As Object, e As EventArgs) Handles txtTasaAnual.TextChanged
-
-    End Sub
-
-    Private Sub cmdclientebuscar_Click(sender As Object, e As EventArgs) Handles cmdclientebuscar.Click
-
     End Sub
 End Class

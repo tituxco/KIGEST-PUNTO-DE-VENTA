@@ -12,7 +12,14 @@
 
         R = (1 + TasaAnual / Periodo)
 
-        CuotaPagar = Monto * (R - 1) / (1 - R ^ (-Plazo))
+
+
+        If TasaAnual = 0 Then
+            CuotaPagar = Monto / Plazo
+        Else
+            CuotaPagar = Monto * (R - 1) / (1 - R ^ (-Plazo))
+
+        End If
 
         Return CuotaPagar
     End Function

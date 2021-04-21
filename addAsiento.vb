@@ -203,7 +203,8 @@
                 .AddWithValue("?codigoAsiento", asientoNumero)
             End With
             comandoLibroMayor.ExecuteNonQuery()
-            CONTABLE.CargarLibros()
+            CONTABLE.CargarLibroDiario()
+
             Me.Close()
 
         Catch ex As Exception

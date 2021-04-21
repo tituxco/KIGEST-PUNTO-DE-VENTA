@@ -59,13 +59,17 @@ Partial Class frmServiciosCloud
         Dim TreeNode35 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("EXTRAS>>>", New System.Windows.Forms.TreeNode() {TreeNode34})
         Dim TreeNode36 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VENDEDORES")
         Dim TreeNode37 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod ADMINISTRACION", New System.Windows.Forms.TreeNode() {TreeNode27, TreeNode31, TreeNode32, TreeNode33, TreeNode35, TreeNode36})
-        Dim TreeNode38 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod TECNICO")
-        Dim TreeNode39 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("IMPRESION DE ETIQUETAS")
-        Dim TreeNode40 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("MODULOS KIBIT")
-        Dim TreeNode41 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PRESTAMOS")
-        Dim TreeNode42 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ESPECIALES", New System.Windows.Forms.TreeNode() {TreeNode39, TreeNode40, TreeNode41})
-        Dim TreeNode43 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod SUELDOS")
-        Dim TreeNode44 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode16, TreeNode37, TreeNode38, TreeNode42, TreeNode43})
+        Dim TreeNode38 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("IMPRESION DE ETIQUETAS")
+        Dim TreeNode39 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("MODULOS KIBIT")
+        Dim TreeNode40 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PRESTAMOS")
+        Dim TreeNode41 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PUBLICIDAD")
+        Dim TreeNode42 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("TECNICO")
+        Dim TreeNode43 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ESPECIALES-SERVICIOS", New System.Windows.Forms.TreeNode() {TreeNode38, TreeNode39, TreeNode40, TreeNode41, TreeNode42})
+        Dim TreeNode44 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod SUELDOS")
+        Dim TreeNode45 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURAR TERMINAL")
+        Dim TreeNode46 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURACIONES VARIAS")
+        Dim TreeNode47 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod CONFIGURACIONES", New System.Windows.Forms.TreeNode() {TreeNode45, TreeNode46})
+        Dim TreeNode48 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode16, TreeNode37, TreeNode43, TreeNode44, TreeNode47})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmServiciosCloud))
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.dtcloud = New System.Windows.Forms.DataGridView()
@@ -84,8 +88,6 @@ Partial Class frmServiciosCloud
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.txtbuscaemp = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -96,10 +98,13 @@ Partial Class frmServiciosCloud
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel20 = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
-        Me.Button27 = New System.Windows.Forms.Button()
         Me.TextBox7 = New System.Windows.Forms.TextBox()
         Me.Label76 = New System.Windows.Forms.Label()
         Me.Label75 = New System.Windows.Forms.Label()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdbuscar = New System.Windows.Forms.Button()
+        Me.Button27 = New System.Windows.Forms.Button()
         Me.Panel12.SuspendLayout()
         CType(Me.dtcloud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -291,27 +296,40 @@ Partial Class frmServiciosCloud
         TreeNode37.Name = "Nodo13"
         TreeNode37.Tag = "4"
         TreeNode37.Text = "Mod ADMINISTRACION"
-        TreeNode38.Name = "Nodo28"
-        TreeNode38.Tag = "5"
-        TreeNode38.Text = "Mod TECNICO"
-        TreeNode39.Name = "Nodo30"
-        TreeNode39.Tag = "AR01"
-        TreeNode39.Text = "IMPRESION DE ETIQUETAS"
+        TreeNode38.Name = "Nodo30"
+        TreeNode38.Tag = "AR01"
+        TreeNode38.Text = "IMPRESION DE ETIQUETAS"
+        TreeNode39.Name = "Nodo0"
+        TreeNode39.Tag = "5KIBIT"
+        TreeNode39.Text = "MODULOS KIBIT"
         TreeNode40.Name = "Nodo0"
-        TreeNode40.Tag = "KIBIT"
-        TreeNode40.Text = "MODULOS KIBIT"
+        TreeNode40.Tag = "5RYM"
+        TreeNode40.Text = "PRESTAMOS"
         TreeNode41.Name = "Nodo0"
-        TreeNode41.Tag = "RYM"
-        TreeNode41.Text = "PRESTAMOS"
-        TreeNode42.Name = "Nodo29"
-        TreeNode42.Text = "ESPECIALES"
-        TreeNode43.Name = "Nodo1"
-        TreeNode43.Tag = "6"
-        TreeNode43.Text = "Mod SUELDOS"
-        TreeNode44.Name = "Nodo0"
-        TreeNode44.Tag = "KIGEST_FACT_SIGT"
-        TreeNode44.Text = "KIGEST_FACT_SIGT"
-        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode44})
+        TreeNode41.Tag = "5PUBLICIDAD"
+        TreeNode41.Text = "PUBLICIDAD"
+        TreeNode42.Name = "Nodo28"
+        TreeNode42.Tag = "5TALLER"
+        TreeNode42.Text = "TECNICO"
+        TreeNode43.Name = "Nodo29"
+        TreeNode43.Tag = "5"
+        TreeNode43.Text = "ESPECIALES-SERVICIOS"
+        TreeNode44.Name = "Nodo1"
+        TreeNode44.Tag = "6"
+        TreeNode44.Text = "Mod SUELDOS"
+        TreeNode45.Name = "Nodo2"
+        TreeNode45.Tag = "CONFTERM"
+        TreeNode45.Text = "CONFIGURAR TERMINAL"
+        TreeNode46.Name = "Nodo3"
+        TreeNode46.Tag = "CONFVAR"
+        TreeNode46.Text = "CONFIGURACIONES VARIAS"
+        TreeNode47.Name = "Nodo1"
+        TreeNode47.Tag = "CONF"
+        TreeNode47.Text = "Mod CONFIGURACIONES"
+        TreeNode48.Name = "Nodo0"
+        TreeNode48.Tag = "KIGEST_FACT_SIGT"
+        TreeNode48.Text = "KIGEST_FACT_SIGT"
+        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode48})
         Me.trvmodulos.Size = New System.Drawing.Size(321, 339)
         Me.trvmodulos.TabIndex = 12
         '
@@ -350,6 +368,7 @@ Partial Class frmServiciosCloud
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.Button2)
         Me.Panel11.Controls.Add(Me.Label17)
         Me.Panel11.Controls.Add(Me.txtbuscaemp)
         Me.Panel11.Controls.Add(Me.Button1)
@@ -377,42 +396,8 @@ Partial Class frmServiciosCloud
         '
         Me.txtbuscaemp.Location = New System.Drawing.Point(441, 73)
         Me.txtbuscaemp.Name = "txtbuscaemp"
-        Me.txtbuscaemp.Size = New System.Drawing.Size(561, 20)
+        Me.txtbuscaemp.Size = New System.Drawing.Size(303, 20)
         Me.txtbuscaemp.TabIndex = 90
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(1070, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(92, 99)
-        Me.Button1.TabIndex = 89
-        Me.Button1.Text = "Guardar privilegios"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'cmdbuscar
-        '
-        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1162, 0)
-        Me.cmdbuscar.Name = "cmdbuscar"
-        Me.cmdbuscar.Size = New System.Drawing.Size(92, 99)
-        Me.cmdbuscar.TabIndex = 74
-        Me.cmdbuscar.Text = "Buscar"
-        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdbuscar.UseVisualStyleBackColor = True
         '
         'DataGridViewTextBoxColumn1
         '
@@ -487,21 +472,6 @@ Partial Class frmServiciosCloud
         Me.GroupBox5.TabIndex = 66
         Me.GroupBox5.TabStop = False
         '
-        'Button27
-        '
-        Me.Button27.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button27.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button27.ForeColor = System.Drawing.Color.White
-        Me.Button27.Image = CType(resources.GetObject("Button27.Image"), System.Drawing.Image)
-        Me.Button27.Location = New System.Drawing.Point(1168, 49)
-        Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(80, 100)
-        Me.Button27.TabIndex = 86
-        Me.Button27.Text = "Guardar"
-        Me.Button27.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button27.UseVisualStyleBackColor = True
-        '
         'TextBox7
         '
         Me.TextBox7.Enabled = False
@@ -533,6 +503,72 @@ Partial Class frmServiciosCloud
         Me.Label75.Size = New System.Drawing.Size(188, 16)
         Me.Label75.TabIndex = 78
         Me.Label75.Text = "Mantenimiento de cuentas"
+        '
+        'Button2
+        '
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Add_User_Male_64px
+        Me.Button2.Location = New System.Drawing.Point(978, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(92, 99)
+        Me.Button2.TabIndex = 92
+        Me.Button2.Text = "Agregar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(1070, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(92, 99)
+        Me.Button1.TabIndex = 89
+        Me.Button1.Text = "Guardar privilegios"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'cmdbuscar
+        '
+        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1162, 0)
+        Me.cmdbuscar.Name = "cmdbuscar"
+        Me.cmdbuscar.Size = New System.Drawing.Size(92, 99)
+        Me.cmdbuscar.TabIndex = 74
+        Me.cmdbuscar.Text = "Buscar"
+        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdbuscar.UseVisualStyleBackColor = True
+        '
+        'Button27
+        '
+        Me.Button27.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button27.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button27.ForeColor = System.Drawing.Color.White
+        Me.Button27.Image = CType(resources.GetObject("Button27.Image"), System.Drawing.Image)
+        Me.Button27.Location = New System.Drawing.Point(1168, 49)
+        Me.Button27.Name = "Button27"
+        Me.Button27.Size = New System.Drawing.Size(80, 100)
+        Me.Button27.TabIndex = 86
+        Me.Button27.Text = "Guardar"
+        Me.Button27.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button27.UseVisualStyleBackColor = True
         '
         'frmServiciosCloud
         '
@@ -591,4 +627,5 @@ Partial Class frmServiciosCloud
     Friend WithEvents TextBox7 As TextBox
     Friend WithEvents Label76 As Label
     Friend WithEvents Label75 As Label
+    Friend WithEvents Button2 As Button
 End Class

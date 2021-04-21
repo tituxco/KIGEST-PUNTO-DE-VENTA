@@ -237,4 +237,18 @@
 
         End Try
     End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "tecnico" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim ventana As New tecnico
+        ventana.MdiParent = Me.MdiParent
+        ventana.Show()
+    End Sub
 End Class

@@ -67,7 +67,7 @@ Module Conexiones
             Dim leerAuth As IDataReader
             Dim i As Integer
 
-            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,cliente, usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt from CliAuth where clave like '" & clav & "' and codus like '" & user & "'", conexionAuth)
+            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,concat(cliente,' - ',sistema), usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt from CliAuth where clave like '" & clav & "' and codus like '" & user & "'", conexionAuth)
             Dim tablaauth As New DataTable
             Dim infoauth() As DataRow
             consultaauth.Fill(tablaauth)
@@ -112,16 +112,21 @@ Module Conexiones
         End Try
     End Function
 
-    'Public Function conectarColab() As Boolean
-    '    Try
-    '        conexionColab = New MySqlConnection
-
-    '        conexionColab.ConnectionString = "server=200.43.113.247; port=3306; userid=kiremoto; password=mecago;Allow Zero Datetime=True;Convert Zero Datetime=True;Persist Security Info=True"
-    '        conexionColab.Open()
-    '        Return True
-    '    Catch ex As Exception
-    '        MsgBox(ex.Message)
-    '        Return False
-    '    End Try
-    'End Function
+    Public Function ComprobarUsuarioAuth(usuario As String, contraseña As String) As Boolean
+        Try
+            Reconectar()
+            Dim sqlQuery As String = "SELECT * FROM AuthServ.CliAuth where codus='" & usuario & "' and clave ='" & contraseña & "'"
+            Dim ConsultaAuth As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+            Dim usuariosAuth As New DataTable
+            ConsultaAuth.Fill(usuariosAuth)
+            If usuariosAuth.Rows.Count > 0 Then
+                Return True
+            ElseIf usuariosAuth.Rows.Count = 0 Then
+                Return False
+            End If
+        Catch ex As Exception
+            'MsgBox(ex.Message)
+            Return False
+        End Try
+    End Function
 End Module

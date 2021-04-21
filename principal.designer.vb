@@ -32,6 +32,7 @@ Partial Class frmprincipal
         Me.lblStatusEmp = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusgral = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.listaConexiones = New System.Windows.Forms.ToolStripDropDownButton()
         Me.tmrcomprobarConexion = New System.Windows.Forms.Timer(Me.components)
         Me.menugral = New System.Windows.Forms.MenuStrip()
         Me.cmdclientes = New System.Windows.Forms.ToolStripMenuItem()
@@ -58,26 +59,29 @@ Partial Class frmprincipal
         Me.ProveedoresToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AgendaDeVencimientosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfiguracionDeTerminalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.cmdtecnico = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmdServicios = New System.Windows.Forms.ToolStripMenuItem()
         Me.CLOUDSERVERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TALLERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PublicidadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListaDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LiquidaciónDeSueldosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MantenimientoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdPrestamos = New System.Windows.Forms.ToolStripMenuItem()
         Me.SIMULADORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LISTADOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ProduccionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.MantenimientoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.dtconexiones = New System.Windows.Forms.DataGridView()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
+        CType(Me.dtconexiones, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1211, 24)
@@ -139,6 +143,15 @@ Partial Class frmprincipal
         Me.lblstatusgral.Name = "lblstatusgral"
         Me.lblstatusgral.Size = New System.Drawing.Size(0, 19)
         '
+        'listaConexiones
+        '
+        Me.listaConexiones.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.listaConexiones.Image = CType(resources.GetObject("listaConexiones.Image"), System.Drawing.Image)
+        Me.listaConexiones.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.listaConexiones.Name = "listaConexiones"
+        Me.listaConexiones.Size = New System.Drawing.Size(29, 22)
+        Me.listaConexiones.Text = "ListaConexiones"
+        '
         'tmrcomprobarConexion
         '
         Me.tmrcomprobarConexion.Enabled = True
@@ -148,7 +161,7 @@ Partial Class frmprincipal
         '
         Me.menugral.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.menugral.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdtecnico, Me.EmpleadosToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.SincronizacionToolStripMenuItem})
+        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdServicios, Me.EmpleadosToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.SincronizacionToolStripMenuItem})
         Me.menugral.Location = New System.Drawing.Point(0, 0)
         Me.menugral.Name = "menugral"
         Me.menugral.Size = New System.Drawing.Size(1211, 40)
@@ -372,13 +385,15 @@ Partial Class frmprincipal
         Me.CajaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CajaToolStripMenuItem.Name = "CajaToolStripMenuItem"
         Me.CajaToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
-        Me.CajaToolStripMenuItem.Text = "Cajas"
+        Me.CajaToolStripMenuItem.Text = "Master Cajas"
         '
         'CajaDiariaToolStripMenuItem
         '
         Me.CajaDiariaToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.CajaDiariaToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.CajaDiariaToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.CajaDiariaToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cash_Register_32px
+        Me.CajaDiariaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CajaDiariaToolStripMenuItem.Name = "CajaDiariaToolStripMenuItem"
         Me.CajaDiariaToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.CajaDiariaToolStripMenuItem.Text = "Caja Diaria"
@@ -416,16 +431,16 @@ Partial Class frmprincipal
         Me.ConfiguracionDeTerminalToolStripMenuItem.Size = New System.Drawing.Size(252, 38)
         Me.ConfiguracionDeTerminalToolStripMenuItem.Text = "Configuracion de terminal"
         '
-        'cmdtecnico
+        'cmdServicios
         '
-        Me.cmdtecnico.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CLOUDSERVERToolStripMenuItem, Me.TALLERToolStripMenuItem})
-        Me.cmdtecnico.Font = New System.Drawing.Font("Segoe UI", 10.0!)
-        Me.cmdtecnico.ForeColor = System.Drawing.Color.White
-        Me.cmdtecnico.Image = CType(resources.GetObject("cmdtecnico.Image"), System.Drawing.Image)
-        Me.cmdtecnico.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
-        Me.cmdtecnico.Name = "cmdtecnico"
-        Me.cmdtecnico.Size = New System.Drawing.Size(97, 36)
-        Me.cmdtecnico.Text = "Tecnico"
+        Me.cmdServicios.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CLOUDSERVERToolStripMenuItem, Me.TALLERToolStripMenuItem, Me.PublicidadToolStripMenuItem})
+        Me.cmdServicios.Font = New System.Drawing.Font("Segoe UI", 10.0!)
+        Me.cmdServicios.ForeColor = System.Drawing.Color.White
+        Me.cmdServicios.Image = Global.SIGT__KIGEST.My.Resources.Resources.services_32px
+        Me.cmdServicios.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.cmdServicios.Name = "cmdServicios"
+        Me.cmdServicios.Size = New System.Drawing.Size(105, 36)
+        Me.cmdServicios.Text = "Servicios"
         '
         'CLOUDSERVERToolStripMenuItem
         '
@@ -435,7 +450,7 @@ Partial Class frmprincipal
         Me.CLOUDSERVERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cloud_Storage_32px
         Me.CLOUDSERVERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CLOUDSERVERToolStripMenuItem.Name = "CLOUDSERVERToolStripMenuItem"
-        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
+        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
         Me.CLOUDSERVERToolStripMenuItem.Text = "CLOUD SERVER"
         '
         'TALLERToolStripMenuItem
@@ -443,11 +458,21 @@ Partial Class frmprincipal
         Me.TALLERToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.TALLERToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.TALLERToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.TALLERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Computer_Support_32px
+        Me.TALLERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Maintenance_32px
         Me.TALLERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.TALLERToolStripMenuItem.Name = "TALLERToolStripMenuItem"
-        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
+        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
         Me.TALLERToolStripMenuItem.Text = "TALLER"
+        '
+        'PublicidadToolStripMenuItem
+        '
+        Me.PublicidadToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.PublicidadToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.PublicidadToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Commercial_32px
+        Me.PublicidadToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.PublicidadToolStripMenuItem.Name = "PublicidadToolStripMenuItem"
+        Me.PublicidadToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.PublicidadToolStripMenuItem.Text = "PUBLICIDAD"
         '
         'EmpleadosToolStripMenuItem
         '
@@ -474,6 +499,22 @@ Partial Class frmprincipal
         Me.LiquidaciónDeSueldosToolStripMenuItem.Name = "LiquidaciónDeSueldosToolStripMenuItem"
         Me.LiquidaciónDeSueldosToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
         Me.LiquidaciónDeSueldosToolStripMenuItem.Text = "Liquidación de sueldos"
+        '
+        'MantenimientoToolStripMenuItem
+        '
+        Me.MantenimientoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.MantenimientoToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.MantenimientoToolStripMenuItem.Name = "MantenimientoToolStripMenuItem"
+        Me.MantenimientoToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
+        Me.MantenimientoToolStripMenuItem.Text = "Mantenimiento"
+        '
+        'ProduccionToolStripMenuItem
+        '
+        Me.ProduccionToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ProduccionToolStripMenuItem.Name = "ProduccionToolStripMenuItem"
+        Me.ProduccionToolStripMenuItem.Size = New System.Drawing.Size(100, 36)
+        Me.ProduccionToolStripMenuItem.Text = "Produccion"
+        Me.ProduccionToolStripMenuItem.Visible = False
         '
         'cmdPrestamos
         '
@@ -519,13 +560,6 @@ Partial Class frmprincipal
         Me.SALIRToolStripMenuItem.Size = New System.Drawing.Size(88, 36)
         Me.SALIRToolStripMenuItem.Text = "SALIR"
         '
-        'ProduccionToolStripMenuItem
-        '
-        Me.ProduccionToolStripMenuItem.Name = "ProduccionToolStripMenuItem"
-        Me.ProduccionToolStripMenuItem.Size = New System.Drawing.Size(100, 36)
-        Me.ProduccionToolStripMenuItem.Text = "Produccion"
-        Me.ProduccionToolStripMenuItem.Visible = False
-        '
         'SincronizacionToolStripMenuItem
         '
         Me.SincronizacionToolStripMenuItem.Name = "SincronizacionToolStripMenuItem"
@@ -533,13 +567,22 @@ Partial Class frmprincipal
         Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
         Me.SincronizacionToolStripMenuItem.Visible = False
         '
-        'MantenimientoToolStripMenuItem
+        'dtconexiones
         '
-        Me.MantenimientoToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.MantenimientoToolStripMenuItem.ForeColor = System.Drawing.Color.White
-        Me.MantenimientoToolStripMenuItem.Name = "MantenimientoToolStripMenuItem"
-        Me.MantenimientoToolStripMenuItem.Size = New System.Drawing.Size(238, 26)
-        Me.MantenimientoToolStripMenuItem.Text = "Mantenimiento"
+        Me.dtconexiones.AllowUserToAddRows = False
+        Me.dtconexiones.AllowUserToDeleteRows = False
+        Me.dtconexiones.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtconexiones.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtconexiones.BackgroundColor = System.Drawing.Color.White
+        Me.dtconexiones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtconexiones.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.dtconexiones.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtconexiones.Location = New System.Drawing.Point(0, 235)
+        Me.dtconexiones.Name = "dtconexiones"
+        Me.dtconexiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dtconexiones.Size = New System.Drawing.Size(1211, 153)
+        Me.dtconexiones.TabIndex = 17
+        Me.dtconexiones.Visible = False
         '
         'frmprincipal
         '
@@ -549,6 +592,7 @@ Partial Class frmprincipal
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(1211, 412)
+        Me.Controls.Add(Me.dtconexiones)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.menugral)
         Me.DoubleBuffered = True
@@ -563,6 +607,7 @@ Partial Class frmprincipal
         Me.StatusStrip1.PerformLayout()
         Me.menugral.ResumeLayout(False)
         Me.menugral.PerformLayout()
+        CType(Me.dtconexiones, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -592,7 +637,7 @@ Partial Class frmprincipal
     Friend WithEvents reciboconsfinal As ToolStripMenuItem
     Friend WithEvents facturabconsfinal As ToolStripMenuItem
     Friend WithEvents FacturaA As ToolStripMenuItem
-    Friend WithEvents cmdtecnico As ToolStripMenuItem
+    Friend WithEvents cmdServicios As ToolStripMenuItem
     Friend WithEvents ABMProductosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ConsultaDeProductos As ToolStripMenuItem
     Friend WithEvents RemitosToolStripMenuItem As ToolStripMenuItem
@@ -614,4 +659,7 @@ Partial Class frmprincipal
     Friend WithEvents ListaDeEmpleadosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents LiquidaciónDeSueldosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MantenimientoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents listaConexiones As ToolStripDropDownButton
+    Friend WithEvents dtconexiones As DataGridView
+    Friend WithEvents PublicidadToolStripMenuItem As ToolStripMenuItem
 End Class

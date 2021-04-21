@@ -7,15 +7,17 @@
     Public ItemSeleccionado As Integer = 0
 
     Public Sub Cargar_Datos(dt As DataTable)
-        todos_los_datos = dt
-        total = dt.Rows.Count
-        lblregistros.Text = total
-        maximo_paginas = Math.Ceiling(total / items_por_pagina)
-        lblPaginasTotales.Text = maximo_paginas
-        dgvVista.DataSource = Split(todos_los_datos)
-        dgvVista.Columns(0).Visible = False
-        HabilitarBotones()
-
+        Try
+            todos_los_datos = dt
+            total = dt.Rows.Count
+            lblregistros.Text = total
+            maximo_paginas = Math.Ceiling(total / items_por_pagina)
+            lblPaginasTotales.Text = maximo_paginas
+            dgvVista.DataSource = Split(todos_los_datos)
+            dgvVista.Columns(0).Visible = False
+            HabilitarBotones()
+        Catch ex As Exception
+        End Try
     End Sub
     'Private Sub cargarOrden(dt As DataTable)
     '    For Each columna As DataColumn In dt.Columns
@@ -104,5 +106,9 @@
         Application.DoEvents()
         dgvVista.DataSource = Split(todos_los_datos)
         EnProgreso.Close()
+    End Sub
+
+    Private Sub DGVPaginado_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 End Class

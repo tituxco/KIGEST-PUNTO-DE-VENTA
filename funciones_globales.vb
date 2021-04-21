@@ -9,6 +9,25 @@ Module funciones_Globales
 
     Public idFactura As Integer
 
+    Public Function ObtenerFechaFacturaElectro(numFac As Integer, tipoFac As Integer) As String
+        Try
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT replace(fecha,'-','') as fecha 
+                FROM kigest_mbraidot.fact_facturas where tipofact=" & tipoFac & " and num_fact=" & numFac & " limit 1", conexionPrinc)
+            Dim fecha As New DataTable
+            consulta.Fill(fecha)
+
+            If fecha.Rows.Count = 0 Then
+                Return ""
+            Else
+                Return (fecha.Rows(0).Item(0))
+            End If
+
+        Catch ex As Exception
+            Return ""
+        End Try
+    End Function
+
     Public Function ObtenerReferenciaControl_tabpage(ByVal nombreControl As String, ByVal Formulario As TabPage) As Control
 
         ' Recorremos la colección de controles del formulario
