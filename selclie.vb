@@ -96,6 +96,13 @@
                         .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
                     End With
                     Me.Close()
+                Case "fichaequipo"
+                    With CType(frmprincipal.ActiveMdiChild, fichaequipo)
+                        ' .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                        .txtrazon.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                    End With
+                    Me.Close()
             End Select
         Catch ex As Exception
 
@@ -170,7 +177,13 @@
                             .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
                         End With
                         Me.Close()
-
+                    Case "fichaequipo"
+                        With CType(frmprincipal.ActiveMdiChild, fichaequipo)
+                            ' .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
+                            .txtrazon.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                        End With
+                        Me.Close()
                 End Select
 
             End If
@@ -179,11 +192,5 @@
         End Try
     End Sub
 
-    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
 
-    End Sub
-
-    Private Sub dtpersonal_KeyUp(sender As Object, e As KeyEventArgs) Handles dtpersonal.KeyUp
-
-    End Sub
 End Class

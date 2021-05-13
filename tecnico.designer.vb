@@ -32,7 +32,7 @@ Partial Class tecnico
         Me.tbtaller = New System.Windows.Forms.TabControl()
         Me.tabequipos = New System.Windows.Forms.TabPage()
         Me.Panel12 = New System.Windows.Forms.Panel()
-        Me.txtespecificaciones = New System.Windows.Forms.TextBox()
+        Me.txtespecificaciones = New System.Windows.Forms.RichTextBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.ecliserie = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -42,6 +42,9 @@ Partial Class tecnico
         Me.Label2 = New System.Windows.Forms.Label()
         Me.treequipos = New System.Windows.Forms.TreeView()
         Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
         Me.rdequiposclieCodInt = New System.Windows.Forms.RadioButton()
         Me.rdequiposlclieSerie = New System.Windows.Forms.RadioButton()
         Me.rdequiposclieCliente = New System.Windows.Forms.RadioButton()
@@ -101,9 +104,6 @@ Partial Class tecnico
         Me.Label20 = New System.Windows.Forms.Label()
         Me.dtdegraf = New System.Windows.Forms.DateTimePicker()
         Me.dthastagraf = New System.Windows.Forms.DateTimePicker()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.tbtaller.SuspendLayout()
         Me.tabequipos.SuspendLayout()
@@ -196,12 +196,12 @@ Partial Class tecnico
         '
         'txtespecificaciones
         '
-        Me.txtespecificaciones.Enabled = False
-        Me.txtespecificaciones.Location = New System.Drawing.Point(9, 162)
-        Me.txtespecificaciones.Multiline = True
+        Me.txtespecificaciones.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.txtespecificaciones.Location = New System.Drawing.Point(9, 160)
         Me.txtespecificaciones.Name = "txtespecificaciones"
-        Me.txtespecificaciones.Size = New System.Drawing.Size(374, 212)
-        Me.txtespecificaciones.TabIndex = 232
+        Me.txtespecificaciones.Size = New System.Drawing.Size(374, 240)
+        Me.txtespecificaciones.TabIndex = 234
+        Me.txtespecificaciones.Text = ""
         '
         'Label4
         '
@@ -290,6 +290,57 @@ Partial Class tecnico
         Me.Panel11.Name = "Panel11"
         Me.Panel11.Size = New System.Drawing.Size(1238, 72)
         Me.Panel11.TabIndex = 0
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.New_Copy_32px
+        Me.Button1.Location = New System.Drawing.Point(994, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(84, 72)
+        Me.Button1.TabIndex = 75
+        Me.Button1.Text = "Agregar Trabajo"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Button5
+        '
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button5.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px1
+        Me.Button5.Location = New System.Drawing.Point(1078, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(84, 72)
+        Me.Button5.TabIndex = 74
+        Me.Button5.Text = "Actualiza"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button5.UseVisualStyleBackColor = True
+        '
+        'Button7
+        '
+        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button7.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button7.ForeColor = System.Drawing.Color.White
+        Me.Button7.Image = Global.SIGT__KIGEST.My.Resources.Resources.Export_32px_WHITE1
+        Me.Button7.Location = New System.Drawing.Point(1162, 0)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(76, 72)
+        Me.Button7.TabIndex = 73
+        Me.Button7.Text = "Salir"
+        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button7.UseVisualStyleBackColor = True
         '
         'rdequiposclieCodInt
         '
@@ -415,7 +466,7 @@ Partial Class tecnico
         Me.DataGridView3.Name = "DataGridView3"
         Me.DataGridView3.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.DataGridView3.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView3.Size = New System.Drawing.Size(881, 366)
+        Me.DataGridView3.Size = New System.Drawing.Size(881, 363)
         Me.DataGridView3.TabIndex = 72
         '
         'DataGridViewTextBoxColumn2
@@ -448,7 +499,7 @@ Partial Class tecnico
         'Panel8
         '
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel8.Location = New System.Drawing.Point(3, 369)
+        Me.Panel8.Location = New System.Drawing.Point(3, 366)
         Me.Panel8.Name = "Panel8"
         Me.Panel8.Size = New System.Drawing.Size(881, 58)
         Me.Panel8.TabIndex = 71
@@ -478,7 +529,7 @@ Partial Class tecnico
         Me.DataGridView2.Name = "DataGridView2"
         Me.DataGridView2.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.DataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView2.Size = New System.Drawing.Size(881, 424)
+        Me.DataGridView2.Size = New System.Drawing.Size(881, 421)
         Me.DataGridView2.TabIndex = 69
         '
         'DataGridViewTextBoxColumn1
@@ -517,7 +568,7 @@ Partial Class tecnico
         Me.TreeView1.Dock = System.Windows.Forms.DockStyle.Left
         Me.TreeView1.Location = New System.Drawing.Point(3, 3)
         Me.TreeView1.Name = "TreeView1"
-        Me.TreeView1.Size = New System.Drawing.Size(291, 424)
+        Me.TreeView1.Size = New System.Drawing.Size(291, 421)
         Me.TreeView1.TabIndex = 0
         '
         'Label12
@@ -928,57 +979,6 @@ Partial Class tecnico
         Me.dthastagraf.Size = New System.Drawing.Size(131, 26)
         Me.dthastagraf.TabIndex = 51
         '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.New_Copy_32px
-        Me.Button1.Location = New System.Drawing.Point(994, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(84, 72)
-        Me.Button1.TabIndex = 75
-        Me.Button1.Text = "Agregar Trabajo"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Button5
-        '
-        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button5.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button5.ForeColor = System.Drawing.Color.White
-        Me.Button5.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px1
-        Me.Button5.Location = New System.Drawing.Point(1078, 0)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(84, 72)
-        Me.Button5.TabIndex = 74
-        Me.Button5.Text = "Actualiza"
-        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button5.UseVisualStyleBackColor = True
-        '
-        'Button7
-        '
-        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button7.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button7.ForeColor = System.Drawing.Color.White
-        Me.Button7.Image = Global.SIGT__KIGEST.My.Resources.Resources.Export_32px_WHITE1
-        Me.Button7.Location = New System.Drawing.Point(1162, 0)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(76, 72)
-        Me.Button7.TabIndex = 73
-        Me.Button7.Text = "Salir"
-        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button7.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button7.UseVisualStyleBackColor = True
-        '
         'tecnico
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1097,7 +1097,7 @@ Partial Class tecnico
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents TabPage1 As System.Windows.Forms.TabPage
     Friend WithEvents TreeView1 As System.Windows.Forms.TreeView
-    Friend WithEvents txtespecificaciones As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Button1 As Button
+    Friend WithEvents txtespecificaciones As RichTextBox
 End Class

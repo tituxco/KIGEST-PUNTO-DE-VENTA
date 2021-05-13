@@ -1,7 +1,7 @@
 ﻿Public Class frmServiciosCloud
     Dim cadena As String
     'Private BindingSourceemp As Windows.Forms.BindingSource = New BindingSource
-    Private Sub CargaServiciosCloud()
+    Public Sub CargaServiciosCloud()
         Try
             dtcloud.Rows.Clear()
             Reconectar()
@@ -131,7 +131,7 @@
         End Try
     End Sub
 
-    Private Sub Panel20_Paint(sender As Object, e As PaintEventArgs) Handles Panel20.Paint
-
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        agregarUsuarioCloud.Show()
     End Sub
 End Class

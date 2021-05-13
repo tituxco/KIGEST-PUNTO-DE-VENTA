@@ -22,10 +22,10 @@ Partial Class addAsiento
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.txtAsientoNumero = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -38,20 +38,24 @@ Partial Class addAsiento
         Me.txtAsientoConcepto = New System.Windows.Forms.TextBox()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.dgvPartidas = New System.Windows.Forms.DataGridView()
-        Me.idCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvCuenta = New System.Windows.Forms.DataGridViewComboBoxColumn()
-        Me.buscar = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.DEBE = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.HABER = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cmbBusquedaCuenta = New System.Windows.Forms.ComboBox()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.lbltotalHaber = New System.Windows.Forms.Label()
+        Me.lbltotalDebe = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.idCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvCuenta = New System.Windows.Forms.DataGridViewComboBoxColumn()
+        Me.DEBE = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.HABER = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvPartidas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -191,61 +195,13 @@ Partial Class addAsiento
         Me.dgvPartidas.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPartidas.BackgroundColor = System.Drawing.Color.White
         Me.dgvPartidas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPartidas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.idCuenta, Me.Codigo, Me.dgvCuenta, Me.buscar, Me.DEBE, Me.HABER})
+        Me.dgvPartidas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.idCuenta, Me.Codigo, Me.dgvCuenta, Me.DEBE, Me.HABER})
         Me.dgvPartidas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvPartidas.Location = New System.Drawing.Point(0, 116)
         Me.dgvPartidas.MultiSelect = False
         Me.dgvPartidas.Name = "dgvPartidas"
-        Me.dgvPartidas.Size = New System.Drawing.Size(785, 295)
+        Me.dgvPartidas.Size = New System.Drawing.Size(785, 257)
         Me.dgvPartidas.TabIndex = 3
-        '
-        'idCuenta
-        '
-        Me.idCuenta.HeaderText = "idCuenta"
-        Me.idCuenta.Name = "idCuenta"
-        Me.idCuenta.Visible = False
-        '
-        'Codigo
-        '
-        Me.Codigo.FillWeight = 30.0!
-        Me.Codigo.HeaderText = "Codigo"
-        Me.Codigo.Name = "Codigo"
-        Me.Codigo.ReadOnly = True
-        '
-        'dgvCuenta
-        '
-        Me.dgvCuenta.HeaderText = "Cuenta"
-        Me.dgvCuenta.Name = "dgvCuenta"
-        Me.dgvCuenta.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCuenta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        '
-        'buscar
-        '
-        Me.buscar.FillWeight = 5.0!
-        Me.buscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.buscar.HeaderText = "..."
-        Me.buscar.Name = "buscar"
-        Me.buscar.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.buscar.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
-        Me.buscar.Text = "Busq"
-        '
-        'DEBE
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle1
-        Me.DEBE.FillWeight = 30.0!
-        Me.DEBE.HeaderText = "DEBE"
-        Me.DEBE.Name = "DEBE"
-        '
-        'HABER
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.HABER.DefaultCellStyle = DataGridViewCellStyle2
-        Me.HABER.FillWeight = 30.0!
-        Me.HABER.HeaderText = "HABER"
-        Me.HABER.Name = "HABER"
         '
         'DataGridViewTextBoxColumn1
         '
@@ -285,13 +241,97 @@ Partial Class addAsiento
         '
         'cmbBusquedaCuenta
         '
-        Me.cmbBusquedaCuenta.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple
+        Me.cmbBusquedaCuenta.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbBusquedaCuenta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbBusquedaCuenta.FormattingEnabled = True
         Me.cmbBusquedaCuenta.Location = New System.Drawing.Point(155, 138)
         Me.cmbBusquedaCuenta.Name = "cmbBusquedaCuenta"
-        Me.cmbBusquedaCuenta.Size = New System.Drawing.Size(384, 229)
+        Me.cmbBusquedaCuenta.Size = New System.Drawing.Size(395, 21)
         Me.cmbBusquedaCuenta.TabIndex = 4
         Me.cmbBusquedaCuenta.Visible = False
+        '
+        'Panel2
+        '
+        Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.lbltotalHaber)
+        Me.Panel2.Controls.Add(Me.lbltotalDebe)
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel2.Location = New System.Drawing.Point(0, 373)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(785, 38)
+        Me.Panel2.TabIndex = 68
+        '
+        'lbltotalHaber
+        '
+        Me.lbltotalHaber.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalHaber.ForeColor = System.Drawing.Color.White
+        Me.lbltotalHaber.Location = New System.Drawing.Point(671, 1)
+        Me.lbltotalHaber.Name = "lbltotalHaber"
+        Me.lbltotalHaber.Size = New System.Drawing.Size(102, 20)
+        Me.lbltotalHaber.TabIndex = 78
+        Me.lbltotalHaber.Text = "$"
+        '
+        'lbltotalDebe
+        '
+        Me.lbltotalDebe.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalDebe.ForeColor = System.Drawing.Color.White
+        Me.lbltotalDebe.Location = New System.Drawing.Point(556, 1)
+        Me.lbltotalDebe.Name = "lbltotalDebe"
+        Me.lbltotalDebe.Size = New System.Drawing.Size(109, 20)
+        Me.lbltotalDebe.TabIndex = 77
+        Me.lbltotalDebe.Text = "$"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.ForeColor = System.Drawing.Color.White
+        Me.Label4.Location = New System.Drawing.Point(457, 0)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(93, 20)
+        Me.Label4.TabIndex = 76
+        Me.Label4.Text = "TOTALES:"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'idCuenta
+        '
+        Me.idCuenta.HeaderText = "idCuenta"
+        Me.idCuenta.Name = "idCuenta"
+        Me.idCuenta.Visible = False
+        '
+        'Codigo
+        '
+        Me.Codigo.FillWeight = 30.0!
+        Me.Codigo.HeaderText = "Codigo"
+        Me.Codigo.Name = "Codigo"
+        Me.Codigo.ReadOnly = True
+        '
+        'dgvCuenta
+        '
+        Me.dgvCuenta.HeaderText = "Cuenta"
+        Me.dgvCuenta.Name = "dgvCuenta"
+        Me.dgvCuenta.ReadOnly = True
+        Me.dgvCuenta.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCuenta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
+        '
+        'DEBE
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = "0"
+        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DEBE.FillWeight = 30.0!
+        Me.DEBE.HeaderText = "DEBE"
+        Me.DEBE.Name = "DEBE"
+        '
+        'HABER
+        '
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.HABER.DefaultCellStyle = DataGridViewCellStyle2
+        Me.HABER.FillWeight = 30.0!
+        Me.HABER.HeaderText = "HABER"
+        Me.HABER.Name = "HABER"
         '
         'addAsiento
         '
@@ -301,6 +341,7 @@ Partial Class addAsiento
         Me.ClientSize = New System.Drawing.Size(785, 411)
         Me.Controls.Add(Me.cmbBusquedaCuenta)
         Me.Controls.Add(Me.dgvPartidas)
+        Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
@@ -314,6 +355,8 @@ Partial Class addAsiento
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         CType(Me.dgvPartidas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.Panel2.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -335,10 +378,13 @@ Partial Class addAsiento
     Friend WithEvents txtAsientoComprobante As TextBox
     Friend WithEvents Label3 As Label
     Friend WithEvents cmbBusquedaCuenta As ComboBox
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents lbltotalHaber As Label
+    Friend WithEvents lbltotalDebe As Label
+    Friend WithEvents Label4 As Label
     Friend WithEvents idCuenta As DataGridViewTextBoxColumn
     Friend WithEvents Codigo As DataGridViewTextBoxColumn
     Friend WithEvents dgvCuenta As DataGridViewComboBoxColumn
-    Friend WithEvents buscar As DataGridViewButtonColumn
     Friend WithEvents DEBE As DataGridViewTextBoxColumn
     Friend WithEvents HABER As DataGridViewTextBoxColumn
 End Class

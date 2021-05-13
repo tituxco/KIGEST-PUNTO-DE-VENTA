@@ -59,7 +59,7 @@ Partial Class NvaPublicidad
         'Button1
         '
         Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Location = New System.Drawing.Point(433, 201)
+        Me.Button1.Location = New System.Drawing.Point(476, 201)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(114, 27)
         Me.Button1.TabIndex = 117
@@ -69,7 +69,7 @@ Partial Class NvaPublicidad
         'btnPagar
         '
         Me.btnPagar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnPagar.Location = New System.Drawing.Point(289, 201)
+        Me.btnPagar.Location = New System.Drawing.Point(332, 201)
         Me.btnPagar.Name = "btnPagar"
         Me.btnPagar.Size = New System.Drawing.Size(133, 27)
         Me.btnPagar.TabIndex = 99
@@ -108,7 +108,7 @@ Partial Class NvaPublicidad
         Me.txtBuscaPrestamo.AcceptsReturn = True
         Me.txtBuscaPrestamo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtBuscaPrestamo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBuscaPrestamo.Location = New System.Drawing.Point(157, 206)
+        Me.txtBuscaPrestamo.Location = New System.Drawing.Point(200, 206)
         Me.txtBuscaPrestamo.Name = "txtBuscaPrestamo"
         Me.txtBuscaPrestamo.ReadOnly = True
         Me.txtBuscaPrestamo.Size = New System.Drawing.Size(121, 22)
@@ -130,7 +130,7 @@ Partial Class NvaPublicidad
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(23, 212)
+        Me.Label10.Location = New System.Drawing.Point(66, 212)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(128, 16)
         Me.Label10.TabIndex = 94
@@ -140,7 +140,7 @@ Partial Class NvaPublicidad
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(711, 201)
+        Me.btnImprimir.Location = New System.Drawing.Point(754, 201)
         Me.btnImprimir.Name = "btnImprimir"
         Me.btnImprimir.Size = New System.Drawing.Size(114, 27)
         Me.btnImprimir.TabIndex = 96
@@ -154,7 +154,7 @@ Partial Class NvaPublicidad
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(832, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(875, 40)
         Me.pntitulo.TabIndex = 112
         '
         'Label1
@@ -192,7 +192,7 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.ReadOnly = True
         Me.dgvPublicidad.RowHeadersVisible = False
         Me.dgvPublicidad.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPublicidad.Size = New System.Drawing.Size(824, 124)
+        Me.dgvPublicidad.Size = New System.Drawing.Size(867, 143)
         Me.dgvPublicidad.TabIndex = 111
         '
         'txtInteresMensual
@@ -298,7 +298,7 @@ Partial Class NvaPublicidad
         'btnCalcular
         '
         Me.btnCalcular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCalcular.Location = New System.Drawing.Point(553, 201)
+        Me.btnCalcular.Location = New System.Drawing.Point(596, 201)
         Me.btnCalcular.Name = "btnCalcular"
         Me.btnCalcular.Size = New System.Drawing.Size(152, 27)
         Me.btnCalcular.TabIndex = 106
@@ -366,7 +366,7 @@ Partial Class NvaPublicidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(832, 362)
+        Me.ClientSize = New System.Drawing.Size(875, 381)
         Me.Controls.Add(Me.txtdetallePublicidad)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Button1)

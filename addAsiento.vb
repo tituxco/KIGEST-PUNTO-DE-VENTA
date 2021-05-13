@@ -8,7 +8,7 @@
     Private Sub addAsiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
-            concat(concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle),'<>',nombreCuenta) as nombreCuenta
+            concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
             FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
             Dim tabPlanCuentas As New DataSet
             consPlanCuentas.Fill(tabPlanCuentas)
@@ -25,6 +25,7 @@
                 Reconectar()
                 Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_libroDiario where codigoAsiento=" & IdAsiento & " limit 1", conexionPrinc)
                 Dim tabLibroDiario As New DataTable
+                '    MsgBox(consLibroDiario.SelectCommand.CommandText)
                 consLibroDiario.Fill(tabLibroDiario)
                 txtAsientoNumero.Text = tabLibroDiario.Rows(0).Item("codigoAsiento")
                 txtAsientoComprobante.Text = tabLibroDiario.Rows(0).Item("comprobanteInterno")
@@ -32,7 +33,7 @@
                 fchAsientoFecha.Value = CDate(tabLibroDiario.Rows(0).Item("fecha").ToString)
 
                 Reconectar()
-                Dim consAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM kigest_obispadorqta.cm_Asientos 
+                Dim consAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM cm_Asientos 
                 where (cuentaDebeId<>0 or cuentaHaberId<>0) and  codigoAsiento=" & IdAsiento, conexionPrinc)
                 Dim tabAsiento As New DataTable
                 consAsiento.Fill(tabAsiento)
@@ -42,22 +43,34 @@
                         dgvPartidas.Rows.Add(
                                          Partida.Item("cuentaDebeId"),
                                          ObtenerCodigoCuenta(Partida.Item("cuentaDebeId")),
-                                         Partida.Item("cuentaDebeId"), "...",
-                                         Partida.Item("importeDebe")
+                                         Partida.Item("cuentaDebeId"),
+                                         Partida.Item("importeDebe"),
+                                         0
                                          )
                     Else
                         dgvPartidas.Rows.Add(
                                         Partida.Item("cuentaHaberId"),
                                         ObtenerCodigoCuenta(Partida.Item("cuentaHaberId")),
-                                        Partida.Item("cuentaHaberId"), "...",
+                                        Partida.Item("cuentaHaberId"),
                                         0,
                                         Partida.Item("importeHaber")
                                         )
                     End If
                 Next
+                CalcularTotalAsiento()
             Else
+                Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, fecha,concepto FROM 
+                cm_libroDiario order by id desc limit 1", conexionPrinc)
+                Dim tabUltAsiento As New DataTable
+                consUltAsiento.Fill(tabUltAsiento)
+
+
                 txtAsientoNumero.Text = ObtenerNumeroAsiento()
+                txtAsientoComprobante.Text = tabUltAsiento.Rows(0).Item(1)
+                fchAsientoFecha.Value = Format(CDate(tabUltAsiento.Rows(0).Item(2).ToString), "dd/MM/yyyy")
+                'txtAsientoConcepto.Text = tabUltAsiento.Rows(0).Item(3)
             End If
+
         Catch ex As Exception
         End Try
 
@@ -65,15 +78,47 @@
 
     Private Sub dgvPartidas_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellEndEdit
         Try
-            If dgvPartidas.CurrentCell.ColumnIndex = dgvPartidas.Columns("Cuenta").Index Then
-                ComprobarCuenta(dgvPartidas.Rows(e.RowIndex).Cells("Cuenta").Value)
+            '  MsgBox(e.ColumnIndex)
+            'If e.RowIndex = 0 Then Exit Sub
+
+            If e.ColumnIndex = 1 Then 'dgvPartidas.Columns("Cuenta").Index Then
+                If ComprobarCuenta(dgvPartidas.Rows(e.RowIndex).Cells("Cuenta").Value) = False Then
+                    MsgBox("la cuenta seleccionada no admite movimientos directos, seleccione una subcuenta")
+                    Exit Sub
+                End If
                 dgvPartidas.Rows(e.RowIndex).Cells(0).Value = dgvPartidas.Rows(e.RowIndex).Cells("Cuenta").Value
                 dgvPartidas.Rows(e.RowIndex).Cells(1).Value = ObtenerCodigoCuenta(dgvPartidas.Rows(e.RowIndex).Cells("Cuenta").Value)
+            ElseIf e.ColumnIndex = 3 Then
+                If dgvPartidas.CurrentCell.Value <> 0 Then dgvPartidas.CurrentCell.Value = FormatNumber(dgvPartidas.CurrentCell.Value)
+                CalcularTotalAsiento()
+            ElseIf e.ColumnIndex = 4 Then
+                If dgvPartidas.CurrentCell.Value <> 0 Then dgvPartidas.CurrentCell.Value = FormatNumber(dgvPartidas.CurrentCell.Value)
+                CalcularTotalAsiento()
             End If
         Catch ex As Exception
         End Try
     End Sub
 
+    Private Sub CalcularTotalAsiento()
+        Dim debeTotal As Double = 0
+        Dim haberTotal As Double = 0
+
+        For Each partida As DataGridViewRow In dgvPartidas.Rows
+            'MsgBox(partida.Cells(4).Value)
+            ' If partida.Index = 0 Then Continue For
+            'If partida.Cells(4).Value = "" Or Not IsNumeric(partida.Cells(4).Value) Or partida.Cells(5).Value = "" Or Not IsNumeric(partida.Cells(5).Value) Then
+            'MsgBox("una de las partidas esta mal cargada, por favor verifique, no se sumaran totales")
+            'partida.Selected = True
+            'Exit Sub
+            'Else
+            debeTotal += partida.Cells("DEBE").Value
+            haberTotal += partida.Cells("HABER").Value
+            ' End If
+        Next
+
+        lbltotalDebe.Text = "$" & FormatNumber(debeTotal, 2)
+        lbltotalHaber.Text = "$" & FormatNumber(haberTotal, 2)
+    End Sub
     Private Function ObtenerCodigoCuenta(idCuenta As Integer) As String
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta                
@@ -85,7 +130,7 @@
         End Try
     End Function
 
-    Private Sub ComprobarCuenta(idcuenta)
+    Private Function ComprobarCuenta(idcuenta) As Boolean
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cuentaMovimiento                
         FROM cm_planDeCuentas where id=" & idcuenta & " order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle limit 1", conexionPrinc)
@@ -93,13 +138,17 @@
             consPlanCuentas.Fill(tabPlanCuentas)
             Dim cuentaMovimiento = tabPlanCuentas.Rows(0).Item("cuentaMovimiento")
             If cuentaMovimiento = 0 Then
-                MsgBox("La cuenta seleccionada no acepta movimientos directos, debe seleccionar una subcuenta")
+                '      MsgBox("La cuenta seleccionada no acepta movimientos directos, debe seleccionar una subcuenta")
                 'dgvPartidas.Rows.Remove(dgvPartidas.CurrentRow)
-                Exit Sub
+                '  Exit Sub
+                Return False
+            Else
+                Return True
             End If
         Catch ex As Exception
+            Return False
         End Try
-    End Sub
+    End Function
     Private Function ObtenerNumeroAsiento() As Integer
         Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", conexionPrinc)
         Dim tabNumeroAsiento As New DataTable
@@ -203,11 +252,15 @@
                 .AddWithValue("?codigoAsiento", asientoNumero)
             End With
             comandoLibroMayor.ExecuteNonQuery()
-            CONTABLE.CargarLibroDiario()
+            With CType(frmprincipal.ActiveMdiChild, CONTABLE)
+                .CargarPeriodos()
+                .CargarLibroDiario()
+            End With
 
             Me.Close()
 
         Catch ex As Exception
+            MsgBox(ex.Message)
         End Try
     End Sub
 
@@ -223,29 +276,11 @@
             cmbBusquedaCuenta.Visible = True
             filaActual = e.RowIndex
             cmbBusquedaCuenta.Focus()
-
+            'cmbBusquedaCuenta.Location()
         End If
     End Sub
 
     Private Sub cmbBusquedaCuenta_KeyUp(sender As Object, e As KeyEventArgs) Handles cmbBusquedaCuenta.KeyUp
-        If e.KeyCode = Keys.Enter Then
-            Try
-                ComprobarCuenta(cmbBusquedaCuenta.SelectedValue)
-                'MsgBox(cmbBusquedaCuenta.SelectedValue)
-                dgvPartidas.Rows(filaActual).Cells("idCuenta").Value = cmbBusquedaCuenta.SelectedValue
-                dgvPartidas.Rows(filaActual).Cells("Codigo").Value = ObtenerCodigoCuenta(cmbBusquedaCuenta.SelectedValue)
-                dgvPartidas.Rows(filaActual).Cells("dgvCuenta").Value = cmbBusquedaCuenta.SelectedValue
-                dgvPartidas.Rows(filaActual).Cells("DEBE").Selected = True  '  .Focus()
-                dgvPartidas.CurrentCell = dgvPartidas.Rows(filaActual).Cells("DEBE")
-                dgvPartidas.BeginEdit(True)
-                cmbBusquedaCuenta.Visible = False
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
-        End If
-    End Sub
-
-    Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
 
     End Sub
 
@@ -259,5 +294,44 @@
         'Catch ex As Exception
 
         'End Try
+    End Sub
+
+    Private Sub dgvPartidas_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellEnter
+        Dim Grid As DataGridView = CType(sender, DataGridView)
+        Dim Rec As Rectangle
+        'Dim Dtp As DataTimePicker
+
+        If e.ColumnIndex = 2 Then ' Si la coolumna es la que quiero
+
+            Rec = Grid.GetCellDisplayRectangle(Grid.CurrentCell.ColumnIndex, Grid.CurrentCell.RowIndex, False)
+
+            cmbBusquedaCuenta.Location = New Point(Rec.Location.X + Grid.Location.X, Rec.Location.Y + Grid.Location.Y)
+            cmbBusquedaCuenta.BringToFront()
+            filaActual = e.RowIndex
+            cmbBusquedaCuenta.Show()
+
+        End If
+
+    End Sub
+
+    Private Sub cmbBusquedaCuenta_KeyDown(sender As Object, e As KeyEventArgs) Handles cmbBusquedaCuenta.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Try
+                If ComprobarCuenta(cmbBusquedaCuenta.SelectedValue) = False Then
+                    MsgBox("la cuenta seleccionada no admite movimientos directos, seleccione una subcuenta")
+                    Exit Sub
+                End If
+                'MsgBox(cmbBusquedaCuenta.SelectedValue)
+                dgvPartidas.Rows(filaActual).Cells("idCuenta").Value = cmbBusquedaCuenta.SelectedValue
+                dgvPartidas.Rows(filaActual).Cells("Codigo").Value = ObtenerCodigoCuenta(cmbBusquedaCuenta.SelectedValue)
+                dgvPartidas.Rows(filaActual).Cells("dgvCuenta").Value = cmbBusquedaCuenta.SelectedValue
+                dgvPartidas.Rows(filaActual).Cells("DEBE").Selected = True  '  .Focus()
+                dgvPartidas.CurrentCell = dgvPartidas.Rows(filaActual).Cells("DEBE")
+                dgvPartidas.BeginEdit(True)
+                cmbBusquedaCuenta.Visible = False
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        End If
     End Sub
 End Class

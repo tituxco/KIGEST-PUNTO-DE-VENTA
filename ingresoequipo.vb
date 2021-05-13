@@ -633,4 +633,17 @@
 
         txtnumor.ReadOnly = False
     End Sub
+
+    Private Sub ingresoequipo_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        Select Case e.KeyCode
+            Case Keys.F12
+                Dim fechaMod As String = InputBox("Ingrese la fecha que desea de la siguiente forma <dd-mm-AAAA>", "Cambio de fecha de orden")
+                fecha = Format(fechaMod, "dd-MMMM-yyyy")
+
+        End Select
+    End Sub
+
+    Private Sub cmbmodelos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbmodelos.SelectedIndexChanged
+
+    End Sub
 End Class

@@ -144,17 +144,17 @@ Public Class busquedaprod
 						((pro.iva+100)/100) *
                         case(select listas.auxcol from fact_listas_precio as listas where listas.id=@idlst) 
 							when 0 then
-								((pro.ganancia+100)/100)
+								((replace(replace(pro.ganancia,'.',''),',','.') +100)/100)
 							when 1 then
-								((pro.utilidad1+100)/100)
+								((replace(replace(pro.utilidad1,'.',''),',','.')+100)/100)
 							when 2 then
-								((pro.utilidad2+100)/100)
+								((replace(replace(pro.utilidad2,'.',''),',','.')+100)/100)
 							when 3 then
-								((pro.utilidad3+100)/100)
+								((replace(replace(pro.utilidad3,'.',''),',','.')+100)/100)
 							when 4 then
-								((pro.utilidad4+100)/100)
+								((replace(replace(pro.utilidad4,'.',''),',','.')+100)/100)
 							when 5 then
-								((pro.utilidad5+100)/100)
+								((replace(replace(pro.utilidad5,'.',''),',','.')+100)/100)
                                 end *
                         (((select listas.utilidad from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
 				,2,'es_AR')
@@ -169,7 +169,7 @@ Public Class busquedaprod
                 
                 cat.nombre as categoria
                 from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
-                MsgBox(consulta.SelectCommand.CommandText)
+                'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
                 Dim tablaprod As New DataTable

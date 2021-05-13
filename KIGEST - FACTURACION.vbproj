@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>255</ApplicationRevision>
+    <ApplicationRevision>262</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -712,6 +712,7 @@
     <None Include="Resources\iconos\New Copy_64px2.png" />
     <None Include="Resources\iconos\New Copy_32px.png" />
     <None Include="Resources\iconos\Add User Male_64px.png" />
+    <None Include="Resources\iconos\To Do_16px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

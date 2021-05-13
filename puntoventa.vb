@@ -2481,4 +2481,8 @@ Public Class puntoventa
     Private Sub txtclierazon_TextChanged(sender As Object, e As EventArgs) Handles txtclierazon.TextChanged
 
     End Sub
+
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
 End Class

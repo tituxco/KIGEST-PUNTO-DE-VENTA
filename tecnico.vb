@@ -407,36 +407,6 @@ Public Class tecnico
     End Sub
 
     Private Sub treequipos_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles treequipos.AfterSelect
-        Try
-            If cargaecli = False Then Exit Sub
-            Reconectar()
-            Dim codigo As Integer
-            'Dim quitar() As Char = {"C", "O", "D", "I", "N", "T", " "}
-            'If InStr(treequipos.SelectedNode.Text, "CODINT ") <> 0 Then
-            '    codigo = e.Node.Text.TrimStart(quitar)
-            'ElseIf InStr(e.Node.Text, "OR ") <> 0 Then
-            '    codigo = e.Node.Parent.Text.TrimStart(quitar)
-            'End If
-            codigo = treequipos.SelectedNode.Tag
-            Dim sqlquery As String = "select (select nomapell_razon from fact_clientes where idclientes=ecli.propietario) as cliente, " _
-            & "ecli.especificaciones, ecli.serie, ecli.estado, " _
-            & "(select concat(et.nombre,'/',ma.nombre,'/',mo.nombre) from tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo  " _
-            & "where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=ecli.modelo) as EQUIPO " _
-            & "from tecni_equipos_clientes as ecli where ecli.id=" & codigo
-            Dim consespec As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlquery, conexionPrinc)
-            Dim tabespec As New DataTable
-            Dim itemespec() As DataRow
-
-            consespec.Fill(tabespec)
-            itemespec = tabespec.Select()
-            eclipropietario.Text = itemespec(0)(0)
-            ecliequipo.Text = itemespec(0)(4)
-            ecliserie.Text = itemespec(0)(2)
-
-        Catch ex As Exception
-
-        End Try
-
 
     End Sub
 
@@ -484,5 +454,56 @@ Public Class tecnico
         Dim ingequ As New fichaequipo
         ingequ.MdiParent = Me.MdiParent
         ingequ.Show()
+    End Sub
+
+    Private Sub Panel12_Paint(sender As Object, e As PaintEventArgs) Handles Panel12.Paint
+
+    End Sub
+
+    Private Sub treequipos_Click(sender As Object, e As EventArgs) Handles treequipos.Click
+        Try
+            If cargaecli = False Then Exit Sub
+            Reconectar()
+            Dim codigo As Integer
+            'Dim quitar() As Char = {"C", "O", "D", "I", "N", "T", " "}
+            'If InStr(treequipos.SelectedNode.Text, "CODINT ") <> 0 Then
+            '    codigo = e.Node.Text.TrimStart(quitar)
+            'ElseIf InStr(e.Node.Text, "OR ") <> 0 Then
+            '    codigo = e.Node.Parent.Text.TrimStart(quitar)
+            'End If
+
+            codigo = treequipos.SelectedNode.Tag
+            Dim sqlquery As String = "select (select nomapell_razon from fact_clientes where idclientes=ecli.propietario) as cliente, " _
+            & "ecli.especificaciones, ecli.serie, ecli.estado, " _
+            & "(select concat(et.nombre,'/',ma.nombre,'/',mo.nombre) from tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo  " _
+            & "where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=ecli.modelo) as EQUIPO " _
+            & "from tecni_equipos_clientes as ecli where ecli.id=" & codigo
+
+            Dim consespec As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlquery, conexionPrinc)
+            Dim tabespec As New DataTable
+            Dim itemespec() As DataRow
+
+            'MsgBox(consespec.SelectCommand.CommandText)
+            consespec.Fill(tabespec)
+            itemespec = tabespec.Select()
+            eclipropietario.Text = itemespec(0)(0)
+            ecliequipo.Text = itemespec(0)(4)
+            ecliserie.Text = itemespec(0)(2)
+            txtespecificaciones.Text = itemespec(0)(1)
+        Catch ex As Exception
+
+        End Try
+
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Me.Close()
+    End Sub
+
+    Private Sub txtequiposclieBusqueda_KeyUp(sender As Object, e As KeyEventArgs) Handles txtequiposclieBusqueda.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            cmdbuscar.PerformClick()
+        End If
     End Sub
 End Class

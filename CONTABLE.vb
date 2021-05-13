@@ -3837,7 +3837,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub Button28_Click(sender As Object, e As EventArgs) Handles Button28.Click
         grpMantenimientoCuenta.Enabled = True
-
+        txtCuentaGrupo.Enabled = True
+        txtCuentaSubGrupo.Enabled = True
+        txtCuentaCta.Enabled = True
+        txtCuentaSubCuenta.Enabled = True
+        txtCuentaCtaDetalle.Enabled = True
     End Sub
 
 
@@ -3868,9 +3872,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 & "(nombreCuenta,grupo,subGrupo,cuenta,subCuenta,cuentaDetalle,cuentaMovimiento,cuentaResultado) values " _
                 & "(?nombreCuenta,?grupo,?subGrupo,?cuenta,?subCuenta,?cuentaDetalle,?cuentaMovimiento,?cuentaResultado)"
             ElseIf ModificaPlanDeCuentas = True Then
-                SqlQuery = "update cm_planDeCuentas set nombreCuenta=?nombreCuenta ,grupo=?grupo ,
-                subGrupo= ?subGrupo,cuenta= ?cuenta,subCuenta=?subCuenta ,cuentaDetalle=?cuentaDetalle , 
-                cuentaMovimiento=?cuentaMovimiento ,cuentaResultado=?cuentaResultado where id=?idCuenta"
+                '    MsgBox("modifica")
+                SqlQuery = "update cm_planDeCuentas set nombreCuenta= ?nombreCuenta ,grupo=?grupo,
+                subGrupo=?subGrupo, cuenta=?cuenta, subCuenta=?subCuenta, cuentaDetalle= ?cuentaDetalle, 
+                cuentaMovimiento= ?cuentaMovimiento, cuentaResultado=?cuentaResultado where id=?idCuenta"
             End If
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
@@ -3884,10 +3889,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 .AddWithValue("?cuentaMovimiento", ctaMovimiento)
                 .AddWithValue("?cuentaResultado", ctaResultado)
                 If ModificaPlanDeCuentas = True Then
-                    .AddWithValue("?idCuenta", idCuenta)
+                    .AddWithValue("?idCuenta", idPLanCuenta)
                 End If
             End With
-
+            'MsgBox(comandoadd.CommandText)
             comandoadd.ExecuteNonQuery()
             btnBuscarPlanCta.PerformClick()
 
@@ -3903,13 +3908,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                     'If ModificaPlanDeCuentas = True Then
                     fila.Selected = True
-                    filaEncontrada = idPLanCuenta
+                    filaEncontrada = fila.Index
                     'End If
                 End If
             Next
             dgvPlanCuentas.Rows(filaEncontrada).Selected = True
             ' dgvPlanCuentas.CurrentCell = dgvPlanCuentas.Rows(filaEncontrada).Cells(0)
             dgvPlanCuentas.FirstDisplayedScrollingRowIndex = filaEncontrada
+            ModificaPlanDeCuentas = False
         Catch ex As Exception
 
         End Try
@@ -3941,7 +3947,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub tablibromayor_Enter(sender As Object, e As EventArgs) Handles tablibromayor.Enter
         Try
             Reconectar()
-            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle), ' <> ',nombreCuenta) as nombreCuenta
+            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
             FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
             Dim dsPlanCuentas As New DataSet
             consPlanCuentas.Fill(dsPlanCuentas)
@@ -3952,15 +3958,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             CargarPeriodos()
 
-            CargarLibroDiario()
-            CargarLibroMayor()
+
 
         Catch ex As Exception
 
         End Try
     End Sub
 
-    Private Sub CargarPeriodos()
+    Public Sub CargarPeriodos()
         Try
             Reconectar()
             Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from cm_libroDiario order by fecha desc", conexionPrinc)
@@ -4283,7 +4288,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                 
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
-                order by CTA.cuentaResultado desc", conexionPrinc)
+                order by  CTA.cuentaResultado desc,CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta desc,CTA.cuentaDetalle asc", conexionPrinc)
             Dim tabSaldoCuenta As New DataTable
             consSaldoCuenta.Fill(tabSaldoCuenta)
 
@@ -4317,9 +4322,35 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Next
 
 
+            CalcularTotalListado()
+
         Catch ex As Exception
 
         End Try
+    End Sub
+    Private Sub CalcularTotalListado()
+        Dim debitosMes As Double = 0
+        Dim creditosMes As Double = 0
+        Dim saldoMes As Double = 0
+        Dim saldoFinal As Double = 0
+
+        For Each partida As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+            'MsgBox(partida.Cells(4).Value)
+            ' If partida.Index = 0 Then Continue For
+            'If partida.Cells(4).Value = "" Or Not IsNumeric(partida.Cells(4).Value) Or partida.Cells(5).Value = "" Or Not IsNumeric(partida.Cells(5).Value) Then
+            'MsgBox("una de las partidas esta mal cargada, por favor verifique, no se sumaran totales")
+            'partida.Selected = True
+            'Exit Sub
+            'Else
+            debitosMes += partida.Cells(4).Value
+            creditosMes += partida.Cells(5).Value
+            saldoMes += partida.Cells(6).Value
+            saldoFinal += partida.Cells(7).Value
+            ' End If
+        Next
+        dgvTotales.Rows.Add("", "", "", "", debitosMes, creditosMes, saldoMes, saldoFinal)
+
+
     End Sub
 
     Private Sub Button35_Click(sender As Object, e As EventArgs) Handles Button35.Click
@@ -4456,5 +4487,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub cmbperiodoLibroDiario_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedValueChanged
+        CargarLibroDiario()
+
+    End Sub
+
+    Private Sub cmbCuentas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedIndexChanged
+
     End Sub
 End Class
