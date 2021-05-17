@@ -3990,7 +3990,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             Reconectar()
             dgvLibroDiario.Rows.Clear()
-            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  where fecha like '" & cmbperiodoLibroDiario.Text & "-%%'", conexionPrinc)
+            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc", conexionPrinc)
             Dim tabLibroDiario As New DataTable
             consLibroDiario.Fill(tabLibroDiario)
             For Each asientoContable As DataRow In tabLibroDiario.Rows
@@ -4222,7 +4222,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LD.codigoAsiento=stos.codigoAsiento and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
             LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%'
-            order by stos.id asc", conexionPrinc)
+            order by LD.fecha asc", conexionPrinc)
 
             tabContable.Fill(datosContables.Tables("libroDiario"))
             'Reconectar()
@@ -4265,9 +4265,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
 
             dgvListadoCuentaConSaldos.Rows.Clear()
-            Reconectar()
 
-            Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id, concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta,
+            Reconectar()
+            If rdCtaSaldo.Checked = True Then
+                Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id, concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta,
 				(select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
@@ -4289,27 +4290,29 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
                 order by  CTA.cuentaResultado desc,CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta desc,CTA.cuentaDetalle asc", conexionPrinc)
-            Dim tabSaldoCuenta As New DataTable
-            consSaldoCuenta.Fill(tabSaldoCuenta)
+                Dim tabSaldoCuenta As New DataTable
+                consSaldoCuenta.Fill(tabSaldoCuenta)
 
-            'Dim col As New DataColumn
+                'Dim col As New DataColumn
 
 
-            For Each saldocuenta As DataRow In tabSaldoCuenta.Rows
-                Dim saldAnterior As Double = 0
-                Dim debMes As Double = 0
-                Dim credMes As Double = 0
-                Dim saldMes As Double = 0
-                Dim saldFinal As Double = 0
+                For Each saldocuenta As DataRow In tabSaldoCuenta.Rows
+                    Dim saldAnterior As Double = 0
+                    Dim debMes As Double = 0
+                    Dim credMes As Double = 0
+                    Dim saldMes As Double = 0
+                    Dim saldFinal As Double = 0
 
-                If IsDBNull(saldocuenta.Item("saldoAnterior")) Then saldAnterior = 0 Else saldAnterior = saldocuenta.Item("saldoAnterior")
-                If IsDBNull(saldocuenta.Item("debitosMes")) Then debMes = 0 Else debMes = saldocuenta.Item("debitosMes")
-                If IsDBNull(saldocuenta.Item("creditosMes")) Then credMes = 0 Else credMes = saldocuenta.Item("creditosMes")
+                    If IsDBNull(saldocuenta.Item("saldoAnterior")) Then saldAnterior = 0 Else saldAnterior = saldocuenta.Item("saldoAnterior")
+                    If IsDBNull(saldocuenta.Item("debitosMes")) Then debMes = 0 Else debMes = saldocuenta.Item("debitosMes")
+                    If IsDBNull(saldocuenta.Item("creditosMes")) Then credMes = 0 Else credMes = saldocuenta.Item("creditosMes")
 
-                saldMes = debMes - credMes
-                saldFinal = saldMes + saldAnterior
-
-                dgvListadoCuentaConSaldos.Rows.Add(
+                    saldMes = debMes - credMes
+                    saldFinal = saldMes + saldAnterior
+                    If saldAnterior = 0 And saldFinal = 0 Then
+                        Continue For
+                    End If
+                    dgvListadoCuentaConSaldos.Rows.Add(
                                     saldocuenta.Item("id"),
                                     saldocuenta.Item("numCuenta"),
                                     saldocuenta.Item("nombreCuenta"),
@@ -4319,15 +4322,278 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     saldMes,
                                     saldFinal
                                     )
-            Next
+                Next
+
+                CalcularTotalListado()
+            End If
+            If rdBalance.Checked = True Then
+
+                Dim consbalance As New MySql.Data.MySqlClient.MySqlDataAdapter("
+                select CTA.id,concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta,CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle, CTA.nombreCuenta, 
+				ifnull((select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
+                ),0) -
+                
+                ifnull((select sum(stos.importeHaber)from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
+                ),0) as MES,
+                
+                ifnull((select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'
+                ),0) as saldoAnterior,
+                 CTA.cuentaMovimiento                											
+                from cm_planDeCuentas as CTA 	
+                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                Dim tabBalance As New DataTable
+                Dim infoBalance() As DataRow
+                consbalance.Fill(tabBalance)
+                Dim tablaBalanceSumas As New DataTable
+
+                Dim datosContables As New datosContable
+
+                For Each cuentaBalance As DataRow In tabBalance.Rows
+                    Dim movMes As Double = 0
+                    Dim saldoAnterior As Double = 0
+                    Dim saldoFinal As Double = 0
+                    Dim Ejercicio As Double = 0
+
+                    movMes = cuentaBalance.Item("MES")
+                    saldoAnterior = cuentaBalance.Item("saldoAnterior")
+
+                    saldoFinal = movMes + saldoAnterior
+                    If cuentaBalance.Item("cuentaMovimiento") = True And cuentaBalance.Item("MES") = 0 And cuentaBalance.Item("saldoAnterior") = 0 Then
+                        Continue For
+                    End If
+
+                    dgvListadoCuentaConSaldos.Rows.Add(
+                        cuentaBalance.Item("id"),
+                        cuentaBalance.Item("numCuenta"),
+                        cuentaBalance.Item("grupo"),
+                        cuentaBalance.Item("subGrupo"),
+                        cuentaBalance.Item("cuenta"),
+                        cuentaBalance.Item("subCuenta"),
+                        cuentaBalance.Item("cuentaDetalle"),
+                        cuentaBalance.Item("nombreCuenta"),
+                        FormatCurrency(movMes, 2),
+                        FormatCurrency(saldoFinal, 2),
+                        0)
 
 
-            CalcularTotalListado()
+                    datosContables.Tables("balanceCuentas").Rows.Add(
+                        cuentaBalance.Item("grupo"),
+                        cuentaBalance.Item("subGrupo"),
+                        cuentaBalance.Item("cuenta"),
+                        cuentaBalance.Item("subCuenta"),
+                        cuentaBalance.Item("cuentaDetalle"),
+                        cuentaBalance.Item("nombreCuenta"),
+                        movMes,
+                        saldoFinal, 0)
 
+                Next
+
+                For Each fila As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+                    Dim ejercicio As Double = 0
+                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value = 0 And fila.Cells("Cuenta").Value = 0 And fila.Cells("subGrupo").Value = 0 Then
+                        infoBalance = datosContables.Tables("balanceCuentas").Select(
+                            "grupo=" & fila.Cells("grupo").Value)
+
+                        For Each monto As DataRow In infoBalance
+                            ejercicio += monto("saldoFinal")
+                        Next
+                        fila.DefaultCellStyle.BackColor = Color.Coral
+                    End If
+
+                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value = 0 And fila.Cells("Cuenta").Value = 0 And fila.Cells("subGrupo").Value <> 0 Then
+                        infoBalance = datosContables.Tables("balanceCuentas").Select(
+                            "grupo=" & fila.Cells("grupo").Value &
+                            " and subGrupo=" & fila.Cells("subGrupo").Value)
+
+                        For Each monto As DataRow In infoBalance
+                            ejercicio += monto("saldoFinal")
+                        Next
+                        fila.DefaultCellStyle.BackColor = Color.ForestGreen
+                    End If
+
+                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value = 0 And fila.Cells("Cuenta").Value <> 0 And fila.Cells("subGrupo").Value <> 0 Then
+                        infoBalance = datosContables.Tables("balanceCuentas").Select(
+                            "grupo=" & fila.Cells("grupo").Value &
+                            " and subGrupo=" & fila.Cells("subGrupo").Value &
+                            " and cuenta=" & fila.Cells("Cuenta").Value)
+
+                        For Each monto As DataRow In infoBalance
+                            ejercicio += monto("saldoFinal")
+                        Next
+                        fila.DefaultCellStyle.BackColor = Color.Aqua
+                    End If
+
+                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value <> 0 And fila.Cells("Cuenta").Value <> 0 And fila.Cells("subGrupo").Value <> 0 Then
+                        infoBalance = datosContables.Tables("balanceCuentas").Select(
+                            "grupo=" & fila.Cells("grupo").Value &
+                            " and subGrupo=" & fila.Cells("subGrupo").Value &
+                            " and cuenta=" & fila.Cells("Cuenta").Value &
+                            "and subCuenta= " & fila.Cells("subCuenta").Value)
+
+                        For Each monto As DataRow In infoBalance
+                            ejercicio += monto("MES")
+                        Next
+                        fila.DefaultCellStyle.BackColor = Color.GreenYellow
+                    End If
+
+                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value <> 0 And fila.Cells("Cuenta").Value <> 0 And fila.Cells("subGrupo").Value <> 0 Then
+                        fila.Cells("MES").Value = FormatCurrency(ejercicio, 2)
+                    Else
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+                    End If
+
+                    'If fila.Cells("Ejercicio").Value = 0 And fila.Cells("MES").Value = 0 And fila.Cells("saldoFinal").Value = 0 Then
+                    '    dgvListadoCuentaConSaldos.Rows.RemoveAt(fila.Index)
+                    'End If
+                Next
+
+
+
+
+
+            End If
         Catch ex As Exception
 
         End Try
     End Sub
+    Private Sub CrearColumnasGrid(tipo As Integer)
+        Try
+
+            dgvListadoCuentaConSaldos.Columns.Clear()
+            If tipo = 1 Then
+
+                Dim columna1 As New DataGridViewTextBoxColumn
+                columna1.Name = "idCuenta"
+                columna1.HeaderText = "idCuenta"
+                columna1.Visible = False
+
+                dgvListadoCuentaConSaldos.Columns.Add(columna1)
+
+                Dim columna2 As New DataGridViewTextBoxColumn
+                columna2.Name = "numCuenta"
+                columna2.HeaderText = "numCuenta"
+                columna2.FillWeight = 40
+                dgvListadoCuentaConSaldos.Columns.Add(columna2)
+
+                Dim columna3 As New DataGridViewTextBoxColumn
+                columna3.Name = "nombreCuenta"
+                columna3.HeaderText = "nombreCuenta"
+                dgvListadoCuentaConSaldos.Columns.Add(columna3)
+
+                Dim columna4 As New DataGridViewTextBoxColumn
+                columna4.Name = "saldoAnterior"
+                columna4.HeaderText = "saldoAnterior"
+                columna4.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna4)
+
+                Dim columna5 As New DataGridViewTextBoxColumn
+                columna5.Name = "debitosMes"
+                columna5.HeaderText = "debitosMes"
+                columna5.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna5)
+
+                Dim columna6 As New DataGridViewTextBoxColumn
+                columna6.Name = "creditosMes"
+                columna6.HeaderText = "creditosMes"
+                columna6.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna6)
+
+                Dim columna7 As New DataGridViewTextBoxColumn
+                columna7.Name = "saldoMes"
+                columna7.HeaderText = "saldoMes"
+                columna7.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna7)
+
+                Dim columna8 As New DataGridViewTextBoxColumn
+                columna8.Name = "saldoFinal"
+                columna8.HeaderText = "saldoFinal"
+                columna8.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna8)
+
+
+
+
+            ElseIf tipo = 2 Then
+                Dim columna1 As New DataGridViewTextBoxColumn
+                columna1.Name = "idCuenta"
+                columna1.HeaderText = "idCuenta"
+                columna1.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna1)
+
+                Dim columna2 As New DataGridViewTextBoxColumn
+                columna2.Name = "numCuenta"
+                columna2.HeaderText = "numCuenta"
+                columna2.FillWeight = 20
+                dgvListadoCuentaConSaldos.Columns.Add(columna2)
+
+                Dim columna9 As New DataGridViewTextBoxColumn
+                columna9.Name = "grupo"
+                columna9.HeaderText = "grupo"
+                columna9.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna9)
+
+                Dim columna10 As New DataGridViewTextBoxColumn
+                columna10.Name = "subGrupo"
+                columna10.HeaderText = "subGrupo"
+                columna10.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna10)
+
+                Dim columna11 As New DataGridViewTextBoxColumn
+                columna11.Name = "cuenta"
+                columna11.HeaderText = "cuenta"
+                columna11.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna11)
+
+                Dim columna12 As New DataGridViewTextBoxColumn
+                columna12.Name = "subCuenta"
+                columna12.HeaderText = "subCuenta"
+                columna12.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna12)
+
+                Dim columna13 As New DataGridViewTextBoxColumn
+                columna13.Name = "cuentaDetalle"
+                columna13.HeaderText = "cuentaDetalle"
+                columna13.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna13)
+
+                Dim columna3 As New DataGridViewTextBoxColumn
+                columna3.Name = "nombreCuenta"
+                columna3.HeaderText = "nombreCuenta"
+                dgvListadoCuentaConSaldos.Columns.Add(columna3)
+
+                Dim columna5 As New DataGridViewTextBoxColumn
+                columna5.Name = "MES"
+                columna5.HeaderText = "MES"
+                columna5.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna5)
+
+                Dim columna4 As New DataGridViewTextBoxColumn
+                columna4.Name = "saldoFinal"
+                columna4.HeaderText = "saldoFinal"
+                columna4.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna4)
+
+                Dim columna6 As New DataGridViewTextBoxColumn
+                columna6.Name = "EJERCICIO"
+                columna6.HeaderText = "TOTAL"
+                columna6.FillWeight = 50
+                dgvListadoCuentaConSaldos.Columns.Add(columna6)
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     Private Sub CalcularTotalListado()
         Dim debitosMes As Double = 0
         Dim creditosMes As Double = 0
@@ -4394,9 +4660,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
 
             Dim datosContables As New datosContable
+            If rdCtaSaldo.Checked = True Then
 
-            For Each cuenta As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
-                datosContables.Tables("cuentasConSaldo").Rows.Add(
+                For Each cuenta As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+                    datosContables.Tables("cuentasConSaldo").Rows.Add(
                                     cuenta.Cells("idCuenta").Value,
                                     cuenta.Cells("numCuenta").Value,
                                     cuenta.Cells(2).Value,
@@ -4407,23 +4674,62 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     cuenta.Cells("saldoFinal").Value
                                     )
 
-            Next
-            Dim imprimirx As New imprimirFX
-            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-            ' parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
-            With imprimirx
-                .MdiParent = Me.MdiParent
-                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoCuentasConSaldos.rdlc"
-                .rptfx.LocalReport.DataSources.Clear()
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("cuentasConSaldo", datosContables.Tables("cuentasConSaldo")))
-                '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
-                '    .rptfx.LocalReport.SetParameters(parameters)
-                .rptfx.DocumentMapCollapsed = True
-                .rptfx.RefreshReport()
-                .Show()
-            End With
+                Next
+                Dim imprimirx As New imprimirFX
+                Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbBalCtasPeriodo.Text))
+                With imprimirx
+                    .MdiParent = Me.MdiParent
+                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoCuentasConSaldos.rdlc"
+                    .rptfx.LocalReport.DataSources.Clear()
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("cuentasConSaldo", datosContables.Tables("cuentasConSaldo")))
+                    '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                    .rptfx.LocalReport.SetParameters(parameters)
+                    .rptfx.DocumentMapCollapsed = True
+                    .rptfx.RefreshReport()
+                    .Show()
+                End With
+            End If
+            If rdBalance.Checked = True Then
+                datosContables.Tables("balanceCuentas").Rows.Clear()
 
+                For Each cuenta As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+                    datosContables.Tables("balanceCuentas").Rows.Add(
+                                    cuenta.Cells("grupo").Value,
+                                    cuenta.Cells("subGrupo").Value,
+                                    cuenta.Cells("cuenta").Value,
+                                    cuenta.Cells("subCuenta").Value,
+                                    cuenta.Cells("cuentaDetalle").Value,
+                                    cuenta.Cells("nombreCuenta").Value,
+                                    CDbl(cuenta.Cells("MES").Value),
+                                    CDbl(cuenta.Cells("saldoFinal").Value),
+                                    CDbl(cuenta.Cells("EJERCICIO").Value),
+                                    cuenta.Cells("numCuenta").Value
+                                    )
+
+                Next
+
+
+
+                Dim imprimirx As New imprimirFX
+                Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbBalCtasPeriodo.Text))
+                With imprimirx
+                    .MdiParent = Me.MdiParent
+                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\balanceCuentas.rdlc"
+                    .rptfx.LocalReport.DataSources.Clear()
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("balanceCuentas", datosContables.Tables("balanceCuentas")))
+                    '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
+                    .rptfx.LocalReport.SetParameters(parameters)
+                    .rptfx.DocumentMapCollapsed = True
+                    .rptfx.RefreshReport()
+                    .Show()
+                End With
+
+
+            End If
         Catch ex As Exception
 
         End Try
@@ -4445,19 +4751,19 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 				(select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha<'2021-03-%%'                
+                LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'                
                 ),0) as saldoAnterior, 
                 
                 ifnull((select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha like '2021-03-%%'                
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
                 ),0) -
                 
                 ifnull((select sum(stos.importeHaber)from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha like '2021-03-%%'               
+                LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'               
                 ),0) as MES
                                 
                 from cm_planDeCuentas as CTA 	
@@ -4496,5 +4802,19 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub cmbCuentas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedIndexChanged
 
+    End Sub
+
+    Private Sub rdCtaSaldo_CheckedChanged(sender As Object, e As EventArgs) Handles rdCtaSaldo.CheckedChanged
+        If rdCtaSaldo.Checked = True Then
+            dgvListadoCuentaConSaldos.Rows.Clear()
+            CrearColumnasGrid(1)
+        End If
+    End Sub
+
+    Private Sub rdBalance_CheckedChanged(sender As Object, e As EventArgs) Handles rdBalance.CheckedChanged
+        If rdBalance.Checked = True Then
+            dgvListadoCuentaConSaldos.Rows.Clear()
+            CrearColumnasGrid(2)
+        End If
     End Sub
 End Class

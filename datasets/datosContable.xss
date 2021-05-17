@@ -9,7 +9,7 @@
     <Shape ID="DesignTable:LibroDiario" ZOrder="4" X="70" Y="70" Height="181" Width="155" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
     <Shape ID="DesignTable:cuentasConSaldo" ZOrder="3" X="261" Y="71" Height="181" Width="165" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
     <Shape ID="DesignTable:libroMayor" ZOrder="2" X="438" Y="72" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
-    <Shape ID="DesignTable:balanceCuentas" ZOrder="1" X="632" Y="231" Height="181" Width="156" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="177" />
+    <Shape ID="DesignTable:balanceCuentas" ZOrder="1" X="650" Y="77" Height="200" Width="156" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="196" />
   </Shapes>
   <Connectors />
 </DiagramLayout>

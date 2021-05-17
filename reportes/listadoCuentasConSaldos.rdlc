@@ -71,10 +71,10 @@
                   <Width>1.87591cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.84469cm</Width>
+                  <Width>5.55365cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.30021cm</Width>
+                  <Width>2.59126cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.46547cm</Width>
@@ -790,7 +790,6 @@
                             <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -864,7 +863,7 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>cuentasConSaldo</DataSetName>
             <Height>1.83528cm</Height>
-            <Width>19.49999cm</Width>
+            <Width>19.5cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -889,7 +888,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="LISTADO DE CUENTAS CON SALDOS: "</Value>
+                      <Value>="LISTADO DE CUENTAS CON SALDOS PERIODO " &amp; Parameters!periodo.Value</Value>
                       <Style />
                     </TextRun>
                   </TextRuns>
@@ -900,9 +899,38 @@
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
               <Top>0.92548cm</Top>
-              <Left>5.05123cm</Left>
+              <Left>7.42956cm</Left>
               <Height>0.6cm</Height>
-              <Width>14.44877cm</Width>
+              <Width>12.07044cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox2">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Pagina " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox2</rd:DefaultName>
+              <Top>0.89641cm</Top>
+              <Height>0.6cm</Height>
+              <Width>5.83375cm</Width>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -920,6 +948,48 @@
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.77266cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Fecha de impresion:  " &amp; Now()</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0.17266cm</Top>
+              <Height>0.6cm</Height>
+              <Width>19.45515cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -931,10 +1001,25 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="periodo">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>periodo</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>

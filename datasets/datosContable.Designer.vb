@@ -1416,9 +1416,13 @@ Partial Public Class datosContable
         
         Private columnnombreCuenta As Global.System.Data.DataColumn
         
-        Private columnsaldoAnterior As Global.System.Data.DataColumn
-        
         Private columnMES As Global.System.Data.DataColumn
+        
+        Private columnsaldoFinal As Global.System.Data.DataColumn
+        
+        Private columnEjercicio As Global.System.Data.DataColumn
+        
+        Private columnnumeroCuenta As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
@@ -1505,17 +1509,33 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property saldoAnteriorColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property MESColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnsaldoAnterior
+                Return Me.columnMES
             End Get
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property MESColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property saldoFinalColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnMES
+                Return Me.columnsaldoFinal
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property EjercicioColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnEjercicio
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property numeroCuentaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnnumeroCuenta
             End Get
         End Property
         
@@ -1556,9 +1576,9 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddbalanceCuentasRow(ByVal grupo As String, ByVal subGrupo As String, ByVal cuenta As String, ByVal subCuenta As String, ByVal cuentaDetalle As String, ByVal nombreCuenta As String, ByVal saldoAnterior As Double, ByVal MES As Double) As balanceCuentasRow
+        Public Overloads Function AddbalanceCuentasRow(ByVal grupo As String, ByVal subGrupo As String, ByVal cuenta As String, ByVal subCuenta As String, ByVal cuentaDetalle As String, ByVal nombreCuenta As String, ByVal MES As Double, ByVal saldoFinal As Double, ByVal Ejercicio As Double, ByVal numeroCuenta As String) As balanceCuentasRow
             Dim rowbalanceCuentasRow As balanceCuentasRow = CType(Me.NewRow,balanceCuentasRow)
-            Dim columnValuesArray() As Object = New Object() {grupo, subGrupo, cuenta, subCuenta, cuentaDetalle, nombreCuenta, saldoAnterior, MES}
+            Dim columnValuesArray() As Object = New Object() {grupo, subGrupo, cuenta, subCuenta, cuentaDetalle, nombreCuenta, MES, saldoFinal, Ejercicio, numeroCuenta}
             rowbalanceCuentasRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowbalanceCuentasRow)
             Return rowbalanceCuentasRow
@@ -1587,8 +1607,10 @@ Partial Public Class datosContable
             Me.columnsubCuenta = MyBase.Columns("subCuenta")
             Me.columncuentaDetalle = MyBase.Columns("cuentaDetalle")
             Me.columnnombreCuenta = MyBase.Columns("nombreCuenta")
-            Me.columnsaldoAnterior = MyBase.Columns("saldoAnterior")
             Me.columnMES = MyBase.Columns("MES")
+            Me.columnsaldoFinal = MyBase.Columns("saldoFinal")
+            Me.columnEjercicio = MyBase.Columns("Ejercicio")
+            Me.columnnumeroCuenta = MyBase.Columns("numeroCuenta")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1606,10 +1628,14 @@ Partial Public Class datosContable
             MyBase.Columns.Add(Me.columncuentaDetalle)
             Me.columnnombreCuenta = New Global.System.Data.DataColumn("nombreCuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnnombreCuenta)
-            Me.columnsaldoAnterior = New Global.System.Data.DataColumn("saldoAnterior", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnsaldoAnterior)
             Me.columnMES = New Global.System.Data.DataColumn("MES", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnMES)
+            Me.columnsaldoFinal = New Global.System.Data.DataColumn("saldoFinal", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnsaldoFinal)
+            Me.columnEjercicio = New Global.System.Data.DataColumn("Ejercicio", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnEjercicio)
+            Me.columnnumeroCuenta = New Global.System.Data.DataColumn("numeroCuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnnumeroCuenta)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2515,21 +2541,6 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property saldoAnterior() As Double
-            Get
-                Try 
-                    Return CType(Me(Me.tablebalanceCuentas.saldoAnteriorColumn),Double)
-                Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'saldoAnterior' de la tabla 'balanceCuentas' es DBNull.", e)
-                End Try
-            End Get
-            Set
-                Me(Me.tablebalanceCuentas.saldoAnteriorColumn) = value
-            End Set
-        End Property
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Property MES() As Double
             Get
                 Try 
@@ -2540,6 +2551,51 @@ Partial Public Class datosContable
             End Get
             Set
                 Me(Me.tablebalanceCuentas.MESColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property saldoFinal() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tablebalanceCuentas.saldoFinalColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'saldoFinal' de la tabla 'balanceCuentas' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablebalanceCuentas.saldoFinalColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property Ejercicio() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tablebalanceCuentas.EjercicioColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Ejercicio' de la tabla 'balanceCuentas' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablebalanceCuentas.EjercicioColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property numeroCuenta() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tablebalanceCuentas.numeroCuentaColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'numeroCuenta' de la tabla 'balanceCuentas' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablebalanceCuentas.numeroCuentaColumn) = value
             End Set
         End Property
         
@@ -2617,18 +2673,6 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IssaldoAnteriorNull() As Boolean
-            Return Me.IsNull(Me.tablebalanceCuentas.saldoAnteriorColumn)
-        End Function
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetsaldoAnteriorNull()
-            Me(Me.tablebalanceCuentas.saldoAnteriorColumn) = Global.System.Convert.DBNull
-        End Sub
-        
-        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Function IsMESNull() As Boolean
             Return Me.IsNull(Me.tablebalanceCuentas.MESColumn)
         End Function
@@ -2637,6 +2681,42 @@ Partial Public Class datosContable
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetMESNull()
             Me(Me.tablebalanceCuentas.MESColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IssaldoFinalNull() As Boolean
+            Return Me.IsNull(Me.tablebalanceCuentas.saldoFinalColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetsaldoFinalNull()
+            Me(Me.tablebalanceCuentas.saldoFinalColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsEjercicioNull() As Boolean
+            Return Me.IsNull(Me.tablebalanceCuentas.EjercicioColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetEjercicioNull()
+            Me(Me.tablebalanceCuentas.EjercicioColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IsnumeroCuentaNull() As Boolean
+            Return Me.IsNull(Me.tablebalanceCuentas.numeroCuentaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetnumeroCuentaNull()
+            Me(Me.tablebalanceCuentas.numeroCuentaColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
