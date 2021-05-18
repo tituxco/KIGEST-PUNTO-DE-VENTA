@@ -760,7 +760,23 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        MsgBox("funcion no disponible aún")
+        Try
+            Dim datosInformes As New datosInformes
+            For Each venta As DataGridViewRow In dtventashistoricas.Rows
+                'If rdInforgeneral.Checked = True And chkproductos.Checked = True Then
+
+                'End If
+                datosInformes.Tables("ventasTotales").Rows.Add(
+                venta.Cells("codigo").Value,
+                venta.Cells("cantidadVendida").Value,
+                venta.Cells("descripcion").Value,
+                venta.Cells("pventa").Value)
+
+
+            Next
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Private Sub chkproductos_CheckedChanged(sender As Object, e As EventArgs) Handles chkproductos.CheckedChanged

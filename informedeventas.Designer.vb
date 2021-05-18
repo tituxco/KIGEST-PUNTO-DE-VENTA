@@ -111,7 +111,6 @@ Partial Class informedeventas
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.tabseguimientoProductos = New System.Windows.Forms.TabPage()
-        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.cmbseguimientoProductosVendedores = New System.Windows.Forms.ComboBox()
@@ -161,6 +160,7 @@ Partial Class informedeventas
         Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.cmdbuscar = New System.Windows.Forms.Button()
+        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pndatosgenerales.SuspendLayout()
@@ -663,12 +663,12 @@ Partial Class informedeventas
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_64px
         Me.Button2.Location = New System.Drawing.Point(1052, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(80, 91)
         Me.Button2.TabIndex = 98
-        Me.Button2.Text = "Guardar"
+        Me.Button2.Text = "Imprimir"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -783,6 +783,8 @@ Partial Class informedeventas
         'chkproductos
         '
         Me.chkproductos.AutoSize = True
+        Me.chkproductos.Checked = True
+        Me.chkproductos.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkproductos.Location = New System.Drawing.Point(288, 20)
         Me.chkproductos.Name = "chkproductos"
         Me.chkproductos.Size = New System.Drawing.Size(92, 17)
@@ -1151,14 +1153,6 @@ Partial Class informedeventas
         Me.tabseguimientoProductos.TabIndex = 2
         Me.tabseguimientoProductos.Text = "SEGUIMIENTO DE PRODUCTOS"
         Me.tabseguimientoProductos.UseVisualStyleBackColor = True
-        '
-        'dgvSeguimientoProductos
-        '
-        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
-        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
-        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
-        Me.dgvSeguimientoProductos.TabIndex = 6
         '
         'Panel7
         '
@@ -1819,6 +1813,14 @@ Partial Class informedeventas
         Me.cmdbuscar.Text = "Buscar"
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdbuscar.UseVisualStyleBackColor = False
+        '
+        'dgvSeguimientoProductos
+        '
+        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
+        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
+        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
+        Me.dgvSeguimientoProductos.TabIndex = 6
         '
         'informedeventas
         '

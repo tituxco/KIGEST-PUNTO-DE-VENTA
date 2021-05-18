@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>263</ApplicationRevision>
+    <ApplicationRevision>264</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -266,6 +266,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>datosimprimir.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="datasets\datosInformes.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>datosInformes.xsd</DependentUpon>
     </Compile>
     <Compile Include="empleados.designer.vb">
       <DependentUpon>empleados.vb</DependentUpon>
@@ -652,6 +657,17 @@
     <None Include="datasets\datosContable.xss">
       <DependentUpon>datosContable.xsd</DependentUpon>
     </None>
+    <None Include="datasets\datosInformes.xsc">
+      <DependentUpon>datosInformes.xsd</DependentUpon>
+    </None>
+    <None Include="datasets\datosInformes.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>datosInformes.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="datasets\datosInformes.xss">
+      <DependentUpon>datosInformes.xsd</DependentUpon>
+    </None>
     <None Include="datasets\datosPrestamo.xsc">
       <DependentUpon>datosPrestamo.xsd</DependentUpon>
     </None>
@@ -961,6 +977,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="reportes\libroMayorTodos.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\informeVentasCompleto.rdlc">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

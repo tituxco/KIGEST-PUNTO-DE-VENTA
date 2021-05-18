@@ -2019,7 +2019,8 @@ Public Class puntoventa
                     End If
                 End If
                 'EN CASO DE NOTAS DE CREDITO O DEBITO SOLICITO COMPROBANTE ASOCIADO
-                If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Then
+                If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Or tipofact = 12 Or tipofact = 13 Then
+
                     Dim tipoCompAsoc = 0
                     fe.F1DetalleCbtesAsocItemCantidad = 1
                     fe.f1IndiceItem = 0
@@ -2034,8 +2035,14 @@ Public Class puntoventa
                             tipoCompAsoc = 6
                         Case 8
                             tipoCompAsoc = 6
+                        Case 12
+                            tipoCompAsoc = 11
+                        Case 13
+                            tipoCompAsoc = 11
+
                     End Select
                     fe.F1DetalleCbtesAsocTipo = tipoCompAsoc
+                    EnProgreso.Close()
                     Dim cbteAsoc As String = InputBox("Ingrese comprobante asociado")
                     If cbteAsoc <> "" Or IsNumeric(cbteAsoc) Then
                         fe.F1DetalleCbtesAsocNro = CInt(cbteAsoc)

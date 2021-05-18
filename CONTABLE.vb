@@ -4000,8 +4000,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                         asientoContable.Item("codigoAsiento"),
                                         asientoContable.Item("fecha"),
                                         asientoContable.Item("concepto"),
-                                        asientoContable.Item("totalDebe"),
-                                        asientoContable.Item("totalHaber"),
+                                        FormatCurrency(asientoContable.Item("totalDebe"), 2),
+                                        FormatCurrency(asientoContable.Item("totalHaber"), 2),
                                         asientoContable.Item("numPartidas")
                                         )
             Next
@@ -4175,10 +4175,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                         movimientoCuenta.Item("comprobanteInterno"),
                                         movimientoCuenta.Item("fecha"),
                                         movimientoCuenta.Item("concepto"),
-                                        movimientoCuenta.Item("importeDebe"),
-                                        movimientoCuenta.Item("importeHaber"),
-                                        saldoDeudor,
-                                        saldoAcreedor
+                                        FormatCurrency(movimientoCuenta.Item("importeDebe"), 2),
+                                        FormatCurrency(movimientoCuenta.Item("importeHaber"), 2),
+                                        FormatCurrency(saldoDeudor, 2),
+                                        FormatCurrency(saldoAcreedor, 2)
                                         )
                 Next
             End If
@@ -4186,7 +4186,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 dgvLibroMayor.Rows.Clear()
                 Reconectar()
 
-                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,CTA.nombreCuenta,  LD.comprobanteInterno, LM.fecha,LM.concepto, 
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,
+            concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta,  
+            LD.comprobanteInterno, LM.fecha,LM.concepto, 
             (select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
             from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
             where LM.fecha <'" & cmbPeriodoLibroMayor.Text & "-%%' and
@@ -4201,7 +4203,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
             LD.codigoAsiento=LM.codigoAsiento and 
             (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
-             order by CTA.id,fecha asc", conexionPrinc)
+            order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle  asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
 
@@ -4224,21 +4226,21 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         movCuenta.Item("comprobanteInterno"),
                         movCuenta.Item("fecha"),
                         movCuenta.Item("concepto"),
-                        saldoAnteriorCuenta,
-                        movCuenta.Item("importeDebe"),
-                        movCuenta.Item("importeHaber"), 0, 0)
+                        FormatCurrency(saldoAnteriorCuenta, 2),
+                        FormatCurrency(movCuenta.Item("importeDebe"), 2),
+                        FormatCurrency(movCuenta.Item("importeHaber"), 2), 0, 0)
                 Next
                 Dim idCuentaGral As Integer = 0
                 For Each movimientoCuenta As DataGridViewRow In dgvLibroMayor.Rows
                     Dim idCuentaActual As Integer = movimientoCuenta.Cells("idCuenta").Value
-                    Dim debeActual As Double = movimientoCuenta.Cells("debe").Value
-                    Dim haberActual As Double = movimientoCuenta.Cells("haber").Value
+                    Dim debeActual As Double = CDbl(movimientoCuenta.Cells("debe").Value)
+                    Dim haberActual As Double = CDbl(movimientoCuenta.Cells("haber").Value)
                     Dim saldoActual As Double = 0
                     Dim saldoAnteriorCuenta As Double = 0
 
                     If idCuentaGral <> idCuentaActual Then
                         idCuentaGral = idCuentaActual
-                        saldoAnteriorCuenta = movimientoCuenta.Cells("saldoAnterior").Value
+                        saldoAnteriorCuenta = CDbl(movimientoCuenta.Cells("saldoAnterior").Value)
                         If saldoAnteriorCuenta > 0 Then
                             saldoDeudor = saldoAnteriorCuenta
                             saldoAcreedor = 0
@@ -4283,9 +4285,15 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         saldoDeudor = debeActual
 
                     End If
-                    movimientoCuenta.Cells("saldoDeudor").Value = saldoDeudor
-                    movimientoCuenta.Cells("saldoAcreedor").Value = saldoAcreedor
+                    movimientoCuenta.Cells("saldoDeudor").Value = FormatCurrency(saldoDeudor, 2)
+                    movimientoCuenta.Cells("saldoAcreedor").Value = FormatCurrency(saldoAcreedor, 2)
                 Next
+            End If
+
+
+            If rdCuentasIndividuales.Checked = False And rdTodasCuentas.Checked = False Then
+                rdCuentasIndividuales.Checked = True
+
             End If
 
         Catch ex As Exception
@@ -4397,7 +4405,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                 
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
-                order by  CTA.cuentaResultado desc,CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta desc,CTA.cuentaDetalle asc", conexionPrinc)
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
                 Dim tabSaldoCuenta As New DataTable
                 consSaldoCuenta.Fill(tabSaldoCuenta)
 
@@ -4424,11 +4432,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     saldocuenta.Item("id"),
                                     saldocuenta.Item("numCuenta"),
                                     saldocuenta.Item("nombreCuenta"),
-                                    saldAnterior,
-                                    debMes,
-                                    credMes,
-                                    saldMes,
-                                    saldFinal
+                                    FormatCurrency(saldAnterior, 2),
+                                    FormatCurrency(debMes, 2),
+                                    FormatCurrency(credMes, 2),
+                                    FormatCurrency(saldMes, 2),
+                                    FormatCurrency(saldFinal, 2)
                                     )
                 Next
 
@@ -4846,10 +4854,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     movimiento.Cells("fecha").Value,
                                     movimiento.Cells("comprobante").Value,
                                     movimiento.Cells("concepto").Value,
-                                    movimiento.Cells("debe").Value,
-                                    movimiento.Cells("haber").Value,
-                                    movimiento.Cells("saldoDeudor").Value,
-                                    movimiento.Cells("saldoAcreedor").Value
+                                    CDbl(movimiento.Cells("debe").Value),
+                                    CDbl(movimiento.Cells("haber").Value),
+                                    CDbl(movimiento.Cells("saldoDeudor").Value),
+                                    CDbl(movimiento.Cells("saldoAcreedor").Value)
                                     )
 
                 Next
@@ -4862,11 +4870,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     movimiento.Cells("fecha").Value,
                                     movimiento.Cells("comprobante").Value,
                                     movimiento.Cells("concepto").Value,
-                                    movimiento.Cells("saldoAnterior").Value,
-                                    movimiento.Cells("debe").Value,
-                                    movimiento.Cells("haber").Value,
-                                    movimiento.Cells("saldoDeudor").Value,
-                                    movimiento.Cells("saldoAcreedor").Value
+                                    CDbl(movimiento.Cells("saldoAnterior").Value),
+                                    CDbl(movimiento.Cells("debe").Value),
+                                    CDbl(movimiento.Cells("haber").Value),
+                                    CDbl(movimiento.Cells("saldoDeudor").Value),
+                                    CDbl(movimiento.Cells("saldoAcreedor").Value)
                                     )
 
                 Next
@@ -4918,11 +4926,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     cuenta.Cells("idCuenta").Value,
                                     cuenta.Cells("numCuenta").Value,
                                     cuenta.Cells(2).Value,
-                                    cuenta.Cells("saldoAnterior").Value,
-                                    cuenta.Cells("debitosMes").Value,
-                                    cuenta.Cells("creditosMes").Value,
-                                    cuenta.Cells("saldoMes").Value,
-                                    cuenta.Cells("saldoFinal").Value
+                                    CDbl(cuenta.Cells("saldoAnterior").Value),
+                                    CDbl(cuenta.Cells("debitosMes").Value),
+                                    CDbl(cuenta.Cells("creditosMes").Value),
+                                    CDbl(cuenta.Cells("saldoMes").Value),
+                                    CDbl(cuenta.Cells("saldoFinal").Value)
                                     )
 
                 Next
@@ -5190,5 +5198,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub cmbBalCtasPeriodo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbBalCtasPeriodo.SelectedValueChanged
         dgvListadoCuentaConSaldos.Rows.Clear()
         dgvTotales.Rows.Clear()
+    End Sub
+
+    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
+
     End Sub
 End Class
