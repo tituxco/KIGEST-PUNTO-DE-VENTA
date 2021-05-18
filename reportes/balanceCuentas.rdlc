@@ -79,7 +79,7 @@
                   <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>7.61885cm</Width>
+                  <Width>6.40177cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>3.02948cm</Width>
@@ -291,7 +291,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=IIF(Fields!grupo.Value.ToString &lt;&gt;"0" And Fields!subGrupo.ToString="0" And Fields!cuenta.ToString="0" And Fields!subCuenta.ToString="0","SlateBlue","Silver")</BackgroundColor>
+                            <BackgroundColor>White</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -325,7 +325,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=IIF(Fields!grupo.Value.ToString &lt;&gt;"0" And Fields!subGrupo.ToString="0" And Fields!cuenta.ToString="0" And Fields!subCuenta.ToString="0","SlateBlue","Silver")</BackgroundColor>
+                            <BackgroundColor>White</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -360,7 +360,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=IIF(Fields!grupo.Value.ToString &lt;&gt;"0" And Fields!subGrupo.ToString="0" And Fields!cuenta.ToString="0" And Fields!subCuenta.ToString="0","SlateBlue","Silver")</BackgroundColor>
+                            <BackgroundColor>White</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -395,7 +395,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=IIF(Fields!grupo.Value.ToString &lt;&gt;"0" And Fields!subGrupo.ToString="0" And Fields!cuenta.ToString="0" And Fields!subCuenta.ToString="0","SlateBlue","Silver")</BackgroundColor>
+                            <BackgroundColor>White</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -430,7 +430,7 @@
                               <Color>LightGrey</Color>
                               <Style>Solid</Style>
                             </Border>
-                            <BackgroundColor>=IIF(Fields!grupo.Value.ToString &lt;&gt;"0" And Fields!subGrupo.ToString="0" And Fields!cuenta.ToString="0" And Fields!subCuenta.ToString="0","SlateBlue","Silver")</BackgroundColor>
+                            <BackgroundColor>White</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -465,13 +465,14 @@
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>balanceCuentas</DataSetName>
             <Top>0.07056cm</Top>
-            <Left>0.22757cm</Left>
+            <Left>1.44465cm</Left>
             <Height>1.2cm</Height>
-            <Width>19.00001cm</Width>
+            <Width>17.78293cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
               </Border>
+              <FontSize>9pt</FontSize>
             </Style>
           </Tablix>
         </ReportItems>
@@ -493,7 +494,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="BALANCE PERIODO " &amp; Parameters!periodo.Value</Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -532,7 +535,6 @@
               </Paragraphs>
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>1.18746cm</Top>
-              <Left>0.22757cm</Left>
               <Height>0.6cm</Height>
               <Width>5.25167cm</Width>
               <ZIndex>1</ZIndex>
@@ -566,7 +568,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Fecha de impresion:  " &amp; Now()</Value>
-                      <Style />
+                      <Style>
+                        <FontStyle>Italic</FontStyle>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>

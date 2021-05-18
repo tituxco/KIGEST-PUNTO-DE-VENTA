@@ -64,25 +64,25 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.74362cm</Width>
+                  <Width>1.77386cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.40511cm</Width>
+                  <Width>2.01201cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.87209cm</Width>
+                  <Width>5.08212cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.46547cm</Width>
+                  <Width>2.49571cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.28026cm</Width>
+                  <Width>2.3105cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.1886cm</Width>
+                  <Width>2.21884cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.54485cm</Width>
+                  <Width>2.57509cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -131,7 +131,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>COMPROBANTE</Value>
+                                  <Value>CBTE</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -603,9 +603,10 @@
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>libroMayor</DataSetName>
-            <Top>0.07056cm</Top>
+            <Top>0.10583cm</Top>
+            <Left>1.05116cm</Left>
             <Height>1.23528cm</Height>
-            <Width>19.5cm</Width>
+            <Width>18.46813cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
@@ -613,10 +614,10 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.52811in</Height>
+        <Height>0.53043in</Height>
         <Style />
       </Body>
-      <Width>19.5cm</Width>
+      <Width>19.51929cm</Width>
       <Page>
         <PageHeader>
           <Height>1.56076cm</Height>
@@ -630,8 +631,10 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="LIBRO MAYOR"</Value>
-                      <Style />
+                      <Value>="LIBRO MAYOR "&amp; Parameters!periodoCuenta.Value</Value>
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -640,10 +643,39 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
-              <Top>0.85493cm</Top>
-              <Left>6.26474cm</Left>
+              <Top>0.81965cm</Top>
+              <Left>6.28403cm</Left>
               <Height>0.6cm</Height>
               <Width>13.23526cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+            <Textbox Name="Textbox26">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Pagina " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value>
+                      <Style />
+                    </TextRun>
+                  </TextRuns>
+                  <Style />
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox26</rd:DefaultName>
+              <Top>0.85493cm</Top>
+              <Height>0.6cm</Height>
+              <Width>5.25167cm</Width>
+              <ZIndex>1</ZIndex>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -661,6 +693,50 @@
             </Border>
           </Style>
         </PageHeader>
+        <PageFooter>
+          <Height>0.79375cm</Height>
+          <PrintOnFirstPage>true</PrintOnFirstPage>
+          <PrintOnLastPage>true</PrintOnLastPage>
+          <ReportItems>
+            <Textbox Name="Textbox3">
+              <CanGrow>true</CanGrow>
+              <KeepTogether>true</KeepTogether>
+              <Paragraphs>
+                <Paragraph>
+                  <TextRuns>
+                    <TextRun>
+                      <Value>="Fecha de impresion:  " &amp; Now()</Value>
+                      <Style>
+                        <FontStyle>Italic</FontStyle>
+                      </Style>
+                    </TextRun>
+                  </TextRuns>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                </Paragraph>
+              </Paragraphs>
+              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <Top>0.17639cm</Top>
+              <Height>0.6cm</Height>
+              <Width>19.45515cm</Width>
+              <Style>
+                <Border>
+                  <Style>None</Style>
+                </Border>
+                <PaddingLeft>2pt</PaddingLeft>
+                <PaddingRight>2pt</PaddingRight>
+                <PaddingTop>2pt</PaddingTop>
+                <PaddingBottom>2pt</PaddingBottom>
+              </Style>
+            </Textbox>
+          </ReportItems>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+          </Style>
+        </PageFooter>
         <PageHeight>29.7cm</PageHeight>
         <PageWidth>21cm</PageWidth>
         <LeftMargin>0.5cm</LeftMargin>
@@ -672,10 +748,25 @@
       </Page>
     </ReportSection>
   </ReportSections>
+  <ReportParameters>
+    <ReportParameter Name="periodoCuenta">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+  </ReportParameters>
   <ReportParametersLayout>
     <GridLayoutDefinition>
       <NumberOfColumns>4</NumberOfColumns>
       <NumberOfRows>2</NumberOfRows>
+      <CellDefinitions>
+        <CellDefinition>
+          <ColumnIndex>0</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>periodoCuenta</ParameterName>
+        </CellDefinition>
+      </CellDefinitions>
     </GridLayoutDefinition>
   </ReportParametersLayout>
   <rd:ReportUnitType>Cm</rd:ReportUnitType>

@@ -71,7 +71,7 @@
                   <Width>1.87591cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>5.55365cm</Width>
+                  <Width>4.7599cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.59126cm</Width>
@@ -862,12 +862,14 @@
             <RepeatColumnHeaders>true</RepeatColumnHeaders>
             <RepeatRowHeaders>true</RepeatRowHeaders>
             <DataSetName>cuentasConSaldo</DataSetName>
+            <Left>0.7489cm</Left>
             <Height>1.83528cm</Height>
-            <Width>19.5cm</Width>
+            <Width>18.70625cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>
               </Border>
+              <FontSize>9pt</FontSize>
             </Style>
           </Tablix>
         </ReportItems>
@@ -889,7 +891,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="LISTADO DE CUENTAS CON SALDOS PERIODO " &amp; Parameters!periodo.Value</Value>
-                      <Style />
+                      <Style>
+                        <FontWeight>Bold</FontWeight>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>
@@ -961,7 +965,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Fecha de impresion:  " &amp; Now()</Value>
-                      <Style />
+                      <Style>
+                        <FontStyle>Italic</FontStyle>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>

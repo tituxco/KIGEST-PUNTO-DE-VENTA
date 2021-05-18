@@ -3990,7 +3990,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             Reconectar()
             dgvLibroDiario.Rows.Clear()
-            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc", conexionPrinc)
+            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  
+            where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc", conexionPrinc)
             Dim tabLibroDiario As New DataTable
             consLibroDiario.Fill(tabLibroDiario)
             For Each asientoContable As DataRow In tabLibroDiario.Rows
@@ -4083,11 +4084,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
     Private Sub CargarLibroMayor()
         Try
+            If rdCuentasIndividuales.Checked = True Then
 
-            dgvLibroMayor.Rows.Clear()
-            Reconectar()
-            Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
-            Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
+                dgvLibroMayor.Rows.Clear()
+                Reconectar()
+                Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
+                Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
             from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
             where LM.fecha < '" & cmbPeriodoLibroMayor.Text & "-%%' and
             LM.codigoAsiento=stos.codigoAsiento and
@@ -4095,80 +4097,81 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             PC.id=" & idCuentaSel & " and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
             order by stos.id asc", conexionPrinc)
-            Dim tabSaldoCuenta As New DataTable
-            consSaldoCuenta.Fill(tabSaldoCuenta)
-            If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
-                saldoAnteriorCuenta = 0
-            Else
-                saldoAnteriorCuenta = tabSaldoCuenta.Rows(0).Item(0)
-            End If
+                Dim tabSaldoCuenta As New DataTable
+                consSaldoCuenta.Fill(tabSaldoCuenta)
+                If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
+                    saldoAnteriorCuenta = 0
+                Else
+                    saldoAnteriorCuenta = tabSaldoCuenta.Rows(0).Item(0)
+                End If
 
-            lblSaldoCtaLibroMayor.Text = FormatNumber(saldoAnteriorCuenta, 2)
+                lblSaldoCtaLibroMayor.Text = FormatNumber(saldoAnteriorCuenta, 2)
 
-            Reconectar()
-            Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
+                Reconectar()
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
             From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
             where LM.codigoAsiento=asi.codigoAsiento and
             LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
             LD.codigoAsiento=LM.codigoAsiento and
             (asi.cuentaDebeId= " & idCuentaSel & " or 
-            asi.cuentaHaberId=" & idCuentaSel & ")", conexionPrinc)
-            Dim tabLibroMayor As New DataTable
-            consLibroMayor.Fill(tabLibroMayor)
-            Dim saldoDeudor As Double = 0
-            Dim saldoAcreedor As Double = 0
+            asi.cuentaHaberId=" & idCuentaSel & ")
+            order by LM.fecha asc", conexionPrinc)
+                Dim tabLibroMayor As New DataTable
+                consLibroMayor.Fill(tabLibroMayor)
+                Dim saldoDeudor As Double = 0
+                Dim saldoAcreedor As Double = 0
 
-            If saldoAnteriorCuenta > 0 Then
-                saldoDeudor = saldoAnteriorCuenta
-                saldoAcreedor = 0
-            ElseIf saldoAnteriorCuenta < 0 Then
-                saldoDeudor = 0
-                saldoAcreedor = saldoAnteriorCuenta * -1
-            Else
-                saldoDeudor = 0
-                saldoAcreedor =0
-            End If
-
-            dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", saldoDeudor, saldoAcreedor)
-
-            For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
-                Dim debeActual As Double = movimientoCuenta.Item("importeDebe")
-                Dim haberActual As Double = movimientoCuenta.Item("importeHaber")
-                Dim saldoActual As Double = 0
-
-                If saldoAcreedor > 0 Then
-
-                    saldoActual = saldoAcreedor - (debeActual - haberActual)
-                    saldoDeudor = 0
-
-                    If saldoActual > 0 Then
-
-                        saldoAcreedor = saldoActual
-                        saldoDeudor = 0
-                    Else
-                        saldoDeudor = saldoActual * -1
-                        saldoAcreedor = 0
-                    End If
-
-                ElseIf saldoDeudor > 0 Then
-
-                    saldoActual = saldoDeudor + (debeActual - haberActual)
+                If saldoAnteriorCuenta > 0 Then
+                    saldoDeudor = saldoAnteriorCuenta
                     saldoAcreedor = 0
-
-                    If saldoActual > 0 Then
-                        saldoDeudor = saldoActual
-                        saldoAcreedor = 0
-                    Else
-                        saldoAcreedor = saldoActual * -1
-                        saldoDeudor = 0
-                    End If
+                ElseIf saldoAnteriorCuenta < 0 Then
+                    saldoDeudor = 0
+                    saldoAcreedor = saldoAnteriorCuenta * -1
                 Else
-                    saldoAcreedor = haberActual
-                    saldoDeudor = debeActual
-
+                    saldoDeudor = 0
+                    saldoAcreedor = 0
                 End If
 
-                dgvLibroMayor.Rows.Add(
+                dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", saldoDeudor, saldoAcreedor)
+
+                For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
+                    Dim debeActual As Double = movimientoCuenta.Item("importeDebe")
+                    Dim haberActual As Double = movimientoCuenta.Item("importeHaber")
+                    Dim saldoActual As Double = 0
+
+                    If saldoAcreedor > 0 Then
+
+                        saldoActual = saldoAcreedor - (debeActual - haberActual)
+                        saldoDeudor = 0
+
+                        If saldoActual > 0 Then
+
+                            saldoAcreedor = saldoActual
+                            saldoDeudor = 0
+                        Else
+                            saldoDeudor = saldoActual * -1
+                            saldoAcreedor = 0
+                        End If
+
+                    ElseIf saldoDeudor > 0 Then
+
+                        saldoActual = saldoDeudor + (debeActual - haberActual)
+                        saldoAcreedor = 0
+
+                        If saldoActual > 0 Then
+                            saldoDeudor = saldoActual
+                            saldoAcreedor = 0
+                        Else
+                            saldoAcreedor = saldoActual * -1
+                            saldoDeudor = 0
+                        End If
+                    Else
+                        saldoAcreedor = haberActual
+                        saldoDeudor = debeActual
+
+                    End If
+
+                    dgvLibroMayor.Rows.Add(
                                         movimientoCuenta.Item("comprobanteInterno"),
                                         movimientoCuenta.Item("fecha"),
                                         movimientoCuenta.Item("concepto"),
@@ -4177,8 +4180,113 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                         saldoDeudor,
                                         saldoAcreedor
                                         )
-            Next
+                Next
+            End If
+            If rdTodasCuentas.Checked = True Then
+                dgvLibroMayor.Rows.Clear()
+                Reconectar()
 
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,CTA.nombreCuenta,  LD.comprobanteInterno, LM.fecha,LM.concepto, 
+            (select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
+            from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
+            where LM.fecha <'" & cmbPeriodoLibroMayor.Text & "-%%' and
+            LM.codigoAsiento=stos.codigoAsiento and
+            LD.codigoAsiento=stos.codigoAsiento and
+            PC.id=CTA.id and
+            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
+            order by stos.id asc) as saldoAnterior,
+			asi.importeDebe, asi.importeHaber 
+            From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
+            where LM.codigoAsiento=asi.codigoAsiento and
+            LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
+            LD.codigoAsiento=LM.codigoAsiento and 
+            (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
+             order by CTA.id,fecha asc", conexionPrinc)
+                Dim tabLibroMayor As New DataTable
+                consLibroMayor.Fill(tabLibroMayor)
+
+                Dim saldoAnterior As Double = 0
+                Dim saldoDeudor As Double = 0
+                Dim saldoAcreedor As Double = 0
+                Dim datosContables As New datosContable
+
+                For Each movCuenta As DataRow In tabLibroMayor.Rows
+                    If IsDBNull(movCuenta.Item("saldoAnterior")) Then
+                        saldoAnteriorCuenta = 0
+                    Else
+                        saldoAnteriorCuenta = movCuenta.Item("saldoAnterior")
+                    End If
+
+
+                    dgvLibroMayor.Rows.Add(
+                        movCuenta.Item("id"),
+                        movCuenta.Item("nombreCuenta"),
+                        movCuenta.Item("comprobanteInterno"),
+                        movCuenta.Item("fecha"),
+                        movCuenta.Item("concepto"),
+                        saldoAnteriorCuenta,
+                        movCuenta.Item("importeDebe"),
+                        movCuenta.Item("importeHaber"), 0, 0)
+                Next
+                Dim idCuentaGral As Integer = 0
+                For Each movimientoCuenta As DataGridViewRow In dgvLibroMayor.Rows
+                    Dim idCuentaActual As Integer = movimientoCuenta.Cells("idCuenta").Value
+                    Dim debeActual As Double = movimientoCuenta.Cells("debe").Value
+                    Dim haberActual As Double = movimientoCuenta.Cells("haber").Value
+                    Dim saldoActual As Double = 0
+                    Dim saldoAnteriorCuenta As Double = 0
+
+                    If idCuentaGral <> idCuentaActual Then
+                        idCuentaGral = idCuentaActual
+                        saldoAnteriorCuenta = movimientoCuenta.Cells("saldoAnterior").Value
+                        If saldoAnteriorCuenta > 0 Then
+                            saldoDeudor = saldoAnteriorCuenta
+                            saldoAcreedor = 0
+                        ElseIf saldoAnteriorCuenta < 0 Then
+                            saldoDeudor = 0
+                            saldoAcreedor = saldoAnteriorCuenta * -1
+                        Else
+                            saldoDeudor = 0
+                            saldoAcreedor = 0
+                        End If
+                    Else
+                        movimientoCuenta.Cells("saldoAnterior").Value = 0
+                    End If
+
+                    If saldoAcreedor > 0 Then
+                        saldoActual = saldoAcreedor - (debeActual - haberActual)
+                        saldoDeudor = 0
+
+                        If saldoActual > 0 Then
+
+                            saldoAcreedor = saldoActual
+                            saldoDeudor = 0
+                        Else
+                            saldoDeudor = saldoActual * -1
+                            saldoAcreedor = 0
+                        End If
+
+                    ElseIf saldoDeudor > 0 Then
+
+                        saldoActual = saldoDeudor + (debeActual - haberActual)
+                        saldoAcreedor = 0
+
+                        If saldoActual > 0 Then
+                            saldoDeudor = saldoActual
+                            saldoAcreedor = 0
+                        Else
+                            saldoAcreedor = saldoActual * -1
+                            saldoDeudor = 0
+                        End If
+                    Else
+                        saldoAcreedor = haberActual
+                        saldoDeudor = debeActual
+
+                    End If
+                    movimientoCuenta.Cells("saldoDeudor").Value = saldoDeudor
+                    movimientoCuenta.Cells("saldoAcreedor").Value = saldoAcreedor
+                Next
+            End If
 
         Catch ex As Exception
 
@@ -4217,7 +4325,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             concat(PC.grupo,PC.subgrupo,PC.cuenta,'.',PC.subcuenta,PC.cuentadetalle) as numCta,
             PC.nombreCuenta,
             stos.importeDebe,stos.importeHaber   
-            from cm_libroDiario as LD, cm_Asientos as stos, cm_planDeCuentas as PC 
+            From cm_libroDiario as LD, cm_Asientos as stos, cm_planDeCuentas as PC 
             where
             LD.codigoAsiento=stos.codigoAsiento and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
@@ -4468,8 +4576,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub CrearColumnasGrid(tipo As Integer)
         Try
 
-            dgvListadoCuentaConSaldos.Columns.Clear()
+
             If tipo = 1 Then
+                dgvListadoCuentaConSaldos.Columns.Clear()
 
                 Dim columna1 As New DataGridViewTextBoxColumn
                 columna1.Name = "idCuenta"
@@ -4523,6 +4632,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
 
             ElseIf tipo = 2 Then
+                dgvListadoCuentaConSaldos.Columns.Clear()
                 Dim columna1 As New DataGridViewTextBoxColumn
                 columna1.Name = "idCuenta"
                 columna1.HeaderText = "idCuenta"
@@ -4588,6 +4698,113 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 columna6.FillWeight = 50
                 dgvListadoCuentaConSaldos.Columns.Add(columna6)
 
+            ElseIf tipo = 3 Then
+                dgvLibroMayor.Columns.Clear()
+                Dim columna1 As New DataGridViewTextBoxColumn
+                columna1.Name = "comprobante"
+                columna1.HeaderText = "Comprobante"
+                columna1.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna1)
+
+                Dim columna2 As New DataGridViewTextBoxColumn
+                columna2.Name = "fecha"
+                columna2.HeaderText = "Fecha"
+                columna2.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna2)
+
+                Dim columna3 As New DataGridViewTextBoxColumn
+                columna3.Name = "concepto"
+                columna3.HeaderText = "Concepto"
+                'columna3.FillWeight = 3
+                dgvLibroMayor.Columns.Add(columna3)
+
+                Dim columna4 As New DataGridViewTextBoxColumn
+                columna4.Name = "debe"
+                columna4.HeaderText = "Debe"
+                columna4.FillWeight = 40
+                dgvLibroMayor.Columns.Add(columna4)
+
+                Dim columna5 As New DataGridViewTextBoxColumn
+                columna5.Name = "haber"
+                columna5.HeaderText = "Haber"
+                columna5.FillWeight = 40
+                dgvLibroMayor.Columns.Add(columna5)
+
+                Dim columna6 As New DataGridViewTextBoxColumn
+                columna6.Name = "saldoDeudor"
+                columna6.HeaderText = "Saldo deudor"
+                columna6.FillWeight = 50
+                dgvLibroMayor.Columns.Add(columna6)
+
+                Dim columna7 As New DataGridViewTextBoxColumn
+                columna7.Name = "saldoAcreedor"
+                columna7.HeaderText = "Saldo acreedor"
+                columna7.FillWeight = 50
+                dgvLibroMayor.Columns.Add(columna7)
+
+            ElseIf tipo = 4 Then
+                dgvLibroMayor.Columns.Clear()
+                Dim columna8 As New DataGridViewTextBoxColumn
+                columna8.Name = "idCuenta"
+                columna8.HeaderText = "idCuenta"
+                columna8.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna8)
+
+                Dim columna9 As New DataGridViewTextBoxColumn
+                columna9.Name = "nombreCuenta"
+                columna9.HeaderText = "Cuenta"
+                columna9.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna9)
+
+                Dim columna1 As New DataGridViewTextBoxColumn
+                columna1.Name = "comprobante"
+                columna1.HeaderText = "Comprobante"
+                columna1.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna1)
+
+                Dim columna2 As New DataGridViewTextBoxColumn
+                columna2.Name = "fecha"
+                columna2.HeaderText = "Fecha"
+                columna2.FillWeight = 30
+                dgvLibroMayor.Columns.Add(columna2)
+
+                Dim columna3 As New DataGridViewTextBoxColumn
+                columna3.Name = "concepto"
+                columna3.HeaderText = "Concepto"
+                'columna3.FillWeight = 3
+                dgvLibroMayor.Columns.Add(columna3)
+
+                Dim columna10 As New DataGridViewTextBoxColumn
+                columna10.Name = "saldoAnterior"
+                columna10.HeaderText = "Saldo Anterior"
+                columna10.FillWeight = 50
+                dgvLibroMayor.Columns.Add(columna10)
+
+
+                Dim columna4 As New DataGridViewTextBoxColumn
+                columna4.Name = "debe"
+                columna4.HeaderText = "Debe"
+                columna4.FillWeight = 40
+                dgvLibroMayor.Columns.Add(columna4)
+
+                Dim columna5 As New DataGridViewTextBoxColumn
+                columna5.Name = "haber"
+                columna5.HeaderText = "Haber"
+                columna5.FillWeight = 40
+                dgvLibroMayor.Columns.Add(columna5)
+
+                Dim columna6 As New DataGridViewTextBoxColumn
+                columna6.Name = "saldoDeudor"
+                columna6.HeaderText = "Saldo deudor"
+                columna6.FillWeight = 50
+                dgvLibroMayor.Columns.Add(columna6)
+
+                Dim columna7 As New DataGridViewTextBoxColumn
+                columna7.Name = "saldoAcreedor"
+                columna7.HeaderText = "Saldo acreedor"
+                columna7.FillWeight = 50
+                dgvLibroMayor.Columns.Add(columna7)
+
             End If
         Catch ex As Exception
 
@@ -4623,8 +4840,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim datosContables As New datosContable
 
-            For Each movimiento As DataGridViewRow In dgvLibroMayor.Rows
-                datosContables.Tables("libroMayor").Rows.Add(
+            If rdCuentasIndividuales.Checked = True Then
+                For Each movimiento As DataGridViewRow In dgvLibroMayor.Rows
+                    datosContables.Tables("libroMayor").Rows.Add(
                                     movimiento.Cells("fecha").Value,
                                     movimiento.Cells("comprobante").Value,
                                     movimiento.Cells("concepto").Value,
@@ -4634,18 +4852,51 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     movimiento.Cells("saldoAcreedor").Value
                                     )
 
-            Next
+                Next
+            End If
+            If rdTodasCuentas.Checked = True Then
+                For Each movimiento As DataGridViewRow In dgvLibroMayor.Rows
+                    datosContables.Tables("libroMayorTodos").Rows.Add(
+                                    movimiento.Cells("idCuenta").Value,
+                                    movimiento.Cells("nombreCuenta").Value,
+                                    movimiento.Cells("fecha").Value,
+                                    movimiento.Cells("comprobante").Value,
+                                    movimiento.Cells("concepto").Value,
+                                    movimiento.Cells("saldoAnterior").Value,
+                                    movimiento.Cells("debe").Value,
+                                    movimiento.Cells("haber").Value,
+                                    movimiento.Cells("saldoDeudor").Value,
+                                    movimiento.Cells("saldoAcreedor").Value
+                                    )
+
+                Next
+            End If
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-            ' parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            If rdCuentasIndividuales.Checked = True Then
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", "PERIODO " & cmbPeriodoLibroMayor.Text & " CUENTA: " & cmbCuentas.Text))
+            Else
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", "PERIODO " & cmbPeriodoLibroMayor.Text))
+            End If
             With imprimirx
                 .MdiParent = Me.MdiParent
                 .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\libroMayor.rdlc"
+                If rdCuentasIndividuales.Checked = True Then
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\libroMayor.rdlc"
+                Else
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\libroMayorTodos.rdlc"
+                End If
                 .rptfx.LocalReport.DataSources.Clear()
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("libroMayor", datosContables.Tables("libroMayor")))
+                If rdCuentasIndividuales.Checked = True Then
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("libroMayor", datosContables.Tables("libroMayor")))
+
+                Else
+
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("libroMayorTodos", datosContables.Tables("libroMayorTodos")))
+                End If
+
                 '.rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadorecibos")))
-                '    .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.LocalReport.SetParameters(parameters)
                 .rptfx.DocumentMapCollapsed = True
                 .rptfx.RefreshReport()
                 .Show()
@@ -4807,6 +5058,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub rdCtaSaldo_CheckedChanged(sender As Object, e As EventArgs) Handles rdCtaSaldo.CheckedChanged
         If rdCtaSaldo.Checked = True Then
             dgvListadoCuentaConSaldos.Rows.Clear()
+            dgvTotales.Rows.Clear()
             CrearColumnasGrid(1)
         End If
     End Sub
@@ -4814,7 +5066,129 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub rdBalance_CheckedChanged(sender As Object, e As EventArgs) Handles rdBalance.CheckedChanged
         If rdBalance.Checked = True Then
             dgvListadoCuentaConSaldos.Rows.Clear()
+            dgvTotales.Rows.Clear()
             CrearColumnasGrid(2)
         End If
+    End Sub
+
+    Private Sub Button39_Click(sender As Object, e As EventArgs)
+        Try
+
+
+            lblSaldoCtaLibroMayor.Text = FormatNumber(saldoAnteriorCuenta, 2)
+
+            Reconectar()
+            Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.nombreCuenta, CTA.id, LD.comprobanteInterno, LM.fecha,LM.concepto, 
+            (select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
+            from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
+            where LM.fecha < '2021-03-%%' and
+            LM.codigoAsiento=stos.codigoAsiento and
+            LD.codigoAsiento=stos.codigoAsiento and
+            PC.id=CTA.id and
+            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
+            order by stos.id asc) as saldoAnterior,
+			asi.importeDebe, asi.importeHaber 
+            From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
+            where LM.codigoAsiento=asi.codigoAsiento and
+            LM.fecha like '2021-03-%%' and
+            LD.codigoAsiento=LM.codigoAsiento and 
+            (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
+             order by CTA.id,fecha asc", conexionPrinc)
+            Dim tabLibroMayor As New DataTable
+            consLibroMayor.Fill(tabLibroMayor)
+            Dim saldoDeudor As Double = 0
+            Dim saldoAcreedor As Double = 0
+
+            If saldoAnteriorCuenta > 0 Then
+                saldoDeudor = saldoAnteriorCuenta
+                saldoAcreedor = 0
+            ElseIf saldoAnteriorCuenta < 0 Then
+                saldoDeudor = 0
+                saldoAcreedor = saldoAnteriorCuenta * -1
+            Else
+                saldoDeudor = 0
+                saldoAcreedor = 0
+            End If
+
+            dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", saldoDeudor, saldoAcreedor)
+
+            For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
+                Dim debeActual As Double = movimientoCuenta.Item("importeDebe")
+                Dim haberActual As Double = movimientoCuenta.Item("importeHaber")
+                Dim saldoActual As Double = 0
+
+                If saldoAcreedor > 0 Then
+
+                    saldoActual = saldoAcreedor - (debeActual - haberActual)
+                    saldoDeudor = 0
+
+                    If saldoActual > 0 Then
+
+                        saldoAcreedor = saldoActual
+                        saldoDeudor = 0
+                    Else
+                        saldoDeudor = saldoActual * -1
+                        saldoAcreedor = 0
+                    End If
+
+                ElseIf saldoDeudor > 0 Then
+
+                    saldoActual = saldoDeudor + (debeActual - haberActual)
+                    saldoAcreedor = 0
+
+                    If saldoActual > 0 Then
+                        saldoDeudor = saldoActual
+                        saldoAcreedor = 0
+                    Else
+                        saldoAcreedor = saldoActual * -1
+                        saldoDeudor = 0
+                    End If
+                Else
+                    saldoAcreedor = haberActual
+                    saldoDeudor = debeActual
+
+                End If
+
+                dgvLibroMayor.Rows.Add(
+                                        movimientoCuenta.Item("comprobanteInterno"),
+                                        movimientoCuenta.Item("fecha"),
+                                        movimientoCuenta.Item("concepto"),
+                                        movimientoCuenta.Item("importeDebe"),
+                                        movimientoCuenta.Item("importeHaber"),
+                                        saldoDeudor,
+                                        saldoAcreedor
+                                        )
+            Next
+
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub rdCuentasIndividuales_CheckedChanged(sender As Object, e As EventArgs) Handles rdCuentasIndividuales.CheckedChanged
+        If rdCuentasIndividuales.Checked = True Then
+            cmbCuentas.Enabled = True
+            lblSaldoCtaLibroMayor.Text = 0
+            CrearColumnasGrid(3)
+        End If
+
+    End Sub
+
+    Private Sub rdTodasCuentas_CheckedChanged(sender As Object, e As EventArgs) Handles rdTodasCuentas.CheckedChanged
+        If rdTodasCuentas.Checked = True Then
+            cmbCuentas.Enabled = False
+            lblSaldoCtaLibroMayor.Text = 0
+            CrearColumnasGrid(4)
+        End If
+    End Sub
+
+    Private Sub cmbBalCtasPeriodo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBalCtasPeriodo.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbBalCtasPeriodo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbBalCtasPeriodo.SelectedValueChanged
+        dgvListadoCuentaConSaldos.Rows.Clear()
+        dgvTotales.Rows.Clear()
     End Sub
 End Class

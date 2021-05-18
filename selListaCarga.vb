@@ -3,8 +3,9 @@
     Dim idfactura As Integer
     Private Sub selListaCarga_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, fecha,concat(lpad(ptovta,4,'0'),'-',lpad(num_fact,8,'0')) as comprobante from fact_facturas where tipofact=997
-        order by fecha desc", conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, fecha,concat(lpad(ptovta,4,'0'),'-',lpad(num_fact,8,'0')) as comprobante 
+        from fact_facturas where tipofact=997
+        order by fecha desc LIMIT " & My.Settings.paginacion, conexionPrinc)
         Dim tablaped As New DataTable
         consulta.Fill(tablaped)
 
