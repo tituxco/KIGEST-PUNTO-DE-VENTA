@@ -475,7 +475,7 @@
                                                     <Value>=Fields!debe.Value</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                                      <Format>'$'#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -509,7 +509,7 @@
                                                     <Value>=Fields!haber.Value</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                                      <Format>'$'#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -543,7 +543,7 @@
                                                     <Value>=Fields!saldoDeudor.Value</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                                      <Format>'$'#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -577,7 +577,7 @@
                                                     <Value>=Fields!saldoAcreedor.Value</Value>
                                                     <Style>
                                                       <FontSize>8pt</FontSize>
-                                                      <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                                      <Format>'$'#,0.00</Format>
                                                     </Style>
                                                   </TextRun>
                                                 </TextRuns>
@@ -597,6 +597,7 @@
                                               <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                                             </Style>
                                           </Textbox>
+                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -632,7 +633,7 @@
                               <DataSetName>libroMayorTodos</DataSetName>
                               <Top>0.63236cm</Top>
                               <Left>0.06414cm</Left>
-                              <Height>0.99716cm</Height>
+                              <Height>0.99715cm</Height>
                               <Width>18.46813cm</Width>
                               <Style>
                                 <Border>
@@ -718,7 +719,7 @@
                                       <Value>=Fields!saldoAnterior.Value</Value>
                                       <Style>
                                         <FontWeight>Bold</FontWeight>
-                                        <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                        <Format>'$'#,0.00</Format>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>

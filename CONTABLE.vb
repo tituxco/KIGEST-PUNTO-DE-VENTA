@@ -4102,10 +4102,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
                     saldoAnteriorCuenta = 0
                 Else
-                    saldoAnteriorCuenta = tabSaldoCuenta.Rows(0).Item(0)
+                    saldoAnteriorCuenta = FormatCurrency(tabSaldoCuenta.Rows(0).Item(0), 2)
                 End If
 
-                lblSaldoCtaLibroMayor.Text = FormatNumber(saldoAnteriorCuenta, 2)
+                lblSaldoCtaLibroMayor.Text = FormatCurrency(saldoAnteriorCuenta, 2)
 
                 Reconectar()
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
@@ -4115,7 +4115,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LD.codigoAsiento=LM.codigoAsiento and
             (asi.cuentaDebeId= " & idCuentaSel & " or 
             asi.cuentaHaberId=" & idCuentaSel & ")
-            order by LM.fecha asc", conexionPrinc)
+            order by LM.fecha asc,LD.comprobanteInterno  asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 Dim saldoDeudor As Double = 0
@@ -4132,7 +4132,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     saldoAcreedor = 0
                 End If
 
-                dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", saldoDeudor, saldoAcreedor)
+                dgvLibroMayor.Rows.Add("", "", "....SALDO ANTERIOR....", "0", "0", FormatCurrency(saldoDeudor, 2), FormatCurrency(saldoAcreedor, 2))
 
                 For Each movimientoCuenta As DataRow In tabLibroMayor.Rows
                     Dim debeActual As Double = movimientoCuenta.Item("importeDebe")
@@ -4185,25 +4185,33 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             If rdTodasCuentas.Checked = True Then
                 dgvLibroMayor.Rows.Clear()
                 Reconectar()
+                Dim consSaldosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id,CTA.cuentaResultado,CTA.grupo ,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle, 
+				concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta, 
+                '0' as comprobanteInterno, str_to_date('" & cmbPeriodoLibroMayor.Text & "-01','%Y-%m-%d') as fecha, 'saldoAnterior' as concepto,
+                (select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario As LD, cm_Asientos As stos
+                where stos.codigoAsiento=LD.codigoAsiento and
+                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                LD.fecha< '" & cmbPeriodoLibroMayor.Text & "-%%'          
+                ) as saldoAnterior,
+                CONVERT('0',DECIMAL) as importeDebe, CONVERT('0', DECIMAL) as importeHaber														
+                from cm_planDeCuentas as CTA 
+                where CTA.cuentaMovimiento=1
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                Dim tabSaldosAnteriores As New DataTable
+                consSaldosAnteriores.Fill(tabSaldosAnteriores)
 
-                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,
-            concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta,  
-            LD.comprobanteInterno, LM.fecha,LM.concepto, 
-            (select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
-            from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
-            where LM.fecha <'" & cmbPeriodoLibroMayor.Text & "-%%' and
-            LM.codigoAsiento=stos.codigoAsiento and
-            LD.codigoAsiento=stos.codigoAsiento and
-            PC.id=CTA.id and
-            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
-            order by stos.id asc) as saldoAnterior,
-			asi.importeDebe, asi.importeHaber 
-            From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
-            where LM.codigoAsiento=asi.codigoAsiento and
-            LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
-            LD.codigoAsiento=LM.codigoAsiento and 
-            (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
-            order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle  asc", conexionPrinc)
+                Reconectar()
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,CTA.cuentaResultado,CTA.grupo ,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle,
+                concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta,  
+                LD.comprobanteInterno, LM.fecha,LM.concepto, 
+                0 as saldoAnterior,
+			    asi.importeDebe, asi.importeHaber 
+                From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
+                where LM.codigoAsiento=asi.codigoAsiento and
+                LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%'  and
+                LD.codigoAsiento=LM.codigoAsiento and 
+                (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc, LD.fecha, LD.comprobanteInterno asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
 
@@ -4212,14 +4220,66 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim saldoAcreedor As Double = 0
                 Dim datosContables As New datosContable
 
-                For Each movCuenta As DataRow In tabLibroMayor.Rows
+                For Each CtaSaldos As DataRow In tabSaldosAnteriores.Rows
+                    'MsgBox(CtaSaldos.Item("saldoAnterior").ToString)
+                    Dim idCuenta = CtaSaldos.Item("id")
+                    Dim encontrado = 0
+                    'For Each movCuenta As DataRow In tabLibroMayor.Rows
+                    '    If idCuenta = movCuenta.Item("id") Then
+                    '        movCuenta.Item("saldoAnterior") = CtaSaldos.Item("saldoAnterior")
+                    '        encontrado = 1
+                    '        Exit For
+                    '    End If
+                    'Next
+                    If Not IsDBNull(CtaSaldos.Item("saldoAnterior")) Then
+                        ' Dim fec As New MySql.Data.Types.MySqlDateTime
+                        tabLibroMayor.Rows.Add(
+                        CtaSaldos.Item("id"),
+                        CtaSaldos.Item("cuentaResultado"),
+                        CtaSaldos.Item("grupo"),
+                        CtaSaldos.Item("subGrupo"),
+                        CtaSaldos.Item("cuenta"),
+                        CtaSaldos.Item("subCuenta"),
+                        CtaSaldos.Item("cuentaDetalle"),
+                        CtaSaldos.Item("nombreCuenta"),
+                        0,
+                        CtaSaldos.Item("fecha"),
+                        "SALDO ANTERIOR",
+                        CDbl(CtaSaldos.Item("saldoAnterior")), 0)
+                    End If
+                Next
+                Dim i As Integer
+                Dim FilasLibro() As DataRow
+                Dim exp As String = ""
+                Dim orden As String = "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc"
+                FilasLibro = tabLibroMayor.Select("", "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc,fecha asc")
+
+                'MsgBox(movCuenta.Length)
+                'For i = movCuenta.GetLowerBound(0) To i = movCuenta.GetUpperBound(0)
+                For Each movCuenta As DataRow In FilasLibro
+                    'For Each movCuenta As DataRow In tabLibroMayor.Rows
+                    Dim importeDebe As Double = 0
+                    Dim importeHaber As Double = 0
+
                     If IsDBNull(movCuenta.Item("saldoAnterior")) Then
                         saldoAnteriorCuenta = 0
                     Else
                         saldoAnteriorCuenta = movCuenta.Item("saldoAnterior")
                     End If
 
+                    If IsDBNull(movCuenta.Item("importeDebe")) Then
+                        importeDebe = 0
+                    Else
+                        importeDebe = movCuenta.Item("importeDebe")
+                    End If
 
+                    If IsDBNull(movCuenta.Item("importeHaber")) Then
+                        importeHaber = 0
+
+                    Else
+                        importeHaber = movCuenta.Item("importeHaber")
+                    End If
+                    MsgBox(saldoAnteriorCuenta)
                     dgvLibroMayor.Rows.Add(
                         movCuenta.Item("id"),
                         movCuenta.Item("nombreCuenta"),
@@ -4227,10 +4287,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         movCuenta.Item("fecha"),
                         movCuenta.Item("concepto"),
                         FormatCurrency(saldoAnteriorCuenta, 2),
-                        FormatCurrency(movCuenta.Item("importeDebe"), 2),
-                        FormatCurrency(movCuenta.Item("importeHaber"), 2), 0, 0)
+                        FormatCurrency(importeDebe, 2),
+                        FormatCurrency(importeHaber, 2), 0, 0)
                 Next
                 Dim idCuentaGral As Integer = 0
+
                 For Each movimientoCuenta As DataGridViewRow In dgvLibroMayor.Rows
                     Dim idCuentaActual As Integer = movimientoCuenta.Cells("idCuenta").Value
                     Dim debeActual As Double = CDbl(movimientoCuenta.Cells("debe").Value)

@@ -347,7 +347,7 @@
                                   <Value>=Fields!MES.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00);''</Format>
+                                    <Format>'$'#,0.00;-'$'#,0.00;''</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -382,7 +382,7 @@
                                   <Value>=Fields!saldoFinal.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00);''</Format>
+                                    <Format>'$'#,0.00;-'$'#,0.00;''</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -417,7 +417,7 @@
                                   <Value>=Fields!Ejercicio.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00);''</Format>
+                                    <Format>'$'#,0.00;-'$'#,0.00;''</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -559,40 +559,6 @@
           <Height>0.935cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="Textbox3">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Fecha de impresion:  " &amp; Now()</Value>
-                      <Style>
-                        <FontStyle>Italic</FontStyle>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0.335cm</Top>
-              <Height>0.6cm</Height>
-              <Width>19.45515cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
           <Style>
             <Border>
               <Style>None</Style>

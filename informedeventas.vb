@@ -496,10 +496,10 @@
 
             consultaComis.Fill(tablaComis)
 
-            Dim consultaComisCAT As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN', concat('COMISION CAT','-',cat.nombre) as tipo, 'NaN',
-			    round(sum(itm.ptotal),2) as MontoVenta,
-                'NaN', promo.descuento_porc as PorcComision,
-                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as MontoComision                
+            Dim consultaComisCAT As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('COMISION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
+			    round(sum(itm.ptotal),2) as montoVenta,
+                'NaN' as ventaObjetivo, promo.descuento_porc as porcComision,
+                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as montoComision                
                 FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_promociones as promo, fact_insumos as ins                 
                 where
                 ins.id=itm.cod and 
@@ -509,10 +509,10 @@
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 ins.categoria in(select idcategoria from fact_promociones where nombrepromo like 'COMISION CATEGORIA') and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
-            Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN', concat('DEVOLUCION CAT','-',cat.nombre) as tipo, 'NaN',
-			    - round(sum(itm.ptotal),2) as MontoVenta,
-                'NaN', promo.descuento_porc as PorcComision,
-                - round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as MontoComision                
+            Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('COMISION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
+			    round(sum(itm.ptotal),2) as montoVenta,
+                'NaN' as ventaObjetivo, promo.descuento_porc as porcComision,
+                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as montoComision                
                 FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_promociones as promo, fact_insumos as ins                 
                 where
                 ins.id=itm.cod and 
@@ -537,16 +537,16 @@
                 FilaCat("descripcion") = tablaComisCat.Rows(i).Item(1)
                 FilaCat("cantidadVendida") = tablaComisCat.Rows(i).Item(2)
                 If IsDBNull(tablaComisCat.Rows(i).Item(3)) Then
-                    FilaCat("MontoVenta") = 0
+                    FilaCat("montoVenta") = 0
                 Else
-                    FilaCat("MontoVenta") = tablaComisCat.Rows(i).Item(3)
+                    FilaCat("montoVenta") = tablaComisCat.Rows(i).Item(3)
                 End If
-                FilaCat("VentaObjetivo") = tablaComisCat.Rows(i).Item(4)
-                FilaCat("PorcComision") = tablaComisCat.Rows(i).Item(5)
+                FilaCat("ventaObjetivo") = tablaComisCat.Rows(i).Item(4)
+                FilaCat("porcComision") = tablaComisCat.Rows(i).Item(5)
                 If IsDBNull(tablaComisCat.Rows(i).Item(6)) Then
-                    FilaCat("MontoComision") = 0
+                    FilaCat("montoComision") = 0
                 Else
-                    FilaCat("MontoComision") = tablaComisCat.Rows(i).Item(6)
+                    FilaCat("montoComision") = tablaComisCat.Rows(i).Item(6)
                 End If
                 tablaComis.Rows.Add(FilaCat)
             Next
@@ -578,14 +578,23 @@
             End If
 
             If rdInforgeneral.Checked = True Then
-                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
-                lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
-                lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 2), 2)
-                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2) - SumarTotal(dtdevoluciones, 2), 2)
-                TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 2), 2)
-                lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
-                lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
-
+                If chkproductos.CheckState = CheckState.Checked Then
+                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                    lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                    lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 4), 2)
+                    TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 4) - SumarTotal(dtdevoluciones, 4), 2)
+                    TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 4), 2)
+                    lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 5) - SumarTotal(dtdevoluciones, 4), 2)
+                    lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+                Else
+                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
+                    lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                    lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 2), 2)
+                    TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2) - SumarTotal(dtdevoluciones, 2), 2)
+                    TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 2), 2)
+                    lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
+                    lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+                End If
             ElseIf rdInforProv.Checked = True Then
                 lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
                 lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
@@ -603,15 +612,7 @@
                 lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
                 lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
             End If
-            If chkproductos.CheckState = CheckState.Checked Then
-                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
-                lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
-                lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 4), 2)
-                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 4) - SumarTotal(dtdevoluciones, 4), 2)
-                TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 4), 2)
-                lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 5) - SumarTotal(dtdevoluciones, 4), 2)
-                lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
-            End If
+
 
 
             'MsgBox("COMISION TOTAL" & TotalVentas & "-" & TotalDevoluciones & " * " & ComisionVendedor & "/ 100")
@@ -763,17 +764,49 @@
         Try
             Dim datosInformes As New datosInformes
             For Each venta As DataGridViewRow In dtventashistoricas.Rows
-                'If rdInforgeneral.Checked = True And chkproductos.Checked = True Then
-
-                'End If
                 datosInformes.Tables("ventasTotales").Rows.Add(
                 venta.Cells("codigo").Value,
                 venta.Cells("cantidadVendida").Value,
                 venta.Cells("descripcion").Value,
                 venta.Cells("pventa").Value)
-
-
             Next
+
+            For Each devolucion As DataGridViewRow In dtdevoluciones.Rows
+                datosInformes.Tables("devoluciones").Rows.Add(
+                devolucion.Cells("codigo").Value,
+                devolucion.Cells("cantidadVendida").Value,
+                devolucion.Cells("descripcion").Value,
+                devolucion.Cells("pventa").Value)
+            Next
+
+            For Each objetivo As DataGridViewRow In dtgcomisiones.Rows
+                datosInformes.Tables("ComisionesProdObj").Rows.Add(
+                objetivo.Cells("codigo").Value,
+                objetivo.Cells("descripcion").Value,
+                objetivo.Cells("cantidadVendida").Value,
+                objetivo.Cells("montoVenta").Value,
+                objetivo.Cells("ventaObjetivo").Value,
+                objetivo.Cells("porcComision").Value,
+                objetivo.Cells("montoComision").Value)
+            Next
+
+
+            Dim imprimirx As New imprimirFX
+            '           Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            With imprimirx
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\informeVentasCompleto.rdlc"
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("ventasTotales", datosInformes.Tables("ventasTotales")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("devoluciones", datosInformes.Tables("devoluciones")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("comisionesObjetivos", datosInformes.Tables("ComisionesProdObj")))
+                '                .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+
+
         Catch ex As Exception
 
         End Try

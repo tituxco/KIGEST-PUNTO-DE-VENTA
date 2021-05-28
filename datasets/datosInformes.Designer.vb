@@ -465,7 +465,7 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddventasTotalesRow(ByVal codigo As String, ByVal cantidad As String, ByVal descripcion As String, ByVal pventa As String) As ventasTotalesRow
+        Public Overloads Function AddventasTotalesRow(ByVal codigo As String, ByVal cantidad As Double, ByVal descripcion As String, ByVal pventa As Double) As ventasTotalesRow
             Dim rowventasTotalesRow As ventasTotalesRow = CType(Me.NewRow,ventasTotalesRow)
             Dim columnValuesArray() As Object = New Object() {codigo, cantidad, descripcion, pventa}
             rowventasTotalesRow.ItemArray = columnValuesArray
@@ -501,11 +501,11 @@ Partial Public Class datosInformes
         Private Sub InitClass()
             Me.columncodigo = New Global.System.Data.DataColumn("codigo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncodigo)
-            Me.columncantidad = New Global.System.Data.DataColumn("cantidad", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columncantidad = New Global.System.Data.DataColumn("cantidad", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncantidad)
             Me.columndescripcion = New Global.System.Data.DataColumn("descripcion", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndescripcion)
-            Me.columnpventa = New Global.System.Data.DataColumn("pventa", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnpventa = New Global.System.Data.DataColumn("pventa", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnpventa)
         End Sub
         
@@ -756,7 +756,7 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AdddevolucionesRow(ByVal codigo As String, ByVal cantidad As String, ByVal descripcion As String, ByVal pventa As String) As devolucionesRow
+        Public Overloads Function AdddevolucionesRow(ByVal codigo As String, ByVal cantidad As Double, ByVal descripcion As String, ByVal pventa As Double) As devolucionesRow
             Dim rowdevolucionesRow As devolucionesRow = CType(Me.NewRow,devolucionesRow)
             Dim columnValuesArray() As Object = New Object() {codigo, cantidad, descripcion, pventa}
             rowdevolucionesRow.ItemArray = columnValuesArray
@@ -792,11 +792,11 @@ Partial Public Class datosInformes
         Private Sub InitClass()
             Me.columncodigo = New Global.System.Data.DataColumn("codigo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncodigo)
-            Me.columncantidad = New Global.System.Data.DataColumn("cantidad", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columncantidad = New Global.System.Data.DataColumn("cantidad", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncantidad)
             Me.columndescripcion = New Global.System.Data.DataColumn("descripcion", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndescripcion)
-            Me.columnpventa = New Global.System.Data.DataColumn("pventa", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnpventa = New Global.System.Data.DataColumn("pventa", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnpventa)
         End Sub
         
@@ -1077,7 +1077,7 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddComisionesProdObjRow(ByVal codigo As String, ByVal descripcion As String, ByVal cantVendida As String, ByVal montoVenta As String, ByVal ventaObjetivo As String, ByVal porcComision As String, ByVal montoComision As String) As ComisionesProdObjRow
+        Public Overloads Function AddComisionesProdObjRow(ByVal codigo As String, ByVal descripcion As String, ByVal cantVendida As Double, ByVal montoVenta As Double, ByVal ventaObjetivo As Double, ByVal porcComision As String, ByVal montoComision As Double) As ComisionesProdObjRow
             Dim rowComisionesProdObjRow As ComisionesProdObjRow = CType(Me.NewRow,ComisionesProdObjRow)
             Dim columnValuesArray() As Object = New Object() {codigo, descripcion, cantVendida, montoVenta, ventaObjetivo, porcComision, montoComision}
             rowComisionesProdObjRow.ItemArray = columnValuesArray
@@ -1118,15 +1118,15 @@ Partial Public Class datosInformes
             MyBase.Columns.Add(Me.columncodigo)
             Me.columndescripcion = New Global.System.Data.DataColumn("descripcion", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columndescripcion)
-            Me.columncantVendida = New Global.System.Data.DataColumn("cantVendida", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columncantVendida = New Global.System.Data.DataColumn("cantVendida", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncantVendida)
-            Me.columnmontoVenta = New Global.System.Data.DataColumn("montoVenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnmontoVenta = New Global.System.Data.DataColumn("montoVenta", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnmontoVenta)
-            Me.columnventaObjetivo = New Global.System.Data.DataColumn("ventaObjetivo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnventaObjetivo = New Global.System.Data.DataColumn("ventaObjetivo", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnventaObjetivo)
             Me.columnporcComision = New Global.System.Data.DataColumn("porcComision", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnporcComision)
-            Me.columnmontoComision = New Global.System.Data.DataColumn("montoComision", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnmontoComision = New Global.System.Data.DataColumn("montoComision", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnmontoComision)
         End Sub
         
@@ -1289,10 +1289,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property cantidad() As String
+        Public Property cantidad() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableventasTotales.cantidadColumn),String)
+                    Return CType(Me(Me.tableventasTotales.cantidadColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cantidad' de la tabla 'ventasTotales' es DBNull.", e)
                 End Try
@@ -1319,10 +1319,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property pventa() As String
+        Public Property pventa() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableventasTotales.pventaColumn),String)
+                    Return CType(Me(Me.tableventasTotales.pventaColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'pventa' de la tabla 'ventasTotales' es DBNull.", e)
                 End Try
@@ -1413,10 +1413,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property cantidad() As String
+        Public Property cantidad() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tabledevoluciones.cantidadColumn),String)
+                    Return CType(Me(Me.tabledevoluciones.cantidadColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cantidad' de la tabla 'devoluciones' es DBNull.", e)
                 End Try
@@ -1443,10 +1443,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property pventa() As String
+        Public Property pventa() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tabledevoluciones.pventaColumn),String)
+                    Return CType(Me(Me.tabledevoluciones.pventaColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'pventa' de la tabla 'devoluciones' es DBNull.", e)
                 End Try
@@ -1552,10 +1552,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property cantVendida() As String
+        Public Property cantVendida() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableComisionesProdObj.cantVendidaColumn),String)
+                    Return CType(Me(Me.tableComisionesProdObj.cantVendidaColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cantVendida' de la tabla 'ComisionesProdObj' es DBNull.", e)
                 End Try
@@ -1567,10 +1567,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property montoVenta() As String
+        Public Property montoVenta() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableComisionesProdObj.montoVentaColumn),String)
+                    Return CType(Me(Me.tableComisionesProdObj.montoVentaColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'montoVenta' de la tabla 'ComisionesProdObj' es DBNull.", e)
                 End Try
@@ -1582,10 +1582,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property ventaObjetivo() As String
+        Public Property ventaObjetivo() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableComisionesProdObj.ventaObjetivoColumn),String)
+                    Return CType(Me(Me.tableComisionesProdObj.ventaObjetivoColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'ventaObjetivo' de la tabla 'ComisionesProdObj' es DBNull."& _ 
                             "", e)
@@ -1613,10 +1613,10 @@ Partial Public Class datosInformes
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property montoComision() As String
+        Public Property montoComision() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableComisionesProdObj.montoComisionColumn),String)
+                    Return CType(Me(Me.tableComisionesProdObj.montoComisionColumn),Double)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'montoComision' de la tabla 'ComisionesProdObj' es DBNull."& _ 
                             "", e)
