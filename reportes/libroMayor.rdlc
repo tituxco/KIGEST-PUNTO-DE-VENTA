@@ -570,7 +570,6 @@
                             <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -645,9 +644,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
               <Top>0.81965cm</Top>
-              <Left>6.28403cm</Left>
+              <Left>2.82502cm</Left>
               <Height>0.6cm</Height>
-              <Width>13.23526cm</Width>
+              <Width>16.69427cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -675,7 +674,7 @@
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>0.85493cm</Top>
               <Height>0.6cm</Height>
-              <Width>5.25167cm</Width>
+              <Width>2.64863cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>

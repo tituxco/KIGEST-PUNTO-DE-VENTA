@@ -13,7 +13,7 @@ Module funciones_Globales
         Try
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT replace(fecha,'-','') as fecha 
-                FROM kigest_mbraidot.fact_facturas where tipofact=" & tipoFac & " and num_fact=" & numFac & " limit 1", conexionPrinc)
+                FROM fact_facturas where tipofact=" & tipoFac & " and num_fact=" & numFac & " limit 1", conexionPrinc)
             Dim fecha As New DataTable
             consulta.Fill(fecha)
 

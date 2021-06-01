@@ -1,4 +1,7 @@
 ﻿Public Class informedeventas
+
+    Dim ComisionVendedor As Double = 0
+    Dim IdVendedorSel As Integer = 0
     Private Sub informedeventas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
         Dim readprov As New DataSet
@@ -137,8 +140,7 @@
             Dim tablaDev As New DataTable
             Dim consIdAlmacen As String = ""
             Dim consIdVendedor As String = ""
-            Dim ComisionVendedor As Double = 0
-            Dim IdVendedorSel As Integer = 0
+
             tablaVta.Clear()
             tablaDev.Clear()
             tablaVta.Columns.Clear()
@@ -238,7 +240,7 @@
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -259,7 +261,7 @@
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -362,7 +364,7 @@
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -464,11 +466,55 @@
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
+            ElseIf rdInforClientes.Checked = True Then
+                Dim consultaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	fact.id_cliente,fact.razon, 
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 
+			    round(sum(                
+                if(itm.tipofact in(1,2,3),
+                itm.ptotal*((itm.iva+100)/100),
+                itm.ptotal)),2) as pventa,
+							
+                round(sum(
+                if(itm.tipofact in(1,2,3),
+                itm.ptotal*((itm.iva+100)/100),
+                itm.ptotal)) - 
+                sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
+                
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact  and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & "
+                group by fact.id_cliente order by fact.razon asc", conexionPrinc)
+
+                Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	fact.id_cliente,fact.razon, 
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
+
+			    round(sum(                
+                if(itm.tipofact in(1,2,3),
+                itm.ptotal*((itm.iva+100)/100),
+                itm.ptotal)),2) as pventa,
+							
+                round(sum(
+                if(itm.tipofact in(1,2,3),
+                itm.ptotal*((itm.iva+100)/100),
+                itm.ptotal)) - 
+                sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as ganancia      
+                
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact  and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & "
+                group by fact.id_cliente order by fact.razon asc", conexionPrinc)
+
+                consultaVTAS.Fill(tablaVta)
+                consultaDEV.Fill(tablaDev)
             ElseIf rdPocaRotacion.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, max(fact.fecha) FechaUltVta, datediff(curdate(), max(fact.fecha)) as Dias			    
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
@@ -491,7 +537,7 @@
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
                 group by ins.descripcion 
                 having sum(itm.cantidad)>promo.compra_min
-                order by ins.descripcion asc", conexionPrinc)
+                order by ins.cod_bar asc", conexionPrinc)
             Dim tablaComis As New DataTable
 
             consultaComis.Fill(tablaComis)
@@ -509,10 +555,10 @@
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 ins.categoria in(select idcategoria from fact_promociones where nombrepromo like 'COMISION CATEGORIA') and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
-            Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('COMISION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
-			    round(sum(itm.ptotal),2) as montoVenta,
+            Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('DEVOLUCION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
+			    round(sum(itm.ptotal),2) *-1 as montoVenta,
                 'NaN' as ventaObjetivo, promo.descuento_porc as porcComision,
-                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as montoComision                
+                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) *-1 as montoComision                
                 FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_promociones as promo, fact_insumos as ins                 
                 where
                 ins.id=itm.cod and 
@@ -610,6 +656,14 @@
                 TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2) - SumarTotal(dtdevoluciones, 2), 2)
                 TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 2), 2)
                 lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
+                lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+            ElseIf rdInforClientes.Checked = True Then
+                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 3), 2)
+                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
+                TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 3), 2)
+                lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 4) - SumarTotal(dtdevoluciones, 4), 2)
                 lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
             End If
 
@@ -763,22 +817,40 @@
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Try
             Dim datosInformes As New datosInformes
-            For Each venta As DataGridViewRow In dtventashistoricas.Rows
-                datosInformes.Tables("ventasTotales").Rows.Add(
-                venta.Cells("codigo").Value,
-                venta.Cells("cantidadVendida").Value,
-                venta.Cells("descripcion").Value,
-                venta.Cells("pventa").Value)
-            Next
+            If rdInforClientes.Checked = True Then
+                For Each venta As DataGridViewRow In dtventashistoricas.Rows
+                    datosInformes.Tables("ventasTotales").Rows.Add(
+                    venta.Cells("id_cliente").Value,
+                    0,
+                    venta.Cells("razon").Value,
+                    venta.Cells("pventa").Value)
+                Next
 
-            For Each devolucion As DataGridViewRow In dtdevoluciones.Rows
-                datosInformes.Tables("devoluciones").Rows.Add(
-                devolucion.Cells("codigo").Value,
-                devolucion.Cells("cantidadVendida").Value,
-                devolucion.Cells("descripcion").Value,
-                devolucion.Cells("pventa").Value)
-            Next
+                For Each devolucion As DataGridViewRow In dtdevoluciones.Rows
+                    datosInformes.Tables("devoluciones").Rows.Add(
+                    devolucion.Cells("id_cliente").Value,
+                    0,
+                    devolucion.Cells("razon").Value,
+                    devolucion.Cells("pventa").Value)
+                Next
 
+            ElseIf rdInforClientes.Checked = False And chkproductos.Checked = True Then
+                For Each venta As DataGridViewRow In dtventashistoricas.Rows
+                    datosInformes.Tables("ventasTotales").Rows.Add(
+                    venta.Cells("codigo").Value,
+                    venta.Cells("cantidadVendida").Value,
+                    venta.Cells("descripcion").Value,
+                    venta.Cells("pventa").Value)
+                Next
+
+                For Each devolucion As DataGridViewRow In dtdevoluciones.Rows
+                    datosInformes.Tables("devoluciones").Rows.Add(
+                    devolucion.Cells("codigo").Value,
+                    devolucion.Cells("cantidadVendida").Value,
+                    devolucion.Cells("descripcion").Value,
+                    devolucion.Cells("pventa").Value)
+                Next
+            End If
             For Each objetivo As DataGridViewRow In dtgcomisiones.Rows
                 datosInformes.Tables("ComisionesProdObj").Rows.Add(
                 objetivo.Cells("codigo").Value,
@@ -792,15 +864,26 @@
 
 
             Dim imprimirx As New imprimirFX
-            '           Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", "INFORME DE VENTAS PERIODO " & Format(CDate(dtpvtashisdesde.Value), "dd-MM-yyyy").ToString & " hasta " & Format(CDate(dtpvtashishasta.Value), "dd-MM-yyyy").ToString))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", "VENDEDOR: " & cmbvendedor.Text & " COMISION GENERAL %: " & ComisionVendedor))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("comisvtas", lblComisvtas.Text))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("comisObjetivos", lblcomisobjetivos.Text))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("comisTotal", lblcomistotal.Text))
+
+
             With imprimirx
-                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\informeVentasCompleto.rdlc"
+                If rdInforClientes.Checked = True Then
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\informeVentasCompletoClientes.rdlc"
+                Else
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\informeVentasCompleto.rdlc"
+                End If
                 .MdiParent = Me.MdiParent
-                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("ventasTotales", datosInformes.Tables("ventasTotales")))
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("devoluciones", datosInformes.Tables("devoluciones")))
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("comisionesObjetivos", datosInformes.Tables("ComisionesProdObj")))
-                '                .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.LocalReport.SetParameters(parameters)
                 .rptfx.DocumentMapCollapsed = True
                 .rptfx.RefreshReport()
                 .Show()

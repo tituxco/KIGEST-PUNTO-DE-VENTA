@@ -882,8 +882,14 @@
             tabtarj.Fill(fac.Tables(("tarjetarecbo")))
 
             Reconectar()
-            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-             & "efectivo,cheque,transferencias,retenciones,tarjetas,total FROM cobranzas where id= " & idfactura, conexionPrinc)
+            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+                    fact.id,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
+                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
+                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
             totrec.Fill(fac.Tables("totalesrecibo"))
 
             Dim imprimirx As New imprimirFX

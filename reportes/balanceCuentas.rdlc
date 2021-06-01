@@ -79,16 +79,16 @@
                   <Width>2.5cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>6.40177cm</Width>
+                  <Width>8.49198cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>3.02948cm</Width>
+                  <Width>2.26219cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.97626cm</Width>
+                  <Width>2.28834cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.87542cm</Width>
+                  <Width>2.24042cm</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -205,7 +205,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>SALDO FINAL</Value>
+                                  <Value>SALDO</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -238,7 +238,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>TOTALES</Value>
+                                  <Value>EJERCICIO</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -506,9 +506,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
               <Top>1.18745cm</Top>
-              <Left>6.81253cm</Left>
+              <Left>3.05545cm</Left>
               <Height>0.6cm</Height>
-              <Width>12.41505cm</Width>
+              <Width>16.17213cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -536,7 +536,7 @@
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>1.18746cm</Top>
               <Height>0.6cm</Height>
-              <Width>5.25167cm</Width>
+              <Width>2.76459cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>

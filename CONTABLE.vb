@@ -1213,7 +1213,7 @@ Public Class CONTABLE
                     FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
                     FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
                     FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
-                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total  
+                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
                     FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
                     totrec.Fill(fac.Tables("totalesrecibo"))
 
@@ -4204,7 +4204,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.id,CTA.cuentaResultado,CTA.grupo ,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle,
                 concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta,  
                 LD.comprobanteInterno, LM.fecha,LM.concepto, 
-                0 as saldoAnterior,
+                convert('0',decimal) as saldoAnterior,
 			    asi.importeDebe, asi.importeHaber 
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
                 where LM.codigoAsiento=asi.codigoAsiento and
@@ -4244,14 +4244,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         CtaSaldos.Item("nombreCuenta"),
                         0,
                         CtaSaldos.Item("fecha"),
-                        "SALDO ANTERIOR",
-                        CDbl(CtaSaldos.Item("saldoAnterior")), 0)
+                        "....SALDO ANTERIOR....",
+                       CtaSaldos.Item("saldoAnterior"), 0)
                     End If
                 Next
                 Dim i As Integer
                 Dim FilasLibro() As DataRow
-                Dim exp As String = ""
-                Dim orden As String = "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc"
+                'Dim exp As String = ""
+                'Dim orden As String = "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc"
                 FilasLibro = tabLibroMayor.Select("", "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc,fecha asc")
 
                 'MsgBox(movCuenta.Length)
@@ -4262,11 +4262,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Dim importeHaber As Double = 0
 
                     If IsDBNull(movCuenta.Item("saldoAnterior")) Then
-                        saldoAnteriorCuenta = 0
+                        saldoAnterior = 0
                     Else
-                        saldoAnteriorCuenta = movCuenta.Item("saldoAnterior")
+                        saldoAnterior = movCuenta.Item("saldoAnterior")
                     End If
 
+                    'MsgBox(saldoAnterior & "-----" & movCuenta.Item("saldoAnterior"))
                     If IsDBNull(movCuenta.Item("importeDebe")) Then
                         importeDebe = 0
                     Else
@@ -4279,14 +4280,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Else
                         importeHaber = movCuenta.Item("importeHaber")
                     End If
-                    MsgBox(saldoAnteriorCuenta)
+                    '   MsgBox(saldoAnteriorCuenta)
                     dgvLibroMayor.Rows.Add(
                         movCuenta.Item("id"),
                         movCuenta.Item("nombreCuenta"),
                         movCuenta.Item("comprobanteInterno"),
                         movCuenta.Item("fecha"),
                         movCuenta.Item("concepto"),
-                        FormatCurrency(saldoAnteriorCuenta, 2),
+                        FormatCurrency(saldoAnterior, 2),
                         FormatCurrency(importeDebe, 2),
                         FormatCurrency(importeHaber, 2), 0, 0)
                 Next
@@ -4297,17 +4298,17 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Dim debeActual As Double = CDbl(movimientoCuenta.Cells("debe").Value)
                     Dim haberActual As Double = CDbl(movimientoCuenta.Cells("haber").Value)
                     Dim saldoActual As Double = 0
-                    Dim saldoAnteriorCuenta As Double = 0
+                    Dim saldoAnteriorCta As Double = 0
 
                     If idCuentaGral <> idCuentaActual Then
                         idCuentaGral = idCuentaActual
-                        saldoAnteriorCuenta = CDbl(movimientoCuenta.Cells("saldoAnterior").Value)
-                        If saldoAnteriorCuenta > 0 Then
-                            saldoDeudor = saldoAnteriorCuenta
+                        saldoAnteriorCta = CDbl(movimientoCuenta.Cells("saldoAnterior").Value)
+                        If saldoAnteriorCta > 0 Then
+                            saldoDeudor = saldoAnteriorCta
                             saldoAcreedor = 0
-                        ElseIf saldoAnteriorCuenta < 0 Then
+                        ElseIf saldoAnteriorCta < 0 Then
                             saldoDeudor = 0
-                            saldoAcreedor = saldoAnteriorCuenta * -1
+                            saldoAcreedor = saldoAnteriorCta * -1
                         Else
                             saldoDeudor = 0
                             saldoAcreedor = 0
@@ -4943,9 +4944,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
             If rdCuentasIndividuales.Checked = True Then
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", "PERIODO " & cmbPeriodoLibroMayor.Text & " CUENTA: " & cmbCuentas.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.Cliente & " PERIODO " & cmbPeriodoLibroMayor.Text & " CUENTA: " & cmbCuentas.Text))
             Else
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", "PERIODO " & cmbPeriodoLibroMayor.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.Cliente & " PERIODO " & cmbPeriodoLibroMayor.Text))
             End If
             With imprimirx
                 .MdiParent = Me.MdiParent
@@ -5150,7 +5151,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT CTA.nombreCuenta, CTA.id, LD.comprobanteInterno, LM.fecha,LM.concepto, 
             (select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
             from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
-            where LM.fecha < '2021-03-%%' and
+            where LM.fecha < '" & cmbPeriodoLibroMayor.Text & "-%%' and
             LM.codigoAsiento=stos.codigoAsiento and
             LD.codigoAsiento=stos.codigoAsiento and
             PC.id=CTA.id and
@@ -5159,7 +5160,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 			asi.importeDebe, asi.importeHaber 
             From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD, cm_planDeCuentas as CTA
             where LM.codigoAsiento=asi.codigoAsiento and
-            LM.fecha like '2021-03-%%' and
+            LM.fecha like ''" & cmbPeriodoLibroMayor.Text & "-%%'-%%' and
             LD.codigoAsiento=LM.codigoAsiento and 
             (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
              order by CTA.id,fecha asc", conexionPrinc)
@@ -5252,16 +5253,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End If
     End Sub
 
-    Private Sub cmbBalCtasPeriodo_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBalCtasPeriodo.SelectedIndexChanged
-
-    End Sub
-
     Private Sub cmbBalCtasPeriodo_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbBalCtasPeriodo.SelectedValueChanged
         dgvListadoCuentaConSaldos.Rows.Clear()
         dgvTotales.Rows.Clear()
     End Sub
 
-    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
 
+    Private Sub cmbPeriodoLibroMayor_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbPeriodoLibroMayor.SelectedValueChanged
+        CargarLibroMayor()
     End Sub
 End Class

@@ -81,7 +81,7 @@
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>1.62952cm</Height>
+                  <Height>1.88351cm</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -597,7 +597,6 @@
                                               <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                                             </Style>
                                           </Textbox>
-                                          <rd:Selected>true</rd:Selected>
                                         </CellContents>
                                       </TablixCell>
                                     </TablixCells>
@@ -631,7 +630,7 @@
                               <RepeatColumnHeaders>true</RepeatColumnHeaders>
                               <RepeatRowHeaders>true</RepeatRowHeaders>
                               <DataSetName>libroMayorTodos</DataSetName>
-                              <Top>0.63236cm</Top>
+                              <Top>0.88636cm</Top>
                               <Left>0.06414cm</Left>
                               <Height>0.99715cm</Height>
                               <Width>18.46813cm</Width>
@@ -660,89 +659,19 @@
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox19</rd:DefaultName>
+                              <Top>0.254cm</Top>
                               <Height>0.6cm</Height>
-                              <Width>7.71082cm</Width>
+                              <Width>18.53227cm</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
                                 </Border>
+                                <BackgroundColor>Silver</BackgroundColor>
                                 <PaddingLeft>2pt</PaddingLeft>
                                 <PaddingRight>2pt</PaddingRight>
                                 <PaddingTop>2pt</PaddingTop>
                                 <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox21">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>="Saldo anterior: " &amp; iif(Fields!saldoAnterior.Value&gt;0,"(Deudor)=","(Acreedor)=")</Value>
-                                      <Style>
-                                        <FontWeight>Bold</FontWeight>
-                                        <Format>'$'#,0.00;('$'#,0.00)</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Right</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox19</rd:DefaultName>
-                              <Top>0.03236cm</Top>
-                              <Left>8.93213cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>4.80621cm</Width>
-                              <ZIndex>2</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                                <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Textbox22">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=Fields!saldoAnterior.Value</Value>
-                                      <Style>
-                                        <FontWeight>Bold</FontWeight>
-                                        <Format>'$'#,0.00</Format>
-                                      </Style>
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style>
-                                    <TextAlign>Left</TextAlign>
-                                  </Style>
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>Textbox19</rd:DefaultName>
-                              <Top>0.03236cm</Top>
-                              <Left>13.84417cm</Left>
-                              <Height>0.6cm</Height>
-                              <Width>4.6881cm</Width>
-                              <ZIndex>3</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                                <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                               </Style>
                             </Textbox>
                           </ReportItems>
@@ -778,7 +707,7 @@
             <DataSetName>libroMayorTodos</DataSetName>
             <Top>0.03528cm</Top>
             <Left>0.92288cm</Left>
-            <Height>1.62952cm</Height>
+            <Height>1.88351cm</Height>
             <Width>18.59641cm</Width>
             <Style>
               <Border>
@@ -787,7 +716,7 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.65543in</Height>
+        <Height>0.90543in</Height>
         <Style />
       </Body>
       <Width>19.51929cm</Width>
@@ -817,9 +746,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
               <Top>0.85493cm</Top>
-              <Left>6.28403cm</Left>
+              <Left>2.76088cm</Left>
               <Height>0.6cm</Height>
-              <Width>13.23526cm</Width>
+              <Width>16.75841cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -847,7 +776,7 @@
               <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>0.85493cm</Top>
               <Height>0.6cm</Height>
-              <Width>5.25167cm</Width>
+              <Width>2.58449cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
@@ -890,7 +819,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox3</rd:DefaultName>
-              <Top>0.17639cm</Top>
+              <Top>0.17638cm</Top>
               <Height>0.6cm</Height>
               <Width>19.45515cm</Width>
               <Style>

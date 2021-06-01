@@ -418,7 +418,7 @@
                                   <Value>=Fields!saldoAnterior.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -452,7 +452,7 @@
                                   <Value>=Fields!debitosMes.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -486,7 +486,7 @@
                                   <Value>=Fields!creditosMes.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -520,7 +520,7 @@
                                   <Value>=Fields!saldoMes.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -554,7 +554,7 @@
                                   <Value>=Fields!saldoFinal.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -661,7 +661,7 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -697,7 +697,7 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -733,7 +733,7 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -769,7 +769,7 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -805,7 +805,7 @@
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
-                                    <Format>'$'#,0.00;('$'#,0.00)</Format>
+                                    <Format>'$'#,0.00</Format>
                                   </Style>
                                 </TextRun>
                               </TextRuns>
@@ -826,6 +826,7 @@
                             <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                   </TablixCells>
@@ -902,10 +903,10 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
-              <Top>0.92548cm</Top>
-              <Left>7.42956cm</Left>
+              <Top>0.89641cm</Top>
+              <Left>2.8012cm</Left>
               <Height>0.6cm</Height>
-              <Width>12.07044cm</Width>
+              <Width>16.6988cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -933,7 +934,7 @@
               <rd:DefaultName>Textbox2</rd:DefaultName>
               <Top>0.89641cm</Top>
               <Height>0.6cm</Height>
-              <Width>5.83375cm</Width>
+              <Width>2.62481cm</Width>
               <ZIndex>1</ZIndex>
               <Style>
                 <Border>
