@@ -106,7 +106,7 @@
                           <rd:DefaultName>Textbox3</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -139,7 +139,7 @@
                           <rd:DefaultName>Textbox7</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -172,7 +172,7 @@
                           <rd:DefaultName>Textbox10</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -206,7 +206,7 @@
                           <rd:DefaultName>Textbox14</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -243,7 +243,7 @@
                           <rd:DefaultName>numCta</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -275,7 +275,7 @@
                           <rd:DefaultName>nombreCuenta</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -308,7 +308,7 @@
                           <rd:DefaultName>importeDebe</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -342,7 +342,7 @@
                           <rd:DefaultName>importeHaber</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>Solid</Style>
                             </Border>
                             <PaddingLeft>2pt</PaddingLeft>
@@ -380,10 +380,10 @@
                           <rd:DefaultName>Textbox98</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Silver</BackgroundColor>
+                            <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -416,10 +416,10 @@
                           <rd:DefaultName>importeDebe1</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Silver</BackgroundColor>
+                            <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -451,10 +451,10 @@
                           <rd:DefaultName>importeHaber1</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Silver</BackgroundColor>
+                            <BackgroundColor>LightGrey</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -490,10 +490,10 @@
                           <rd:DefaultName>Textbox15</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Gray</BackgroundColor>
+                            <BackgroundColor>Silver</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -526,10 +526,10 @@
                           <rd:DefaultName>importeDebe2</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Gray</BackgroundColor>
+                            <BackgroundColor>Silver</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -561,10 +561,10 @@
                           <rd:DefaultName>importeHaber2</rd:DefaultName>
                           <Style>
                             <Border>
-                              <Color>LightGrey</Color>
+                              <Color>DimGray</Color>
                               <Style>None</Style>
                             </Border>
-                            <BackgroundColor>Gray</BackgroundColor>
+                            <BackgroundColor>Silver</BackgroundColor>
                             <PaddingLeft>2pt</PaddingLeft>
                             <PaddingRight>2pt</PaddingRight>
                             <PaddingTop>2pt</PaddingTop>
@@ -612,7 +612,7 @@
                         <rd:DefaultName>Textbox63</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>LightGrey</Color>
+                            <Color>DimGray</Color>
                             <Style>Solid</Style>
                           </Border>
                           <PaddingLeft>2pt</PaddingLeft>
@@ -648,7 +648,7 @@
                             <rd:DefaultName>Textbox65</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
+                                <Color>DimGray</Color>
                                 <Style>Solid</Style>
                               </Border>
                               <PaddingLeft>2pt</PaddingLeft>
@@ -684,7 +684,7 @@
                                 <rd:DefaultName>Textbox92</rd:DefaultName>
                                 <Style>
                                   <Border>
-                                    <Color>LightGrey</Color>
+                                    <Color>DimGray</Color>
                                     <Style>Solid</Style>
                                   </Border>
                                   <PaddingLeft>2pt</PaddingLeft>
@@ -737,10 +737,10 @@
                         <rd:DefaultName>fecha</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>LightGrey</Color>
+                            <Color>DimGray</Color>
                             <Style>Solid</Style>
                           </Border>
-                          <BackgroundColor>Silver</BackgroundColor>
+                          <BackgroundColor>LightGrey</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -783,7 +783,7 @@
                             <rd:DefaultName>comprobanteInterno</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
+                                <Color>DimGray</Color>
                                 <Style>Solid</Style>
                               </Border>
                               <PaddingLeft>2pt</PaddingLeft>
@@ -828,7 +828,7 @@
                                 <rd:DefaultName>concepto1</rd:DefaultName>
                                 <Style>
                                   <Border>
-                                    <Color>LightGrey</Color>
+                                    <Color>DimGray</Color>
                                     <Style>Solid</Style>
                                   </Border>
                                   <PaddingLeft>2pt</PaddingLeft>
@@ -870,10 +870,10 @@
                             <rd:DefaultName>Textbox96</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
+                                <Color>DimGray</Color>
                                 <Style>None</Style>
                               </Border>
-                              <BackgroundColor>Silver</BackgroundColor>
+                              <BackgroundColor>LightGrey</BackgroundColor>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
@@ -906,10 +906,10 @@
                                 <rd:DefaultName>Textbox97</rd:DefaultName>
                                 <Style>
                                   <Border>
-                                    <Color>LightGrey</Color>
+                                    <Color>DimGray</Color>
                                     <Style>None</Style>
                                   </Border>
-                                  <BackgroundColor>Silver</BackgroundColor>
+                                  <BackgroundColor>LightGrey</BackgroundColor>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -947,10 +947,10 @@
                         <rd:DefaultName>Textbox11</rd:DefaultName>
                         <Style>
                           <Border>
-                            <Color>LightGrey</Color>
+                            <Color>DimGray</Color>
                             <Style>Solid</Style>
                           </Border>
-                          <BackgroundColor>Gray</BackgroundColor>
+                          <BackgroundColor>Silver</BackgroundColor>
                           <PaddingLeft>2pt</PaddingLeft>
                           <PaddingRight>2pt</PaddingRight>
                           <PaddingTop>2pt</PaddingTop>
@@ -983,10 +983,10 @@
                             <rd:DefaultName>Textbox12</rd:DefaultName>
                             <Style>
                               <Border>
-                                <Color>LightGrey</Color>
+                                <Color>DimGray</Color>
                                 <Style>None</Style>
                               </Border>
-                              <BackgroundColor>Gray</BackgroundColor>
+                              <BackgroundColor>Silver</BackgroundColor>
                               <PaddingLeft>2pt</PaddingLeft>
                               <PaddingRight>2pt</PaddingRight>
                               <PaddingTop>2pt</PaddingTop>
@@ -1019,10 +1019,10 @@
                                 <rd:DefaultName>Textbox13</rd:DefaultName>
                                 <Style>
                                   <Border>
-                                    <Color>LightGrey</Color>
+                                    <Color>DimGray</Color>
                                     <Style>None</Style>
                                   </Border>
-                                  <BackgroundColor>Gray</BackgroundColor>
+                                  <BackgroundColor>Silver</BackgroundColor>
                                   <PaddingLeft>2pt</PaddingLeft>
                                   <PaddingRight>2pt</PaddingRight>
                                   <PaddingTop>2pt</PaddingTop>
@@ -1075,7 +1075,7 @@
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="LIBRO DIARIO: " &amp; Parameters!periodo.Value</Value>
+                      <Value>=Parameters!periodo.Value</Value>
                       <Style>
                         <FontWeight>Bold</FontWeight>
                       </Style>
@@ -1088,39 +1088,9 @@
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
               <Top>0.85493cm</Top>
-              <Left>5.99232cm</Left>
-              <Height>0.6cm</Height>
-              <Width>13.23526cm</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox26">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Pagina " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox26</rd:DefaultName>
-              <Top>0.85493cm</Top>
               <Left>0.22757cm</Left>
               <Height>0.6cm</Height>
-              <Width>5.25167cm</Width>
-              <ZIndex>1</ZIndex>
+              <Width>19.00001cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1143,28 +1113,27 @@
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
-            <Textbox Name="Textbox4">
+            <Textbox Name="Textbox26">
               <CanGrow>true</CanGrow>
               <KeepTogether>true</KeepTogether>
               <Paragraphs>
                 <Paragraph>
                   <TextRuns>
                     <TextRun>
-                      <Value>="Fecha de impresion:  " &amp; Now()</Value>
-                      <Style>
-                        <FontStyle>Italic</FontStyle>
-                      </Style>
+                      <Value>="Pagina " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value>
+                      <Style />
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
-              <rd:DefaultName>Textbox3</rd:DefaultName>
+              <rd:DefaultName>Textbox26</rd:DefaultName>
               <Top>0.17639cm</Top>
+              <Left>7.4056cm</Left>
               <Height>0.6cm</Height>
-              <Width>19.45515cm</Width>
+              <Width>5.25167cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>

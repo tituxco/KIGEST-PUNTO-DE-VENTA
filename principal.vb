@@ -52,7 +52,7 @@ Public Class frmprincipal
 
             cargar_valores_generales()
         Else
-            Me.Text = "V- " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.MajorRevision & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.MinorRevision & " - Usuario: " & DatosAcceso.Cliente
+            Me.Text = "V- " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.MajorRevision & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.MinorRevision & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
 
             cargar_valores_generales()

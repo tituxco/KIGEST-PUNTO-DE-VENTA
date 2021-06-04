@@ -1459,6 +1459,10 @@ Partial Public Class datosContable
         
         Private columnnumeroCuenta As Global.System.Data.DataColumn
         
+        Private columncuentaResultado As Global.System.Data.DataColumn
+        
+        Private columncuentaMovimiento As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub New()
@@ -1575,6 +1579,22 @@ Partial Public Class datosContable
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property cuentaResultadoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columncuentaResultado
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public ReadOnly Property cuentaMovimientoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columncuentaMovimiento
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -1611,9 +1631,9 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddbalanceCuentasRow(ByVal grupo As String, ByVal subGrupo As String, ByVal cuenta As String, ByVal subCuenta As String, ByVal cuentaDetalle As String, ByVal nombreCuenta As String, ByVal MES As Double, ByVal saldoFinal As Double, ByVal Ejercicio As Double, ByVal numeroCuenta As String) As balanceCuentasRow
+        Public Overloads Function AddbalanceCuentasRow(ByVal grupo As Integer, ByVal subGrupo As Integer, ByVal cuenta As Integer, ByVal subCuenta As Integer, ByVal cuentaDetalle As Integer, ByVal nombreCuenta As String, ByVal MES As Double, ByVal saldoFinal As Double, ByVal Ejercicio As Double, ByVal numeroCuenta As String, ByVal cuentaResultado As Boolean, ByVal cuentaMovimiento As Boolean) As balanceCuentasRow
             Dim rowbalanceCuentasRow As balanceCuentasRow = CType(Me.NewRow,balanceCuentasRow)
-            Dim columnValuesArray() As Object = New Object() {grupo, subGrupo, cuenta, subCuenta, cuentaDetalle, nombreCuenta, MES, saldoFinal, Ejercicio, numeroCuenta}
+            Dim columnValuesArray() As Object = New Object() {grupo, subGrupo, cuenta, subCuenta, cuentaDetalle, nombreCuenta, MES, saldoFinal, Ejercicio, numeroCuenta, cuentaResultado, cuentaMovimiento}
             rowbalanceCuentasRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowbalanceCuentasRow)
             Return rowbalanceCuentasRow
@@ -1646,20 +1666,22 @@ Partial Public Class datosContable
             Me.columnsaldoFinal = MyBase.Columns("saldoFinal")
             Me.columnEjercicio = MyBase.Columns("Ejercicio")
             Me.columnnumeroCuenta = MyBase.Columns("numeroCuenta")
+            Me.columncuentaResultado = MyBase.Columns("cuentaResultado")
+            Me.columncuentaMovimiento = MyBase.Columns("cuentaMovimiento")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columngrupo = New Global.System.Data.DataColumn("grupo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columngrupo = New Global.System.Data.DataColumn("grupo", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columngrupo)
-            Me.columnsubGrupo = New Global.System.Data.DataColumn("subGrupo", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnsubGrupo = New Global.System.Data.DataColumn("subGrupo", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnsubGrupo)
-            Me.columncuenta = New Global.System.Data.DataColumn("cuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columncuenta = New Global.System.Data.DataColumn("cuenta", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncuenta)
-            Me.columnsubCuenta = New Global.System.Data.DataColumn("subCuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnsubCuenta = New Global.System.Data.DataColumn("subCuenta", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnsubCuenta)
-            Me.columncuentaDetalle = New Global.System.Data.DataColumn("cuentaDetalle", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columncuentaDetalle = New Global.System.Data.DataColumn("cuentaDetalle", GetType(Integer), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncuentaDetalle)
             Me.columnnombreCuenta = New Global.System.Data.DataColumn("nombreCuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnnombreCuenta)
@@ -1671,6 +1693,10 @@ Partial Public Class datosContable
             MyBase.Columns.Add(Me.columnEjercicio)
             Me.columnnumeroCuenta = New Global.System.Data.DataColumn("numeroCuenta", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnnumeroCuenta)
+            Me.columncuentaResultado = New Global.System.Data.DataColumn("cuentaResultado", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columncuentaResultado)
+            Me.columncuentaMovimiento = New Global.System.Data.DataColumn("cuentaMovimiento", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columncuentaMovimiento)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2855,10 +2881,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property grupo() As String
+        Public Property grupo() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tablebalanceCuentas.grupoColumn),String)
+                    Return CType(Me(Me.tablebalanceCuentas.grupoColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'grupo' de la tabla 'balanceCuentas' es DBNull.", e)
                 End Try
@@ -2870,10 +2896,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property subGrupo() As String
+        Public Property subGrupo() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tablebalanceCuentas.subGrupoColumn),String)
+                    Return CType(Me(Me.tablebalanceCuentas.subGrupoColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'subGrupo' de la tabla 'balanceCuentas' es DBNull.", e)
                 End Try
@@ -2885,10 +2911,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property cuenta() As String
+        Public Property cuenta() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tablebalanceCuentas.cuentaColumn),String)
+                    Return CType(Me(Me.tablebalanceCuentas.cuentaColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cuenta' de la tabla 'balanceCuentas' es DBNull.", e)
                 End Try
@@ -2900,10 +2926,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property subCuenta() As String
+        Public Property subCuenta() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tablebalanceCuentas.subCuentaColumn),String)
+                    Return CType(Me(Me.tablebalanceCuentas.subCuentaColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'subCuenta' de la tabla 'balanceCuentas' es DBNull.", e)
                 End Try
@@ -2915,10 +2941,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property cuentaDetalle() As String
+        Public Property cuentaDetalle() As Integer
             Get
                 Try 
-                    Return CType(Me(Me.tablebalanceCuentas.cuentaDetalleColumn),String)
+                    Return CType(Me(Me.tablebalanceCuentas.cuentaDetalleColumn),Integer)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cuentaDetalle' de la tabla 'balanceCuentas' es DBNull.", e)
                 End Try
@@ -3000,6 +3026,37 @@ Partial Public Class datosContable
             End Get
             Set
                 Me(Me.tablebalanceCuentas.numeroCuentaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property cuentaResultado() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tablebalanceCuentas.cuentaResultadoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cuentaResultado' de la tabla 'balanceCuentas' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablebalanceCuentas.cuentaResultadoColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Property cuentaMovimiento() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tablebalanceCuentas.cuentaMovimientoColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'cuentaMovimiento' de la tabla 'balanceCuentas' es DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablebalanceCuentas.cuentaMovimientoColumn) = value
             End Set
         End Property
         
@@ -3121,6 +3178,30 @@ Partial Public Class datosContable
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Public Sub SetnumeroCuentaNull()
             Me(Me.tablebalanceCuentas.numeroCuentaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IscuentaResultadoNull() As Boolean
+            Return Me.IsNull(Me.tablebalanceCuentas.cuentaResultadoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetcuentaResultadoNull()
+            Me(Me.tablebalanceCuentas.cuentaResultadoColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Function IscuentaMovimientoNull() As Boolean
+            Return Me.IsNull(Me.tablebalanceCuentas.cuentaMovimientoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
+        Public Sub SetcuentaMovimientoNull()
+            Me(Me.tablebalanceCuentas.cuentaMovimientoColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

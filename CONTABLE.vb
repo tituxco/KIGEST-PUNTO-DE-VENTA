@@ -4410,7 +4410,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             'End If
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", DatosAcceso.sistema & " LIBRO DIARIO " & cmbperiodoLibroDiario.Text))
             With imprimirx
                 .MdiParent = Me.MdiParent
                 .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
@@ -4525,7 +4525,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
                 LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'
                 ),0) as saldoAnterior,
-                 CTA.cuentaMovimiento                											
+                 CTA.cuentaMovimiento,CTA.cuentaResultado                											
                 from cm_planDeCuentas as CTA 	
                 order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
                 Dim tabBalance As New DataTable
@@ -4540,6 +4540,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Dim saldoAnterior As Double = 0
                     Dim saldoFinal As Double = 0
                     Dim Ejercicio As Double = 0
+
 
                     movMes = cuentaBalance.Item("MES")
                     saldoAnterior = cuentaBalance.Item("saldoAnterior")
@@ -4557,6 +4558,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         cuentaBalance.Item("cuenta"),
                         cuentaBalance.Item("subCuenta"),
                         cuentaBalance.Item("cuentaDetalle"),
+                        cuentaBalance.Item("cuentaResultado"),
+                        cuentaBalance.Item("cuentaMovimiento"),
                         cuentaBalance.Item("nombreCuenta"),
                         FormatCurrency(movMes, 2),
                         FormatCurrency(saldoFinal, 2),
@@ -4577,12 +4580,15 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                 For Each fila As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
                     Dim ejercicio As Double = 0
+                    Dim mtoMes As Double = 0
+
                     If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value = 0 And fila.Cells("Cuenta").Value = 0 And fila.Cells("subGrupo").Value = 0 Then
                         infoBalance = datosContables.Tables("balanceCuentas").Select(
                             "grupo=" & fila.Cells("grupo").Value)
 
                         For Each monto As DataRow In infoBalance
                             ejercicio += monto("saldoFinal")
+                            mtoMes += monto("MES")
                         Next
                         fila.DefaultCellStyle.BackColor = Color.Coral
                     End If
@@ -4594,6 +4600,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                         For Each monto As DataRow In infoBalance
                             ejercicio += monto("saldoFinal")
+                            mtoMes += monto("MES")
                         Next
                         fila.DefaultCellStyle.BackColor = Color.ForestGreen
                     End If
@@ -4606,6 +4613,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                         For Each monto As DataRow In infoBalance
                             ejercicio += monto("saldoFinal")
+                            mtoMes += monto("MES")
                         Next
                         fila.DefaultCellStyle.BackColor = Color.Aqua
                     End If
@@ -4618,20 +4626,103 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                             "and subCuenta= " & fila.Cells("subCuenta").Value)
 
                         For Each monto As DataRow In infoBalance
-                            ejercicio += monto("MES")
+                            ejercicio += monto("saldoFinal")
+                            mtoMes += monto("MES")
                         Next
                         fila.DefaultCellStyle.BackColor = Color.GreenYellow
                     End If
 
-                    If fila.Cells("cuentaDetalle").Value = 0 And fila.Cells("subCuenta").Value <> 0 And fila.Cells("Cuenta").Value <> 0 And fila.Cells("subGrupo").Value <> 0 Then
-                        fila.Cells("MES").Value = FormatCurrency(ejercicio, 2)
-                    Else
-                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
-                    End If
+                    txtlog.Text &= fila.Cells("cuentaDetalle").Value & "//" &
+                    fila.Cells("subCuenta").Value & "//" &
+                    fila.Cells("cuenta").Value & "//" &
+                    fila.Cells("subGrupo").Value & "//" &
+                    fila.Cells("cuentaResultado").Value & "//" &
+                    fila.Cells("cuentaMovimiento").Value & "//" & vbNewLine
 
-                    'If fila.Cells("Ejercicio").Value = 0 And fila.Cells("MES").Value = 0 And fila.Cells("saldoFinal").Value = 0 Then
-                    '    dgvListadoCuentaConSaldos.Rows.RemoveAt(fila.Index)
-                    'End If
+                    If fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value <> 0 And
+                        fila.Cells("cuenta").Value <> 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = True And
+                        fila.Cells("cuentaMovimiento").Value = False Then
+                        '    MsgBox("cuenta resultado1")
+
+                        fila.Cells("MES").Value = FormatCurrency(mtoMes, 2)
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value <> 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = True And
+                        fila.Cells("cuentaMovimiento").Value = False Then
+                        'MsgBox("cuenta resultado2")
+
+                        fila.Cells("MES").Value = FormatCurrency(mtoMes, 2)
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value = 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = True And
+                        fila.Cells("cuentaMovimiento").Value = False Then
+                        'MsgBox("cuenta resultado3")
+
+                        fila.Cells("MES").Value = FormatCurrency(mtoMes, 2)
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value = 0 And
+                        fila.Cells("subGrupo").Value = 0 And
+                        fila.Cells("cuentaResultado").Value = True And
+                        fila.Cells("cuentaMovimiento").Value = False Then
+                        'MsgBox("cuenta resultado4")
+
+                        fila.Cells("MES").Value = FormatCurrency(mtoMes, 2)
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value <> 0 And
+                        fila.Cells("cuenta").Value <> 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = 0 And
+                        fila.Cells("cuentaMovimiento").Value = 0 Then
+
+
+                        fila.Cells("MES").Value = FormatCurrency(mtoMes, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value <> 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = 0 And
+                        fila.Cells("cuentaMovimiento").Value = 0 Then
+
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value = 0 And
+                        fila.Cells("subGrupo").Value <> 0 And
+                        fila.Cells("cuentaResultado").Value = 0 And
+                        fila.Cells("cuentaMovimiento").Value = 0 Then
+
+
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    ElseIf fila.Cells("cuentaDetalle").Value = 0 And
+                        fila.Cells("subCuenta").Value = 0 And
+                        fila.Cells("cuenta").Value = 0 And
+                        fila.Cells("subGrupo").Value = 0 And
+                        fila.Cells("cuentaResultado").Value = 0 And
+                        fila.Cells("cuentaMovimiento").Value = 0 Then
+
+                        fila.Cells("Ejercicio").Value = FormatCurrency(ejercicio, 2)
+
+                    End If
                 Next
 
 
@@ -4745,6 +4836,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 columna13.Visible = False
                 dgvListadoCuentaConSaldos.Columns.Add(columna13)
 
+                Dim columna14 As New DataGridViewTextBoxColumn
+                columna14.Name = "cuentaResultado"
+                columna14.HeaderText = "cuentaResultado"
+                columna14.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna14)
+
+                Dim columna15 As New DataGridViewTextBoxColumn
+                columna15.Name = "cuentaMovimiento"
+                columna15.HeaderText = "cuentaMovimiento"
+                columna15.Visible = False
+                dgvListadoCuentaConSaldos.Columns.Add(columna15)
+
                 Dim columna3 As New DataGridViewTextBoxColumn
                 columna3.Name = "nombreCuenta"
                 columna3.HeaderText = "nombreCuenta"
@@ -4764,7 +4867,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                 Dim columna6 As New DataGridViewTextBoxColumn
                 columna6.Name = "EJERCICIO"
-                columna6.HeaderText = "TOTAL"
+                columna6.HeaderText = "EJERCICIO"
                 columna6.FillWeight = 50
                 dgvListadoCuentaConSaldos.Columns.Add(columna6)
 
@@ -4944,9 +5047,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
             If rdCuentasIndividuales.Checked = True Then
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.Cliente & " PERIODO " & cmbPeriodoLibroMayor.Text & " CUENTA: " & cmbCuentas.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.sistema & " PERIODO " & cmbPeriodoLibroMayor.Text & " CUENTA: " & cmbCuentas.Text))
             Else
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.Cliente & " PERIODO " & cmbPeriodoLibroMayor.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.sistema & " PERIODO " & cmbPeriodoLibroMayor.Text))
             End If
             With imprimirx
                 .MdiParent = Me.MdiParent
@@ -4998,7 +5101,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Next
                 Dim imprimirx As New imprimirFX
                 Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbBalCtasPeriodo.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", DatosAcceso.sistema & " LISTADO DE CUENTAS CON SALDOS " & cmbBalCtasPeriodo.Text))
                 With imprimirx
                     .MdiParent = Me.MdiParent
                     .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
@@ -5026,16 +5129,16 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                     CDbl(cuenta.Cells("MES").Value),
                                     CDbl(cuenta.Cells("saldoFinal").Value),
                                     CDbl(cuenta.Cells("EJERCICIO").Value),
-                                    cuenta.Cells("numCuenta").Value
+                                    cuenta.Cells("numCuenta").Value,
+                                    cuenta.Cells("cuentaResultado").Value,
+                                    cuenta.Cells("cuentaMovimiento").Value
                                     )
 
                 Next
 
-
-
                 Dim imprimirx As New imprimirFX
                 Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbBalCtasPeriodo.Text))
+                parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", DatosAcceso.sistema & " BALANCE " & cmbBalCtasPeriodo.Text))
                 With imprimirx
                     .MdiParent = Me.MdiParent
                     .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local

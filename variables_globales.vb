@@ -11,6 +11,7 @@
     Public Structure DatosUsuario
         Public Property Moduloacc As String
         Public Property Cliente As String
+        Public Property sistema As String
         Public Property usuario As String
         Public Property pass As String
         Public Property bd As String

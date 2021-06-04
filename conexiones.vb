@@ -67,7 +67,7 @@ Module Conexiones
             Dim leerAuth As IDataReader
             Dim i As Integer
 
-            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,concat(cliente,' - ',sistema), usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt from CliAuth where clave like '" & clav & "' and codus like '" & user & "'", conexionAuth)
+            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,cliente,sistema, usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt from CliAuth where clave like '" & clav & "' and codus like '" & user & "'", conexionAuth)
             Dim tablaauth As New DataTable
             Dim infoauth() As DataRow
             consultaauth.Fill(tablaauth)
@@ -79,26 +79,27 @@ Module Conexiones
                 Exit Function
             End If
 
-            If infoauth(0)(4) = 1 Then
-                serv = infoauth(0)(5)
-                port = infoauth(0)(7)
-                database = infoauth(0)(6)
-                user = infoauth(0)(3)
-                clie = infoauth(0)(2)
-                pass = infoauth(0)(1)
-                codus = infoauth(0)(0)
-                idInt = infoauth(0)(10)
+            If infoauth(0)("autorizado") = 1 Then
+                serv = infoauth(0)("servidor")
+                port = infoauth(0)("puerto")
+                database = infoauth(0)("bd")
+                user = infoauth(0)("usuario")
+                clie = infoauth(0)("cliente")
+                pass = infoauth(0)("pass")
+                codus = infoauth(0)("codus")
+                idInt = infoauth(0)("idInt")
 
 
-                DatosAcceso.pass = infoauth(0)(1)
-                DatosAcceso.Cliente = infoauth(0)(2)
-                DatosAcceso.usuario = infoauth(0)(3)
-                DatosAcceso.CLOUDserv = infoauth(0)(5)
-                DatosAcceso.bd = infoauth(0)(6)
-                DatosAcceso.puerto = infoauth(0)(7)
-                DatosAcceso.Moduloacc = infoauth(0)(8)
-                DatosAcceso.RESPserv = infoauth(0)(9)
-                DatosAcceso.UsuarioINT = infoauth(0)(10)
+                DatosAcceso.pass = infoauth(0)("pass")
+                DatosAcceso.Cliente = infoauth(0)("cliente")
+                DatosAcceso.sistema = infoauth(0)("sistema")
+                DatosAcceso.usuario = infoauth(0)("usuario")
+                DatosAcceso.CLOUDserv = infoauth(0)("servidor")
+                DatosAcceso.bd = infoauth(0)("bd")
+                DatosAcceso.puerto = infoauth(0)("puerto")
+                DatosAcceso.Moduloacc = infoauth(0)("modulo")
+                DatosAcceso.RESPserv = infoauth(0)("servidor_resp")
+                DatosAcceso.UsuarioINT = infoauth(0)("idInt")
                 'If conectar(serv, port, user, pass, database) = True Then
                 'Return True
                 'End If
