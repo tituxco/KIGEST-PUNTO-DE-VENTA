@@ -93,6 +93,7 @@ Public Class frmInicializar2
                 pbprogresocons.Visible = False
             End If
         Catch ex As Exception
+            MsgBox(ex.Message)
             pbprogresocons.Visible = False
         End Try
 
