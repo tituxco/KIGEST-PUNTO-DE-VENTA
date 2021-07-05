@@ -1548,7 +1548,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>COMISIONES POR OBJETIVOS</Value>
+                    <Value>COMISION ADICIONAL POR OBJETIVOS</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
                     </Style>
@@ -1754,7 +1754,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>COMISION POR VENTAS:</Value>
+                    <Value>COMISION POR VENTAS GRAL:</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1766,9 +1766,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>10.0268cm</Top>
-            <Left>9.555cm</Left>
+            <Left>8.66863cm</Left>
             <Height>0.6cm</Height>
-            <Width>3.99702cm</Width>
+            <Width>5.24056cm</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -1788,7 +1788,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>COMISION POR OBJETIVOS:</Value>
+                    <Value>ADICIONAL POR OBJETIVOS:</Value>
                     <Style>
                       <FontSize>9pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -1800,9 +1800,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>10.80319cm</Top>
-            <Left>9.555cm</Left>
+            <Left>8.66863cm</Left>
             <Height>0.6cm</Height>
-            <Width>4.97598cm</Width>
+            <Width>5.24056cm</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -1837,9 +1837,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>10.0268cm</Top>
-            <Left>13.69313cm</Left>
+            <Left>14.19427cm</Left>
             <Height>0.6cm</Height>
-            <Width>4.13394cm</Width>
+            <Width>3.59221cm</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -1873,9 +1873,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>10.76791cm</Top>
-            <Left>14.67209cm</Left>
+            <Left>14.20995cm</Left>
             <Height>0.6cm</Height>
-            <Width>4.13394cm</Width>
+            <Width>3.57653cm</Width>
             <ZIndex>14</ZIndex>
             <Style>
               <Border>
@@ -1906,9 +1906,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
             <Top>11.57958cm</Top>
-            <Left>9.555cm</Left>
+            <Left>8.66863cm</Left>
             <Height>0.6cm</Height>
-            <Width>3.99702cm</Width>
+            <Width>4.38329cm</Width>
             <ZIndex>15</ZIndex>
             <Style>
               <Border>
@@ -1942,8 +1942,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox26</rd:DefaultName>
-            <Top>11.5443cm</Top>
-            <Left>13.69313cm</Left>
+            <Top>11.57958cm</Top>
+            <Left>13.65254cm</Left>
             <Height>0.6cm</Height>
             <Width>4.13394cm</Width>
             <ZIndex>16</ZIndex>
@@ -1956,6 +1956,76 @@
               <PaddingTop>2pt</PaddingTop>
               <PaddingBottom>2pt</PaddingBottom>
               <rd:FormatSymbolCulture>es-AR</rd:FormatSymbolCulture>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox43">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>VENTA EFECTIVA:</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox26</rd:DefaultName>
+            <Top>11.5443cm</Top>
+            <Left>0.49554cm</Left>
+            <Height>0.6cm</Height>
+            <Width>3.58302cm</Width>
+            <ZIndex>17</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <BackgroundColor>Silver</BackgroundColor>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox44">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>=Sum(Fields!pventa.Value, "ventasTotales")-Sum(Fields!pventa.Value, "devoluciones")</Value>
+                    <Style>
+                      <FontSize>9pt</FontSize>
+                      <FontWeight>Bold</FontWeight>
+                      <Format>#,0.00</Format>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style>
+                  <TextAlign>Left</TextAlign>
+                </Style>
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox26</rd:DefaultName>
+            <Top>11.57958cm</Top>
+            <Left>4.25495cm</Left>
+            <Height>0.6cm</Height>
+            <Width>3.13474cm</Width>
+            <ZIndex>18</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
             </Style>
           </Textbox>
         </ReportItems>

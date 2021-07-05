@@ -410,21 +410,26 @@
             Dim precioTOT As String = txttotaltrabajo.Text.ToString.Replace(".", "").Replace(",", ".")
             Dim sqlQuery As String
             Dim codInt As String = txtcodint.Text
+
             Reconectar()
             sqlQuery = "INSERT INTO tecni_taller(id,equipo,trab_estado,tecnico,estado,falla,tarea_realiz,
             observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie,
-            cliente, motivo_ing,accesorios,fecha_ing,fecha_eg,modelo,trabajo_categoria,recibe) VALUES(
+            cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(
             ?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins,
             ?preciomo,?extra,?presup,?mail,?telefono,?serie,
-            ?cliente,?motivoIng,?accesorios,?fechaIng,?fechaEg,?modeloEq,?trabCateg,?recibe)    
+            ?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe)    
             
             ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, 
             tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, 
             observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, 
             mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, 
             telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng,
-            accesorios=?accesorios,fecha_ing=?fechaIng,fecha_eg=?fechaEg,modelo=?modeloEq,
+            accesorios=?accesorios,fecha_ing=?fechaIng,modelo=?modeloEq,
             trabajo_categoria=?trabCateg,recibe=?recibe"
+
+
+
+            'Dim feg As String
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
@@ -446,8 +451,9 @@
                 .AddWithValue("?cliente", cliente)
                 .AddWithValue("?motivoIng", motivoIng)
                 .AddWithValue("?accesorios", accesorios)
-                .AddWithValue("?fechaIng", Format(FECHAGRAL, "yyyy-MM-dd"))
-                .AddWithValue("?fechaEg", Format(FECHAGRAL, "yyyy-MM-dd"))
+                .AddWithValue("?fechaIng", Format(CDate(lblfecha.Text.Replace("Ingreso: ", "").ToString), "yyyy-MM-dd"))
+
+                '.AddWithValue("?fechaEg", Format(FECHAGRAL, "yyyy-MM-dd"))
                 .AddWithValue("?modeloEq", modelo)
                 .AddWithValue("?trabCateg", trabajoCategoria)
                 .AddWithValue("?recibe", recibe)

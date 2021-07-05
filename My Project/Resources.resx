@@ -178,6 +178,9 @@
   <data name="Sync_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Sync_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="To Do_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\To Do_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="I'd kill for you. Please ask me to kill for you." type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\I'd kill for you. Please ask me to kill for you..png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -231,6 +234,9 @@
   </data>
   <data name="Sync_32px1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Sync_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Save_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\Save_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="services_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\services_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -346,7 +352,7 @@
   <data name="OOo Math" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OOo Math.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="To Do_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\To Do_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8_Versions_64px_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\icons8_Versions_64px_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

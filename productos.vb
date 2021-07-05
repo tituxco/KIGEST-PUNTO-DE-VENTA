@@ -5,6 +5,7 @@ Imports System.Data.OleDb
 Public Class productos
     Dim modificaProd As Boolean
     Dim imprimirlist As Boolean
+    Dim imprimirEtiqu As Boolean
     Dim elimColumn As Boolean
     Dim proveedorimport As Integer
     Dim categoriaimport As Integer
@@ -358,11 +359,48 @@ Public Class productos
                 DgvProductos.Cargar_Datos(tablaprod)
                 'dtproductos.DataSource = tablaprod
                 'dtproductos.Columns(0).Visible = False
-            ElseIf imprimirlist = True Then
+            ElseIf imprimirEtiqu = True Then
                 Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
                 Dim fac As New datosfacturas
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as codigo, descripcion FROM fact_insumos " & cadenaComp, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.id as CodInterno, pro.descripcion, pro.codigo as PLU,
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock,   
+                case (select position('%' in listas.utilidad) from fact_listas_precio as listas where listas.id=@idlst)
+                when 0 then
+                format(
+						replace(replace(pro.precio,'.',''),',','.') *
+						((select mon.cotizacion from fact_moneda as mon where mon.id=pro.moneda)) *
+						((pro.iva+100)/100) *
+                        case(select listas.auxcol from fact_listas_precio as listas where listas.id=@idlst) 
+							when 0 then
+								((replace(replace(pro.ganancia,'.',''),',','.') +100)/100)
+							when 1 then
+								((replace(replace(pro.utilidad1,'.',''),',','.')+100)/100)
+							when 2 then
+								((replace(replace(pro.utilidad2,'.',''),',','.')+100)/100)
+							when 3 then
+								((replace(replace(pro.utilidad3,'.',''),',','.')+100)/100)
+							when 4 then
+								((replace(replace(pro.utilidad4,'.',''),',','.')+100)/100)
+							when 5 then
+								((replace(replace(pro.utilidad5,'.',''),',','.')+100)/100)
+                                end *
+                        (((select listas.utilidad from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
+				,2,'es_AR')
+                when 1 then
+                format(
+						replace(replace(pro.precio,'.',''),',','.') *
+						((select mon.cotizacion from fact_moneda as mon where mon.id=pro.moneda)) *
+						((pro.iva+100)/100) *						
+						(((select substring(listas.utilidad from 2) from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
+				,2,'es_AR')
+                end as precio, 
+                
+                cat.nombre as categoria
+                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
+                consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
+                consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
+
                 'Dim filasProd() As DataRow
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
@@ -377,7 +415,7 @@ Public Class productos
                 With imprimirx
                     .MdiParent = Me.MdiParent
                     .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoproductos.rdlc"
+                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\productosetiquetas.rdlc"
                     .rptfx.LocalReport.DataSources.Clear()
                     .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
                     .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadoproductos")))
@@ -1057,7 +1095,8 @@ Public Class productos
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 
         Try
-            imprimirlist = True
+            imprimirEtiqu = True
+
             cargarProductos(busqCod(txtbuscar.Text), busqNomb(txtbuscar.Text), cmbcatProdGral.SelectedValue)
         Catch ex As Exception
 

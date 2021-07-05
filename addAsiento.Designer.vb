@@ -38,18 +38,19 @@ Partial Class addAsiento
         Me.txtAsientoConcepto = New System.Windows.Forms.TextBox()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.dgvPartidas = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.dgvCuenta = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.cmbBusquedaCuenta = New System.Windows.Forms.ComboBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.lbltotalHaber = New System.Windows.Forms.Label()
         Me.lbltotalDebe = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
+        Me.chkReabrir = New System.Windows.Forms.CheckBox()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.idCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.dgvCuenta = New System.Windows.Forms.DataGridViewComboBoxColumn()
         Me.DEBE = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.HABER = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
@@ -61,6 +62,7 @@ Partial Class addAsiento
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pntitulo.Controls.Add(Me.chkReabrir)
         Me.pntitulo.Controls.Add(Me.txtAsientoNumero)
         Me.pntitulo.Controls.Add(Me.Label1)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
@@ -203,41 +205,13 @@ Partial Class addAsiento
         Me.dgvPartidas.Size = New System.Drawing.Size(785, 257)
         Me.dgvPartidas.TabIndex = 3
         '
-        'DataGridViewTextBoxColumn1
+        'dgvCuenta
         '
-        Me.DataGridViewTextBoxColumn1.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Codigo"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Visible = False
-        Me.DataGridViewTextBoxColumn1.Width = 104
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn2.HeaderText = "DEBE"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        Me.DataGridViewTextBoxColumn2.Width = 105
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridViewTextBoxColumn3.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn3.HeaderText = "HABER"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.Width = 104
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle4
-        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "HABER"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.Width = 70
+        Me.dgvCuenta.HeaderText = "Cuenta"
+        Me.dgvCuenta.Name = "dgvCuenta"
+        Me.dgvCuenta.ReadOnly = True
+        Me.dgvCuenta.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvCuenta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         '
         'cmbBusquedaCuenta
         '
@@ -294,6 +268,53 @@ Partial Class addAsiento
         Me.Label4.Text = "TOTALES:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
+        'chkReabrir
+        '
+        Me.chkReabrir.AutoSize = True
+        Me.chkReabrir.ForeColor = System.Drawing.Color.White
+        Me.chkReabrir.Location = New System.Drawing.Point(653, 40)
+        Me.chkReabrir.Name = "chkReabrir"
+        Me.chkReabrir.Size = New System.Drawing.Size(132, 17)
+        Me.chkReabrir.TabIndex = 78
+        Me.chkReabrir.Text = "Guardar y agregar otro"
+        Me.chkReabrir.UseVisualStyleBackColor = True
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Codigo"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        Me.DataGridViewTextBoxColumn1.Width = 104
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "DEBE"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        Me.DataGridViewTextBoxColumn2.Width = 105
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle3.Format = "C2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridViewTextBoxColumn3.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "HABER"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 104
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "HABER"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Width = 70
+        '
         'idCuenta
         '
         Me.idCuenta.HeaderText = "idCuenta"
@@ -306,14 +327,6 @@ Partial Class addAsiento
         Me.Codigo.HeaderText = "Codigo"
         Me.Codigo.Name = "Codigo"
         Me.Codigo.ReadOnly = True
-        '
-        'dgvCuenta
-        '
-        Me.dgvCuenta.HeaderText = "Cuenta"
-        Me.dgvCuenta.Name = "dgvCuenta"
-        Me.dgvCuenta.ReadOnly = True
-        Me.dgvCuenta.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvCuenta.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic
         '
         'DEBE
         '
@@ -387,4 +400,5 @@ Partial Class addAsiento
     Friend WithEvents dgvCuenta As DataGridViewComboBoxColumn
     Friend WithEvents DEBE As DataGridViewTextBoxColumn
     Friend WithEvents HABER As DataGridViewTextBoxColumn
+    Friend WithEvents chkReabrir As CheckBox
 End Class

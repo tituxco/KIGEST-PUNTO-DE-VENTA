@@ -4400,7 +4400,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LD.codigoAsiento=stos.codigoAsiento and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
             LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%'
-            order by LD.fecha asc", conexionPrinc)
+            ", conexionPrinc)
 
             tabContable.Fill(datosContables.Tables("libroDiario"))
             'Reconectar()
@@ -4487,7 +4487,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                     saldMes = debMes - credMes
                     saldFinal = saldMes + saldAnterior
-                    If saldAnterior = 0 And saldFinal = 0 Then
+                    If saldAnterior = 0 And debMes = 0 And credMes = 0 And saldFinal = 0 Then
                         Continue For
                     End If
                     dgvListadoCuentaConSaldos.Rows.Add(

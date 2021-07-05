@@ -19,6 +19,11 @@
         cmbInforCateg.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
         cmbInforCateg.SelectedIndex = -1
 
+        cmbinfocategObjetivos.DataSource = readCat.Tables(0)
+        cmbinfocategObjetivos.DisplayMember = readCat.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbinfocategObjetivos.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
+        cmbinfocategObjetivos.SelectedIndex = -1
+
         Dim tablaAlmac As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
         Dim readAlmac As New DataSet
         tablaAlmac.Fill(readAlmac)
@@ -525,80 +530,81 @@
                 consulta.Fill(tablaVta)
             End If
 
-            Reconectar()
-            Dim consultaComis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
-			    round(sum(itm.ptotal),2) as MontoVenta,
-                promo.compra_min as VentaObjetivo, promo.descuento_porc as PorcComision,
-                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as MontoComision
-                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_promociones as promo where
-                ins.id=itm.cod and fact.id=itm.id_fact  and itm.cod=promo.idproducto and promo.nombrepromo like 'COMISION PRODUCTO' and
-                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                itm.cod in(select idproducto from fact_promociones where nombrepromo like 'COMISION PRODUCTO') and
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion 
-                having sum(itm.cantidad)>promo.compra_min
-                order by ins.cod_bar asc", conexionPrinc)
-            Dim tablaComis As New DataTable
 
-            consultaComis.Fill(tablaComis)
+            If cmbinfocategObjetivos.SelectedValue <> 0 Then
+                Reconectar()
+                Dim consultaComis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
+            round(sum(itm.ptotal),2) as MontoVenta,
+                     promo.compra_min as VentaObjetivo, promo.descuento_porc as PorcComision,
+                     round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as MontoComision
+                     FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_promociones as promo where
+                     ins.id=itm.cod and fact.id=itm.id_fact  and itm.cod=promo.idproducto and promo.nombrepromo like 'COMISION PRODUCTO' and
+                     itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                     itm.cod in(select idproducto from fact_promociones where nombrepromo like 'COMISION PRODUCTO') and
+                     fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
+                     group by ins.descripcion 
+                     having sum(itm.cantidad)>promo.compra_min
+                     order by ins.cod_bar asc", conexionPrinc)
+                Dim tablaComis As New DataTable
 
-            Dim consultaComisCAT As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('COMISION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
+                consultaComis.Fill(tablaComis)
+
+                Dim consultaComisCAT As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('COMISION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
 			    round(sum(itm.ptotal),2) as montoVenta,
-                'NaN' as ventaObjetivo, promo.descuento_porc as porcComision,
-                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) as montoComision                
-                FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_promociones as promo, fact_insumos as ins                 
+                'NaN' as ventaObjetivo, " & txtporcComisionObjetivo.Text & " AS porcComision,
+                round(sum(itm.ptotal) * (" & txtporcComisionObjetivo.Text & " /100),2) as montoComision                
+                FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_insumos as ins                 
                 where
                 ins.id=itm.cod and 
                 ins.categoria=cat.id and
-                fact.id=itm.id_fact  and 
-                ins.categoria=promo.idcategoria and promo.nombrepromo like 'COMISION CATEGORIA' and
+                fact.id=itm.id_fact  and 		
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                ins.categoria in(select idcategoria from fact_promociones where nombrepromo like 'COMISION CATEGORIA') and
+                ins.categoria in(" & cmbinfocategObjetivos.SelectedValue & ") and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
-            Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('DEVOLUCION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
+                Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('DEVOLUCION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
 			    round(sum(itm.ptotal),2) *-1 as montoVenta,
-                'NaN' as ventaObjetivo, promo.descuento_porc as porcComision,
-                round(sum(itm.ptotal) * (promo.descuento_porc /100),2) *-1 as montoComision                
-                FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_promociones as promo, fact_insumos as ins                 
+                'NaN' as ventaObjetivo, " & txtporcComisionObjetivo.Text & " AS porcComision,
+                round(sum(itm.ptotal) * (" & txtporcComisionObjetivo.Text & " /100),2) *-1 as montoComision                
+                FROM fact_items as itm, fact_categoria_insum as cat, fact_facturas as fact, fact_insumos as ins                 
                 where
                 ins.id=itm.cod and 
                 ins.categoria=cat.id and
-                fact.id=itm.id_fact  and 
-                ins.categoria=promo.idcategoria and promo.nombrepromo like 'COMISION CATEGORIA' and
+                fact.id=itm.id_fact  and 		
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
-                ins.categoria in(select idcategoria from fact_promociones where nombrepromo like 'COMISION CATEGORIA') and
+                ins.categoria in(" & cmbinfocategObjetivos.SelectedValue & ") and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
-            Dim tablaComisCat As New DataTable
-            Dim tablacomiscatDEV As New DataTable
-            consultaComisCAT.Fill(tablaComisCat)
-            consultaComisDEV.Fill(tablacomiscatDEV)
-            'MsgBox(tablacomiscatDEV.Rows.Count)
-            'If tablacomiscatDEV.Rows.Count > 1 Then
-            tablaComisCat.Merge(tablacomiscatDEV)
-            'End If
-            Dim i As Integer
-            For i = 0 To tablaComisCat.Rows.Count - 1
-                Dim FilaCat As DataRow = tablaComis.NewRow()
-                FilaCat("codigo") = tablaComisCat.Rows(i).Item(0)
-                FilaCat("descripcion") = tablaComisCat.Rows(i).Item(1)
-                FilaCat("cantidadVendida") = tablaComisCat.Rows(i).Item(2)
-                If IsDBNull(tablaComisCat.Rows(i).Item(3)) Then
-                    FilaCat("montoVenta") = 0
-                Else
-                    FilaCat("montoVenta") = tablaComisCat.Rows(i).Item(3)
-                End If
-                FilaCat("ventaObjetivo") = tablaComisCat.Rows(i).Item(4)
-                FilaCat("porcComision") = tablaComisCat.Rows(i).Item(5)
-                If IsDBNull(tablaComisCat.Rows(i).Item(6)) Then
-                    FilaCat("montoComision") = 0
-                Else
-                    FilaCat("montoComision") = tablaComisCat.Rows(i).Item(6)
-                End If
-                tablaComis.Rows.Add(FilaCat)
-            Next
-
+                Dim tablaComisCat As New DataTable
+                Dim tablacomiscatDEV As New DataTable
+                consultaComisCAT.Fill(tablaComisCat)
+                consultaComisDEV.Fill(tablacomiscatDEV)
+                'MsgBox(tablacomiscatDEV.Rows.Count)
+                'If tablacomiscatDEV.Rows.Count > 1 Then
+                tablaComisCat.Merge(tablacomiscatDEV)
+                'End If
+                Dim i As Integer
+                For i = 0 To tablaComisCat.Rows.Count - 1
+                    Dim FilaCat As DataRow = tablaComis.NewRow()
+                    FilaCat("codigo") = tablaComisCat.Rows(i).Item(0)
+                    FilaCat("descripcion") = tablaComisCat.Rows(i).Item(1)
+                    FilaCat("cantidadVendida") = tablaComisCat.Rows(i).Item(2)
+                    If IsDBNull(tablaComisCat.Rows(i).Item(3)) Then
+                        FilaCat("montoVenta") = 0
+                    Else
+                        FilaCat("montoVenta") = tablaComisCat.Rows(i).Item(3)
+                    End If
+                    FilaCat("ventaObjetivo") = tablaComisCat.Rows(i).Item(4)
+                    FilaCat("porcComision") = tablaComisCat.Rows(i).Item(5)
+                    If IsDBNull(tablaComisCat.Rows(i).Item(6)) Then
+                        FilaCat("montoComision") = 0
+                    Else
+                        FilaCat("montoComision") = tablaComisCat.Rows(i).Item(6)
+                    End If
+                    tablaComis.Rows.Add(FilaCat)
+                Next
+                dtgcomisiones.DataSource = tablaComis
+            End If
             dtventashistoricas.DataSource = tablaVta
-            dtgcomisiones.DataSource = tablaComis
+
             dtdevoluciones.DataSource = tablaDev
 
 

@@ -19,7 +19,7 @@
       <Fields>
         <Field Name="fecha">
           <DataField>fecha</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
         <Field Name="codigoAsiento">
           <DataField>codigoAsiento</DataField>
@@ -43,11 +43,11 @@
         </Field>
         <Field Name="importeDebe">
           <DataField>importeDebe</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
         <Field Name="importeHaber">
           <DataField>importeHaber</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
+          <rd:TypeName>System.Double</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
@@ -728,6 +728,7 @@
                                 <Value>=Fields!fecha.Value</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
+                                  <Format>d</Format>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -747,6 +748,7 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
+                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>

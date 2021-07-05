@@ -9,6 +9,13 @@ Module funciones_Globales
 
     Public idFactura As Integer
 
+
+    Public Sub ReabrirFormulario(formulario As Form)
+        'formulario.Close()
+        'Dim reabre As New formulario
+
+        'formulario.Show()
+    End Sub
     Public Function ObtenerFechaFacturaElectro(numFac As Integer, tipoFac As Integer) As String
         Try
             Reconectar()

@@ -575,7 +575,7 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Overloads Function AddLibroDiarioRow(ByVal fecha As String, ByVal codigoAsiento As String, ByVal comprobanteInterno As String, ByVal concepto As String, ByVal numCta As String, ByVal nombreCuenta As String, ByVal importeDebe As Double, ByVal importeHaber As Double) As LibroDiarioRow
+        Public Overloads Function AddLibroDiarioRow(ByVal fecha As Date, ByVal codigoAsiento As String, ByVal comprobanteInterno As String, ByVal concepto As String, ByVal numCta As String, ByVal nombreCuenta As String, ByVal importeDebe As Double, ByVal importeHaber As Double) As LibroDiarioRow
             Dim rowLibroDiarioRow As LibroDiarioRow = CType(Me.NewRow,LibroDiarioRow)
             Dim columnValuesArray() As Object = New Object() {fecha, codigoAsiento, comprobanteInterno, concepto, numCta, nombreCuenta, importeDebe, importeHaber}
             rowLibroDiarioRow.ItemArray = columnValuesArray
@@ -613,7 +613,7 @@ Partial Public Class datosContable
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
         Private Sub InitClass()
-            Me.columnfecha = New Global.System.Data.DataColumn("fecha", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            Me.columnfecha = New Global.System.Data.DataColumn("fecha", GetType(Date), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnfecha)
             Me.columncodigoAsiento = New Global.System.Data.DataColumn("codigoAsiento", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncodigoAsiento)
@@ -2212,10 +2212,10 @@ Partial Public Class datosContable
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property fecha() As String
+        Public Property fecha() As Date
             Get
                 Try 
-                    Return CType(Me(Me.tableLibroDiario.fechaColumn),String)
+                    Return CType(Me(Me.tableLibroDiario.fechaColumn),Date)
                 Catch e As Global.System.InvalidCastException
                     Throw New Global.System.Data.StrongTypingException("El valor de la columna 'fecha' de la tabla 'LibroDiario' es DBNull.", e)
                 End Try

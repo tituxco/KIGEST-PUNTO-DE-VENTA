@@ -5,7 +5,7 @@
     Dim filaActual As Integer
 
     ' Dim tabPlanCuentas As New DataSet
-    Private Sub addAsiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Public Sub addAsiento_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
             concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
@@ -257,7 +257,16 @@
                 .CargarLibroDiario()
             End With
 
-            Me.Close()
+            If chkReabrir.Checked = True Then
+                dgvPartidas.Rows.Clear()
+                txtAsientoNumero.Text = ObtenerNumeroAsiento() 'addAsiento_Load(me,)
+                txtAsientoConcepto.Text = ""
+                txtAsientoComprobante.Focus()
+                CalcularTotalAsiento()
+            Else
+                Me.Close()
+            End If
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -333,5 +342,9 @@
                 MsgBox(ex.Message)
             End Try
         End If
+    End Sub
+
+    Private Sub dgvPartidas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellContentClick
+
     End Sub
 End Class

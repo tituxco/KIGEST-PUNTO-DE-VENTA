@@ -47,7 +47,7 @@ Public Class frmprincipal
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed = True Then
-            Me.Text = Application.ProductName & " - V" & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString & " - Usuario: " & DatosAcceso.Cliente
+            Me.Text = Application.ProductName & " - V" & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
 
             cargar_valores_generales()
