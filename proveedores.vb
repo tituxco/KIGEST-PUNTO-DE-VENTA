@@ -66,6 +66,9 @@ Public Class proveedores
             txtcuit.Text = lector("cuit").ToString
             txtdomicilio.Text = lector("direccion").ToString
             txtinfo.Text = lector("informacion_adic").ToString
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                cmbBusquedaCuenta.SelectedValue = lector("cuentagastos")
+            End If
         Catch ex As Exception
             lblestado.ForeColor = Color.Red
             lblestado.Text = "Atención: " & ex.Message
@@ -151,13 +154,14 @@ Public Class proveedores
 
     Private Sub cmdaceptar_Click(sender As Object, e As EventArgs) Handles cmdaceptar.Click
 
-        Dim sqlQuery As String
+        Dim sqlQuery As String = ""
 
         Dim razon As String
         Dim domicilio As String
         Dim tipoiva As Integer
         Dim cuit As String
         Dim info As String
+        Dim cuentaGastos As Integer
 
         Try
             Reconectar()
@@ -165,6 +169,7 @@ Public Class proveedores
             tipoiva = cmbcondiva.SelectedValue
             cuit = txtcuit.Text
             domicilio = txtdomicilio.Text.ToUpper
+            cuentaGastos = cmbBusquedaCuenta.SelectedValue
 
             info = txtinfo.Text.ToUpper
 
@@ -174,15 +179,28 @@ Public Class proveedores
             End If
 
             Reconectar()
+            If InStr(DatosAcceso.Moduloacc, "4al") = False Then
 
-            If modificarPers = False Then
-                sqlQuery = "insert into fact_proveedores " _
-                & "(razon,direccion,tipo_iva, cuit, informacion_adic) values " _
+                If modificarPers = False Then
+                    sqlQuery = "insert into fact_proveedores " _
+                & "(razon,direccion,tipo_iva, cuit, informacion_adic,cuentagastos) values " _
                 & "(?razon,?dire,?iva,?cuit,?info)"
-            ElseIf modificarPers = True Then
-                '  MsgBox("modificando")
-                sqlQuery = "update fact_proveedores set razon=?razon, direccion=?dire, tipo_iva=?iva, cuit=?cuit, " _
+                ElseIf modificarPers = True Then
+                    '  MsgBox("modificando")
+                    sqlQuery = "update fact_proveedores set razon=?razon, direccion=?dire, tipo_iva=?iva, cuit=?cuit, " _
                     & " informacion_adic=?info where id=?idp"
+                End If
+            Else
+                If modificarPers = False Then
+                    sqlQuery = "insert into fact_proveedores " _
+                & "(razon,direccion,tipo_iva, cuit, informacion_adic,cuentagastos) values " _
+                & "(?razon,?dire,?iva,?cuit,?info,?cuentaGastos)"
+                ElseIf modificarPers = True Then
+                    '  MsgBox("modificando")
+                    sqlQuery = "update fact_proveedores set razon=?razon, direccion=?dire, tipo_iva=?iva, cuit=?cuit, " _
+                    & " informacion_adic=?info, cuentagastos=?cuentaGastos where id=?idp"
+                End If
+
             End If
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -192,6 +210,7 @@ Public Class proveedores
                 .AddWithValue("?iva", tipoiva)
                 .AddWithValue("?cuit", cuit)
                 .AddWithValue("?info", info)
+                .AddWithValue("?cuentaGastos", cuentaGastos)
 
                 If modificarPers = True Then
                     .AddWithValue("?idp", Idproveedor)
@@ -363,6 +382,7 @@ Public Class proveedores
 
         deshabilitarControles()
         CargarPersonal()
+
         'cargamos tipos de factura en el combo
         Dim tablafac As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc,  abrev from tipos_comprobantes where debcred like 'D'", conexionPrinc)
         Dim readfac As New DataSet
@@ -370,8 +390,18 @@ Public Class proveedores
         tipoFac.DataSource = readfac.Tables(0)
         tipoFac.ValueMember = readfac.Tables(0).Columns(0).Caption.ToString
         tipoFac.DisplayMember = readfac.Tables(0).Columns(1).Caption.ToString
+        If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+            grpCuentaContable.Visible = True
+            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
+            concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            Dim tabPlanCuentas As New DataSet
+            consPlanCuentas.Fill(tabPlanCuentas)
 
-
+            cmbBusquedaCuenta.DataSource = tabPlanCuentas.Tables(0)
+            cmbBusquedaCuenta.DisplayMember = tabPlanCuentas.Tables(0).Columns("nombreCuenta").Caption.ToString
+            cmbBusquedaCuenta.ValueMember = tabPlanCuentas.Tables(0).Columns("id").Caption.ToString
+        End If
 
 
     End Sub
@@ -422,6 +452,14 @@ Public Class proveedores
     End Sub
 
     Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
+
+    End Sub
+
+    Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabPage1_Click(sender As Object, e As EventArgs) Handles TabPage1.Click
 
     End Sub
 End Class

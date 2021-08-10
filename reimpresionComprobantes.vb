@@ -99,7 +99,7 @@ Public Class reimpresionComprobantes
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
             concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr  
@@ -194,7 +194,7 @@ Public Class reimpresionComprobantes
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech,
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   , fac.codigo_qr
@@ -444,7 +444,7 @@ Public Class reimpresionComprobantes
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech,
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
@@ -870,5 +870,90 @@ Public Class reimpresionComprobantes
 
     Private Sub cmbInforPtoVta_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbInforPtoVta.SelectionChangeCommitted
         cmdbuscar.PerformClick()
+    End Sub
+
+    Private Sub Panel5_Paint(sender As Object, e As PaintEventArgs) Handles Panel5.Paint
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs)
+
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        'Dim Barra As New ProgressBar
+        'Barra.Style = ProgressBarStyle.Marquee
+        'Barra.Size = New Point(270, 40)
+        'Barra.Location = New Point(10, 30)
+        'Barra.Value = 100
+        'EnProgreso.Controls.Add(Barra)
+        EnProgreso.Show()
+        Application.DoEvents()
+        Dim columna As Integer
+        Dim limite As Integer = Val(TextBox1.Text)
+        Dim numComprobante As String = ""
+        If txtNumeroComprobante.Text <> "" Then
+            numComprobante = " and fact.num_fact in(" & txtNumeroComprobante.Text & ")"
+        End If
+        Dim Razonsoc As String = " and fact.razon like '%" & txtrazonsocial.Text.Replace(" ", "%") & "%'"
+        Try
+
+            Reconectar()
+            Dim tablaprod As New DataTable
+            'Dim filasProd() As DataRow
+
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+            fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, 
+            fact.localidad, con.condicion, 
+            case when fis.debcred='C' then 
+            concat('-',FORMAT(fact.total,2,'es_AR')) 
+            else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
+            from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
+            where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact in(999,11)
+            and fact.ptovta like '%'", conexionPrinc)
+            columna = 7
+            consulta.Fill(tablaprod)
+            Dim i As Integer
+
+
+            dgvlistadoCobranza.DataSource = tablaprod
+            dgvlistadoCobranza.Columns(0).Visible = False
+            dgvlistadoCobranza.Columns(9).Visible = False
+
+
+
+            EnProgreso.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            EnProgreso.Close()
+        End Try
+    End Sub
+
+    Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+        Try
+            If ElementoFacturado(dgvlistadoCobranza.CurrentRow.Cells("factnum").Value) = True Then
+                MsgBox("LA FACTURA YA TIENE UN RECIBO ASOCIADO, NO SE PUEDE IMPUTAR DOS VECES EL PAGO A UNA MISMA FACTURA")
+                Exit Sub
+            End If
+
+            Dim mov As New reciboRapido
+            'mov.MdiParent = Me.MdiParent
+            mov.idFactura = dgvlistadoCobranza.CurrentRow.Cells("id").Value
+            mov.Show()
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 End Class

@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Data.OleDb
 Imports System.Drawing.Printing
+Imports Microsoft.Office.Interop
 
 'Imports Excel = Microsoft.Office.Interop.Excel
 'Imports System.Runtime.InteropServices
@@ -16,6 +17,99 @@ Module funciones_Globales
 
         'formulario.Show()
     End Sub
+
+    Public Function ElementoFacturado(descripcion As String) As Boolean
+        Try
+            Reconectar()
+            Dim consItmFacturado As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.num_fact FROM fact_facturas as fact, fact_items as itm where
+            itm.id_fact=fact.id and
+            itm.descripcion like '%" & descripcion & "%' and 
+            date_format(fact.fecha,'%Y-%m') like '" & Format(Now(), "yyyy-MM") & "'", conexionPrinc)
+            Dim tabItmFacturado As New DataTable
+            consItmFacturado.Fill(tabItmFacturado)
+            If tabItmFacturado.Rows.Count <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+
+    End Function
+    Public Function ObtenerNumeroAsiento() As Integer
+        Reconectar()
+        Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", conexionPrinc)
+        Dim tabNumeroAsiento As New DataTable
+        consNumeroAsiento.Fill(tabNumeroAsiento)
+        Dim NumeroAsiento As Integer = 0
+        If IsDBNull(tabNumeroAsiento.Rows(0).Item("codigoAsiento")) Then
+            NumeroAsiento = 1
+        Else
+            NumeroAsiento = tabNumeroAsiento.Rows(0).Item("codigoAsiento") + 1
+        End If
+        Return NumeroAsiento
+    End Function
+
+    Public Function GuardarAsientoContable(codigoAsiento As Integer, comprobante As String, concepto As String, importeDebe As Double, cuentaDebeId As Integer,
+                                           importeHaber As Double, cuentaHaberId As Integer, numPartidas As Integer, fecha As String) As Boolean
+        Try
+
+            Reconectar()
+            Dim agregarPartidaDebe As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+                (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
+            Dim comandoPartidaDebe As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaDebe, conexionPrinc)
+            With comandoPartidaDebe.Parameters
+                .AddWithValue("?codigoAsiento", codigoAsiento)
+                .AddWithValue("?cuentaDebeId", cuentaDebeId)
+                .AddWithValue("?importeDebe", importeDebe)
+                .AddWithValue("?cuentaHaberId", 0)
+                .AddWithValue("?importeHaber", 0)
+            End With
+            comandoPartidaDebe.ExecuteNonQuery()
+
+            Reconectar()
+            Dim agregarPartidaHaber As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+                (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
+            Dim comandoPartidaHaber As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaHaber, conexionPrinc)
+            With comandoPartidaHaber.Parameters
+                .AddWithValue("?codigoAsiento", codigoAsiento)
+                .AddWithValue("?cuentaDebeId", 0)
+                .AddWithValue("?importeDebe", 0)
+                .AddWithValue("?cuentaHaberId", cuentaHaberId)
+                .AddWithValue("?importeHaber", importeHaber)
+            End With
+            comandoPartidaHaber.ExecuteNonQuery()
+
+            Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
+            (?comprobanteInterno,?codigoAsiento,?fecha,?concepto,?totalDebe,?totalHaber,?numPartidas)"
+            Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, conexionPrinc)
+            With comandoLibroDiario.Parameters
+                .AddWithValue("?comprobanteInterno", comprobante)
+                .AddWithValue("?codigoAsiento", codigoAsiento)
+                .AddWithValue("?fecha", fecha)
+                .AddWithValue("?concepto", concepto.ToUpper)
+                .AddWithValue("?totalDebe", importeDebe)
+                .AddWithValue("?totalHaber", importeHaber)
+                .AddWithValue("?numPartidas", numPartidas)
+            End With
+            comandoLibroDiario.ExecuteNonQuery()
+
+            Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
+            (?fecha,?concepto,?codigoAsiento)"
+            Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, conexionPrinc)
+            With comandoLibroMayor.Parameters
+                .AddWithValue("?fecha", fecha)
+                .AddWithValue("?concepto", concepto.ToUpper)
+                .AddWithValue("?codigoAsiento", codigoAsiento)
+            End With
+            comandoLibroMayor.ExecuteNonQuery()
+
+        Catch ex As Exception
+
+        End Try
+
+    End Function
     Public Function ObtenerFechaFacturaElectro(numFac As Integer, tipoFac As Integer) As String
         Try
             Reconectar()
@@ -184,7 +278,7 @@ Module funciones_Globales
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech,
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
@@ -383,7 +477,7 @@ Module funciones_Globales
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR'),fac.codigo_qr   
@@ -1070,7 +1164,7 @@ Module funciones_Globales
     Public Function CompletarCeros(ByVal numero As Integer, ByVal tip As Integer) As String
         Select Case tip
             Case 1
-                Return Format(numero, "0000000000")
+                Return Format(numero, "00000000")
             Case 2
                 Return Format(numero, "0000")
         End Select
@@ -1172,6 +1266,27 @@ Module funciones_Globales
         End Try
     End Function
 
+    Public Function ObtenerNombrePrimeraHoja(ByVal rutaLibro As String) As String
+        Dim app As Excel.Application = Nothing
+        Try
+            app = New Excel.Application()
+            Dim wb As Excel.Workbook = app.Workbooks.Open(rutaLibro)
+            Dim ws As Excel.Worksheet = CType(wb.Worksheets.Item(1), Excel.Worksheet)
+            Dim name As String = ws.Name
+            ws = Nothing
+            wb.Close()
+            wb = Nothing
+            Return name
+        Catch ex As Exception
+            Throw
+
+        Finally
+            If (Not app Is Nothing) Then _
+                app.Quit()
+            Runtime.InteropServices.Marshal.ReleaseComObject(app)
+            app = Nothing
+        End Try
+    End Function
     Public Function GetDataExcel(
   ByVal fileName As String, ByVal sheetName As String) As DataTable
         Try
@@ -1253,7 +1368,7 @@ Module funciones_Globales
                 Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("                
                 SELECT lt.id, lt.stock as stock, prod.desc_cantidad 
                 FROM fact_insumos_lotes as lt, fact_insumos as prod
-                where lt.idproducto=prod.id and lt.idproducto=" & codigo & " and lt.idalmacen= " & my.Settings.idAlmacen  & "                
+                where lt.idproducto=prod.id and lt.idproducto=" & codigo & " and lt.idalmacen= " & My.Settings.idAlmacen & "                
                 and lt.stock >0  order by lt.id asc", conexionPrinc)
                 Dim tablastock As New DataTable
                 Dim infostock() As DataRow

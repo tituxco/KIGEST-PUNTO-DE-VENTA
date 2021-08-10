@@ -24,52 +24,52 @@ Partial Class CONTABLE
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CONTABLE))
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend4 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle130 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle131 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle132 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle133 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle134 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle135 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle136 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle137 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle138 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle139 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle140 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle141 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle142 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle143 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle144 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle145 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle146 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle147 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle148 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle149 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle150 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle151 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle152 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle153 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle154 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle155 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle156 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle157 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle158 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle159 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle160 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle161 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle162 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle163 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle164 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle165 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle166 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle167 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle168 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle169 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle170 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle171 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle172 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
@@ -143,6 +143,10 @@ Partial Class CONTABLE
         Me.DataGridView6 = New System.Windows.Forms.DataGridView()
         Me.TabPage15 = New System.Windows.Forms.TabPage()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.TabPage13 = New System.Windows.Forms.TabPage()
         Me.cmbptovtaconf = New System.Windows.Forms.ComboBox()
         Me.Label40 = New System.Windows.Forms.Label()
@@ -185,11 +189,21 @@ Partial Class CONTABLE
         Me.dtstockvalorizado = New System.Windows.Forms.DataGridView()
         Me.Panel19 = New System.Windows.Forms.Panel()
         Me.dttotstock = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn26 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn27 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tabBalanceCtas = New System.Windows.Forms.TabPage()
         Me.txtlog = New System.Windows.Forms.TextBox()
         Me.dgvListadoCuentaConSaldos = New System.Windows.Forms.DataGridView()
         Me.Panel15 = New System.Windows.Forms.Panel()
         Me.dgvTotales = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn65 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn66 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn67 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn68 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn69 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn70 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn71 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn72 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.rdBalance = New System.Windows.Forms.RadioButton()
         Me.rdCtaSaldo = New System.Windows.Forms.RadioButton()
@@ -201,6 +215,13 @@ Partial Class CONTABLE
         Me.Label81 = New System.Windows.Forms.Label()
         Me.tablibromayor = New System.Windows.Forms.TabPage()
         Me.dgvLibroDiario = New System.Windows.Forms.DataGridView()
+        Me.Column23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.rdTodasCuentas = New System.Windows.Forms.RadioButton()
         Me.rdCuentasIndividuales = New System.Windows.Forms.RadioButton()
@@ -225,6 +246,15 @@ Partial Class CONTABLE
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tabplancuentas = New System.Windows.Forms.TabPage()
         Me.dgvPlanCuentas = New System.Windows.Forms.DataGridView()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.nombreCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.subGrupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.subCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cuentaDetalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cuentaMovimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cuentaResultado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel21 = New System.Windows.Forms.Panel()
         Me.Panel30 = New System.Windows.Forms.Panel()
         Me.Button34 = New System.Windows.Forms.Button()
@@ -253,9 +283,22 @@ Partial Class CONTABLE
         Me.Label12 = New System.Windows.Forms.Label()
         Me.tabcuentasproveedores = New System.Windows.Forms.TabPage()
         Me.dtcuentaprov = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel14 = New System.Windows.Forms.Panel()
         Me.Button22 = New System.Windows.Forms.Button()
         Me.dttotalesprov = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column29 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.lbldatoscuentaprov = New System.Windows.Forms.Label()
         Me.lblproveedorcuenta = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -267,6 +310,14 @@ Partial Class CONTABLE
         Me.Label24 = New System.Windows.Forms.Label()
         Me.tabcuentasclientes = New System.Windows.Forms.TabPage()
         Me.dtcuentaclie = New System.Windows.Forms.DataGridView()
+        Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.Panel23 = New System.Windows.Forms.Panel()
         Me.Button17 = New System.Windows.Forms.Button()
@@ -274,6 +325,12 @@ Partial Class CONTABLE
         Me.Button6 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.dttotales = New System.Windows.Forms.DataGridView()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.lbldtoscliecta = New System.Windows.Forms.Label()
         Me.lblclientecta = New System.Windows.Forms.Label()
@@ -410,7 +467,10 @@ Partial Class CONTABLE
         Me.tabcomprobantes = New System.Windows.Forms.TabPage()
         Me.dtfacturas = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.grpcomprobantes = New System.Windows.Forms.GroupBox()
         Me.cmbtipofac = New System.Windows.Forms.ComboBox()
         Me.chktodosfact = New System.Windows.Forms.CheckBox()
@@ -437,28 +497,9 @@ Partial Class CONTABLE
         Me.Label54 = New System.Windows.Forms.Label()
         Me.rdventadiaria = New System.Windows.Forms.RadioButton()
         Me.rdninguno = New System.Windows.Forms.RadioButton()
-        Me.lbltotalfact = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
         Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.tabcontable = New System.Windows.Forms.TabControl()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -466,8 +507,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn24 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn25 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn26 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn27 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn28 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn29 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn30 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -498,44 +537,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn55 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn56 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn57 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column17 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column16 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column14 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column15 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column29 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.nombreCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.grupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.subGrupo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.subCuenta = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cuentaDetalle = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cuentaMovimiento = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cuentaResultado = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column18 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn65 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn66 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn67 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn68 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn69 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn70 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn71 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn72 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn58 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn59 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn60 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -543,6 +544,7 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn62 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn63 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn64 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.pntitulo.SuspendLayout()
         Me.balance.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -648,6 +650,7 @@ Partial Class CONTABLE
         Me.tabcomprobantes.SuspendLayout()
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpcomprobantes.SuspendLayout()
         Me.grpacciones.SuspendLayout()
@@ -655,6 +658,7 @@ Partial Class CONTABLE
         Me.grpfiltrar.SuspendLayout()
         Me.grpagrupar.SuspendLayout()
         Me.tabcontable.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -665,7 +669,7 @@ Partial Class CONTABLE
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1180, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(994, 40)
         Me.pntitulo.TabIndex = 10
         '
         'Label1
@@ -823,7 +827,7 @@ Partial Class CONTABLE
         Me.lstbalancehistorico.Location = New System.Drawing.Point(3, 103)
         Me.lstbalancehistorico.Name = "lstbalancehistorico"
         Me.lstbalancehistorico.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.lstbalancehistorico.Size = New System.Drawing.Size(1152, 212)
+        Me.lstbalancehistorico.Size = New System.Drawing.Size(1152, 313)
         Me.lstbalancehistorico.TabIndex = 14
         '
         'Panel28
@@ -1295,7 +1299,7 @@ Partial Class CONTABLE
         Me.TabControl4.Location = New System.Drawing.Point(3, 3)
         Me.TabControl4.Name = "TabControl4"
         Me.TabControl4.SelectedIndex = 0
-        Me.TabControl4.Size = New System.Drawing.Size(1152, 340)
+        Me.TabControl4.Size = New System.Drawing.Size(1152, 441)
         Me.TabControl4.TabIndex = 103
         '
         'TabPage8
@@ -1305,7 +1309,7 @@ Partial Class CONTABLE
         Me.TabPage8.Location = New System.Drawing.Point(4, 22)
         Me.TabPage8.Name = "TabPage8"
         Me.TabPage8.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage8.Size = New System.Drawing.Size(1144, 314)
+        Me.TabPage8.Size = New System.Drawing.Size(1144, 415)
         Me.TabPage8.TabIndex = 0
         Me.TabPage8.Text = "LISTAS DE PRECIOS"
         Me.TabPage8.UseVisualStyleBackColor = True
@@ -1342,7 +1346,7 @@ Partial Class CONTABLE
         Me.TabPage10.Location = New System.Drawing.Point(4, 22)
         Me.TabPage10.Name = "TabPage10"
         Me.TabPage10.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage10.Size = New System.Drawing.Size(1144, 314)
+        Me.TabPage10.Size = New System.Drawing.Size(1144, 415)
         Me.TabPage10.TabIndex = 1
         Me.TabPage10.Text = "CATEGORIAS DE PRODUCTOS"
         Me.TabPage10.UseVisualStyleBackColor = True
@@ -1386,7 +1390,7 @@ Partial Class CONTABLE
         Me.tabmoneda.Location = New System.Drawing.Point(4, 22)
         Me.tabmoneda.Name = "tabmoneda"
         Me.tabmoneda.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabmoneda.Size = New System.Drawing.Size(1144, 314)
+        Me.tabmoneda.Size = New System.Drawing.Size(1144, 415)
         Me.tabmoneda.TabIndex = 2
         Me.tabmoneda.Text = "COTIZACION DE MONEDA"
         Me.tabmoneda.UseVisualStyleBackColor = True
@@ -1415,7 +1419,7 @@ Partial Class CONTABLE
         Me.TabPage12.Location = New System.Drawing.Point(4, 22)
         Me.TabPage12.Name = "TabPage12"
         Me.TabPage12.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage12.Size = New System.Drawing.Size(1144, 314)
+        Me.TabPage12.Size = New System.Drawing.Size(1144, 415)
         Me.TabPage12.TabIndex = 3
         Me.TabPage12.Text = "ALMACENES DE PRODUCTOS"
         Me.TabPage12.UseVisualStyleBackColor = True
@@ -1444,7 +1448,7 @@ Partial Class CONTABLE
         Me.TabPage15.Location = New System.Drawing.Point(4, 22)
         Me.TabPage15.Name = "TabPage15"
         Me.TabPage15.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage15.Size = New System.Drawing.Size(1144, 314)
+        Me.TabPage15.Size = New System.Drawing.Size(1144, 415)
         Me.TabPage15.TabIndex = 4
         Me.TabPage15.Text = "PROMOCIONES DE PRODUCTOS"
         Me.TabPage15.UseVisualStyleBackColor = True
@@ -1465,6 +1469,30 @@ Partial Class CONTABLE
         Me.dtdescuentos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtdescuentos.Size = New System.Drawing.Size(1138, 308)
         Me.dtdescuentos.TabIndex = 98
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "idpromo"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "DESCRIPCION"
+        Me.Column2.Name = "Column2"
+        Me.Column2.ReadOnly = True
+        '
+        'Column3
+        '
+        Me.Column3.FillWeight = 20.0!
+        Me.Column3.HeaderText = "COMPRA MIN"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.FillWeight = 20.0!
+        Me.Column4.HeaderText = "DESCUENTO %"
+        Me.Column4.Name = "Column4"
         '
         'TabPage13
         '
@@ -1536,7 +1564,7 @@ Partial Class CONTABLE
         Me.dtvendedores.MultiSelect = False
         Me.dtvendedores.Name = "dtvendedores"
         Me.dtvendedores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtvendedores.Size = New System.Drawing.Size(1152, 340)
+        Me.dtvendedores.Size = New System.Drawing.Size(1152, 441)
         Me.dtvendedores.TabIndex = 88
         '
         'TabPage3
@@ -1564,7 +1592,7 @@ Partial Class CONTABLE
         Me.dtconceptosingresos.MultiSelect = False
         Me.dtconceptosingresos.Name = "dtconceptosingresos"
         Me.dtconceptosingresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtconceptosingresos.Size = New System.Drawing.Size(1152, 340)
+        Me.dtconceptosingresos.Size = New System.Drawing.Size(1152, 441)
         Me.dtconceptosingresos.TabIndex = 89
         '
         'TabPage4
@@ -1592,7 +1620,7 @@ Partial Class CONTABLE
         Me.dtconceptosegresos.MultiSelect = False
         Me.dtconceptosegresos.Name = "dtconceptosegresos"
         Me.dtconceptosegresos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtconceptosegresos.Size = New System.Drawing.Size(1152, 340)
+        Me.dtconceptosegresos.Size = New System.Drawing.Size(1152, 441)
         Me.dtconceptosegresos.TabIndex = 89
         '
         'TabPage5
@@ -1866,17 +1894,17 @@ Partial Class CONTABLE
         'chrestad
         '
         Me.chrestad.BackColor = System.Drawing.Color.Transparent
-        ChartArea1.Name = "ChartArea1"
-        Me.chrestad.ChartAreas.Add(ChartArea1)
+        ChartArea4.Name = "ChartArea1"
+        Me.chrestad.ChartAreas.Add(ChartArea4)
         Me.chrestad.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.Name = "Legend1"
-        Me.chrestad.Legends.Add(Legend1)
+        Legend4.Name = "Legend1"
+        Me.chrestad.Legends.Add(Legend4)
         Me.chrestad.Location = New System.Drawing.Point(3, 38)
         Me.chrestad.Name = "chrestad"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.chrestad.Series.Add(Series1)
+        Series4.ChartArea = "ChartArea1"
+        Series4.Legend = "Legend1"
+        Series4.Name = "Series1"
+        Me.chrestad.Series.Add(Series4)
         Me.chrestad.Size = New System.Drawing.Size(1158, 412)
         Me.chrestad.TabIndex = 91
         Me.chrestad.Text = "Chart1"
@@ -1961,6 +1989,23 @@ Partial Class CONTABLE
         Me.dttotstock.Size = New System.Drawing.Size(1166, 21)
         Me.dttotstock.TabIndex = 85
         '
+        'DataGridViewTextBoxColumn26
+        '
+        Me.DataGridViewTextBoxColumn26.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn26.HeaderText = "Descripcion"
+        Me.DataGridViewTextBoxColumn26.Name = "DataGridViewTextBoxColumn26"
+        Me.DataGridViewTextBoxColumn26.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn27
+        '
+        DataGridViewCellStyle130.Format = "N2"
+        DataGridViewCellStyle130.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle130
+        Me.DataGridViewTextBoxColumn27.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn27.HeaderText = "Saldo"
+        Me.DataGridViewTextBoxColumn27.Name = "DataGridViewTextBoxColumn27"
+        Me.DataGridViewTextBoxColumn27.ReadOnly = True
+        '
         'tabBalanceCtas
         '
         Me.tabBalanceCtas.Controls.Add(Me.txtlog)
@@ -2029,6 +2074,63 @@ Partial Class CONTABLE
         Me.dgvTotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvTotales.Size = New System.Drawing.Size(1166, 21)
         Me.dgvTotales.TabIndex = 21
+        '
+        'DataGridViewTextBoxColumn65
+        '
+        Me.DataGridViewTextBoxColumn65.HeaderText = ""
+        Me.DataGridViewTextBoxColumn65.Name = "DataGridViewTextBoxColumn65"
+        Me.DataGridViewTextBoxColumn65.Visible = False
+        '
+        'DataGridViewTextBoxColumn66
+        '
+        Me.DataGridViewTextBoxColumn66.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn66.HeaderText = ""
+        Me.DataGridViewTextBoxColumn66.Name = "DataGridViewTextBoxColumn66"
+        '
+        'DataGridViewTextBoxColumn67
+        '
+        Me.DataGridViewTextBoxColumn67.HeaderText = ""
+        Me.DataGridViewTextBoxColumn67.Name = "DataGridViewTextBoxColumn67"
+        '
+        'DataGridViewTextBoxColumn68
+        '
+        DataGridViewCellStyle131.Format = "N2"
+        Me.DataGridViewTextBoxColumn68.DefaultCellStyle = DataGridViewCellStyle131
+        Me.DataGridViewTextBoxColumn68.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn68.HeaderText = ""
+        Me.DataGridViewTextBoxColumn68.Name = "DataGridViewTextBoxColumn68"
+        '
+        'DataGridViewTextBoxColumn69
+        '
+        DataGridViewCellStyle132.Format = "N2"
+        Me.DataGridViewTextBoxColumn69.DefaultCellStyle = DataGridViewCellStyle132
+        Me.DataGridViewTextBoxColumn69.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn69.HeaderText = ""
+        Me.DataGridViewTextBoxColumn69.Name = "DataGridViewTextBoxColumn69"
+        '
+        'DataGridViewTextBoxColumn70
+        '
+        DataGridViewCellStyle133.Format = "N2"
+        Me.DataGridViewTextBoxColumn70.DefaultCellStyle = DataGridViewCellStyle133
+        Me.DataGridViewTextBoxColumn70.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn70.HeaderText = ""
+        Me.DataGridViewTextBoxColumn70.Name = "DataGridViewTextBoxColumn70"
+        '
+        'DataGridViewTextBoxColumn71
+        '
+        DataGridViewCellStyle134.Format = "N2"
+        Me.DataGridViewTextBoxColumn71.DefaultCellStyle = DataGridViewCellStyle134
+        Me.DataGridViewTextBoxColumn71.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn71.HeaderText = ""
+        Me.DataGridViewTextBoxColumn71.Name = "DataGridViewTextBoxColumn71"
+        '
+        'DataGridViewTextBoxColumn72
+        '
+        DataGridViewCellStyle135.Format = "N2"
+        Me.DataGridViewTextBoxColumn72.DefaultCellStyle = DataGridViewCellStyle135
+        Me.DataGridViewTextBoxColumn72.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn72.HeaderText = ""
+        Me.DataGridViewTextBoxColumn72.Name = "DataGridViewTextBoxColumn72"
         '
         'Panel4
         '
@@ -2179,6 +2281,53 @@ Partial Class CONTABLE
         Me.dgvLibroDiario.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvLibroDiario.Size = New System.Drawing.Size(1166, 73)
         Me.dgvLibroDiario.TabIndex = 18
+        '
+        'Column23
+        '
+        Me.Column23.FillWeight = 20.0!
+        Me.Column23.HeaderText = "NumComprobante"
+        Me.Column23.Name = "Column23"
+        '
+        'Column5
+        '
+        Me.Column5.FillWeight = 20.0!
+        Me.Column5.HeaderText = "CodigoAsiento"
+        Me.Column5.Name = "Column5"
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 30.0!
+        Me.Column6.HeaderText = "Fecha"
+        Me.Column6.Name = "Column6"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "Concepto"
+        Me.Column9.Name = "Column9"
+        '
+        'Column18
+        '
+        DataGridViewCellStyle136.Format = "N2"
+        DataGridViewCellStyle136.NullValue = "0"
+        Me.Column18.DefaultCellStyle = DataGridViewCellStyle136
+        Me.Column18.FillWeight = 30.0!
+        Me.Column18.HeaderText = "Total Debe"
+        Me.Column18.Name = "Column18"
+        '
+        'Column12
+        '
+        DataGridViewCellStyle137.Format = "N2"
+        DataGridViewCellStyle137.NullValue = "0"
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle137
+        Me.Column12.FillWeight = 30.0!
+        Me.Column12.HeaderText = "Total Haber"
+        Me.Column12.Name = "Column12"
+        '
+        'Column19
+        '
+        Me.Column19.FillWeight = 10.0!
+        Me.Column19.HeaderText = "Partidas"
+        Me.Column19.Name = "Column19"
         '
         'Panel3
         '
@@ -2500,6 +2649,59 @@ Partial Class CONTABLE
         Me.dgvPlanCuentas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvPlanCuentas.Size = New System.Drawing.Size(1166, 213)
         Me.dgvPlanCuentas.TabIndex = 90
+        '
+        'id
+        '
+        Me.id.HeaderText = "idCuenta"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'nombreCuenta
+        '
+        Me.nombreCuenta.HeaderText = "NombreCuenta"
+        Me.nombreCuenta.Name = "nombreCuenta"
+        '
+        'grupo
+        '
+        Me.grupo.FillWeight = 20.0!
+        Me.grupo.HeaderText = "Grupo"
+        Me.grupo.Name = "grupo"
+        '
+        'subGrupo
+        '
+        Me.subGrupo.FillWeight = 20.0!
+        Me.subGrupo.HeaderText = "subGrupo"
+        Me.subGrupo.Name = "subGrupo"
+        '
+        'cuenta
+        '
+        Me.cuenta.FillWeight = 20.0!
+        Me.cuenta.HeaderText = "Cuenta"
+        Me.cuenta.Name = "cuenta"
+        '
+        'subCuenta
+        '
+        Me.subCuenta.FillWeight = 20.0!
+        Me.subCuenta.HeaderText = "subCuenta"
+        Me.subCuenta.Name = "subCuenta"
+        '
+        'cuentaDetalle
+        '
+        Me.cuentaDetalle.FillWeight = 20.0!
+        Me.cuentaDetalle.HeaderText = "cuentaDetalle"
+        Me.cuentaDetalle.Name = "cuentaDetalle"
+        '
+        'cuentaMovimiento
+        '
+        Me.cuentaMovimiento.HeaderText = "cuentaMovimiento"
+        Me.cuentaMovimiento.Name = "cuentaMovimiento"
+        Me.cuentaMovimiento.Visible = False
+        '
+        'cuentaResultado
+        '
+        Me.cuentaResultado.HeaderText = "cuentaResultado"
+        Me.cuentaResultado.Name = "cuentaResultado"
+        Me.cuentaResultado.Visible = False
         '
         'Panel21
         '
@@ -2857,6 +3059,60 @@ Partial Class CONTABLE
         Me.dtcuentaprov.Size = New System.Drawing.Size(1166, 267)
         Me.dtcuentaprov.TabIndex = 91
         '
+        'DataGridViewTextBoxColumn7
+        '
+        Me.DataGridViewTextBoxColumn7.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn7.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.Visible = False
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        DataGridViewCellStyle138.Format = "d"
+        DataGridViewCellStyle138.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle138
+        Me.DataGridViewTextBoxColumn8.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn8.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        '
+        'DataGridViewTextBoxColumn9
+        '
+        Me.DataGridViewTextBoxColumn9.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn9.HeaderText = "Descripcion"
+        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
+        Me.DataGridViewTextBoxColumn9.ReadOnly = True
+        Me.DataGridViewTextBoxColumn9.Visible = False
+        '
+        'DataGridViewTextBoxColumn10
+        '
+        DataGridViewCellStyle139.Format = "d"
+        DataGridViewCellStyle139.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle139
+        Me.DataGridViewTextBoxColumn10.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn10.HeaderText = "Debe"
+        Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
+        Me.DataGridViewTextBoxColumn10.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn11
+        '
+        Me.DataGridViewTextBoxColumn11.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn11.HeaderText = "Haber"
+        Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
+        Me.DataGridViewTextBoxColumn11.ReadOnly = True
+        '
+        'Column11
+        '
+        Me.Column11.FillWeight = 30.0!
+        Me.Column11.HeaderText = "Vencimiento"
+        Me.Column11.Name = "Column11"
+        '
+        'DataGridViewTextBoxColumn12
+        '
+        Me.DataGridViewTextBoxColumn12.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn12.HeaderText = "Saldo"
+        Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
+        Me.DataGridViewTextBoxColumn12.ReadOnly = True
+        '
         'Panel14
         '
         Me.Panel14.Controls.Add(Me.Button22)
@@ -2898,6 +3154,61 @@ Partial Class CONTABLE
         Me.dttotalesprov.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dttotalesprov.Size = New System.Drawing.Size(1166, 21)
         Me.dttotalesprov.TabIndex = 85
+        '
+        'DataGridViewTextBoxColumn14
+        '
+        DataGridViewCellStyle140.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle140
+        Me.DataGridViewTextBoxColumn14.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn14.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
+        Me.DataGridViewTextBoxColumn14.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn15
+        '
+        Me.DataGridViewTextBoxColumn15.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn15.HeaderText = "Descripcion"
+        Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
+        Me.DataGridViewTextBoxColumn15.ReadOnly = True
+        Me.DataGridViewTextBoxColumn15.Visible = False
+        '
+        'DataGridViewTextBoxColumn16
+        '
+        DataGridViewCellStyle141.Format = "N2"
+        DataGridViewCellStyle141.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle141
+        Me.DataGridViewTextBoxColumn16.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn16.HeaderText = "Debe"
+        Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
+        Me.DataGridViewTextBoxColumn16.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn17
+        '
+        DataGridViewCellStyle142.Format = "N2"
+        DataGridViewCellStyle142.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn17.DefaultCellStyle = DataGridViewCellStyle142
+        Me.DataGridViewTextBoxColumn17.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn17.HeaderText = "Haber"
+        Me.DataGridViewTextBoxColumn17.Name = "DataGridViewTextBoxColumn17"
+        Me.DataGridViewTextBoxColumn17.ReadOnly = True
+        Me.DataGridViewTextBoxColumn17.Visible = False
+        '
+        'Column29
+        '
+        Me.Column29.FillWeight = 40.0!
+        Me.Column29.HeaderText = "Column29"
+        Me.Column29.Name = "Column29"
+        Me.Column29.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn18
+        '
+        DataGridViewCellStyle143.Format = "N2"
+        DataGridViewCellStyle143.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle143
+        Me.DataGridViewTextBoxColumn18.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn18.HeaderText = "Saldo"
+        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
+        Me.DataGridViewTextBoxColumn18.ReadOnly = True
         '
         'lbldatoscuentaprov
         '
@@ -3037,6 +3348,56 @@ Partial Class CONTABLE
         Me.dtcuentaclie.Size = New System.Drawing.Size(1166, 289)
         Me.dtcuentaclie.TabIndex = 84
         '
+        'Column17
+        '
+        Me.Column17.FillWeight = 20.0!
+        Me.Column17.HeaderText = "id"
+        Me.Column17.Name = "Column17"
+        '
+        'Column10
+        '
+        DataGridViewCellStyle144.Format = "d"
+        DataGridViewCellStyle144.NullValue = Nothing
+        Me.Column10.DefaultCellStyle = DataGridViewCellStyle144
+        Me.Column10.FillWeight = 30.0!
+        Me.Column10.HeaderText = "Fecha"
+        Me.Column10.Name = "Column10"
+        '
+        'Column16
+        '
+        Me.Column16.HeaderText = "Descripcion"
+        Me.Column16.Name = "Column16"
+        '
+        'Column13
+        '
+        Me.Column13.FillWeight = 30.0!
+        Me.Column13.HeaderText = "Debe"
+        Me.Column13.Name = "Column13"
+        '
+        'Column14
+        '
+        Me.Column14.FillWeight = 30.0!
+        Me.Column14.HeaderText = "Haber"
+        Me.Column14.Name = "Column14"
+        '
+        'Column15
+        '
+        Me.Column15.FillWeight = 30.0!
+        Me.Column15.HeaderText = "Saldo"
+        Me.Column15.Name = "Column15"
+        '
+        'Column7
+        '
+        Me.Column7.FillWeight = 30.0!
+        Me.Column7.HeaderText = "comp"
+        Me.Column7.Name = "Column7"
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 20.0!
+        Me.Column8.HeaderText = "tipofac"
+        Me.Column8.Name = "Column8"
+        '
         'Panel12
         '
         Me.Panel12.Controls.Add(Me.Panel23)
@@ -3116,6 +3477,51 @@ Partial Class CONTABLE
         Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dttotales.Size = New System.Drawing.Size(1166, 23)
         Me.dttotales.TabIndex = 85
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        DataGridViewCellStyle145.Format = "d"
+        DataGridViewCellStyle145.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle145
+        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Descripcion"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Debe"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Haber"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
         '
         'Panel7
         '
@@ -4436,7 +4842,7 @@ Partial Class CONTABLE
         Me.tabcobranzas.Controls.Add(Me.Panel6)
         Me.tabcobranzas.Location = New System.Drawing.Point(4, 22)
         Me.tabcobranzas.Name = "tabcobranzas"
-        Me.tabcobranzas.Size = New System.Drawing.Size(1172, 479)
+        Me.tabcobranzas.Size = New System.Drawing.Size(986, 479)
         Me.tabcobranzas.TabIndex = 15
         Me.tabcobranzas.Text = "COBRANZAS"
         Me.tabcobranzas.UseVisualStyleBackColor = True
@@ -4454,20 +4860,19 @@ Partial Class CONTABLE
         Me.dtlistacob.Location = New System.Drawing.Point(0, 105)
         Me.dtlistacob.Name = "dtlistacob"
         Me.dtlistacob.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistacob.Size = New System.Drawing.Size(1172, 374)
+        Me.dtlistacob.Size = New System.Drawing.Size(986, 374)
         Me.dtlistacob.TabIndex = 10
         '
         'Panel6
         '
         Me.Panel6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel6.Controls.Add(Me.GroupBox6)
+        Me.Panel6.Controls.Add(Me.cmdbuscarcomp)
         Me.Panel6.Controls.Add(Me.GroupBox2)
         Me.Panel6.Controls.Add(Me.Button19)
         Me.Panel6.Controls.Add(Me.GroupBox1)
-        Me.Panel6.Controls.Add(Me.lbltotcob)
-        Me.Panel6.Controls.Add(Me.lbltotalnombre)
         Me.Panel6.Controls.Add(Me.Button11)
         Me.Panel6.Controls.Add(Me.Button12)
-        Me.Panel6.Controls.Add(Me.cmdbuscarcomp)
         Me.Panel6.Controls.Add(Me.Label17)
         Me.Panel6.Controls.Add(Me.Label18)
         Me.Panel6.Controls.Add(Me.dtpdecob)
@@ -4475,7 +4880,7 @@ Partial Class CONTABLE
         Me.Panel6.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel6.Location = New System.Drawing.Point(0, 0)
         Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(1172, 105)
+        Me.Panel6.Size = New System.Drawing.Size(986, 105)
         Me.Panel6.TabIndex = 9
         '
         'GroupBox2
@@ -4627,26 +5032,26 @@ Partial Class CONTABLE
         '
         'lbltotcob
         '
-        Me.lbltotcob.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbltotcob.AutoSize = True
+        Me.lbltotcob.Dock = System.Windows.Forms.DockStyle.Top
         Me.lbltotcob.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbltotcob.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lbltotcob.Location = New System.Drawing.Point(1028, 31)
+        Me.lbltotcob.Location = New System.Drawing.Point(3, 32)
         Me.lbltotcob.Name = "lbltotcob"
-        Me.lbltotcob.Size = New System.Drawing.Size(0, 20)
+        Me.lbltotcob.Size = New System.Drawing.Size(194, 20)
         Me.lbltotcob.TabIndex = 65
+        Me.lbltotcob.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'lbltotalnombre
         '
-        Me.lbltotalnombre.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbltotalnombre.AutoSize = True
+        Me.lbltotalnombre.Dock = System.Windows.Forms.DockStyle.Top
         Me.lbltotalnombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbltotalnombre.ForeColor = System.Drawing.Color.White
-        Me.lbltotalnombre.Location = New System.Drawing.Point(1029, 11)
+        Me.lbltotalnombre.Location = New System.Drawing.Point(3, 16)
         Me.lbltotalnombre.Name = "lbltotalnombre"
-        Me.lbltotalnombre.Size = New System.Drawing.Size(57, 16)
+        Me.lbltotalnombre.Size = New System.Drawing.Size(194, 16)
         Me.lbltotalnombre.TabIndex = 64
         Me.lbltotalnombre.Text = "TOTAL"
+        Me.lbltotalnombre.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'Button11
         '
@@ -4677,7 +5082,7 @@ Partial Class CONTABLE
         Me.cmdbuscarcomp.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscarcomp.ForeColor = System.Drawing.Color.White
         Me.cmdbuscarcomp.Image = CType(resources.GetObject("cmdbuscarcomp.Image"), System.Drawing.Image)
-        Me.cmdbuscarcomp.Location = New System.Drawing.Point(1092, 0)
+        Me.cmdbuscarcomp.Location = New System.Drawing.Point(906, 0)
         Me.cmdbuscarcomp.Name = "cmdbuscarcomp"
         Me.cmdbuscarcomp.Size = New System.Drawing.Size(80, 105)
         Me.cmdbuscarcomp.TabIndex = 48
@@ -4736,7 +5141,7 @@ Partial Class CONTABLE
         Me.tabcomprobantes.Location = New System.Drawing.Point(4, 22)
         Me.tabcomprobantes.Name = "tabcomprobantes"
         Me.tabcomprobantes.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabcomprobantes.Size = New System.Drawing.Size(1172, 479)
+        Me.tabcomprobantes.Size = New System.Drawing.Size(986, 479)
         Me.tabcomprobantes.TabIndex = 6
         Me.tabcomprobantes.Text = "VENTAS"
         Me.tabcomprobantes.UseVisualStyleBackColor = True
@@ -4754,36 +5159,70 @@ Partial Class CONTABLE
         Me.dtfacturas.Location = New System.Drawing.Point(3, 108)
         Me.dtfacturas.Name = "dtfacturas"
         Me.dtfacturas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtfacturas.Size = New System.Drawing.Size(1166, 368)
+        Me.dtfacturas.Size = New System.Drawing.Size(980, 368)
         Me.dtfacturas.TabIndex = 8
         '
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel5.Controls.Add(Me.PictureBox1)
+        Me.Panel5.Controls.Add(Me.GroupBox5)
+        Me.Panel5.Controls.Add(Me.cmdbuscar)
         Me.Panel5.Controls.Add(Me.grpcomprobantes)
         Me.Panel5.Controls.Add(Me.grpacciones)
         Me.Panel5.Controls.Add(Me.grpperiodo)
         Me.Panel5.Controls.Add(Me.grpfiltrar)
         Me.Panel5.Controls.Add(Me.grpagrupar)
-        Me.Panel5.Controls.Add(Me.lbltotalfact)
-        Me.Panel5.Controls.Add(Me.Label10)
-        Me.Panel5.Controls.Add(Me.cmdbuscar)
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel5.ForeColor = System.Drawing.Color.White
         Me.Panel5.Location = New System.Drawing.Point(3, 3)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(1166, 105)
+        Me.Panel5.Size = New System.Drawing.Size(980, 105)
         Me.Panel5.TabIndex = 0
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.PictureBox1)
+        Me.GroupBox5.Controls.Add(Me.lbltotalfact)
+        Me.GroupBox5.Controls.Add(Me.Label10)
+        Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.GroupBox5.Location = New System.Drawing.Point(741, 0)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(159, 105)
+        Me.GroupBox5.TabIndex = 74
+        Me.GroupBox5.TabStop = False
+        '
+        'Label10
+        '
+        Me.Label10.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.White
+        Me.Label10.Location = New System.Drawing.Point(3, 16)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(153, 16)
+        Me.Label10.TabIndex = 64
+        Me.Label10.Text = "TOTAL"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopRight
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(939, 52)
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 52)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(100, 50)
+        Me.PictureBox1.Size = New System.Drawing.Size(153, 30)
         Me.PictureBox1.TabIndex = 73
         Me.PictureBox1.TabStop = False
         Me.PictureBox1.Visible = False
+        '
+        'lbltotalfact
+        '
+        Me.lbltotalfact.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbltotalfact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalfact.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltotalfact.Location = New System.Drawing.Point(3, 32)
+        Me.lbltotalfact.Name = "lbltotalfact"
+        Me.lbltotalfact.Size = New System.Drawing.Size(153, 20)
+        Me.lbltotalfact.TabIndex = 65
+        Me.lbltotalfact.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'grpcomprobantes
         '
@@ -5079,29 +5518,6 @@ Partial Class CONTABLE
         Me.rdninguno.Text = "Ninguno"
         Me.rdninguno.UseVisualStyleBackColor = True
         '
-        'lbltotalfact
-        '
-        Me.lbltotalfact.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.lbltotalfact.AutoSize = True
-        Me.lbltotalfact.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lbltotalfact.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lbltotalfact.Location = New System.Drawing.Point(1025, 26)
-        Me.lbltotalfact.Name = "lbltotalfact"
-        Me.lbltotalfact.Size = New System.Drawing.Size(0, 20)
-        Me.lbltotalfact.TabIndex = 65
-        '
-        'Label10
-        '
-        Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.ForeColor = System.Drawing.Color.White
-        Me.Label10.Location = New System.Drawing.Point(1026, 6)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(57, 16)
-        Me.Label10.TabIndex = 64
-        Me.Label10.Text = "TOTAL"
-        '
         'cmdbuscar
         '
         Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -5109,7 +5525,7 @@ Partial Class CONTABLE
         Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1086, 0)
+        Me.cmdbuscar.Location = New System.Drawing.Point(900, 0)
         Me.cmdbuscar.Name = "cmdbuscar"
         Me.cmdbuscar.Size = New System.Drawing.Size(80, 105)
         Me.cmdbuscar.TabIndex = 48
@@ -5139,101 +5555,8 @@ Partial Class CONTABLE
         Me.tabcontable.Location = New System.Drawing.Point(0, 40)
         Me.tabcontable.Name = "tabcontable"
         Me.tabcontable.SelectedIndex = 0
-        Me.tabcontable.Size = New System.Drawing.Size(1180, 505)
+        Me.tabcontable.Size = New System.Drawing.Size(994, 505)
         Me.tabcontable.TabIndex = 12
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "id"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        Me.DataGridViewTextBoxColumn1.Visible = False
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        DataGridViewCellStyle16.Format = "d"
-        DataGridViewCellStyle16.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle16
-        Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Descripcion"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Debe"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Haber"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        Me.DataGridViewTextBoxColumn7.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn7.HeaderText = "id"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.Visible = False
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        DataGridViewCellStyle9.Format = "d"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle9
-        Me.DataGridViewTextBoxColumn8.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn8.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        '
-        'DataGridViewTextBoxColumn9
-        '
-        Me.DataGridViewTextBoxColumn9.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn9.HeaderText = "Descripcion"
-        Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
-        Me.DataGridViewTextBoxColumn9.ReadOnly = True
-        Me.DataGridViewTextBoxColumn9.Visible = False
-        '
-        'DataGridViewTextBoxColumn10
-        '
-        DataGridViewCellStyle10.Format = "d"
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle10
-        Me.DataGridViewTextBoxColumn10.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn10.HeaderText = "Debe"
-        Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
-        Me.DataGridViewTextBoxColumn10.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn11
-        '
-        Me.DataGridViewTextBoxColumn11.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn11.HeaderText = "Haber"
-        Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
-        Me.DataGridViewTextBoxColumn11.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn12
-        '
-        Me.DataGridViewTextBoxColumn12.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn12.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
-        Me.DataGridViewTextBoxColumn12.ReadOnly = True
         '
         'DataGridViewTextBoxColumn13
         '
@@ -5242,54 +5565,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn13.Name = "DataGridViewTextBoxColumn13"
         Me.DataGridViewTextBoxColumn13.ReadOnly = True
         Me.DataGridViewTextBoxColumn13.Width = 161
-        '
-        'DataGridViewTextBoxColumn14
-        '
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle11
-        Me.DataGridViewTextBoxColumn14.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn14.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
-        Me.DataGridViewTextBoxColumn14.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn15
-        '
-        Me.DataGridViewTextBoxColumn15.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn15.HeaderText = "Descripcion"
-        Me.DataGridViewTextBoxColumn15.Name = "DataGridViewTextBoxColumn15"
-        Me.DataGridViewTextBoxColumn15.ReadOnly = True
-        Me.DataGridViewTextBoxColumn15.Visible = False
-        '
-        'DataGridViewTextBoxColumn16
-        '
-        DataGridViewCellStyle12.Format = "N2"
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle12
-        Me.DataGridViewTextBoxColumn16.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn16.HeaderText = "Debe"
-        Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
-        Me.DataGridViewTextBoxColumn16.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn17
-        '
-        DataGridViewCellStyle13.Format = "N2"
-        DataGridViewCellStyle13.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn17.DefaultCellStyle = DataGridViewCellStyle13
-        Me.DataGridViewTextBoxColumn17.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn17.HeaderText = "Haber"
-        Me.DataGridViewTextBoxColumn17.Name = "DataGridViewTextBoxColumn17"
-        Me.DataGridViewTextBoxColumn17.ReadOnly = True
-        Me.DataGridViewTextBoxColumn17.Visible = False
-        '
-        'DataGridViewTextBoxColumn18
-        '
-        DataGridViewCellStyle14.Format = "N2"
-        DataGridViewCellStyle14.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle14
-        Me.DataGridViewTextBoxColumn18.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn18.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
-        Me.DataGridViewTextBoxColumn18.ReadOnly = True
         '
         'DataGridViewTextBoxColumn19
         '
@@ -5316,8 +5591,8 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn22
         '
-        DataGridViewCellStyle17.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle146.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle146
         Me.DataGridViewTextBoxColumn22.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn22.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
@@ -5335,9 +5610,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn24
         '
-        DataGridViewCellStyle18.Format = "N2"
-        DataGridViewCellStyle18.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle147.Format = "N2"
+        DataGridViewCellStyle147.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle147
         Me.DataGridViewTextBoxColumn24.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn24.HeaderText = "Debe"
         Me.DataGridViewTextBoxColumn24.Name = "DataGridViewTextBoxColumn24"
@@ -5346,32 +5621,15 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn25
         '
-        DataGridViewCellStyle19.Format = "N2"
-        DataGridViewCellStyle19.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle148.Format = "N2"
+        DataGridViewCellStyle148.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle148
         Me.DataGridViewTextBoxColumn25.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn25.HeaderText = "Haber"
         Me.DataGridViewTextBoxColumn25.Name = "DataGridViewTextBoxColumn25"
         Me.DataGridViewTextBoxColumn25.ReadOnly = True
         Me.DataGridViewTextBoxColumn25.Visible = False
         Me.DataGridViewTextBoxColumn25.Width = 158
-        '
-        'DataGridViewTextBoxColumn26
-        '
-        Me.DataGridViewTextBoxColumn26.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn26.HeaderText = "Descripcion"
-        Me.DataGridViewTextBoxColumn26.Name = "DataGridViewTextBoxColumn26"
-        Me.DataGridViewTextBoxColumn26.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn27
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridViewTextBoxColumn27.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn27.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn27.Name = "DataGridViewTextBoxColumn27"
-        Me.DataGridViewTextBoxColumn27.ReadOnly = True
         '
         'DataGridViewTextBoxColumn28
         '
@@ -5413,9 +5671,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn33
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn33.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle149.Format = "N2"
+        DataGridViewCellStyle149.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn33.DefaultCellStyle = DataGridViewCellStyle149
         Me.DataGridViewTextBoxColumn33.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn33.HeaderText = "Nombre"
         Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
@@ -5427,13 +5685,12 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn34.FillWeight = 10.0!
         Me.DataGridViewTextBoxColumn34.HeaderText = "mensual"
         Me.DataGridViewTextBoxColumn34.Name = "DataGridViewTextBoxColumn34"
-        Me.DataGridViewTextBoxColumn34.Width = 112
         '
         'DataGridViewTextBoxColumn35
         '
-        DataGridViewCellStyle21.Format = "N2"
-        DataGridViewCellStyle21.NullValue = "0"
-        Me.DataGridViewTextBoxColumn35.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle150.Format = "N2"
+        DataGridViewCellStyle150.NullValue = "0"
+        Me.DataGridViewTextBoxColumn35.DefaultCellStyle = DataGridViewCellStyle150
         Me.DataGridViewTextBoxColumn35.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn35.HeaderText = "Descripcion"
         Me.DataGridViewTextBoxColumn35.Name = "DataGridViewTextBoxColumn35"
@@ -5443,9 +5700,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn36
         '
-        DataGridViewCellStyle22.Format = "N2"
-        DataGridViewCellStyle22.NullValue = "0"
-        Me.DataGridViewTextBoxColumn36.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle151.Format = "N2"
+        DataGridViewCellStyle151.NullValue = "0"
+        Me.DataGridViewTextBoxColumn36.DefaultCellStyle = DataGridViewCellStyle151
         Me.DataGridViewTextBoxColumn36.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn36.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn36.Name = "DataGridViewTextBoxColumn36"
@@ -5463,9 +5720,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn38
         '
-        DataGridViewCellStyle23.Format = "d"
-        DataGridViewCellStyle23.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn38.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle152.Format = "d"
+        DataGridViewCellStyle152.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn38.DefaultCellStyle = DataGridViewCellStyle152
         Me.DataGridViewTextBoxColumn38.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn38.HeaderText = "Column26"
         Me.DataGridViewTextBoxColumn38.Name = "DataGridViewTextBoxColumn38"
@@ -5474,9 +5731,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn39
         '
-        DataGridViewCellStyle24.Format = "N2"
-        DataGridViewCellStyle24.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn39.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle153.Format = "N2"
+        DataGridViewCellStyle153.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn39.DefaultCellStyle = DataGridViewCellStyle153
         Me.DataGridViewTextBoxColumn39.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn39.HeaderText = "Descripcion"
         Me.DataGridViewTextBoxColumn39.Name = "DataGridViewTextBoxColumn39"
@@ -5486,9 +5743,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn40
         '
-        DataGridViewCellStyle25.Format = "N2"
-        DataGridViewCellStyle25.NullValue = "0"
-        Me.DataGridViewTextBoxColumn40.DefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle154.Format = "N2"
+        DataGridViewCellStyle154.NullValue = "0"
+        Me.DataGridViewTextBoxColumn40.DefaultCellStyle = DataGridViewCellStyle154
         Me.DataGridViewTextBoxColumn40.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn40.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn40.Name = "DataGridViewTextBoxColumn40"
@@ -5499,21 +5756,20 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn41
         '
         Me.DataGridViewTextBoxColumn41.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle26.Format = "N2"
-        DataGridViewCellStyle26.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn41.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle155.Format = "N2"
+        DataGridViewCellStyle155.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn41.DefaultCellStyle = DataGridViewCellStyle155
         Me.DataGridViewTextBoxColumn41.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn41.HeaderText = "Caja"
         Me.DataGridViewTextBoxColumn41.Name = "DataGridViewTextBoxColumn41"
         Me.DataGridViewTextBoxColumn41.ReadOnly = True
         Me.DataGridViewTextBoxColumn41.Visible = False
-        Me.DataGridViewTextBoxColumn41.Width = 141
         '
         'DataGridViewTextBoxColumn42
         '
-        DataGridViewCellStyle27.Format = "d"
-        DataGridViewCellStyle27.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn42.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle156.Format = "d"
+        DataGridViewCellStyle156.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn42.DefaultCellStyle = DataGridViewCellStyle156
         Me.DataGridViewTextBoxColumn42.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn42.HeaderText = "Concepto"
         Me.DataGridViewTextBoxColumn42.Name = "DataGridViewTextBoxColumn42"
@@ -5524,14 +5780,13 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn43
         '
         Me.DataGridViewTextBoxColumn43.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle28.Format = "N2"
-        DataGridViewCellStyle28.NullValue = "0"
-        Me.DataGridViewTextBoxColumn43.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle157.Format = "N2"
+        DataGridViewCellStyle157.NullValue = "0"
+        Me.DataGridViewTextBoxColumn43.DefaultCellStyle = DataGridViewCellStyle157
         Me.DataGridViewTextBoxColumn43.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn43.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn43.Name = "DataGridViewTextBoxColumn43"
         Me.DataGridViewTextBoxColumn43.ReadOnly = True
-        Me.DataGridViewTextBoxColumn43.Width = 47
         '
         'DataGridViewTextBoxColumn44
         '
@@ -5545,20 +5800,19 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn45
         '
         Me.DataGridViewTextBoxColumn45.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle29.Format = "N2"
-        DataGridViewCellStyle29.NullValue = "0"
-        Me.DataGridViewTextBoxColumn45.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle158.Format = "N2"
+        DataGridViewCellStyle158.NullValue = "0"
+        Me.DataGridViewTextBoxColumn45.DefaultCellStyle = DataGridViewCellStyle158
         Me.DataGridViewTextBoxColumn45.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn45.HeaderText = "Concepto"
         Me.DataGridViewTextBoxColumn45.Name = "DataGridViewTextBoxColumn45"
         Me.DataGridViewTextBoxColumn45.ReadOnly = True
-        Me.DataGridViewTextBoxColumn45.Width = 115
         '
         'DataGridViewTextBoxColumn46
         '
-        DataGridViewCellStyle30.Format = "N2"
-        DataGridViewCellStyle30.NullValue = "0"
-        Me.DataGridViewTextBoxColumn46.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle159.Format = "N2"
+        DataGridViewCellStyle159.NullValue = "0"
+        Me.DataGridViewTextBoxColumn46.DefaultCellStyle = DataGridViewCellStyle159
         Me.DataGridViewTextBoxColumn46.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn46.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn46.Name = "DataGridViewTextBoxColumn46"
@@ -5567,9 +5821,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn47
         '
-        DataGridViewCellStyle31.Format = "N2"
-        DataGridViewCellStyle31.NullValue = "0"
-        Me.DataGridViewTextBoxColumn47.DefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle160.Format = "N2"
+        DataGridViewCellStyle160.NullValue = "0"
+        Me.DataGridViewTextBoxColumn47.DefaultCellStyle = DataGridViewCellStyle160
         Me.DataGridViewTextBoxColumn47.FillWeight = 25.0!
         Me.DataGridViewTextBoxColumn47.HeaderText = "Codigo"
         Me.DataGridViewTextBoxColumn47.Name = "DataGridViewTextBoxColumn47"
@@ -5578,9 +5832,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn48
         '
-        DataGridViewCellStyle32.Format = "N2"
-        DataGridViewCellStyle32.NullValue = "0"
-        Me.DataGridViewTextBoxColumn48.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle161.Format = "N2"
+        DataGridViewCellStyle161.NullValue = "0"
+        Me.DataGridViewTextBoxColumn48.DefaultCellStyle = DataGridViewCellStyle161
         Me.DataGridViewTextBoxColumn48.FillWeight = 150.0!
         Me.DataGridViewTextBoxColumn48.HeaderText = "Producto"
         Me.DataGridViewTextBoxColumn48.Name = "DataGridViewTextBoxColumn48"
@@ -5590,19 +5844,18 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn49
         '
         Me.DataGridViewTextBoxColumn49.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle33.Format = "N2"
-        DataGridViewCellStyle33.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn49.DefaultCellStyle = DataGridViewCellStyle33
+        DataGridViewCellStyle162.Format = "N2"
+        DataGridViewCellStyle162.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn49.DefaultCellStyle = DataGridViewCellStyle162
         Me.DataGridViewTextBoxColumn49.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn49.HeaderText = "Ventas"
         Me.DataGridViewTextBoxColumn49.Name = "DataGridViewTextBoxColumn49"
-        Me.DataGridViewTextBoxColumn49.Width = 144
         '
         'DataGridViewTextBoxColumn50
         '
-        DataGridViewCellStyle34.Format = "N2"
-        DataGridViewCellStyle34.NullValue = "0"
-        Me.DataGridViewTextBoxColumn50.DefaultCellStyle = DataGridViewCellStyle34
+        DataGridViewCellStyle163.Format = "N2"
+        DataGridViewCellStyle163.NullValue = "0"
+        Me.DataGridViewTextBoxColumn50.DefaultCellStyle = DataGridViewCellStyle163
         Me.DataGridViewTextBoxColumn50.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn50.HeaderText = "Importe"
         Me.DataGridViewTextBoxColumn50.Name = "DataGridViewTextBoxColumn50"
@@ -5610,9 +5863,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn51
         '
-        DataGridViewCellStyle35.Format = "N2"
-        DataGridViewCellStyle35.NullValue = "0"
-        Me.DataGridViewTextBoxColumn51.DefaultCellStyle = DataGridViewCellStyle35
+        DataGridViewCellStyle164.Format = "N2"
+        DataGridViewCellStyle164.NullValue = "0"
+        Me.DataGridViewTextBoxColumn51.DefaultCellStyle = DataGridViewCellStyle164
         Me.DataGridViewTextBoxColumn51.FillWeight = 25.0!
         Me.DataGridViewTextBoxColumn51.HeaderText = "Codigo"
         Me.DataGridViewTextBoxColumn51.Name = "DataGridViewTextBoxColumn51"
@@ -5622,9 +5875,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn52
         '
-        DataGridViewCellStyle36.Format = "N2"
-        DataGridViewCellStyle36.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn52.DefaultCellStyle = DataGridViewCellStyle36
+        DataGridViewCellStyle165.Format = "N2"
+        DataGridViewCellStyle165.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn52.DefaultCellStyle = DataGridViewCellStyle165
         Me.DataGridViewTextBoxColumn52.FillWeight = 150.0!
         Me.DataGridViewTextBoxColumn52.HeaderText = "Producto"
         Me.DataGridViewTextBoxColumn52.Name = "DataGridViewTextBoxColumn52"
@@ -5633,9 +5886,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn53
         '
-        DataGridViewCellStyle37.Format = "N2"
-        DataGridViewCellStyle37.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn53.DefaultCellStyle = DataGridViewCellStyle37
+        DataGridViewCellStyle166.Format = "N2"
+        DataGridViewCellStyle166.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn53.DefaultCellStyle = DataGridViewCellStyle166
         Me.DataGridViewTextBoxColumn53.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn53.HeaderText = "Ventas"
         Me.DataGridViewTextBoxColumn53.Name = "DataGridViewTextBoxColumn53"
@@ -5644,9 +5897,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn54
         '
-        DataGridViewCellStyle38.Format = "N2"
-        DataGridViewCellStyle38.NullValue = "0"
-        Me.DataGridViewTextBoxColumn54.DefaultCellStyle = DataGridViewCellStyle38
+        DataGridViewCellStyle167.Format = "N2"
+        DataGridViewCellStyle167.NullValue = "0"
+        Me.DataGridViewTextBoxColumn54.DefaultCellStyle = DataGridViewCellStyle167
         Me.DataGridViewTextBoxColumn54.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn54.HeaderText = "Importe"
         Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
@@ -5656,9 +5909,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn55
         '
-        DataGridViewCellStyle39.Format = "N2"
-        DataGridViewCellStyle39.NullValue = "0"
-        Me.DataGridViewTextBoxColumn55.DefaultCellStyle = DataGridViewCellStyle39
+        DataGridViewCellStyle168.Format = "N2"
+        DataGridViewCellStyle168.NullValue = "0"
+        Me.DataGridViewTextBoxColumn55.DefaultCellStyle = DataGridViewCellStyle168
         Me.DataGridViewTextBoxColumn55.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn55.HeaderText = "COMPRA MIN"
         Me.DataGridViewTextBoxColumn55.Name = "DataGridViewTextBoxColumn55"
@@ -5667,9 +5920,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn56
         '
-        DataGridViewCellStyle40.Format = "N2"
-        DataGridViewCellStyle40.NullValue = "0"
-        Me.DataGridViewTextBoxColumn56.DefaultCellStyle = DataGridViewCellStyle40
+        DataGridViewCellStyle169.Format = "N2"
+        DataGridViewCellStyle169.NullValue = "0"
+        Me.DataGridViewTextBoxColumn56.DefaultCellStyle = DataGridViewCellStyle169
         Me.DataGridViewTextBoxColumn56.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn56.HeaderText = "DESCUENTO %"
         Me.DataGridViewTextBoxColumn56.Name = "DataGridViewTextBoxColumn56"
@@ -5677,263 +5930,19 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn57
         '
-        DataGridViewCellStyle41.Format = "N2"
-        DataGridViewCellStyle41.NullValue = "0"
-        Me.DataGridViewTextBoxColumn57.DefaultCellStyle = DataGridViewCellStyle41
+        DataGridViewCellStyle170.Format = "N2"
+        DataGridViewCellStyle170.NullValue = "0"
+        Me.DataGridViewTextBoxColumn57.DefaultCellStyle = DataGridViewCellStyle170
         Me.DataGridViewTextBoxColumn57.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn57.HeaderText = "saldoMes"
         Me.DataGridViewTextBoxColumn57.Name = "DataGridViewTextBoxColumn57"
         Me.DataGridViewTextBoxColumn57.Width = 146
         '
-        'Column17
-        '
-        Me.Column17.FillWeight = 20.0!
-        Me.Column17.HeaderText = "id"
-        Me.Column17.Name = "Column17"
-        '
-        'Column10
-        '
-        DataGridViewCellStyle15.Format = "d"
-        DataGridViewCellStyle15.NullValue = Nothing
-        Me.Column10.DefaultCellStyle = DataGridViewCellStyle15
-        Me.Column10.FillWeight = 30.0!
-        Me.Column10.HeaderText = "Fecha"
-        Me.Column10.Name = "Column10"
-        '
-        'Column16
-        '
-        Me.Column16.HeaderText = "Descripcion"
-        Me.Column16.Name = "Column16"
-        '
-        'Column13
-        '
-        Me.Column13.FillWeight = 30.0!
-        Me.Column13.HeaderText = "Debe"
-        Me.Column13.Name = "Column13"
-        '
-        'Column14
-        '
-        Me.Column14.FillWeight = 30.0!
-        Me.Column14.HeaderText = "Haber"
-        Me.Column14.Name = "Column14"
-        '
-        'Column15
-        '
-        Me.Column15.FillWeight = 30.0!
-        Me.Column15.HeaderText = "Saldo"
-        Me.Column15.Name = "Column15"
-        '
-        'Column7
-        '
-        Me.Column7.FillWeight = 30.0!
-        Me.Column7.HeaderText = "comp"
-        Me.Column7.Name = "Column7"
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 20.0!
-        Me.Column8.HeaderText = "tipofac"
-        Me.Column8.Name = "Column8"
-        '
-        'Column11
-        '
-        Me.Column11.FillWeight = 30.0!
-        Me.Column11.HeaderText = "Vencimiento"
-        Me.Column11.Name = "Column11"
-        '
-        'Column29
-        '
-        Me.Column29.FillWeight = 40.0!
-        Me.Column29.HeaderText = "Column29"
-        Me.Column29.Name = "Column29"
-        Me.Column29.ReadOnly = True
-        '
-        'id
-        '
-        Me.id.HeaderText = "idCuenta"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'nombreCuenta
-        '
-        Me.nombreCuenta.HeaderText = "NombreCuenta"
-        Me.nombreCuenta.Name = "nombreCuenta"
-        '
-        'grupo
-        '
-        Me.grupo.FillWeight = 20.0!
-        Me.grupo.HeaderText = "Grupo"
-        Me.grupo.Name = "grupo"
-        '
-        'subGrupo
-        '
-        Me.subGrupo.FillWeight = 20.0!
-        Me.subGrupo.HeaderText = "subGrupo"
-        Me.subGrupo.Name = "subGrupo"
-        '
-        'cuenta
-        '
-        Me.cuenta.FillWeight = 20.0!
-        Me.cuenta.HeaderText = "Cuenta"
-        Me.cuenta.Name = "cuenta"
-        '
-        'subCuenta
-        '
-        Me.subCuenta.FillWeight = 20.0!
-        Me.subCuenta.HeaderText = "subCuenta"
-        Me.subCuenta.Name = "subCuenta"
-        '
-        'cuentaDetalle
-        '
-        Me.cuentaDetalle.FillWeight = 20.0!
-        Me.cuentaDetalle.HeaderText = "cuentaDetalle"
-        Me.cuentaDetalle.Name = "cuentaDetalle"
-        '
-        'cuentaMovimiento
-        '
-        Me.cuentaMovimiento.HeaderText = "cuentaMovimiento"
-        Me.cuentaMovimiento.Name = "cuentaMovimiento"
-        Me.cuentaMovimiento.Visible = False
-        '
-        'cuentaResultado
-        '
-        Me.cuentaResultado.HeaderText = "cuentaResultado"
-        Me.cuentaResultado.Name = "cuentaResultado"
-        Me.cuentaResultado.Visible = False
-        '
-        'Column23
-        '
-        Me.Column23.FillWeight = 20.0!
-        Me.Column23.HeaderText = "NumComprobante"
-        Me.Column23.Name = "Column23"
-        '
-        'Column5
-        '
-        Me.Column5.FillWeight = 20.0!
-        Me.Column5.HeaderText = "CodigoAsiento"
-        Me.Column5.Name = "Column5"
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 30.0!
-        Me.Column6.HeaderText = "Fecha"
-        Me.Column6.Name = "Column6"
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "Concepto"
-        Me.Column9.Name = "Column9"
-        '
-        'Column18
-        '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.Column18.DefaultCellStyle = DataGridViewCellStyle7
-        Me.Column18.FillWeight = 30.0!
-        Me.Column18.HeaderText = "Total Debe"
-        Me.Column18.Name = "Column18"
-        '
-        'Column12
-        '
-        DataGridViewCellStyle8.Format = "N2"
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.Column12.DefaultCellStyle = DataGridViewCellStyle8
-        Me.Column12.FillWeight = 30.0!
-        Me.Column12.HeaderText = "Total Haber"
-        Me.Column12.Name = "Column12"
-        '
-        'Column19
-        '
-        Me.Column19.FillWeight = 10.0!
-        Me.Column19.HeaderText = "Partidas"
-        Me.Column19.Name = "Column19"
-        '
-        'DataGridViewTextBoxColumn65
-        '
-        Me.DataGridViewTextBoxColumn65.HeaderText = ""
-        Me.DataGridViewTextBoxColumn65.Name = "DataGridViewTextBoxColumn65"
-        Me.DataGridViewTextBoxColumn65.Visible = False
-        '
-        'DataGridViewTextBoxColumn66
-        '
-        Me.DataGridViewTextBoxColumn66.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn66.HeaderText = ""
-        Me.DataGridViewTextBoxColumn66.Name = "DataGridViewTextBoxColumn66"
-        '
-        'DataGridViewTextBoxColumn67
-        '
-        Me.DataGridViewTextBoxColumn67.HeaderText = ""
-        Me.DataGridViewTextBoxColumn67.Name = "DataGridViewTextBoxColumn67"
-        '
-        'DataGridViewTextBoxColumn68
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        Me.DataGridViewTextBoxColumn68.DefaultCellStyle = DataGridViewCellStyle2
-        Me.DataGridViewTextBoxColumn68.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn68.HeaderText = ""
-        Me.DataGridViewTextBoxColumn68.Name = "DataGridViewTextBoxColumn68"
-        '
-        'DataGridViewTextBoxColumn69
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        Me.DataGridViewTextBoxColumn69.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridViewTextBoxColumn69.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn69.HeaderText = ""
-        Me.DataGridViewTextBoxColumn69.Name = "DataGridViewTextBoxColumn69"
-        '
-        'DataGridViewTextBoxColumn70
-        '
-        DataGridViewCellStyle4.Format = "N2"
-        Me.DataGridViewTextBoxColumn70.DefaultCellStyle = DataGridViewCellStyle4
-        Me.DataGridViewTextBoxColumn70.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn70.HeaderText = ""
-        Me.DataGridViewTextBoxColumn70.Name = "DataGridViewTextBoxColumn70"
-        '
-        'DataGridViewTextBoxColumn71
-        '
-        DataGridViewCellStyle5.Format = "N2"
-        Me.DataGridViewTextBoxColumn71.DefaultCellStyle = DataGridViewCellStyle5
-        Me.DataGridViewTextBoxColumn71.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn71.HeaderText = ""
-        Me.DataGridViewTextBoxColumn71.Name = "DataGridViewTextBoxColumn71"
-        '
-        'DataGridViewTextBoxColumn72
-        '
-        DataGridViewCellStyle6.Format = "N2"
-        Me.DataGridViewTextBoxColumn72.DefaultCellStyle = DataGridViewCellStyle6
-        Me.DataGridViewTextBoxColumn72.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn72.HeaderText = ""
-        Me.DataGridViewTextBoxColumn72.Name = "DataGridViewTextBoxColumn72"
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "idpromo"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "DESCRIPCION"
-        Me.Column2.Name = "Column2"
-        Me.Column2.ReadOnly = True
-        '
-        'Column3
-        '
-        Me.Column3.FillWeight = 20.0!
-        Me.Column3.HeaderText = "COMPRA MIN"
-        Me.Column3.Name = "Column3"
-        '
-        'Column4
-        '
-        Me.Column4.FillWeight = 20.0!
-        Me.Column4.HeaderText = "DESCUENTO %"
-        Me.Column4.Name = "Column4"
-        '
         'DataGridViewTextBoxColumn58
         '
-        DataGridViewCellStyle42.Format = "N2"
-        DataGridViewCellStyle42.NullValue = "0"
-        Me.DataGridViewTextBoxColumn58.DefaultCellStyle = DataGridViewCellStyle42
+        DataGridViewCellStyle171.Format = "N2"
+        DataGridViewCellStyle171.NullValue = "0"
+        Me.DataGridViewTextBoxColumn58.DefaultCellStyle = DataGridViewCellStyle171
         Me.DataGridViewTextBoxColumn58.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn58.HeaderText = "saldoFinal"
         Me.DataGridViewTextBoxColumn58.Name = "DataGridViewTextBoxColumn58"
@@ -5949,9 +5958,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn60
         '
-        DataGridViewCellStyle43.Format = "N2"
-        DataGridViewCellStyle43.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn60.DefaultCellStyle = DataGridViewCellStyle43
+        DataGridViewCellStyle172.Format = "N2"
+        DataGridViewCellStyle172.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn60.DefaultCellStyle = DataGridViewCellStyle172
         Me.DataGridViewTextBoxColumn60.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn60.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn60.Name = "DataGridViewTextBoxColumn60"
@@ -5985,11 +5994,22 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn64.Name = "DataGridViewTextBoxColumn64"
         Me.DataGridViewTextBoxColumn64.Width = 158
         '
+        'GroupBox6
+        '
+        Me.GroupBox6.Controls.Add(Me.lbltotcob)
+        Me.GroupBox6.Controls.Add(Me.lbltotalnombre)
+        Me.GroupBox6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.GroupBox6.Location = New System.Drawing.Point(706, 0)
+        Me.GroupBox6.Name = "GroupBox6"
+        Me.GroupBox6.Size = New System.Drawing.Size(200, 105)
+        Me.GroupBox6.TabIndex = 76
+        Me.GroupBox6.TabStop = False
+        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1180, 545)
+        Me.ClientSize = New System.Drawing.Size(994, 545)
         Me.Controls.Add(Me.tabcontable)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
@@ -6126,7 +6146,7 @@ Partial Class CONTABLE
         Me.tabcomprobantes.ResumeLayout(False)
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
-        Me.Panel5.PerformLayout()
+        Me.GroupBox5.ResumeLayout(False)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpcomprobantes.ResumeLayout(False)
         Me.grpcomprobantes.PerformLayout()
@@ -6138,6 +6158,7 @@ Partial Class CONTABLE
         Me.grpagrupar.ResumeLayout(False)
         Me.grpagrupar.PerformLayout()
         Me.tabcontable.ResumeLayout(False)
+        Me.GroupBox6.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -6614,4 +6635,6 @@ Partial Class CONTABLE
     Friend WithEvents rdTodasCuentas As RadioButton
     Friend WithEvents rdCuentasIndividuales As RadioButton
     Friend WithEvents txtlog As TextBox
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents GroupBox6 As GroupBox
 End Class

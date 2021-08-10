@@ -71,7 +71,7 @@
                   <Width>1.87591cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>4.7599cm</Width>
+                  <Width>4.49532cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.59126cm</Width>
@@ -83,7 +83,7 @@
                   <Width>2.28026cm</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.1886cm</Width>
+                  <Width>2.49803cm</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>2.54485cm</Width>
@@ -864,7 +864,7 @@
             <DataSetName>cuentasConSaldo</DataSetName>
             <Left>0.7489cm</Left>
             <Height>1.83528cm</Height>
-            <Width>18.70625cm</Width>
+            <Width>18.7511cm</Width>
             <Style>
               <Border>
                 <Style>Solid</Style>

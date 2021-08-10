@@ -275,7 +275,7 @@ Partial Class frmprincipal
         Me.NuevaEfacturaToolStripMenuItem.Image = CType(resources.GetObject("NuevaEfacturaToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevaEfacturaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevaEfacturaToolStripMenuItem.Name = "NuevaEfacturaToolStripMenuItem"
-        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
+        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
         Me.NuevaEfacturaToolStripMenuItem.Text = "Recuperar facturas Elect."
         '
         'NuevoPedidoToolStripMenuItem
@@ -286,7 +286,7 @@ Partial Class frmprincipal
         Me.NuevoPedidoToolStripMenuItem.Image = CType(resources.GetObject("NuevoPedidoToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevoPedidoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevoPedidoToolStripMenuItem.Name = "NuevoPedidoToolStripMenuItem"
-        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
+        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
         Me.NuevoPedidoToolStripMenuItem.Text = "Presupuestos/Pedidos"
         '
         'reciboconsfinal
@@ -297,7 +297,7 @@ Partial Class frmprincipal
         Me.reciboconsfinal.Image = CType(resources.GetObject("reciboconsfinal.Image"), System.Drawing.Image)
         Me.reciboconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.reciboconsfinal.Name = "reciboconsfinal"
-        Me.reciboconsfinal.Size = New System.Drawing.Size(280, 38)
+        Me.reciboconsfinal.Size = New System.Drawing.Size(305, 38)
         Me.reciboconsfinal.Text = "Recibo Cons. final"
         '
         'facturabconsfinal
@@ -308,7 +308,7 @@ Partial Class frmprincipal
         Me.facturabconsfinal.Image = CType(resources.GetObject("facturabconsfinal.Image"), System.Drawing.Image)
         Me.facturabconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.facturabconsfinal.Name = "facturabconsfinal"
-        Me.facturabconsfinal.Size = New System.Drawing.Size(280, 38)
+        Me.facturabconsfinal.Size = New System.Drawing.Size(305, 38)
         Me.facturabconsfinal.Text = "Factura B / C"
         '
         'FacturaA
@@ -319,7 +319,7 @@ Partial Class frmprincipal
         Me.FacturaA.Image = CType(resources.GetObject("FacturaA.Image"), System.Drawing.Image)
         Me.FacturaA.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FacturaA.Name = "FacturaA"
-        Me.FacturaA.Size = New System.Drawing.Size(280, 38)
+        Me.FacturaA.Size = New System.Drawing.Size(305, 38)
         Me.FacturaA.Text = "Factura A"
         '
         'RemitosToolStripMenuItem
@@ -328,7 +328,7 @@ Partial Class frmprincipal
         Me.RemitosToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.RemitosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.RemitosToolStripMenuItem.Name = "RemitosToolStripMenuItem"
-        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
+        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
         Me.RemitosToolStripMenuItem.Text = "Remitos"
         '
         'ReimpresiónDeComprobantesToolStripMenuItem
@@ -339,8 +339,8 @@ Partial Class frmprincipal
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
         Me.ReimpresiónDeComprobantesToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Name = "ReimpresiónDeComprobantesToolStripMenuItem"
-        Me.ReimpresiónDeComprobantesToolStripMenuItem.Size = New System.Drawing.Size(280, 38)
-        Me.ReimpresiónDeComprobantesToolStripMenuItem.Text = "Reimpresión de comprobantes"
+        Me.ReimpresiónDeComprobantesToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
+        Me.ReimpresiónDeComprobantesToolStripMenuItem.Text = "Comprobantes emitidos"
         '
         'cmdadministracion
         '

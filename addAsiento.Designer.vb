@@ -27,6 +27,7 @@ Partial Class addAsiento
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
+        Me.chkReabrir = New System.Windows.Forms.CheckBox()
         Me.txtAsientoNumero = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -44,7 +45,6 @@ Partial Class addAsiento
         Me.lbltotalHaber = New System.Windows.Forms.Label()
         Me.lbltotalDebe = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.chkReabrir = New System.Windows.Forms.CheckBox()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -70,6 +70,17 @@ Partial Class addAsiento
         Me.pntitulo.Name = "pntitulo"
         Me.pntitulo.Size = New System.Drawing.Size(785, 57)
         Me.pntitulo.TabIndex = 66
+        '
+        'chkReabrir
+        '
+        Me.chkReabrir.AutoSize = True
+        Me.chkReabrir.ForeColor = System.Drawing.Color.White
+        Me.chkReabrir.Location = New System.Drawing.Point(653, 40)
+        Me.chkReabrir.Name = "chkReabrir"
+        Me.chkReabrir.Size = New System.Drawing.Size(132, 17)
+        Me.chkReabrir.TabIndex = 78
+        Me.chkReabrir.Text = "Guardar y agregar otro"
+        Me.chkReabrir.UseVisualStyleBackColor = True
         '
         'txtAsientoNumero
         '
@@ -267,17 +278,6 @@ Partial Class addAsiento
         Me.Label4.TabIndex = 76
         Me.Label4.Text = "TOTALES:"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'chkReabrir
-        '
-        Me.chkReabrir.AutoSize = True
-        Me.chkReabrir.ForeColor = System.Drawing.Color.White
-        Me.chkReabrir.Location = New System.Drawing.Point(653, 40)
-        Me.chkReabrir.Name = "chkReabrir"
-        Me.chkReabrir.Size = New System.Drawing.Size(132, 17)
-        Me.chkReabrir.TabIndex = 78
-        Me.chkReabrir.Text = "Guardar y agregar otro"
-        Me.chkReabrir.UseVisualStyleBackColor = True
         '
         'DataGridViewTextBoxColumn1
         '

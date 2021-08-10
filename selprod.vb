@@ -72,19 +72,16 @@
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).cargarProdCod(fila)
                     CType(frmprincipal.ActiveMdiChild, fichaequipo).CalcularTotales()
-                'Case "produccion"
-                '    CType(frmprincipal.ActiveMdiChild, produccion).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                '    CType(frmprincipal.ActiveMdiChild, produccion).cargarProdCod(fila)
+
                 Case "ptovta"
                     If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
                         CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
-                        CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdCod(fila)
                     Else
-                        'CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                        'CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
+                        CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
                     End If
-
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdCod(fila)
                     CType(frmprincipal.ActiveMdiChild, puntoventa).CalcularTotales()
+
             End Select
             Me.Close()
         Catch ex As Exception

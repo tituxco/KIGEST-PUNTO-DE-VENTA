@@ -22,7 +22,7 @@ Partial Class NvaPublicidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnPagar = New System.Windows.Forms.Button()
         Me.txtclientenombre = New System.Windows.Forms.TextBox()
@@ -52,6 +52,8 @@ Partial Class NvaPublicidad
         Me.txtclientecuenta = New System.Windows.Forms.TextBox()
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtdetallePublicidad = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.txtconcepto = New System.Windows.Forms.TextBox()
         Me.pntitulo.SuspendLayout()
         CType(Me.dgvPublicidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -179,14 +181,14 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPublicidad.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPublicidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.Desktop
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.Desktop
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle3
         Me.dgvPublicidad.Location = New System.Drawing.Point(1, 234)
         Me.dgvPublicidad.Name = "dgvPublicidad"
         Me.dgvPublicidad.ReadOnly = True
@@ -302,7 +304,7 @@ Partial Class NvaPublicidad
         Me.btnCalcular.Name = "btnCalcular"
         Me.btnCalcular.Size = New System.Drawing.Size(152, 27)
         Me.btnCalcular.TabIndex = 106
-        Me.btnCalcular.Text = "Previsiualizar prestamo"
+        Me.btnCalcular.Text = "Previsiualizar"
         Me.btnCalcular.UseVisualStyleBackColor = True
         '
         'txtCuota
@@ -359,14 +361,36 @@ Partial Class NvaPublicidad
         Me.txtdetallePublicidad.MaxLength = 240
         Me.txtdetallePublicidad.Multiline = True
         Me.txtdetallePublicidad.Name = "txtdetallePublicidad"
-        Me.txtdetallePublicidad.Size = New System.Drawing.Size(656, 39)
+        Me.txtdetallePublicidad.Size = New System.Drawing.Size(656, 31)
         Me.txtdetallePublicidad.TabIndex = 119
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(43, 167)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(66, 16)
+        Me.Label12.TabIndex = 120
+        Me.Label12.Text = "Concepto"
+        '
+        'txtconcepto
+        '
+        Me.txtconcepto.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtconcepto.Location = New System.Drawing.Point(132, 161)
+        Me.txtconcepto.MaxLength = 240
+        Me.txtconcepto.Multiline = True
+        Me.txtconcepto.Name = "txtconcepto"
+        Me.txtconcepto.Size = New System.Drawing.Size(656, 31)
+        Me.txtconcepto.TabIndex = 121
         '
         'NvaPublicidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(875, 381)
+        Me.Controls.Add(Me.txtconcepto)
+        Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.txtdetallePublicidad)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.Button1)
@@ -396,10 +420,10 @@ Partial Class NvaPublicidad
         Me.Controls.Add(Me.txtPlazo)
         Me.Controls.Add(Me.txtclientecuenta)
         Me.KeyPreview = True
-        Me.MaximizeBox = False
         Me.Name = "NvaPublicidad"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "NvaPublicidad"
+        Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
         CType(Me.dgvPublicidad, System.ComponentModel.ISupportInitialize).EndInit()
@@ -437,4 +461,6 @@ Partial Class NvaPublicidad
     Friend WithEvents txtclientecuenta As TextBox
     Friend WithEvents Label11 As Label
     Public WithEvents txtdetallePublicidad As TextBox
+    Friend WithEvents Label12 As Label
+    Public WithEvents txtconcepto As TextBox
 End Class

@@ -35,21 +35,33 @@ Public Class CajaDiaria
         End If
 
         Reconectar()
-        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter("select ie.fecha, case ie.tipo
-	When 1 Then (Select ic.concepto from  fact_ingresos_concepto  As ic where ic.id=ie.concepto) 
-	when 2 then (select concat(ec.concepto,'(',ie.descripcion,')') from fact_egresos_concepto  as ec where ec.id=ie.concepto) 
-end as concepto, case ie.tipo
-When 1 Then (Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
-	from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
-	where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
-	and ie.tipo=1 )  
-when 2 then (select concat(tip.abrev,' - ',fac.numero) 
-	from fact_proveedores_fact as fac, fact_conffiscal as tip, fact_puntosventa as ptovta
-	where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
-	and ptovta.id=tip.ptovta and ie.tipo=2) end as detalles,  
-format(replace(ie.monto,',','.'),2,'es_AR'), ie.tipo 
-from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
-and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")", conexionPrinc)
+        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter("select ie.fecha, 
+		case ie.tipo
+			When 1 Then (
+				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
+                fact_facturas as fact, fact_clientes as cl 
+                where ic.id=ie.concepto and ie.comprobante=fact.id and
+                cl.idclientes=fact.id_cliente                
+                ) 
+			when 2 then (
+				select concat(ec.concepto,' - ',prov.razon,' - (',ie.descripcion,')') from fact_egresos_concepto  as ec, 
+				fact_proveedores_fact as fact, fact_proveedores as prov 
+				where ec.id=ie.concepto and ie.comprobante=fact.id and fact.idproveedor=prov.id) 
+			end as concepto, 
+        case ie.tipo
+			When 1 Then (
+				Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
+				from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
+				where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
+				and ie.tipo=1 )  
+			when 2 then (select concat(tip.abrev,' - ',fac.numero) 
+				from fact_proveedores_fact as fac, fact_conffiscal as tip, fact_puntosventa as ptovta
+				where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
+				and ptovta.id=tip.ptovta and ie.tipo=2) 
+			end as detalles,  
+				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo 
+				from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")", conexionPrinc)
         Dim tablacaja As New DataTable
         Dim infocaja() As DataRow
         consultacaja.Fill(tablacaja)
@@ -93,22 +105,23 @@ and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=
 
     Private Sub cmdcerrarcaja_Click(sender As Object, e As EventArgs) Handles cmdcerrarcaja.Click
         Try
-            Dim fecha As String = Format(Now, "yyyy-MM-dd")
-            Dim sqlQuery As String
+            If MsgBox("Realmente desa realizar el arqueo de caja?", vbYesNo + vbQuestion, "Cierre de caja") = vbYes Then
+                Dim fecha As String = Format(Now, "yyyy-MM-dd")
+                Dim sqlQuery As String
 
-            Reconectar()
-            sqlQuery = "insert into fact_cajas_cierres(monto,caja) values (?monto,?caja)"
+                Reconectar()
+                sqlQuery = "insert into fact_cajas_cierres(monto,caja) values (?monto,?caja)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?monto", FormatNumber(saldoCaja, 2))
-                .AddWithValue("?caja", My.Settings.CajaDef)
-            End With
-            comandoadd.ExecuteNonQuery()
-            MsgBox("El cierre de caja fue exitoso")
-            saldoCaja = 0
-            CargarCaja()
-
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?monto", FormatNumber(saldoCaja, 2))
+                    .AddWithValue("?caja", My.Settings.CajaDef)
+                End With
+                comandoadd.ExecuteNonQuery()
+                MsgBox("El cierre de caja fue exitoso")
+                saldoCaja = 0
+                CargarCaja()
+            End If
         Catch ex As Exception
 
         End Try

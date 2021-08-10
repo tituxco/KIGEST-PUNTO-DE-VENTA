@@ -43,6 +43,9 @@ Partial Class proveedores
         Me.dtpersonal = New System.Windows.Forms.DataGridView()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.grpCuentaContable = New System.Windows.Forms.GroupBox()
+        Me.cmbBusquedaCuenta = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.txtcuit = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtinfo = New System.Windows.Forms.TextBox()
@@ -80,6 +83,7 @@ Partial Class proveedores
         CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
+        Me.grpCuentaContable.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         CType(Me.dtcomprobantes, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
@@ -278,6 +282,7 @@ Partial Class proveedores
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.grpCuentaContable)
         Me.TabPage1.Controls.Add(Me.txtcuit)
         Me.TabPage1.Controls.Add(Me.Label3)
         Me.TabPage1.Controls.Add(Me.txtinfo)
@@ -295,6 +300,38 @@ Partial Class proveedores
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Información General"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'grpCuentaContable
+        '
+        Me.grpCuentaContable.Controls.Add(Me.cmbBusquedaCuenta)
+        Me.grpCuentaContable.Controls.Add(Me.Label5)
+        Me.grpCuentaContable.Location = New System.Drawing.Point(3, 252)
+        Me.grpCuentaContable.Name = "grpCuentaContable"
+        Me.grpCuentaContable.Size = New System.Drawing.Size(497, 57)
+        Me.grpCuentaContable.TabIndex = 203
+        Me.grpCuentaContable.TabStop = False
+        Me.grpCuentaContable.Visible = False
+        '
+        'cmbBusquedaCuenta
+        '
+        Me.cmbBusquedaCuenta.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbBusquedaCuenta.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbBusquedaCuenta.FormattingEnabled = True
+        Me.cmbBusquedaCuenta.Location = New System.Drawing.Point(143, 19)
+        Me.cmbBusquedaCuenta.Name = "cmbBusquedaCuenta"
+        Me.cmbBusquedaCuenta.Size = New System.Drawing.Size(354, 21)
+        Me.cmbBusquedaCuenta.TabIndex = 201
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.Label5.Location = New System.Drawing.Point(8, 22)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(129, 16)
+        Me.Label5.TabIndex = 202
+        Me.Label5.Text = "Cuenta de gastos"
         '
         'txtcuit
         '
@@ -322,7 +359,7 @@ Partial Class proveedores
         Me.txtinfo.Multiline = True
         Me.txtinfo.Name = "txtinfo"
         Me.txtinfo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtinfo.Size = New System.Drawing.Size(500, 176)
+        Me.txtinfo.Size = New System.Drawing.Size(500, 91)
         Me.txtinfo.TabIndex = 8
         '
         'Label10
@@ -600,6 +637,8 @@ Partial Class proveedores
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
         Me.TabPage1.PerformLayout()
+        Me.grpCuentaContable.ResumeLayout(False)
+        Me.grpCuentaContable.PerformLayout()
         Me.TabPage2.ResumeLayout(False)
         CType(Me.dtcomprobantes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
@@ -652,4 +691,7 @@ Partial Class proveedores
     Friend WithEvents Column1 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents DataGridViewTextBoxColumn7 As System.Windows.Forms.DataGridViewTextBoxColumn
+    Friend WithEvents Label5 As Label
+    Friend WithEvents cmbBusquedaCuenta As ComboBox
+    Friend WithEvents grpCuentaContable As GroupBox
 End Class

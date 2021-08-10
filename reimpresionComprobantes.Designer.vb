@@ -51,6 +51,18 @@ Partial Class reimpresionComprobantes
         Me.Label44 = New System.Windows.Forms.Label()
         Me.dtderemitos = New System.Windows.Forms.DateTimePicker()
         Me.dthastaremitos = New System.Windows.Forms.DateTimePicker()
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.dgvlistadoCobranza = New System.Windows.Forms.DataGridView()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -59,6 +71,9 @@ Partial Class reimpresionComprobantes
         Me.TabPage1.SuspendLayout()
         CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel22.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.dgvlistadoCobranza, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -78,14 +93,15 @@ Partial Class reimpresionComprobantes
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(269, 39)
+        Me.Label1.Size = New System.Drawing.Size(667, 39)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "REIMPRESIÓN"
+        Me.Label1.Text = "VISUALIZACION DE COMPROBANTES"
         '
         'TabControl1
         '
         Me.TabControl1.Controls.Add(Me.tabcomprobantes)
         Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
@@ -148,7 +164,7 @@ Partial Class reimpresionComprobantes
         Me.Label49.AutoSize = True
         Me.Label49.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label49.ForeColor = System.Drawing.Color.White
-        Me.Label49.Location = New System.Drawing.Point(200, 11)
+        Me.Label49.Location = New System.Drawing.Point(188, 11)
         Me.Label49.Name = "Label49"
         Me.Label49.Size = New System.Drawing.Size(80, 13)
         Me.Label49.TabIndex = 79
@@ -160,22 +176,22 @@ Partial Class reimpresionComprobantes
         Me.cmbInforPtoVta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbInforPtoVta.ForeColor = System.Drawing.Color.White
         Me.cmbInforPtoVta.FormattingEnabled = True
-        Me.cmbInforPtoVta.Location = New System.Drawing.Point(200, 29)
+        Me.cmbInforPtoVta.Location = New System.Drawing.Point(188, 29)
         Me.cmbInforPtoVta.Name = "cmbInforPtoVta"
-        Me.cmbInforPtoVta.Size = New System.Drawing.Size(153, 23)
+        Me.cmbInforPtoVta.Size = New System.Drawing.Size(125, 23)
         Me.cmbInforPtoVta.TabIndex = 78
         '
         'txtrazonsocial
         '
-        Me.txtrazonsocial.Location = New System.Drawing.Point(519, 31)
+        Me.txtrazonsocial.Location = New System.Drawing.Point(462, 31)
         Me.txtrazonsocial.Name = "txtrazonsocial"
-        Me.txtrazonsocial.Size = New System.Drawing.Size(218, 20)
+        Me.txtrazonsocial.Size = New System.Drawing.Size(161, 20)
         Me.txtrazonsocial.TabIndex = 65
         '
         'Label4
         '
         Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(516, 15)
+        Me.Label4.Location = New System.Drawing.Point(459, 15)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(144, 13)
         Me.Label4.TabIndex = 64
@@ -183,7 +199,7 @@ Partial Class reimpresionComprobantes
         '
         'txtNumeroComprobante
         '
-        Me.txtNumeroComprobante.Location = New System.Drawing.Point(362, 31)
+        Me.txtNumeroComprobante.Location = New System.Drawing.Point(322, 31)
         Me.txtNumeroComprobante.Name = "txtNumeroComprobante"
         Me.txtNumeroComprobante.Size = New System.Drawing.Size(131, 20)
         Me.txtNumeroComprobante.TabIndex = 63
@@ -191,7 +207,7 @@ Partial Class reimpresionComprobantes
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(359, 15)
+        Me.Label3.Location = New System.Drawing.Point(319, 15)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(134, 13)
         Me.Label3.TabIndex = 62
@@ -394,6 +410,161 @@ Partial Class reimpresionComprobantes
         Me.dthastaremitos.Size = New System.Drawing.Size(117, 23)
         Me.dthastaremitos.TabIndex = 43
         '
+        'TabPage2
+        '
+        Me.TabPage2.Controls.Add(Me.dgvlistadoCobranza)
+        Me.TabPage2.Controls.Add(Me.Panel1)
+        Me.TabPage2.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage2.Name = "TabPage2"
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage2.Size = New System.Drawing.Size(1261, 416)
+        Me.TabPage2.TabIndex = 9
+        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.UseVisualStyleBackColor = True
+        '
+        'dgvlistadoCobranza
+        '
+        Me.dgvlistadoCobranza.AllowUserToAddRows = False
+        Me.dgvlistadoCobranza.AllowUserToDeleteRows = False
+        Me.dgvlistadoCobranza.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvlistadoCobranza.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvlistadoCobranza.BackgroundColor = System.Drawing.Color.White
+        Me.dgvlistadoCobranza.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvlistadoCobranza.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvlistadoCobranza.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dgvlistadoCobranza.Location = New System.Drawing.Point(3, 73)
+        Me.dgvlistadoCobranza.Name = "dgvlistadoCobranza"
+        Me.dgvlistadoCobranza.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvlistadoCobranza.Size = New System.Drawing.Size(1255, 340)
+        Me.dgvlistadoCobranza.TabIndex = 16
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.Button2)
+        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.Button3)
+        Me.Panel1.Controls.Add(Me.Button5)
+        Me.Panel1.Controls.Add(Me.Button6)
+        Me.Panel1.Controls.Add(Me.Label5)
+        Me.Panel1.Controls.Add(Me.Label6)
+        Me.Panel1.Controls.Add(Me.DateTimePicker1)
+        Me.Panel1.Controls.Add(Me.DateTimePicker2)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel1.Location = New System.Drawing.Point(3, 3)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1255, 70)
+        Me.Panel1.TabIndex = 15
+        '
+        'Button3
+        '
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Location = New System.Drawing.Point(198, 36)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(138, 23)
+        Me.Button3.TabIndex = 58
+        Me.Button3.Text = "Imprimir listado"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button5
+        '
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Location = New System.Drawing.Point(198, 12)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(138, 23)
+        Me.Button5.TabIndex = 57
+        Me.Button5.Text = "Reimprimir comprobante"
+        Me.Button5.UseVisualStyleBackColor = True
+        '
+        'Button6
+        '
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.Location = New System.Drawing.Point(1190, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(65, 70)
+        Me.Button6.TabIndex = 48
+        Me.Button6.Text = "Buscar"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.UseVisualStyleBackColor = True
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.BackColor = System.Drawing.Color.Transparent
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(6, 16)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(49, 17)
+        Me.Label5.TabIndex = 44
+        Me.Label5.Text = "Desde"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.Transparent
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.ForeColor = System.Drawing.Color.White
+        Me.Label6.Location = New System.Drawing.Point(6, 42)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(45, 17)
+        Me.Label6.TabIndex = 45
+        Me.Label6.Text = "Hasta"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DateTimePicker1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(61, 11)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(117, 23)
+        Me.DateTimePicker1.TabIndex = 42
+        '
+        'DateTimePicker2
+        '
+        Me.DateTimePicker2.AccessibleName = ""
+        Me.DateTimePicker2.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DateTimePicker2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.DateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker2.Location = New System.Drawing.Point(61, 37)
+        Me.DateTimePicker2.Name = "DateTimePicker2"
+        Me.DateTimePicker2.Size = New System.Drawing.Size(117, 23)
+        Me.DateTimePicker2.TabIndex = 43
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(357, 11)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(71, 17)
+        Me.CheckBox1.TabIndex = 59
+        Me.CheckBox1.Text = "Sin pagar"
+        Me.CheckBox1.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cash_Register_32px1
+        Me.Button2.Location = New System.Drawing.Point(1112, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(78, 70)
+        Me.Button2.TabIndex = 81
+        Me.Button2.Text = "Imputar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
         'reimpresionComprobantes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -417,6 +588,10 @@ Partial Class reimpresionComprobantes
         CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel22.ResumeLayout(False)
         Me.Panel22.PerformLayout()
+        Me.TabPage2.ResumeLayout(False)
+        CType(Me.dgvlistadoCobranza, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -449,4 +624,16 @@ Partial Class reimpresionComprobantes
     Friend WithEvents Label4 As Label
     Friend WithEvents Label49 As Label
     Friend WithEvents cmbInforPtoVta As ComboBox
+    Friend WithEvents TabPage2 As TabPage
+    Friend WithEvents dgvlistadoCobranza As DataGridView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents Button3 As Button
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
+    Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents Button2 As Button
 End Class

@@ -26,13 +26,6 @@
                 'calcularEnvases()
 
             ElseIf e.ColumnIndex = 2 Then
-                'If InStr(dtproductos.Rows(e.RowIndex).Cells(0).Value, "&") = 0 And InStr(dtproductos.Rows(e.RowIndex).Cells(0).Value, "0") = 0 Then
-                'If ObtenerStock(dtproductos.CurrentRow.Cells(0).Value) < dtproductos.CurrentCell.Value Then
-                'MsgBox("Stock insuficiente")
-                'dtproductos.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.Red
-                'Exit Sub
-                'End If
-                'End If
                 Dim pUnit As Double = dtproductos.Rows(e.RowIndex).Cells(5).Value
                 Dim cant As Double = dtproductos.Rows(e.RowIndex).Cells(2).Value
                 dtproductos.Rows(e.RowIndex).Cells(6).Value = Math.Round(pUnit * cant, 2)

@@ -105,7 +105,7 @@ Public Class nuevaventa
             Exit Sub
         End If
         If InStr(codPLU, "#") = 1 Then
-            Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
+            Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length)
         ElseIf IsNumeric(codPLU) Then
             Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
         ElseIf Not IsNumeric(codPLU) Then
@@ -161,7 +161,7 @@ Public Class nuevaventa
             Exit Sub
         End If
         If InStr(codPLU, "#") = 1 Then
-            Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
+            Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length)
         ElseIf IsNumeric(codPLU) Then
             Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
         ElseIf Not IsNumeric(codPLU) Then

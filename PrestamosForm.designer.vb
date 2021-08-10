@@ -310,9 +310,9 @@ Partial Class PrestamosForm
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(610, 39)
+        Me.Label1.Size = New System.Drawing.Size(398, 39)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "VISUALIZAR/SIMULAR PRESTAMO"
+        Me.Label1.Text = "VISUALIZAR/SIMULAR"
         '
         'Label8
         '
@@ -394,7 +394,7 @@ Partial Class PrestamosForm
         Me.Controls.Add(Me.txtclientecuenta)
         Me.Name = "PrestamosForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "PrestamosForm"
+        Me.Text = "VISUALIZAR-SIMULAR"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.Panel2.ResumeLayout(False)
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()

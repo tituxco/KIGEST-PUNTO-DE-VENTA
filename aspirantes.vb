@@ -8,13 +8,17 @@ Public Class frmaspirantes
     Dim agregarPers As Boolean
     Private BindingSource1 As Windows.Forms.BindingSource = New BindingSource
     Dim idsub As String
+    Private cmd As MySql.Data.MySqlClient.MySqlCommand
+    Private da As MySql.Data.MySqlClient.MySqlDataAdapter
+    Private ds As DataSet
 
     Private Sub frmpersonal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dtdesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
         deshabilitarControles()
         cargarDtosGrales()
         tabSeguimientoVendedores.Parent = Nothing
-        If InStr(DatosAcceso.Moduloacc, "4f") = False Then tabHistorialVentasCliente.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4h") = False Then tabHistorialVentasCliente.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4g") = False Then tabPublicidad.Parent = Nothing
 
     End Sub
     Private Sub ClienteSeleccionado(cliente As Integer) Handles dgvClientes.SeleccionarItem
@@ -341,7 +345,7 @@ Public Class frmaspirantes
         txtcelular.Text = ""
         txtcontactos.Text = ""
         txtmail.Text = ""
-
+        dgvPublicidades.DataSource = Nothing
     End Sub
 
     Private Function ComprobarAspirante(ByRef dni As String) As Boolean
@@ -834,6 +838,61 @@ Public Class frmaspirantes
         Catch ex As Exception
             EnProgreso.Close()
 
+        End Try
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        Try
+            Reconectar()
+            Consultas("SELECT pr.ID_PRESTAMO AS ORDEN, pr.fecha as INICIO, date_sub(max(DTP.fecha), interval 1 month) as FIN, 
+		pr.DESCRIPCION as DESCRIPCION,pr.CONCEPTO,
+        pr.plazo as DURACION,	
+        round(pr.MONTO_PRESTAMO,2) AS TOTAL, round(pr.CUOTA,2) AS MENSUAL        
+        FROM rym_prestamo as pr, fact_clientes as cl, rym_detalle_prestamo as DTP
+        where pr.ID_CLIENTE=cl.idclientes and
+        DTP.ID_PRESTAMO= pr.ID_PRESTAMO AND
+        idclientes=" & Idcliente)
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Public Sub Consultas(ByVal Cadena As String)
+        Reconectar()
+        'Dim fecha As MySql.Data.Types.MySqlDateTime()
+        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        'cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
+        'cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
+        da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
+
+        ds = New DataSet
+        da.Fill(ds)
+
+        If ds.Tables(0).Rows.Count > 0 Then
+            dgvPublicidades.DataSource = ds.Tables(0)
+        Else
+            'dgvPrestamos.Cargar_Datos(Nothing)
+        End If
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Try
+            Dim i As Integer
+            For i = 0 To Me.MdiChildren.Length - 1
+                If MdiChildren(i).Name = "NvaPublicidad" Then
+                    Me.MdiChildren(i).BringToFront()
+                    Exit Sub
+                End If
+            Next
+
+            Dim tec As New NvaPublicidad
+            tec.MdiParent = Me.MdiParent
+            tec.Show()
+            tec.txtBuscaPrestamo.Text = dgvPublicidades.CurrentRow.Cells(0).Value
+            tec.Button1.Enabled = False
+            tec.btnCalcular.Enabled = False
+            tec.diasMora = 0
+        Catch ex As Exception
         End Try
     End Sub
 End Class

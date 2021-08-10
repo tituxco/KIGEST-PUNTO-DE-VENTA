@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>274</ApplicationRevision>
+    <ApplicationRevision>285</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -560,10 +560,22 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="rawImpresora.vb" />
+    <Compile Include="reciboRapido.Designer.vb">
+      <DependentUpon>reciboRapido.vb</DependentUpon>
+    </Compile>
+    <Compile Include="reciboRapido.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="selprod.designer.vb">
       <DependentUpon>selprod.vb</DependentUpon>
     </Compile>
     <Compile Include="selprod.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selVendedor.Designer.vb">
+      <DependentUpon>selVendedor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="selVendedor.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="sueldos.designer.vb">
@@ -731,6 +743,8 @@
     <None Include="Resources\iconos\To Do_16px.png" />
     <None Include="Resources\iconos\Save_64px.png" />
     <None Include="Resources\iconos\icons8_Versions_64px_1.png" />
+    <None Include="Resources\iconos\factura.png" />
+    <None Include="Resources\iconos\Cash in Hand_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -990,8 +1004,18 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="reportes\publicidad_visualizacion.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="reciboRapido.resx">
+      <DependentUpon>reciboRapido.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="selprod.resx">
       <DependentUpon>selprod.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selVendedor.resx">
+      <DependentUpon>selVendedor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="sueldos.resx">
       <DependentUpon>sueldos.vb</DependentUpon>
@@ -1131,22 +1155,22 @@
   <ItemGroup>
     <PublishFile Include="SIGT - FACT.pdb">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
     <PublishFile Include="SIGT - FACT.xml">
       <Visible>False</Visible>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
       <Group>
       </Group>
       <TargetPath>
       </TargetPath>
-      <PublishState>Include</PublishState>
-      <IncludeHash>True</IncludeHash>
       <FileType>File</FileType>
     </PublishFile>
   </ItemGroup>

@@ -23,29 +23,29 @@ Partial Class puntoventa
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(puntoventa))
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -698,14 +698,14 @@ Partial Class puntoventa
         Me.dtproductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dtproductos.BackgroundColor = System.Drawing.Color.Gray
         Me.dtproductos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle23.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dtproductos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dtproductos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.dtproductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtproductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column12, Me.Column14, Me.Column15, Me.Column16, Me.Column17, Me.Column18, Me.Column19, Me.Column20})
         Me.dtproductos.Dock = System.Windows.Forms.DockStyle.Fill
@@ -714,22 +714,22 @@ Partial Class puntoventa
         Me.dtproductos.Location = New System.Drawing.Point(0, 122)
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle29.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle29.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle29.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle29.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle29.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle29.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle29.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dtproductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dtproductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.dtproductos.Size = New System.Drawing.Size(899, 503)
         Me.dtproductos.TabIndex = 101
         '
         'Column12
         '
-        DataGridViewCellStyle24.Format = "N0"
-        DataGridViewCellStyle24.NullValue = "0"
-        Me.Column12.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle2.Format = "N0"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column12.HeaderText = "id"
         Me.Column12.Name = "Column12"
         Me.Column12.Visible = False
@@ -742,9 +742,9 @@ Partial Class puntoventa
         '
         'Column15
         '
-        DataGridViewCellStyle25.Format = "N3"
-        DataGridViewCellStyle25.NullValue = "0"
-        Me.Column15.DefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle3.Format = "N3"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.Column15.DefaultCellStyle = DataGridViewCellStyle3
         Me.Column15.FillWeight = 20.0!
         Me.Column15.HeaderText = "Cantidad"
         Me.Column15.Name = "Column15"
@@ -756,26 +756,26 @@ Partial Class puntoventa
         '
         'Column17
         '
-        DataGridViewCellStyle26.NullValue = "21"
-        Me.Column17.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle4.NullValue = "21"
+        Me.Column17.DefaultCellStyle = DataGridViewCellStyle4
         Me.Column17.FillWeight = 20.0!
         Me.Column17.HeaderText = "I.V.A."
         Me.Column17.Name = "Column17"
         '
         'Column18
         '
-        DataGridViewCellStyle27.Format = "N2"
-        DataGridViewCellStyle27.NullValue = "0"
-        Me.Column18.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = "0"
+        Me.Column18.DefaultCellStyle = DataGridViewCellStyle5
         Me.Column18.FillWeight = 20.0!
         Me.Column18.HeaderText = "PUnit."
         Me.Column18.Name = "Column18"
         '
         'Column19
         '
-        DataGridViewCellStyle28.Format = "N2"
-        DataGridViewCellStyle28.NullValue = "0"
-        Me.Column19.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.Column19.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column19.FillWeight = 20.0!
         Me.Column19.HeaderText = "PTotal"
         Me.Column19.Name = "Column19"
@@ -805,15 +805,14 @@ Partial Class puntoventa
         '
         'Label21
         '
-        Me.Label21.AutoSize = True
         Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label21.ForeColor = System.Drawing.Color.Red
         Me.Label21.Location = New System.Drawing.Point(3, 55)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(553, 13)
+        Me.Label21.Size = New System.Drawing.Size(467, 29)
         Me.Label21.TabIndex = 76
         Me.Label21.Text = "|<F1>: CONTADO/CTA CTE|  |<F2>: LISTA DE PRECIOS| | <F9>: ALMACEN|  |<F8>: TIPO-F" &
-    "ACT|"
+    "ACT|  |<F9> VENDEDOR|"
         '
         'dtdescuentos
         '
@@ -897,9 +896,9 @@ Partial Class puntoventa
         '
         'Column7
         '
-        DataGridViewCellStyle30.Format = "N0"
-        DataGridViewCellStyle30.NullValue = "0"
-        Me.Column7.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle8.Format = "N0"
+        DataGridViewCellStyle8.NullValue = "0"
+        Me.Column7.DefaultCellStyle = DataGridViewCellStyle8
         Me.Column7.FillWeight = 10.0!
         Me.Column7.HeaderText = "id"
         Me.Column7.Name = "Column7"
@@ -913,9 +912,9 @@ Partial Class puntoventa
         '
         'Column3
         '
-        DataGridViewCellStyle31.Format = "N3"
-        DataGridViewCellStyle31.NullValue = "1"
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle9.Format = "N3"
+        DataGridViewCellStyle9.NullValue = "1"
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle9
         Me.Column3.FillWeight = 20.0!
         Me.Column3.HeaderText = "Cantidad"
         Me.Column3.Name = "Column3"
@@ -928,27 +927,27 @@ Partial Class puntoventa
         '
         'Column6
         '
-        DataGridViewCellStyle32.Format = "N2"
-        DataGridViewCellStyle32.NullValue = "21"
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle10.Format = "N2"
+        DataGridViewCellStyle10.NullValue = "21"
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle10
         Me.Column6.FillWeight = 20.0!
         Me.Column6.HeaderText = "IVA"
         Me.Column6.Name = "Column6"
         '
         'Column4
         '
-        DataGridViewCellStyle33.Format = "N2"
-        DataGridViewCellStyle33.NullValue = "0"
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle33
+        DataGridViewCellStyle11.Format = "N2"
+        DataGridViewCellStyle11.NullValue = "0"
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle11
         Me.Column4.FillWeight = 20.0!
         Me.Column4.HeaderText = "P. Unit"
         Me.Column4.Name = "Column4"
         '
         'Column5
         '
-        DataGridViewCellStyle34.Format = "N2"
-        DataGridViewCellStyle34.NullValue = "0"
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle34
+        DataGridViewCellStyle12.Format = "N2"
+        DataGridViewCellStyle12.NullValue = "0"
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle12
         Me.Column5.FillWeight = 20.0!
         Me.Column5.HeaderText = "P. Total"
         Me.Column5.Name = "Column5"
@@ -1557,9 +1556,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle35.Format = "N0"
-        DataGridViewCellStyle35.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle35
+        DataGridViewCellStyle13.Format = "N0"
+        DataGridViewCellStyle13.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle13
         Me.DataGridViewTextBoxColumn3.FillWeight = 10.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "id"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -1574,9 +1573,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle36.Format = "N2"
-        DataGridViewCellStyle36.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle36
+        DataGridViewCellStyle14.Format = "N2"
+        DataGridViewCellStyle14.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle14
         Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "Cantidad"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -1591,9 +1590,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle37.Format = "N2"
-        DataGridViewCellStyle37.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle37
+        DataGridViewCellStyle15.Format = "N2"
+        DataGridViewCellStyle15.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle15
         Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "IVA"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -1602,9 +1601,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle38.Format = "N2"
-        DataGridViewCellStyle38.NullValue = "0"
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle38
+        DataGridViewCellStyle16.Format = "N2"
+        DataGridViewCellStyle16.NullValue = "0"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridViewTextBoxColumn8.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn8.HeaderText = "P. Unit"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
@@ -1612,9 +1611,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn9
         '
-        DataGridViewCellStyle39.Format = "N2"
-        DataGridViewCellStyle39.NullValue = "0"
-        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle39
+        DataGridViewCellStyle17.Format = "N2"
+        DataGridViewCellStyle17.NullValue = "0"
+        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn9.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn9.HeaderText = "P. Total"
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
@@ -1641,9 +1640,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn14
         '
-        DataGridViewCellStyle40.Format = "N0"
-        DataGridViewCellStyle40.NullValue = "0"
-        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle40
+        DataGridViewCellStyle18.Format = "N0"
+        DataGridViewCellStyle18.NullValue = "0"
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle18
         Me.DataGridViewTextBoxColumn14.FillWeight = 10.0!
         Me.DataGridViewTextBoxColumn14.HeaderText = "id"
         Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
@@ -1658,9 +1657,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn16
         '
-        DataGridViewCellStyle41.Format = "N3"
-        DataGridViewCellStyle41.NullValue = "1"
-        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle41
+        DataGridViewCellStyle19.Format = "N3"
+        DataGridViewCellStyle19.NullValue = "1"
+        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle19
         Me.DataGridViewTextBoxColumn16.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn16.HeaderText = "Cantidad"
         Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
@@ -1675,9 +1674,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn18
         '
-        DataGridViewCellStyle42.Format = "N2"
-        DataGridViewCellStyle42.NullValue = "21"
-        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle42
+        DataGridViewCellStyle20.Format = "N2"
+        DataGridViewCellStyle20.NullValue = "21"
+        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle20
         Me.DataGridViewTextBoxColumn18.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn18.HeaderText = "IVA"
         Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
@@ -1685,9 +1684,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn19
         '
-        DataGridViewCellStyle43.Format = "N2"
-        DataGridViewCellStyle43.NullValue = "0"
-        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle43
+        DataGridViewCellStyle21.Format = "N2"
+        DataGridViewCellStyle21.NullValue = "0"
+        Me.DataGridViewTextBoxColumn19.DefaultCellStyle = DataGridViewCellStyle21
         Me.DataGridViewTextBoxColumn19.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn19.HeaderText = "P. Unit"
         Me.DataGridViewTextBoxColumn19.Name = "DataGridViewTextBoxColumn19"
@@ -1695,9 +1694,9 @@ Partial Class puntoventa
         '
         'DataGridViewTextBoxColumn20
         '
-        DataGridViewCellStyle44.Format = "N2"
-        DataGridViewCellStyle44.NullValue = "0"
-        Me.DataGridViewTextBoxColumn20.DefaultCellStyle = DataGridViewCellStyle44
+        DataGridViewCellStyle22.Format = "N2"
+        DataGridViewCellStyle22.NullValue = "0"
+        Me.DataGridViewTextBoxColumn20.DefaultCellStyle = DataGridViewCellStyle22
         Me.DataGridViewTextBoxColumn20.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn20.HeaderText = "P. Total"
         Me.DataGridViewTextBoxColumn20.Name = "DataGridViewTextBoxColumn20"

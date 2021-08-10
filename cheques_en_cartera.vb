@@ -15,6 +15,7 @@
     End Sub
 
     Private Sub CargarChequesDeTerceros()
+        Reconectar()
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select che.id, che.banco, che.serie, che.fecha_cobro, che.importe " _
             & "from fact_cheques as che " _
             & "where che.tipo_cheque=1 and che.estado_cheque=1 ", conexionPrinc)
@@ -30,6 +31,7 @@
 
     Private Sub CargarChequesPropios()
         Try
+            Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select che.id, che.banco, che.serie, " _
             & "che.fecha_cobro, che.importe " _
             & "from fact_cheques as che " _
@@ -141,5 +143,9 @@
         If dtchequesterceros.IsCurrentCellDirty Then
             dtchequesterceros.CommitEdit(DataGridViewDataErrorContexts.Commit)
         End If
+    End Sub
+
+    Private Sub cmbtercerosSelAll_Click(sender As Object, e As EventArgs) Handles cmbtercerosSelAll.Click
+
     End Sub
 End Class

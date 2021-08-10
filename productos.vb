@@ -1115,7 +1115,8 @@ Public Class productos
             dlAbrir.ShowDialog()
             If dlAbrir.FileName <> "" Then
                 ficheros = dlAbrir.FileName
-                Dim dt As DataTable = GetDataExcel(ficheros, InputBox("Ingrese nombre de la hoja de excel", "Importar lista de precios", "Hoja1"))
+
+                Dim dt As DataTable = GetDataExcel(ficheros, ObtenerNombrePrimeraHoja(ficheros)) 'GetDataExcel(ficheros, InputBox("Ingrese nombre de la hoja de excel", "Importar lista de precios", "Hoja1"))
                 dtimportados.DataSource = dt
                 lblcantprod.Text = dtimportados.RowCount
                 'ProgressBar1.Maximum = dtimportados.RowCount

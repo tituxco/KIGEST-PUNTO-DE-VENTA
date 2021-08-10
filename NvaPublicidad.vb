@@ -3,6 +3,7 @@
     Private da As MySql.Data.MySqlClient.MySqlDataAdapter
     Private ds As DataSet
     Public idCliente As Integer
+    Public diasMora As String
 
     Private Sub btnCalcular_Click(sender As Object, e As EventArgs) Handles btnCalcular.Click
         txtCuota.Text = Operaciones.Calculacuota(CDbl(txtmonto.Text), CDbl(txtTasaAnual.Text), CInt(txtPlazo.Text))
@@ -17,27 +18,24 @@
 
     Private Sub PrevisualizarPrestamo()
 
+        If txtCuota.Text = "" Or txtCuota.Text = "0" Then
+            MsgBox("debe calcular primero la cuota")
+            Exit Sub
+        End If
+
         dgvPublicidad.Columns.Clear()
         dgvPublicidad.Rows.Clear()
 
         dgvPublicidad.Columns.Add("Fechavencimiento", "Fecha Vencimiento")
         dgvPublicidad.Columns.Add("Montomensual", "Monto Mensual")
 
-
-        'tablaPrestamo.Columns.Add(New DataColumn("Fecha vencimiento", GetType(String)))
-        'tablaPrestamo.Columns.Add(New DataColumn("Monto mensual", GetType(String)))
-
-        'Dim NoPrestamo As String
-
-        'NoPrestamo = "1"
-
-        Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+        Dim fecha As String = Format(CDate(DateTimePicker1.Value.AddMonths(1)), "yyyy-MM-dd")
 
         Dim Plazo As Integer = txtPlazo.Text
         Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
         Dim InteresAnual As Double = FormatNumber(txtTasaAnual.Text, 2)
         Dim capitalAmortizado As Double = 0
-        Dim FechaPago As Date = DateTimePicker1.Value
+        Dim FechaPago As Date = DateTimePicker1.Value.AddMonths(1)
         Dim MiCuota As Double = 0
 
         Dim SaldoInicial As Double = FormatNumber(txtmonto.Text, 2)
@@ -45,11 +43,7 @@
         Dim InteresPagado As Double = 0
         Dim capitalRestante As Double = FormatNumber(txtmonto.Text, 2)
 
-        If txtCuota.Text = "" Or txtCuota.Text = "0" Then
-            MsgBox("debe calcular primero la cuota")
-            Exit Sub
-        End If
-
+        MsgBox(FechaPago)
         For i As Integer = 1 To Plazo
             '    MsgBox(fecha)
             MiCuota = txtCuota.Text
@@ -72,6 +66,11 @@
 
     Private Sub GeneraPrestamo()
 
+        If txtCuota.Text = "" Or txtCuota.Text = "0" Then
+            MsgBox("debe calcular primero la cuota")
+            Exit Sub
+        End If
+
         If txtclientecuenta.Text = "" Or txtclientecuenta.Text = "9999" Then
             MsgBox("Debe seleccionar un cliente para guardar el plan de publicidad")
             Exit Sub
@@ -79,6 +78,11 @@
 
         If txtdetallePublicidad.Text = "" Then
             MsgBox("Debe ingresar detalle de publicidad")
+            Exit Sub
+        End If
+
+        If txtconcepto.Text = "" Then
+            MsgBox("Debe ingresar Concepto de publicidad")
             Exit Sub
         End If
 
@@ -95,16 +99,17 @@
         txtPrestamo.Text = NoPrestamo
         Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
 
-        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion) 
+        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto) 
         values('" & NoPrestamo & "','" & fecha & "','" & idCliente & "','" & txtPlazo.Text & "','" &
-        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "')", Today.Date)
+        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "')", Today.Date)
 
 
         Dim Plazo As Integer = txtPlazo.Text
         Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
         Dim InteresAnual As Double = FormatNumber(txtTasaAnual.Text, 2)
         Dim capitalAmortizado As Double = 0
-        Dim FechaPago As Date = DateTimePicker1.Value
+        Dim FechaPago As Date = CDate(fecha).AddMonths(1) 'DateTimePicker1.Value.AddMonths(1) 'DateTimePicker1.Value
+        fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
         Dim MiCuota As Double = 0
 
         Dim SaldoInicial As Double = FormatNumber(txtmonto.Text, 2)
@@ -112,14 +117,8 @@
         Dim InteresPagado As Double = 0
         Dim capitalRestante As Double = FormatNumber(txtmonto.Text, 2)
 
-        'MsgBox(InteresMensual & "-" & InteresAnual & "-" & SaldoInicial & "-" & capitalRestante)
-        'Exit Sub
-        If txtCuota.Text = "" Or txtCuota.Text = "0" Then
-            MsgBox("debe calcular primero la cuota")
-            Exit Sub
-        End If
-
         For i As Integer = 1 To Plazo
+
             MiCuota = txtCuota.Text
             InteresPagado = SaldoInicial * InteresMensual
             CapitalPagado = MiCuota - InteresPagado
@@ -133,6 +132,7 @@
 
             FechaPago = FechaPago.AddMonths(1)
             fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
+
             SaldoInicial = SaldoInicial - CapitalPagado
             'MsgBox(MiCuota & "-" & InteresPagado & "-" & capitalRestante & "-" & capitalRestante & "-" & capitalAmortizado)
         Next
@@ -146,7 +146,7 @@
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
         cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
-        cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = "15"
+        cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = diasMora
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
 
         ds = New DataSet
@@ -181,10 +181,17 @@
         IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
-        DTP.* 
+		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO,
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.descripcion like concat('%#',DTP.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(DTP.FECHA,'%Y-%m') 
+        ) AS FACTURA
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
         Reconectar()
-        Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, cli.nomapell_razon,pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA
+        Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, pre.ID_PRESTAMO,cli.nomapell_razon,pre.DESCRIPCION,pre.CONCEPTO,
+        pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA
         FROM rym_prestamo as pre, fact_clientes as cli
         where cli.idclientes=pre.ID_CLIENTE
         and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
@@ -197,6 +204,8 @@
             txtmonto.Text = DatosPrestamo(0).Item("MONTO_PRESTAMO")
             txtPlazo.Text = DatosPrestamo(0).Item("PLAZO")
             txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
+            txtconcepto.Text = DatosPrestamo(0).Item("CONCEPTO")
+            txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
 
             txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
             For Each cont As Control In Me.Controls
@@ -233,33 +242,35 @@
         Dim DatosGenerales As New datosgenerales
         Dim DatosPrestamo As New datosPrestamo
         Dim consultaPrestamo As New MySql.Data.MySqlClient.MySqlCommand("select 
-        IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,
+        IF((SELECT count(*) from rym_pagos AS PA where PA.ID_PRESTAMO=DTP.ID_PRESTAMO and PA.periodo=DTP.PERIODO)=1,
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
-        DTP.* 
-        from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc", conexionPrinc)
+		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO, PRE.DESCRIPCION, PRE.CONCEPTO, PRE.ID_PRESTAMO,PRE.FECHA
+        from rym_detalle_prestamo AS DTP, rym_prestamo as PRE where 
+        PRE.ID_PRESTAMO = DTP.ID_PRESTAMO AND
+        DTP.ID_PRESTAMO='" & txtBuscaPrestamo.Text & "' and DTP.PERIODO <>0 order by DTP.ID asc", conexionPrinc)
         Dim tablaPrestamo As New DataTable
         'Dim filasProd() As DataRow
-        tablaEmpresa.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
-            & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+        tablaEmpresa.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+        emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+        emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo 
+        FROM fact_empresa as emp where emp.id=1", conexionPrinc)
 
         tablaEmpresa.Fill(DatosGenerales.Tables("datosEmpresa"))
         Reconectar()
         consultaPrestamo.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
-        consultaPrestamo.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = "15"
+        consultaPrestamo.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = diasMora
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(consultaPrestamo)
-        da.Fill(DatosPrestamo.Tables("Prestamo_Visualizacion"))
+        da.Fill(DatosPrestamo.Tables("Publicidad_Visualizacion"))
 
         Dim imprimirx As New imprimirFX
         With imprimirx
             .MdiParent = Me.MdiParent
             .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\prestamo_visualizacion.rdlc"
+            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\publicidad_visualizacion.rdlc"
             .rptfx.LocalReport.DataSources.Clear()
             .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", DatosGenerales.Tables("datosEmpresa")))
-            .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosPrestamo", DatosPrestamo.Tables("Prestamo_Visualizacion")))
+            .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosPrestamo", DatosPrestamo.Tables("Publicidad_Visualizacion")))
             '.rptfx.LocalReport.SetParameters(parameters)
             .rptfx.DocumentMapCollapsed = True
             .rptfx.RefreshReport()
@@ -277,7 +288,7 @@
 
     Private Sub PrestamosForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If txtPrestamo.Text <> "" And txtclientecuenta.Text = "" And txtclientecuenta.Text = "9999" Then
-            Operaciones.Eliminar("delete from pr, dpr Using rym_prestamo As pr, rym_detalle_2prestamo as dpr 
+            Operaciones.Eliminar("delete from pr, dpr Using rym_prestamo As pr, rym_detalle_prestamo as dpr 
             where pr.ID_PRESTAMO = dpr.ID_PRESTAMO And pr.ID_PRESTAMO ='" & txtPrestamo.Text & "'")
         End If
 
@@ -296,5 +307,9 @@
             selclie.Show()
             selclie.TopMost = True
         End If
+    End Sub
+
+    Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
     End Sub
 End Class

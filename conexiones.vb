@@ -52,7 +52,7 @@ Module Conexiones
 
         Try
             conexionAuth = New MySqlConnection
-            conexionAuth.ConnectionString = "server=authkibit.donweb-remoteip.net; port=3306; userid=kiremoto; password=mecago;Allow Zero Datetime=True;Convert Zero Datetime=True;Persist Security Info=True"
+            conexionAuth.ConnectionString = "server=66.97.35.86; port=3306; userid=kiremoto; password=mecago;Allow Zero Datetime=True;Convert Zero Datetime=True;Persist Security Info=True"
             conexionAuth.Open()
 
             conexionAuth.ChangeDatabase("AuthServ")

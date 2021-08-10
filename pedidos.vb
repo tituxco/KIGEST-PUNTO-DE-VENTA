@@ -174,9 +174,20 @@
                 Exit Sub
             End If
             Dim idped As Integer = IDPedidoSeleccionado 'dtpedidos.CurrentRow.Cells(0).Value
-            Dim delItm As String = "delete from fact_items where id_fact=" & IDPedidoSeleccionado
+            Dim condicionITM As String = ""
+            Dim condicionPED As String = ""
 
-            Dim delPed As String = "delete from fact_facturas where id=" & IDPedidoSeleccionado
+            If rdImportar.Checked = True Then
+                condicionITM = " where codint like '" & dgvPedidos.dgvVista.CurrentRow.Cells("observaciones").Value & "'"
+                condicionPED = " where id= " & IDPedidoSeleccionado
+            Else
+                condicionITM = " where id_fact=" & IDPedidoSeleccionado
+                condicionPED = " where id= " & IDPedidoSeleccionado
+            End If
+
+            Dim delItm As String = "delete from fact_items " & condicionITM
+
+            Dim delPed As String = "delete from fact_facturas " & condicionPED
 
             Reconectar()
             Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, conexionPrinc)

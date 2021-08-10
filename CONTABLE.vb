@@ -257,7 +257,7 @@ Public Class CONTABLE
                 case when fis.debcred='C' then 
                 concat('-',FORMAT(fact.total,2,'es_AR')) 
                 else FORMAT(fact.total,2,'es_AR') end as total, 
-                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta
+                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta
                 from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
                 where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
                 and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
@@ -1326,7 +1326,7 @@ Public Class CONTABLE
         Dim mov As New movimientodecaja
         mov.MdiParent = Me.MdiParent
         mov.movrap = True
-        mov.movraptip = 19
+        mov.movraptip = 996
         mov.movrapclie = txtcuentabus.Text
         mov.Show()
     End Sub
@@ -3856,6 +3856,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim CuentaCtaDetalle As Integer = CInt(txtCuentaCtaDetalle.Text)
             Dim ctaMovimiento As Integer = 0
             Dim ctaResultado As Integer = 0
+            idPLanCuenta = dgvPlanCuentas.CurrentRow.Cells(0).Value
             If chkCuentaMovimiento.Checked = True Then ctaMovimiento = 1
             If chkCuentaResultados.Checked = True Then ctaResultado = 1
 
@@ -3991,7 +3992,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
             dgvLibroDiario.Rows.Clear()
             Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  
-            where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc", conexionPrinc)
+            where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc, codigoAsiento desc", conexionPrinc)
             Dim tabLibroDiario As New DataTable
             consLibroDiario.Fill(tabLibroDiario)
             For Each asientoContable As DataRow In tabLibroDiario.Rows
@@ -4062,7 +4063,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             ModificaPlanDeCuentas = True
             grpMantenimientoCuenta.Enabled = True
-            idPLanCuenta = dgvPlanCuentas.CurrentRow.Cells(0).Value
             txtCuentaGrupo.Enabled = False
             txtCuentaSubGrupo.Enabled = False
             txtCuentaCta.Enabled = False

@@ -10,7 +10,7 @@ Public Class puntoventa
     Dim ptovta As Integer
     Dim tipofact As Integer
     Dim numfact As Integer
-    Dim condVta As Integer = 1
+    Public condVta As Integer
     Public listaPrecios As Integer
     Public IdFactura As Integer
     Dim TipoIVAContr As Integer
@@ -134,13 +134,21 @@ Public Class puntoventa
                 lblclieciudad.Text = infocl(0)(2)
                 lblclietipocontr.Text = infocl(0)(3)
                 txtcliecuitcuil.Text = infocl(0)(4)
-                lblfactcondvta.Text = "CONTADO"
+                If condVta = 1 Then
+                    lblfactcondvta.Text = "CONTADO"
+
+                ElseIf condVta = 2 Then
+                    lblfactcondvta.Text = "CTACTE"
+                Else
+                    condVta = 1
+                    lblfactcondvta.Text = "CONTADO"
+                End If
                 lblfactlistaprecios.Text = infocl(0)(5)
                 listaPrecios = infocl(0)(6)
                 TipoIVAContr = infocl(0)(7)
-                'txtcodPLU.Focus()
+                    'txtcodPLU.Focus()
 
-            End If
+                End If
 
 
         Catch ex As Exception
@@ -311,6 +319,49 @@ Public Class puntoventa
     End Sub
     Public Sub cargarProdCod(ByRef fila As Integer)
         Try
+            'Dim codPLU As String = dtproductos.Rows(fila).Cells(1).Value
+            'Dim Busq As String
+            'If codPLU = "" Then
+            '    MsgBox("Debe ingresar un codigo o PLU")
+            '    dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.Red
+            '    Exit Sub
+            'End If
+            'If InStr(codPLU, "#") = 1 Then
+            '    Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
+            'ElseIf IsNumeric(codPLU) Then
+            '    Busq = "where id=" & codPLU '& " or codigo like '" & codPLU & "'"
+            'ElseIf Not IsNumeric(codPLU) Then
+            '    Busq = "where cod_bar like '" & codPLU & "'"
+            'End If
+            'Reconectar()
+            'Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
+            'Dim tablaprod As New DataTable
+            'Dim filasProd() As DataRow
+            'consulta.Fill(tablaprod)
+            'filasProd = tablaprod.Select("")
+            'Dim descuento As Double = 0
+            'Dim precio As Double = 0
+            'For i = 0 To filasProd.GetUpperBound(0)
+            '    'MsgBox(filasProd(i)(0))
+            '    dtproductos.Rows(fila).Cells(0).Value = filasProd(i)(0)
+            '    If filasProd(i)(1).ToString = "" Then
+            '        dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(0)
+            '    Else
+            '        dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(1)
+            '    End If
+            '    If IsNothing(dtproductos.Rows(fila).Cells(2)) Or dtproductos.Rows(fila).Cells(2).ToString = "0" Or dtproductos.Rows(fila).Cells(2).ToString = "" Then
+            '        dtproductos.Rows(fila).Cells(2).Value = 1
+            '    End If
+            '    'descuento = calcularPromociones(filasProd(i)(0), FormatNumber(dtproductos.Rows(fila).Cells(2).Value))
+            '    precio = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, listaPrecios, tipofact) / descuento
+
+            '    dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
+            '    dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
+            '    dtproductos.Rows(fila).Cells(5).Value = precio
+
+            '    dtproductos.Rows(fila).Cells(6).Value = precio * FormatNumber(dtproductos.Rows(fila).Cells(2).Value)
+            '    dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.GreenYellow
+
             Dim codPLU As String = dtproductos.Rows(fila).Cells(1).Value
             Dim Busq As String
             If codPLU = "" Then
@@ -319,42 +370,47 @@ Public Class puntoventa
                 Exit Sub
             End If
             If InStr(codPLU, "#") = 1 Then
-                Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
-            ElseIf IsNumeric(codPLU) Then
-                Busq = "where id=" & codPLU '& " or codigo like '" & codPLU & "'"
-            ElseIf Not IsNumeric(codPLU) Then
-                Busq = "where cod_bar like '" & codPLU & "'"
+                Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length)
+            ElseIf Val(codPLU <> 0) Then
+
+                Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
+
             End If
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
+            'dtproductos.DataSource = tablaprod
+            '        dtproductos.Rows.Clear()
             filasProd = tablaprod.Select("")
-            Dim descuento As Double
-            Dim precio As Double
+            'cmbcondvta.Enabled = False
+            'cmbtipocontr.Enabled = False
             For i = 0 To filasProd.GetUpperBound(0)
-                'MsgBox(filasProd(i)(0))
+                'If ObtenerStock(filasProd(i)(0)) = 0 Then
+                'MsgBox("No hay stock de este producto")
+                'dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.Red
+                'Exit For
+                'Exit Sub
+                'End If
                 dtproductos.Rows(fila).Cells(0).Value = filasProd(i)(0)
                 If filasProd(i)(1).ToString = "" Then
                     dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(0)
                 Else
                     dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(1)
                 End If
-                If IsNothing(dtproductos.Rows(fila).Cells(2)) Or dtproductos.Rows(fila).Cells(2).ToString = "0" Or dtproductos.Rows(fila).Cells(2).ToString = "" Then
+                If IsDBNull(dtproductos.Rows(fila).Cells(2)) Then
                     dtproductos.Rows(fila).Cells(2).Value = 1
                 End If
-                descuento = calcularPromociones(filasProd(i)(0), FormatNumber(dtproductos.Rows(fila).Cells(2).Value))
-                precio = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, listaPrecios, tipofact) / descuento
 
                 dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
                 dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
-                dtproductos.Rows(fila).Cells(5).Value = precio
+                dtproductos.Rows(fila).Cells(5).Value = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, listaPrecios, tipofact)
 
-                dtproductos.Rows(fila).Cells(6).Value = precio * FormatNumber(dtproductos.Rows(fila).Cells(2).Value)
+                dtproductos.Rows(fila).Cells(6).Value = calcularPrecioProducto(dtproductos.Rows(fila).Cells(0).Value, listaPrecios, tipofact) * CDbl(dtproductos.Rows(fila).Cells(2).Value)
                 dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.GreenYellow
-
             Next
+            'Next
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -412,7 +468,7 @@ Public Class puntoventa
         End If
 
         filasProd = tablaprod.Select("")
-        If tipofact = 13 Then
+        If tipofact = 1 Or tipofact = 2 Or tipofact = 3 Then
             For i = 0 To filasProd.GetUpperBound(0)
                 If fila = -1 Then
                     dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), filasProd(i)(2), filasProd(i)(3), filasProd(i)(4),
@@ -461,13 +517,13 @@ Public Class puntoventa
             MsgBox("Debe ingresar un codigo o PLU")
             Exit Sub
         End If
-        If InStr(codPLU, "#") = 1 Then
-            Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length - 1)
-        Else 'IsNumeric(codPLU) Then
-            '    Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
-            'ElseIf Not IsNumeric(codPLU) Then
-            Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
-        End If
+        ' If InStr(codPLU, "#") = 1 Then
+        'Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length)
+        'Else 'IsNumeric(codPLU) Then
+        '    Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
+        'ElseIf Not IsNumeric(codPLU) Then
+        Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
+        'End If
 
         Reconectar()
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
@@ -484,8 +540,9 @@ Public Class puntoventa
         Dim promocion As Double
         Dim precio As Double
         For i = 0 To filasProd.GetUpperBound(0)
-            promocion = calcularPromociones(filasProd(i)(0), FormatNumber(txtcantPLU.Text))
-            precio = calcularPrecioProducto(filasProd(i)(0), listaPrecios, tipofact) / promocion
+
+            precio = calcularPrecioProducto(filasProd(i)(0), listaPrecios, tipofact) ' / promocion
+            'MsgBox(precio)
             If fila = -1 Then
                 dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), txtcantPLU.Text, filasProd(i)(3), filasProd(i)(2),
                 precio, FormatNumber(txtcantPLU.Text) * precio)
@@ -844,6 +901,7 @@ Public Class puntoventa
                 comandoupd.Transaction = Transaccion
                 comandoupd.ExecuteNonQuery()
             End If
+            Dim ventaCta As Integer
             'cargo los items de la factura
             'Dim i As Integer
             For Each itemsFact As DataGridViewRow In dtproductos.Rows
@@ -908,7 +966,6 @@ Public Class puntoventa
                     comandoupd.ExecuteNonQuery()
                 End If
 
-
                 'guardamos los items
                 Reconectar()
                 sqlQuery = "insert into fact_items " _
@@ -939,6 +996,15 @@ Public Class puntoventa
                     comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                     comandoupd.Transaction = Transaccion
                     comandoupd.ExecuteNonQuery()
+                End If
+
+                ' CUENTAS DE VENTAS DISTINTAS PARA RADIO AMANECER   
+                If InStr(itemsFact.Cells(3).Value, "TV") Then
+                    ventaCta = 76
+                ElseIf InStr(itemsFact.Cells(3).Value, "RADIO") Then
+                    ventaCta = 75
+                Else
+                    ventaCta = 77
                 End If
             Next
 
@@ -980,15 +1046,26 @@ Public Class puntoventa
             End If
             For Each PedidoFact As DataGridViewRow In dtpedidosfact.Rows
                 Dim pedidosFact As String
+
                 If pedidosFact = "" Then pedidosFact = PedidoFact.Cells(0).Value
                 If pedidosFact <> "" Then pedidosFact &= ", " & PedidoFact.Cells(0).Value
 
                 sqlQuery = "update fact_facturas set observaciones ='FACTURADO' WHERE tipofact=995 and id in(" & pedidosFact & ")"
-
+                Reconectar()
                 comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 comandoupd.Transaction = Transaccion
                 comandoupd.ExecuteNonQuery()
             Next
+
+            'VERIFICAMOS SI ESTA HABLITIADO LOS ASIENTOS CONTABLES
+            'LOS NUMEROS DE CUENTA CORRESPONDEN AL PLAN DE CUENTA DE RADIOAMANECER 
+            'MsgBox(InStr(DatosAcceso.Moduloacc, "4al"))
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+
+                Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
+                                           "PUBLICIDAD " & txtclierazon.Text, CDbl(total.Replace(".", ",")), 11, CDbl(total.Replace(".", ",")), ventaCta, 2, fecha)
+            End If
 
             Transaccion.Commit()
             cmdguardar.Enabled = False
@@ -1590,6 +1667,12 @@ Public Class puntoventa
                         .cargar_datos_factura()
                         .Idcliente = txtcliecta.Text
                         .cargarCliente()
+                        If tipofact = 1 Or tipofact = 2 Or tipofact = 3 Then
+                            For Each producto As DataGridViewRow In dtproductos.Rows
+                                producto.Cells(5).Value = CDbl(producto.Cells(5).Value) / ((CDbl(producto.Cells(4).Value) + 100) / 100)
+                                producto.Cells(6).Value = CDbl(producto.Cells(5).Value) * CDbl(producto.Cells(2).Value)
+                            Next
+                        End If
                         CalcularTotales()
                     End With
                 Case Keys.F9
@@ -2497,6 +2580,10 @@ Public Class puntoventa
     End Sub
 
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
+
+    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
 
     End Sub
 End Class

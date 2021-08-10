@@ -204,13 +204,7 @@
     End Sub
 
     Private Sub txtrazon_KeyUp(sender As Object, e As KeyEventArgs) Handles txtrazon.KeyUp
-        If e.KeyCode = Keys.Enter Then
-            selclie.busqueda = txtrazon.Text
-            selclie.llama = "movimientodecaja"
-            selclie.dtpersonal.Focus()
-            selclie.Show()
-            selclie.TopMost = True
-        End If
+
     End Sub
 
 
@@ -288,6 +282,28 @@
 
             End If
 
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                grpCuentaContable.Visible = True
+                Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
+                concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
+                FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+                Dim tabCtasDebe As New DataSet
+                Dim tabCtasHaber As New DataSet
+                consPlanCuentas.Fill(tabCtasDebe)
+                consPlanCuentas.Fill(tabCtasHaber)
+
+
+                cmbCuentaDebe.DataSource = tabCtasDebe.Tables(0)
+                cmbCuentaDebe.DisplayMember = tabCtasDebe.Tables(0).Columns("nombreCuenta").Caption.ToString
+                cmbCuentaDebe.ValueMember = tabCtasDebe.Tables(0).Columns("id").Caption.ToString
+
+                cmbCuentaHaber.DataSource = tabCtasHaber.Tables(0)
+                cmbCuentaHaber.DisplayMember = tabCtasHaber.Tables(0).Columns("nombreCuenta").Caption.ToString
+                cmbCuentaHaber.ValueMember = tabCtasHaber.Tables(0).Columns("id").Caption.ToString
+            End If
+
+
+
         Catch ex As Exception
         End Try
     End Sub
@@ -312,15 +328,23 @@
                 pagrecibos.Parent = TabControl1
                 pagordenpago.Parent = Nothing
                 pagtrans.Parent = Nothing
+                If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                    cmbCuentaDebe.SelectedValue = 5
+                    cmbCuentaHaber.SelectedValue = 75
+                End If
             ElseIf cmbtipofac.SelectedValue = 993 Then
                 pagrecibos.Parent = Nothing
                 pagtrans.Parent = Nothing
                 pagordenpago.Parent = TabControl1
+                If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                    cmbCuentaHaber.SelectedValue = 5
+                End If
             ElseIf cmbtipofac.SelectedValue = 994 Then
                 pagtrans.Parent = TabControl1
                 pagordenpago.Parent = Nothing
                 pagrecibos.Parent = Nothing
             Else
+
                 pagtrans.Parent = Nothing
                 pagordenpago.Parent = Nothing
                 pagrecibos.Parent = Nothing
@@ -336,7 +360,10 @@
             Exit Sub
         End If
 
-
+        If txttotalefectivo.Text <> "" Then
+            MsgBox("debe ingresar al menos cero en el monto en efectivo")
+            Exit Sub
+        End If
         If Not IsNumeric(txttotalrecibo.Text) Or txttotalrecibo.Text = "0" Or txttotalrecibo.Text = "" Then
             MsgBox("el recibo no puede ser cero!")
             Exit Sub
@@ -391,6 +418,7 @@
 
             'guardamos el cheque
             For Each cheque As DataGridViewRow In dtcheques.Rows
+                Reconectar()
                 If Not IsNothing(cheque.Cells(3).Value) Then
                     sqlQuery = "insert into fact_cheques " _
                 & "(cliente,comprobante,fecha_cobro,banco,serie,importe,tipo_cheque) values " _
@@ -409,6 +437,7 @@
             Next
 
             For Each tarjeta As DataGridViewRow In dttarjetas.Rows
+                Reconectar()
                 If Not IsNothing(tarjeta.Cells(0).Value) Then
                     sqlQuery = "insert into fact_tarjetas " _
                 & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
@@ -427,6 +456,7 @@
             Next
 
             If txttransferencias.Text <> "" Or txttransferencias.Text <> "0" Then
+                Reconectar()
                 sqlQuery = "insert into fact_transferencias (fecha, cliente, importe, comprobante) values " _
                 & "(?fecha,?cliente,?importe,?comprobante)"
                 Dim comandotrans As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -441,6 +471,7 @@
             End If
 
             If txtretenciones.Text <> "" Or txtretenciones.Text <> "0" Then
+                Reconectar()
                 sqlQuery = "insert into fact_retenciones (fecha, cliente, importe, comprobante) values " _
                 & "(?fecha,?cliente,?importe,?comprobante)"
                 Dim comandoreten As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
@@ -462,6 +493,17 @@
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
+
+            'GUARDAMOS EL MOVIMIENTO DE CUENTA
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
+                Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                           "PAGO FACTURA " & txtrazon.Text, CDbl(total.Replace(".", ",")), cmbCuentaDebe.SelectedValue,
+                                           CDbl(total.Replace(".", ",")), cmbCuentaHaber.SelectedValue, 2, fecha)
+            Else
+                ' MsgBox("no se permite asiento contable")
+            End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -528,6 +570,7 @@
                 comandoadd.ExecuteNonQuery()
 
             Next
+
             MsgBox("Recibo guardado satisfactoriamente")
             Button1.Text = "Cerrar"
         Catch ex As Exception
@@ -552,8 +595,8 @@
             MsgBox(ex.Message)
         End Try
 
-        If txttotalefectivo.Text <> 0 And txttotalefectivo.Text <> "" Then
-            Try 'actualizamos la caja
+        'If txttotalefectivo.Text <> 0  Then
+        Try 'actualizamos la caja
                 Dim sqlQuery As String
                 sqlQuery = "insert into fact_ingreso_egreso " _
                     & "(concepto,monto,comprobante,caja,tipo) values" _
@@ -576,7 +619,7 @@
             Catch ex As Exception
 
             End Try
-        End If
+        'End If
     End Sub
     Public Sub cargarCuentaProv(ByRef idprov As Integer)
         Dim debegral As Double = 0
@@ -585,8 +628,8 @@
 
         Try
             Reconectar()
-            Dim consultaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select direccion," _
-            & " tipo_iva, cuit from fact_proveedores where id=" & idprov, conexionPrinc)
+            Dim consultaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select direccion,
+            tipo_iva, cuit, cuentagastos from fact_proveedores where id=" & idprov, conexionPrinc)
 
             Dim tablaprov As New DataTable
             consultaprov.Fill(tablaprov)
@@ -595,12 +638,15 @@
             txtprovdireccion.Text = dtoprov(0)(0)
             cmbproviva.SelectedValue = dtoprov(0)(1)
             txtprovcuit.Text = dtoprov(0)(2)
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                cmbCuentaDebe.SelectedValue = dtoprov(0)("cuentagastos")
+            End If
         Catch ex As Exception
         End Try
     End Sub
 
     Private Sub cmbproveedores_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbproveedores.SelectedValueChanged
-        'cargarCuentaProv(cmbproveedores.SelectedValue)
+
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles cmbopguardar.Click
@@ -684,6 +730,7 @@
                 UpdCheque.ExecuteNonQuery()
             Next
 
+
             MsgBox("Orden de pago guardada satisfactoriamente")
 
             Reconectar()
@@ -698,7 +745,16 @@
                 .AddWithValue("?desc", txtdescripcionop.Text.ToUpper)
             End With
             agregaCaja.ExecuteNonQuery()
-
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                GuardarAsientoContable(numAsiento,
+                                           cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                           txtdescripcionop.Text.ToUpper & "-" & cmbproveedores.Text,
+                                           CDbl(total.Replace(".", ",")),
+                                           cmbCuentaDebe.SelectedValue,
+                                           CDbl(total.Replace(".", ",")),
+                                           cmbCuentaHaber.SelectedValue, 2, fecha)
+            End If
             cargarCuentaProv(movrapclie)
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -915,6 +971,7 @@
     End Sub
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If MsgBox("Esta seguro que desea cargar todas las facturas impagas de este cliente?", vbQuestion + vbYesNo) = vbYes Then
+            Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select cta.id, concat(tip.abrev,' ',lpad(fa.ptovta,4,'0') ,'-', lpad(fa.num_fact,8,'0')) comprobante, " _
             & "case " _
             & "when tip.debcred='D' then " _
@@ -1055,15 +1112,22 @@
         SendKeys.Send("{TAB}")
     End Sub
 
-    Private Sub dtcheques_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtcheques.CellContentClick
+
+    Private Sub cmbproveedores_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbproveedores.SelectionChangeCommitted
+        cargarCuentaProv(cmbproveedores.SelectedValue)
+    End Sub
+
+    Private Sub txtrazon_TextChanged(sender As Object, e As EventArgs) Handles txtrazon.TextChanged
 
     End Sub
 
-    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
-
-    End Sub
-
-    Private Sub cmbtipofac_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipofac.SelectedIndexChanged
-
+    Private Sub txtrazon_KeyDown(sender As Object, e As KeyEventArgs) Handles txtrazon.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            selclie.busqueda = txtrazon.Text
+            selclie.llama = "movimientodecaja"
+            selclie.dtpersonal.Focus()
+            selclie.Show()
+            selclie.TopMost = True
+        End If
     End Sub
 End Class

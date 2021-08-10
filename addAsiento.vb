@@ -149,18 +149,7 @@
             Return False
         End Try
     End Function
-    Private Function ObtenerNumeroAsiento() As Integer
-        Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", conexionPrinc)
-        Dim tabNumeroAsiento As New DataTable
-        consNumeroAsiento.Fill(tabNumeroAsiento)
-        Dim NumeroAsiento As Integer = 0
-        If IsDBNull(tabNumeroAsiento.Rows(0).Item("codigoAsiento")) Then
-            NumeroAsiento = 1
-        Else
-            NumeroAsiento = tabNumeroAsiento.Rows(0).Item("codigoAsiento") + 1
-        End If
-        Return NumeroAsiento
-    End Function
+
 
     Private Sub cmdGuardar_Click(sender As Object, e As EventArgs) Handles cmdGuardar.Click
         Try
@@ -345,6 +334,10 @@
     End Sub
 
     Private Sub dgvPartidas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellContentClick
+
+    End Sub
+
+    Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
 
     End Sub
 End Class

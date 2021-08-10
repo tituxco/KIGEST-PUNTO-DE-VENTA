@@ -299,6 +299,7 @@ Partial Class frmpagoscompra
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(287, 233)
+        Me.ControlBox = False
         Me.Controls.Add(Me.panelTarjetas)
         Me.Controls.Add(Me.panelefectivo)
         Me.Controls.Add(Me.panelformaspago)
