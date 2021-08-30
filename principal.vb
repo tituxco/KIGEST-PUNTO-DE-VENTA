@@ -3,7 +3,9 @@ Imports System.Net
 
 Public Class frmprincipal
     Public loged As Boolean
+    Public IPPublica As String = GetExternalIp()
     Private Sub frmprincipal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Cierre de sistema", IPPublica)
         End
     End Sub
 
@@ -44,6 +46,18 @@ Public Class frmprincipal
     Private Sub frmprincipal_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
 
     End Sub
+
+    Private Function GetExternalIp() As String
+        Try
+            Dim ExternalIP As String
+            ExternalIP = (New System.Net.WebClient()).DownloadString("http://checkip.dyndns.org/")
+            ExternalIP = (New System.Text.RegularExpressions.Regex("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")) _
+                     .Matches(ExternalIP)(0).ToString()
+            Return ExternalIP
+        Catch
+            Return Nothing
+        End Try
+    End Function
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed = True Then
@@ -56,6 +70,9 @@ Public Class frmprincipal
             Me.TopMost = False
 
             cargar_valores_generales()
+
+            GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Acceso al sistema", IPPublica)
+            lblstatusBDprinc.Text = "Mi IP: " & IPPublica
         End If
     End Sub
     Private Sub cargar_valores_generales()
@@ -114,7 +131,10 @@ Public Class frmprincipal
             FacturaElectro.certificado = infocl(2)(2)
             FacturaElectro.passcertificado = infocl(3)(2)
             FacturaElectro.licencia = infocl(5)(2)
-
+            ' MsgBox(tablacl.Rows.Count)
+            If tablacl.Rows.Count > 6 Then
+                DatosAcceso.ServMensual = infocl(6)(2)
+            End If
             Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico from cm_usuarios where id=" & DatosAcceso.UsuarioINT, conexionPrinc)
             Dim tabla2 As New DataTable
             Dim info2() As DataRow
@@ -207,7 +227,7 @@ Public Class frmprincipal
             'End If
             'compruebo las empresas
             lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString
-            lblstatusBDprinc.Text = "Base de datos principal: " & conexionPrinc.Database
+            lblstatusBDprinc.Text = "Mi IP: " & IPPublica
             'lblstatcodus.Text = "Codigo de usuario: " & codus
             'lblcolaborativocon.Text = "Colaborativo con: " & conexionColab.Database
             'lblStatusEmp.Text = "Empresa Seleccionada: " & conexionEmp.State.ToString & ">>>" & conexionEmp.Database

@@ -44,7 +44,7 @@ Public Class CajaDiaria
                 cl.idclientes=fact.id_cliente                
                 ) 
 			when 2 then (
-				select concat(ec.concepto,' - ',prov.razon,' - (',ie.descripcion,')') from fact_egresos_concepto  as ec, 
+				select concat(ec.concepto,' - ',prov.razon) from fact_egresos_concepto  as ec, 
 				fact_proveedores_fact as fact, fact_proveedores as prov 
 				where ec.id=ie.concepto and ie.comprobante=fact.id and fact.idproveedor=prov.id) 
 			end as concepto, 
@@ -59,7 +59,7 @@ Public Class CajaDiaria
 				where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
 				and ptovta.id=tip.ptovta and ie.tipo=2) 
 			end as detalles,  
-				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo 
+				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo,ie.descripcion 
 				from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
 				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")", conexionPrinc)
         Dim tablacaja As New DataTable
@@ -69,14 +69,14 @@ Public Class CajaDiaria
         Dim i As Integer
 
         For i = 0 To infocaja.GetUpperBound(0)
-            If infocaja(i)(4) = 1 Then   'INGRESOS
-                ingresos = ingresos + (infocaja(i)(3)) 'remplazarcoma(infocaja(i)(3))
+            If infocaja(i)("tipo") = 1 Then   'INGRESOS
+                ingresos = ingresos + (infocaja(i)("MONTO")) 'remplazarcoma(infocaja(i)(3))
                 saldoCaja = ingresos - egresos
-                dtcaja.Rows.Add(infocaja(i)(0), infocaja(i)(1), infocaja(i)(2), infocaja(i)(3), "0", FormatNumber(saldoCaja, 2))
-            ElseIf infocaja(i)(4) = 2 Then 'EGRESOS
-                egresos = egresos + (infocaja(i)(3)) 'remplazarcoma(infocaja(i)(3))
+                dtcaja.Rows.Add(infocaja(i)("fecha"), infocaja(i)("concepto") & "(" & infocaja(i)("descripcion") & ")", infocaja(i)("detalles"), infocaja(i)("MONTO"), "0", FormatNumber(saldoCaja, 2))
+            ElseIf infocaja(i)("tipo") = 2 Then 'EGRESOS
+                egresos = egresos + (infocaja(i)("MONTO")) 'remplazarcoma(infocaja(i)(3))
                 saldoCaja = ingresos - egresos
-                dtcaja.Rows.Add(infocaja(i)(0), infocaja(i)(1), infocaja(i)(2), "0", infocaja(i)(3), FormatNumber(saldoCaja, 2))
+                dtcaja.Rows.Add(infocaja(i)("fecha"), infocaja(i)("concepto") & "(" & infocaja(i)("descripcion") & ")", infocaja(i)("detalles"), "0", infocaja(i)("MONTO"), FormatNumber(saldoCaja, 2))
             End If
         Next
         dttotales.Rows.Clear()

@@ -26,6 +26,8 @@
         Public Property Tecnico As Integer
         Public Property idFacRap As Integer
         Public Property IdPtoVtaDef As Integer
+        Public Property ServMensual As String
+
     End Structure
     Public DatosAcceso As DatosUsuario
 

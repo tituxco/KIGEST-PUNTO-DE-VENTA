@@ -360,7 +360,7 @@
             Exit Sub
         End If
 
-        If txttotalefectivo.Text <> "" Then
+        If txttotalefectivo.Text = "" Then
             MsgBox("debe ingresar al menos cero en el monto en efectivo")
             Exit Sub
         End If
@@ -598,18 +598,20 @@
         'If txttotalefectivo.Text <> 0  Then
         Try 'actualizamos la caja
                 Dim sqlQuery As String
-                sqlQuery = "insert into fact_ingreso_egreso " _
-                    & "(concepto,monto,comprobante,caja,tipo) values" _
-                    & "(?conc,?monto,?comp,?caja,'1')"
+            sqlQuery = "insert into fact_ingreso_egreso " _
+                    & "(concepto,monto,comprobante,caja,tipo,descripcion) values" _
+                    & "(?conc,?monto,?comp,?caja,'1','?desc')"
 
-                Reconectar()
+            Reconectar()
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text))
                     .AddWithValue("?comp", idfactura)
                     .AddWithValue("?caja", cmbcajas.SelectedValue)
-                    .AddWithValue("?conc", cmbconceptoing.SelectedValue)
-                End With
+                .AddWithValue("?conc", cmbconceptoing.SelectedValue)
+                .AddWithValue("?desc", txtconceptos.Text.ToUpper)
+
+            End With
                 comandoadd.ExecuteNonQuery()
                 'MsgBox("caja actualizada")
                 Button1.Text = "Cerrar"

@@ -84,6 +84,9 @@
     Private Sub listadoPublicidades_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cmdbuscar.PerformClick()
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        Me.Text = "LISTADO " & DatosAcceso.ServMensual
+        dtdesdefact.Value = obtenerPrimerDiaMes()
+        Label1.Text = DatosAcceso.ServMensual
     End Sub
 
     Private Sub cmdsalir_Click(sender As Object, e As EventArgs)

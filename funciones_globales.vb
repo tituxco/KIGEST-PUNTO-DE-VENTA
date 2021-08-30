@@ -11,13 +11,32 @@ Module funciones_Globales
     Public idFactura As Integer
 
 
-    Public Sub ReabrirFormulario(formulario As Form)
-        'formulario.Close()
-        'Dim reabre As New formulario
+    Public Sub GuardarLog(Clie As String, usuario As String, bd As String, tarea As String, ip As String)
+        Try
+            Reconectar()
+            Dim agregarLog As String = "insert into AuthServ.LogAcc(Clie,usuario,bd,tarea,ip) values(
+            ?Clie,?usuario,?bd,?tarea,?ip)"
+            Dim comandoLog As New MySql.Data.MySqlClient.MySqlCommand(agregarLog, conexionAuth)
+            With comandoLog.Parameters
+                .AddWithValue("?Clie", Clie)
+                .AddWithValue("?usuario", usuario)
+                .AddWithValue("?bd", bd)
+                .AddWithValue("?tarea", tarea)
+                .AddWithValue("?ip", ip)
+            End With
+            comandoLog.ExecuteNonQuery()
+        Catch ex As Exception
 
-        'formulario.Show()
+        End Try
     End Sub
 
+    Public Function obtenerPrimerDiaMes() As Date
+        Try
+            Return CDate("01-" & Month(Now) & "-" & Year(Now))
+        Catch ex As Exception
+
+        End Try
+    End Function
     Public Function ElementoFacturado(descripcion As String) As Boolean
         Try
             Reconectar()

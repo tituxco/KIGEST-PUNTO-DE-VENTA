@@ -54,6 +54,8 @@ Partial Class reimpresionComprobantes
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.dgvlistadoCobranza = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -61,8 +63,6 @@ Partial Class reimpresionComprobantes
         Me.Label6 = New System.Windows.Forms.Label()
         Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -419,7 +419,7 @@ Partial Class reimpresionComprobantes
         Me.TabPage2.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage2.Size = New System.Drawing.Size(1261, 416)
         Me.TabPage2.TabIndex = 9
-        Me.TabPage2.Text = "TabPage2"
+        Me.TabPage2.Text = "Lista Cobranza"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'dgvlistadoCobranza
@@ -455,6 +455,33 @@ Partial Class reimpresionComprobantes
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(1255, 70)
         Me.Panel1.TabIndex = 15
+        '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cash_Register_32px1
+        Me.Button2.Location = New System.Drawing.Point(1112, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(78, 70)
+        Me.Button2.TabIndex = 81
+        Me.Button2.Text = "Imputar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
+        'CheckBox1
+        '
+        Me.CheckBox1.AutoSize = True
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
+        Me.CheckBox1.Location = New System.Drawing.Point(357, 11)
+        Me.CheckBox1.Name = "CheckBox1"
+        Me.CheckBox1.Size = New System.Drawing.Size(71, 17)
+        Me.CheckBox1.TabIndex = 59
+        Me.CheckBox1.Text = "Sin pagar"
+        Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'Button3
         '
@@ -537,33 +564,6 @@ Partial Class reimpresionComprobantes
         Me.DateTimePicker2.Name = "DateTimePicker2"
         Me.DateTimePicker2.Size = New System.Drawing.Size(117, 23)
         Me.DateTimePicker2.TabIndex = 43
-        '
-        'CheckBox1
-        '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.ForeColor = System.Drawing.Color.White
-        Me.CheckBox1.Location = New System.Drawing.Point(357, 11)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(71, 17)
-        Me.CheckBox1.TabIndex = 59
-        Me.CheckBox1.Text = "Sin pagar"
-        Me.CheckBox1.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cash_Register_32px1
-        Me.Button2.Location = New System.Drawing.Point(1112, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(78, 70)
-        Me.Button2.TabIndex = 81
-        Me.Button2.Text = "Imputar"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button2.UseVisualStyleBackColor = False
         '
         'reimpresionComprobantes
         '

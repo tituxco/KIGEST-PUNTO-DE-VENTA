@@ -17,6 +17,7 @@ Public Class frmInicializar2
         'End If
     End Sub
 
+
     Private Sub cmdAceptar_Click(sender As Object, e As EventArgs) Handles cmdAceptar.Click
         'guardo los datos de conexion en el caso de que hayan tildado la opcion
         pbprogresocons.Visible = True
@@ -29,9 +30,9 @@ Public Class frmInicializar2
             End If
             'compruebo que este autorizado
             If ConectarAuth() = True Then
-                lblEstado.Text = "Conectado"
+                lblEstado.Text = "Conectando"
                 If ComprobarAuth() = True Then
-                    lblEstado.Text = "Ingresando"
+                    lblEstado.Text = "Comprobando credenciales"
                     If conectar(serv, port, user, pass, database) = True Then
                         My.Settings.servidor = serv
                         My.Settings.puerto = port
@@ -44,6 +45,9 @@ Public Class frmInicializar2
                         My.Settings.idint = DatosAcceso.UsuarioINT
                         'My.Settings.idAlmacen = DatosAcceso.IdAlmacen
                         My.Settings.Save()
+
+
+
                         If comprobar_base_de_datos_principal() = True Then
                             'compruebo que las tablas de la base de datos principal esten correctas
                             If comprobar_tablas_princ() = True Then

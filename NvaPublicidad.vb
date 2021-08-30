@@ -310,6 +310,7 @@
     End Sub
 
     Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Me.Text = "Nva " & DatosAcceso.ServMensual
+        Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
     End Sub
 End Class

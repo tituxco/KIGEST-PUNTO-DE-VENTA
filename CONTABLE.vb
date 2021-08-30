@@ -5365,4 +5365,40 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub cmbPeriodoLibroMayor_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbPeriodoLibroMayor.SelectedValueChanged
         CargarLibroMayor()
     End Sub
+
+    Private Sub Panel16_Paint(sender As Object, e As PaintEventArgs) Handles Panel16.Paint
+
+    End Sub
+
+    Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles tabUsuarios.Click
+
+    End Sub
+
+    Private Sub TabPage6_Enter(sender As Object, e As EventArgs) Handles tabUsuarios.Enter
+        Try
+            Reconectar()
+            Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave 
+            FROM AuthServ.CliAuth  where bd like '" & DatosAcceso.bd & "'  ", conexionAuth)
+            Dim tabUsuarios As New DataTable
+            consUsuarios.Fill(tabUsuarios)
+
+            dgvUsuarios.DataSource = tabUsuarios
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub TabLog_Enter(sender As Object, e As EventArgs) Handles tabLog.Enter
+        Try
+            Reconectar()
+            Dim consLog As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT Clie as Usuario, tarea, ip, fecha_hora FROM 
+            AuthServ.LogAcc where bd like '" & DatosAcceso.bd & "'  order by id desc", conexionAuth)
+            Dim tabLog As New DataTable
+            consLog.Fill(tabLog)
+
+            dgvLog.DataSource = tabLog
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

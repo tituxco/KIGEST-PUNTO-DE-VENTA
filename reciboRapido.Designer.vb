@@ -22,7 +22,6 @@ Partial Class reciboRapido
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(reciboRapido))
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
@@ -37,6 +36,7 @@ Partial Class reciboRapido
         Me.cmbcajas = New System.Windows.Forms.ComboBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtRecNumero = New System.Windows.Forms.TextBox()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
@@ -177,6 +177,21 @@ Partial Class reciboRapido
         Me.txtRecNumero.TabIndex = 104
         Me.txtRecNumero.Text = "0"
         '
+        'Button3
+        '
+        Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.icons8_Versions_64px_11
+        Me.Button3.Location = New System.Drawing.Point(154, 209)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(78, 88)
+        Me.Button3.TabIndex = 106
+        Me.Button3.Text = "Otros"
+        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button3.UseVisualStyleBackColor = False
+        '
         'Button2
         '
         Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -198,12 +213,12 @@ Partial Class reciboRapido
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(154, 209)
+        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cash_in_Hand_64px1
+        Me.Button1.Location = New System.Drawing.Point(70, 209)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(78, 88)
         Me.Button1.TabIndex = 100
-        Me.Button1.Text = "Guardar"
+        Me.Button1.Text = "Efectivo"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -214,6 +229,7 @@ Partial Class reciboRapido
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(325, 300)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Button3)
         Me.Controls.Add(Me.Button2)
         Me.Controls.Add(Me.txtRecNumero)
         Me.Controls.Add(Me.Label3)
@@ -256,4 +272,5 @@ Partial Class reciboRapido
     Friend WithEvents Label3 As Label
     Friend WithEvents txtRecNumero As TextBox
     Friend WithEvents Button2 As Button
+    Friend WithEvents Button3 As Button
 End Class

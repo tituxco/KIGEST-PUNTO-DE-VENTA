@@ -119,7 +119,6 @@ Partial Class frmprincipal
         Me.lblstatusBDprinc.Size = New System.Drawing.Size(136, 19)
         Me.lblstatusBDprinc.Text = "Base de datos principal:"
         Me.lblstatusBDprinc.ToolTipText = "Nombre de la base de datos principal del sistema"
-        Me.lblstatusBDprinc.Visible = False
         '
         'lblStatusEmp
         '
@@ -275,7 +274,7 @@ Partial Class frmprincipal
         Me.NuevaEfacturaToolStripMenuItem.Image = CType(resources.GetObject("NuevaEfacturaToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevaEfacturaToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevaEfacturaToolStripMenuItem.Name = "NuevaEfacturaToolStripMenuItem"
-        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
+        Me.NuevaEfacturaToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
         Me.NuevaEfacturaToolStripMenuItem.Text = "Recuperar facturas Elect."
         '
         'NuevoPedidoToolStripMenuItem
@@ -286,7 +285,7 @@ Partial Class frmprincipal
         Me.NuevoPedidoToolStripMenuItem.Image = CType(resources.GetObject("NuevoPedidoToolStripMenuItem.Image"), System.Drawing.Image)
         Me.NuevoPedidoToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.NuevoPedidoToolStripMenuItem.Name = "NuevoPedidoToolStripMenuItem"
-        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
+        Me.NuevoPedidoToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
         Me.NuevoPedidoToolStripMenuItem.Text = "Presupuestos/Pedidos"
         '
         'reciboconsfinal
@@ -297,7 +296,7 @@ Partial Class frmprincipal
         Me.reciboconsfinal.Image = CType(resources.GetObject("reciboconsfinal.Image"), System.Drawing.Image)
         Me.reciboconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.reciboconsfinal.Name = "reciboconsfinal"
-        Me.reciboconsfinal.Size = New System.Drawing.Size(305, 38)
+        Me.reciboconsfinal.Size = New System.Drawing.Size(242, 38)
         Me.reciboconsfinal.Text = "Recibo Cons. final"
         '
         'facturabconsfinal
@@ -308,7 +307,7 @@ Partial Class frmprincipal
         Me.facturabconsfinal.Image = CType(resources.GetObject("facturabconsfinal.Image"), System.Drawing.Image)
         Me.facturabconsfinal.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.facturabconsfinal.Name = "facturabconsfinal"
-        Me.facturabconsfinal.Size = New System.Drawing.Size(305, 38)
+        Me.facturabconsfinal.Size = New System.Drawing.Size(242, 38)
         Me.facturabconsfinal.Text = "Factura B / C"
         '
         'FacturaA
@@ -319,7 +318,7 @@ Partial Class frmprincipal
         Me.FacturaA.Image = CType(resources.GetObject("FacturaA.Image"), System.Drawing.Image)
         Me.FacturaA.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.FacturaA.Name = "FacturaA"
-        Me.FacturaA.Size = New System.Drawing.Size(305, 38)
+        Me.FacturaA.Size = New System.Drawing.Size(242, 38)
         Me.FacturaA.Text = "Factura A"
         '
         'RemitosToolStripMenuItem
@@ -328,7 +327,7 @@ Partial Class frmprincipal
         Me.RemitosToolStripMenuItem.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.RemitosToolStripMenuItem.ForeColor = System.Drawing.Color.White
         Me.RemitosToolStripMenuItem.Name = "RemitosToolStripMenuItem"
-        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(305, 38)
+        Me.RemitosToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
         Me.RemitosToolStripMenuItem.Text = "Remitos"
         '
         'ReimpresiónDeComprobantesToolStripMenuItem
@@ -450,7 +449,7 @@ Partial Class frmprincipal
         Me.CLOUDSERVERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cloud_Storage_32px
         Me.CLOUDSERVERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.CLOUDSERVERToolStripMenuItem.Name = "CLOUDSERVERToolStripMenuItem"
-        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.CLOUDSERVERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.CLOUDSERVERToolStripMenuItem.Text = "CLOUD SERVER"
         '
         'TALLERToolStripMenuItem
@@ -461,7 +460,7 @@ Partial Class frmprincipal
         Me.TALLERToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Maintenance_32px
         Me.TALLERToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.TALLERToolStripMenuItem.Name = "TALLERToolStripMenuItem"
-        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.TALLERToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.TALLERToolStripMenuItem.Text = "TALLER"
         '
         'PublicidadToolStripMenuItem
@@ -471,7 +470,7 @@ Partial Class frmprincipal
         Me.PublicidadToolStripMenuItem.Image = Global.SIGT__KIGEST.My.Resources.Resources.Commercial_32px
         Me.PublicidadToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.PublicidadToolStripMenuItem.Name = "PublicidadToolStripMenuItem"
-        Me.PublicidadToolStripMenuItem.Size = New System.Drawing.Size(196, 38)
+        Me.PublicidadToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.PublicidadToolStripMenuItem.Text = "PUBLICIDAD"
         '
         'EmpleadosToolStripMenuItem
