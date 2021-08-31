@@ -183,7 +183,7 @@ Public Class proveedores
 
                 If modificarPers = False Then
                     sqlQuery = "insert into fact_proveedores " _
-                & "(razon,direccion,tipo_iva, cuit, informacion_adic,cuentagastos) values " _
+                & "(razon,direccion,tipo_iva, cuit, informacion_adic) values " _
                 & "(?razon,?dire,?iva,?cuit,?info)"
                 ElseIf modificarPers = True Then
                     '  MsgBox("modificando")
@@ -282,27 +282,27 @@ Public Class proveedores
     End Function
 
     Private Sub cmdeliminar_Click(sender As Object, e As EventArgs) Handles cmdeliminar.Click
-        If DatosAcceso.Moduloacc <> 6 Then
-            MsgBox("NO esta autorizado a modificar las los pacientes")
-            Exit Sub
-        End If
-        Try
-            Reconectar()
-            If MsgBox("Esta seguro que desea eliminar este Paciente?, se borraran todos los datos asociados a él?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question, "Eliminar Paciente") = MsgBoxResult.Ok Then
+        'If DatosAcceso.Moduloacc <> 6 Then
+        '    'MsgBox("NO esta autorizado a modificar las los pacientes")
+        '    Exit Sub
+        'End If
+        'Try
+        '    Reconectar()
+        '    If MsgBox("Esta seguro que desea eliminar este Paciente?, se borraran todos los datos asociados a él?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question, "Eliminar Paciente") = MsgBoxResult.Ok Then
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "DELETE from pacientes where id=" & Idproveedor
-                comando.ExecuteReader()
-                CargarPersonal()
-                lblestado.ForeColor = Color.GreenYellow
-                lblestado.Text = "Se elimino correctamente"
-            End If
+        '        comando.Connection = conexionPrinc
+        '        comando.CommandText = "DELETE from pacientes where id=" & Idproveedor
+        '        comando.ExecuteReader()
+        '        CargarPersonal()
+        '        lblestado.ForeColor = Color.GreenYellow
+        '        lblestado.Text = "Se elimino correctamente"
+        '    End If
 
-        Catch ex As Exception
+        'Catch ex As Exception
 
-            lblestado.ForeColor = Color.Red
-            lblestado.Text = "Atención: " & ex.Message
-        End Try
+        '    lblestado.ForeColor = Color.Red
+        '    lblestado.Text = "Atención: " & ex.Message
+        'End Try
     End Sub
 
     Private Sub cmdnuevapers_Click(sender As Object, e As EventArgs) Handles cmdnuevapers.Click
