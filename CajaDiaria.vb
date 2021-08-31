@@ -1,14 +1,24 @@
 ﻿
 Public Class CajaDiaria
     Dim saldoCaja As Double = 0
+    Dim CajaDef As Integer = My.Settings.CajaDef
     Private Sub CajaDiaria_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        CargarCaja()
+        Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & CajaDef & " order by id desc", conexionPrinc)
+        Dim readcierres As New DataSet
+        tablacierres.Fill(readcierres)
+        cmbcierresCajas.DataSource = readcierres.Tables(0)
+        cmbcierresCajas.DisplayMember = readcierres.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbcierresCajas.ValueMember = readcierres.Tables(0).Columns(0).Caption.ToString
+        cmbcierresCajas.SelectedIndex = 0 'My.Settings.CajaDef
+        CargarCaja(False)
+
         If InStr(DatosAcceso.Moduloacc, "4bba") = False Then cmdnuevomov.Visible = False
     End Sub
-    Private Sub CargarCaja()
+    Private Sub CargarCaja(historial As Boolean)
         Dim egresos As Double = 0
         Dim ingresos As Double = 0
-        Dim CajaDef As Integer = My.Settings.CajaDef
+
+        Dim idCierreSel As Integer = cmbcierresCajas.SelectedValue
         saldoCaja = 0
 
         Dim ultimoCierr As String
@@ -17,10 +27,18 @@ Public Class CajaDiaria
         '    fechacaja = " and cc.fecha <='" & Format(DateAdd(DateInterval.Day, 1, dtpfechacaja.Value), "yyyy-MM-dd") & "'"
         '    MsgBox(fechacaja)
         'End If
-
+        Dim SQLARQUEO As String = ""
+        Dim SQLCAJA As String = ""
         dtcaja.Rows.Clear()
+        If historial = True Then
+            SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")"
+
+        Else
+            SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+
+        End If
         Reconectar()
-        Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter("select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & CajaDef & fechacaja & ")", conexionPrinc)
+        Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, conexionPrinc)
         Dim tablacierr As New DataTable
         Dim infocierr() As DataRow
         consultacierre.Fill(tablacierr)
@@ -34,8 +52,37 @@ Public Class CajaDiaria
             ingresos = ingresos + tablacierr(0)(1)
         End If
 
-        Reconectar()
-        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter("select ie.fecha, 
+        If historial = True Then
+            SQLCAJA = "select ie.fecha, 
+		case ie.tipo
+			When 1 Then (
+				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
+                fact_facturas as fact, fact_clientes as cl 
+                where ic.id=ie.concepto and ie.comprobante=fact.id and
+                cl.idclientes=fact.id_cliente                
+                ) 
+			when 2 then (
+				select concat(ec.concepto,' - ',prov.razon) from fact_egresos_concepto  as ec, 
+				fact_proveedores_fact as fact, fact_proveedores as prov 
+				where ec.id=ie.concepto and ie.comprobante=fact.id and fact.idproveedor=prov.id) 
+			end as concepto, 
+        case ie.tipo
+			When 1 Then (
+				Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
+				from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
+				where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
+				and ie.tipo=1 )  
+			when 2 then (select concat(tip.abrev,' - ',fac.numero) 
+				from fact_proveedores_fact as fac, fact_conffiscal as tip, fact_puntosventa as ptovta
+				where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
+				and ptovta.id=tip.ptovta and ie.tipo=2) 
+			end as detalles,  
+				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo, ie.descripcion
+			from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
+				and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
+                and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
+        Else
+            SQLCAJA = "select ie.fecha, 
 		case ie.tipo
 			When 1 Then (
 				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
@@ -61,7 +108,10 @@ Public Class CajaDiaria
 			end as detalles,  
 				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo,ie.descripcion 
 				from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
-				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")", conexionPrinc)
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+        End If
+        Reconectar()
+        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, conexionPrinc)
         Dim tablacaja As New DataTable
         Dim infocaja() As DataRow
         consultacaja.Fill(tablacaja)
@@ -105,6 +155,10 @@ Public Class CajaDiaria
 
     Private Sub cmdcerrarcaja_Click(sender As Object, e As EventArgs) Handles cmdcerrarcaja.Click
         Try
+            If chkfiltrofecha.Checked = True Then
+                MsgBox("no se puede cerrar caja si tiene el historial activado")
+                Exit Sub
+            End If
             If MsgBox("Realmente desa realizar el arqueo de caja?", vbYesNo + vbQuestion, "Cierre de caja") = vbYes Then
                 Dim fecha As String = Format(Now, "yyyy-MM-dd")
                 Dim sqlQuery As String
@@ -120,7 +174,7 @@ Public Class CajaDiaria
                 comandoadd.ExecuteNonQuery()
                 MsgBox("El cierre de caja fue exitoso")
                 saldoCaja = 0
-                CargarCaja()
+                CargarCaja(False)
             End If
         Catch ex As Exception
 
@@ -128,7 +182,11 @@ Public Class CajaDiaria
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        CargarCaja()
+        If chkfiltrofecha.Checked = True Then
+            CargarCaja(True)
+        Else
+            CargarCaja(False)
+        End If
     End Sub
 
     Private Sub cmdsalir_Click(sender As Object, e As EventArgs) Handles cmdsalir.Click
@@ -138,5 +196,15 @@ Public Class CajaDiaria
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         GenerarExcel(dtcaja)
+    End Sub
+
+    Private Sub chkfiltrofecha_CheckedChanged(sender As Object, e As EventArgs) Handles chkfiltrofecha.CheckedChanged
+        If chkfiltrofecha.Checked = True Then
+            cmbcierresCajas.Enabled = True
+            CargarCaja(True)
+        Else
+            cmbcierresCajas.Enabled = False
+            CargarCaja(False)
+        End If
     End Sub
 End Class
