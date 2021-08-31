@@ -22,18 +22,22 @@ Partial Class caja
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(caja))
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.chkfiltrofecha = New System.Windows.Forms.CheckBox()
-        Me.dtpfechacaja = New System.Windows.Forms.DateTimePicker()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.cmbcajas = New System.Windows.Forms.ComboBox()
+        Me.cmdsalir = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.cmdnuevomov = New System.Windows.Forms.Button()
+        Me.cmdcerrarcaja = New System.Windows.Forms.Button()
         Me.dttotales = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -48,13 +52,6 @@ Partial Class caja
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.cmdnuevomov = New System.Windows.Forms.Button()
-        Me.cmdcerrarcaja = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdsalir = New System.Windows.Forms.Button()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -67,12 +64,9 @@ Partial Class caja
         '
         Me.pnnavegacion.AutoScroll = True
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pnnavegacion.Controls.Add(Me.Label2)
         Me.pnnavegacion.Controls.Add(Me.cmbcierresCajas)
         Me.pnnavegacion.Controls.Add(Me.Button2)
-        Me.pnnavegacion.Controls.Add(Me.Button1)
         Me.pnnavegacion.Controls.Add(Me.chkfiltrofecha)
-        Me.pnnavegacion.Controls.Add(Me.dtpfechacaja)
         Me.pnnavegacion.Controls.Add(Me.Label6)
         Me.pnnavegacion.Controls.Add(Me.cmbcajas)
         Me.pnnavegacion.Controls.Add(Me.cmdsalir)
@@ -82,38 +76,52 @@ Partial Class caja
         Me.pnnavegacion.Size = New System.Drawing.Size(1015, 88)
         Me.pnnavegacion.TabIndex = 13
         '
+        'cmbcierresCajas
+        '
+        Me.cmbcierresCajas.Enabled = False
+        Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbcierresCajas.FormattingEnabled = True
+        Me.cmbcierresCajas.Location = New System.Drawing.Point(307, 43)
+        Me.cmbcierresCajas.Name = "cmbcierresCajas"
+        Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
+        Me.cmbcierresCajas.TabIndex = 49
+        '
+        'Button2
+        '
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px1
+        Me.Button2.Location = New System.Drawing.Point(827, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(94, 88)
+        Me.Button2.TabIndex = 48
+        Me.Button2.Text = "Actualizar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'chkfiltrofecha
         '
         Me.chkfiltrofecha.AutoSize = True
         Me.chkfiltrofecha.BackColor = System.Drawing.Color.Transparent
         Me.chkfiltrofecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkfiltrofecha.ForeColor = System.Drawing.Color.White
-        Me.chkfiltrofecha.Location = New System.Drawing.Point(356, 24)
+        Me.chkfiltrofecha.Location = New System.Drawing.Point(307, 17)
         Me.chkfiltrofecha.Name = "chkfiltrofecha"
-        Me.chkfiltrofecha.Size = New System.Drawing.Size(77, 21)
+        Me.chkfiltrofecha.Size = New System.Drawing.Size(179, 21)
         Me.chkfiltrofecha.TabIndex = 46
-        Me.chkfiltrofecha.Text = "CIERRE"
+        Me.chkfiltrofecha.Text = "CIERRES ANTERIORES"
         Me.chkfiltrofecha.UseVisualStyleBackColor = False
-        Me.chkfiltrofecha.Visible = False
-        '
-        'dtpfechacaja
-        '
-        Me.dtpfechacaja.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpfechacaja.Enabled = False
-        Me.dtpfechacaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dtpfechacaja.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtpfechacaja.Location = New System.Drawing.Point(589, 59)
-        Me.dtpfechacaja.Name = "dtpfechacaja"
-        Me.dtpfechacaja.Size = New System.Drawing.Size(117, 26)
-        Me.dtpfechacaja.TabIndex = 45
-        Me.dtpfechacaja.Visible = False
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.ForeColor = System.Drawing.Color.White
-        Me.Label6.Location = New System.Drawing.Point(7, 29)
+        Me.Label6.Location = New System.Drawing.Point(12, 22)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(46, 16)
         Me.Label6.TabIndex = 43
@@ -123,10 +131,27 @@ Partial Class caja
         '
         Me.cmbcajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbcajas.FormattingEnabled = True
-        Me.cmbcajas.Location = New System.Drawing.Point(59, 13)
+        Me.cmbcajas.Location = New System.Drawing.Point(10, 43)
         Me.cmbcajas.Name = "cmbcajas"
         Me.cmbcajas.Size = New System.Drawing.Size(291, 39)
         Me.cmbcajas.TabIndex = 42
+        '
+        'cmdsalir
+        '
+        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdsalir.ForeColor = System.Drawing.Color.White
+        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
+        Me.cmdsalir.Location = New System.Drawing.Point(921, 0)
+        Me.cmdsalir.Name = "cmdsalir"
+        Me.cmdsalir.Size = New System.Drawing.Size(94, 88)
+        Me.cmdsalir.TabIndex = 17
+        Me.cmdsalir.Text = "Salir"
+        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdsalir.UseVisualStyleBackColor = True
         '
         'pntitulo
         '
@@ -171,6 +196,36 @@ Partial Class caja
         Me.Panel2.Size = New System.Drawing.Size(1015, 103)
         Me.Panel2.TabIndex = 85
         '
+        'cmdnuevomov
+        '
+        Me.cmdnuevomov.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdnuevomov.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdnuevomov.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdnuevomov.ForeColor = System.Drawing.Color.White
+        Me.cmdnuevomov.Image = CType(resources.GetObject("cmdnuevomov.Image"), System.Drawing.Image)
+        Me.cmdnuevomov.Location = New System.Drawing.Point(95, 0)
+        Me.cmdnuevomov.Name = "cmdnuevomov"
+        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 103)
+        Me.cmdnuevomov.TabIndex = 1
+        Me.cmdnuevomov.Text = "Nuevo mov"
+        Me.cmdnuevomov.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdnuevomov.UseVisualStyleBackColor = False
+        '
+        'cmdcerrarcaja
+        '
+        Me.cmdcerrarcaja.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdcerrarcaja.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdcerrarcaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdcerrarcaja.ForeColor = System.Drawing.Color.White
+        Me.cmdcerrarcaja.Image = CType(resources.GetObject("cmdcerrarcaja.Image"), System.Drawing.Image)
+        Me.cmdcerrarcaja.Location = New System.Drawing.Point(0, 0)
+        Me.cmdcerrarcaja.Name = "cmdcerrarcaja"
+        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 103)
+        Me.cmdcerrarcaja.TabIndex = 0
+        Me.cmdcerrarcaja.Text = "Cerrar caja"
+        Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdcerrarcaja.UseVisualStyleBackColor = False
+        '
         'dttotales
         '
         Me.dttotales.AllowUserToDeleteRows = False
@@ -194,9 +249,9 @@ Partial Class caja
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle3.Format = "d"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle5.Format = "d"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -255,9 +310,9 @@ Partial Class caja
         '
         'Column1
         '
-        DataGridViewCellStyle4.Format = "d"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle6.Format = "d"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle6
         Me.Column1.FillWeight = 50.0!
         Me.Column1.HeaderText = "Fecha"
         Me.Column1.Name = "Column1"
@@ -289,103 +344,6 @@ Partial Class caja
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Saldo"
         Me.Column5.Name = "Column5"
-        '
-        'cmbcierresCajas
-        '
-        Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbcierresCajas.FormattingEnabled = True
-        Me.cmbcierresCajas.Location = New System.Drawing.Point(430, 13)
-        Me.cmbcierresCajas.Name = "cmbcierresCajas"
-        Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
-        Me.cmbcierresCajas.TabIndex = 49
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.ForeColor = System.Drawing.Color.White
-        Me.Label2.Location = New System.Drawing.Point(519, 69)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(64, 16)
-        Me.Label2.TabIndex = 50
-        Me.Label2.Text = "CIERRE"
-        Me.Label2.Visible = False
-        '
-        'cmdnuevomov
-        '
-        Me.cmdnuevomov.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdnuevomov.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdnuevomov.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdnuevomov.ForeColor = System.Drawing.Color.White
-        Me.cmdnuevomov.Image = CType(resources.GetObject("cmdnuevomov.Image"), System.Drawing.Image)
-        Me.cmdnuevomov.Location = New System.Drawing.Point(95, 0)
-        Me.cmdnuevomov.Name = "cmdnuevomov"
-        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 103)
-        Me.cmdnuevomov.TabIndex = 1
-        Me.cmdnuevomov.Text = "Nuevo mov"
-        Me.cmdnuevomov.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdnuevomov.UseVisualStyleBackColor = False
-        '
-        'cmdcerrarcaja
-        '
-        Me.cmdcerrarcaja.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdcerrarcaja.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdcerrarcaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdcerrarcaja.ForeColor = System.Drawing.Color.White
-        Me.cmdcerrarcaja.Image = CType(resources.GetObject("cmdcerrarcaja.Image"), System.Drawing.Image)
-        Me.cmdcerrarcaja.Location = New System.Drawing.Point(0, 0)
-        Me.cmdcerrarcaja.Name = "cmdcerrarcaja"
-        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 103)
-        Me.cmdcerrarcaja.TabIndex = 0
-        Me.cmdcerrarcaja.Text = "Cerrar caja"
-        Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdcerrarcaja.UseVisualStyleBackColor = False
-        '
-        'Button2
-        '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px1
-        Me.Button2.Location = New System.Drawing.Point(827, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(94, 88)
-        Me.Button2.TabIndex = 48
-        Me.Button2.Text = "Actualizar"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button2.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(746, 13)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(75, 34)
-        Me.Button1.TabIndex = 47
-        Me.Button1.UseVisualStyleBackColor = False
-        Me.Button1.Visible = False
-        '
-        'cmdsalir
-        '
-        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdsalir.ForeColor = System.Drawing.Color.White
-        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(921, 0)
-        Me.cmdsalir.Name = "cmdsalir"
-        Me.cmdsalir.Size = New System.Drawing.Size(94, 88)
-        Me.cmdsalir.TabIndex = 17
-        Me.cmdsalir.Text = "Salir"
-        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdsalir.UseVisualStyleBackColor = True
         '
         'caja
         '
@@ -429,7 +387,6 @@ Partial Class caja
     Friend WithEvents Column5 As System.Windows.Forms.DataGridViewTextBoxColumn
     Friend WithEvents cmdnuevomov As System.Windows.Forms.Button
     Friend WithEvents chkfiltrofecha As System.Windows.Forms.CheckBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents Panel2 As Panel
     Friend WithEvents dttotales As DataGridView
     Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn

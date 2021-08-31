@@ -355,6 +355,28 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim ptovta As String = txtptovta.Text
+
+        Dim fecha As String = Format(CDate(fechagral), "yyyy-MM-dd")
+        Dim idcliente As String = txtctaclie.Text
+        Dim razon As String = txtrazon.Text
+        Dim direccion As String = txtdomicilio.Text
+        Dim localidad As String = txtciudad.Text
+        Dim tipocontr As String = cmbtipocontr.Text
+        Dim cuit As String = txtcuit.Text
+
+        Dim totalRecibo As String = remplazarPunto(txttotalrecibo.Text)
+        Dim totalRetenciones As String = remplazarPunto(txtretenciones.Text)
+        Dim totalTarjetas As String = remplazarPunto(txttotaltarjeta.Text)
+        Dim totalCheques As String = remplazarPunto(txttotalvalores.Text)
+        Dim totalEfectivo As String = remplazarPunto(txttotalefectivo.Text)
+
+        Dim tipoFact As Integer = cmbtipofac.SelectedValue
+        Dim num_fact As Integer = CType(txtnufac.Text, Integer)
+        Dim sqlQuery As String
+        Dim conceptos As String = txtconceptos.Text.ToUpper
+
+
         If Button1.Text = "Cerrar" Then
             Me.Close()
             Exit Sub
@@ -368,22 +390,8 @@
             MsgBox("el recibo no puede ser cero!")
             Exit Sub
         End If
-        Dim num_fact As Integer
-        Try
-            Dim ptovta As String = txtptovta.Text
 
-            Dim fecha As String = Format(CDate(fechagral), "yyyy-MM-dd")
-            Dim idcliente As String = txtctaclie.Text
-            Dim razon As String = txtrazon.Text
-            Dim direccion As String = txtdomicilio.Text
-            Dim localidad As String = txtciudad.Text
-            Dim tipocontr As String = cmbtipocontr.Text
-            Dim cuit As String = txtcuit.Text
-            Dim total As String = remplazarPunto(txttotalrecibo.Text)
-            Dim tipoFact As Integer = cmbtipofac.SelectedValue
-            num_fact = CType(txtnufac.Text, Integer)
-            Dim sqlQuery As String
-            Dim conceptos As String = txtconceptos.Text.ToUpper
+        Try
 
             Reconectar()
 
@@ -410,7 +418,7 @@
                 .AddWithValue("?loca", localidad)
                 .AddWithValue("?tipocont", tipocontr)
                 .AddWithValue("?cuit", cuit)
-                .AddWithValue("?tot", total)
+                .AddWithValue("?tot", totalRecibo)
                 .AddWithValue("?observa", conceptos)
             End With
             comandoadd.ExecuteNonQuery()
@@ -482,8 +490,18 @@
                     .AddWithValue("?comprobante", idfactura)
                     '.AddWithValue("?cuenta", )
                 End With
-                comandoreten.ExecuteNonQuery()
-            End If
+                    comandoreten.ExecuteNonQuery()
+                    If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                        'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
+                        Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                        GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                               "RETENCIONES " & txtrazon.Text, CDbl(totalRetenciones.Replace(".", ",")), 97,
+                                               CDbl(totalRetenciones.Replace(".", ",")), cmbCuentaDebe.SelectedValue, 2, fecha)
+
+                    Else
+                        ' MsgBox("no se permite asiento contable")
+                    End If
+                End If
 
             Reconectar()
             Dim lector As System.Data.IDataReader
@@ -494,28 +512,21 @@
             lector = sql.ExecuteReader
             lector.Read()
 
-            'GUARDAMOS EL MOVIMIENTO DE CUENTA
+            'GUARDAMOS EL MOVIMIENTO DE CUENTA 
             If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
                 'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
                 Dim numAsiento As Integer = ObtenerNumeroAsiento()
                 GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
-                                           "PAGO FACTURA " & txtrazon.Text, CDbl(total.Replace(".", ",")), cmbCuentaDebe.SelectedValue,
-                                           CDbl(total.Replace(".", ",")), cmbCuentaHaber.SelectedValue, 2, fecha)
+                                       "PAGO FACTURA " & txtrazon.Text, CDbl(totalRecibo.Replace(".", ",")), cmbCuentaDebe.SelectedValue,
+                                       CDbl(totalRecibo.Replace(".", ",")), cmbCuentaHaber.SelectedValue, 2, fecha)
             Else
                 ' MsgBox("no se permite asiento contable")
             End If
 
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-        Try
             Dim cod As String
             Dim descripcion As String
             Dim ptotal As String
-            'Dim num_fact As String
-
-            Dim sqlQuery As String
+            'Dim num_fact As String           '            Dim sqlQuery As String
             Dim i As Integer
             Dim idAlmacen As Integer = My.Settings.idAlmacen
             Dim idCaja As Integer = My.Settings.CajaDef
@@ -525,9 +536,7 @@
                 Exit Sub
             End If
 
-
             For Each factconcepto As DataGridViewRow In dtconceptos.Rows
-
                 cod = "0"
                 descripcion = factconcepto.Cells(1).Value
                 ptotal = factconcepto.Cells(2).Value
@@ -535,8 +544,8 @@
 
                 'poner factura como pagada
 
-                Dim lector As System.Data.IDataReader
-                Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+                'Dim lector As System.Data.IDataReader
+                'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
 
                 Reconectar()
                 sql.Connection = conexionPrinc
@@ -557,8 +566,8 @@
                 & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 Reconectar()
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                With comandoadd.Parameters
+                Dim addItemRec As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With addItemRec.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?desc", descripcion)
                     .AddWithValue("?ptot", ptotal)
@@ -567,60 +576,51 @@
                     .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idfactura)
                 End With
-                comandoadd.ExecuteNonQuery()
+                addItemRec.ExecuteNonQuery()
 
             Next
 
             MsgBox("Recibo guardado satisfactoriamente")
             Button1.Text = "Cerrar"
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
 
-        Try
-            Dim sqlQuery As String
+            '    Dim sqlQuery As String
 
             sqlQuery = "insert into fact_cuentaclie " _
             & "(idclie,idcomp,pago) values" _
             & "(?clie, ?idcomp,'1')"
             Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
+            Dim addCtaClie As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            With addCtaClie.Parameters
                 .AddWithValue("?clie", txtctaclie.Text)
                 .AddWithValue("?idcomp", idfactura)
             End With
-            comandoadd.ExecuteNonQuery()
+            addCtaClie.ExecuteNonQuery()
             'MsgBox("Cuenta corriente actualizada")
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
-        'If txttotalefectivo.Text <> 0  Then
-        Try 'actualizamos la caja
-                Dim sqlQuery As String
+            'actualizamos la caja
+            '    Dim sqlQuery As String
             sqlQuery = "insert into fact_ingreso_egreso " _
                     & "(concepto,monto,comprobante,caja,tipo,descripcion) values" _
-                    & "(?conc,?monto,?comp,?caja,'1','?desc')"
+                    & "(?conc,?monto,?comp,?caja,'1',?desc)"
 
             Reconectar()
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                With comandoadd.Parameters
-                    .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text))
-                    .AddWithValue("?comp", idfactura)
-                    .AddWithValue("?caja", cmbcajas.SelectedValue)
+            Dim addCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            With addCaja.Parameters
+                .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text) - remplazarPunto(txtretenciones.Text))
+                .AddWithValue("?comp", idfactura)
+                .AddWithValue("?caja", cmbcajas.SelectedValue)
                 .AddWithValue("?conc", cmbconceptoing.SelectedValue)
                 .AddWithValue("?desc", txtconceptos.Text.ToUpper)
 
             End With
-                comandoadd.ExecuteNonQuery()
-                'MsgBox("caja actualizada")
-                Button1.Text = "Cerrar"
+            addCaja.ExecuteNonQuery()
+            'MsgBox("caja actualizada")
+            Button1.Text = "Cerrar"
 
-                'Button1.Enabled = False
-                Button3.Enabled = True
-            Catch ex As Exception
+            'Button1.Enabled = False
+            Button3.Enabled = True
+        Catch ex As Exception
 
-            End Try
+        End Try
         'End If
     End Sub
     Public Sub cargarCuentaProv(ByRef idprov As Integer)

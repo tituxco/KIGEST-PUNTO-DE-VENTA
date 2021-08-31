@@ -598,6 +598,7 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub reimpresionComprobantes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Reconectar()
         Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
         Dim readptovta As New DataSet
         tablaptovta.Fill(readptovta)

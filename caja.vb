@@ -80,27 +80,39 @@
             dtcaja.Rows.Clear()
             Reconectar()
 
-            Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter("select fecha, monto from fact_cajas_cierres where caja=" & idCajaSel & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")", conexionPrinc)
+            Dim SQLARQUEO As String
+            If historial = True Then
+                SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & idCajaSel & " and fecha=(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id<" & idCierreSel & ")"
+                ' MsgBox(SQLARQUEO)
+            Else
+
+                SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & idCajaSel & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & ")"
+                'MsgBox(SQLARQUEO)
+            End If
+
+            Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, conexionPrinc)
+            'MsgBox(consultacierre.SelectCommand.CommandText)
             Dim tablacierr As New DataTable
             Dim infocierr() As DataRow
 
             consultacierre.Fill(tablacierr)
-
+            'MsgBox(tablacierr.Rows.Count)
             If tablacierr.Rows.Count = 0 Then
-                'ultimoCierr = "%%%%-%%-%%"
+                'ultimoCierr = "%%%%-%%-%%
             Else
                 '    If historial = False Then
                 infocierr = tablacierr.Select()
-                    'ultimoCierr = Format(CDate(tablacierr(0)(0).ToString), "yyyy-MM-dd")
-                    dtcaja.Rows.Add(tablacierr(0)(0), "", "ARQUEO DE CAJA", tablacierr(0)(1), "0")
-                    ingresos = ingresos + tablacierr(0)(1)
+                'ultimoCierr = Format(CDate(tablacierr(0)(0).ToString), "yyyy-MM-dd")
+                dtcaja.Rows.Add(tablacierr(0)(0), "", "ARQUEO DE CAJA", tablacierr(0)(1), "0")
+                ' MsgBox(tablacierr(0)(1))
+                ingresos = ingresos + tablacierr(0)(1)
                 '   End If
             End If
 
             Reconectar()
             Dim SqlTEXT As String
-            'If historial = False Then
-            SqlTEXT = "select ie.fecha, 
+            If historial = True Then
+                SqlTEXT = "select ie.fecha, 
 		case ie.tipo
 			When 1 Then (
 				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
@@ -126,24 +138,37 @@
 			end as detalles,  
 				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo, ie.descripcion
 			from fact_ingreso_egreso as ie where ie.caja= " & idCajaSel & "
-				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")"
-            'Else
-            ''   SqlTEXT = "select ie.fecha, case ie.tipo
-            ''When 1 Then (Select ic.concepto from  fact_ingresos_concepto  As ic where ic.id=ie.concepto) 
-            ''when 2 then (select concat(ec.concepto,'(',ie.descripcion,')') from fact_egresos_concepto  as ec where ec.id=ie.concepto) 
-            ''   end as concepto, case ie.tipo
-            ''   When 1 Then (Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
-            ''from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
-            ''where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
-            ''and ie.tipo=1 )  
-            ''   when 2 then (select concat(tip.abrev,' - ',fac.numero) 
-            ''from fact_proveedores_fact as fac, fact_conffiscal as tip, fact_puntosventa as ptovta
-            ''where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
-            ''and ptovta.id=tip.ptovta and ie.tipo=2) end as detalles,  
-            ''   format(replace(ie.monto,',','.'),2,'es_AR'), ie.tipo 
-            ''   from fact_ingreso_egreso as ie where ie.caja= " & CajaDef &
-            ''   " and ie.fecha like '" & Format(dtpfechacaja.Value, "yyyy-MM-dd") & " %%:%%:%%'"
-            'End If
+				and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id<" & idCierreSel & ")
+                and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")"
+            Else
+                SqlTEXT = "select ie.fecha, 
+		case ie.tipo
+			When 1 Then (
+				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
+                fact_facturas as fact, fact_clientes as cl 
+                where ic.id=ie.concepto and ie.comprobante=fact.id and
+                cl.idclientes=fact.id_cliente                
+                ) 
+			when 2 then (
+				select concat(ec.concepto,' - ',prov.razon) from fact_egresos_concepto  as ec, 
+				fact_proveedores_fact as fact, fact_proveedores as prov 
+				where ec.id=ie.concepto and ie.comprobante=fact.id and fact.idproveedor=prov.id) 
+			end as concepto, 
+        case ie.tipo
+			When 1 Then (
+				Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
+				from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
+				where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
+				and ie.tipo=1 )  
+			when 2 then (select concat(tip.abrev,' - ',fac.numero) 
+				from fact_proveedores_fact as fac, fact_conffiscal as tip, fact_puntosventa as ptovta
+				where tip.donfdesc=fac.tipo and fac.id=ie.comprobante and tip.ptovta=left(fac.numero,4) 
+				and ptovta.id=tip.ptovta and ie.tipo=2) 
+			end as detalles,  
+				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo,ie.descripcion 
+				from fact_ingreso_egreso as ie where ie.caja= " & idCajaSel & "
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & ")"
+            End If
             'MsgBox(SqlTEXT)
             Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlTEXT, conexionPrinc)
             Dim tablacaja As New DataTable
@@ -195,15 +220,15 @@
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
         CargarCaja(False)
     End Sub
 
     Private Sub chkfiltrofecha_CheckedChanged(sender As Object, e As EventArgs) Handles chkfiltrofecha.CheckedChanged
         If CType(sender, CheckBox).Checked = True Then
-            dtpfechacaja.Enabled = True
+            cmbcierresCajas.Enabled = True
         Else
-            dtpfechacaja.Enabled = False
+            cmbcierresCajas.Enabled = False
         End If
     End Sub
 
@@ -212,8 +237,20 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If chkfiltrofecha.CheckState = True Then
+            CargarCaja(True)
+        Else
+            CargarCaja(False)
+        End If
+
+
+    End Sub
+
+    Private Sub cmbcierresCajas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbcierresCajas.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbcierresCajas_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbcierresCajas.SelectionChangeCommitted
         CargarCaja(True)
-
-
     End Sub
 End Class
