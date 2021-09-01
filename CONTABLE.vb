@@ -1773,6 +1773,7 @@ Public Class CONTABLE
             & "from fact_clientes as clie, fact_facturas as fac, fact_cheques as che " _
             & "where che.tipo_cheque=1 and che.comprobante = fac.id And fac.id_cliente = clie.idclientes " & consul, conexionPrinc)
             Dim tablacheques As New DataTable
+            'MsgBox(consulta.SelectCommand.CommandText)
 
             consulta.Fill(tablacheques)
             dtcheques.DataSource = tablacheques

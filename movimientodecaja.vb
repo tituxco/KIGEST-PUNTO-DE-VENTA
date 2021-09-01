@@ -648,7 +648,7 @@
     End Sub
 
     Private Sub cmbproveedores_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbproveedores.SelectedValueChanged
-
+        cargarCuentaProv(cmbproveedores.SelectedValue)
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles cmbopguardar.Click
@@ -1131,5 +1131,9 @@
             selclie.Show()
             selclie.TopMost = True
         End If
+    End Sub
+
+    Private Sub cmbproveedores_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbproveedores.SelectedIndexChanged
+
     End Sub
 End Class

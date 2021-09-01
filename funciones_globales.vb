@@ -75,55 +75,56 @@ Module funciones_Globales
         Try
 
             Reconectar()
-            Dim agregarPartidaDebe As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+            If importeDebe <> 0 And importeHaber <> 0 Then
+                Dim agregarPartidaDebe As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
                 (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
-            Dim comandoPartidaDebe As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaDebe, conexionPrinc)
-            With comandoPartidaDebe.Parameters
-                .AddWithValue("?codigoAsiento", codigoAsiento)
-                .AddWithValue("?cuentaDebeId", cuentaDebeId)
-                .AddWithValue("?importeDebe", importeDebe)
-                .AddWithValue("?cuentaHaberId", 0)
-                .AddWithValue("?importeHaber", 0)
-            End With
-            comandoPartidaDebe.ExecuteNonQuery()
+                Dim comandoPartidaDebe As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaDebe, conexionPrinc)
+                With comandoPartidaDebe.Parameters
+                    .AddWithValue("?codigoAsiento", codigoAsiento)
+                    .AddWithValue("?cuentaDebeId", cuentaDebeId)
+                    .AddWithValue("?importeDebe", importeDebe)
+                    .AddWithValue("?cuentaHaberId", 0)
+                    .AddWithValue("?importeHaber", 0)
+                End With
+                comandoPartidaDebe.ExecuteNonQuery()
 
-            Reconectar()
-            Dim agregarPartidaHaber As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+                Reconectar()
+                Dim agregarPartidaHaber As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
                 (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
-            Dim comandoPartidaHaber As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaHaber, conexionPrinc)
-            With comandoPartidaHaber.Parameters
-                .AddWithValue("?codigoAsiento", codigoAsiento)
-                .AddWithValue("?cuentaDebeId", 0)
-                .AddWithValue("?importeDebe", 0)
-                .AddWithValue("?cuentaHaberId", cuentaHaberId)
-                .AddWithValue("?importeHaber", importeHaber)
-            End With
-            comandoPartidaHaber.ExecuteNonQuery()
+                Dim comandoPartidaHaber As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaHaber, conexionPrinc)
+                With comandoPartidaHaber.Parameters
+                    .AddWithValue("?codigoAsiento", codigoAsiento)
+                    .AddWithValue("?cuentaDebeId", 0)
+                    .AddWithValue("?importeDebe", 0)
+                    .AddWithValue("?cuentaHaberId", cuentaHaberId)
+                    .AddWithValue("?importeHaber", importeHaber)
+                End With
+                comandoPartidaHaber.ExecuteNonQuery()
 
-            Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
+                Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
             (?comprobanteInterno,?codigoAsiento,?fecha,?concepto,?totalDebe,?totalHaber,?numPartidas)"
-            Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, conexionPrinc)
-            With comandoLibroDiario.Parameters
-                .AddWithValue("?comprobanteInterno", comprobante)
-                .AddWithValue("?codigoAsiento", codigoAsiento)
-                .AddWithValue("?fecha", fecha)
-                .AddWithValue("?concepto", concepto.ToUpper)
-                .AddWithValue("?totalDebe", importeDebe)
-                .AddWithValue("?totalHaber", importeHaber)
-                .AddWithValue("?numPartidas", numPartidas)
-            End With
-            comandoLibroDiario.ExecuteNonQuery()
+                Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, conexionPrinc)
+                With comandoLibroDiario.Parameters
+                    .AddWithValue("?comprobanteInterno", comprobante)
+                    .AddWithValue("?codigoAsiento", codigoAsiento)
+                    .AddWithValue("?fecha", fecha)
+                    .AddWithValue("?concepto", concepto.ToUpper)
+                    .AddWithValue("?totalDebe", importeDebe)
+                    .AddWithValue("?totalHaber", importeHaber)
+                    .AddWithValue("?numPartidas", numPartidas)
+                End With
+                comandoLibroDiario.ExecuteNonQuery()
 
-            Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
+                Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
             (?fecha,?concepto,?codigoAsiento)"
-            Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, conexionPrinc)
-            With comandoLibroMayor.Parameters
-                .AddWithValue("?fecha", fecha)
-                .AddWithValue("?concepto", concepto.ToUpper)
-                .AddWithValue("?codigoAsiento", codigoAsiento)
-            End With
-            comandoLibroMayor.ExecuteNonQuery()
-
+                Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, conexionPrinc)
+                With comandoLibroMayor.Parameters
+                    .AddWithValue("?fecha", fecha)
+                    .AddWithValue("?concepto", concepto.ToUpper)
+                    .AddWithValue("?codigoAsiento", codigoAsiento)
+                End With
+                comandoLibroMayor.ExecuteNonQuery()
+            End If
         Catch ex As Exception
 
         End Try

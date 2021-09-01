@@ -22,9 +22,9 @@ Partial Class CajaDiaria
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CajaDiaria))
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -47,10 +47,10 @@ Partial Class CajaDiaria
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
+        Me.chkfiltrofecha = New System.Windows.Forms.CheckBox()
+        Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
         Me.dtpfechacaja = New System.Windows.Forms.DateTimePicker()
         Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
-        Me.chkfiltrofecha = New System.Windows.Forms.CheckBox()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -82,9 +82,9 @@ Partial Class CajaDiaria
         '
         'Column1
         '
-        DataGridViewCellStyle9.Format = "d"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column1.FillWeight = 50.0!
         Me.Column1.HeaderText = "Fecha"
         Me.Column1.Name = "Column1"
@@ -222,9 +222,9 @@ Partial Class CajaDiaria
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle10.Format = "d"
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle2.Format = "d"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle2
         Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -289,6 +289,31 @@ Partial Class CajaDiaria
         Me.pntitulo.Size = New System.Drawing.Size(1050, 40)
         Me.pntitulo.TabIndex = 84
         '
+        'chkfiltrofecha
+        '
+        Me.chkfiltrofecha.AutoSize = True
+        Me.chkfiltrofecha.BackColor = System.Drawing.Color.Transparent
+        Me.chkfiltrofecha.Dock = System.Windows.Forms.DockStyle.Right
+        Me.chkfiltrofecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkfiltrofecha.ForeColor = System.Drawing.Color.White
+        Me.chkfiltrofecha.Location = New System.Drawing.Point(520, 0)
+        Me.chkfiltrofecha.Name = "chkfiltrofecha"
+        Me.chkfiltrofecha.Size = New System.Drawing.Size(179, 40)
+        Me.chkfiltrofecha.TabIndex = 50
+        Me.chkfiltrofecha.Text = "CIERRES ANTERIORES"
+        Me.chkfiltrofecha.UseVisualStyleBackColor = False
+        '
+        'cmbcierresCajas
+        '
+        Me.cmbcierresCajas.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmbcierresCajas.Enabled = False
+        Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbcierresCajas.FormattingEnabled = True
+        Me.cmbcierresCajas.Location = New System.Drawing.Point(699, 0)
+        Me.cmbcierresCajas.Name = "cmbcierresCajas"
+        Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
+        Me.cmbcierresCajas.TabIndex = 51
+        '
         'dtpfechacaja
         '
         Me.dtpfechacaja.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -312,31 +337,6 @@ Partial Class CajaDiaria
         Me.Button1.Size = New System.Drawing.Size(75, 40)
         Me.Button1.TabIndex = 47
         Me.Button1.UseVisualStyleBackColor = False
-        '
-        'cmbcierresCajas
-        '
-        Me.cmbcierresCajas.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmbcierresCajas.Enabled = False
-        Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbcierresCajas.FormattingEnabled = True
-        Me.cmbcierresCajas.Location = New System.Drawing.Point(699, 0)
-        Me.cmbcierresCajas.Name = "cmbcierresCajas"
-        Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
-        Me.cmbcierresCajas.TabIndex = 51
-        '
-        'chkfiltrofecha
-        '
-        Me.chkfiltrofecha.AutoSize = True
-        Me.chkfiltrofecha.BackColor = System.Drawing.Color.Transparent
-        Me.chkfiltrofecha.Dock = System.Windows.Forms.DockStyle.Right
-        Me.chkfiltrofecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkfiltrofecha.ForeColor = System.Drawing.Color.White
-        Me.chkfiltrofecha.Location = New System.Drawing.Point(520, 0)
-        Me.chkfiltrofecha.Name = "chkfiltrofecha"
-        Me.chkfiltrofecha.Size = New System.Drawing.Size(179, 40)
-        Me.chkfiltrofecha.TabIndex = 50
-        Me.chkfiltrofecha.Text = "CIERRES ANTERIORES"
-        Me.chkfiltrofecha.UseVisualStyleBackColor = False
         '
         'CajaDiaria
         '
