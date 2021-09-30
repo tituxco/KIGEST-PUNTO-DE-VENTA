@@ -5390,16 +5390,29 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub TabLog_Enter(sender As Object, e As EventArgs) Handles tabLog.Enter
+        CargarLogAcceso()
+    End Sub
+
+    Private Sub Button26_Click_1(sender As Object, e As EventArgs) Handles Button26.Click
+        Dialog1.Show()
+
+    End Sub
+
+    Private Sub CargarLogAcceso()
         Try
             Reconectar()
             Dim consLog As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT Clie as Usuario, tarea, ip, fecha_hora FROM 
-            AuthServ.LogAcc where bd like '" & DatosAcceso.bd & "'  order by id desc", conexionAuth)
+            AuthServ.LogAcc where bd like '" & DatosAcceso.bd & "'  and fecha_hora like '" & Format(dtfechalog.Value, "yyyy-MM-dd") & " %%:%%:%%' order by id desc", conexionAuth)
             Dim tabLog As New DataTable
             consLog.Fill(tabLog)
 
+            ' MsgBox(consLog.SelectCommand.CommandText)
             dgvLog.DataSource = tabLog
         Catch ex As Exception
 
         End Try
+    End Sub
+    Private Sub Button39_Click_1(sender As Object, e As EventArgs) Handles Button39.Click
+        CargarLogAcceso()
     End Sub
 End Class

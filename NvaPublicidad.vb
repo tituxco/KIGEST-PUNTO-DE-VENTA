@@ -185,7 +185,7 @@
         (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
-        itm.descripcion like concat('%#',DTP.ID_PRESTAMO,'%') and
+        itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(DTP.FECHA,'%Y-%m') 
         ) AS FACTURA
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")

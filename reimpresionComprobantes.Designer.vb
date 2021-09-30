@@ -61,8 +61,8 @@ Partial Class reimpresionComprobantes
         Me.Button6 = New System.Windows.Forms.Button()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
-        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.dtdesdeCobranza = New System.Windows.Forms.DateTimePicker()
+        Me.dthastaCobranza = New System.Windows.Forms.DateTimePicker()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -448,8 +448,8 @@ Partial Class reimpresionComprobantes
         Me.Panel1.Controls.Add(Me.Button6)
         Me.Panel1.Controls.Add(Me.Label5)
         Me.Panel1.Controls.Add(Me.Label6)
-        Me.Panel1.Controls.Add(Me.DateTimePicker1)
-        Me.Panel1.Controls.Add(Me.DateTimePicker2)
+        Me.Panel1.Controls.Add(Me.dtdesdeCobranza)
+        Me.Panel1.Controls.Add(Me.dthastaCobranza)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
@@ -544,26 +544,26 @@ Partial Class reimpresionComprobantes
         Me.Label6.TabIndex = 45
         Me.Label6.Text = "Hasta"
         '
-        'DateTimePicker1
+        'dtdesdeCobranza
         '
-        Me.DateTimePicker1.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DateTimePicker1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(61, 11)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(117, 23)
-        Me.DateTimePicker1.TabIndex = 42
+        Me.dtdesdeCobranza.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdesdeCobranza.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdesdeCobranza.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtdesdeCobranza.Location = New System.Drawing.Point(61, 11)
+        Me.dtdesdeCobranza.Name = "dtdesdeCobranza"
+        Me.dtdesdeCobranza.Size = New System.Drawing.Size(117, 23)
+        Me.dtdesdeCobranza.TabIndex = 42
         '
-        'DateTimePicker2
+        'dthastaCobranza
         '
-        Me.DateTimePicker2.AccessibleName = ""
-        Me.DateTimePicker2.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DateTimePicker2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.DateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker2.Location = New System.Drawing.Point(61, 37)
-        Me.DateTimePicker2.Name = "DateTimePicker2"
-        Me.DateTimePicker2.Size = New System.Drawing.Size(117, 23)
-        Me.DateTimePicker2.TabIndex = 43
+        Me.dthastaCobranza.AccessibleName = ""
+        Me.dthastaCobranza.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthastaCobranza.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dthastaCobranza.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dthastaCobranza.Location = New System.Drawing.Point(61, 37)
+        Me.dthastaCobranza.Name = "dthastaCobranza"
+        Me.dthastaCobranza.Size = New System.Drawing.Size(117, 23)
+        Me.dthastaCobranza.TabIndex = 43
         '
         'reimpresionComprobantes
         '
@@ -633,7 +633,7 @@ Partial Class reimpresionComprobantes
     Friend WithEvents Button6 As Button
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents DateTimePicker1 As DateTimePicker
-    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents dtdesdeCobranza As DateTimePicker
+    Friend WithEvents dthastaCobranza As DateTimePicker
     Friend WithEvents Button2 As Button
 End Class

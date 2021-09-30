@@ -26,13 +26,12 @@ Partial Class listadoPublicidades
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.chkMostarInfo = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.dthastafact = New System.Windows.Forms.DateTimePicker()
         Me.dtdesdefact = New System.Windows.Forms.DateTimePicker()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtdiasmora = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -44,8 +43,11 @@ Partial Class listadoPublicidades
         Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.chkMostarInfo = New System.Windows.Forms.CheckBox()
+        Me.chkSoloMorosos = New System.Windows.Forms.CheckBox()
+        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
+        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
         Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
+        Me.chksinFact = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -77,14 +79,16 @@ Partial Class listadoPublicidades
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.chksinFact)
+        Me.pnnavegacion.Controls.Add(Me.RadioButton2)
+        Me.pnnavegacion.Controls.Add(Me.RadioButton1)
+        Me.pnnavegacion.Controls.Add(Me.chkSoloMorosos)
         Me.pnnavegacion.Controls.Add(Me.chkMostarInfo)
         Me.pnnavegacion.Controls.Add(Me.Button3)
         Me.pnnavegacion.Controls.Add(Me.dthastafact)
         Me.pnnavegacion.Controls.Add(Me.dtdesdefact)
         Me.pnnavegacion.Controls.Add(Me.Label8)
         Me.pnnavegacion.Controls.Add(Me.Label4)
-        Me.pnnavegacion.Controls.Add(Me.RadioButton2)
-        Me.pnnavegacion.Controls.Add(Me.RadioButton1)
         Me.pnnavegacion.Controls.Add(Me.Label3)
         Me.pnnavegacion.Controls.Add(Me.txtdiasmora)
         Me.pnnavegacion.Controls.Add(Me.Label2)
@@ -99,6 +103,19 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1208, 89)
         Me.pnnavegacion.TabIndex = 76
+        '
+        'chkMostarInfo
+        '
+        Me.chkMostarInfo.AutoSize = True
+        Me.chkMostarInfo.Checked = True
+        Me.chkMostarInfo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkMostarInfo.ForeColor = System.Drawing.Color.White
+        Me.chkMostarInfo.Location = New System.Drawing.Point(457, 10)
+        Me.chkMostarInfo.Name = "chkMostarInfo"
+        Me.chkMostarInfo.Size = New System.Drawing.Size(136, 17)
+        Me.chkMostarInfo.TabIndex = 196
+        Me.chkMostarInfo.Text = "Ver/ocultar informacion"
+        Me.chkMostarInfo.UseVisualStyleBackColor = True
         '
         'Button3
         '
@@ -122,17 +139,18 @@ Partial Class listadoPublicidades
         Me.dthastafact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dthastafact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dthastafact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dthastafact.Location = New System.Drawing.Point(261, 61)
+        Me.dthastafact.Location = New System.Drawing.Point(615, 10)
         Me.dthastafact.Name = "dthastafact"
         Me.dthastafact.Size = New System.Drawing.Size(117, 23)
         Me.dthastafact.TabIndex = 193
+        Me.dthastafact.Visible = False
         '
         'dtdesdefact
         '
         Me.dtdesdefact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdesdefact.Location = New System.Drawing.Point(261, 19)
+        Me.dtdesdefact.Location = New System.Drawing.Point(288, 32)
         Me.dtdesdefact.Name = "dtdesdefact"
         Me.dtdesdefact.Size = New System.Drawing.Size(117, 23)
         Me.dtdesdefact.TabIndex = 192
@@ -143,53 +161,29 @@ Partial Class listadoPublicidades
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(304, 41)
+        Me.Label8.Location = New System.Drawing.Point(285, 15)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(17, 17)
+        Me.Label8.Size = New System.Drawing.Size(77, 17)
         Me.Label8.TabIndex = 194
-        Me.Label8.Text = "A"
+        Me.Label8.Text = "Posterior a"
         '
         'Label4
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(258, 0)
+        Me.Label4.Location = New System.Drawing.Point(285, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(63, 16)
+        Me.Label4.Size = New System.Drawing.Size(91, 16)
         Me.Label4.TabIndex = 191
-        Me.Label4.Text = "Periodo"
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.Checked = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.White
-        Me.RadioButton2.Location = New System.Drawing.Point(174, 24)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(66, 17)
-        Me.RadioButton2.TabIndex = 190
-        Me.RadioButton2.TabStop = True
-        Me.RadioButton2.Text = "Vigentes"
-        Me.RadioButton2.UseVisualStyleBackColor = True
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.White
-        Me.RadioButton1.Location = New System.Drawing.Point(103, 24)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(65, 17)
-        Me.RadioButton1.TabIndex = 189
-        Me.RadioButton1.Text = "Morosos"
-        Me.RadioButton1.UseVisualStyleBackColor = True
+        Me.Label4.Text = "Periodo FIN"
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.ForeColor = System.Drawing.Color.White
-        Me.Label3.Location = New System.Drawing.Point(100, 0)
+        Me.Label3.Location = New System.Drawing.Point(81, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(51, 16)
         Me.Label3.TabIndex = 188
@@ -288,7 +282,6 @@ Partial Class listadoPublicidades
         Me.txtbuscar.Name = "txtbuscar"
         Me.txtbuscar.Size = New System.Drawing.Size(237, 22)
         Me.txtbuscar.TabIndex = 169
-        Me.txtbuscar.Text = "BUSCAR NOMBRE DE PRODUCTO #CODIGO"
         '
         'Button1
         '
@@ -328,18 +321,41 @@ Partial Class listadoPublicidades
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
         '
-        'chkMostarInfo
+        'chkSoloMorosos
         '
-        Me.chkMostarInfo.AutoSize = True
-        Me.chkMostarInfo.Checked = True
-        Me.chkMostarInfo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkMostarInfo.ForeColor = System.Drawing.Color.White
-        Me.chkMostarInfo.Location = New System.Drawing.Point(410, 10)
-        Me.chkMostarInfo.Name = "chkMostarInfo"
-        Me.chkMostarInfo.Size = New System.Drawing.Size(136, 17)
-        Me.chkMostarInfo.TabIndex = 196
-        Me.chkMostarInfo.Text = "Ver/ocultar informacion"
-        Me.chkMostarInfo.UseVisualStyleBackColor = True
+        Me.chkSoloMorosos.AutoSize = True
+        Me.chkSoloMorosos.ForeColor = System.Drawing.Color.White
+        Me.chkSoloMorosos.Location = New System.Drawing.Point(84, 38)
+        Me.chkSoloMorosos.Name = "chkSoloMorosos"
+        Me.chkSoloMorosos.Size = New System.Drawing.Size(89, 17)
+        Me.chkSoloMorosos.TabIndex = 198
+        Me.chkSoloMorosos.Text = "Solo morosos"
+        Me.chkSoloMorosos.UseVisualStyleBackColor = True
+        '
+        'RadioButton1
+        '
+        Me.RadioButton1.AutoSize = True
+        Me.RadioButton1.Checked = True
+        Me.RadioButton1.ForeColor = System.Drawing.Color.White
+        Me.RadioButton1.Location = New System.Drawing.Point(84, 15)
+        Me.RadioButton1.Name = "RadioButton1"
+        Me.RadioButton1.Size = New System.Drawing.Size(66, 17)
+        Me.RadioButton1.TabIndex = 199
+        Me.RadioButton1.TabStop = True
+        Me.RadioButton1.Text = "Vigentes"
+        Me.RadioButton1.UseVisualStyleBackColor = True
+        '
+        'RadioButton2
+        '
+        Me.RadioButton2.AutoSize = True
+        Me.RadioButton2.ForeColor = System.Drawing.Color.White
+        Me.RadioButton2.Location = New System.Drawing.Point(175, 15)
+        Me.RadioButton2.Name = "RadioButton2"
+        Me.RadioButton2.Size = New System.Drawing.Size(69, 17)
+        Me.RadioButton2.TabIndex = 200
+        Me.RadioButton2.Text = "Vencidas"
+        Me.RadioButton2.UseVisualStyleBackColor = True
+        Me.RadioButton2.Visible = False
         '
         'dgvPrestamos
         '
@@ -348,6 +364,17 @@ Partial Class listadoPublicidades
         Me.dgvPrestamos.Name = "dgvPrestamos"
         Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
         Me.dgvPrestamos.TabIndex = 78
+        '
+        'chksinFact
+        '
+        Me.chksinFact.AutoSize = True
+        Me.chksinFact.ForeColor = System.Drawing.Color.White
+        Me.chksinFact.Location = New System.Drawing.Point(175, 38)
+        Me.chksinFact.Name = "chksinFact"
+        Me.chksinFact.Size = New System.Drawing.Size(107, 17)
+        Me.chksinFact.TabIndex = 201
+        Me.chksinFact.Text = "Sin Factura ACT."
+        Me.chksinFact.UseVisualStyleBackColor = True
         '
         'listadoPublicidades
         '
@@ -383,8 +410,6 @@ Partial Class listadoPublicidades
     Friend WithEvents Button2 As Button
     Friend WithEvents txtdiasmora As TextBox
     Friend WithEvents Label2 As Label
-    Friend WithEvents RadioButton2 As RadioButton
-    Friend WithEvents RadioButton1 As RadioButton
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
     Friend WithEvents dthastafact As DateTimePicker
@@ -392,4 +417,8 @@ Partial Class listadoPublicidades
     Friend WithEvents Label8 As Label
     Friend WithEvents Button3 As Button
     Friend WithEvents chkMostarInfo As CheckBox
+    Friend WithEvents RadioButton2 As RadioButton
+    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents chkSoloMorosos As CheckBox
+    Friend WithEvents chksinFact As CheckBox
 End Class

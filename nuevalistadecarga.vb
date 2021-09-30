@@ -167,6 +167,14 @@
 
     Private Sub dtpedidosfact_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtpedidosfact.CellEndEdit
         Reconectar()
+        Dim i As Integer
+        For i = 0 To dtpedidosfact.Rows.Count - 2
+            If i <> dtpedidosfact.CurrentRow.Index And dtpedidosfact.Rows(i).Cells("Pedidos").Value = dtpedidosfact.CurrentCell.Value Then
+                MsgBox("El pedido ya esta en la lista de carga actual")
+                Exit Sub
+            End If
+        Next
+        Reconectar()
         Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
         & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995 and OBSERVACIONES LIKE 'PENDIENTE'", conexionPrinc)
         Dim tablaped As New DataTable
@@ -178,13 +186,12 @@
             dtpedidosfact.CurrentCell.Value = ""
             SendKeys.Send("{UP}")
             Exit Sub
-
         End If
         dtpedidosfact.CurrentRow.Cells(0).Value = infoped(0)(0)
 
         Reconectar()
         Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod, itm.plu, itm.cantidad, itm.descripcion,
-         (select peso from cm_pesoEspecifico where id=itm.cod) as PE from fact_items  as itm where itm.id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
+         ifnull((select peso from cm_pesoEspecifico where id=itm.cod),0) as PE from fact_items  as itm where itm.id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
         Dim tablaitm As New DataTable
         Dim infoitm() As DataRow
         Dim existe As Boolean = False
@@ -248,9 +255,6 @@
                 End If
 
             End If
-
-
-
         Next
         calcularEnvases()
 

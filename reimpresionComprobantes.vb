@@ -599,6 +599,8 @@ Public Class reimpresionComprobantes
 
     Private Sub reimpresionComprobantes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Reconectar()
+        dtdesdeCobranza.Value = obtenerPrimerDiaMes()
+        dtderemitos.Value = obtenerPrimerDiaMes()
         Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
         Dim readptovta As New DataSet
         tablaptovta.Fill(readptovta)
@@ -922,7 +924,8 @@ Public Class reimpresionComprobantes
             else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact in(999,11)
-            and fact.ptovta like '%'", conexionPrinc)
+            and fact.ptovta like '%' and 
+            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "'", conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer

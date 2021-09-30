@@ -4,7 +4,8 @@
   <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
     <security>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
-        <!-- Opciones del manifiesto UAC
+		  
+		  <!-- Opciones del manifiesto UAC
              Si quiere cambiar el nivel del Control de cuentas de usuario de Windows reemplace el 
              nodo requestedExecutionLevel por uno de los siguientes.
 

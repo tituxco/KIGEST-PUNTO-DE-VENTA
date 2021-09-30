@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>290</ApplicationRevision>
+    <ApplicationRevision>301</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -272,6 +272,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>datosInformes.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog1.Designer.vb">
+      <DependentUpon>Dialog1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Dialog1.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="empleados.designer.vb">
       <DependentUpon>empleados.vb</DependentUpon>
@@ -746,6 +752,7 @@
     <None Include="Resources\iconos\icons8_Versions_64px_1.png" />
     <None Include="Resources\iconos\factura.png" />
     <None Include="Resources\iconos\Cash in Hand_64px.png" />
+    <None Include="Resources\iconos\not_equal_32px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -787,6 +794,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="configuracion.resx">
       <DependentUpon>configuracion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog1.resx">
+      <DependentUpon>Dialog1.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="empleados.resx">
       <DependentUpon>empleados.vb</DependentUpon>

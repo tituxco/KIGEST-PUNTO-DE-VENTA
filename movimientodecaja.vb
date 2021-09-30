@@ -4,6 +4,8 @@
     Public movrap As Boolean
     Public movraptip As Integer
     Public movrapclie As Integer
+    Public movrapFact As Integer
+    Public movrapConc As String
     Dim SelFech As New CalendarCell
     Dim ptovta As Integer = DatosAcceso.IdPtoVtaDef
 
@@ -268,19 +270,7 @@
             pagordenpago.Parent = Nothing
             pagtrans.Parent = Nothing
             lblfecha.Text = fechagral
-            If movrap = True Then
-                Select Case movraptip
-                    Case 19
-                        cmbtipofac.SelectedValue = movraptip
-                        txtctaclie.Text = movrapclie
-                        cargarCliente()
-                    Case 6
-                        cmbtipofac.SelectedValue = movraptip
-                        txtctaclie.Text = movrapclie
-                        cmbproveedores.SelectedValue = movrapclie
-                End Select
 
-            End If
 
             If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
                 grpCuentaContable.Visible = True
@@ -302,7 +292,20 @@
                 cmbCuentaHaber.ValueMember = tabCtasHaber.Tables(0).Columns("id").Caption.ToString
             End If
 
+            If movrap = True Then
+                Select Case movraptip
+                    Case 996
+                        cmbtipofac.SelectedValue = movraptip
+                        txtctaclie.Text = movrapclie
+                        txtconceptos.Text = movrapConc
+                        cargarCliente()
+                    Case 993
+                        cmbtipofac.SelectedValue = movraptip
+                        txtctaclie.Text = movrapclie
+                        cmbproveedores.SelectedValue = movrapclie
+                End Select
 
+            End If
 
         Catch ex As Exception
         End Try
@@ -330,7 +333,7 @@
                 pagtrans.Parent = Nothing
                 If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
                     cmbCuentaDebe.SelectedValue = 5
-                    cmbCuentaHaber.SelectedValue = 75
+                    cmbCuentaHaber.SelectedValue = 11 'cuenta deudores por publicidad
                 End If
             ElseIf cmbtipofac.SelectedValue = 993 Then
                 pagrecibos.Parent = Nothing
@@ -370,7 +373,8 @@
         Dim totalTarjetas As String = remplazarPunto(txttotaltarjeta.Text)
         Dim totalCheques As String = remplazarPunto(txttotalvalores.Text)
         Dim totalEfectivo As String = remplazarPunto(txttotalefectivo.Text)
-
+        Dim NetodeRetenciones As String = CDbl(totalRecibo.Replace(".", ",")) - CDbl(totalRetenciones.Replace(".", ","))
+        MsgBox (NetodeRetenciones )
         Dim tipoFact As Integer = cmbtipofac.SelectedValue
         Dim num_fact As Integer = CType(txtnufac.Text, Integer)
         Dim sqlQuery As String
@@ -605,7 +609,7 @@
             Reconectar()
             Dim addCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With addCaja.Parameters
-                .AddWithValue("?monto", remplazarPunto(txttotalrecibo.Text) - remplazarPunto(txtretenciones.Text))
+                .AddWithValue("?monto", NetodeRetenciones)
                 .AddWithValue("?comp", idfactura)
                 .AddWithValue("?caja", cmbcajas.SelectedValue)
                 .AddWithValue("?conc", cmbconceptoing.SelectedValue)
@@ -648,7 +652,12 @@
     End Sub
 
     Private Sub cmbproveedores_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbproveedores.SelectedValueChanged
-        cargarCuentaProv(cmbproveedores.SelectedValue)
+        Try
+            cargarCuentaProv(cmbproveedores.SelectedValue)
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles cmbopguardar.Click
@@ -1134,6 +1143,10 @@
     End Sub
 
     Private Sub cmbproveedores_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbproveedores.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbtipofac_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipofac.SelectedIndexChanged
 
     End Sub
 End Class

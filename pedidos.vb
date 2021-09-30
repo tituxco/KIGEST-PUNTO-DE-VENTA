@@ -395,55 +395,57 @@
     End Function
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-
-        If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
-            MsgBox("El pedido ya fue facturado")
-            Exit Sub
-        End If
-
-        If MismoVendedor() = False Then
-            MsgBox("los pedidos deben ser del mismo vendedor")
-            Exit Sub
-        End If
-
-        'MsgBox(ObtenerIdCliente(dtpedidos.CurrentRow.Cells(3).Value))
-        Dim i As Integer
-        Dim FilasSelecc As Integer = CantFilasSel()
-        For i = 0 To Me.MdiChildren.Length - 1
-            If MdiChildren(i).Name = "puntoventa" Then
-                Me.MdiChildren(i).BringToFront()
+        Try
+            If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
+                MsgBox("El pedido ya fue facturado")
                 Exit Sub
             End If
-        Next
 
-        'MsgBox(filasSel)
-        Dim vta As New puntoventa
-        vta.MdiParent = Me.MdiParent
-        vta.idfacrap = My.Settings.idfacRap
-        If FilasSelecc > 1 Then
-            Dim itemPedido As String
-            Dim ptovtapedido As String
-            vta.Idcliente = 9999
-            For Each filas As DataGridViewRow In dgvPedidos.dgvVista.Rows
-                If filas.Selected = True Then
-                    itemPedido = CInt(Strings.Right(filas.Cells(1).Value, 8))
-                    ptovtapedido = CInt(Strings.Left(filas.Cells(1).Value, 4))
-                    vta.dtpedidosfact.Rows.Add(filas.Cells(0).Value, ptovtapedido & "-" & itemPedido)
-                    vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
+            If MismoVendedor() = False Then
+                MsgBox("los pedidos deben ser del mismo vendedor")
+                Exit Sub
+            End If
+
+            'MsgBox(ObtenerIdCliente(dtpedidos.CurrentRow.Cells(3).Value))
+            Dim i As Integer
+            Dim FilasSelecc As Integer = CantFilasSel()
+            For i = 0 To Me.MdiChildren.Length - 1
+                If MdiChildren(i).Name = "puntoventa" Then
+                    Me.MdiChildren(i).BringToFront()
+                    Exit Sub
                 End If
             Next
-            vta.Show()
 
-        ElseIf CantFilasSel() = 1 Then
-            Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
-            Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))
-            vta.Idcliente = ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
-            vta.cargarCliente()
-            vta.txtcodPLU.Focus()
-            vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
-            vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
-            vta.Show()
-        End If
+            'MsgBox(filasSel)
+            Dim vta As New puntoventa
+            vta.MdiParent = Me.MdiParent
+            vta.idfacrap = My.Settings.idfacRap
+            If FilasSelecc > 1 Then
+                Dim itemPedido As String
+                Dim ptovtapedido As String
+                vta.Idcliente = 9999
+                For Each filas As DataGridViewRow In dgvPedidos.dgvVista.Rows
+                    If filas.Selected = True Then
+                        itemPedido = CInt(Strings.Right(filas.Cells(1).Value, 8))
+                        ptovtapedido = CInt(Strings.Left(filas.Cells(1).Value, 4))
+                        vta.dtpedidosfact.Rows.Add(filas.Cells(0).Value, ptovtapedido & "-" & itemPedido)
+                        vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
+                    End If
+                Next
+                vta.Show()
+
+            ElseIf CantFilasSel() = 1 Then
+                Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
+                Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))
+                vta.Idcliente = ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
+                vta.cargarCliente()
+                vta.txtcodPLU.Focus()
+                vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
+                vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
+                vta.Show()
+            End If
+        Catch ex As Exception
+        End Try
     End Sub
 
     Private Sub cmbvendedor_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbvendedor.SelectionChangeCommitted

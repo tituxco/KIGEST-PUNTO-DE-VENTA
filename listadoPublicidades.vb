@@ -3,6 +3,23 @@
     Private da As MySql.Data.MySqlClient.MySqlDataAdapter
     Private ds As DataSet
     Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click
+        Dim fechaBusq As String = ""
+        Dim morosoBusq As String = ""
+        Dim clienteBusq As String = ""
+        Dim facturadosBusq As String = ""
+        fechaBusq = " having FIN >= '" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "'" ' and FIN >="
+
+        If chkSoloMorosos.Checked = True Then
+            morosoBusq = " and MOROSO_MESES>0 "
+        End If
+
+        If txtbuscar.Text <> "" Then
+            clienteBusq = " and CLIENTE LIKE '%" & txtbuscar.Text.Replace(" ", "%") & "%' "
+        End If
+
+        If chksinFact.Checked = True Then
+            facturadosBusq = " and FACTURA_ACTUAL IS NULL "
+        End If
 
         Reconectar()
         Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
@@ -19,10 +36,18 @@
             and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
             )AS MOROSO_MESES,        
         round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
-        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO,
-        pr.CONCEPTO,cl.vendedor  
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m')) AS FACTURA_ACTUAL,		
+        cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes")
+        where pr.ID_CLIENTE=cl.idclientes" &
+        fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
+
+        'MsgBox()
     End Sub
 
     Public Sub Consultas(ByVal Cadena As String)
@@ -32,7 +57,7 @@
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-
+        'MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
 
@@ -43,6 +68,8 @@
         Else
             dgvPrestamos.Cargar_Datos(Nothing)
         End If
+
+
 
     End Sub
 
@@ -82,11 +109,12 @@
     End Sub
 
     Private Sub listadoPublicidades_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        cmdbuscar.PerformClick()
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         Me.Text = "LISTADO " & DatosAcceso.ServMensual
         dtdesdefact.Value = obtenerPrimerDiaMes()
         Label1.Text = DatosAcceso.ServMensual
+        cmdbuscar.PerformClick()
+
     End Sub
 
     Private Sub cmdsalir_Click(sender As Object, e As EventArgs)
@@ -115,7 +143,7 @@
                 .dtproductos.Rows.Add("0", "#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value, "1",
                  dgvPrestamos.dgvVista.CurrentRow.Cells("CONCEPTO").Value & " #" &
                  dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value &
-                 " (" & Format(Now(), "MMMM yyyy") & ")".ToUpper, "21",
+                 " (" & Format(Now().AddMonths(-1), "MMMM yyyy") & ")".ToUpper, "21",
                  dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value,
                  dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value)
                 .condVta = 2

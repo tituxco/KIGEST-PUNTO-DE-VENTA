@@ -53,9 +53,12 @@ Public Class frmprincipal
             ExternalIP = (New System.Net.WebClient()).DownloadString("http://checkip.dyndns.org/")
             ExternalIP = (New System.Text.RegularExpressions.Regex("\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")) _
                      .Matches(ExternalIP)(0).ToString()
-            Return ExternalIP
+
+            GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Acceso al sistema", ExternalIP & " (" & Environment.MachineName & ")")
+            Return ExternalIP & " (" & Environment.MachineName & ")"
+
         Catch
-            Return Nothing
+            Return "ERROR IP"
         End Try
     End Function
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -71,7 +74,6 @@ Public Class frmprincipal
 
             cargar_valores_generales()
 
-            GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Acceso al sistema", IPPublica)
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica
         End If
     End Sub
@@ -140,7 +142,7 @@ Public Class frmprincipal
             Dim info2() As DataRow
             cons2.Fill(tabla2)
             info2 = tabla2.Select("")
-
+            ' MsgBox(cons2.SelectCommand.CommandText)
             DatosAcceso.Vendedor = info2(0)(0)
             DatosAcceso.Tecnico = info2(0)(1)
             'DatosAcceso.IdAlmacen = My.Settings.idAlmacen
@@ -227,7 +229,8 @@ Public Class frmprincipal
             'End If
             'compruebo las empresas
             lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString
-            lblstatusBDprinc.Text = "Mi IP: " & IPPublica
+            lblstatusBDprinc.Text = "Mi IP: " & IPPublica & Environment.MachineName
+
             'lblstatcodus.Text = "Codigo de usuario: " & codus
             'lblcolaborativocon.Text = "Colaborativo con: " & conexionColab.Database
             'lblStatusEmp.Text = "Empresa Seleccionada: " & conexionEmp.State.ToString & ">>>" & conexionEmp.Database

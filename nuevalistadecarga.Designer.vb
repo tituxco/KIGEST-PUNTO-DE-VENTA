@@ -67,8 +67,6 @@ Partial Class nuevalistadecarga
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dtpedidosfact = New System.Windows.Forms.DataGridView()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -80,6 +78,8 @@ Partial Class nuevalistadecarga
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Pedidos = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dtenvases, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.paneltareas.SuspendLayout()
         Me.Panel6.SuspendLayout()
@@ -436,23 +436,12 @@ Partial Class nuevalistadecarga
         '
         Me.dtpedidosfact.BackgroundColor = System.Drawing.Color.White
         Me.dtpedidosfact.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtpedidosfact.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.DataGridViewTextBoxColumn12})
+        Me.dtpedidosfact.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column8, Me.Pedidos})
         Me.dtpedidosfact.Dock = System.Windows.Forms.DockStyle.Right
         Me.dtpedidosfact.Location = New System.Drawing.Point(959, 0)
         Me.dtpedidosfact.Name = "dtpedidosfact"
         Me.dtpedidosfact.Size = New System.Drawing.Size(143, 339)
         Me.dtpedidosfact.TabIndex = 90
-        '
-        'Column8
-        '
-        Me.Column8.HeaderText = "idfact"
-        Me.Column8.Name = "Column8"
-        Me.Column8.Visible = False
-        '
-        'DataGridViewTextBoxColumn12
-        '
-        Me.DataGridViewTextBoxColumn12.HeaderText = "Pedidos"
-        Me.DataGridViewTextBoxColumn12.Name = "DataGridViewTextBoxColumn12"
         '
         'DataGridViewTextBoxColumn1
         '
@@ -550,6 +539,17 @@ Partial Class nuevalistadecarga
         Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
         Me.DataGridViewTextBoxColumn11.Visible = False
         '
+        'Column8
+        '
+        Me.Column8.HeaderText = "idfact"
+        Me.Column8.Name = "Column8"
+        Me.Column8.Visible = False
+        '
+        'Pedidos
+        '
+        Me.Pedidos.HeaderText = "Pedidos"
+        Me.Pedidos.Name = "Pedidos"
+        '
         'nuevalistadecarga
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -607,8 +607,6 @@ Partial Class nuevalistadecarga
     Friend WithEvents panelprod As Panel
     Friend WithEvents dtproductos As DataGridView
     Friend WithEvents dtpedidosfact As DataGridView
-    Friend WithEvents Column8 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
     Friend WithEvents dtlistadecarga As DataGridView
     Friend WithEvents Column7 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
@@ -625,4 +623,6 @@ Partial Class nuevalistadecarga
     Friend WithEvents DataGridViewTextBoxColumn14 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn15 As DataGridViewTextBoxColumn
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
+    Friend WithEvents Column8 As DataGridViewTextBoxColumn
+    Friend WithEvents Pedidos As DataGridViewTextBoxColumn
 End Class

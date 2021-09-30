@@ -54,6 +54,8 @@ Partial Class ConfiguracionTerminal
         Me.rdcalculo2 = New System.Windows.Forms.RadioButton()
         Me.txtidmoneda = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.txtidDevolucion = New System.Windows.Forms.TextBox()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -360,12 +362,31 @@ Partial Class ConfiguracionTerminal
         Me.Label5.TabIndex = 140
         Me.Label5.Text = "IdMonedaDef"
         '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(207, 46)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(99, 16)
+        Me.Label6.TabIndex = 143
+        Me.Label6.Text = "idDevolucion"
+        '
+        'txtidDevolucion
+        '
+        Me.txtidDevolucion.Location = New System.Drawing.Point(312, 42)
+        Me.txtidDevolucion.Name = "txtidDevolucion"
+        Me.txtidDevolucion.Size = New System.Drawing.Size(100, 20)
+        Me.txtidDevolucion.TabIndex = 142
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(497, 421)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.txtidDevolucion)
         Me.Controls.Add(Me.txtidmoneda)
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox2)
@@ -439,4 +460,6 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents rdcalculo2 As RadioButton
     Friend WithEvents txtidmoneda As TextBox
     Friend WithEvents Label5 As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents txtidDevolucion As TextBox
 End Class

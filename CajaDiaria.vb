@@ -68,8 +68,7 @@ Public Class CajaDiaria
 			end as concepto, 
         case ie.tipo
 			When 1 Then (
-				Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 
-				from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
+				Select concat(tip.abrev,' - ',lpad(fac.ptovta,'3','0'),'-',lpad(fac.num_fact,'8','0')) 				from fact_facturas as fac, fact_conffiscal as tip ,  fact_puntosventa as ptovta
 				where  tip.donfdesc=fac.tipofact and ptovta.id=tip.ptovta and fac.ptovta=ptovta.id and fac.id=ie.comprobante 
 				and ie.tipo=1 )  
 			when 2 then (select concat(tip.abrev,' - ',fac.numero) 

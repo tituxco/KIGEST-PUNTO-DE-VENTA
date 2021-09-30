@@ -69,6 +69,10 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
+            If MsgBox("SEGURO???", vbYesNo) = vbNo Then
+                Exit Sub
+            End If
+
             Dim idReciboNvo As Integer
             Dim sqlQuery As String
             Dim fecha As String = Format(Now(), "yyyy-MM-dd")
@@ -113,7 +117,7 @@
                 .AddWithValue("?ptot", itm_ptotal)
                 .AddWithValue("?tipofact", 996)
                 .AddWithValue("?idAlmacen", idAlmacen)
-                .AddWithValue("?idCaja", idCaja)
+                .AddWithValue("?idCaja", idcaja)
                 .AddWithValue("?id_fact", idReciboNvo)
             End With
             addItm.ExecuteNonQuery()
@@ -215,5 +219,25 @@
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "movimientodecaja" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
+
+        Dim tec As New movimientodecaja
+        tec.MdiParent = Me.MdiParent
+        tec.movrap = True
+        tec.movraptip = 996
+        tec.movrapclie = Clie_idCliente
+        tec.movrapConc = txtConcepto.Text
+        tec.movrapFact = idFactura
+        Me.Close()
+        tec.Show()
     End Sub
 End Class

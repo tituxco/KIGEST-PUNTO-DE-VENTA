@@ -42,7 +42,7 @@ Module funciones_Globales
             Reconectar()
             Dim consItmFacturado As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.num_fact FROM fact_facturas as fact, fact_items as itm where
             itm.id_fact=fact.id and
-            itm.descripcion like '%" & descripcion & "%' and 
+            itm.plu like '%" & descripcion & "%' and 
             date_format(fact.fecha,'%Y-%m') like '" & Format(Now(), "yyyy-MM") & "'", conexionPrinc)
             Dim tabItmFacturado As New DataTable
             consItmFacturado.Fill(tabItmFacturado)
