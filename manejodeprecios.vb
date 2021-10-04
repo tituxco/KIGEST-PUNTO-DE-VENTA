@@ -459,7 +459,7 @@
                     Dim porcentaje As Double = (FormatNumber(txtPorcProv.Text) + 100) / 100
                     Dim codprov As Integer = cmbproveedor.SelectedValue
                     Reconectar()
-                    ConsultaSQL = "update fact_insumos set precio= format(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2,'es_AR') where codprov=" & codprov
+                    ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') where codprov=" & codprov
                     Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
                     consulta.ExecuteNonQuery()
                     MsgBox("Precios actualizados")
@@ -485,7 +485,7 @@
                     Dim porcentaje As Double = (FormatNumber(txtPorcCateg.Text) + 100) / 100
                     Dim categoria As Integer = cmbcatProd.SelectedValue
                     Reconectar()
-                    ConsultaSQL = "update fact_insumos set precio= format(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2,'es_AR') where categoria=" & categoria
+                    ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') where categoria=" & categoria
                     Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
                     consulta.ExecuteNonQuery()
                     MsgBox("Precios actualizados")
@@ -511,7 +511,7 @@
                 Dim porcentaje As Double = (FormatNumber(txtPorcTodos.Text) + 100) / 100
                 'MsgBox(porcentaje.ToString.Replace(",", "."))
                 Reconectar()
-                ConsultaSQL = "update fact_insumos set precio= format(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2,'es_AR')"
+                ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',')"
                 Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
                 consulta.ExecuteNonQuery()
                 MsgBox("Precios actualizados")
@@ -532,9 +532,8 @@
             If IsNumeric(txtporcBusq.Text) Then
                 Dim porcentaje As Double = (FormatNumber(txtporcBusq.Text) + 100) / 100
                 For Each producto As DataGridViewRow In dtproductos.Rows
-
                     Reconectar()
-                    ConsultaSQL = "update fact_insumos set precio= format(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2,'es_AR') 
+                    ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') 
                     where id=" & producto.Cells(0).Value
                     Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
                     consulta.ExecuteNonQuery()

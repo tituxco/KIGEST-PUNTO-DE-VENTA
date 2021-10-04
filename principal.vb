@@ -229,7 +229,7 @@ Public Class frmprincipal
             'End If
             'compruebo las empresas
             lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString
-            lblstatusBDprinc.Text = "Mi IP: " & IPPublica & Environment.MachineName
+            lblstatusBDprinc.Text = "Mi IP: " & IPPublica '& Environment.MachineName
 
             'lblstatcodus.Text = "Codigo de usuario: " & codus
             'lblcolaborativocon.Text = "Colaborativo con: " & conexionColab.Database

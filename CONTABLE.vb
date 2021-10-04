@@ -1258,7 +1258,8 @@ Public Class CONTABLE
             format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
+            format(replace(ptotal,',','.'),2,'es_AR') as ptotal ,
+            plu as codigo
             from fact_items where id_fact=" & idfactura, conexionPrinc)
 
                     tabFac.Fill(fac.Tables("facturax"))
@@ -2648,7 +2649,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "cantidad as cant, descripcion, iva ,punit ,ptotal as ptotal from fact_items where id_fact=" & idFactura, conexionPrinc)
+            & "cantidad as cant, descripcion, iva ,punit ,ptotal as ptotal, plu as codigo from fact_items where id_fact=" & idFactura, conexionPrinc)
             tabFac.Fill(fac.Tables("facturax"))
             Dim imprimirx As New imprimirFX
             With imprimirx
@@ -3360,7 +3361,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
+            format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
+            plu as codigo
             from fact_items where id_fact=" & idFactura, conexionPrinc)
 
                 tabFac.Fill(fac.Tables("facturax"))

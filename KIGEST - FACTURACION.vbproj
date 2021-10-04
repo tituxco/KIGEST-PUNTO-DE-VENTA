@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>301</ApplicationRevision>
+    <ApplicationRevision>303</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -74,7 +74,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>KIGEST %28converted%29.ico</ApplicationIcon>
+    <ApplicationIcon>ico_kigest_fact %281%29.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>79A8E5137F52C388B7A977015DF7485FD77C0C5A</ManifestCertificateThumbprint>
@@ -753,6 +753,7 @@
     <None Include="Resources\iconos\factura.png" />
     <None Include="Resources\iconos\Cash in Hand_64px.png" />
     <None Include="Resources\iconos\not_equal_32px.png" />
+    <Content Include="ico_kigest_fact %281%29.ico" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
