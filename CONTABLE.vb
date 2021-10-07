@@ -22,6 +22,8 @@ Public Class CONTABLE
         balance.Parent = Nothing
         cmbMovimientosHistoricos.SelectedIndex = 1
         If InStr(DatosAcceso.Moduloacc, "CONFVAR") = False Then tabconfiguracion.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "CONFUSER") = False Then tabUsuarios.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "CONFUSER") = False Then tabLog.Parent = Nothing
 
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabBalanceCtas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabplancuentas.Parent = Nothing
@@ -1167,144 +1169,12 @@ Public Class CONTABLE
         Try
 
 
-
+            Dim idfactura As Integer = dtcuentaclie.CurrentRow.Cells(6).Value
             Select Case dtcuentaclie.CurrentRow.Cells(7).Value
                 Case 996
-                    Dim idfactura = dtcuentaclie.CurrentRow.Cells(6).Value
-                    'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim tabVal As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim tabtarj As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim totrec As New MySql.Data.MySqlClient.MySqlDataAdapter
-
-                    Dim fac As New datosfacturas
-
-                    Reconectar()
-                    tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-                    & "emp.nombrefantasia As empnombre, emp.razonsocial As emprazon, emp.direccion As empdire, emp.localidad As emploca, " _
-                    & "emp.cuit As empcuit, emp.ingbrutos As empib, emp.ivatipo As empcontr, emp.inicioact As empinicioact, emp.drei As empdrei, emp.logo As emplogo, " _
-                    & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon, " _
-                    & "fac.direccion As facdire, fac.localidad As facloca, fac.tipocontr As factipocontr, fac.cuit As faccuit, fac.vendedor As facvend, " _
-                    & "fac.condvta as faccondvta, format(fac.iva105,2,'es_AR'), format(fac.iva21,2,'es_AR'),format(fac.total,2,'es_AR'),    " _
-                    & "fac.observaciones as facobserva " _
-                    & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, conexionPrinc)
-                    tabEmp.Fill(fac.Tables("factura_enca"))
-
-                    Reconectar()
-                    tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-                    & "banco, serie as numero, fecha_cobro as fcobro, format(importe,2,'es_AR') as importe from fact_cheques where comprobante = " & idfactura, conexionPrinc)
-                    tabVal.Fill(fac.Tables("valoresrecibo"))
-
-
-                    Reconectar()
-                    tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select descripcion,ptotal as ptotal from fact_items where id_fact=" & idfactura, conexionPrinc)
-                    tabFac.Fill(fac.Tables("reciboitems"))
-
-                    Reconectar()
-                    tabtarj.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-                    & "nombre,autorizacion,format(importe,2,'es_AR') as importe from fact_tarjetas where comprobante=" & idfactura, conexionPrinc)
-                    tabtarj.Fill(fac.Tables(("tarjetarecbo")))
-
-                    Reconectar()
-                    totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
-                    fact.id,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
-                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
-                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
-                    totrec.Fill(fac.Tables("totalesrecibo"))
-
-                    Dim imprimirx As New imprimirFX
-                    With imprimirx
-                        .MdiParent = Me.MdiParent
-                        .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\recibo.rdlc"
-                        .rptfx.LocalReport.DataSources.Clear()
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("valores", fac.Tables("valoresrecibo")))
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("reciboitems")))
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("tarjetas", fac.Tables("tarjetarecbo")))
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("totalesrecibo", fac.Tables("totalesrecibo")))
-
-                        .rptfx.DocumentMapCollapsed = True
-                        .rptfx.RefreshReport()
-                        .Show()
-                    End With
+                    ImprimirRecibos(idfactura)
                 Case Else
-                    Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                    Dim fac As New datosfacturas
-                    Dim idfactura = dtcuentaclie.CurrentRow.Cells(6).Value
-                    Reconectar()
-
-                    tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
-            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
-            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fac.ptovta=fis.ptovta and condvent.id=fac.condvta and fac.id=" & idfactura, conexionPrinc)
-
-                    tabEmp.Fill(fac.Tables("factura_enca"))
-                    Reconectar()
-
-                    tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            plu,
-            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
-            format(replace(iva,',','.'),2,'es_AR') as iva ,
-            format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal ,
-            plu as codigo
-            from fact_items where id_fact=" & idfactura, conexionPrinc)
-
-                    tabFac.Fill(fac.Tables("facturax"))
-                    'buscamos el punto de venta el que pertenece el comprobante
-                    Dim ptovta As Integer
-                    'Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select ptovta from fact_conffiscal where donfdesc=" & dtfacturas.CurrentRow.Cells(9).Value, conexionPrinc)
-                    'Dim tablacl As New DataTable
-                    'Dim infocl() As DataRow
-                    'consulta.Fill(tablacl)
-                    'infocl = tablacl.Select("")
-                    'ptovta = infocl(0)(0)
-                    'ptovta = f
-
-                    Dim imprimirx As New imprimirFX
-                    With imprimirx
-                        .MdiParent = Me.MdiParent
-                        .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                        'MsgBox(FacturaElectro.puntovtaelect)
-                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-                        'If ptovta <> FacturaElectro.puntovtaelect Then
-                        '    Select Case ptovta
-                        '        Case 1
-                        '            Select Case dtfacturas.CurrentRow.Cells(9).Value
-                        '                Case 1, 3
-                        '                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaleg.rdlc"
-                        '                Case 999
-
-                        '                Case 3
-                        '                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\notacredleg.rdlc"
-                        '                Case 991
-                        '                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-                        '            End Select
-                        '    End Select
-                        'Else
-                        '    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-                        'End If
-
-                        .rptfx.LocalReport.DataSources.Clear()
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
-                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
-                        .rptfx.DocumentMapCollapsed = True
-                        .rptfx.RefreshReport()
-                        .Show()
-                    End With
-
+                    ImprimirFactura(idfactura, 1, False)
             End Select
 
         Catch ex As Exception
@@ -2284,69 +2154,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim idfactura = dtlistacob.CurrentRow.Cells(0).Value
             'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabVal As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabtarj As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim totrec As New MySql.Data.MySqlClient.MySqlDataAdapter
-
-            Dim fac As New datosfacturas
-
-            Reconectar()
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia As empnombre, emp.razonsocial As emprazon, emp.direccion As empdire, emp.localidad As emploca, " _
-            & "emp.cuit As empcuit, emp.ingbrutos As empib, emp.ivatipo As empcontr, emp.inicioact As empinicioact, emp.drei As empdrei, emp.logo As emplogo, " _
-            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon, " _
-            & "fac.direccion As facdire, fac.localidad As facloca, fac.tipocontr As factipocontr, fac.cuit As faccuit, fac.vendedor As facvend, " _
-            & "fac.condvta as faccondvta, fac.iva105, fac.iva21,fac.total,  " _
-            & "fac.observaciones as facobserva " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, conexionPrinc)
-            tabEmp.Fill(fac.Tables("factura_enca"))
-
-            Reconectar()
-            tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "banco, serie as numero, fecha_cobro as fcobro, importe as importe from fact_cheques where comprobante = " & idfactura, conexionPrinc)
-            tabVal.Fill(fac.Tables("valoresrecibo"))
-
-
-            Reconectar()
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "descripcion,ptotal as ptotal from fact_items where " _
-            & "id_fact=" & idfactura, conexionPrinc)
-            tabFac.Fill(fac.Tables("reciboitems"))
-
-            Reconectar()
-            tabtarj.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "nombre,autorizacion,format(importe,2,'es_AR') as importe from fact_tarjetas where comprobante=" & idfactura, conexionPrinc)
-            tabtarj.Fill(fac.Tables(("tarjetarecbo")))
-
-            Reconectar()
-            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
-                    fact.id,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
-                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
-                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
-            totrec.Fill(fac.Tables("totalesrecibo"))
-
-            Dim imprimirx As New imprimirFX
-            With imprimirx
-                .MdiParent = Me.MdiParent
-                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & " \reportes\recibo.rdlc"
-                .rptfx.LocalReport.DataSources.Clear()
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("valores", fac.Tables("valoresrecibo")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("reciboitems")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("tarjetas", fac.Tables("tarjetarecbo")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("totalesrecibo", fac.Tables("totalesrecibo")))
-
-                .rptfx.DocumentMapCollapsed = True
-                .rptfx.RefreshReport()
-                .Show()
-            End With
+            ImprimirRecibos(idfactura)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -3321,91 +3129,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub dtfacturas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellDoubleClick
         Try
             Dim idFactura As Integer = dtfacturas.CurrentRow.Cells(0).Value
-            If My.Settings.ImprTikets = 1 Then
-                Dim PrintTxt As New PrintDocument
-                Dim pgSize As New PaperSize
-                pgSize.RawKind = Printing.PaperKind.Custom
-                pgSize.Width = 147 '196.8 '
-                'pgSize.Height = 173.23 '100
-                PrintTxt.DefaultPageSettings.PaperSize = pgSize
-                ' evento print
-
-                AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
-                PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-                PrintTxt.Print()
-
-            Else
-
-                'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-                Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                Dim fac As New datosfacturas
-
-                Reconectar()
-
-                tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
-            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
-            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fac.ptovta=fis.ptovta and condvent.id=fac.condvta and fac.id=" & idFactura, conexionPrinc)
-
-                tabEmp.Fill(fac.Tables("factura_enca"))
-                Reconectar()
-
-                tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            plu,
-            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
-            format(replace(iva,',','.'),2,'es_AR') as iva ,
-            format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
-            plu as codigo
-            from fact_items where id_fact=" & idFactura, conexionPrinc)
-
-                tabFac.Fill(fac.Tables("facturax"))
-                'buscamos el punto de venta el que pertenece el comprobante
-                Dim ptovta As Integer
-                'Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select ptovta from fact_conffiscal where donfdesc=" & dtfacturas.CurrentRow.Cells(9).Value, conexionPrinc)
-                'Dim tablacl As New DataTable
-                'Dim infocl() As DataRow
-                'consulta.Fill(tablacl)
-                'infocl = tablacl.Select("")
-                'ptovta = infocl(0)(0)
-                ptovta = dtfacturas.CurrentRow.Cells(10).Value
-                Dim imprimirx As New imprimirFX
-                With imprimirx
-                    .MdiParent = Me.MdiParent
-                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                    'MsgBox(FacturaElectro.puntovtaelect)
-                    If ptovta <> FacturaElectro.puntovtaelect Then
-                        Select Case ptovta
-                            Case 1
-                                Select Case dtfacturas.CurrentRow.Cells(9).Value
-                                    Case 1, 3
-                                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaleg.rdlc"
-                                    Case 999
-                                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-                                    Case 3
-                                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\notacredleg.rdlc"
-                                    Case 991
-                                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-                                End Select
-                        End Select
-                    Else
-                        .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-                    End If
-
-                    .rptfx.LocalReport.DataSources.Clear()
-                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
-                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
-                    .rptfx.DocumentMapCollapsed = True
-                    .rptfx.RefreshReport()
-                    .Show()
-                End With
-            End If
+            Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
+            ImprimirFactura(idFactura, ptovta, False)
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -3945,6 +3670,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Function
 
     Private Sub Button30_Click(sender As Object, e As EventArgs) Handles Button30.Click
+        If ConsultarPeriodoCerrado(cmbperiodoLibroDiario.Text) = True Then
+            MsgBox("el periodo ya esta cerrado, no se pueden agregar asientos")
+            Exit Sub
+        End If
         addAsiento.Show()
     End Sub
 
@@ -5416,5 +5145,64 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
     Private Sub Button39_Click_1(sender As Object, e As EventArgs) Handles Button39.Click
         CargarLogAcceso()
+    End Sub
+
+    Private Sub tabdtostecni_Click(sender As Object, e As EventArgs) Handles tabdtostecni.Click
+
+    End Sub
+
+    Private Sub servidorCorreo_Click(sender As Object, e As EventArgs) Handles servidorCorreo.Click
+
+    End Sub
+
+    Private Sub servidorCorreo_Enter(sender As Object, e As EventArgs) Handles servidorCorreo.Enter
+        Try
+            Reconectar()
+            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,nombre,texto1 from tecni_datosgenerales where id>=26 and id<=30", conexionPrinc)
+            Dim tablaDtosMail As New DataTable
+            consultaDtosMail.Fill(tablaDtosMail)
+            dgvServidorCorreo.Rows.Clear()
+            For Each fila As DataRow In tablaDtosMail.Rows
+                dgvServidorCorreo.Rows.Add(fila.Item(0), fila.Item(1), fila.Item(2))
+            Next
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dgvServidorCorreo_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvServidorCorreo.CellEndEdit
+        Try
+            If e.ColumnIndex = 2 Then
+                Dim id As Integer = dgvServidorCorreo.Rows(e.RowIndex).Cells(0).Value
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update tecni_datosgenerales set texto1='" &
+                                                                          dgvServidorCorreo.CurrentCell.Value & "' where id=" & id, conexionPrinc)
+                comandoadd.ExecuteNonQuery()
+                MsgBox("valor actualizado")
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dtfacturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellContentClick
+
+    End Sub
+
+    Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
+        If ConsultarPeriodoCerrado(cmbperiodoLibroDiario.Text) = True Then
+            MsgBox("el periodo ya esta cerrado")
+            Exit Sub
+        Else
+            If MsgBox("Esta seguro que desea cerrar el periodo? no se podran agregar ni modificar asientos contables luego de esta operacion", vbYesNo + vbQuestion, "Cerrar periodo") = vbNo Then
+                Exit Sub
+            Else
+                Reconectar()
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", conexionPrinc)
+                comandoadd.ExecuteNonQuery()
+                MsgBox("Periodo cerrado")
+            End If
+
+        End If
+
     End Sub
 End Class

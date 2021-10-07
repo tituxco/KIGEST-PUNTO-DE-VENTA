@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class reimpresionComprobantes
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class reimpresionComprobantes
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(reimpresionComprobantes))
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -29,6 +29,8 @@ Partial Class reimpresionComprobantes
         Me.tabcomprobantes = New System.Windows.Forms.TabPage()
         Me.dtfacturas = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
         Me.Label49 = New System.Windows.Forms.Label()
         Me.cmbInforPtoVta = New System.Windows.Forms.ComboBox()
         Me.txtrazonsocial = New System.Windows.Forms.TextBox()
@@ -140,6 +142,8 @@ Partial Class reimpresionComprobantes
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel5.Controls.Add(Me.Button8)
+        Me.Panel5.Controls.Add(Me.Button7)
         Me.Panel5.Controls.Add(Me.Label49)
         Me.Panel5.Controls.Add(Me.cmbInforPtoVta)
         Me.Panel5.Controls.Add(Me.txtrazonsocial)
@@ -158,6 +162,36 @@ Partial Class reimpresionComprobantes
         Me.Panel5.Name = "Panel5"
         Me.Panel5.Size = New System.Drawing.Size(1255, 70)
         Me.Panel5.TabIndex = 0
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_32px1
+        Me.Button8.Location = New System.Drawing.Point(872, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(80, 70)
+        Me.Button8.TabIndex = 81
+        Me.Button8.Text = "Guardar"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button7.Image = Global.SIGT__KIGEST.My.Resources.Resources.secured_letter_32px
+        Me.Button7.Location = New System.Drawing.Point(952, 0)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(80, 70)
+        Me.Button7.TabIndex = 80
+        Me.Button7.Text = "Enviar"
+        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button7.UseVisualStyleBackColor = False
         '
         'Label49
         '
@@ -636,4 +670,6 @@ Partial Class reimpresionComprobantes
     Friend WithEvents dtdesdeCobranza As DateTimePicker
     Friend WithEvents dthastaCobranza As DateTimePicker
     Friend WithEvents Button2 As Button
+    Friend WithEvents Button7 As Button
+    Friend WithEvents Button8 As Button
 End Class

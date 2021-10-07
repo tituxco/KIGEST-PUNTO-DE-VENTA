@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>303</ApplicationRevision>
+    <ApplicationRevision>306</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -754,6 +754,9 @@
     <None Include="Resources\iconos\Cash in Hand_64px.png" />
     <None Include="Resources\iconos\not_equal_32px.png" />
     <Content Include="ico_kigest_fact %281%29.ico" />
+    <None Include="Resources\iconos\secured_letter_48px.png" />
+    <None Include="Resources\iconos\secured_letter_32px.png" />
+    <None Include="Resources\iconos\delete_document_32px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

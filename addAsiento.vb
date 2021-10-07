@@ -57,6 +57,11 @@
                                         )
                     End If
                 Next
+                If ConsultarPeriodoCerrado(Format(fchAsientoFecha.Value, "yyyy-MM")) = True Then
+                    dgvPartidas.ReadOnly = True
+                    dgvPartidas.AllowUserToAddRows = False
+                    dgvPartidas.AllowUserToDeleteRows = False
+                End If
                 CalcularTotalAsiento()
             Else
                 Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, fecha,concepto FROM 
@@ -153,6 +158,11 @@
 
     Private Sub cmdGuardar_Click(sender As Object, e As EventArgs) Handles cmdGuardar.Click
         Try
+            Dim periodoaConsultar As String = Format(fchAsientoFecha.Value, "yyyy-MM")
+            If ConsultarPeriodoCerrado(periodoaConsultar) = True Then
+                MsgBox("el periodo ya esta cerrado, no se pueden modificar ni agregar asientos")
+                Exit Sub
+            End If
             If ModificarAsiento = True Then
                 If MsgBox("esta seguro que desea modificar este asiento contable? ", vbYesNo + vbQuestion) = vbNo Then
                     Exit Sub
@@ -167,11 +177,25 @@
 
                     comandoDelAsiento.ExecuteNonQuery()
                     comandoDelAsiento2.ExecuteNonQuery()
-                    comandodelAsiento3.ExecuteNonQuery()
+                    comandoDelAsiento3.ExecuteNonQuery()
                 End If
             Else
+
+
+
                 If MsgBox("Esta seguro que desa agregar este asiento?", vbYesNo + vbQuestion) = vbNo Then
                     Exit Sub
+                Else
+                    Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, fecha,concepto FROM 
+                cm_libroDiario order by id desc limit 1", conexionPrinc)
+                    Dim tabUltAsiento As New DataTable
+                    consUltAsiento.Fill(tabUltAsiento)
+
+
+                    txtAsientoNumero.Text = ObtenerNumeroAsiento()
+                    'txtAsientoComprobante.Text = tabUltAsiento.Rows(0).Item(1)
+                    'fchAsientoFecha.Value = Format(CDate(tabUltAsiento.Rows(0).Item(2).ToString), "dd/MM/yyyy")
+                    'txtAsientoConcepto.Text = tabUltAsiento.Rows(0).Item(3)
                 End If
 
             End If
@@ -338,6 +362,10 @@
     End Sub
 
     Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub dgvPartidas_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellLeave
 
     End Sub
 End Class

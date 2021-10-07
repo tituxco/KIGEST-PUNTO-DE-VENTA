@@ -715,7 +715,7 @@
                 Dim asunto As String = infoDtosMail(11)(0) & " " & txtnumor.Text & "  " & txtrazon.Text & "(" & txtinfoextra.Text & ")"
 
                 If chkenviamail.Checked = True And cmbestadotrab.SelectedValue <> 8 Then
-                    EnviarMail(mail, para, asunto)
+                    EnviarMail(mail, para, asunto, New System.Net.Mail.Attachment(Nothing))
                 End If
             End If
 
@@ -803,7 +803,7 @@
 
 
             If chkenviamail.Checked = True Then
-                EnviarMail(mail, para, asunto)
+                EnviarMail(mail, para, asunto, New System.Net.Mail.Attachment(Nothing))
             End If
 
         Catch ex As Exception

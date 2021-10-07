@@ -72,8 +72,9 @@ Partial Class frmServiciosCloud
         Dim TreeNode48 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod SUELDOS")
         Dim TreeNode49 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURAR TERMINAL")
         Dim TreeNode50 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURACIONES VARIAS")
-        Dim TreeNode51 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod CONFIGURACIONES", New System.Windows.Forms.TreeNode() {TreeNode49, TreeNode50})
-        Dim TreeNode52 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode16, TreeNode41, TreeNode47, TreeNode48, TreeNode51})
+        Dim TreeNode51 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("HISTORIAL Y CONFIGURACION DE USUARIOS")
+        Dim TreeNode52 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod CONFIGURACIONES", New System.Windows.Forms.TreeNode() {TreeNode49, TreeNode50, TreeNode51})
+        Dim TreeNode53 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode16, TreeNode41, TreeNode47, TreeNode48, TreeNode52})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmServiciosCloud))
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.dtcloud = New System.Windows.Forms.DataGridView()
@@ -338,13 +339,16 @@ Partial Class frmServiciosCloud
         TreeNode50.Name = "Nodo3"
         TreeNode50.Tag = "CONFVAR"
         TreeNode50.Text = "CONFIGURACIONES VARIAS"
-        TreeNode51.Name = "Nodo1"
-        TreeNode51.Tag = "CONF"
-        TreeNode51.Text = "Mod CONFIGURACIONES"
-        TreeNode52.Name = "Nodo0"
-        TreeNode52.Tag = "KIGEST_FACT_SIGT"
-        TreeNode52.Text = "KIGEST_FACT_SIGT"
-        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode52})
+        TreeNode51.Name = "Nodo0"
+        TreeNode51.Tag = "CONFUSER"
+        TreeNode51.Text = "HISTORIAL Y CONFIGURACION DE USUARIOS"
+        TreeNode52.Name = "Nodo1"
+        TreeNode52.Tag = "CONF"
+        TreeNode52.Text = "Mod CONFIGURACIONES"
+        TreeNode53.Name = "Nodo0"
+        TreeNode53.Tag = "KIGEST_FACT_SIGT"
+        TreeNode53.Text = "KIGEST_FACT_SIGT"
+        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode53})
         Me.trvmodulos.Size = New System.Drawing.Size(321, 339)
         Me.trvmodulos.TabIndex = 12
         '

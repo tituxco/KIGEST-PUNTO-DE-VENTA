@@ -493,7 +493,7 @@
             Dim para As String = txtmail.Text.ToLower
             Dim asunto As String = "Ingreso equipo OR:" & txtnumor.Text & txtrazon.Text & "(" & txtinfoextra.Text & ")"
             If chkenviamail.Checked = True Then
-                EnviarMail(mail, para, asunto)
+                EnviarMail(mail, para, asunto, New System.Net.Mail.Attachment(Nothing))
             End If
 
         Catch ex As Exception

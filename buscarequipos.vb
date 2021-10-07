@@ -34,20 +34,25 @@
             End If
             'MsgBox(consulta)
 
-            Dim tabla As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-            & "tall.id as ORDEN,(select concat(et.nombre,'/',ma.nombre,'/',mo.nombre) from tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo  " _
-            & "where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=tall.modelo) as EQUIPO, tall.serie,  " _
-            & "cli.nomapell_razon as Cliente, tall.infoextra as extra,  tall.equipo as codint, " _
-            & "te.nombre as estado,  case tall.trab_estado " _
-            & "when 0 then (select 'Sin terminar') " _
-            & "when 1 then (select concat (fis.abrev, ' ', fa.ptovta,'-', fa.num_fact) from fact_facturas as fa, tipos_comprobantes as fis where fis.donfdesc=fa.tipofact and fis.ptovta=fa.ptovta and tall.factura=fa.id) " _
-            & "when 2 then (select 'CtaCte') " _
-            & "when 3 then (select 'Sin facturar') " _
-            & "when 4 then (select 'En deposito') " _
-            & "when 5 then (select 'de baja') end as factur " _
-            & "from tecni_taller as tall,  fact_clientes as cli, tecni_taller_estado as te where " _
-            & "fecha_ing between '" & Format(dtpdesdetrab.Value, "yyyy-MM-dd") & "' and '" & Format(dtphastatrab.Value, "yyyy-MM-dd") & "' and " _
-            & "cli.idclientes=tall.cliente and tall.estado=te.id " _
+            Dim tabla As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+            tall.id as ORDEN,(select concat(et.nombre,'/',ma.nombre,'/',mo.nombre) from tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo  
+            where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=tall.modelo) as EQUIPO, 
+            fecha_ing as FechaIngreso,
+            if(fecha_eg='0000-00-00','',fecha_eg) as FechEgreso, tall.serie,  
+            cli.nomapell_razon as Cliente, tall.infoextra as extra,  tall.equipo as codint, 
+            te.nombre as estado,  case tall.trab_estado 
+            when 0 then (select 'Sin terminar') 
+            when 1 then (select concat (fis.abrev, ' ', fa.ptovta,'-', fa.num_fact) from fact_facturas as fa, tipos_comprobantes as fis where fis.donfdesc=fa.tipofact and fis.ptovta=fa.ptovta and tall.factura=fa.id) 
+            when 2 then (select 'CtaCte') 
+            when 3 then (select 'Sin facturar') 
+            when 4 then (select 'En deposito') 
+            when 5 then (select 'de baja') end as factur,
+            ins_monto as MontoInsumos,
+            mo_monto as MontoManoObra,
+            trab_monto as MontoTotal 
+            from tecni_taller as tall,  fact_clientes as cli, tecni_taller_estado as te where
+            fecha_ing between '" & Format(dtpdesdetrab.Value, "yyyy-MM-dd") & "' and '" & Format(dtphastatrab.Value, "yyyy-MM-dd") & "' and 
+            cli.idclientes=tall.cliente and tall.estado=te.id " _
             & consulta, conexionPrinc)
 
             'MsgBox(tabla.SelectCommand)

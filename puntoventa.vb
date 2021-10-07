@@ -1108,73 +1108,8 @@ Public Class puntoventa
         EnProgreso.Show()
         Application.DoEvents()
 
-        ImprimirFactura(IdFactura, ptovta, condVta)
+        ImprimirFactura(IdFactura, ptovta, False)
 
-        '        Try
-        '            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-        '            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-        '            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-        '            Dim fac As New datosfacturas
-
-        '            Reconectar()
-
-        '            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
-        'emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
-        'emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        'concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-        'concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-        'concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-        ''','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra 
-        'FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        'where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
-
-        '            tabEmp.Fill(fac.Tables("factura_enca"))
-        '            Reconectar()
-
-        '            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-        '            plu,
-        '            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
-        '            format(replace(iva,',','.'),2,'es_AR') as iva ,
-        '            format(replace(punit,',','.'),2,'es_AR') as punit ,
-        '            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-        '            from fact_items where id_fact=" & IdFactura, conexionPrinc)
-        '            tabFac.Fill(fac.Tables("facturax"))
-
-        '            Dim direccionReport As String
-        '            If ptovta <> FacturaElectro.puntovtaelect Then
-        '                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-        '            Else
-        '                direccionReport = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-        '            End If
-        '            If My.Settings.ImprTikets = 1 And condVta = 1 Then
-        '                Dim PrintTxt As New PrintDocument
-        '                Dim pgSize As New PaperSize
-        '                pgSize.RawKind = Printing.PaperKind.Custom
-        '                pgSize.Width = 147 '196.8 '
-        '                'pgSize.Height = 173.23 '100
-        '                PrintTxt.DefaultPageSettings.PaperSize = pgSize
-        '                ' evento print
-
-        '                If ptovta <> FacturaElectro.puntovtaelect Then
-        '                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
-        '                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-        '                    PrintTxt.Print()
-        '                Else
-        '                    AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketFiscal
-        '                    PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
-        '                    PrintTxt.Print()
-        '                End If
-        '            Else
-
-        '                Using Imprimir As New ImprimirDirecto()
-        '                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-        '                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-        '                End Using
-        '            End If
-        '        Catch ex As Exception
-        '            MsgBox(ex.Message)
-        '            EnProgreso.Close()
-        '        End Try
         EnProgreso.Close()
     End Sub
 

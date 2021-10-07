@@ -299,11 +299,12 @@ Public Class frmaspirantes
             ElseIf modificarPers = False Then
                 lblestado.ForeColor = Color.GreenYellow
                 lblestado.Text = "Cliente agregado correctamente"
+                Idcliente = comandoadd.LastInsertedId
                 cargarDtosGrales()
                 'txtbuscar.Text = txtapellido.Text & ", " & txtnombres.Text
                 CargarPersonal(txtbuscar.Text)
                 CargarInfoPers()
-                Idcliente = comandoadd.LastInsertedId
+
                 Dim i As Integer
                 For i = 0 To dgvClientes.dgvVista.Rows.Count - 1
                     If dgvClientes.dgvVista.Item(0, i).Value = Idcliente Then

@@ -3,6 +3,7 @@ Imports System.IO
 Imports System.Data.OleDb
 Imports System.Drawing.Printing
 Imports Microsoft.Office.Interop
+Imports Microsoft.Reporting.WinForms
 
 'Imports Excel = Microsoft.Office.Interop.Excel
 'Imports System.Runtime.InteropServices
@@ -11,6 +12,30 @@ Module funciones_Globales
     Public idFactura As Integer
 
 
+
+    Public Sub GenerarPDF(Encabezado As DataTable, Items As DataTable, Ruta As String, Archivo As String, reporte As String)
+
+        Try
+            Dim deviceInf As String = "<DeviceInfo>
+                <EmbedFonts>None</EmbedFonts>
+                </DeviceInfo>"
+            Dim viewer As New Microsoft.Reporting.WinForms.ReportViewer()
+            viewer.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+            viewer.LocalReport.EnableExternalImages = True
+            viewer.LocalReport.ReportPath = reporte 'imprimirFX.rptfx.LocalReport.ReportPath 'System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+            viewer.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", Encabezado))
+            viewer.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", Items))
+
+
+            Dim exportarPDF As Byte() = viewer.LocalReport.Render("PDF", deviceInf)
+            Dim NuevoDocumento As New FileStream(Ruta & Archivo, FileMode.Create)
+            NuevoDocumento.Write(exportarPDF, 0, exportarPDF.Length)
+            NuevoDocumento.Close()
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
     Public Sub GuardarLog(Clie As String, usuario As String, bd As String, tarea As String, ip As String)
         Try
             Reconectar()
@@ -56,6 +81,22 @@ Module funciones_Globales
         End Try
 
     End Function
+
+    Public Function ConsultarPeriodoCerrado(periodo As String) As Boolean
+        Try
+            Reconectar()
+            Dim consPeriodoCerrado As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT periodo from cm_periodos_cerrados where periodo like '" & periodo & "' limit 1", conexionPrinc)
+            Dim tabPeriodoCerrado As New DataTable
+            consPeriodoCerrado.Fill(tabPeriodoCerrado)
+            If tabPeriodoCerrado.Rows.Count = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Function
     Public Function ObtenerNumeroAsiento() As Integer
         Reconectar()
         Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", conexionPrinc)
@@ -73,6 +114,10 @@ Module funciones_Globales
     Public Function GuardarAsientoContable(codigoAsiento As Integer, comprobante As String, concepto As String, importeDebe As Double, cuentaDebeId As Integer,
                                            importeHaber As Double, cuentaHaberId As Integer, numPartidas As Integer, fecha As String) As Boolean
         Try
+            If ConsultarPeriodoCerrado(Format(fecha, "yyyy-MM")) = True Then
+                Return False
+                Exit Function
+            End If
 
             Reconectar()
             If importeDebe <> 0 And importeHaber <> 0 Then
@@ -125,8 +170,9 @@ Module funciones_Globales
                 End With
                 comandoLibroMayor.ExecuteNonQuery()
             End If
+            Return True
         Catch ex As Exception
-
+            Return False
         End Try
 
     End Function
@@ -450,7 +496,6 @@ Module funciones_Globales
 
 
     End Sub
-
     Private Sub ImprimirTiketFiscal(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
         ' letra
         'Dim font1 As New Font("EAN-13", 40)
@@ -697,8 +742,7 @@ Module funciones_Globales
 
 
     End Sub
-
-    Public Sub ImprimirFactura(idfact As Integer, ptovta As Integer, condvta As Integer)
+    Public Sub ImprimirFactura(idfact As Integer, ptovta As Integer, directo As Boolean)
         Try
             'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
@@ -713,9 +757,9 @@ Module funciones_Globales
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,            
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr 
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & idfact, conexionPrinc)
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & idfact, conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
@@ -736,7 +780,10 @@ Module funciones_Globales
             Else
                 direccionReport = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
             End If
-            If My.Settings.ImprTikets = 1 And condvta = 1 Then
+            Dim condVta As String = fac.Tables("factura_enca").Rows(0).Item("faccondvta")
+            Dim TipoFact As Integer = fac.Tables("factura_enca").Rows(0).Item("donfdesc")
+            'Dim PtoVta As Integer =
+            If My.Settings.ImprTikets = 1 And condVta = "CONTADO" Then
                 Dim PrintTxt As New PrintDocument
                 Dim pgSize As New PaperSize
                 pgSize.RawKind = Printing.PaperKind.Custom
@@ -756,11 +803,29 @@ Module funciones_Globales
                     PrintTxt.Print()
                 End If
             Else
+                If directo = True Then
+                    Using Imprimir As New ImprimirDirecto()
+                        Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
+                    End Using
+                Else
+                    Dim imprimirx As New imprimirFX
+                    With imprimirx
+                        .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                        Select Case TipoFact
+                            Case 1 To 3, 6 To 8, 11 To 13
+                                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+                            Case Else
+                                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+                        End Select
+                        .rptfx.LocalReport.DataSources.Clear()
+                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
+                        .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
+                        .rptfx.DocumentMapCollapsed = True
+                        .rptfx.RefreshReport()
+                        .Show()
 
-                Using Imprimir As New ImprimirDirecto()
-                    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-                    '    Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
-                End Using
+                    End With
+                End If
             End If
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -810,6 +875,75 @@ Module funciones_Globales
             MsgBox(ex.Message)
         End Try
     End Sub
+    Public Sub ImprimirRecibos(idRecibo As Integer)
+        Try
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabVal As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabtarj As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim totrec As New MySql.Data.MySqlClient.MySqlDataAdapter
+
+            Dim fac As New datosfacturas
+
+            Reconectar()
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
+            & "emp.nombrefantasia As empnombre, emp.razonsocial As emprazon, emp.direccion As empdire, emp.localidad As emploca, " _
+            & "emp.cuit As empcuit, emp.ingbrutos As empib, emp.ivatipo As empcontr, emp.inicioact As empinicioact, emp.drei As empdrei, emp.logo As emplogo, " _
+            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon, " _
+            & "fac.direccion As facdire, fac.localidad As facloca, fac.tipocontr As factipocontr, fac.cuit As faccuit, fac.vendedor As facvend, " _
+            & "fac.condvta as faccondvta, fac.iva105, fac.iva21,fac.total,  " _
+            & "fac.observaciones as facobserva " _
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idRecibo, conexionPrinc)
+            tabEmp.Fill(fac.Tables("factura_enca"))
+
+            Reconectar()
+            tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            & "banco, serie as numero, fecha_cobro as fcobro, importe as importe from fact_cheques where comprobante = " & idRecibo, conexionPrinc)
+            tabVal.Fill(fac.Tables("valoresrecibo"))
+
+
+            Reconectar()
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            & "descripcion,ptotal as ptotal from fact_items where " _
+            & "id_fact=" & idRecibo, conexionPrinc)
+            tabFac.Fill(fac.Tables("reciboitems"))
+
+            Reconectar()
+            tabtarj.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            & "nombre,autorizacion,format(importe,2,'es_AR') as importe from fact_tarjetas where comprobante=" & idRecibo, conexionPrinc)
+            tabtarj.Fill(fac.Tables(("tarjetarecbo")))
+
+            Reconectar()
+            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+                    fact.id,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
+                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
+                    FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
+                    FROM fact_facturas as fact where fact.id= " & idRecibo, conexionPrinc)
+            totrec.Fill(fac.Tables("totalesrecibo"))
+
+            Dim imprimirx As New imprimirFX
+            With imprimirx
+                '.MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & " \reportes\recibo.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("valores", fac.Tables("valoresrecibo")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("reciboitems")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("tarjetas", fac.Tables("tarjetarecbo")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("totalesrecibo", fac.Tables("totalesrecibo")))
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     'Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As Int32
     'End Function
     Public Function RepararNumeracionComprobantes() As Boolean
@@ -1459,7 +1593,15 @@ Module funciones_Globales
             Return 0
         End Try
     End Function
-    Public Sub EnviarMail(ByVal mensaje As String, ByVal para As String, ByVal asunto As String)
+    Public Function ValidarDireccionEmail(ByVal direccion As String) As Boolean
+        Try
+            Dim a As New System.Net.Mail.MailAddress(direccion)
+        Catch ex As Exception
+            Return False
+        End Try
+        Return True
+    End Function
+    Public Sub EnviarMail(ByVal mensaje As String, ByVal para As String, ByVal asunto As String, adjunto As System.Net.Mail.Attachment)
         Dim mje As New System.Net.Mail.MailMessage()
         Dim SMTP As New System.Net.Mail.SmtpClient
 
@@ -1467,6 +1609,8 @@ Module funciones_Globales
         Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=26 and id<=30", conexionPrinc)
         Dim tablaDtosMail As New DataTable
         Dim infoDtosMail() As DataRow
+        'Dim adjunto As New System.Net.Mail.Attachment(adjunto)
+
         consultaDtosMail.Fill(tablaDtosMail)
         infoDtosMail = tablaDtosMail.Select("")
 
@@ -1475,13 +1619,15 @@ Module funciones_Globales
         SMTP.Port = infoDtosMail(3)(0).ToString
         SMTP.EnableSsl = False
 
+
         mje.[To].Add(para.ToLower)
+        mje.Attachments.Add(adjunto)
         mje.From = New System.Net.Mail.MailAddress(infoDtosMail(0)(0).ToString, infoDtosMail(4)(0).ToString, System.Text.Encoding.UTF8)
         mje.Subject = asunto
         mje.SubjectEncoding = System.Text.Encoding.UTF8
         mje.Body = mensaje
         mje.BodyEncoding = System.Text.Encoding.UTF8
-        mje.Priority = System.Net.Mail.MailPriority.Normal
+        mje.Priority = System.Net.Mail.MailPriority.High
         mje.IsBodyHtml = False
         Try
             SMTP.Send(mje)
