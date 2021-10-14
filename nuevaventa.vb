@@ -286,17 +286,7 @@ Public Class nuevaventa
                             txtiva21.Text = iva21
                             txtsub21.Text = subtotal21
                             txtsub105.Text = subtotal105
-                        'Case 6, 8, 7
-                        '    If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
-                        '        subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
-                        '        'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
-                        '    ElseIf dtproductos.Rows(i).Cells(4).Value = "21" Then
-                        '        subtotal21 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
-
-                        '    Else
-                        '        Exit Sub
-                        '    End If
-                        Case 991, 992
+                        Case 11, 12, 13, 991, 992, 999
                             If dtproductos.Rows(i).Cells(4).Value = "10,5" Then
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
@@ -329,6 +319,7 @@ Public Class nuevaventa
                                 subtotal105 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                                 'subtotal += FormatNumber(dtproductos.Rows(i).Cells(5).Value)
                             ElseIf dtproductos.Rows(i).Cells(4).Value = "21" Then
+                                'MsgBox("aca 21 ok suma")
                                 subtotal21 += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
                             Else
                                 Exit Sub
@@ -435,43 +426,40 @@ Public Class nuevaventa
     Public Sub cargarCliente()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre," _
-            & " cl.iva_tipo, cl.cuit, cl.lista_precios,cl.vendedor from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre,
+            cl.iva_tipo, cl.cuit, cl.lista_precios,cl.vendedor,cl.idclientes from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and 
+            (cl.idclientes ='" & txtctaclie.Text & "' or   replace(cl.cuit,'-','') like '" & txtcuit.Text & "') limit 1", conexionPrinc)
             Dim tablacl As New DataTable
-            Dim infocl() As DataRow
+            'Dim infocl() As DataRow
             consulta.Fill(tablacl)
-            infocl = tablacl.Select("")
-            If infocl(0)(3) <> 1 Then
+            If tablacl.Rows.Count = 0 Then
+                MsgBox("el cliente no se encuentra en la base de datos, verifique el cuit si esta bien escrito")
+                Exit Sub
+            End If
+            'infocl = tablacl.Select("")
+            If tablacl.Rows(0).Item("iva_tipo") <> 1 Then
                 Select Case cmbtipofac.SelectedValue
                     Case 1, 3, 2
-                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & infocl(0)(3))
+                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & tablacl.Rows(0).Item("iva_tipo"))
                         txtrazon.Focus()
                         Exit Sub
                 End Select
-            ElseIf infocl(0)(3) = 1 Then
+            ElseIf tablacl.Rows(0).Item("iva_tipo") = 1 Then
                 Select Case cmbtipofac.SelectedValue
                     Case 6, 8, 7
-                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & infocl(0)(3))
+                        MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente" & cmbtipofac.SelectedValue & "-" & tablacl.Rows(0).Item("iva_tipo"))
                         txtrazon.Focus()
                         Exit Sub
                 End Select
             End If
-            'If cmbtipofac.SelectedValue = 1 And infocl(0)(3) = 1 Then
-            '    MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente")
-            '    txtrazon.Focus()
-            '    Exit Sub
-            'ElseIf cmbtipofac.SelectedValue = 3 And infocl(0)(3) <> 1 Then
-            '    MsgBox("El tipo de factura seleccionado no correponde al tipo de contribuyente")
-            '    txtrazon.Focus()
-            '    Exit Sub
-            'End If
-            txtrazon.Text = infocl(0)(0)
-            txtdomicilio.Text = infocl(0)(1)
-            txtciudad.Text = infocl(0)(2)
-            cmbtipocontr.SelectedValue = infocl(0)(3)
-            txtcuit.Text = infocl(0)(4)
-            cmblistaprecio.SelectedValue = infocl(0)(5)
-            cmbvendedor.SelectedValue = infocl(0)(6)
+            txtctaclie.Text = tablacl.Rows(0).Item("idclientes")
+            txtrazon.Text = tablacl.Rows(0).Item("clie")
+            txtdomicilio.Text = tablacl.Rows(0).Item("dir_domicilio")
+            txtciudad.Text = tablacl.Rows(0).Item("nombre")
+            cmbtipocontr.SelectedValue = tablacl.Rows(0).Item("iva_tipo")
+            txtcuit.Text = tablacl.Rows(0).Item("cuit")
+            cmblistaprecio.SelectedValue = tablacl.Rows(0).Item("lista_precios")
+            cmbvendedor.SelectedValue = tablacl.Rows(0).Item("vendedor")
         Catch ex As Exception
         End Try
     End Sub
@@ -531,19 +519,39 @@ Public Class nuevaventa
 
     Private Sub cmbtipofac_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbtipofac.SelectionChangeCommitted
         Try
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & txtptovta.SelectedValue
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-            txtnufac.Text = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
+            'Reconectar()
+            'Dim lector As System.Data.IDataReader
+            'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+            'sql.Connection = conexionPrinc
+            'sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & txtptovta.SelectedValue
+            'sql.CommandType = CommandType.Text
+            'lector = sql.ExecuteReader
+            'lector.Read()
+            'txtnufac.Text = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
+            'Dim FechAtras As String
+            'FechAtras = InputBox("Ingrese la fecha de la factura a recuperar", "Recuperar factura electronica")
+            'If FechAtras = "" Or Not IsDate(FechAtras) Then
+            '    MsgBox("no es una fecha valida")
+            '    Exit Sub
+            'End If
+
+            txtnufac.Text = ""
+            txtnufac.Focus()
+
+            'Dim nvafech As String = InputBox("ingrese nueva fecha", "cambio de fecha de factura")
+            'If nvafech <> "" And IsDate(nvafech) Then
+            'fechagral = FechAtras
+            'lblfecha.Text = Format(CDate(FechAtras), "dd-MMMM-yyyy")
+            tmrcontrolarnumfact.Enabled = False
+            txtnufac.ReadOnly = False
+            rehacerfact = True
+            cmbsolicitarcae.Text = "Recuperar Info"
+            'End If
+
             cmbtipofac.Enabled = False
             txtptovta.Enabled = False
             panelcliente.Enabled = True
-            tmrcontrolarnumfact.Enabled = True
+            'tmrcontrolarnumfact.Enabled = True
             Select Case cmbtipofac.SelectedValue
                 Case 3, 13
                     fa = True
@@ -649,7 +657,10 @@ Public Class nuevaventa
         Dim ptotal As String
         Dim codbar As String
         Dim i As Integer
-
+        Dim codigo_qr As Byte()
+        'If ptovta = FacturaElectro.puntovtaelect Then
+        codigo_qr = Imagen_Bytes(Image.FromFile(Application.StartupPath & "\" & lblcodigobarras.Text & ".jpg"))
+        ' End If
         'comprobamos que se seleccione un vendedor
         If cmbvendedor.SelectedValue = 0 Then
             MsgBox("Seleccione vendedor")
@@ -688,8 +699,8 @@ Public Class nuevaventa
         Try
             'GUARDO LOS DATOS DE LA FACTURA
             sqlQuery = "insert into fact_facturas  " _
-            & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra) values " _
-            & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra)"
+            & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,codigo_qr) values " _
+            & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?codigo_qr)"
             comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
@@ -712,6 +723,7 @@ Public Class nuevaventa
                 .AddWithValue("?cae", lblestadoCAE.Text.Replace("CAE: ", ""))
                 .AddWithValue("?vtocae", lblvtoCAE.Text.Replace("Vto: ", ""))
                 .AddWithValue("?codbarra", lblcodigobarras.Text)
+                .AddWithValue("?codigo_qr", codigo_qr)
             End With
             comandoadd.Transaction = Transaccion
             comandoadd.ExecuteNonQuery()
@@ -815,34 +827,34 @@ Public Class nuevaventa
             End With
             comandoadd.Transaction = Transaccion
             comandoadd.ExecuteNonQuery()
-            Select Case cmbcondvta.SelectedValue
-                Case 2 'cuenta corriente
-                    MsgBox("Cuenta corriente actualizada")
+            'Select Case cmbcondvta.SelectedValue
+            '    Case 2 'cuenta corriente
+            '        MsgBox("Cuenta corriente actualizada")
 
-                Case 1 'contado genero un recibo
+            '    Case 1 'contado genero un recibo
 
-                    Dim j As Integer
-                    For j = 0 To frmprincipal.MdiChildren.Length - 1
-                        If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
-                            'frmprincipal.MdiChildren(i).BringToFront()
-                            MsgBox("La ventana de movimiento de caja esta abierta")
-                            Exit Sub
-                        End If
-                    Next
-                    Dim mov As New movimientodecaja
-                    mov.MdiParent = Me.MdiParent
-                    mov.Show()
-                    mov.cmbtipofac.SelectedValue = 5
-                    mov.txtctaclie.Text = txtctaclie.Text
-                    mov.cargarCliente()
-                    mov.dtconceptos.Rows.Add(comandoadd.LastInsertedId, cmbtipofac.Text & " " & txtptovta.Text & " - " & txtnufac.Text, txttotal.Text, idFactura)
-                    mov.dtconceptos.Enabled = False
-                    mov.cmbtipofac.Enabled = False
-                    mov.Button4.Enabled = False
-                    mov.txttotalefectivo.Focus()
-                    mov.AcceptButton = mov.Button1
-                    mov.CalcularTotalescobro()
-            End Select
+            '        Dim j As Integer
+            '        For j = 0 To frmprincipal.MdiChildren.Length - 1
+            '            If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
+            '                'frmprincipal.MdiChildren(i).BringToFront()
+            '                MsgBox("La ventana de movimiento de caja esta abierta")
+            '                Exit Sub
+            '            End If
+            '        Next
+            '        Dim mov As New movimientodecaja
+            '        mov.MdiParent = Me.MdiParent
+            '        mov.Show()
+            '        mov.cmbtipofac.SelectedValue = 5
+            '        mov.txtctaclie.Text = txtctaclie.Text
+            '        mov.cargarCliente()
+            '        mov.dtconceptos.Rows.Add(comandoadd.LastInsertedId, cmbtipofac.Text & " " & txtptovta.Text & " - " & txtnufac.Text, txttotal.Text, idFactura)
+            '        mov.dtconceptos.Enabled = False
+            '        mov.cmbtipofac.Enabled = False
+            '        mov.Button4.Enabled = False
+            '        mov.txttotalefectivo.Focus()
+            '        mov.AcceptButton = mov.Button1
+            '        mov.CalcularTotalescobro()
+            'End Select
 
             'PONEMOS FACTURADO AL PEDIDO
             If rdpedido.Checked = True Then
@@ -908,60 +920,7 @@ Public Class nuevaventa
         EnProgreso.Show()
         Application.DoEvents()
         Try
-            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim fac As New datosfacturas
-
-            Reconectar()
-
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
-            & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, " _
-            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, " _
-            & "concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, " _
-            & "concat(vend.apellido,', ',vend.nombre) as facvend, fac.condvta as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21," _
-            & "'','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra " _
-            & "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac  " _
-            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.id=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
-
-            tabEmp.Fill(fac.Tables("factura_enca"))
-            Reconectar()
-
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            plu,
-            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
-            format(replace(iva,',','.'),2,'es_AR') as iva ,
-            format(replace(punit,',','.'),2,'es_AR') as punit ,
-            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & idFactura, conexionPrinc)
-            tabFac.Fill(fac.Tables("facturax"))
-
-            Dim imprimirx As New imprimirFX
-            With imprimirx
-                .MdiParent = Me.MdiParent
-                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                If txtptovta.Text <> FacturaElectro.puntovtaelect Then 'Select Case txtptovta.Text
-
-                    Select Case cmbtipofac.SelectedValue
-                        Case 1, 3
-                            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaleg.rdlc"
-                        Case 2, 12, 29
-                            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-                        Case 4, 10
-                            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\notacredleg.rdlc"
-                    End Select
-                Else
-                    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-                End If ' End Select
-                .rptfx.LocalReport.DataSources.Clear()
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
-                .rptfx.DocumentMapCollapsed = True
-                .rptfx.RefreshReport()
-
-                .Show()
-            End With
+            ImprimirFactura(idFactura, txtptovta.Text, False)
         Catch ex As Exception
             MsgBox(ex.Message)
             EnProgreso.Close()
@@ -1390,6 +1349,15 @@ Public Class nuevaventa
                 lblobservacionescae.Text &= "Cuit del comprador: " & fe.F1DetalleDocNro & vbNewLine
                 lblcodigobarras.Text = fe.f1CodigoDeBarraAFIP
                 cmdguardar.Enabled = True
+
+                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & lblcodigobarras.Text & ".jpg"
+                fe.f1detalleqrtolerancia = 1
+                fe.f1detalleqrresolucion = 4
+                fe.f1detalleqrformato = 6
+                If fe.f1qrGenerar(99) = False Then
+                    MsgBox("error al generar el codigo QR " + fe.ArchivoQRError + " " + fe.UltimoMensajeError)
+                    Exit Sub
+                End If
             Else
                 MsgBox("No existe comprobante")
             End If
@@ -1745,5 +1713,163 @@ Public Class nuevaventa
         Catch ex As Exception
 
         End Try
+    End Sub
+
+    Private Sub cmbtipofac_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipofac.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Button1_Click_3(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        'Dim Barra As New ProgressBar
+        'Barra.Style = ProgressBarStyle.Marquee
+        'Barra.Size = New Point(270, 40)
+        'Barra.Location = New Point(10, 30)
+        'Barra.Value = 100
+        'EnProgreso.Controls.Add(Barra)
+        EnProgreso.Show()
+        Application.DoEvents()
+
+        Try
+
+            Dim fe As New WSAFIPFE.Factura
+            'Dim nContador As Integer
+            'Dim nNumero As Integer
+            Dim lresultado As Boolean
+
+            Dim cbtetipo As Integer
+            Dim doctipo As Integer
+            Dim contribtipo As Integer
+            Dim idiva As Integer
+
+            Dim sub21 As Double = FormatNumber(txtsub21.Text, 2)
+            Dim sub105 As Double = FormatNumber(txtsub105.Text, 2)
+            Dim iva21 As Double = FormatNumber(txtiva21.Text, 2)
+            Dim iva105 As Double = FormatNumber(txtiva105.Text, 2)
+            Dim subtotal As Double = Math.Round(sub21 + sub105, 2)
+            Dim ivatotal As Double = Math.Round(iva21 + iva105, 2)
+            Dim total As Double = Math.Round(subtotal + ivatotal, 2)
+
+            Dim existecomp As Boolean
+            'MsgBox(cmbtipofac.SelectedValue)
+            Select Case cmbtipofac.SelectedValue
+                Case 1
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.FacturaA
+                Case 2
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaDebitoA
+                Case 3
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaCreditoA
+                Case 6
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.FacturaB
+                Case 7
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaDebitoB
+                Case 8
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaCreditoB
+                Case 11
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.FacturaC
+                Case 12
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaDebitoC
+                Case 13
+                    cbtetipo = WSAFIPFE.Factura.TipoComprobante.NotaCreditoC
+                Case Else
+                    MsgBox("tipo de comprobante no admitido")
+                    EnProgreso.Close()
+                    Exit Sub
+            End Select
+
+            'Select Case cmbtipocontr.SelectedValue
+            '    Case 1
+            '        contribtipo = WSAFIPFE.Factura.TipoReponsable.ResponsableInscripto
+            '        doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
+            '        idiva = 5
+            '    Case 5
+            '        contribtipo = WSAFIPFE.Factura.TipoReponsable.Exento
+            '        doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
+            '        idiva = 3
+            '    Case 4
+            '        If txtcuit.Text = "" Then
+            '            contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
+            '            doctipo = WSAFIPFE.Factura.TipoDocumento.SinIdentificacionGlobalDiario
+            '            txtcuit.Text = 0
+            '            idiva = 3
+            '        ElseIf txtcuit.Text <> "" And IsNumeric(txtcuit.Text) Then
+            '            contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
+            '            doctipo = WSAFIPFE.Factura.TipoDocumento.DNI
+            '            'txtcuit.Text = 0
+            '            idiva = 3
+            '        End If
+            '    Case 6
+            '        contribtipo = WSAFIPFE.Factura.TipoReponsable.Monotributo
+            '        doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
+            '        idiva = 3
+            '    Case Else
+            '        MsgBox("Tipo de contribuyente no admitido")
+            '        EnProgreso.Close()
+            '        Exit Sub
+            'End Select
+
+            lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
+            fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+            ' MsgBox(lresultado.ToString)
+            If lresultado Then
+                lresultado = fe.f1ObtenerTicketAcceso()
+
+            End If
+
+            existecomp = fe.F1CompConsultar(Val(txtptovta.Text), cbtetipo, Val(txtnufac.Text))
+            If existecomp Then
+                lblestadoCAE.Text = fe.F1RespuestaDetalleCae
+                lblvtoCAE.Text = fe.F1RespuestaDetalleCAEFchVto
+                lblfechacae.Text = fe.F1RespuestaDetalleCbteFch
+                lblimportecae.Text = fe.F1DetalleImpTotal
+                lblcuitcae.Text = fe.F1DetalleDocNro
+                lblobservacionescae.Text = "Resultado: " & fe.F1RespuestaResultado & vbNewLine
+                lblobservacionescae.Text &= "Importe de la factura: " & fe.F1DetalleImpTotal & vbNewLine
+                lblobservacionescae.Text &= "Fecha del Comprobante: " & fe.F1DetalleCbteFch & vbNewLine
+                lblobservacionescae.Text &= "Cuit del comprador: " & fe.F1DetalleDocNro & vbNewLine
+                lblcodigobarras.Text = fe.f1CodigoDeBarraAFIP
+                cmdguardar.Enabled = True
+                txtcuit.Text = fe.F1DetalleDocNro
+                Dim FechaComp As String = fe.F1DetalleCbteFch
+                FechaComp = FechaComp.Insert(4, "-").Insert(7, "-")
+                fechagral = Format(CDate(FechaComp), "dd-MM-yyyy")
+                lblfecha.Text = Format(CDate(fechagral), "dd-MMMM-yyyy")
+                cargarCliente()
+
+                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & lblcodigobarras.Text & ".jpg"
+                fe.f1detalleqrtolerancia = 1
+                fe.f1detalleqrresolucion = 4
+                fe.f1detalleqrformato = 6
+                If fe.f1qrGenerar(99) = False Then
+                    MsgBox("error al generar el codigo QR " + fe.ArchivoQRError + " " + fe.UltimoMensajeError)
+                    Exit Sub
+                End If
+
+                EnProgreso.Close()
+            Else
+                EnProgreso.Close()
+                MsgBox("No existe comprobante")
+            End If
+        Catch ex As Exception
+            EnProgreso.Close()
+        End Try
+    End Sub
+
+    Private Sub txtcuit_TextChanged(sender As Object, e As EventArgs) Handles txtcuit.TextChanged
+
+    End Sub
+
+    Private Sub txtctaclie_TextChanged(sender As Object, e As EventArgs) Handles txtctaclie.TextChanged
+
     End Sub
 End Class

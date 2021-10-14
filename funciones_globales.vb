@@ -782,6 +782,11 @@ Module funciones_Globales
             End If
             Dim condVta As String = fac.Tables("factura_enca").Rows(0).Item("faccondvta")
             Dim TipoFact As Integer = fac.Tables("factura_enca").Rows(0).Item("donfdesc")
+            'MsgBox(condVta & "___" & TipoFact)
+            If TipoFact = 996 Then
+                ImprimirRecibos(idfact)
+                Exit Sub
+            End If
             'Dim PtoVta As Integer =
             If My.Settings.ImprTikets = 1 And condVta = "CONTADO" Then
                 Dim PrintTxt As New PrintDocument
@@ -802,7 +807,8 @@ Module funciones_Globales
                     PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
                     PrintTxt.Print()
                 End If
-            Else
+            ElseIf My.Settings.ImprTikets = 1 And condVta = "CTACTE" Then
+
                 If directo = True Then
                     Using Imprimir As New ImprimirDirecto()
                         Imprimir.Run(fac.Tables("factura_enca"), fac.Tables("facturax"), direccionReport)
@@ -826,6 +832,25 @@ Module funciones_Globales
 
                     End With
                 End If
+            Else
+                Dim imprimirx As New imprimirFX
+                With imprimirx
+                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                    Select Case TipoFact
+                        Case 1 To 3, 6 To 8, 11 To 13
+                            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+
+                        Case Else
+                            .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+                    End Select
+                    .rptfx.LocalReport.DataSources.Clear()
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
+                    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("facturax")))
+                    .rptfx.DocumentMapCollapsed = True
+                    .rptfx.RefreshReport()
+                    .Show()
+                End With
+
             End If
         Catch ex As Exception
             MsgBox(ex.Message)

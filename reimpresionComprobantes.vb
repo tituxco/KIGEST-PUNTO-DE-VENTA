@@ -65,15 +65,9 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-
-
-
-
-
         Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
         IdFactura = dtfacturas.CurrentRow.Cells(0).Value
         ImprimirFactura(IdFactura, ptovta, False)
-
     End Sub
 
     Private Sub ImprimirTiketFiscal(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)

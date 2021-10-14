@@ -2521,4 +2521,90 @@ Public Class puntoventa
     Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
 
     End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        Dim fe As New WSAFIPFE.Factura
+
+        Dim bresultado As Boolean
+
+        bresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
+        fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+        If bresultado = True Then
+            bresultado = fe.f1ObtenerTicketAcceso()
+            'MsgBox("Tiket obtenido" )
+        Else
+            MsgBox("NO SE PUDO OBTENER EL TIKET DE ACCESO A AFIP." & vbNewLine & "Motivo:" & fe.UltimoNumeroError & vbNewLine & fe.UltimoMensajeError)
+            ' EnProgreso.Close()
+            Exit Sub
+        End If
+        If bresultado = True Then
+            bresultado = fe.p1GetPersona(txtcliecuitcuil.Text)
+
+            If fe.UltimoMensajeError = "" Then
+
+                MsgBox("apellido " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.apellido", "", 0, 0))
+
+                MsgBox("nombre " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.nombre", "", 0, 0))
+
+                MsgBox("razon " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.razonsocial", "", 0, 0))
+
+                MsgBox("localidad " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0))
+
+                MsgBox("direccion " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0))
+
+                MsgBox("tipo domicilio " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.tipodomicilio", "", 0, 0))
+
+                If fe.p1VerificarImpuesto(20, "activo") Then
+
+                    MsgBox("monotributista")
+
+                End If
+
+                If fe.p1VerificarImpuesto(30, "activo") Then
+
+                    MsgBox("INSCRIPTO IVA")
+
+                End If
+
+                If fe.p1VerificarImpuesto(32, "activo") Then
+
+                    MsgBox("exento IVA")
+
+                End If
+
+            Else
+
+                MsgBox("error general" + fe.UltimoMensajeError)
+
+            End If
+
+        Else
+
+            MsgBox("fallo acceso " + fe.UltimoMensajeError)
+
+        End If
+
+
+        'If fe.iniciar(0, "cuit", "certificado.pfx", "archiv.lic si es para el modo real 1") Then
+
+        '    fe.p1Version = 52
+
+        '    fe.ArchivoXMLEnviado = "d:\p1envio.xml"
+
+        '    fe.ArchivoXMLRecibido = "d:\p1recibo.xml"
+
+        '    fe.ArchivoCertificadoPassword = ""
+
+        '    If fe.p1ObtenerTicketAcceso() Then
+
+
+
+        '    Else
+
+        '    MsgBox("fallo iniciar " + fe.UltimoMensajeError)
+
+        'End If
+
+
+    End Sub
 End Class

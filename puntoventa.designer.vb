@@ -150,6 +150,7 @@ Partial Class puntoventa
         Me.lblcliedomicilio = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel8 = New System.Windows.Forms.Panel()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.txtcliecuitcuil = New System.Windows.Forms.TextBox()
@@ -215,7 +216,7 @@ Partial Class puntoventa
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1133, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1190, 40)
         Me.pntitulo.TabIndex = 75
         '
         'Label1
@@ -235,7 +236,7 @@ Partial Class puntoventa
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(899, 0)
+        Me.Button1.Location = New System.Drawing.Point(956, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(234, 40)
         Me.Button1.TabIndex = 7
@@ -265,7 +266,7 @@ Partial Class puntoventa
         Me.paneltareas2.Controls.Add(Me.Panel3)
         Me.paneltareas2.Controls.Add(Me.Panel7)
         Me.paneltareas2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.paneltareas2.Location = New System.Drawing.Point(899, 40)
+        Me.paneltareas2.Location = New System.Drawing.Point(956, 40)
         Me.paneltareas2.Name = "paneltareas2"
         Me.paneltareas2.Size = New System.Drawing.Size(234, 709)
         Me.paneltareas2.TabIndex = 78
@@ -690,7 +691,7 @@ Partial Class puntoventa
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 40)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(899, 709)
+        Me.Panel1.Size = New System.Drawing.Size(956, 709)
         Me.Panel1.TabIndex = 79
         '
         'dtproductos
@@ -722,7 +723,7 @@ Partial Class puntoventa
         DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
         DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.dtproductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle7
-        Me.dtproductos.Size = New System.Drawing.Size(899, 503)
+        Me.dtproductos.Size = New System.Drawing.Size(956, 503)
         Me.dtproductos.TabIndex = 101
         '
         'Column12
@@ -800,7 +801,7 @@ Partial Class puntoventa
         Me.paneltareas.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.paneltareas.Location = New System.Drawing.Point(0, 625)
         Me.paneltareas.Name = "paneltareas"
-        Me.paneltareas.Size = New System.Drawing.Size(899, 84)
+        Me.paneltareas.Size = New System.Drawing.Size(956, 84)
         Me.paneltareas.TabIndex = 90
         '
         'Label21
@@ -823,7 +824,7 @@ Partial Class puntoventa
         Me.dtdescuentos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtdescuentos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column13, Me.DataGridViewTextBoxColumn12, Me.Column11})
         Me.dtdescuentos.Dock = System.Windows.Forms.DockStyle.Right
-        Me.dtdescuentos.Location = New System.Drawing.Point(577, 0)
+        Me.dtdescuentos.Location = New System.Drawing.Point(634, 0)
         Me.dtdescuentos.Name = "dtdescuentos"
         Me.dtdescuentos.Size = New System.Drawing.Size(322, 84)
         Me.dtdescuentos.TabIndex = 75
@@ -981,7 +982,7 @@ Partial Class puntoventa
         Me.pnaddProd.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnaddProd.Location = New System.Drawing.Point(0, 85)
         Me.pnaddProd.Name = "pnaddProd"
-        Me.pnaddProd.Size = New System.Drawing.Size(899, 37)
+        Me.pnaddProd.Size = New System.Drawing.Size(956, 37)
         Me.pnaddProd.TabIndex = 88
         '
         'cmbdescuentoRecargo
@@ -1093,7 +1094,7 @@ Partial Class puntoventa
         Me.lblnoplu.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblnoplu.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblnoplu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblnoplu.Location = New System.Drawing.Point(459, 0)
+        Me.lblnoplu.Location = New System.Drawing.Point(516, 0)
         Me.lblnoplu.Name = "lblnoplu"
         Me.lblnoplu.Size = New System.Drawing.Size(279, 35)
         Me.lblnoplu.TabIndex = 74
@@ -1101,7 +1102,7 @@ Partial Class puntoventa
         'CheckBox1
         '
         Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.CheckBox1.Location = New System.Drawing.Point(738, 0)
+        Me.CheckBox1.Location = New System.Drawing.Point(795, 0)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(93, 35)
         Me.CheckBox1.TabIndex = 73
@@ -1113,7 +1114,7 @@ Partial Class puntoventa
         Me.chkaplicardesc.Checked = True
         Me.chkaplicardesc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkaplicardesc.Dock = System.Windows.Forms.DockStyle.Right
-        Me.chkaplicardesc.Location = New System.Drawing.Point(831, 0)
+        Me.chkaplicardesc.Location = New System.Drawing.Point(888, 0)
         Me.chkaplicardesc.Name = "chkaplicardesc"
         Me.chkaplicardesc.Size = New System.Drawing.Size(66, 35)
         Me.chkaplicardesc.TabIndex = 63
@@ -1130,7 +1131,7 @@ Partial Class puntoventa
         Me.panelcliente.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelcliente.Location = New System.Drawing.Point(0, 28)
         Me.panelcliente.Name = "panelcliente"
-        Me.panelcliente.Size = New System.Drawing.Size(899, 57)
+        Me.panelcliente.Size = New System.Drawing.Size(956, 57)
         Me.panelcliente.TabIndex = 87
         '
         'Panel13
@@ -1147,7 +1148,7 @@ Partial Class puntoventa
         Me.Panel13.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel13.Location = New System.Drawing.Point(0, 42)
         Me.Panel13.Name = "Panel13"
-        Me.Panel13.Size = New System.Drawing.Size(899, 17)
+        Me.Panel13.Size = New System.Drawing.Size(956, 17)
         Me.Panel13.TabIndex = 57
         '
         'lblfacIdAlmacen
@@ -1270,7 +1271,7 @@ Partial Class puntoventa
         Me.Panel12.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel12.Location = New System.Drawing.Point(0, 25)
         Me.Panel12.Name = "Panel12"
-        Me.Panel12.Size = New System.Drawing.Size(899, 17)
+        Me.Panel12.Size = New System.Drawing.Size(956, 17)
         Me.Panel12.TabIndex = 56
         '
         'lblclietipocontr
@@ -1358,6 +1359,7 @@ Partial Class puntoventa
         '
         Me.Panel8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel8.Controls.Add(Me.Button5)
         Me.Panel8.Controls.Add(Me.Button3)
         Me.Panel8.Controls.Add(Me.Button2)
         Me.Panel8.Controls.Add(Me.txtcliecuitcuil)
@@ -1368,8 +1370,24 @@ Partial Class puntoventa
         Me.Panel8.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel8.Location = New System.Drawing.Point(0, 0)
         Me.Panel8.Name = "Panel8"
-        Me.Panel8.Size = New System.Drawing.Size(899, 25)
+        Me.Panel8.Size = New System.Drawing.Size(956, 25)
         Me.Panel8.TabIndex = 55
+        '
+        'Button5
+        '
+        Me.Button5.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Location = New System.Drawing.Point(881, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(41, 23)
+        Me.Button5.TabIndex = 53
+        Me.Button5.Text = "GET"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        Me.Button5.UseVisualStyleBackColor = False
+        Me.Button5.Visible = False
         '
         'Button3
         '
@@ -1406,7 +1424,7 @@ Partial Class puntoventa
         '
         Me.txtcliecuitcuil.Dock = System.Windows.Forms.DockStyle.Left
         Me.txtcliecuitcuil.Location = New System.Drawing.Point(651, 0)
-        Me.txtcliecuitcuil.MaxLength = 10
+        Me.txtcliecuitcuil.MaxLength = 11
         Me.txtcliecuitcuil.Name = "txtcliecuitcuil"
         Me.txtcliecuitcuil.Size = New System.Drawing.Size(128, 20)
         Me.txtcliecuitcuil.TabIndex = 12
@@ -1462,7 +1480,7 @@ Partial Class puntoventa
         Me.panelencabeza.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelencabeza.Location = New System.Drawing.Point(0, 0)
         Me.panelencabeza.Name = "panelencabeza"
-        Me.panelencabeza.Size = New System.Drawing.Size(899, 28)
+        Me.panelencabeza.Size = New System.Drawing.Size(956, 28)
         Me.panelencabeza.TabIndex = 86
         '
         'Button4
@@ -1714,7 +1732,7 @@ Partial Class puntoventa
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1133, 749)
+        Me.ClientSize = New System.Drawing.Size(1190, 749)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.paneltareas2)
         Me.Controls.Add(Me.pntitulo)
@@ -1894,4 +1912,5 @@ Partial Class puntoventa
     Friend WithEvents Column18 As DataGridViewTextBoxColumn
     Friend WithEvents Column19 As DataGridViewTextBoxColumn
     Friend WithEvents Column20 As DataGridViewTextBoxColumn
+    Friend WithEvents Button5 As Button
 End Class
