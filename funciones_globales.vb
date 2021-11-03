@@ -1445,6 +1445,62 @@ Module funciones_Globales
             Return False
         End Try
     End Function
+    Public Function ComprobarLocalidad(nombre As String) As Integer
+        Reconectar()
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM cm_localidad where nombre like '%" & nombre & "%' limit 1", conexionPrinc)
+        Dim tabla As New DataTable
+        consulta.Fill(tabla)
+        If tabla.Rows.Count <> 0 Then
+            Return tabla.Rows(0).Item("id")
+        Else
+            Reconectar()
+            Dim comandoADD As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_localidades (nombre) values ('" & nombre & "')", conexionAuth)
+            comandoADD.ExecuteNonQuery()
+            Return comandoADD.LastInsertedId
+        End If
+    End Function
+    Public Function ComprobarClienteCUIT(cuit As String) As Boolean
+
+        'Dim busqtxt As String
+        'parametro = parametro.Replace(" ", "%")
+        'busqtxt = " where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq"
+
+        Try
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_clientes where cuit like '" & cuit & "'", conexionPrinc)
+            Dim tablaPers As New DataTable
+            consulta.Fill(tablaPers)
+
+            If tablaPers.Rows.Count = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+    Public Function ComprobarProveedorCUIT(cuit As String) As Boolean
+
+        'Dim busqtxt As String
+        'parametro = parametro.Replace(" ", "%")
+        'busqtxt = " where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq"
+
+        Try
+            Reconectar()
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_proveedores where cuit like '" & cuit & "'", conexionPrinc)
+            Dim tablaPers As New DataTable
+            consulta.Fill(tablaPers)
+
+            If tablaPers.Rows.Count = 0 Then
+                Return False
+            Else
+                Return True
+            End If
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
 
     Public Function ObtenerNombrePrimeraHoja(ByVal rutaLibro As String) As String
         Dim app As Excel.Application = Nothing
@@ -1631,7 +1687,7 @@ Module funciones_Globales
         Dim SMTP As New System.Net.Mail.SmtpClient
 
         Reconectar()
-        Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=26 and id<=30", conexionPrinc)
+        Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=26 and id<=32", conexionPrinc)
         Dim tablaDtosMail As New DataTable
         Dim infoDtosMail() As DataRow
         'Dim adjunto As New System.Net.Mail.Attachment(adjunto)
@@ -1642,9 +1698,10 @@ Module funciones_Globales
         SMTP.Credentials = New System.Net.NetworkCredential(infoDtosMail(0)(0).ToString, infoDtosMail(1)(0).ToString)
         SMTP.Host = infoDtosMail(2)(0).ToString
         SMTP.Port = infoDtosMail(3)(0).ToString
-        SMTP.EnableSsl = False
-
-
+        SMTP.UseDefaultCredentials = infoDtosMail(5)(0).ToString
+        SMTP.EnableSsl = infoDtosMail(6)(0).ToString
+        'SMTP.
+        'System.Net.NetworkCredential NetworkCred = New System.Net.NetworkCredential();
         mje.[To].Add(para.ToLower)
         mje.Attachments.Add(adjunto)
         mje.From = New System.Net.Mail.MailAddress(infoDtosMail(0)(0).ToString, infoDtosMail(4)(0).ToString, System.Text.Encoding.UTF8)
@@ -1654,6 +1711,7 @@ Module funciones_Globales
         mje.BodyEncoding = System.Text.Encoding.UTF8
         mje.Priority = System.Net.Mail.MailPriority.High
         mje.IsBodyHtml = False
+
         Try
             SMTP.Send(mje)
             MessageBox.Show("Mensaje enviado correctamente", "Exito!", MessageBoxButtons.OK)

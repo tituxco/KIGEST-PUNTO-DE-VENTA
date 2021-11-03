@@ -37,6 +37,11 @@ Partial Class CajaDiaria
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.grpdetalleCaja = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblefectivo = New System.Windows.Forms.Label()
+        Me.lblcheques = New System.Windows.Forms.Label()
+        Me.lbltarjeta = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.cmdnuevomov = New System.Windows.Forms.Button()
@@ -53,6 +58,7 @@ Partial Class CajaDiaria
         Me.Button1 = New System.Windows.Forms.Button()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel2.SuspendLayout()
+        Me.grpdetalleCaja.SuspendLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
         Me.pntitulo.SuspendLayout()
@@ -104,7 +110,7 @@ Partial Class CajaDiaria
         Me.dtcaja.MultiSelect = False
         Me.dtcaja.Name = "dtcaja"
         Me.dtcaja.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtcaja.Size = New System.Drawing.Size(1050, 294)
+        Me.dtcaja.Size = New System.Drawing.Size(986, 300)
         Me.dtcaja.TabIndex = 87
         '
         'Column4
@@ -142,6 +148,7 @@ Partial Class CajaDiaria
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.grpdetalleCaja)
         Me.Panel2.Controls.Add(Me.Button2)
         Me.Panel2.Controls.Add(Me.cmdsalir)
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
@@ -149,8 +156,65 @@ Partial Class CajaDiaria
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 23)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1050, 103)
+        Me.Panel2.Size = New System.Drawing.Size(986, 103)
         Me.Panel2.TabIndex = 85
+        '
+        'grpdetalleCaja
+        '
+        Me.grpdetalleCaja.Controls.Add(Me.Label3)
+        Me.grpdetalleCaja.Controls.Add(Me.lblefectivo)
+        Me.grpdetalleCaja.Controls.Add(Me.lblcheques)
+        Me.grpdetalleCaja.Controls.Add(Me.lbltarjeta)
+        Me.grpdetalleCaja.Dock = System.Windows.Forms.DockStyle.Right
+        Me.grpdetalleCaja.Location = New System.Drawing.Point(673, 0)
+        Me.grpdetalleCaja.Name = "grpdetalleCaja"
+        Me.grpdetalleCaja.Size = New System.Drawing.Size(219, 103)
+        Me.grpdetalleCaja.TabIndex = 93
+        Me.grpdetalleCaja.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(6, 10)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(146, 17)
+        Me.Label3.TabIndex = 92
+        Me.Label3.Text = "DETALLE DE CAJA"
+        '
+        'lblefectivo
+        '
+        Me.lblefectivo.AutoSize = True
+        Me.lblefectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblefectivo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblefectivo.Location = New System.Drawing.Point(6, 33)
+        Me.lblefectivo.Name = "lblefectivo"
+        Me.lblefectivo.Size = New System.Drawing.Size(94, 18)
+        Me.lblefectivo.TabIndex = 51
+        Me.lblefectivo.Text = "EFECTIVO:"
+        '
+        'lblcheques
+        '
+        Me.lblcheques.AutoSize = True
+        Me.lblcheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcheques.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblcheques.Location = New System.Drawing.Point(6, 74)
+        Me.lblcheques.Name = "lblcheques"
+        Me.lblcheques.Size = New System.Drawing.Size(95, 18)
+        Me.lblcheques.TabIndex = 53
+        Me.lblcheques.Text = "CHEQUES:"
+        '
+        'lbltarjeta
+        '
+        Me.lbltarjeta.AutoSize = True
+        Me.lbltarjeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltarjeta.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltarjeta.Location = New System.Drawing.Point(6, 53)
+        Me.lbltarjeta.Name = "lbltarjeta"
+        Me.lbltarjeta.Size = New System.Drawing.Size(85, 18)
+        Me.lbltarjeta.TabIndex = 52
+        Me.lbltarjeta.Text = "TARJETA:"
         '
         'Button2
         '
@@ -175,7 +239,7 @@ Partial Class CajaDiaria
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(956, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(892, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(94, 103)
         Me.cmdsalir.TabIndex = 18
@@ -248,7 +312,7 @@ Partial Class CajaDiaria
         Me.dttotales.ReadOnly = True
         Me.dttotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dttotales.Size = New System.Drawing.Size(1050, 23)
+        Me.dttotales.Size = New System.Drawing.Size(986, 23)
         Me.dttotales.TabIndex = 84
         '
         'Panel1
@@ -257,9 +321,9 @@ Partial Class CajaDiaria
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.dttotales)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 334)
+        Me.Panel1.Location = New System.Drawing.Point(0, 340)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1050, 126)
+        Me.Panel1.Size = New System.Drawing.Size(986, 126)
         Me.Panel1.TabIndex = 86
         '
         'Label1
@@ -286,7 +350,7 @@ Partial Class CajaDiaria
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1050, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(986, 40)
         Me.pntitulo.TabIndex = 84
         '
         'chkfiltrofecha
@@ -296,7 +360,7 @@ Partial Class CajaDiaria
         Me.chkfiltrofecha.Dock = System.Windows.Forms.DockStyle.Right
         Me.chkfiltrofecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkfiltrofecha.ForeColor = System.Drawing.Color.White
-        Me.chkfiltrofecha.Location = New System.Drawing.Point(520, 0)
+        Me.chkfiltrofecha.Location = New System.Drawing.Point(456, 0)
         Me.chkfiltrofecha.Name = "chkfiltrofecha"
         Me.chkfiltrofecha.Size = New System.Drawing.Size(179, 40)
         Me.chkfiltrofecha.TabIndex = 50
@@ -309,7 +373,7 @@ Partial Class CajaDiaria
         Me.cmbcierresCajas.Enabled = False
         Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbcierresCajas.FormattingEnabled = True
-        Me.cmbcierresCajas.Location = New System.Drawing.Point(699, 0)
+        Me.cmbcierresCajas.Location = New System.Drawing.Point(635, 0)
         Me.cmbcierresCajas.Name = "cmbcierresCajas"
         Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
         Me.cmbcierresCajas.TabIndex = 51
@@ -332,7 +396,7 @@ Partial Class CajaDiaria
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(975, 0)
+        Me.Button1.Location = New System.Drawing.Point(911, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 40)
         Me.Button1.TabIndex = 47
@@ -343,7 +407,7 @@ Partial Class CajaDiaria
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1050, 460)
+        Me.ClientSize = New System.Drawing.Size(986, 466)
         Me.Controls.Add(Me.dtcaja)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pntitulo)
@@ -353,6 +417,8 @@ Partial Class CajaDiaria
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
+        Me.grpdetalleCaja.ResumeLayout(False)
+        Me.grpdetalleCaja.PerformLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
         Me.pntitulo.ResumeLayout(False)
@@ -387,4 +453,9 @@ Partial Class CajaDiaria
     Friend WithEvents Button2 As Button
     Friend WithEvents cmbcierresCajas As ComboBox
     Friend WithEvents chkfiltrofecha As CheckBox
+    Friend WithEvents lblcheques As Label
+    Friend WithEvents lbltarjeta As Label
+    Friend WithEvents lblefectivo As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents grpdetalleCaja As GroupBox
 End Class

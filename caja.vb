@@ -63,6 +63,10 @@
         Try
             Dim egresos As Double = 0
             Dim ingresos As Double = 0
+            Dim totalesEfectivo As Double = 0
+            Dim totalesCheques As Double = 0
+            Dim totalesTarjetas As Double = 0
+
             saldoCaja = 0
             Dim CajaDef As Integer = cmbcajas.SelectedValue
             Dim ultimoCierr As String
@@ -71,6 +75,8 @@
 
             Dim idCajaSel As Integer = cmbcajas.SelectedValue
             Dim idCierreSel As Integer = cmbcierresCajas.SelectedValue
+            Dim SQLtarjetas As String = ""
+            Dim SQLcheques As String = ""
 
             'If chkfiltrofecha.Checked = True Then
             '    fechacaja = " and cc.fecha <='" & Format(DateAdd(DateInterval.Day, 1, dtpfechacaja.Value), "yyyy-MM-dd") & "'"
@@ -140,6 +146,19 @@
 			from fact_ingreso_egreso as ie where ie.caja= " & idCajaSel & "
 				and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id<" & idCierreSel & ")
                 and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")"
+
+                SQLtarjetas = "select tar.importe, ie.tipo           
+            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & idCajaSel & " and          
+            tar.comprobante=ie.comprobante
+			and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id<" & idCierreSel & ")
+            and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")"
+
+                SQLcheques = "select che.importe, ie.tipo                        
+            from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & idCajaSel & " and
+			che.comprobante=ie.comprobante
+            and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id<" & idCierreSel & ")
+            and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & " and cc.id=" & idCierreSel & ")"
+
             Else
                 SqlTEXT = "select ie.fecha, 
 		case ie.tipo
@@ -168,14 +187,47 @@
 				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo,ie.descripcion 
 				from fact_ingreso_egreso as ie where ie.caja= " & idCajaSel & "
 				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & ")"
+
+                SQLtarjetas = "select tar.importe, ie.tipo
+            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & idCajaSel & "
+            and tar.comprobante=ie.comprobante            
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & ")"
+
+                SQLcheques = "select che.importe, ie.tipo
+            from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & idCajaSel & "
+            and che.comprobante=ie.comprobante            
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & idCajaSel & ")"
+
             End If
             'MsgBox(SqlTEXT)
             Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlTEXT, conexionPrinc)
+            Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, conexionPrinc)
+            Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, conexionPrinc)
+            Dim tablacheques As New DataTable
+            Dim tablatarjetas As New DataTable
             Dim tablacaja As New DataTable
             Dim infocaja() As DataRow
             consultacaja.Fill(tablacaja)
+            consultacheques.Fill(tablacheques)
+            consultatarjetas.Fill(tablatarjetas)
             infocaja = tablacaja.Select()
             Dim i As Integer
+
+            For Each Cheque As DataRow In tablacheques.Rows
+                If Cheque.Item("tipo") = 1 Then
+                    totalesCheques += FormatNumber(Cheque.Item("importe"))
+                Else
+                    totalesCheques -= FormatNumber(Cheque.Item("importe"))
+                End If
+            Next
+
+            For Each tarjetas As DataRow In tablatarjetas.Rows
+                If tarjetas.Item("tipo") = 1 Then
+                    totalesTarjetas += FormatNumber(tarjetas.Item("importe"))
+                Else
+                    totalesTarjetas -= FormatNumber(tarjetas.Item("importe"))
+                End If
+            Next
 
             For i = 0 To infocaja.GetUpperBound(0)
                 If infocaja(i)("tipo") = 1 Then   'INGRESOS
@@ -188,6 +240,9 @@
                     dtcaja.Rows.Add(infocaja(i)("fecha"), infocaja(i)("concepto") & "(" & infocaja(i)("descripcion") & ")", infocaja(i)("detalles"), "0", infocaja(i)("MONTO"), FormatNumber(saldoCaja, 2))
                 End If
             Next
+            lbltarjeta.Text = "TARJETA= $" & totalesTarjetas
+            lblcheques.Text = "CHEQUES= $" & totalesCheques
+            lblefectivo.Text = "EFECTIVO= $" & saldoCaja - (totalesTarjetas + totalesCheques)
             dttotales.Rows.Clear()
             dttotales.Rows.Add("", "", "TOTALES", FormatNumber(ingresos, 2), FormatNumber(egresos, 2), FormatNumber(saldoCaja, 2))
             dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen

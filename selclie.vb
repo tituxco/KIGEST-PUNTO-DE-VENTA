@@ -77,7 +77,7 @@
                     With CType(frmprincipal.ActiveMdiChild, puntoventa)
                         .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
                         .txtcliecta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCliente()
+                        .cargarCliente(False)
                         '.cmbrecibeusuario.Focus()
                         .txtcodPLU.Focus()
                     End With
@@ -157,7 +157,7 @@
                         With CType(frmprincipal.ActiveMdiChild, puntoventa)
                             .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
                             .txtcliecta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente()
+                            .cargarCliente(False)
                             '.cmbrecibeusuario.Focus()
                             .txtcodPLU.Focus()
                         End With

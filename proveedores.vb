@@ -2,7 +2,7 @@
 Public Class proveedores
     Inherits System.Windows.Forms.Form
     'Public HC As New verhc()
-    Dim Idproveedor As Integer
+    Public Idproveedor As Integer
     Dim modificarPers As Boolean
     Dim agregarPers As Boolean
     Private BindingSource1 As Windows.Forms.BindingSource = New BindingSource
@@ -13,16 +13,24 @@ Public Class proveedores
 
     Private Sub dtpersonal_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellEnter
         Idproveedor = dtpersonal.CurrentRow.Cells.Item(0).Value
-        CargarInfoProv()
-        cargarCuentaProv()
+        CargarInfoProv(False)
+        cargarCuentaProv(Idproveedor)
     End Sub
-    Public Sub CargarPersonal()
+    Public Sub CargarPersonal(busqueda As String, cuit As Boolean)
 
         cargarDtosGrales()
         Try
+            Dim busquedaTXT As String
+
+            If cuit = True Then
+                busquedaTXT = " where replace(cuit,'-','')=" & busqueda
+            Else
+                busquedaTXT = " where razon like '%" & busqueda.Replace(" ", "%") & "%'"
+            End If
+
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores order by razon asc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores " & busquedaTXT & " order by razon asc", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
@@ -44,8 +52,9 @@ Public Class proveedores
         End Try
     End Sub
 
-    Private Sub CargarInfoProv()
+    Public Sub CargarInfoProv(consCuit As Boolean)
         Dim imag As Byte()
+
         vaciarControles()
         Try
             Reconectar()
@@ -53,8 +62,11 @@ Public Class proveedores
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             conexionPrinc.ChangeDatabase(database)
             sql.Connection = conexionPrinc
-            sql.CommandText = "select * from fact_proveedores where id=" & Idproveedor
-
+            If consCuit = True Then
+                sql.CommandText = "select * from fact_proveedores where replace(cuit,'-','')" = txtcuit.Text
+            Else
+                sql.CommandText = "select * from fact_proveedores where id=" & Idproveedor
+            End If
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -66,6 +78,7 @@ Public Class proveedores
             txtcuit.Text = lector("cuit").ToString
             txtdomicilio.Text = lector("direccion").ToString
             txtinfo.Text = lector("informacion_adic").ToString
+            Idproveedor = lector("id").ToString
             If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
                 cmbBusquedaCuenta.SelectedValue = lector("cuentagastos")
             End If
@@ -97,15 +110,14 @@ Public Class proveedores
 
     End Sub
 
-    Private Sub cargarCuentaProv()
+    Public Sub cargarCuentaProv(idProv As Integer)
         Try
             dtcomprobantes.Rows.Clear()
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, fa.fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada " _
-            & "from fact_proveedores_fact as fa where idproveedor= " & Idproveedor & " order by fa.fecha desc", conexionPrinc)
+            & "from fact_proveedores_fact as fa where idproveedor= " & idProv & " order by fa.fecha desc", conexionPrinc)
             Dim tablacta As New DataTable
-            'Dim ds As New DataSet
+            'MsgBox(consulta.SelectCommand.CommandText)
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
             Dim itemCta() As DataRow
             Dim i As Integer
@@ -114,14 +126,8 @@ Public Class proveedores
 
             For i = 0 To itemCta.GetUpperBound(0)
                 dtcomprobantes.Rows.Add(itemCta(i)(0), itemCta(i)(1), itemCta(i)(2), itemCta(i)(3), itemCta(i)(4), itemCta(i)(5), itemCta(i)(6))
-                'If itemCta(i)(7) = 1 Then
-                '    dtcomprobantes.Rows(dtcomprobantes.RowCount - 1).DefaultCellStyle.BackColor = Color.GreenYellow
-                'End If
-            Next
 
-            ' dtcomprobantes.Item(2, dtcomprobantes.RowCount - 1) = tipoFac.Clone
-            dtcomprobantes.Item(1, dtcomprobantes.RowCount - 1) = SelFech.Clone
-            dtcomprobantes.Item(5, dtcomprobantes.RowCount - 1) = SelFech.Clone
+            Next
 
         Catch ex As Exception
 
@@ -229,16 +235,17 @@ Public Class proveedores
                 lblestado.Text = "Proveedor agregado correctamente"
                 cargarDtosGrales()
                 'txtbuscar.Text = txtapellido.Text & ", " & txtnombres.Text
-                CargarPersonal()
-                CargarInfoProv()
+                CargarPersonal(txtcuit.Text, True)
+
                 Idproveedor = comandoadd.LastInsertedId
+
                 Dim i As Integer
                 For i = 0 To dtpersonal.Rows.Count - 1
                     If dtpersonal.Item(0, i).Value = Idproveedor Then
                         dtpersonal.Rows(i).Selected = True
                     End If
                 Next
-
+                CargarInfoProv(False)
                 dtpersonal.Enabled = False
             End If
 
@@ -381,7 +388,7 @@ Public Class proveedores
     Private Sub proveedores_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         deshabilitarControles()
-        CargarPersonal()
+        CargarPersonal("%", False)
 
         'cargamos tipos de factura en el combo
         Dim tablafac As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc,  abrev from tipos_comprobantes where debcred like 'D'", conexionPrinc)
@@ -411,20 +418,10 @@ Public Class proveedores
     End Sub
 
     Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-        Dim i As Integer
-        For i = 0 To frmprincipal.MdiChildren.Length - 1
-            If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
-                'frmprincipal.MdiChildren(i).BringToFront()
-                MsgBox("la ventana de movimiento de cuenta ya esta abierta, por favor complete la operacion antes de efectuar otra", vbCritical)
-                Exit Sub
-            End If
-        Next
 
-        Dim mov As New movimientodecaja
-        mov.MdiParent = Me.MdiParent
-        mov.movrap = True
-        mov.movraptip = 6
-        mov.movrapclie = dtpersonal.CurrentRow.Cells(0).Value
+        Dim mov As New NvaFacturaCompra
+        'mov.MdiParent = Me.MdiParent
+        mov.idProveedor = dtpersonal.CurrentRow.Cells("Cuenta").Value
         mov.Show()
     End Sub
 
@@ -432,7 +429,7 @@ Public Class proveedores
         addProductosLote.idcomprobante = dtcomprobantes.CurrentRow.Cells(0).Value
         addProductosLote.Show()
         addProductosLote.TopMost = True
-        addProductosLote.cmdaceptar.Enabled = False
+        ' addProductosLote.cmdaceptar.Enabled = False
     End Sub
 
     Private Sub dtcomprobantes_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcomprobantes.CellEndEdit
@@ -455,11 +452,178 @@ Public Class proveedores
 
     End Sub
 
-    Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
+
+    Private Sub txtcuit_KeyDown(sender As Object, e As KeyEventArgs) Handles txtcuit.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim AFIPEstadoClave As String = ""
+            Dim AFIPNombreApellido As String = ""
+            Dim AFIPRazonSocial As String = ""
+            Dim AFIPLocalidad As String = ""
+            Dim AFIPDireccion As String = ""
+            Dim AFIPTipoContribuyente As String = ""
+
+            If txtcuit.Text = "" Or Not IsNumeric(txtcuit.Text) Or txtcuit.Text.Length < 11 Then
+                MsgBox("VERIFIQUE EL CUIT INGRESADO, NO PARECE SER VALIDO")
+                Exit Sub
+            End If
+            If ComprobarProveedorCUIT(txtcuit.Text) = False Then
+                If MsgBox("El PROVEEDOR no existe en su base de datos, desea agregarlo automaticamente consultando el padron de contribuyentes?", vbYesNo + vbQuestion) = vbYes Then
+                    Dim fe As New WSAFIPFE.Factura
+
+                    Dim bresultado As Boolean
+
+                    If fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia) Then
+                        fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+
+                        fe.ArchivoXMLEnviado = Application.StartupPath & "\p1envio.xml"
+                        fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
+                        fe.p1Version = 5
+
+                        If fe.p1ObtenerTicketAcceso() Then
+                            bresultado = fe.p1GetPersona(txtcuit.Text)
+                            If fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0) <> "" Then
+                                MsgBox("NO SE PUEDE EMITIR FACTURA PARA ESTE CLIENTE " & vbNewLine & fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0))
+                                Exit Sub
+                            End If
+                            AFIPEstadoClave = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.estadoClave", "", 0, 0)
+                            AFIPNombreApellido = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.apellido", "", 0, 0) & ", " & fe.p1LeerPropiedad("p1getPersona", "datosGenerales.nombre", "", 0, 0)
+                            AFIPRazonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.razonsocial", "", 0, 0)
+                            AFIPLocalidad = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0)
+                            AFIPDireccion = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0)
+
+                            If fe.p1VerificarImpuesto(20, "activo") Then
+                                AFIPTipoContribuyente = "MONOTRIBUTO"
+                            End If
+
+                            If fe.p1VerificarImpuesto(30, "activo") Then
+                                AFIPTipoContribuyente = "RESPONSABLE INSCRIPTO"
+                            End If
+
+                            If fe.p1VerificarImpuesto(32, "activo") Then
+                                AFIPTipoContribuyente = "EXENTO"
+                            End If
+
+                        Else
+                            MsgBox("NO SE PUEDE OBTENER EL TIKET DE ACCESO " & vbNewLine & fe.UltimoMensajeError)
+                        End If
+                    Else
+                        MsgBox("NO SE PUDO INICIAR EL SERVICIO DE CONSULTA DE PADRON DE CONTRIBUYENTES, REINTENTE" & vbNewLine & fe.UltimoMensajeError)
+                    End If
+                    txtrazon.Text = AFIPNombreApellido & AFIPRazonSocial
+
+                    MsgBox(AFIPNombreApellido & AFIPRazonSocial)
+                    'If AFIPEstadoClave = "ACTIVO" Then
+
+                    Dim SQLQuery As String
+                    Dim razon As String
+                    Dim telefono As String
+                    Dim celular As String
+                    Dim domicilio As String
+                    Dim localidad As String
+                    Dim observaciones As String
+                    Dim tipoiva As Integer
+                    Dim cuit As String
+                    Dim contacto As String
+                    Dim mail As String
+                    Dim numeroClie As String
+                    Dim vendedor As Integer = DatosAcceso.Vendedor
+                    Dim lista As Integer = 1
+                    Dim codclie As String = ""
+
+                    If AFIPRazonSocial = "" Then
+                        razon = AFIPNombreApellido
+                    Else
+                        razon = AFIPRazonSocial
+                    End If
+
+                    Select Case AFIPTipoContribuyente
+                        Case "MONOTRIBUTO"
+                            tipoiva = 6
+                        Case "EXENTO"
+                            tipoiva = 5
+                        Case "RESPONSABLE INSCRIPTO"
+                            tipoiva = 1
+                    End Select
+
+                    cuit = txtcuit.Text
+                    telefono = ""
+                    celular = ""
+                    domicilio = AFIPDireccion
+                    observaciones = ""
+                    localidad = AFIPLocalidad 'ComprobarLocalidad(AFIPLocalidad)
+                    contacto = ""
+                    mail = ""
+                    numeroClie = ""
+                    Reconectar()
+                    SQLQuery = "insert into fact_proveedores (razon,direccion,tipo_iva,cuit) values 
+                        (?nomb,?domi,?iva,?cuit)"
+
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SQLQuery, conexionPrinc)
+                    With comandoadd.Parameters
+                        .AddWithValue("?nomb", razon)
+                        .AddWithValue("?domi", domicilio & " - " & localidad)
+                        .AddWithValue("?iva", tipoiva)
+                        .AddWithValue("?cuit", cuit)
+
+                    End With
+                    comandoadd.ExecuteNonQuery()
+                    cargarDtosGrales()
+                    'txtbuscar.Text = txtapellido.Text & ", " & txtnombres.Text
+                    CargarPersonal(txtcuit.Text, True)
+
+                    Idproveedor = comandoadd.LastInsertedId
+
+                    Dim i As Integer
+                    For i = 0 To dtpersonal.Rows.Count - 1
+                        If dtpersonal.Item(0, i).Value = Idproveedor Then
+                            dtpersonal.Rows(i).Selected = True
+                        End If
+                    Next
+                    CargarInfoProv(False)
+                    dtpersonal.Enabled = False
+                End If
+
+                modificarPers = False
+                cmdmodificar.Enabled = True
+                cmdnuevapers.Enabled = True
+                cmdeliminar.Enabled = True
+                cmdcancelar.Enabled = False
+                cmdaceptar.Enabled = False
+                dtpersonal.Enabled = True
+
+                'lblestado.Text = ""
+                deshabilitarControles()
+
+
+            Else
+                MsgBox("el cuit ingresado pertenece a un cliente ya cargado, verifique")
+                txtbusqueda.Text = txtcuit.Text
+                CargarPersonal(txtcuit.Text, True)
+            End If
+        End If
+    End Sub
+
+    Private Sub txtbusqueda_TextChanged(sender As Object, e As EventArgs) Handles txtbusqueda.TextChanged
 
     End Sub
 
-    Private Sub TabPage1_Click(sender As Object, e As EventArgs) Handles TabPage1.Click
+    Private Sub txtbusqueda_MouseLeave(sender As Object, e As EventArgs) Handles txtbusqueda.MouseLeave
+
+    End Sub
+
+    Private Sub txtbusqueda_KeyDown(sender As Object, e As KeyEventArgs) Handles txtbusqueda.KeyDown
+        If e.KeyCode = Keys.Enter Then
+
+            If IsNumeric(txtbusqueda.Text) Then
+                CargarPersonal(txtbusqueda.Text, True)
+            Else
+                CargarPersonal(txtbusqueda.Text, False)
+            End If
+
+        End If
+    End Sub
+
+    Private Sub txtcuit_TextChanged(sender As Object, e As EventArgs) Handles txtcuit.TextChanged
 
     End Sub
 End Class

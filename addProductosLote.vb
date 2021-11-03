@@ -124,7 +124,7 @@
             txtcomprobanteFcompra.Text = infocl(0)(2).ToString
             txtcomprobanteFvencimiento.Text = infocl(0)(3).ToString
             txtcomprobanteImporte.Text = infocl(0)(4)
-            txtcomprobanteObservaciones.Text = infocl(0)(6)
+            txtcomprobanteObservaciones.Text = infocl(0)(6).ToString
             'lblproveedor.Text = "Proveedor: " & infocl(0)(0)
             'lblcomprobante.Text = "Comprobante: NUM " & infocl(0)(1) & "      FECHA " & infocl(0)(2).ToString & "       MONTO: " & infocl(0)(3)
             If infocl(0)(5) = 1 Then
@@ -153,6 +153,7 @@
                 dtproductos.EditMode = DataGridViewEditMode.EditProgrammatically
                 dtproductos.ScrollBars = ScrollBars.Vertical
                 pnadd.Enabled = False
+                cmdaceptar.Enabled = False
 
             End If
 
@@ -448,6 +449,7 @@
             Dim observaciones As String
             Dim idProveedor As Integer
 
+
             If cmbcatprod.SelectedValue = 0 Or cmbcatprod.SelectedIndex = -1 Then
                 MsgBox("debe seleccionar una categoria de producto para poder cargar")
                 Exit Sub
@@ -458,55 +460,67 @@
                 Exit Sub
             End If
 
-            fecha = Format(CDate(txtcomprobanteFcompra.Text), "yyyy-MM-dd")
-            tipo = "F"
-            numero = txtcomprobanteNum.Text
-            monto = txtcomprobanteImporte.Text
-            observaciones = txtcomprobanteObservaciones.Text
-            idProveedor = cmbproveedor.SelectedValue
-            vencimiento = Format(CDate(txtcomprobanteFvencimiento.Text), "yyyy-MM-dd")
-            Reconectar()
-
-            sqlQuery = "insert into fact_proveedores_fact " _
-                        & "(fecha, tipo,numero, monto,vencimiento,idproveedor,observaciones) values " _
-                        & "(?fech, ?tipo, ?numero, ?monto,?venc,?idp,?observ)"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-
-            With comandoadd.Parameters
-                .AddWithValue("?fech", fecha)
-                .AddWithValue("?tipo", tipo)
-                .AddWithValue("?numero", numero)
-                .AddWithValue("?monto", monto) 'remplazarPunto(monto))
-                .AddWithValue("?venc", vencimiento)
-                .AddWithValue("?observ", observaciones)
-                .AddWithValue("?idp", idProveedor)
-            End With
-            comandoadd.ExecuteNonQuery()
-
-            Dim idcomp As Integer = comandoadd.LastInsertedId
-            Reconectar()
-
-            sqlQuery = "insert into fact_cuentaprov " _
-                        & "(idprov,idcomp) values " _
-                        & "(?prov, ?comp)"
-            Dim comandoaddcta As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-
-            With comandoaddcta.Parameters
-                .AddWithValue("?prov", idProveedor)
-                .AddWithValue("?comp", idcomp)
-
-            End With
-            comandoaddcta.ExecuteNonQuery()
-
-            'MsgBox("Factura ingresada cargada correctamente")
-
-            idcomprobante = comandoadd.LastInsertedId
-            If GuardarProductos() = True Then
-                GuardarLoteCompra()
-                cmdaceptar.Enabled = False
+            If idcomprobante <> 0 Then
+                If GuardarProductos() = True Then
+                    GuardarLoteCompra()
+                    cmdaceptar.Enabled = False
+                Else
+                    MsgBox("hubo un error al guardar los productos, el lote no se guardara")
+                    cmdaceptar.Enabled = True
+                End If
             Else
-                MsgBox("hubo un error al guardar los productos, el lote no se guardara")
-                cmdaceptar.Enabled = True
+
+                fecha = Format(CDate(txtcomprobanteFcompra.Text), "yyyy-MM-dd")
+                tipo = "F"
+                numero = txtcomprobanteNum.Text
+                monto = txtcomprobanteImporte.Text
+                observaciones = txtcomprobanteObservaciones.Text
+                idProveedor = cmbproveedor.SelectedValue
+                vencimiento = Format(CDate(txtcomprobanteFvencimiento.Text), "yyyy-MM-dd")
+                Reconectar()
+
+                sqlQuery = "insert into fact_proveedores_fact " _
+                            & "(fecha, tipo,numero, monto,vencimiento,idproveedor,observaciones) values " _
+                            & "(?fech, ?tipo, ?numero, ?monto,?venc,?idp,?observ)"
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+
+                With comandoadd.Parameters
+                    .AddWithValue("?fech", fecha)
+                    .AddWithValue("?tipo", tipo)
+                    .AddWithValue("?numero", numero)
+                    .AddWithValue("?monto", monto) 'remplazarPunto(monto))
+                    .AddWithValue("?venc", vencimiento)
+                    .AddWithValue("?observ", observaciones)
+                    .AddWithValue("?idp", idProveedor)
+                End With
+                comandoadd.ExecuteNonQuery()
+
+                Dim idcomp As Integer = comandoadd.LastInsertedId
+                Reconectar()
+
+                sqlQuery = "insert into fact_cuentaprov " _
+                            & "(idprov,idcomp) values " _
+                            & "(?prov, ?comp)"
+                Dim comandoaddcta As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+
+                With comandoaddcta.Parameters
+                    .AddWithValue("?prov", idProveedor)
+                    .AddWithValue("?comp", idcomp)
+
+                End With
+                comandoaddcta.ExecuteNonQuery()
+
+                'MsgBox("Factura ingresada cargada correctamente")
+
+                idcomprobante = comandoadd.LastInsertedId
+
+                If GuardarProductos() = True Then
+                    GuardarLoteCompra()
+                    cmdaceptar.Enabled = False
+                Else
+                    MsgBox("hubo un error al guardar los productos, el lote no se guardara")
+                    cmdaceptar.Enabled = True
+                End If
             End If
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -598,14 +612,6 @@
     Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
         My.Settings.calcCosto = chkcalcularcosto.CheckState
         My.Settings.Save()
-    End Sub
-
-    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
-
-    End Sub
-
-    Private Sub cmblista_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmblista.SelectedIndexChanged
-
     End Sub
 
     Private Sub cmblista_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmblista.SelectedValueChanged
@@ -815,4 +821,5 @@
         End Try
 
     End Function
+
 End Class

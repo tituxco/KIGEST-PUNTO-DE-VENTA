@@ -60,29 +60,29 @@
     End Sub
 
     Private Sub dtcloud_RowValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.RowValidated
-        Try
-            Dim sqlQuery As String = "update AuthServ.CliAuth set cliente=?cliente, sistema=?sistema,bd=?clbd," _
-            & "codus=?auusua,clave=?aupass, autorizado=?autorizado where id=" & dtcloud.Rows(e.RowIndex).Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?cliente", dtcloud.Rows(e.RowIndex).Cells(1).Value.ToString.ToUpper)
-                .AddWithValue("?sistema", dtcloud.Rows(e.RowIndex).Cells(2).Value.ToString.ToUpper)
-                .AddWithValue("?clbd", dtcloud.Rows(e.RowIndex).Cells(3).Value.ToString)
-                .AddWithValue("?auusua", dtcloud.Rows(e.RowIndex).Cells(4).Value)
-                .AddWithValue("?aupass", dtcloud.Rows(e.RowIndex).Cells(5).Value)
-                .AddWithValue("?autorizado", dtcloud.Rows(e.RowIndex).Cells(7).Value)
+        'Try
+        '    Dim sqlQuery As String = "update AuthServ.CliAuth set cliente=?cliente, sistema=?sistema,bd=?clbd," _
+        '    & "codus=?auusua,clave=?aupass, autorizado=?autorizado where id=" & dtcloud.Rows(e.RowIndex).Cells(0).Value
+        '    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+        '    With comandoadd.Parameters
+        '        .AddWithValue("?cliente", dtcloud.Rows(e.RowIndex).Cells(1).Value.ToString.ToUpper)
+        '        .AddWithValue("?sistema", dtcloud.Rows(e.RowIndex).Cells(2).Value.ToString.ToUpper)
+        '        .AddWithValue("?clbd", dtcloud.Rows(e.RowIndex).Cells(3).Value.ToString)
+        '        .AddWithValue("?auusua", dtcloud.Rows(e.RowIndex).Cells(4).Value)
+        '        .AddWithValue("?aupass", dtcloud.Rows(e.RowIndex).Cells(5).Value)
+        '        .AddWithValue("?autorizado", dtcloud.Rows(e.RowIndex).Cells(7).Value)
 
-            End With
-            comandoadd.ExecuteNonQuery()
-            If dtcloud.Rows(e.RowIndex).Cells(7).Value = 0 Then
-                dtcloud.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.OrangeRed
-            Else
-                dtcloud.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.White
-            End If
-            CargaServiciosCloud()
-        Catch ex As Exception
+        '    End With
+        '    comandoadd.ExecuteNonQuery()
+        '    If dtcloud.Rows(e.RowIndex).Cells(7).Value = 0 Then
+        '        dtcloud.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.OrangeRed
+        '    Else
+        '        dtcloud.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.White
+        '    End If
+        '    CargaServiciosCloud()
+        'Catch ex As Exception
 
-        End Try
+        'End Try
 
     End Sub
 
@@ -133,5 +133,26 @@
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         agregarUsuarioCloud.Show()
+    End Sub
+
+    Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click
+
+    End Sub
+
+    Private Sub dtcloud_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellEndEdit
+        If e.ColumnIndex = 5 Then
+
+            Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dtcloud.CurrentRow.Cells(5).Value & "') where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 7 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set autorizado =" & dtcloud.CurrentRow.Cells(7).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        End If
     End Sub
 End Class

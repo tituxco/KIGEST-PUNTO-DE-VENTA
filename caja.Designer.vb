@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class caja
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,11 +20,11 @@ Partial Class caja
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(caja))
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -52,12 +52,18 @@ Partial Class caja
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.grpdetalleCaja = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblefectivo = New System.Windows.Forms.Label()
+        Me.lblcheques = New System.Windows.Forms.Label()
+        Me.lbltarjeta = New System.Windows.Forms.Label()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpdetalleCaja.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnnavegacion
@@ -188,6 +194,7 @@ Partial Class caja
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.grpdetalleCaja)
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
         Me.Panel2.Controls.Add(Me.cmdcerrarcaja)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
@@ -249,9 +256,9 @@ Partial Class caja
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle5.Format = "d"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle3.Format = "d"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -310,9 +317,9 @@ Partial Class caja
         '
         'Column1
         '
-        DataGridViewCellStyle6.Format = "d"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle4.Format = "d"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle4
         Me.Column1.FillWeight = 50.0!
         Me.Column1.HeaderText = "Fecha"
         Me.Column1.Name = "Column1"
@@ -345,6 +352,63 @@ Partial Class caja
         Me.Column5.HeaderText = "Saldo"
         Me.Column5.Name = "Column5"
         '
+        'grpdetalleCaja
+        '
+        Me.grpdetalleCaja.Controls.Add(Me.Label3)
+        Me.grpdetalleCaja.Controls.Add(Me.lblefectivo)
+        Me.grpdetalleCaja.Controls.Add(Me.lblcheques)
+        Me.grpdetalleCaja.Controls.Add(Me.lbltarjeta)
+        Me.grpdetalleCaja.Dock = System.Windows.Forms.DockStyle.Right
+        Me.grpdetalleCaja.Location = New System.Drawing.Point(796, 0)
+        Me.grpdetalleCaja.Name = "grpdetalleCaja"
+        Me.grpdetalleCaja.Size = New System.Drawing.Size(219, 103)
+        Me.grpdetalleCaja.TabIndex = 94
+        Me.grpdetalleCaja.TabStop = False
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.ForeColor = System.Drawing.Color.White
+        Me.Label3.Location = New System.Drawing.Point(6, 10)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(146, 17)
+        Me.Label3.TabIndex = 92
+        Me.Label3.Text = "DETALLE DE CAJA"
+        '
+        'lblefectivo
+        '
+        Me.lblefectivo.AutoSize = True
+        Me.lblefectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblefectivo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblefectivo.Location = New System.Drawing.Point(6, 33)
+        Me.lblefectivo.Name = "lblefectivo"
+        Me.lblefectivo.Size = New System.Drawing.Size(94, 18)
+        Me.lblefectivo.TabIndex = 51
+        Me.lblefectivo.Text = "EFECTIVO:"
+        '
+        'lblcheques
+        '
+        Me.lblcheques.AutoSize = True
+        Me.lblcheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblcheques.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblcheques.Location = New System.Drawing.Point(6, 74)
+        Me.lblcheques.Name = "lblcheques"
+        Me.lblcheques.Size = New System.Drawing.Size(95, 18)
+        Me.lblcheques.TabIndex = 53
+        Me.lblcheques.Text = "CHEQUES:"
+        '
+        'lbltarjeta
+        '
+        Me.lbltarjeta.AutoSize = True
+        Me.lbltarjeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 11.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltarjeta.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltarjeta.Location = New System.Drawing.Point(6, 53)
+        Me.lbltarjeta.Name = "lbltarjeta"
+        Me.lbltarjeta.Size = New System.Drawing.Size(85, 18)
+        Me.lbltarjeta.TabIndex = 52
+        Me.lbltarjeta.Text = "TARJETA:"
+        '
         'caja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -366,6 +430,8 @@ Partial Class caja
         Me.Panel2.ResumeLayout(False)
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grpdetalleCaja.ResumeLayout(False)
+        Me.grpdetalleCaja.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -398,4 +464,9 @@ Partial Class caja
     Friend WithEvents Button2 As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents cmbcierresCajas As ComboBox
+    Friend WithEvents grpdetalleCaja As GroupBox
+    Friend WithEvents Label3 As Label
+    Friend WithEvents lblefectivo As Label
+    Friend WithEvents lblcheques As Label
+    Friend WithEvents lbltarjeta As Label
 End Class

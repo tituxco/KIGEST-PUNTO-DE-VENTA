@@ -13,10 +13,16 @@ Public Class CajaDiaria
         CargarCaja(False)
 
         If InStr(DatosAcceso.Moduloacc, "4bba") = False Then cmdnuevomov.Visible = False
+        'If InStr(DatosAcceso.Moduloacc, "4bba") = False Then grpdetalleCaja.Visible = False
+
     End Sub
     Private Sub CargarCaja(historial As Boolean)
         Dim egresos As Double = 0
         Dim ingresos As Double = 0
+
+        Dim totalesEfectivo As Double = 0
+        Dim totalesCheques As Double = 0
+        Dim totalesTarjetas As Double = 0
 
         Dim idCierreSel As Integer = cmbcierresCajas.SelectedValue
         saldoCaja = 0
@@ -29,6 +35,8 @@ Public Class CajaDiaria
         'End If
         Dim SQLARQUEO As String = ""
         Dim SQLCAJA As String = ""
+        Dim SQLtarjetas As String = ""
+        Dim SQLcheques As String = ""
         dtcaja.Rows.Clear()
         If historial = True Then
             SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")"
@@ -80,7 +88,20 @@ Public Class CajaDiaria
 			from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
 				and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
                 and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
+
+            SQLtarjetas = "select tar.importe, ie.tipo           
+            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & CajaDef & " and          
+            tar.comprobante=ie.comprobante
+			and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
+            and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
+
+            SQLcheques = "select che.importe, ie.tipo                        
+            from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & CajaDef & " and
+			che.comprobante=ie.comprobante
+            and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
+            and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
         Else
+
             SQLCAJA = "select ie.fecha, 
 		case ie.tipo
 			When 1 Then (
@@ -108,13 +129,48 @@ Public Class CajaDiaria
 				format(replace(ie.monto,',','.'),2,'es_AR') AS MONTO, ie.tipo,ie.descripcion 
 				from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
 				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+
+            SQLtarjetas = "select tar.importe, ie.tipo
+            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & CajaDef & "
+            and tar.comprobante=ie.comprobante            
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+
+            SQLcheques = "select che.importe, ie.tipo
+            from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & CajaDef & "
+            and che.comprobante=ie.comprobante            
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
         End If
         Reconectar()
         Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, conexionPrinc)
+        Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, conexionPrinc)
+        Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, conexionPrinc)
+        Dim tablacheques As New DataTable
+        Dim tablatarjetas As New DataTable
         Dim tablacaja As New DataTable
+
         Dim infocaja() As DataRow
         consultacaja.Fill(tablacaja)
+        consultacheques.Fill(tablacheques)
+        consultatarjetas.Fill(tablatarjetas)
         infocaja = tablacaja.Select()
+
+        For Each Cheque As DataRow In tablacheques.Rows
+            If Cheque.Item("tipo") = 1 Then
+                totalesCheques += FormatNumber(Cheque.Item("importe"))
+            Else
+                totalesCheques -= FormatNumber(Cheque.Item("importe"))
+            End If
+        Next
+
+        For Each tarjetas As DataRow In tablatarjetas.Rows
+            If tarjetas.Item("tipo") = 1 Then
+                totalesTarjetas += FormatNumber(tarjetas.Item("importe"))
+            Else
+                totalesTarjetas -= FormatNumber(tarjetas.Item("importe"))
+            End If
+        Next
+
+
         Dim i As Integer
 
         For i = 0 To infocaja.GetUpperBound(0)
@@ -128,6 +184,9 @@ Public Class CajaDiaria
                 dtcaja.Rows.Add(infocaja(i)("fecha"), infocaja(i)("concepto") & "(" & infocaja(i)("descripcion") & ")", infocaja(i)("detalles"), "0", infocaja(i)("MONTO"), FormatNumber(saldoCaja, 2))
             End If
         Next
+        lbltarjeta.Text = "TARJETA= $" & totalesTarjetas
+        lblcheques.Text = "CHEQUES= $" & totalesCheques
+        lblefectivo.Text = "EFECTIVO= $" & saldoCaja - (totalesTarjetas + totalesCheques)
         dttotales.Rows.Clear()
         dttotales.Rows.Add("", "", "TOTALES", FormatNumber(ingresos, 2), FormatNumber(egresos, 2), FormatNumber(saldoCaja, 2))
         dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen

@@ -506,7 +506,7 @@ Public Class frmprincipal
         vta.MdiParent = Me
         vta.idfacrap = My.Settings.idfacRap
         vta.Idcliente = 9999
-        vta.cargarCliente()
+        vta.cargarCliente(False)
         vta.txtcodPLU.Focus()
         vta.Show()
     End Sub
@@ -524,7 +524,7 @@ Public Class frmprincipal
         vta.MdiParent = Me
         vta.idfacrap = 2
         vta.Idcliente = 9999
-        vta.cargarCliente()
+        vta.cargarCliente(False)
         vta.cmdguardar.Enabled = False
         vta.cmdsolicitarcae.Enabled = True
         vta.txtcodPLU.Focus()
@@ -719,7 +719,7 @@ Public Class frmprincipal
         vta.MdiParent = Me
         vta.idfacrap = 5
         vta.Idcliente = 9999
-        vta.cargarCliente()
+        vta.cargarCliente(False)
         vta.txtcodPLU.Focus()
         vta.Show()
     End Sub

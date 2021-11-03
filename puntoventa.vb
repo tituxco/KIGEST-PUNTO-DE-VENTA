@@ -29,7 +29,7 @@ Public Class puntoventa
         End If
         cargar_datos_factura()
         txtcodPLU.Focus()
-        If InStr(DatosAcceso.Moduloacc, "1") = False Then Button2.Enabled = False
+        ' If InStr(DatosAcceso.Moduloacc, "1") = False Then Button2.Enabled = False
         If InStr(DatosAcceso.Moduloacc, "3z") = False Then chkquitarstock.Enabled = False
 
     End Sub
@@ -111,29 +111,40 @@ Public Class puntoventa
             MsgBox(ex.Message)
         End Try
     End Sub
-    Public Sub cargarCliente()
+    Public Sub cargarCliente(busq_cuit As Boolean)
         Try
             txtcliecta.Text = Idcliente
+
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("Select cl.nomapell_razon As clie, cl.dir_domicilio, lc.nombre As localidad, " _
-            & "iv.tipo As tipocontr, cl.cuit, lp.nombre As lista_precios, cl.lista_precios,cl.iva_tipo " _
+            Dim param As String = ""
+            If busq_cuit = True Then
+                param = " (replace(cl.cuit,'-','') like '" & txtcliecuitcuil.Text & "' and cl.cuit<>'') "
+            Else
+                param = "(cl.idclientes = '" & txtcliecta.Text & "')"
+            End If
+
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("Select cl.idclientes,cl.nomapell_razon As clie, cl.dir_domicilio, lc.nombre As localidad, " _
+            & "iv.tipo As tipocontr, cl.cuit, lp.nombre As lista_preciosNM, cl.lista_precios,cl.iva_tipo " _
             & "from fact_clientes As cl,  cm_localidad As lc, fact_ivatipo As iv, fact_listas_precio As lp " _
-            & "where lc.id= cl.dir_localidad And iv.id = cl.iva_tipo And lp.id = cl.lista_precios And idclientes = " & txtcliecta.Text, conexionPrinc)
+            & "where lc.id= cl.dir_localidad And iv.id = cl.iva_tipo And lp.id = cl.lista_precios 
+            And" & param, conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
             infocl = tablacl.Select("")
 
-            If tipofact = 1 And infocl(0)(7) <> 1 Then
+            'MsgBox(consulta.SelectCommand.CommandText)
+            If tipofact = 1 And infocl(0)("iva_tipo") <> 1 Then
                 MsgBox("El tipo de contribuyente no corresponde para el tipo de factura, por favor verifique")
                 txtcliecta.Text = ""
                 Exit Sub
             Else
-                txtclierazon.Text = infocl(0)(0)
-                lblcliedomicilio.Text = infocl(0)(1)
-                lblclieciudad.Text = infocl(0)(2)
-                lblclietipocontr.Text = infocl(0)(3)
-                txtcliecuitcuil.Text = infocl(0)(4)
+                txtcliecta.Text = infocl(0)("idclientes")
+                txtclierazon.Text = infocl(0)("clie")
+                lblcliedomicilio.Text = infocl(0)("dir_domicilio")
+                lblclieciudad.Text = infocl(0)("localidad")
+                lblclietipocontr.Text = infocl(0)("tipocontr")
+                txtcliecuitcuil.Text = infocl(0)("cuit")
                 If condVta = 1 Then
                     lblfactcondvta.Text = "CONTADO"
 
@@ -143,13 +154,13 @@ Public Class puntoventa
                     condVta = 1
                     lblfactcondvta.Text = "CONTADO"
                 End If
-                lblfactlistaprecios.Text = infocl(0)(5)
-                listaPrecios = infocl(0)(6)
-                TipoIVAContr = infocl(0)(7)
-                    'txtcodPLU.Focus()
+                lblfactlistaprecios.Text = infocl(0)("lista_preciosNM")
+                listaPrecios = infocl(0)("lista_precios")
+                TipoIVAContr = infocl(0)("iva_tipo")
+                'txtcodPLU.Focus()
 
-                End If
-
+            End If
+            'MsgBox(infocl(0)("clie"))
 
         Catch ex As Exception
         End Try
@@ -158,7 +169,7 @@ Public Class puntoventa
     Private Sub txtcliecta_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcliecta.KeyUp
         Try
             If e.KeyCode = Keys.Enter Then
-                cargarCliente()
+                cargarCliente(False)
             End If
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -189,6 +200,7 @@ Public Class puntoventa
 
                 Dim pUnit As Double = dtproductos.Rows(e.RowIndex).Cells(5).Value
                 Dim cant As Double = dtproductos.Rows(e.RowIndex).Cells(2).Value
+
                 dtproductos.Rows(e.RowIndex).Cells(6).Value = Math.Round(pUnit * cant, 2)
                 dtproductos.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.GreenYellow
 
@@ -205,11 +217,31 @@ Public Class puntoventa
                     End If
                 End If
             ElseIf e.ColumnIndex = 5 Then
-                dtproductos.CurrentCell.Value = dtproductos.CurrentCell.Value
-                Dim pUnit As Double = dtproductos.CurrentCell.Value
+                Dim pUnit As Double = 0
                 Dim cant As Double = dtproductos.Rows(e.RowIndex).Cells(2).Value
+                Dim RI As Boolean = False
+                Dim alicuota As Double = (dtproductos.Rows(e.RowIndex).Cells(4).Value + 100) / 100
+                Select Case tipofact
+                    Case 1 To 3
+                        RI = True
+                    Case Else
+                        RI = False
+                End Select
+
+                If chkPreciosFinales.Checked = True And RI = True Then
+                    'MsgBox("factura RI")
+                    pUnit = Math.Round(FormatNumber(dtproductos.CurrentCell.Value, 2) / alicuota, 2)
+                Else
+                    pUnit = FormatNumber(dtproductos.CurrentCell.Value, 2)
+                End If
+
+                dtproductos.CurrentCell.Value = pUnit 'dtproductos.CurrentCell.Value
+
+                'Dim pUnit As Double =
+                'Dim cant As Double = 
                 dtproductos.Rows(e.RowIndex).Cells(6).Value = Math.Round(pUnit * cant, 2)
                 dtproductos.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.GreenYellow
+
 
 
 
@@ -1578,6 +1610,10 @@ Public Class puntoventa
                 Case Keys.F7
                     Button1.PerformClick()
                 Case Keys.F8
+                    If cmdguardar.Enabled = False And dtproductos.Rows.Count <> 0 And cmdsolicitarcae.Enabled = False Then
+                        MsgBox("debe iniciar un comprobante en blanco antes")
+                        Exit Sub
+                    End If
                     Dim idFacRap As Integer
                     Reconectar()
                     Dim consultaFacRap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
@@ -1601,7 +1637,7 @@ Public Class puntoventa
                         .txtcodPLU.Focus()
                         .cargar_datos_factura()
                         .Idcliente = txtcliecta.Text
-                        .cargarCliente()
+                        .cargarCliente(False)
                         If tipofact = 1 Or tipofact = 2 Or tipofact = 3 Then
                             For Each producto As DataGridViewRow In dtproductos.Rows
                                 producto.Cells(5).Value = CDbl(producto.Cells(5).Value) / ((CDbl(producto.Cells(4).Value) + 100) / 100)
@@ -1652,10 +1688,10 @@ Public Class puntoventa
         Select Case tipofact
             Case 1, 2, 3
                 Idcliente = txtcliecta.Text
-                cargarCliente()
+                cargarCliente(False)
             Case Else
                 Idcliente = 9999
-                cargarCliente()
+                cargarCliente(False)
         End Select
         cargar_datos_factura()
         CalcularTotales()
@@ -1775,11 +1811,30 @@ Public Class puntoventa
     End Sub
 
     Private Sub txtcantPLU_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcantPLU.KeyUp
+        Dim punit As String = 0
+        Dim cant As Double = FormatNumber(txtcantPLU.Text, 2)
+        Dim alicuota As Double = (txtivaPLU.Text + 100) / 100
+        'MsgBox(tipofact)
+        Dim RI As Boolean = False
+
+        Select Case tipofact
+            Case 1 To 3
+                RI = True
+            Case Else
+                RI = False
+        End Select
+
+        If chkPreciosFinales.Checked = True And RI = True Then
+            'MsgBox("factura RI")
+            punit = Math.Round(FormatNumber(txtpreciounitPLU.Text, 2) / alicuota, 2)
+        Else
+            punit = FormatNumber(txtpreciounitPLU.Text, 2)
+        End If
         If e.KeyCode = Keys.Enter Then
             If txtcodPLU.Text = "" Then
                 If IsNumeric(txtcantPLU.Text) And IsNumeric(txtpreciounitPLU.Text) Then
                     dtproductos.Rows.Add(0, 0, FormatNumber(txtcantPLU.Text, 2),
-                    txtdescripcionPLU.Text.ToUpper, txtivaPLU.Text, FormatNumber(txtpreciounitPLU.Text, 2), FormatNumber(txtpreciounitPLU.Text, 2) * FormatNumber(txtcantPLU.Text, 2))
+                    txtdescripcionPLU.Text.ToUpper, txtivaPLU.Text, punit, punit * cant)
                     txtcantPLU.Text = "1"
                     txtdescripcionPLU.Text = ""
                     txtpreciounitPLU.Text = ""
@@ -2431,7 +2486,7 @@ Public Class puntoventa
 
     Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
         Idcliente = 9999
-        cargarCliente()
+        cargarCliente(False)
     End Sub
 
     Private Sub cmbdescuentoRecargo_Click(sender As Object, e As EventArgs) Handles cmbdescuentoRecargo.Click
@@ -2523,88 +2578,149 @@ Public Class puntoventa
     End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+
+        Dim AFIPEstadoClave As String = ""
+        Dim AFIPNombreApellido As String = ""
+        Dim AFIPRazonSocial As String = ""
+        Dim AFIPLocalidad As String = ""
+        Dim AFIPDireccion As String = ""
+        Dim AFIPTipoContribuyente As String = ""
+
+        If txtcliecuitcuil.Text = "" Or Not IsNumeric(txtcliecuitcuil.Text) Or txtcliecuitcuil.Text.Length < 11 Then
+            MsgBox("VERIFIQUE EL CUIT INGRESADO, NO PARECE SER VALIDO")
+            Exit Sub
+        End If
         Dim fe As New WSAFIPFE.Factura
 
         Dim bresultado As Boolean
 
-        bresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
-        fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
-        If bresultado = True Then
-            bresultado = fe.f1ObtenerTicketAcceso()
-            'MsgBox("Tiket obtenido" )
+        If fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia) Then
+            fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+
+            fe.ArchivoXMLEnviado = Application.StartupPath & "\p1envio.xml"
+            fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
+            fe.p1Version = 5
+
+            If fe.p1ObtenerTicketAcceso() Then
+                bresultado = fe.p1GetPersona(txtcliecuitcuil.Text)
+                If fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0) <> "" Then
+                    MsgBox("NO SE PUEDE EMITIR FACTURA PARA ESTE CLIENTE " & vbNewLine & fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0))
+                    Exit Sub
+                End If
+                AFIPEstadoClave = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.estadoClave", "", 0, 0)
+                    AFIPNombreApellido = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.apellido", "", 0, 0) & ", " & fe.p1LeerPropiedad("p1getPersona", "datosGenerales.nombre", "", 0, 0)
+                    AFIPRazonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.razonsocial", "", 0, 0)
+                    AFIPLocalidad = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0)
+                    AFIPDireccion = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0)
+
+                    If fe.p1VerificarImpuesto(20, "activo") Then
+                        AFIPTipoContribuyente = "MONOTRIBUTO"
+                    End If
+
+                    If fe.p1VerificarImpuesto(30, "activo") Then
+                        AFIPTipoContribuyente = "RESPONSABLE INSCRIPTO"
+                    End If
+
+                    If fe.p1VerificarImpuesto(32, "activo") Then
+                        AFIPTipoContribuyente = "EXENTO"
+                    End If
+
+                Else
+                    MsgBox("NO SE PUEDE OBTENER EL TIKET DE ACCESO " & vbNewLine & fe.UltimoMensajeError)
+            End If
         Else
-            MsgBox("NO SE PUDO OBTENER EL TIKET DE ACCESO A AFIP." & vbNewLine & "Motivo:" & fe.UltimoNumeroError & vbNewLine & fe.UltimoMensajeError)
-            ' EnProgreso.Close()
-            Exit Sub
+            MsgBox("NO SE PUDO INICIAR EL SERVICIO DE CONSULTA DE PADRON DE CONTRIBUYENTES, REINTENTE" & vbNewLine & fe.UltimoMensajeError)
         End If
-        If bresultado = True Then
-            bresultado = fe.p1GetPersona(txtcliecuitcuil.Text)
+        txtclierazon.Text = AFIPNombreApellido
 
-            If fe.UltimoMensajeError = "" Then
+        'MsgBox(AFIPEstadoClave)
+        'If AFIPEstadoClave = "ACTIVO" Then
+        If ComprobarClienteCUIT(txtcliecuitcuil.Text) = True Then
+            'MsgBox("el cliente existe en la base de datos")
+            cargarCliente(True)
+        Else
+            Dim SQLQuery As String
+            Dim razon As String
+            Dim telefono As String
+            Dim celular As String
+            Dim domicilio As String
+            Dim localidad As String
+            Dim observaciones As String
+            Dim tipoiva As Integer
+            Dim cuit As String
+            Dim contacto As String
+            Dim mail As String
+            Dim numeroClie As String
+            Dim vendedor As Integer = DatosAcceso.Vendedor
+            Dim lista As Integer = 1
+            Dim codclie As String = ""
 
-                MsgBox("apellido " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.apellido", "", 0, 0))
-
-                MsgBox("nombre " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.nombre", "", 0, 0))
-
-                MsgBox("razon " + fe.p1LeerPropiedad("p1getPersona", "datosgenerales.razonsocial", "", 0, 0))
-
-                MsgBox("localidad " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0))
-
-                MsgBox("direccion " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0))
-
-                MsgBox("tipo domicilio " + fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.tipodomicilio", "", 0, 0))
-
-                If fe.p1VerificarImpuesto(20, "activo") Then
-
-                    MsgBox("monotributista")
-
-                End If
-
-                If fe.p1VerificarImpuesto(30, "activo") Then
-
-                    MsgBox("INSCRIPTO IVA")
-
-                End If
-
-                If fe.p1VerificarImpuesto(32, "activo") Then
-
-                    MsgBox("exento IVA")
-
-                End If
-
+            If AFIPRazonSocial = "" Then
+                razon = AFIPNombreApellido
             Else
-
-                MsgBox("error general" + fe.UltimoMensajeError)
-
+                razon = AFIPRazonSocial
             End If
 
-        Else
+            Select Case AFIPTipoContribuyente
+                Case "MONOTRIBUTO"
+                    tipoiva = 6
+                Case "EXENTO"
+                    tipoiva = 5
+                Case "RESPONSABLE INSCRIPTO"
+                    tipoiva = 1
+            End Select
 
-            MsgBox("fallo acceso " + fe.UltimoMensajeError)
+            cuit = txtcliecuitcuil.Text
+            telefono = ""
+            celular = ""
+            domicilio = AFIPDireccion
+            observaciones = ""
+            localidad = ComprobarLocalidad(AFIPLocalidad)
+            contacto = ""
+            mail = ""
+            numeroClie = ""
+            Reconectar()
+            SQLQuery = "insert into fact_clientes " _
+                & "(nomapell_razon, dir_domicilio, dir_localidad, iva_tipo, cuit, telefono, contacto, celular, email, observaciones,lista_precios,codClie,vendedor) values " _
+                & "(?nomb,?domi,?loca,?iva,?cuit,?tel,?cont,?cel,?mail,?obs,?lista,?codclie,?vendedor)"
 
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?nomb", razon)
+                    .AddWithValue("?domi", domicilio)
+                    .AddWithValue("?loca", localidad)
+                    .AddWithValue("?iva", tipoiva)
+                    .AddWithValue("?cuit", cuit)
+                    .AddWithValue("?tel", telefono)
+                    .AddWithValue("?cont", contacto)
+                    .AddWithValue("?cel", celular)
+                    .AddWithValue("?mail", mail)
+                    .AddWithValue("?obs", observaciones)
+                    .AddWithValue("?lista", lista)
+                    .AddWithValue("?codclie", codclie)
+                .AddWithValue("?vendedor", vendedor)
+            End With
+            comandoadd.ExecuteNonQuery()
+            cargarCliente(True)
         End If
 
 
-        'If fe.iniciar(0, "cuit", "certificado.pfx", "archiv.lic si es para el modo real 1") Then
+    End Sub
 
-        '    fe.p1Version = 52
+    Private Sub txtcliecuitcuil_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcliecuitcuil.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            If ComprobarClienteCUIT(txtcliecuitcuil.Text) = False Then
+                If MsgBox("El cliente no existe en su base de datos, desea agregarlo automaticamente consultando el padron de contribuyentes?", vbYesNo + vbQuestion) = vbYes Then
+                    Button5.PerformClick()
+                End If
+            Else
+                cargarCliente(True)
+            End If
 
-        '    fe.ArchivoXMLEnviado = "d:\p1envio.xml"
+        End If
+    End Sub
 
-        '    fe.ArchivoXMLRecibido = "d:\p1recibo.xml"
-
-        '    fe.ArchivoCertificadoPassword = ""
-
-        '    If fe.p1ObtenerTicketAcceso() Then
-
-
-
-        '    Else
-
-        '    MsgBox("fallo iniciar " + fe.UltimoMensajeError)
-
-        'End If
-
+    Private Sub txtcliecuitcuil_TextChanged(sender As Object, e As EventArgs) Handles txtcliecuitcuil.TextChanged
 
     End Sub
 End Class

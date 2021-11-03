@@ -438,7 +438,8 @@
                 Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
                 Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))
                 vta.Idcliente = ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
-                vta.cargarCliente()
+                'MsgBox(ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value))
+                vta.cargarCliente(False)
                 vta.txtcodPLU.Focus()
                 vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
                 vta.CargarPedidoRemoto(itemPedido, ptovtapedido)
@@ -497,7 +498,7 @@
         vta.Idcliente = 9999 'ObtenerIdCliente(dgvPedidos.dgvVista.CurrentRow.Cells(3).Value)
         vta.lblfacIdAlmacen.Text = My.Settings.idAlmacen
         vta.lblfacvendedor.Text = cmbvendedor.SelectedValue
-        vta.cargarCliente()
+        vta.cargarCliente(False)
         vta.txtcodPLU.Focus()
         'vta.dtpedidosfact.Rows.Add(dgvPedidos.dgvVista.CurrentRow.Cells(0).Value, ptovtapedido & "-" & itemPedido)
         'vta.CargarPedidoRemoto(itemPedido, ptovtapedido)

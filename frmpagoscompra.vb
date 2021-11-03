@@ -184,8 +184,18 @@ Public Class frmpagoscompra
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
+
             NumRecibo = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
             Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
+            Reconectar()
+            Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", conexionPrinc)
+            Dim readTarjetasNombre As New DataSet
+            tablatajetasNombre.Fill(readTarjetasNombre)
+
+            txtTarjetaNombre.DataSource = readTarjetasNombre.Tables(0)
+            txtTarjetaNombre.DisplayMember = readTarjetasNombre.Tables(0).Columns("nombre").Caption.ToString.ToUpper
+            txtTarjetaNombre.ValueMember = readTarjetasNombre.Tables(0).Columns("id").Caption.ToString
+            'cmbTarjetasMarcas.SelectedIndex = -1
 
             panelformaspago.Visible = False
             panelefectivo.Visible = False
@@ -288,7 +298,20 @@ Public Class frmpagoscompra
             comandoaddITM.ExecuteNonQuery()
             puntoventa.Button1.Focus()
             'Try 'actualizamos la caja
+            Dim ConsultaCaj As String
+            ConsultaCaj = "insert into fact_ingreso_egreso " _
+                & "(concepto,monto,comprobante,caja,tipo) values" _
+                & "(?conc,?monto,?comp,?caja,'1')"
 
+            Reconectar()
+            Dim comandocaj As New MySql.Data.MySqlClient.MySqlCommand(ConsultaCaj, conexionPrinc)
+            With comandocaj.Parameters
+                .AddWithValue("?monto", TOTAL)
+                .AddWithValue("?comp", IdRecibo)
+                .AddWithValue("?caja", idCaja)
+                .AddWithValue("?conc", "1")
+            End With
+            comandocaj.ExecuteNonQuery()
             Me.Close()
 
         Catch ex As Exception
@@ -296,7 +319,7 @@ Public Class frmpagoscompra
         End Try
     End Sub
 
-    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaNombre.KeyDown
+    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyCode = Keys.Enter Then
 
             txtTarjetaAutoriza.Focus()

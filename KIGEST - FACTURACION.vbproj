@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>308</ApplicationRevision>
+    <ApplicationRevision>316</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -499,6 +499,12 @@
     <Compile Include="nuevoremito.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="NvaFacturaCompra.Designer.vb">
+      <DependentUpon>NvaFacturaCompra.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NvaFacturaCompra.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="NvaPublicidad.Designer.vb">
       <DependentUpon>NvaPublicidad.vb</DependentUpon>
     </Compile>
@@ -934,6 +940,9 @@
     <Content Include="reportes\listacarga.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="NvaFacturaCompra.resx">
+      <DependentUpon>NvaFacturaCompra.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NvaPublicidad.resx">
       <DependentUpon>NvaPublicidad.vb</DependentUpon>
     </EmbeddedResource>

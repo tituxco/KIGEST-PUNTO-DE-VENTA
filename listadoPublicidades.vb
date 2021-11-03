@@ -41,7 +41,7 @@
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
-        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m')) AS FACTURA_ACTUAL,		
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes" &
@@ -57,7 +57,7 @@
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-        'MsgBox(cmd.CommandText)
+        MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
 
@@ -138,7 +138,7 @@
             With vta
                 .Idcliente = dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
                 .condVta = 2
-                .cargarCliente()
+                .cargarCliente(False)
                 .txtcodPLU.Focus()
                 .dtproductos.Rows.Add("0", "#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value, "1",
                  dgvPrestamos.dgvVista.CurrentRow.Cells("CONCEPTO").Value & " #" &

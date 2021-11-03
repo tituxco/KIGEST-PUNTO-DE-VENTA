@@ -41,6 +41,7 @@ Partial Class proveedores
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtpersonal = New System.Windows.Forms.DataGridView()
+        Me.txtbusqueda = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.grpCuentaContable = New System.Windows.Forms.GroupBox()
@@ -245,6 +246,7 @@ Partial Class proveedores
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.dtpersonal)
+        Me.Panel1.Controls.Add(Me.txtbusqueda)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(0, 113)
         Me.Panel1.Name = "Panel1"
@@ -258,15 +260,23 @@ Partial Class proveedores
         Me.dtpersonal.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dtpersonal.BackgroundColor = System.Drawing.Color.White
         Me.dtpersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtpersonal.Dock = System.Windows.Forms.DockStyle.Left
+        Me.dtpersonal.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtpersonal.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtpersonal.Location = New System.Drawing.Point(0, 0)
+        Me.dtpersonal.Location = New System.Drawing.Point(0, 20)
         Me.dtpersonal.MultiSelect = False
         Me.dtpersonal.Name = "dtpersonal"
         Me.dtpersonal.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtpersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtpersonal.Size = New System.Drawing.Size(237, 389)
+        Me.dtpersonal.Size = New System.Drawing.Size(237, 369)
         Me.dtpersonal.TabIndex = 63
+        '
+        'txtbusqueda
+        '
+        Me.txtbusqueda.Dock = System.Windows.Forms.DockStyle.Top
+        Me.txtbusqueda.Location = New System.Drawing.Point(0, 0)
+        Me.txtbusqueda.Name = "txtbusqueda"
+        Me.txtbusqueda.Size = New System.Drawing.Size(237, 20)
+        Me.txtbusqueda.TabIndex = 204
         '
         'TabControl1
         '
@@ -446,12 +456,15 @@ Partial Class proveedores
         '
         'dtcomprobantes
         '
+        Me.dtcomprobantes.AllowUserToAddRows = False
+        Me.dtcomprobantes.AllowUserToDeleteRows = False
         Me.dtcomprobantes.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dtcomprobantes.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dtcomprobantes.BackgroundColor = System.Drawing.Color.White
         Me.dtcomprobantes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtcomprobantes.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column7, Me.Column8, Me.Column11, Me.Column9, Me.Column10, Me.Column12, Me.Column1})
         Me.dtcomprobantes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtcomprobantes.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dtcomprobantes.Location = New System.Drawing.Point(3, 33)
         Me.dtcomprobantes.MultiSelect = False
         Me.dtcomprobantes.Name = "dtcomprobantes"
@@ -546,7 +559,7 @@ Partial Class proveedores
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(70, 60)
         Me.Button1.TabIndex = 89
-        Me.Button1.Text = "Ver detalle"
+        Me.Button1.Text = "Ver detalle / Stock"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button6
@@ -556,7 +569,7 @@ Partial Class proveedores
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(70, 60)
         Me.Button6.TabIndex = 88
-        Me.Button6.Text = "Cargar info Fiscal"
+        Me.Button6.Text = "Cargar Factura"
         Me.Button6.UseVisualStyleBackColor = True
         '
         'DataGridViewTextBoxColumn1
@@ -633,6 +646,7 @@ Partial Class proveedores
         Me.pntitulo.PerformLayout()
         Me.pnnavegacion.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.TabPage1.ResumeLayout(False)
@@ -694,4 +708,5 @@ Partial Class proveedores
     Friend WithEvents Label5 As Label
     Friend WithEvents cmbBusquedaCuenta As ComboBox
     Friend WithEvents grpCuentaContable As GroupBox
+    Friend WithEvents txtbusqueda As TextBox
 End Class

@@ -117,6 +117,8 @@ Partial Class puntoventa
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnaddProd = New System.Windows.Forms.Panel()
+        Me.lblnoplu = New System.Windows.Forms.Label()
+        Me.chkPreciosFinales = New System.Windows.Forms.CheckBox()
         Me.cmbdescuentoRecargo = New System.Windows.Forms.Button()
         Me.txtpreciounitPLU = New System.Windows.Forms.TextBox()
         Me.txtivaPLU = New System.Windows.Forms.TextBox()
@@ -129,7 +131,6 @@ Partial Class puntoventa
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label25 = New System.Windows.Forms.Label()
-        Me.lblnoplu = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.chkaplicardesc = New System.Windows.Forms.CheckBox()
         Me.panelcliente = New System.Windows.Forms.Panel()
@@ -964,6 +965,8 @@ Partial Class puntoventa
         '
         Me.pnaddProd.BackColor = System.Drawing.Color.Gray
         Me.pnaddProd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.pnaddProd.Controls.Add(Me.lblnoplu)
+        Me.pnaddProd.Controls.Add(Me.chkPreciosFinales)
         Me.pnaddProd.Controls.Add(Me.cmbdescuentoRecargo)
         Me.pnaddProd.Controls.Add(Me.txtpreciounitPLU)
         Me.pnaddProd.Controls.Add(Me.txtivaPLU)
@@ -976,7 +979,6 @@ Partial Class puntoventa
         Me.pnaddProd.Controls.Add(Me.Label10)
         Me.pnaddProd.Controls.Add(Me.Label9)
         Me.pnaddProd.Controls.Add(Me.Label25)
-        Me.pnaddProd.Controls.Add(Me.lblnoplu)
         Me.pnaddProd.Controls.Add(Me.CheckBox1)
         Me.pnaddProd.Controls.Add(Me.chkaplicardesc)
         Me.pnaddProd.Dock = System.Windows.Forms.DockStyle.Top
@@ -984,6 +986,30 @@ Partial Class puntoventa
         Me.pnaddProd.Name = "pnaddProd"
         Me.pnaddProd.Size = New System.Drawing.Size(956, 37)
         Me.pnaddProd.TabIndex = 88
+        '
+        'lblnoplu
+        '
+        Me.lblnoplu.BackColor = System.Drawing.Color.Transparent
+        Me.lblnoplu.Dock = System.Windows.Forms.DockStyle.Right
+        Me.lblnoplu.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblnoplu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblnoplu.Location = New System.Drawing.Point(659, 0)
+        Me.lblnoplu.Name = "lblnoplu"
+        Me.lblnoplu.Size = New System.Drawing.Size(64, 35)
+        Me.lblnoplu.TabIndex = 74
+        '
+        'chkPreciosFinales
+        '
+        Me.chkPreciosFinales.Checked = True
+        Me.chkPreciosFinales.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkPreciosFinales.Dock = System.Windows.Forms.DockStyle.Right
+        Me.chkPreciosFinales.ForeColor = System.Drawing.Color.White
+        Me.chkPreciosFinales.Location = New System.Drawing.Point(723, 0)
+        Me.chkPreciosFinales.Name = "chkPreciosFinales"
+        Me.chkPreciosFinales.Size = New System.Drawing.Size(72, 35)
+        Me.chkPreciosFinales.TabIndex = 76
+        Me.chkPreciosFinales.Text = "P. Finales"
+        Me.chkPreciosFinales.UseVisualStyleBackColor = True
         '
         'cmbdescuentoRecargo
         '
@@ -1036,6 +1062,7 @@ Partial Class puntoventa
         'Label19
         '
         Me.Label19.AutoSize = True
+        Me.Label19.ForeColor = System.Drawing.Color.White
         Me.Label19.Location = New System.Drawing.Point(541, 2)
         Me.Label19.Name = "Label19"
         Me.Label19.Size = New System.Drawing.Size(36, 13)
@@ -1045,6 +1072,7 @@ Partial Class puntoventa
         'Label17
         '
         Me.Label17.AutoSize = True
+        Me.Label17.ForeColor = System.Drawing.Color.White
         Me.Label17.Location = New System.Drawing.Point(475, 2)
         Me.Label17.Name = "Label17"
         Me.Label17.Size = New System.Drawing.Size(40, 13)
@@ -1054,6 +1082,7 @@ Partial Class puntoventa
         'Label12
         '
         Me.Label12.AutoSize = True
+        Me.Label12.ForeColor = System.Drawing.Color.White
         Me.Label12.Location = New System.Drawing.Point(440, 2)
         Me.Label12.Name = "Label12"
         Me.Label12.Size = New System.Drawing.Size(24, 13)
@@ -1063,6 +1092,7 @@ Partial Class puntoventa
         'Label10
         '
         Me.Label10.AutoSize = True
+        Me.Label10.ForeColor = System.Drawing.Color.White
         Me.Label10.Location = New System.Drawing.Point(234, 2)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(80, 13)
@@ -1072,6 +1102,7 @@ Partial Class puntoventa
         'Label9
         '
         Me.Label9.AutoSize = True
+        Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(105, 2)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(28, 13)
@@ -1082,26 +1113,17 @@ Partial Class puntoventa
         '
         Me.Label25.AutoSize = True
         Me.Label25.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label25.ForeColor = System.Drawing.Color.White
         Me.Label25.Location = New System.Drawing.Point(2, 16)
         Me.Label25.Name = "Label25"
         Me.Label25.Size = New System.Drawing.Size(98, 16)
         Me.Label25.TabIndex = 59
         Me.Label25.Text = "Ingresar PLU"
         '
-        'lblnoplu
-        '
-        Me.lblnoplu.BackColor = System.Drawing.Color.Transparent
-        Me.lblnoplu.Dock = System.Windows.Forms.DockStyle.Right
-        Me.lblnoplu.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblnoplu.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblnoplu.Location = New System.Drawing.Point(516, 0)
-        Me.lblnoplu.Name = "lblnoplu"
-        Me.lblnoplu.Size = New System.Drawing.Size(279, 35)
-        Me.lblnoplu.TabIndex = 74
-        '
         'CheckBox1
         '
         Me.CheckBox1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.CheckBox1.ForeColor = System.Drawing.Color.White
         Me.CheckBox1.Location = New System.Drawing.Point(795, 0)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(93, 35)
@@ -1114,6 +1136,7 @@ Partial Class puntoventa
         Me.chkaplicardesc.Checked = True
         Me.chkaplicardesc.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkaplicardesc.Dock = System.Windows.Forms.DockStyle.Right
+        Me.chkaplicardesc.ForeColor = System.Drawing.Color.White
         Me.chkaplicardesc.Location = New System.Drawing.Point(888, 0)
         Me.chkaplicardesc.Name = "chkaplicardesc"
         Me.chkaplicardesc.Size = New System.Drawing.Size(66, 35)
@@ -1380,14 +1403,13 @@ Partial Class puntoventa
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button5.ForeColor = System.Drawing.Color.White
-        Me.Button5.Location = New System.Drawing.Point(881, 0)
+        Me.Button5.Location = New System.Drawing.Point(890, 0)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(41, 23)
+        Me.Button5.Size = New System.Drawing.Size(70, 23)
         Me.Button5.TabIndex = 53
-        Me.Button5.Text = "GET"
+        Me.Button5.Text = "OBTENER"
         Me.Button5.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.Button5.UseVisualStyleBackColor = False
-        Me.Button5.Visible = False
         '
         'Button3
         '
@@ -1396,7 +1418,7 @@ Partial Class puntoventa
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Location = New System.Drawing.Point(840, 0)
+        Me.Button3.Location = New System.Drawing.Point(849, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(41, 23)
         Me.Button3.TabIndex = 52
@@ -1414,9 +1436,9 @@ Partial Class puntoventa
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Location = New System.Drawing.Point(779, 0)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(61, 23)
+        Me.Button2.Size = New System.Drawing.Size(70, 23)
         Me.Button2.TabIndex = 51
-        Me.Button2.Text = "Agregar"
+        Me.Button2.Text = "AGREGAR"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.TopCenter
         Me.Button2.UseVisualStyleBackColor = False
         '
@@ -1913,4 +1935,5 @@ Partial Class puntoventa
     Friend WithEvents Column19 As DataGridViewTextBoxColumn
     Friend WithEvents Column20 As DataGridViewTextBoxColumn
     Friend WithEvents Button5 As Button
+    Friend WithEvents chkPreciosFinales As CheckBox
 End Class
