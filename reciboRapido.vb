@@ -231,7 +231,7 @@
         Next
 
         Dim tec As New movimientodecaja
-        tec.MdiParent = Me.MdiParent
+        tec.MdiParent = frmprincipal
         tec.movrap = True
         tec.movraptip = 996
         tec.movrapclie = Clie_idCliente

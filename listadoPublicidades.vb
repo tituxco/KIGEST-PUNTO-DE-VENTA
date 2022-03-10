@@ -57,7 +57,7 @@
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-        MsgBox(cmd.CommandText)
+        'MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
 

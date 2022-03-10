@@ -12,7 +12,24 @@ Module funciones_Globales
     Public idFactura As Integer
 
 
+    Public Function cargarInfoFactCobro(idFactura As Integer) As String()
+        ReDim cargarInfoFactCobro(3)
+        Dim infoFact As String()
+        ReDim infoFact(3)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from facturasclientes_impagas where idfact= " & idFactura, conexionPrinc)
+        Dim tablaPers As New DataTable
+        Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
+        consulta.Fill(tablaPers)
+        If tablaPers.Rows.Count <> 0 Then
+            infoFact(0) = tablaPers(0).Item("id")
+            infoFact(1) = tablaPers(0).Item("comprobante")
+            infoFact(2) = tablaPers(0).Item("importe")
+            infoFact(3) = tablaPers(0).Item("idfact")
+        End If
 
+        Return infoFact
+
+    End Function
     Public Sub GenerarPDF(Encabezado As DataTable, Items As DataTable, Ruta As String, Archivo As String, reporte As String)
 
         Try
@@ -211,6 +228,22 @@ Module funciones_Globales
         Return Nothing
 
     End Function
+    Public Function ObtenerCotizacion(idMoneda As Integer) As Double
+        Reconectar()
+        Dim lector As System.Data.IDataReader
+        Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+        sql.Connection = conexionPrinc
+        sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & idMoneda & ") As cotiza, (Select valor from fact_configuraciones where  id =1) As lista"
+        sql.CommandType = CommandType.Text
+        'MsgBox(sql.CommandText)
+        lector = sql.ExecuteReader
+        lector.Read()
+        Dim cotizacion As Double = FormatNumber(lector("cotiza").ToString)
+        Return cotizacion
+    End Function
+
+
+
     Public Function calcularPrecioProducto(IdProd As String, listaPrecios As Integer, tipofact As Integer) As Double
         Try
             Dim ganancia As Double
@@ -757,7 +790,7 @@ Module funciones_Globales
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,            
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,cl.email  
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,fac.observaciones as facobserva2,cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & idfact, conexionPrinc)
 
@@ -807,7 +840,7 @@ Module funciones_Globales
                     PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
                     PrintTxt.Print()
                 End If
-            ElseIf My.Settings.ImprTikets = 1 And condVta = "CTACTE" Then
+            ElseIf My.Settings.ImprTikets = 1 And (condVta = "CTACTE" Or condVta = "CTA. CTE.") Then
 
                 If directo = True Then
                     Using Imprimir As New ImprimirDirecto()
@@ -1687,7 +1720,7 @@ Module funciones_Globales
         Dim SMTP As New System.Net.Mail.SmtpClient
 
         Reconectar()
-        Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=26 and id<=32", conexionPrinc)
+        Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=26 and id<=33 order by id asc", conexionPrinc)
         Dim tablaDtosMail As New DataTable
         Dim infoDtosMail() As DataRow
         'Dim adjunto As New System.Net.Mail.Attachment(adjunto)
@@ -1704,7 +1737,7 @@ Module funciones_Globales
         'System.Net.NetworkCredential NetworkCred = New System.Net.NetworkCredential();
         mje.[To].Add(para.ToLower)
         mje.Attachments.Add(adjunto)
-        mje.From = New System.Net.Mail.MailAddress(infoDtosMail(0)(0).ToString, infoDtosMail(4)(0).ToString, System.Text.Encoding.UTF8)
+        mje.From = New System.Net.Mail.MailAddress(infoDtosMail(7)(0).ToString, infoDtosMail(4)(0).ToString, System.Text.Encoding.UTF8)
         mje.Subject = asunto
         mje.SubjectEncoding = System.Text.Encoding.UTF8
         mje.Body = mensaje

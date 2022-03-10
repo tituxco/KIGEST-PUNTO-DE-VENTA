@@ -57,7 +57,7 @@ Partial Class reimpresionComprobantes
         Me.dgvlistadoCobranza = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Button2 = New System.Windows.Forms.Button()
-        Me.CheckBox1 = New System.Windows.Forms.CheckBox()
+        Me.chksinPagar = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -476,7 +476,7 @@ Partial Class reimpresionComprobantes
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Panel1.Controls.Add(Me.Button2)
-        Me.Panel1.Controls.Add(Me.CheckBox1)
+        Me.Panel1.Controls.Add(Me.chksinPagar)
         Me.Panel1.Controls.Add(Me.Button3)
         Me.Panel1.Controls.Add(Me.Button5)
         Me.Panel1.Controls.Add(Me.Button6)
@@ -506,16 +506,16 @@ Partial Class reimpresionComprobantes
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button2.UseVisualStyleBackColor = False
         '
-        'CheckBox1
+        'chksinPagar
         '
-        Me.CheckBox1.AutoSize = True
-        Me.CheckBox1.ForeColor = System.Drawing.Color.White
-        Me.CheckBox1.Location = New System.Drawing.Point(357, 11)
-        Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(71, 17)
-        Me.CheckBox1.TabIndex = 59
-        Me.CheckBox1.Text = "Sin pagar"
-        Me.CheckBox1.UseVisualStyleBackColor = True
+        Me.chksinPagar.AutoSize = True
+        Me.chksinPagar.ForeColor = System.Drawing.Color.White
+        Me.chksinPagar.Location = New System.Drawing.Point(357, 11)
+        Me.chksinPagar.Name = "chksinPagar"
+        Me.chksinPagar.Size = New System.Drawing.Size(71, 17)
+        Me.chksinPagar.TabIndex = 59
+        Me.chksinPagar.Text = "Sin pagar"
+        Me.chksinPagar.UseVisualStyleBackColor = True
         '
         'Button3
         '
@@ -527,6 +527,7 @@ Partial Class reimpresionComprobantes
         Me.Button3.TabIndex = 58
         Me.Button3.Text = "Imprimir listado"
         Me.Button3.UseVisualStyleBackColor = True
+        Me.Button3.Visible = False
         '
         'Button5
         '
@@ -607,6 +608,7 @@ Partial Class reimpresionComprobantes
         Me.ClientSize = New System.Drawing.Size(1269, 482)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.pntitulo)
+        Me.KeyPreview = True
         Me.Name = "reimpresionComprobantes"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "reimpresionComprobantes"
@@ -661,7 +663,7 @@ Partial Class reimpresionComprobantes
     Friend WithEvents TabPage2 As TabPage
     Friend WithEvents dgvlistadoCobranza As DataGridView
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents CheckBox1 As CheckBox
+    Friend WithEvents chksinPagar As CheckBox
     Friend WithEvents Button3 As Button
     Friend WithEvents Button5 As Button
     Friend WithEvents Button6 As Button

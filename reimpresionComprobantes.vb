@@ -67,7 +67,12 @@ Public Class reimpresionComprobantes
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
         Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
         IdFactura = dtfacturas.CurrentRow.Cells(0).Value
-        ImprimirFactura(IdFactura, ptovta, False)
+        If chkImprimirA4.CheckState = CheckState.Checked Then
+            ImprimirFactura(IdFactura, ptovta, True)
+        Else
+            ImprimirFactura(IdFactura, ptovta, False)
+        End If
+
     End Sub
 
     Private Sub ImprimirTiketFiscal(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)
@@ -837,6 +842,10 @@ Public Class reimpresionComprobantes
             Reconectar()
             Dim tablaprod As New DataTable
             'Dim filasProd() As DataRow
+            Dim sinPagar As String
+            If chksinPagar.CheckState = CheckState.Checked Then
+                sinPagar = " and fact.observaciones2 like ''"
+            End If
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
             fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, 
@@ -847,7 +856,7 @@ Public Class reimpresionComprobantes
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact in(999,11)
             and fact.ptovta like '%' and 
-            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "'", conexionPrinc)
+            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "' " & sinPagar, conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer
@@ -1013,5 +1022,28 @@ Public Class reimpresionComprobantes
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub dtfacturas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtfacturas.KeyUp
+        If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR FACTURAS")
+        Else
+            If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                Reconectar()
+
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_facturas where id=" & dtfacturas.CurrentRow.Cells(0).Value, conexionPrinc)
+                comandofact.ExecuteNonQuery()
+                Dim comandoItm As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_items where id_fact=" & dtfacturas.CurrentRow.Cells(0).Value, conexionPrinc)
+                comandoItm.ExecuteNonQuery()
+                cmdbuscar.PerformClick()
+
+                MsgBox("comprobante eliminado")
+            End If
+
+        End If
+    End Sub
+
+    Private Sub dtfacturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellContentClick
+
     End Sub
 End Class

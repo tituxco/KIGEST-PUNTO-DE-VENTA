@@ -1467,14 +1467,6 @@ Public Class productos
                 lbldireccionimagen.Text = ficheros
                 imgFoto.Image = Image.FromFile(ficheros)
             End If
-
-            ''Dim i As Integer
-            ''For i = 0 To 3
-            ''dtproductos.Columns(0).HeaderText = "DESCRIPCION"
-            'dtproductos.Columns(1).HeaderText = "COD_BARR"
-            'dtproductos.Columns(2).HeaderText = "PRESENTACION"
-            ''dtproductos.Columns(3).HeaderText = "COSTO"
-            ''Next
         Catch ex As Exception
             MessageBox.Show(ex.Message)
 

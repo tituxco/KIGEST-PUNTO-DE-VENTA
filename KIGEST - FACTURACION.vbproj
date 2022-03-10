@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>316</ApplicationRevision>
+    <ApplicationRevision>333</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -763,6 +763,7 @@
     <None Include="Resources\iconos\secured_letter_48px.png" />
     <None Include="Resources\iconos\secured_letter_32px.png" />
     <None Include="Resources\iconos\delete_document_32px.png" />
+    <None Include="Resources\iconos\duplicate_contacts_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1035,6 +1036,10 @@
     <EmbeddedResource Include="reciboRapido.resx">
       <DependentUpon>reciboRapido.vb</DependentUpon>
     </EmbeddedResource>
+    <Content Include="reportes\planCuentas.rdlc">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="selprod.resx">
       <DependentUpon>selprod.vb</DependentUpon>
     </EmbeddedResource>

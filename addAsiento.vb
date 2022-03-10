@@ -157,6 +157,8 @@
 
 
     Private Sub cmdGuardar_Click(sender As Object, e As EventArgs) Handles cmdGuardar.Click
+        Dim CuentaDebeGral As Integer
+        Dim CuentaHaberGral As Integer
         Try
             Dim periodoaConsultar As String = Format(fchAsientoFecha.Value, "yyyy-MM")
             If ConsultarPeriodoCerrado(periodoaConsultar) = True Then
@@ -174,15 +176,11 @@
                     Dim comandoDelAsiento3 As New MySql.Data.MySqlClient.MySqlCommand("
                     delete from cm_libroMayor where codigoAsiento=" & IdAsiento, conexionPrinc)
 
-
                     comandoDelAsiento.ExecuteNonQuery()
                     comandoDelAsiento2.ExecuteNonQuery()
                     comandoDelAsiento3.ExecuteNonQuery()
                 End If
             Else
-
-
-
                 If MsgBox("Esta seguro que desa agregar este asiento?", vbYesNo + vbQuestion) = vbNo Then
                     Exit Sub
                 Else
@@ -220,12 +218,14 @@
                     cuentaDebeId = partida.Cells("idCuenta").Value
                     totalDebe = totalDebe + partida.Cells("DEBE").Value
                     importeDebe = partida.Cells("DEBE").Value
+                    CuentaDebeGral = cuentaDebeId
                 End If
                 If partida.Cells("HABER").Value <> 0 Then
                     cuentaHaberId = partida.Cells("idCuenta").Value
                     'totalHaber = totalHaber + FormatNumber((partida.Cells("HABER").Value), 2)
                     totalHaber = totalHaber + partida.Cells("HABER").Value
                     importeHaber = partida.Cells("HABER").Value
+                    CuentaHaberGral = cuentaHaberId
                 End If
 
                 Dim agregarPartida As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
@@ -275,6 +275,13 @@
                 txtAsientoNumero.Text = ObtenerNumeroAsiento() 'addAsiento_Load(me,)
                 txtAsientoConcepto.Text = ""
                 txtAsientoComprobante.Focus()
+                If rdDebe.Checked = True Then
+                    cmbBusquedaCuenta.SelectedValue = CuentaDebeGral
+                ElseIf rdHaber.Checked = True Then
+                    cmbBusquedaCuenta.SelectedValue = CuentaHaberGral
+                End If
+
+
                 CalcularTotalAsiento()
             Else
                 Me.Close()
@@ -367,5 +374,26 @@
 
     Private Sub dgvPartidas_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellLeave
 
+    End Sub
+
+    Private Sub cmbBusquedaCuenta_LostFocus(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.LostFocus
+        'If e.KeyCode = Keys.Enter Then
+        Try
+                If ComprobarCuenta(cmbBusquedaCuenta.SelectedValue) = False Then
+                    MsgBox("la cuenta seleccionada no admite movimientos directos, seleccione una subcuenta")
+                    Exit Sub
+                End If
+                'MsgBox(cmbBusquedaCuenta.SelectedValue)
+                dgvPartidas.Rows(filaActual).Cells("idCuenta").Value = cmbBusquedaCuenta.SelectedValue
+                dgvPartidas.Rows(filaActual).Cells("Codigo").Value = ObtenerCodigoCuenta(cmbBusquedaCuenta.SelectedValue)
+                dgvPartidas.Rows(filaActual).Cells("dgvCuenta").Value = cmbBusquedaCuenta.SelectedValue
+                dgvPartidas.Rows(filaActual).Cells("DEBE").Selected = True  '  .Focus()
+                dgvPartidas.CurrentCell = dgvPartidas.Rows(filaActual).Cells("DEBE")
+                dgvPartidas.BeginEdit(True)
+                cmbBusquedaCuenta.Visible = False
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+        'End If
     End Sub
 End Class

@@ -41,7 +41,7 @@ Partial Class Dialog1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.OK_Button, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Cancel_Button, 1, 0)
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(417, 274)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(693, 361)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -80,7 +80,7 @@ Partial Class Dialog1
         Me.dgvasisentos.Name = "dgvasisentos"
         Me.dgvasisentos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dgvasisentos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvasisentos.Size = New System.Drawing.Size(563, 216)
+        Me.dgvasisentos.Size = New System.Drawing.Size(831, 303)
         Me.dgvasisentos.TabIndex = 65
         '
         'pntitulo
@@ -90,7 +90,7 @@ Partial Class Dialog1
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(575, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(851, 40)
         Me.pntitulo.TabIndex = 66
         '
         'Label1
@@ -110,7 +110,7 @@ Partial Class Dialog1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.CancelButton = Me.Cancel_Button
-        Me.ClientSize = New System.Drawing.Size(575, 315)
+        Me.ClientSize = New System.Drawing.Size(851, 402)
         Me.Controls.Add(Me.pntitulo)
         Me.Controls.Add(Me.dgvasisentos)
         Me.Controls.Add(Me.TableLayoutPanel1)
@@ -120,7 +120,7 @@ Partial Class Dialog1
         Me.Name = "Dialog1"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Dialog1"
+        Me.Text = "CHEQUEO DE ASIENTOS CONTABLES"
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.dgvasisentos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.pntitulo.ResumeLayout(False)

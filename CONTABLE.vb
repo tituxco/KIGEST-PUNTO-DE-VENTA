@@ -3362,8 +3362,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             carpetadestino.ShowDialog()
             'Dim carpeta As New IO.DirectoryInfo(carpetadestino.SelectedPath)
-            Dim nombrecomprobantes = carpetadestino.SelectedPath & "\" & "_VENTAScomprobantes_" & ".txt"
-            Dim nombrealicutas = carpetadestino.SelectedPath & "\" & "_VENTASalicuotas_" & ".txt"
+            Dim nombrecomprobantes = carpetadestino.SelectedPath & "\" & cmbperiodocarg.Text & "_VENTAScomprobantes_" & ".txt"
+            Dim nombrealicutas = carpetadestino.SelectedPath & "\" & cmbperiodocarg.Text & "_VENTASalicuotas_" & ".txt"
             Dim strStreamW As Stream = Nothing
             Dim strStreamWriter As StreamWriter = Nothing
             Windows.Forms.Cursor.Current = Cursors.WaitCursor
@@ -3872,33 +3872,32 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 dgvLibroMayor.Rows.Clear()
                 Reconectar()
                 Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
-                Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select sum(stos.importeDebe)-sum(stos.importeHaber) as saldoAnterior
-            from cm_libroDiario as LD, cm_libroMayor as LM, cm_Asientos as stos, cm_planDeCuentas as PC 
-            where LM.fecha < '" & cmbPeriodoLibroMayor.Text & "-%%' and
-            LM.codigoAsiento=stos.codigoAsiento and
-            LD.codigoAsiento=stos.codigoAsiento and
-            PC.id=" & idCuentaSel & " and
-            (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId)
-            order by stos.id asc", conexionPrinc)
+                Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select saldo as saldoAnterior from cm_saldos_cuentas
+                where periodo like date_format(date_sub('" & cmbPeriodoLibroMayor.Text & "-01',interval 1 month),'%Y-%m') and
+                idCuenta=" & idCuentaSel, conexionPrinc)
                 Dim tabSaldoCuenta As New DataTable
                 consSaldoCuenta.Fill(tabSaldoCuenta)
-                If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
+                If tabSaldoCuenta.Rows.Count = 0 Then
                     saldoAnteriorCuenta = 0
                 Else
-                    saldoAnteriorCuenta = FormatCurrency(tabSaldoCuenta.Rows(0).Item(0), 2)
+                    If IsDBNull(tabSaldoCuenta.Rows(0).Item(0)) Then
+                        saldoAnteriorCuenta = 0
+                    Else
+                        saldoAnteriorCuenta = FormatCurrency(tabSaldoCuenta.Rows(0).Item(0), 2)
+                    End If
                 End If
 
                 lblSaldoCtaLibroMayor.Text = FormatCurrency(saldoAnteriorCuenta, 2)
 
                 Reconectar()
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
-            From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
-            where LM.codigoAsiento=asi.codigoAsiento and
-            LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
-            LD.codigoAsiento=LM.codigoAsiento and
-            (asi.cuentaDebeId= " & idCuentaSel & " or 
-            asi.cuentaHaberId=" & idCuentaSel & ")
-            order by LM.fecha asc,LD.comprobanteInterno  asc", conexionPrinc)
+                From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
+                where LM.codigoAsiento=asi.codigoAsiento and
+                LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
+                LD.codigoAsiento=LM.codigoAsiento and
+                (asi.cuentaDebeId= " & idCuentaSel & " or 
+                asi.cuentaHaberId=" & idCuentaSel & ")
+                order by LM.fecha asc,LD.comprobanteInterno  asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 Dim saldoDeudor As Double = 0
@@ -3971,10 +3970,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim consSaldosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id,CTA.cuentaResultado,CTA.grupo ,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle, 
 				concat(CTA.grupo,CTA.subgrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentadetalle,'<>',CTA.nombreCuenta) AS nombreCuenta, 
                 '0' as comprobanteInterno, str_to_date('" & cmbPeriodoLibroMayor.Text & "-01','%Y-%m-%d') as fecha, 'saldoAnterior' as concepto,
-                (select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario As LD, cm_Asientos As stos
-                where stos.codigoAsiento=LD.codigoAsiento and
-                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha< '" & cmbPeriodoLibroMayor.Text & "-%%'          
+                (select saldo from cm_saldos_cuentas 
+                where idCuenta=CTA.id and periodo like date_format(date_sub('" & cmbPeriodoLibroMayor.Text & "-01',interval 1 month),'%Y-%m')        
                 ) as saldoAnterior,
                 CONVERT('0',DECIMAL) as importeDebe, CONVERT('0', DECIMAL) as importeHaber														
                 from cm_planDeCuentas as CTA 
@@ -4007,13 +4004,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     'MsgBox(CtaSaldos.Item("saldoAnterior").ToString)
                     Dim idCuenta = CtaSaldos.Item("id")
                     Dim encontrado = 0
-                    'For Each movCuenta As DataRow In tabLibroMayor.Rows
-                    '    If idCuenta = movCuenta.Item("id") Then
-                    '        movCuenta.Item("saldoAnterior") = CtaSaldos.Item("saldoAnterior")
-                    '        encontrado = 1
-                    '        Exit For
-                    '    End If
-                    'Next
+
                     If Not IsDBNull(CtaSaldos.Item("saldoAnterior")) Then
                         ' Dim fec As New MySql.Data.Types.MySqlDateTime
                         tabLibroMayor.Rows.Add(
@@ -4035,8 +4026,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim FilasLibro() As DataRow
                 'Dim exp As String = ""
                 'Dim orden As String = "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc"
-                FilasLibro = tabLibroMayor.Select("", "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc,fecha asc")
-
+                FilasLibro = tabLibroMayor.Select("", "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc,fecha asc,comprobanteInterno asc")
+                'Dim miview As DataView = New DataView(tabLibroMayor)
+                'miview.Sort = "cuentaResultado desc,grupo asc,subGrupo asc,cuenta asc,subCuenta asc,cuentaDetalle asc,fecha asc,comprobanteInterno asc"
+                'DgvPaginado1.Cargar_Datos(miview.ToTable)
                 'MsgBox(movCuenta.Length)
                 'For i = movCuenta.GetLowerBound(0) To i = movCuenta.GetUpperBound(0)
                 For Each movCuenta As DataRow In FilasLibro
@@ -4214,26 +4207,50 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Button36_Click(sender As Object, e As EventArgs) Handles Button36.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        EnProgreso.Show()
+        Application.DoEvents()
         Try
             CargarLibroMayor()
+            EnProgreso.Close()
         Catch ex As Exception
-
+            EnProgreso.Close()
         End Try
     End Sub
 
 
     Private Sub Button41_Click(sender As Object, e As EventArgs) Handles Button41.Click
+
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        EnProgreso.Show()
+        Application.DoEvents()
+        dgvListadoCuentaConSaldos.Rows.Clear()
         Try
-
-            dgvListadoCuentaConSaldos.Rows.Clear()
-
             Reconectar()
             If rdCtaSaldo.Checked = True Then
                 Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id, concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta,
-				(select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
-                where stos.codigoAsiento=LD.codigoAsiento and
-                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'                
+				(select saldo from cm_saldos_cuentas 
+                where idCuenta=CTA.id and periodo like date_format(date_sub('" & cmbBalCtasPeriodo.Text & "-01',interval 1 month),'%Y-%m')
                 ) as saldoAnterior, 
                 
                 (select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
@@ -4303,10 +4320,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
                 ),0) as MES,
                 
-                ifnull((select sum(stos.importeDebe)-sum(stos.importeHaber) from cm_libroDiario as LD, cm_Asientos as stos 							
-                where stos.codigoAsiento=LD.codigoAsiento and
-                (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
-                LD.fecha<'" & cmbBalCtasPeriodo.Text & "-%%'
+                ifnull((select saldo from cm_saldos_cuentas 
+                where idCuenta=CTA.id and periodo like date_format(date_sub('" & cmbBalCtasPeriodo.Text & "-01',interval 1 month),'%Y-%m')
                 ),0) as saldoAnterior,
                  CTA.cuentaMovimiento,CTA.cuentaResultado                											
                 from cm_planDeCuentas as CTA 	
@@ -4507,14 +4522,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                     End If
                 Next
-
-
-
-
-
             End If
+            EnProgreso.Close()
         Catch ex As Exception
-
+            EnProgreso.Close()
         End Try
     End Sub
     Private Sub CrearColumnasGrid(tipo As Integer)
@@ -5240,20 +5251,61 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
-        If ConsultarPeriodoCerrado(cmbperiodoLibroDiario.Text) = True Then
-            MsgBox("el periodo ya esta cerrado")
-            Exit Sub
-        Else
-            If MsgBox("Esta seguro que desea cerrar el periodo? no se podran agregar ni modificar asientos contables luego de esta operacion", vbYesNo + vbQuestion, "Cerrar periodo") = vbNo Then
-                Exit Sub
+        Try
+            Dim EnProgreso As New Form
+            EnProgreso.ControlBox = False
+            EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+            EnProgreso.Size = New Point(430, 30)
+            EnProgreso.StartPosition = FormStartPosition.CenterScreen
+            EnProgreso.TopMost = True
+            Dim Etiqueta As New Label
+            Etiqueta.AutoSize = True
+            Etiqueta.Text = "Cerrando periodo, esto puede tardar unos momentos, por favor espere ..."
+            Etiqueta.Location = New Point(5, 5)
+            EnProgreso.Controls.Add(Etiqueta)
+            EnProgreso.Show()
+            Application.DoEvents()
+
+            If rdCtaSaldo.Checked = True Then
+                MsgBox("Para cerrar el periodo debe visualizar el BALANCE")
             Else
-                Reconectar()
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", conexionPrinc)
-                comandoadd.ExecuteNonQuery()
-                MsgBox("Periodo cerrado")
+                Exit Sub
             End If
 
-        End If
+            If ConsultarPeriodoCerrado(cmbperiodoLibroDiario.Text) = True Then
+                MsgBox("el periodo ya esta cerrado")
+                Exit Sub
+            Else
+                If MsgBox("Esta seguro que desea cerrar el periodo? no se podran agregar ni modificar asientos contables luego de esta operacion", vbYesNo + vbQuestion, "Cerrar periodo") = vbNo Then
+                    Exit Sub
+                Else
+                    Reconectar()
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", conexionPrinc)
+                    comandoadd.ExecuteNonQuery()
+                    For Each cuentaSaldo As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+                        MsgBox(cuentaSaldo.Cells(7).Value & "--" & CDbl(cuentaSaldo.Cells(7).Value))
+                        Dim idcuenta As Integer = cuentaSaldo.Cells(0).Value
+                        Dim saldoCuenta As Double = CDbl(cuentaSaldo.Cells(11).Value).ToString.Replace(",", ".")
+
+                        Reconectar()
+                        Dim comandoadd2 As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_saldos_cuentas (idCuenta, periodo,saldo)
+                        values ('" & idcuenta & "','" & cmbBalCtasPeriodo.Text & "', '" & saldoCuenta & "'
+                        )", conexionPrinc)
+                        comandoadd2.ExecuteNonQuery()
+                    Next
+
+
+                    MsgBox("Periodo cerrado")
+                End If
+
+            End If
+            EnProgreso.Close()
+        Catch ex As Exception
+
+            MsgBox(ex.Message & vbNewLine & vbNewLine & "CORROBORE IGUALMENTE QUE EL PERIODO ESTE CERRADO Y LOS SALDOS DE LAS CUENTAS")
+
+        End Try
+
 
     End Sub
 
@@ -5519,8 +5571,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             carpetadestino.ShowDialog()
             'Dim carpeta As New IO.DirectoryInfo(carpetadestino.SelectedPath)
-            Dim nombrecomprobantes = carpetadestino.SelectedPath & "\" & Replace(cmbperiodocarg.Text, "/", "") & "_COMPRAScomprobantes_" & DatosAcceso.Cliente.ToString & ".txt"
-            Dim nombrealicutas = carpetadestino.SelectedPath & "\" & Replace(cmbperiodocarg.Text, "/", "") & "_COMPRASalicuotas_" & DatosAcceso.Cliente.ToString & ".txt"
+            Dim nombrecomprobantes = carpetadestino.SelectedPath & "\" & Replace(cmbPeriodoComp.Text, "/", "") & "_COMPRAScomprobantes_" & DatosAcceso.Cliente.ToString & ".txt"
+            Dim nombrealicutas = carpetadestino.SelectedPath & "\" & Replace(cmbPeriodoComp.Text, "/", "") & "_COMPRASalicuotas_" & DatosAcceso.Cliente.ToString & ".txt"
             Dim strStreamW As Stream = Nothing
             Dim strStreamWriter As StreamWriter = Nothing
             Windows.Forms.Cursor.Current = Cursors.WaitCursor
@@ -5584,5 +5636,140 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub txtbdsincronizarCOMP_TextChanged(sender As Object, e As EventArgs) Handles txtbdsincronizarCOMP.TextChanged
         txtbdSincronizar.Text = txtbdsincronizarCOMP.Text
+    End Sub
+
+    Private Sub dgvUsuarios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellContentClick
+
+    End Sub
+
+    Private Sub dgvUsuarios_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellEndEdit
+        If e.ColumnIndex = 4 Then
+
+            Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dgvUsuarios.CurrentRow.Cells("clave").Value & "') where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            'CargaServiciosCloud()
+            dgvUsuarios.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 3 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set codus='" & dgvUsuarios.CurrentRow.Cells("clave").Value & "' where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            'CargaServiciosCloud()
+            dgvUsuarios.Rows(e.RowIndex).Selected = True
+        End If
+    End Sub
+
+    Private Sub Button46_Click(sender As Object, e As EventArgs) Handles Button46.Click
+        Try
+            Dim datosContables As New datosContable
+            Dim TablaPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("
+            select concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta        
+                from cm_planDeCuentas as CTA 	
+                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionSEC)
+            Dim readPeriodo As New DataSet
+            TablaPlanCuentas.Fill(datosContables.Tables("planCuentas"))
+
+
+
+            Dim imprimirx As New imprimirFX
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodoCuenta", DatosAcceso.sistema & " PLAN DE CUENTAS"))
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\planCuentas.rdlc"
+
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("planCuentas", datosContables.Tables("planCuentas")))
+                .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub dtfacturas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtfacturas.KeyUp
+        If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") <> False Then
+
+            If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                Reconectar()
+
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
+                delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
+                delete  FROM fact_cuentaclie where idcomp=@idComprobante;", conexionPrinc)
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters("@idComprobante").Value = dtfacturas.CurrentRow.Cells(0).Value
+
+                comandofact.ExecuteNonQuery()
+
+                MsgBox("Comprobante eliminado")
+                cmdbuscar.PerformClick()
+
+            End If
+
+        End If
+    End Sub
+
+    Private Sub dgvLibroDiario_KeyUp(sender As Object, e As KeyEventArgs) Handles dgvLibroDiario.KeyUp
+        If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR ASIENTOS CONTABLES")
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") <> False Then
+
+            If MsgBox("esta seguro que desea elminiar este asiento contable? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                Reconectar()
+
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete FROM cm_libroMayor where codigoAsiento =@codigoAsiento;
+                delete FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
+                delete FROM cm_Asientos where codigoAsiento=@codigoAsiento;", conexionPrinc)
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters("@codigoAsiento").Value = dgvLibroDiario.CurrentRow.Cells("CodigoAsiento").Value
+
+                comandofact.ExecuteNonQuery()
+
+                MsgBox("asiento contable eliminado")
+                CargarLibroDiario()
+            End If
+
+        End If
+    End Sub
+
+    Private Sub dtlistacob_KeyUp(sender As Object, e As KeyEventArgs) Handles dtlistacob.KeyUp
+        If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") <> False Then
+
+            If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                Reconectar()
+
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
+                delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
+                delete  FROM fact_cuentaclie where idcomp=@idComprobante;", conexionPrinc)
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters("@idComprobante").Value = dtlistacob.CurrentRow.Cells(0).Value
+
+                comandofact.ExecuteNonQuery()
+
+                MsgBox("Comprobante eliminado")
+                cmdbuscarcomp.PerformClick()
+
+            End If
+
+        End If
+    End Sub
+
+    Private Sub Button47_Click(sender As Object, e As EventArgs) Handles Button47.Click
+
+
+
+        For Each cuentaSaldo As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
+
+        Next
     End Sub
 End Class

@@ -12,6 +12,7 @@
             total = dt.Rows.Count
             lblregistros.Text = total
             maximo_paginas = Math.Ceiling(total / items_por_pagina)
+
             lblPaginasTotales.Text = maximo_paginas
             dgvVista.DataSource = Split(todos_los_datos)
             dgvVista.Columns(0).Visible = False

@@ -17,8 +17,8 @@ Public Class Dialog1
         Try
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT ld.codigoAsiento, ld.comprobanteInterno,ld.fecha, ld.concepto, ld.NumPartidas,(SELECT count(*) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)) AS REALES,
-            (SELECT sum(importeDebe) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)) as sumDEBE,
-            (SELECT sum(importeHaber) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)) as sumHABER
+            ROUND((SELECT sum(importeDebe) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)),2) as sumDEBE,
+            ROUND((SELECT sum(importeHaber) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)),2) as sumHABER
             FROM cm_libroDiario AS ld
             having NumPartidas<>REALES or sumDebe<>sumHaber", conexionPrinc)
             Dim tabla As New DataTable

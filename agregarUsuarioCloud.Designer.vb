@@ -143,6 +143,7 @@ Partial Class agregarUsuarioCloud
         '
         Me.txtCloudContraseña.Location = New System.Drawing.Point(126, 167)
         Me.txtCloudContraseña.Name = "txtCloudContraseña"
+        Me.txtCloudContraseña.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtCloudContraseña.Size = New System.Drawing.Size(175, 20)
         Me.txtCloudContraseña.TabIndex = 75
         '
@@ -201,16 +202,17 @@ Partial Class agregarUsuarioCloud
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(76, 248)
+        Me.Label9.Location = New System.Drawing.Point(49, 248)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(50, 13)
+        Me.Label9.Size = New System.Drawing.Size(71, 13)
         Me.Label9.TabIndex = 80
-        Me.Label9.Text = "Usuario"
+        Me.Label9.Text = "Usuario BD"
         '
         'txtCloudHostContraseña
         '
         Me.txtCloudHostContraseña.Location = New System.Drawing.Point(126, 271)
         Me.txtCloudHostContraseña.Name = "txtCloudHostContraseña"
+        Me.txtCloudHostContraseña.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtCloudHostContraseña.Size = New System.Drawing.Size(175, 20)
         Me.txtCloudHostContraseña.TabIndex = 83
         '
@@ -218,11 +220,11 @@ Partial Class agregarUsuarioCloud
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(49, 274)
+        Me.Label10.Location = New System.Drawing.Point(28, 275)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(71, 13)
+        Me.Label10.Size = New System.Drawing.Size(92, 13)
         Me.Label10.TabIndex = 82
-        Me.Label10.Text = "Contraseña"
+        Me.Label10.Text = "Contraseña BD"
         '
         'Panel1
         '

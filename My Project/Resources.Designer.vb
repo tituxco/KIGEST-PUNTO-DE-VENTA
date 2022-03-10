@@ -233,6 +233,16 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property duplicate_contacts_64px() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("duplicate_contacts_64px", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Edit_32px() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Edit_32px", resourceCulture)
@@ -696,6 +706,16 @@ Namespace My.Resources
         Friend ReadOnly Property Print_64px() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Print_64px", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property Print_64px1() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Print_64px1", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

@@ -155,4 +155,88 @@
             dtcloud.Rows(e.RowIndex).Selected = True
         End If
     End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        Try
+            If rdseleccionadas.Checked = True Then
+                Reconectar()
+                Dim sqlquery As String
+                Dim DATABASE As String
+                DATABASE = dtcloud.CurrentRow.Cells("DBClie").Value
+                sqlquery = txtsentencias.Text
+                conexionSEC.ChangeDatabase(DATABASE)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionSEC)
+                comandoadd.ExecuteNonQuery()
+                MsgBox("modificaciones de estructura de BD ejecutadoas")
+            ElseIf rdprefijo.Checked = True Then
+                Dim i As Integer
+                For i = 0 To ListBox1.Items.Count - 1
+                    Reconectar()
+                    Dim sqlquery As String
+                    Dim DATABASE As String
+                    DATABASE = ListBox1.Items(i)
+                    sqlquery = txtsentencias.Text
+                    conexionSEC.ChangeDatabase(DATABASE)
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionSEC)
+                    comandoadd.ExecuteNonQuery()
+                    Console.WriteLine(ListBox1.Items(i) & " se ha modificado")
+                Next
+                MsgBox("todas las bases de datos se han modificado")
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub rdprefijo_CheckedChanged(sender As Object, e As EventArgs) Handles rdprefijo.CheckedChanged
+
+    End Sub
+
+    Private Sub txtprefijobd_TextChanged(sender As Object, e As EventArgs) Handles txtprefijobd.TextChanged
+
+    End Sub
+
+    Private Sub txtprefijobd_KeyDown(sender As Object, e As KeyEventArgs) Handles txtprefijobd.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            For Each servicio As DataGridViewRow In dtcloud.Rows
+                If InStr(servicio.Cells("DBClie").Value, txtprefijobd.Text) <> 0 And ExisteBD(servicio.Cells("DBClie").Value) = False Then
+                    ListBox1.Items.Add(servicio.Cells("DBClie").Value)
+                End If
+            Next
+        End If
+    End Sub
+    Private Function ExisteBD(comparar As String) As Boolean
+        Dim i As Integer
+        Dim enc As Integer
+        For i = 0 To ListBox1.Items.Count - 1
+            If ListBox1.Items(i) = comparar Then
+                enc = enc + 1
+            End If
+        Next
+        If enc = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    Private Sub ListBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub ListBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles ListBox1.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            ListBox1.Items.RemoveAt(ListBox1.SelectedIndex)
+        End If
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        agregarUsuarioCloud.idDuplicado = dtcloud.CurrentRow.Cells("id").Value
+        agregarUsuarioCloud.duplicar = True
+        agregarUsuarioCloud.Show()
+    End Sub
+
+    Private Sub Button27_Click(sender As Object, e As EventArgs)
+
+    End Sub
 End Class

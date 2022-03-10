@@ -735,7 +735,7 @@ Public Class frmprincipal
             Dim Cotizacion As String = InputBox("Ingrese nueva cotizacion de dolar", "Cambiar cotizacion")
 
             If IsNumeric(Cotizacion) Then
-
+                Reconectar()
                 Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set cotizacion = '" & Cotizacion.Replace(".", ",") & "' where id=2", conexionPrinc)
                 comandoUPD.ExecuteNonQuery()
 

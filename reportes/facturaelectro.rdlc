@@ -906,7 +906,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!emprazon.Value, "encabezado")</Value>
+                    <Value>="Razón social: " &amp; First(Fields!emprazon.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -939,7 +939,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!empdire.Value, "encabezado")</Value>
+                    <Value>="Dirección: " &amp; First(Fields!empdire.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -971,7 +971,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!empcontr.Value, "encabezado")</Value>
+                    <Value>="Condición: " &amp; First(Fields!empcontr.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -1133,7 +1133,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=First(Fields!emploca.Value, "encabezado")</Value>
+                    <Value>="Localidad: " &amp; First(Fields!emploca.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -1261,7 +1261,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Dirección: " &amp; First(Fields!facdire.Value, "encabezado") &amp; " - " &amp; First(Fields!facloca.Value, "encabezado")</Value>
+                    <Value>="Domicilio: " &amp; First(Fields!facdire.Value, "encabezado") &amp; " - " &amp; First(Fields!facloca.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>
@@ -1295,7 +1295,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="IVA " &amp; First(Fields!factipocontr.Value, "encabezado")</Value>
+                    <Value>="COND. FRENTE A IVA: " &amp; First(Fields!factipocontr.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>
@@ -1309,7 +1309,7 @@
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>1.09064cm</Top>
             <Height>0.52592cm</Height>
-            <Width>6.37737cm</Width>
+            <Width>10.33905cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -1339,10 +1339,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.09064cm</Top>
-            <Left>6.44086cm</Left>
+            <Top>1.68712cm</Top>
+            <Left>0.03528cm</Left>
             <Height>0.52592cm</Height>
-            <Width>3.89818cm</Width>
+            <Width>10.21751cm</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -1373,10 +1373,10 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.83881cm</Top>
-            <Left>0.00549cm</Left>
+            <Top>1.65184cm</Top>
+            <Left>10.32335cm</Left>
             <Height>0.52063cm</Height>
-            <Width>10.30377cm</Width>
+            <Width>8.98473cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
               <Border>
@@ -1428,7 +1428,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Observaciones " &amp; First(Fields!facobserva.Value, "encabezado")</Value>
+                    <Value>="Observaciones " &amp; First(Fields!facobserva2.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>
@@ -1442,7 +1442,7 @@
             <rd:DefaultName>Textbox4</rd:DefaultName>
             <Top>0.55591cm</Top>
             <Left>10.33905cm</Left>
-            <Height>1.83527cm</Height>
+            <Height>1.06065cm</Height>
             <Width>9.04878cm</Width>
             <ZIndex>6</ZIndex>
             <Style>
@@ -1459,7 +1459,7 @@
         <KeepTogether>true</KeepTogether>
         <Top>4.64051cm</Top>
         <Left>0.1709cm</Left>
-        <Height>2.58169cm</Height>
+        <Height>2.67694cm</Height>
         <Width>19.38783cm</Width>
         <ZIndex>2</ZIndex>
         <Style>
@@ -1475,7 +1475,7 @@
   <Width>19.56264cm</Width>
   <Page>
     <PageFooter>
-      <Height>4.85417cm</Height>
+      <Height>6.01834cm</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -1496,7 +1496,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.49389cm</Top>
+          <Top>1.44639cm</Top>
           <Left>15.91256cm</Left>
           <Height>0.6cm</Height>
           <Width>1.22118cm</Width>
@@ -1511,7 +1511,7 @@
           </Style>
         </Textbox>
         <Line Name="Line1">
-          <Top>0.42333cm</Top>
+          <Top>1.37583cm</Top>
           <Left>0.19051cm</Left>
           <Height>0cm</Height>
           <Width>19.37213cm</Width>
@@ -1542,7 +1542,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>0.49389cm</Top>
+          <Top>1.44639cm</Top>
           <Left>17.16901cm</Left>
           <Height>0.6cm</Height>
           <Width>2.39363cm</Width>
@@ -1574,7 +1574,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox9</rd:DefaultName>
-          <Top>4.43056cm</Top>
+          <Top>5.38306cm</Top>
           <Left>0.19051cm</Left>
           <Height>0.42361cm</Height>
           <Width>10.846cm</Width>
@@ -1606,7 +1606,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.235cm</Top>
+          <Top>2.1875cm</Top>
           <Left>15.343cm</Left>
           <Height>0.6cm</Height>
           <Width>1.82602cm</Width>
@@ -1641,7 +1641,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>1.235cm</Top>
+          <Top>2.1875cm</Top>
           <Left>17.16901cm</Left>
           <Height>0.6cm</Height>
           <Width>2.37402cm</Width>
@@ -1660,7 +1660,7 @@
           <Source>Embedded</Source>
           <Value>logo_afip</Value>
           <Sizing>FitProportional</Sizing>
-          <Top>0.59972cm</Top>
+          <Top>1.55222cm</Top>
           <Left>4.20163cm</Left>
           <Height>1.48222cm</Height>
           <Width>4.67502cm</Width>
@@ -1688,7 +1688,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox2</rd:DefaultName>
-          <Top>2.11694cm</Top>
+          <Top>3.06944cm</Top>
           <Left>4.20163cm</Left>
           <Height>0.6cm</Height>
           <Width>8.20942cm</Width>
@@ -1722,7 +1722,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox37</rd:DefaultName>
-          <Top>2.71694cm</Top>
+          <Top>3.66944cm</Top>
           <Left>4.17517cm</Left>
           <Height>0.58154cm</Height>
           <Width>13.50075cm</Width>
@@ -1742,7 +1742,7 @@
           <Value>=First(Fields!codigo_qr.Value, "encabezado")</Value>
           <MIMEType>image/jpeg</MIMEType>
           <Sizing>Fit</Sizing>
-          <Top>0.59528cm</Top>
+          <Top>1.54778cm</Top>
           <Left>0.20618cm</Left>
           <Height>3.8cm</Height>
           <Width>3.8cm</Width>
@@ -1753,6 +1753,40 @@
             </Border>
           </Style>
         </Image>
+        <Textbox Name="Textbox37">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="Notas: " &amp; First(Fields!facobserva2.Value, "encabezado")</Value>
+                  <Style>
+                    <FontStyle>Italic</FontStyle>
+                    <FontSize>8pt</FontSize>
+                    <FontWeight>Bold</FontWeight>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style />
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>Textbox4</rd:DefaultName>
+          <Top>0.10583cm</Top>
+          <Left>0.20618cm</Left>
+          <Height>0.9886cm</Height>
+          <Width>19.35646cm</Width>
+          <ZIndex>10</ZIndex>
+          <Style>
+            <Border>
+              <Style>None</Style>
+            </Border>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
       </ReportItems>
       <Style>
         <Border>
@@ -1918,6 +1952,10 @@
         <Field Name="codigo_qr">
           <DataField>codigo_qr</DataField>
           <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="facobserva2">
+          <DataField>facobserva2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>

@@ -18,6 +18,7 @@
     Private Sub pedidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarDatosGrales()
         cargarPedidos()
+        dtpdesde.Value = obtenerPrimerDiaMes()
     End Sub
     Private Sub cargarDatosGrales()
         Try

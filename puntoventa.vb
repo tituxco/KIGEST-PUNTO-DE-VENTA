@@ -820,7 +820,8 @@ Public Class puntoventa
         Dim total As String = remplazarPunto(lblfacttotal.Text)
         Dim vendedor As Integer = lblfacvendedor.Text
         'Dim tipoFact As Integer = cmbtipofac.SelectedValue
-        Dim obs2 As String = txtobservaciones.Text
+        Dim obs2 As String = ""
+        Dim obs As String = txtobservaciones.Text
         Dim transp As String = txttransporte.Text
         'num_fact = CType(txtnufac.Text, Integer)
         Dim sqlQuery As String
@@ -875,13 +876,7 @@ Public Class puntoventa
                     productoscomp.DefaultCellStyle.BackColor = Color.LightGreen
                 End If
             Next
-            'If contarstock > 0 Then
-            '    If MsgBox("Uno de los productos no pudo ser procesado por falta de stock o es insuficiente, desea continuar de todas formas? 
-            '    los elementos que no se procesaran estan resaltados en rojo", vbYesNo) = vbNo Then
-            '        EnProgreso.Close()
-            '        Exit Sub
-            '    End If
-            'End If
+
         End If
 
         Reconectar()
@@ -918,7 +913,7 @@ Public Class puntoventa
                 .AddWithValue("?cae", lblestadoCAE.Text.Replace("CAE: ", ""))
                 .AddWithValue("?vtocae", lblvtoCAE.Text.Replace("Vto: ", ""))
                 .AddWithValue("?codbarra", lblcodigobarras.Text)
-                .AddWithValue("?transp", transp)
+                .AddWithValue("?transp", obs & vbNewLine & transp)
                 .AddWithValue("?codigo_qr", codigo_qr)
             End With
             comandoadd.Transaction = Transaccion
@@ -1038,6 +1033,8 @@ Public Class puntoventa
                 Else
                     ventaCta = 77
                 End If
+
+
             Next
 
             'dependiendo de la condicion de venta hacemos distintas acciones
@@ -1095,11 +1092,17 @@ Public Class puntoventa
             If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
 
                 Dim numAsiento As Integer = ObtenerNumeroAsiento()
-                GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
+                If tipofact = 13 Then
+                    GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
+                                           "NOTA DE CREDITO " & txtclierazon.Text, CDbl(total.Replace(".", ",")), ventaCta, CDbl(total.Replace(".", ",")), 11, 2, fecha)
+                ElseIf tipofact = 11 Or tipofact = 12 Then
+                    GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
                                            "PUBLICIDAD " & txtclierazon.Text, CDbl(total.Replace(".", ",")), 11, CDbl(total.Replace(".", ",")), ventaCta, 2, fecha)
+                End If
+
             End If
 
-            Transaccion.Commit()
+                Transaccion.Commit()
             cmdguardar.Enabled = False
             cmdremitar.Enabled = True
             cmdimprimir.Enabled = True
@@ -1140,7 +1143,12 @@ Public Class puntoventa
         EnProgreso.Show()
         Application.DoEvents()
 
-        ImprimirFactura(IdFactura, ptovta, False)
+        If lblfactcondvta.Text = "CONTADO" Then
+            ImprimirFactura(IdFactura, ptovta, False)
+
+        Else
+            ImprimirFactura(IdFactura, ptovta, True)
+        End If
 
         EnProgreso.Close()
     End Sub
@@ -1687,8 +1695,15 @@ Public Class puntoventa
         dtproductos.Rows.Clear()
         Select Case tipofact
             Case 1, 2, 3
-                Idcliente = txtcliecta.Text
-                cargarCliente(False)
+                Idcliente = 0
+                lblclieciudad.Text = ""
+                lblcliedomicilio.Text = ""
+                lblclietipocontr.Text = ""
+                txtcliecta.Text = ""
+                txtcliecuitcuil.Text = ""
+                txtclierazon.Text = ""
+
+                'cargarCliente(False)
             Case Else
                 Idcliente = 9999
                 cargarCliente(False)
@@ -2721,6 +2736,10 @@ Public Class puntoventa
     End Sub
 
     Private Sub txtcliecuitcuil_TextChanged(sender As Object, e As EventArgs) Handles txtcliecuitcuil.TextChanged
+
+    End Sub
+
+    Private Sub chkPreciosFinales_CheckedChanged(sender As Object, e As EventArgs) Handles chkPreciosFinales.CheckedChanged
 
     End Sub
 End Class

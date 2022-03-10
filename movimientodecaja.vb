@@ -299,6 +299,8 @@
                         txtctaclie.Text = movrapclie
                         txtconceptos.Text = movrapConc
                         cargarCliente()
+                        '                        MsgBox("(" & movrapFact & ")" & cargarInfoFactCobro(movrapFact)(0) & "__" & cargarInfoFactCobro(movrapFact)(1) & "__" & cargarInfoFactCobro(movrapFact)(2) & "__" & cargarInfoFactCobro(movrapFact)(3))
+                        dtconceptos.Rows.Add(cargarInfoFactCobro(movrapFact)(0), cargarInfoFactCobro(movrapFact)(1), cargarInfoFactCobro(movrapFact)(2), cargarInfoFactCobro(movrapFact)(3))
                     Case 993
                         cmbtipofac.SelectedValue = movraptip
                         txtctaclie.Text = movrapclie
@@ -374,7 +376,7 @@
         Dim totalCheques As String = remplazarPunto(txttotalvalores.Text)
         Dim totalEfectivo As String = remplazarPunto(txttotalefectivo.Text)
         Dim NetodeRetenciones As String = CDbl(totalRecibo.Replace(".", ",")) - CDbl(totalRetenciones.Replace(".", ","))
-        MsgBox (NetodeRetenciones )
+        'MsgBox (NetodeRetenciones )
         Dim tipoFact As Integer = cmbtipofac.SelectedValue
         Dim num_fact As Integer = CType(txtnufac.Text, Integer)
         Dim sqlQuery As String
@@ -810,6 +812,17 @@
             Dim fecha As String = Format(CDate(fechagral), "yyyy-MM-dd")
             Dim total As String = remplazarPunto(txttotalmovimiento.Text)
             Dim tipoFact As Integer = cmbtipofac.SelectedValue
+
+            If cmbctade.SelectedValue = cmbctahacia.SelectedValue Then
+                MsgBox("las cuentas de origen y destino deben ser distintas")
+                Exit Sub
+            End If
+
+            If cmbctade.SelectedValue = 0 Or cmbctahacia.SelectedValue = 0 Then
+                MsgBox("una de las cuentas no es valida, verifique")
+                Exit Sub
+            End If
+
             If RestringirNumerosFact(cmbtipofac.SelectedValue, num_fact, ptovta) = True Then
                 MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
                 por favor contacte con el administrador o repare la numeración manualmente")
@@ -899,6 +912,18 @@
                 Dim UpdCheque As New MySql.Data.MySqlClient.MySqlCommand(SqlCh, conexionPrinc)
                 UpdCheque.ExecuteNonQuery()
             Next
+
+            '********************realizamos el asiento contable en el caso de que sea necesario
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                GuardarAsientoContable(numAsiento,
+                                           cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                           "MOVIMIENTO ENTRE CUENTAS",
+                                           CDbl(total.Replace(".", ",")),
+                                           cmbCuentaDebe.SelectedValue,
+                                           CDbl(total.Replace(".", ",")),
+                                           cmbCuentaHaber.SelectedValue, 2, fecha)
+            End If
 
             MsgBox("caja actualizada")
             Me.Close()
@@ -1094,10 +1119,11 @@
             .LLAMA = "ingreso"
             .provclie = txtctaclie.Text
             '.fila = dtcuentaclie.CurrentRow.Cells(2).Value
-            .Show()
+            '.MdiParent = Me.MdiParent
             .TopMost = True
             .AplicarRec = False
             .lbltotalrecibo.Text = "Total Recibo: $" & txttotalrecibo.Text & " -- "
+            .Show()
         End With
     End Sub
 

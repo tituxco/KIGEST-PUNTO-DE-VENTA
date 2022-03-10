@@ -760,4 +760,41 @@
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
     End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        txtobservaciones.Text = txtobservaciones.Text & vbNewLine & frmprincipal.lblPrincipalDolar.Text
+
+    End Sub
+
+    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
+
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Try
+            For Each producto As DataGridViewRow In dtproductos.Rows
+                If producto.Cells(1).Value <> "" Or producto.Cells(1).Value <> 0 Then
+                    cargarProdCod(producto.Index)
+                End If
+            Next
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub txtobservaciones_TextChanged(sender As Object, e As EventArgs) Handles txtobservaciones.TextChanged
+
+    End Sub
+
+    Private Sub txtobservaciones_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtobservaciones.KeyPress
+
+    End Sub
+
+    Private Sub txtobservaciones_KeyDown(sender As Object, e As KeyEventArgs) Handles txtobservaciones.KeyDown
+        If e.KeyCode = Keys.Delete Then
+            If MsgBox("esta seguro que desea eliminar todas las observaciones?", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                txtobservaciones.Text = ""
+            End If
+        End If
+    End Sub
 End Class
