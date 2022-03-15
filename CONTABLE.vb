@@ -73,6 +73,7 @@ Public Class CONTABLE
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabBalanceCtas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabplancuentas.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tablibromayor.Parent = Nothing
+        If InStr(DatosAcceso.Moduloacc, "4ak") = False Then tabEjercicios.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4aa") = False Then tabcomprobantes.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "4ab") = False Then tabcobranzas.Parent = Nothing
         ''If InStr(DatosAcceso.Moduloacc, "4ac") = False Then balance.Parent = Nothing
@@ -3752,7 +3753,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Public Sub CargarPeriodos()
         Try
             Reconectar()
-            Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from cm_libroDiario order by fecha desc", conexionPrinc)
+            Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') as periodo
+            from cm_libroDiario
+            having periodo > (select valor from fact_configuraciones where id=77)  
+            order by fecha desc", conexionPrinc)
 
             Dim readPeriodo As New DataSet
             TablaPeriodo.Fill(readPeriodo)
@@ -4251,6 +4255,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select CTA.id, concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta,
 				(select saldo from cm_saldos_cuentas 
                 where idCuenta=CTA.id and periodo like date_format(date_sub('" & cmbBalCtasPeriodo.Text & "-01',interval 1 month),'%Y-%m')
+                and periodo >(select valor from fact_configuraciones where id=77)
                 ) as saldoAnterior, 
                 
                 (select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
@@ -4322,6 +4327,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 
                 ifnull((select saldo from cm_saldos_cuentas 
                 where idCuenta=CTA.id and periodo like date_format(date_sub('" & cmbBalCtasPeriodo.Text & "-01',interval 1 month),'%Y-%m')
+                and periodo >(select valor from fact_configuraciones where id=77)
                 ),0) as saldoAnterior,
                  CTA.cuentaMovimiento,CTA.cuentaResultado                											
                 from cm_planDeCuentas as CTA 	
@@ -5764,12 +5770,75 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End If
     End Sub
 
-    Private Sub Button47_Click(sender As Object, e As EventArgs) Handles Button47.Click
+    Private Sub btnActualizarEjercicio_Click(sender As Object, e As EventArgs) Handles btnActualizarEjercicio.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        EnProgreso.Show()
+        Application.DoEvents()
+        Try
+
+            dgvDatosEjercicio.DataSource = Nothing
+            Reconectar()
+            If rdMovimientosEjercicios.Checked = True Then
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
+                From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
+                where LM.codigoAsiento=asi.codigoAsiento and
+                LM.fecha like '" & cmbañoEjercicio.Text & "-%%-%%' and
+                LD.codigoAsiento=LM.codigoAsiento and
+                (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
+                asi.cuentaHaberId= " & cmbCuentaEjercicio.SelectedValue & " ) and
+				LM.concepto like '%" & txtconceptoEjercicio.Text.Replace(" ", "%") & "%'
+                order by LM.fecha asc,LD.comprobanteInterno asc", conexionPrinc)
+                Dim tabLibroMayor As New DataTable
+                consLibroMayor.Fill(tabLibroMayor)
+                dgvDatosEjercicio.DataSource = tabLibroMayor
+            ElseIf rdSumaEjercicio.Checked = True Then
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT MONTHNAME(LM.fecha) AS MES,SUM(asi.importeDebe) AS DEBE, SUM(asi.importeHaber) AS HABER 
+                From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
+                where LM.codigoAsiento=asi.codigoAsiento and
+                LM.fecha like '" & cmbañoEjercicio.Text & "-%%-%%' and
+                LD.codigoAsiento=LM.codigoAsiento and
+                (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
+                asi.cuentaHaberId=" & cmbCuentaEjercicio.SelectedValue & " ) and
+				LM.concepto like '%" & txtconceptoEjercicio.Text.Replace(" ", "%") & "%'
+                group by month(LM.fecha)", conexionPrinc)
+                Dim tabLibroMayor As New DataTable
+                consLibroMayor.Fill(tabLibroMayor)
+                dgvDatosEjercicio.DataSource = tabLibroMayor
+            End If
+            EnProgreso.Close()
+        Catch ex As Exception
+            EnProgreso.Close()
+        End Try
+    End Sub
+    Private Sub tabEjercicios_Enter(sender As Object, e As EventArgs) Handles tabEjercicios.Enter
+        Reconectar()
+        Dim consEjerciciosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT periodoFiscal from cm_ejercicios_cerrados", conexionPrinc)
+        Dim dsEjerciciosAnteriores As New DataSet
+        consEjerciciosAnteriores.Fill(dsEjerciciosAnteriores)
+
+        cmbañoEjercicio.DataSource = dsEjerciciosAnteriores.Tables(0)
+        cmbañoEjercicio.DisplayMember = dsEjerciciosAnteriores.Tables(0).Columns("periodoFiscal").Caption
 
 
+        Reconectar()
+        Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+        Dim dsPlanCuentas As New DataSet
+        consPlanCuentas.Fill(dsPlanCuentas)
 
-        For Each cuentaSaldo As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
-
-        Next
+        cmbCuentaEjercicio.DataSource = dsPlanCuentas.Tables(0)
+        cmbCuentaEjercicio.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
+        cmbCuentaEjercicio.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
+        'cmbCuentas.ValueMember = dsEjerciciosAnteriores.Tables(0).Columns("id").Captio     
     End Sub
 End Class
