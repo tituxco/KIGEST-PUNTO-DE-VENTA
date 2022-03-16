@@ -845,14 +845,12 @@ Public Class frmaspirantes
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Try
             Reconectar()
-            Consultas("SELECT pr.ID_PRESTAMO AS ORDEN, pr.fecha as INICIO, date_sub(max(DTP.fecha), interval 1 month) as FIN, 
+            Consultas("SELECT pr.ID_PRESTAMO AS ORDEN, pr.fecha as INICIO, date_add(pr.fecha, interval pr.plazo month) as FIN, 
 		pr.DESCRIPCION as DESCRIPCION,pr.CONCEPTO,
         pr.plazo as DURACION,	
         round(pr.MONTO_PRESTAMO,2) AS TOTAL, round(pr.CUOTA,2) AS MENSUAL        
-        FROM rym_prestamo as pr, fact_clientes as cl, rym_detalle_prestamo as DTP
-        where pr.ID_CLIENTE=cl.idclientes and
-        DTP.ID_PRESTAMO= pr.ID_PRESTAMO AND
-        idclientes=" & Idcliente)
+        FROM rym_prestamo as pr
+        where pr.ID_CLIENTE=" & Idcliente)
         Catch ex As Exception
 
         End Try

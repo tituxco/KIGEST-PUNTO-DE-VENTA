@@ -1027,7 +1027,7 @@ Public Class reimpresionComprobantes
     Private Sub dtfacturas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtfacturas.KeyUp
         If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
             MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR FACTURAS")
-        Else
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = True Then
             If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
                 Reconectar()
 

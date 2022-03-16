@@ -25,7 +25,12 @@ Partial Class listadoPublicidades
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(listadoPublicidades))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.chksinFact = New System.Windows.Forms.CheckBox()
+        Me.rdAVencer = New System.Windows.Forms.RadioButton()
+        Me.rdvigentes = New System.Windows.Forms.RadioButton()
+        Me.chkSoloMorosos = New System.Windows.Forms.CheckBox()
         Me.chkMostarInfo = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.dthastafact = New System.Windows.Forms.DateTimePicker()
@@ -43,11 +48,6 @@ Partial Class listadoPublicidades
         Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.chkSoloMorosos = New System.Windows.Forms.CheckBox()
-        Me.RadioButton1 = New System.Windows.Forms.RadioButton()
-        Me.RadioButton2 = New System.Windows.Forms.RadioButton()
-        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
-        Me.chksinFact = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -76,12 +76,20 @@ Partial Class listadoPublicidades
         Me.TabPage1.Text = "Listado de publicidades"
         Me.TabPage1.UseVisualStyleBackColor = True
         '
+        'dgvPrestamos
+        '
+        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
+        Me.dgvPrestamos.Name = "dgvPrestamos"
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvPrestamos.TabIndex = 78
+        '
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.pnnavegacion.Controls.Add(Me.chksinFact)
-        Me.pnnavegacion.Controls.Add(Me.RadioButton2)
-        Me.pnnavegacion.Controls.Add(Me.RadioButton1)
+        Me.pnnavegacion.Controls.Add(Me.rdAVencer)
+        Me.pnnavegacion.Controls.Add(Me.rdvigentes)
         Me.pnnavegacion.Controls.Add(Me.chkSoloMorosos)
         Me.pnnavegacion.Controls.Add(Me.chkMostarInfo)
         Me.pnnavegacion.Controls.Add(Me.Button3)
@@ -103,6 +111,52 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1208, 89)
         Me.pnnavegacion.TabIndex = 76
+        '
+        'chksinFact
+        '
+        Me.chksinFact.AutoSize = True
+        Me.chksinFact.ForeColor = System.Drawing.Color.White
+        Me.chksinFact.Location = New System.Drawing.Point(175, 38)
+        Me.chksinFact.Name = "chksinFact"
+        Me.chksinFact.Size = New System.Drawing.Size(107, 17)
+        Me.chksinFact.TabIndex = 201
+        Me.chksinFact.Text = "Sin Factura ACT."
+        Me.chksinFact.UseVisualStyleBackColor = True
+        '
+        'rdAVencer
+        '
+        Me.rdAVencer.AutoSize = True
+        Me.rdAVencer.ForeColor = System.Drawing.Color.White
+        Me.rdAVencer.Location = New System.Drawing.Point(175, 15)
+        Me.rdAVencer.Name = "rdAVencer"
+        Me.rdAVencer.Size = New System.Drawing.Size(68, 17)
+        Me.rdAVencer.TabIndex = 200
+        Me.rdAVencer.Text = "A vencer"
+        Me.rdAVencer.UseVisualStyleBackColor = True
+        '
+        'rdvigentes
+        '
+        Me.rdvigentes.AutoSize = True
+        Me.rdvigentes.Checked = True
+        Me.rdvigentes.ForeColor = System.Drawing.Color.White
+        Me.rdvigentes.Location = New System.Drawing.Point(84, 15)
+        Me.rdvigentes.Name = "rdvigentes"
+        Me.rdvigentes.Size = New System.Drawing.Size(66, 17)
+        Me.rdvigentes.TabIndex = 199
+        Me.rdvigentes.TabStop = True
+        Me.rdvigentes.Text = "Vigentes"
+        Me.rdvigentes.UseVisualStyleBackColor = True
+        '
+        'chkSoloMorosos
+        '
+        Me.chkSoloMorosos.AutoSize = True
+        Me.chkSoloMorosos.ForeColor = System.Drawing.Color.White
+        Me.chkSoloMorosos.Location = New System.Drawing.Point(84, 38)
+        Me.chkSoloMorosos.Name = "chkSoloMorosos"
+        Me.chkSoloMorosos.Size = New System.Drawing.Size(89, 17)
+        Me.chkSoloMorosos.TabIndex = 198
+        Me.chkSoloMorosos.Text = "Solo morosos"
+        Me.chkSoloMorosos.UseVisualStyleBackColor = True
         '
         'chkMostarInfo
         '
@@ -290,12 +344,12 @@ Partial Class listadoPublicidades
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.Microsoft_Excel_64px
         Me.Button1.Location = New System.Drawing.Point(1106, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
         Me.Button1.TabIndex = 168
-        Me.Button1.Text = "Imprimir"
+        Me.Button1.Text = "Exportar"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.Button1.UseVisualStyleBackColor = True
@@ -320,61 +374,6 @@ Partial Class listadoPublicidades
         Me.Label1.Size = New System.Drawing.Size(281, 39)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
-        '
-        'chkSoloMorosos
-        '
-        Me.chkSoloMorosos.AutoSize = True
-        Me.chkSoloMorosos.ForeColor = System.Drawing.Color.White
-        Me.chkSoloMorosos.Location = New System.Drawing.Point(84, 38)
-        Me.chkSoloMorosos.Name = "chkSoloMorosos"
-        Me.chkSoloMorosos.Size = New System.Drawing.Size(89, 17)
-        Me.chkSoloMorosos.TabIndex = 198
-        Me.chkSoloMorosos.Text = "Solo morosos"
-        Me.chkSoloMorosos.UseVisualStyleBackColor = True
-        '
-        'RadioButton1
-        '
-        Me.RadioButton1.AutoSize = True
-        Me.RadioButton1.Checked = True
-        Me.RadioButton1.ForeColor = System.Drawing.Color.White
-        Me.RadioButton1.Location = New System.Drawing.Point(84, 15)
-        Me.RadioButton1.Name = "RadioButton1"
-        Me.RadioButton1.Size = New System.Drawing.Size(66, 17)
-        Me.RadioButton1.TabIndex = 199
-        Me.RadioButton1.TabStop = True
-        Me.RadioButton1.Text = "Vigentes"
-        Me.RadioButton1.UseVisualStyleBackColor = True
-        '
-        'RadioButton2
-        '
-        Me.RadioButton2.AutoSize = True
-        Me.RadioButton2.ForeColor = System.Drawing.Color.White
-        Me.RadioButton2.Location = New System.Drawing.Point(175, 15)
-        Me.RadioButton2.Name = "RadioButton2"
-        Me.RadioButton2.Size = New System.Drawing.Size(69, 17)
-        Me.RadioButton2.TabIndex = 200
-        Me.RadioButton2.Text = "Vencidas"
-        Me.RadioButton2.UseVisualStyleBackColor = True
-        Me.RadioButton2.Visible = False
-        '
-        'dgvPrestamos
-        '
-        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
-        Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvPrestamos.TabIndex = 78
-        '
-        'chksinFact
-        '
-        Me.chksinFact.AutoSize = True
-        Me.chksinFact.ForeColor = System.Drawing.Color.White
-        Me.chksinFact.Location = New System.Drawing.Point(175, 38)
-        Me.chksinFact.Name = "chksinFact"
-        Me.chksinFact.Size = New System.Drawing.Size(107, 17)
-        Me.chksinFact.TabIndex = 201
-        Me.chksinFact.Text = "Sin Factura ACT."
-        Me.chksinFact.UseVisualStyleBackColor = True
         '
         'listadoPublicidades
         '
@@ -417,8 +416,8 @@ Partial Class listadoPublicidades
     Friend WithEvents Label8 As Label
     Friend WithEvents Button3 As Button
     Friend WithEvents chkMostarInfo As CheckBox
-    Friend WithEvents RadioButton2 As RadioButton
-    Friend WithEvents RadioButton1 As RadioButton
+    Friend WithEvents rdAVencer As RadioButton
+    Friend WithEvents rdvigentes As RadioButton
     Friend WithEvents chkSoloMorosos As CheckBox
     Friend WithEvents chksinFact As CheckBox
 End Class

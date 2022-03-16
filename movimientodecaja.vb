@@ -276,7 +276,7 @@
                 grpCuentaContable.Visible = True
                 Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
                 concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-                FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+                FROM cm_planDeCuentas where cuentaMovimiento=1 order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
                 Dim tabCtasDebe As New DataSet
                 Dim tabCtasHaber As New DataSet
                 consPlanCuentas.Fill(tabCtasDebe)
@@ -386,6 +386,15 @@
         If Button1.Text = "Cerrar" Then
             Me.Close()
             Exit Sub
+        End If
+
+        If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+            If cmbCuentaDebe.SelectedValue = cmbCuentaHaber.SelectedValue Then
+                MsgBox("LA CUENTA DE ORIGEN Y DESTINO DEBEN SER DISTINTAS PARA REALIZAR EL MOVIMIENTO")
+                Exit Sub
+            End If
+        Else
+            ' MsgBox("no se permite asiento contable")
         End If
 
         If txttotalefectivo.Text = "" Then

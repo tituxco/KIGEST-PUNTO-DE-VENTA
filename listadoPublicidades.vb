@@ -22,7 +22,8 @@
         End If
 
         Reconectar()
-        Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+        If rdvigentes.Checked = True Then
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
 		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
@@ -46,7 +47,32 @@
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes" &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
-
+        ElseIf rdAVencer.Checked = True Then
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
+        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+        (select count(*) from rym_detalle_prestamo as DTP 
+	    	where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+            )AS MESES_DEBE,
+        (select count(*) from rym_detalle_prestamo as DTP 
+		    where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+            )AS MOROSO_MESES,        
+        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+        cl.vendedor
+        FROM rym_prestamo as pr, fact_clientes as cl
+        where pr.ID_CLIENTE=cl.idclientes
+        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')")
+        End If
         'MsgBox()
     End Sub
 
@@ -60,12 +86,13 @@
         'MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
-
+        'MsgBox(Cadena)
         If ds.Tables(0).Rows.Count > 0 Then
             dgvPrestamos.Cargar_Datos(ds.Tables(0))
             dgvPrestamos.dgvVista.Columns(0).Visible = True
             'DataGridView1.DataSource = ds.Tables(0)
         Else
+
             dgvPrestamos.Cargar_Datos(Nothing)
         End If
 
@@ -178,5 +205,9 @@
             dgvPrestamos.dgvVista.Columns("SALDO").Visible = True
             dgvPrestamos.dgvVista.Columns("vendedor").Visible = True
         End If
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        GenerarExcel(dgvPrestamos.dgvVista)
     End Sub
 End Class

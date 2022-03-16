@@ -3399,6 +3399,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
 
     Private Sub ivaVentas_Enter(sender As Object, e As EventArgs) Handles ivaVentas.Enter
+        Reconectar()
         Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_facturas order by fecha desc", conexionPrinc)
 
         Dim readPeriodo As New DataSet
@@ -5789,7 +5790,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             dgvDatosEjercicio.DataSource = Nothing
             Reconectar()
             If rdMovimientosEjercicios.Checked = True Then
-                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("
+                SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber, '' as saldoDeudor,'' as saldoAcreedor
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
                 LM.fecha like '" & cmbañoEjercicio.Text & "-%%-%%' and
@@ -5801,6 +5803,63 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 dgvDatosEjercicio.DataSource = tabLibroMayor
+                Dim saldoDeudor As Double = 0
+                Dim saldoAcreedor As Double = 0
+
+                For Each movimientoCuenta As DataGridViewRow In dgvDatosEjercicio.Rows
+                    Dim debeActual As Double = movimientoCuenta.Cells("importeDebe").Value
+                    Dim haberActual As Double = movimientoCuenta.Cells("importeHaber").Value
+                    Dim saldoActual As Double = 0
+
+                    If saldoAcreedor > 0 Then
+
+                        saldoActual = saldoAcreedor - (debeActual - haberActual)
+                        saldoDeudor = 0
+
+                        If saldoActual > 0 Then
+
+                            saldoAcreedor = saldoActual
+                            saldoDeudor = 0
+                        Else
+                            saldoDeudor = saldoActual * -1
+                            saldoAcreedor = 0
+                        End If
+
+                    ElseIf saldoDeudor > 0 Then
+
+                        saldoActual = saldoDeudor + (debeActual - haberActual)
+                        saldoAcreedor = 0
+
+                        If saldoActual > 0 Then
+                            saldoDeudor = saldoActual
+                            saldoAcreedor = 0
+                        Else
+                            saldoAcreedor = saldoActual * -1
+                            saldoDeudor = 0
+                        End If
+                    Else
+                        saldoAcreedor = haberActual
+                        saldoDeudor = debeActual
+
+                    End If
+
+                    movimientoCuenta.Cells("importeDebe").Value = movimientoCuenta.Cells("importeDebe").Value
+                    movimientoCuenta.Cells("importeHaber").Value = movimientoCuenta.Cells("importeHaber").Value
+                    movimientoCuenta.Cells("saldoDeudor").Value = FormatNumber(saldoDeudor, 2)
+                    movimientoCuenta.Cells("saldoAcreedor").Value = FormatNumber(saldoAcreedor, 2)
+
+                Next
+                dgvDatosEjercicio.Columns("importeDebe").DefaultCellStyle.Format = "N2"
+                dgvDatosEjercicio.Columns("importeHaber").DefaultCellStyle.Format = "N2"
+                dgvDatosEjercicio.Columns("saldoDeudor").DefaultCellStyle.Format = "N2"
+                dgvDatosEjercicio.Columns("saldoAcreedor").DefaultCellStyle.Format = "N2"
+
+
+
+
+
+
+
             ElseIf rdSumaEjercicio.Checked = True Then
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT MONTHNAME(LM.fecha) AS MES,SUM(asi.importeDebe) AS DEBE, SUM(asi.importeHaber) AS HABER 
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
