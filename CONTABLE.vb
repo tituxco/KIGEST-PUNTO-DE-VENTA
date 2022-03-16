@@ -924,7 +924,7 @@ Public Class CONTABLE
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtcategorias.DataSource = tablalistas
-            dtcategorias.Columns(0).Width = 30
+            'dtcategorias.Columns(0).Width = 30
 
         Catch ex As Exception
 
@@ -5899,5 +5899,23 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         cmbCuentaEjercicio.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
         cmbCuentaEjercicio.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
         'cmbCuentas.ValueMember = dsEjerciciosAnteriores.Tables(0).Columns("id").Captio     
+    End Sub
+
+    Private Sub dtcategorias_UserAddedRow(sender As Object, e As DataGridViewRowEventArgs) Handles dtcategorias.UserAddedRow
+        Try
+            Reconectar()
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_categoria_insum (nombre) values " _
+        & "(?nmb)", conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?nmb", dtcategorias.CurrentRow.Cells(1).Value.ToString.ToUpper)
+
+                '.AddWithValue("?id", dtlistasprecio.Rows(e.RowIndex).Cells(0).Value)
+            End With
+            comandoadd.ExecuteNonQuery()
+            dtcategorias.CurrentRow.Cells(0).Value = comandoadd.LastInsertedId
+            'cargarListas()
+
+        Catch ex As Exception
+        End Try
     End Sub
 End Class
