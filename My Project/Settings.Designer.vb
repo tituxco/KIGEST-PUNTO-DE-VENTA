@@ -379,7 +379,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("2")>  _
         Public Property metodoCalculo() As Integer
             Get
                 Return CType(Me("metodoCalculo"),Integer)

@@ -140,6 +140,7 @@
         Me.Text = "LISTADO " & DatosAcceso.ServMensual
         dtdesdefact.Value = obtenerPrimerDiaMes()
         Label1.Text = DatosAcceso.ServMensual
+        tabListadoSerivicios.Text = DatosAcceso.ServMensual
         cmdbuscar.PerformClick()
 
     End Sub

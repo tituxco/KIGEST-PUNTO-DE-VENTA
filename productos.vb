@@ -501,66 +501,118 @@ Public Class productos
 
             Dim costoUtil As Double
             Dim costoFinal As Double
+            Dim idc As Double = FormatNumber(txtIDC.Text, 3)
+            Dim icl As Double = FormatNumber(txtICL.Text, 3)
 
-            costoFinal = precioCosto * iva * cotizacion
+
+            Dim tipoproducto As Integer = cmbtipoprod.SelectedIndex
+
+            If tipoproducto = 2 Then
+                costoFinal = (precioCosto * iva) + idc + icl
+                txtcostofinal.Text = Math.Round(costoFinal, 3)
+                For i = 0 To dtlistas.RowCount - 1
+                    Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
+                    Dim utilListSum As Double = (utilidad * 100) - 100
+                    Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
+
+                    If dtlistas.Rows(i).Cells(3).Value.ToString = "%" Then
+                        dtlistas.Rows(i).Cells(2).Value = (precioCosto * utilidad * iva) + idc + icl
+                    Else
+                        'MsgBox("aca")
+                        Select Case dtlistas.Rows(i).Cells(4).Value
+
+
+                            Case 0
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util) - 1) * iva) + idc + icl   'costoFinal * ((utilidad + util) - 1)
+
+                            Case 1
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util1) - 1) * iva) + idc + icl
+
+                            Case 2
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util2) - 1) * iva) + idc + icl
+
+                            Case 3
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util3) - 1) * iva) + idc + icl
+
+                            Case 4
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util4) - 1) * iva) + idc + icl
+
+                            Case 5
+
+                                dtlistas.Rows(i).Cells(2).Value = (precioCosto * ((utilidad + util5) - 1) * iva) + idc + icl
+
+                        End Select
+                    End If
+                Next
+            Else
+                costoFinal = precioCosto * iva * cotizacion
+                txtcostofinal.Text = Math.Round(costoFinal, 2)
+
+                Dim i As Integer
+
+                For i = 0 To dtlistas.RowCount - 1
+                    Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
+                    Dim utilListSum As Double = (utilidad * 100) - 100
+                    Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
+
+                    If dtlistas.Rows(i).Cells(3).Value.ToString = "%" Then
+                        dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
+                    Else
+                        Select Case dtlistas.Rows(i).Cells(4).Value
+                            Case 0
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util) - 1)
+                                End If
+                            Case 1
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util1) - 1)
+                                End If
+                            Case 2
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util2) - 1)
+                                End If
+                            Case 3
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util3
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util3) - 1)
+                                End If
+                            Case 4
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util4
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util4) - 1)
+                                End If
+                            Case 5
+                                If My.Settings.metodoCalculo = 1 Then
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util5
+                                Else
+                                    dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util5) - 1)
+                                End If
+                        End Select
+                    End If
+                Next
+
+                precioCosto = 0
+                cotizacion = 0
+                iva = 0
+            End If
+
+
             'costoUtil = costoFinal * util
             'MsgBox(precioCosto & "*" & iva & "*" & cotizacion)
-            txtcostofinal.Text = Math.Round(costoFinal, 2)
 
-            Dim i As Integer
-
-            For i = 0 To dtlistas.RowCount - 1
-                Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
-                Dim utilListSum As Double = (utilidad * 100) - 100
-                Dim sumaUtil As Double = (utilListSum + util2sum + 100) / 100
-
-                If dtlistas.Rows(i).Cells(3).Value.ToString = "%" Then
-                    dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad
-                Else
-                    Select Case dtlistas.Rows(i).Cells(4).Value
-                        Case 0
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util) - 1)
-                            End If
-                        Case 1
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util1
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util1) - 1)
-                            End If
-                        Case 2
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util2
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util2) - 1)
-                            End If
-                        Case 3
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util3
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util3) - 1)
-                            End If
-                        Case 4
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util4
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util4) - 1)
-                            End If
-                        Case 5
-                            If My.Settings.metodoCalculo = 1 Then
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * utilidad * util5
-                            Else
-                                dtlistas.Rows(i).Cells(2).Value = costoFinal * ((utilidad + util5) - 1)
-                            End If
-                    End Select
-                End If
-            Next
-
-            precioCosto = 0
-            cotizacion = 0
-            iva = 0
         Catch ex As Exception
 
         End Try
@@ -616,6 +668,13 @@ Public Class productos
             txtinfoextra.Text = infoProd(0)("detalles")
             txtcodigo.Text = infoProd(0)("codigo")
             cmbtipoprod.SelectedIndex = infoProd(0)("tipo")
+            ''si es combustible habilitamos otras opciones
+            If infoProd(0)("tipo") = 2 Then
+                grpImpuestosCombustibles.Visible = True
+                txtIDC.Text = infoProd(0)("impuestoFijo01")
+                txtICL.Text = infoProd(0)("impuestoFijo02")
+            End If
+
             'txtutilidad0.Text = infoProd(0)("ganancia")
             cmbunidades.SelectedValue = infoProd(0)("unidades")
             ' MsgBox(infoProd(0)(24))
@@ -898,6 +957,8 @@ Public Class productos
             Dim unidades As Integer = cmbunidades.SelectedValue
             Dim bonificacion As String = ""
             Dim desc_cantidad As String = txtmultiplStock.Text
+            Dim idc As String = txtIDC.Text
+            Dim icl As String = txtICL.Text
             If txtbonificacionMax.Text = "" Then bonificacion = 0 Else bonificacion = txtbonificacionMax.Text
             If codigo <> "" And modificaProd = False Then
                 If ExisteProducto(codigo) = True Then
@@ -916,104 +977,173 @@ Public Class productos
             Dim moneda As Integer = cmbmoneda.SelectedValue
             Dim foto As Byte() = Imagen_Bytes(imgFoto.Image)
 
-            'Dim stock As String = txtstoked.Text
-            Reconectar()
-            If categoria = 0 And cmbcatprod.Text <> "" Then
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
-                    "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
-                '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
-                '   insert into  fact_categoria_insum (id,nombre) values 
-                '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
-                '   ON DUPLICATE KEY UPDATE 
-                'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
-                comandoad.ExecuteNonQuery()
-                categoria = comandoad.LastInsertedId
-            End If
+            If tipo = 2 Then
 
-            Reconectar()
-            If marca = 0 And cmbmarcas.Text <> "" Then
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_marcas(nombre) values('" & cmbmarcas.Text.ToUpper & "')", conexionPrinc)
-                comandoad.ExecuteNonQuery()
-                marca = comandoad.LastInsertedId
-            End If
+                Dim sqlQuery As String
 
-            Reconectar()
-            If modelo = 0 And cmbmodelos.Text <> "" Then
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_modelos (idmarca,nombre) values('" & marca & "','" & cmbmodelos.Text.ToUpper & "')", conexionPrinc)
-                comandoad.ExecuteNonQuery()
-                modelo = comandoad.LastInsertedId
-            End If
+                If modificaProd = False Then
+                    sqlQuery = "insert into fact_insumos 
+                (descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, 
+                moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,
+                utilidad4,utilidad5,desc_cantidad,impuestoFijo01,impuestoFijo02) values 
+                (?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, 
+                ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4,?util5,
+                ?desc_cantidad,?impuestoFijo01,?impuestoFijo02)"
+                ElseIf modificaProd = True Then
+                    sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
+                codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone,
+                utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, 
+                presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4, utilidad5=?util5,
+                desc_cantidad=?desc_cantidad, impuestoFijo01=?impuestoFijo01,impuestoFijo02=?impuestoFijo02 where id=?idp"
+                End If
+                Reconectar()
 
-            Reconectar()
-            If moneda = 0 And cmbmoneda.Text <> "" Then
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_moneda (nombre,cotizacion) values('" & cmbmoneda.Text.ToUpper & "','1')", conexionPrinc)
-                comandoad.ExecuteNonQuery()
-                modelo = comandoad.LastInsertedId
-            End If
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?desc", nombre)
+                    .AddWithValue("?prec", costo)
+                    .AddWithValue("?gan", utilidad)
+                    .AddWithValue("?gar", garantia)
+                    .AddWithValue("?iva", iva)
+                    .AddWithValue("?codprov", codprov)
+                    .AddWithValue("?cat", categoria)
+                    .AddWithValue("?marca", marca)
+                    .AddWithValue("?modelo", modelo)
+                    .AddWithValue("?det", infoext)
+                    .AddWithValue("?plu", codigo)
+                    .AddWithValue("?mone", moneda)
+                    .AddWithValue("?uti1", utilidad1)
+                    .AddWithValue("?uti2", utilidad2)
+                    .AddWithValue("?calcpcio", calcular_precio)
+                    .AddWithValue("?unid", unidades)
+                    .AddWithValue("?present", presentacion)
+                    .AddWithValue("?tipo", tipo)
+                    .AddWithValue("?foto", foto)
+                    .AddWithValue("?codigo", codigo)
+                    .AddWithValue("?bonif", bonificacion)
+                    .AddWithValue("?util3", utilidad3)
+                    .AddWithValue("?util4", utilidad4)
+                    .AddWithValue("?util5", utilidad5)
+                    .AddWithValue("?desc_cantidad", desc_cantidad)
+                    .AddWithValue("?impuestoFijo01", idc)
+                    .AddWithValue("?impuestoFijo02", icl)
 
-            Dim sqlQuery As String
+                    If modificaProd = True Then
+                        '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
+                        .AddWithValue("?idp", idProductoGral)
+                    End If
 
-            If modificaProd = False Then
-                sqlQuery = "insert into fact_insumos 
+                End With
+                comandoadd.ExecuteNonQuery()
+
+                If txtPesoEspecifico.Text <> "" And IsNumeric(txtPesoEspecifico.Text) Then
+                    Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
+                    Reconectar()
+                    Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
+                on duplicate key update peso=?peso", conexionPrinc)
+                    comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
+                    comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
+
+                    comandoPesoEsp.ExecuteNonQuery()
+                End If
+            Else
+                'Dim stock As String = txtstoked.Text
+                Reconectar()
+                If categoria = 0 And cmbcatprod.Text <> "" Then
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
+                        "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
+                    '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
+                    '   insert into  fact_categoria_insum (id,nombre) values 
+                    '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
+                    '   ON DUPLICATE KEY UPDATE 
+                    'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
+                    comandoad.ExecuteNonQuery()
+                    categoria = comandoad.LastInsertedId
+                End If
+
+                Reconectar()
+                If marca = 0 And cmbmarcas.Text <> "" Then
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_marcas(nombre) values('" & cmbmarcas.Text.ToUpper & "')", conexionPrinc)
+                    comandoad.ExecuteNonQuery()
+                    marca = comandoad.LastInsertedId
+                End If
+
+                Reconectar()
+                If modelo = 0 And cmbmodelos.Text <> "" Then
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_modelos (idmarca,nombre) values('" & marca & "','" & cmbmodelos.Text.ToUpper & "')", conexionPrinc)
+                    comandoad.ExecuteNonQuery()
+                    modelo = comandoad.LastInsertedId
+                End If
+
+                Reconectar()
+                If moneda = 0 And cmbmoneda.Text <> "" Then
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_moneda (nombre,cotizacion) values('" & cmbmoneda.Text.ToUpper & "','1')", conexionPrinc)
+                    comandoad.ExecuteNonQuery()
+                    modelo = comandoad.LastInsertedId
+                End If
+
+                Dim sqlQuery As String
+
+                If modificaProd = False Then
+                    sqlQuery = "insert into fact_insumos 
                 (descripcion, precio, ganancia, garantia, iva, codprov, categoria, marca, modelo, detalles, cod_bar, 
                 moneda,utilidad1,utilidad2, tipo, codigo, calcular_precio,unidades,presentacion,foto,bonif,utilidad3,utilidad4,utilidad5,desc_cantidad) values 
                 (?desc, ?prec, ?gan, ?gar, ?iva, ?codprov, ?cat, ?marca, ?modelo, ?det, ?plu, 
                 ?mone,?uti1,?uti2,?tipo,?codigo,?calcpcio,?unid,?present,?foto,?bonif,?util3,?util4,?util5,?desc_cantidad)"
-            ElseIf modificaProd = True Then
-                sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
+                ElseIf modificaProd = True Then
+                    sqlQuery = "update fact_insumos set descripcion=?desc, precio=?prec, ganancia=?gan, garantia=?gar, iva=?iva, 
                 codprov=?codprov, categoria=?cat, marca=?marca,modelo=?modelo, detalles=?det,cod_bar=?plu, moneda=?mone,
                 utilidad1=?uti1,utilidad2=?uti2, tipo=?tipo, codigo=?codigo, calcular_precio=?calcpcio,unidades=?unid, 
                 presentacion=?present, foto=?foto, bonif=?bonif, utilidad3=?util3, utilidad4=?util4, utilidad5=?util5,desc_cantidad=?desc_cantidad where id=?idp"
-            End If
-            Reconectar()
-
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?desc", nombre)
-                .AddWithValue("?prec", costo)
-                .AddWithValue("?gan", utilidad)
-                .AddWithValue("?gar", garantia)
-                .AddWithValue("?iva", iva)
-                .AddWithValue("?codprov", codprov)
-                .AddWithValue("?cat", categoria)
-                .AddWithValue("?marca", marca)
-                .AddWithValue("?modelo", modelo)
-                .AddWithValue("?det", infoext)
-                .AddWithValue("?plu", codigo)
-                .AddWithValue("?mone", moneda)
-                .AddWithValue("?uti1", utilidad1)
-                .AddWithValue("?uti2", utilidad2)
-                .AddWithValue("?calcpcio", calcular_precio)
-                .AddWithValue("?unid", unidades)
-                .AddWithValue("?present", presentacion)
-                .AddWithValue("?tipo", tipo)
-                .AddWithValue("?foto", foto)
-                .AddWithValue("?codigo", codigo)
-                .AddWithValue("?bonif", bonificacion)
-                .AddWithValue("?util3", utilidad3)
-                .AddWithValue("?util4", utilidad4)
-                .AddWithValue("?util5", utilidad5)
-                .AddWithValue("?desc_cantidad", desc_cantidad)
-                If modificaProd = True Then
-                    '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
-                    .AddWithValue("?idp", idProductoGral)
                 End If
-
-            End With
-            comandoadd.ExecuteNonQuery()
-
-            If txtPesoEspecifico.Text <> "" And IsNumeric(txtPesoEspecifico.Text) Then
-                Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
                 Reconectar()
-                Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
+
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoadd.Parameters
+                    .AddWithValue("?desc", nombre)
+                    .AddWithValue("?prec", costo)
+                    .AddWithValue("?gan", utilidad)
+                    .AddWithValue("?gar", garantia)
+                    .AddWithValue("?iva", iva)
+                    .AddWithValue("?codprov", codprov)
+                    .AddWithValue("?cat", categoria)
+                    .AddWithValue("?marca", marca)
+                    .AddWithValue("?modelo", modelo)
+                    .AddWithValue("?det", infoext)
+                    .AddWithValue("?plu", codigo)
+                    .AddWithValue("?mone", moneda)
+                    .AddWithValue("?uti1", utilidad1)
+                    .AddWithValue("?uti2", utilidad2)
+                    .AddWithValue("?calcpcio", calcular_precio)
+                    .AddWithValue("?unid", unidades)
+                    .AddWithValue("?present", presentacion)
+                    .AddWithValue("?tipo", tipo)
+                    .AddWithValue("?foto", foto)
+                    .AddWithValue("?codigo", codigo)
+                    .AddWithValue("?bonif", bonificacion)
+                    .AddWithValue("?util3", utilidad3)
+                    .AddWithValue("?util4", utilidad4)
+                    .AddWithValue("?util5", utilidad5)
+                    .AddWithValue("?desc_cantidad", desc_cantidad)
+                    If modificaProd = True Then
+                        '    Dim idProducto As Integer = DgvProductos.dgvVista.CurrentRow.Cells(0).Value  'dtproductos.CurrentRow.Cells(0).Value
+                        .AddWithValue("?idp", idProductoGral)
+                    End If
+
+                End With
+                comandoadd.ExecuteNonQuery()
+
+                If txtPesoEspecifico.Text <> "" And IsNumeric(txtPesoEspecifico.Text) Then
+                    Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
+                    Reconectar()
+                    Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
                 on duplicate key update peso=?peso", conexionPrinc)
-                comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
-                comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
+                    comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
+                    comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
 
-                comandoPesoEsp.ExecuteNonQuery()
+                    comandoPesoEsp.ExecuteNonQuery()
+                End If
             End If
-
-
             MsgBox("Operacion completada correctamente")
             deshabilitarControles()
             'TabPage2.Parent = Nothing
@@ -1654,6 +1784,71 @@ Public Class productos
     End Sub
 
     Private Sub DgvProductos_MouseEnter(sender As Object, e As EventArgs) Handles DgvProductos.MouseEnter
+
+    End Sub
+
+    Private Sub txtcosto_TextChanged(sender As Object, e As EventArgs) Handles txtcosto.TextChanged
+
+    End Sub
+
+    Private Sub cmbtipoprod_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipoprod.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbtipoprod_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbtipoprod.SelectedValueChanged
+        If cmbtipoprod.Text = "COMBUSTIBLES" Then
+            grpImpuestosCombustibles.Visible = True
+        Else
+            grpImpuestosCombustibles.Visible = False
+        End If
+    End Sub
+
+    Private Sub txtIDC_TextChanged(sender As Object, e As EventArgs) Handles txtIDC.TextChanged
+
+    End Sub
+
+    Private Sub txtutilidad0_TextChanged(sender As Object, e As EventArgs) Handles txtutilidad0.TextChanged
+
+    End Sub
+
+    Private Sub txtIDC_Layout(sender As Object, e As LayoutEventArgs) Handles txtIDC.Layout
+
+    End Sub
+
+    Private Sub txtIDC_KeyUp(sender As Object, e As KeyEventArgs) Handles txtIDC.KeyUp
+        Try
+            If e.KeyCode = Keys.Enter Then
+                '   DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
+                calcularPrecios()
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub txtIDC_Leave(sender As Object, e As EventArgs) Handles txtIDC.Leave
+        '   DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
+        calcularPrecios()
+    End Sub
+
+    Private Sub txtICL_TextChanged(sender As Object, e As EventArgs) Handles txtICL.TextChanged
+
+    End Sub
+
+    Private Sub txtICL_KeyUp(sender As Object, e As KeyEventArgs) Handles txtICL.KeyUp
+        Try
+            If e.KeyCode = Keys.Enter Then
+                '   DirectCast(sender, TextBox).Text = DirectCast(sender, TextBox).Text 'remplazarcoma(txtutilidad.Text)
+                calcularPrecios()
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub txtICL_Leave(sender As Object, e As EventArgs) Handles txtICL.Leave
+
+        calcularPrecios()
 
     End Sub
 End Class

@@ -673,6 +673,16 @@ Namespace My.Resources
         '''<summary>
         '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         '''</summary>
+        Friend ReadOnly Property peso_26px() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("peso 26px", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
         Friend ReadOnly Property Pie_chart_() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Pie chart.", resourceCulture)
@@ -986,6 +996,16 @@ Namespace My.Resources
         Friend ReadOnly Property To_Do_16px() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("To Do_16px", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        '''</summary>
+        Friend ReadOnly Property transaction_26px() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("transaction_26px", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

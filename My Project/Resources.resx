@@ -190,6 +190,9 @@
   <data name="To Do_16px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\To Do_16px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="peso 26px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\peso 26px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="I'd kill for you. Please ask me to kill for you." type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\I'd kill for you. Please ask me to kill for you..png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -361,6 +364,9 @@
   <data name="Export_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Export_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Microsoft Excel_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\Microsoft Excel_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Commercial_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Commercial_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -400,7 +406,7 @@
   <data name="OOo Math" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OOo Math.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Microsoft Excel_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\Microsoft Excel_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="transaction_26px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\transaction_26px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

@@ -1025,9 +1025,17 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub dtfacturas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtfacturas.KeyUp
+
+    End Sub
+
+    Private Sub dtfacturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellContentClick
+
+    End Sub
+
+    Private Sub reimpresionComprobantes_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
             MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR FACTURAS")
-        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = True Then
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") <> False Then
             If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
                 Reconectar()
 
@@ -1041,9 +1049,5 @@ Public Class reimpresionComprobantes
             End If
 
         End If
-    End Sub
-
-    Private Sub dtfacturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellContentClick
-
     End Sub
 End Class

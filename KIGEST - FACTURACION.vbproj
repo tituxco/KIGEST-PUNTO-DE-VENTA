@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>339</ApplicationRevision>
+    <ApplicationRevision>341</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -337,6 +337,12 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Factura.vb" />
+    <Compile Include="facturarCombustible.Designer.vb">
+      <DependentUpon>facturarCombustible.vb</DependentUpon>
+    </Compile>
+    <Compile Include="facturarCombustible.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="facturas.Designer.vb">
       <DependentUpon>facturas.vb</DependentUpon>
     </Compile>
@@ -765,6 +771,8 @@
     <None Include="Resources\iconos\delete_document_32px.png" />
     <None Include="Resources\iconos\duplicate_contacts_64px.png" />
     <None Include="Resources\iconos\Microsoft Excel_64px.png" />
+    <None Include="Resources\iconos\peso 26px.png" />
+    <None Include="Resources\iconos\transaction_26px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -821,6 +829,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DGVPaginado.resx">
       <DependentUpon>DGVPaginado.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="facturarCombustible.resx">
+      <DependentUpon>facturarCombustible.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmServiciosCloud.resx">
       <DependentUpon>frmServiciosCloud.vb</DependentUpon>

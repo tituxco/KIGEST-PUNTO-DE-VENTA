@@ -3145,14 +3145,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
 
-    Private Sub TabPage10_Click(sender As Object, e As EventArgs) Handles TabPage10.Click
-
-    End Sub
-
-    Private Sub dtcategorias_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtcategorias.CellContentClick
-
-    End Sub
-
 
     Private Sub dtlistacob_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs) Handles dtlistacob.ColumnHeaderMouseClick
         Try
@@ -4275,6 +4267,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 where CTA.cuentaMovimiento=1
                 order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
                 Dim tabSaldoCuenta As New DataTable
+
                 consSaldoCuenta.Fill(tabSaldoCuenta)
 
                 'Dim col As New DataColumn
@@ -4317,12 +4310,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 				ifnull((select sum(stos.importeDebe)from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                CTA.cuentaMovimiento=1 and
                 LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
                 ),0) -
                 
                 ifnull((select sum(stos.importeHaber)from cm_libroDiario as LD, cm_Asientos as stos 							
                 where stos.codigoAsiento=LD.codigoAsiento and
                 (stos.cuentaDebeId=CTA.id or stos.cuentaHaberId=CTA.id) and
+                CTA.cuentaMovimiento=1 and
                 LD.fecha like '" & cmbBalCtasPeriodo.Text & "-%%'
                 ),0) as MES,
                 
@@ -4335,6 +4330,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
                 Dim tabBalance As New DataTable
                 Dim infoBalance() As DataRow
+                'MsgBox(consbalance.SelectCommand.CommandText)
                 consbalance.Fill(tabBalance)
                 Dim tablaBalanceSumas As New DataTable
 
@@ -5273,9 +5269,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             EnProgreso.Show()
             Application.DoEvents()
 
-            If rdCtaSaldo.Checked = True Then
-                MsgBox("Para cerrar el periodo debe visualizar el BALANCE")
-            Else
+            If rdBalance.Checked = True Then
+                MsgBox("Para cerrar el periodo debe visualizar LISTADO DE CUENTAS CON SALDO")
                 Exit Sub
             End If
 
@@ -5290,14 +5285,19 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", conexionPrinc)
                     comandoadd.ExecuteNonQuery()
                     For Each cuentaSaldo As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
-                        MsgBox(cuentaSaldo.Cells(7).Value & "--" & CDbl(cuentaSaldo.Cells(7).Value))
+                        'MsgBox(cuentaSaldo.Cells(7).Value & "--" & CDbl(cuentaSaldo.Cells(7).Value.ToString.Replace(".", "")))
                         Dim idcuenta As Integer = cuentaSaldo.Cells(0).Value
-                        Dim saldoCuenta As Double = CDbl(cuentaSaldo.Cells(11).Value).ToString.Replace(",", ".")
-
+                        Dim saldotxt As String = remplazarPunto(cuentaSaldo.Cells(7).Value.ToString.Replace(".", "").Replace(".", "."))
+                        Dim saldoCuenta As Double = CDbl(cuentaSaldo.Cells(7).Value)
+                        'MsgBox(saldoCuenta & "----" & saldotxt)
                         Reconectar()
                         Dim comandoadd2 As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_saldos_cuentas (idCuenta, periodo,saldo)
-                        values ('" & idcuenta & "','" & cmbBalCtasPeriodo.Text & "', '" & saldoCuenta & "'
-                        )", conexionPrinc)
+                        values (?idcuenta,?periodo,?saldo)", conexionPrinc)
+                        With comandoadd2.Parameters
+                            .AddWithValue("?idcuenta", idcuenta)
+                            .AddWithValue("?periodo", cmbBalCtasPeriodo.Text)
+                            .AddWithValue("?saldo", saldoCuenta)
+                        End With
                         comandoadd2.ExecuteNonQuery()
                     Next
 
@@ -5917,5 +5917,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
         Catch ex As Exception
         End Try
+    End Sub
+
+    Private Sub dgvDatosEjercicio_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDatosEjercicio.CellContentClick
+
+    End Sub
+
+    Private Sub Button51_Click(sender As Object, e As EventArgs) Handles Button51.Click
+        GenerarExcel(dgvDatosEjercicio)
+
     End Sub
 End Class

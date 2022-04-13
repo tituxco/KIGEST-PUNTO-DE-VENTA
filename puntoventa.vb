@@ -154,6 +154,7 @@ Public Class puntoventa
                     condVta = 1
                     lblfactcondvta.Text = "CONTADO"
                 End If
+                Idcliente = txtcliecta.Text
                 lblfactlistaprecios.Text = infocl(0)("lista_preciosNM")
                 listaPrecios = infocl(0)("lista_precios")
                 TipoIVAContr = infocl(0)("iva_tipo")
@@ -271,16 +272,22 @@ Public Class puntoventa
             Dim iva105 As Double
             Dim iva21 As Double
             Dim total As Double
-
+            Dim otrosTributos As Double = 0
+            Dim idc As Double = 0
+            Dim icl As Double = 0
             lblfactiva105.Text = 0
             lblfactiva21.Text = 0
             lblfactsubtotal.Text = 0
             lblfacttotal.Text = 0
+            lblOtrosTributos.Text = 0
+
             If dtproductos.Rows.Count = 1 Then
                 Exit Sub
             End If
 
             For Each producto As DataGridViewRow In dtproductos.Rows
+
+
                 Select Case tipofact
                     Case 991, 992, 998, 999, 11, 12, 13 'remito,factura x,fc,ndc,ncc
 
@@ -295,9 +302,12 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+                        idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
+                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
                         subtotal = Math.Round(subtotal105 + subtotal21 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21 + otrosTributos, My.Settings.numDecimales)
                     Case 1, 2, 3
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += FormatNumber(producto.Cells(6).Value)
@@ -310,6 +320,9 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+                        idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
+                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
@@ -319,7 +332,7 @@ Public Class puntoventa
                         txtsub0.Text = subtotal00
                         subtotal = Math.Round(subtotal21 + subtotal105 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21 + otrosTributos, My.Settings.numDecimales)
                     Case 6, 7, 8
                         If producto.Cells(4).Value = "10,5" Or producto.Cells(4).Value = "10,50" Then
                             subtotal105 += Math.Round(FormatNumber(producto.Cells(6).Value) / 1.105, My.Settings.numDecimales)
@@ -332,6 +345,9 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+                        idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
+                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
@@ -341,9 +357,9 @@ Public Class puntoventa
                         txtsub0.Text = subtotal00
                         subtotal = Math.Round(subtotal105 + subtotal21 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
-                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21, My.Settings.numDecimales)
+                        lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21 + otrosTributos, My.Settings.numDecimales)
                 End Select
-
+                lblOtrosTributos.Text = Math.Round(otrosTributos, 3)
             Next
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -403,7 +419,7 @@ Public Class puntoventa
             End If
             If InStr(codPLU, "#") = 1 Then
                 Busq = "where cod_bar= " & Microsoft.VisualBasic.Right(codPLU, codPLU.Length)
-            ElseIf Val(codPLU <> 0) Then
+            ElseIf Val(codPLU <> "0") Then
 
                 Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
 
@@ -558,7 +574,7 @@ Public Class puntoventa
         'End If
 
         Reconectar()
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,impuestoFijo01,impuestoFijo02 FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         consulta.Fill(tablaprod)
@@ -573,20 +589,22 @@ Public Class puntoventa
         Dim precio As Double
         For i = 0 To filasProd.GetUpperBound(0)
 
-            precio = calcularPrecioProducto(filasProd(i)(0), listaPrecios, tipofact) ' / promocion
+            precio = calcularPrecioProducto(filasProd(i)("id"), listaPrecios, tipofact) ' / promocion
             'MsgBox(precio)
             If fila = -1 Then
-                dtproductos.Rows.Add(filasProd(i)(0), filasProd(i)(1), txtcantPLU.Text, filasProd(i)(3), filasProd(i)(2),
+                dtproductos.Rows.Add(filasProd(i)("id"), filasProd(i)("codigo"), txtcantPLU.Text, filasProd(i)("descripcion"), filasProd(i)("iva"),
                 precio, FormatNumber(txtcantPLU.Text) * precio)
                 ' GuardarHistorialProducto(dtproductos.Rows.Count - 1)
             Else
-                dtproductos.Rows(fila).Cells(0).Value = filasProd(i)(0)
-                dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(1)
+                dtproductos.Rows(fila).Cells(0).Value = filasProd(i)("id")
+                dtproductos.Rows(fila).Cells(1).Value = filasProd(i)("codigo")
                 dtproductos.Rows(fila).Cells(2).Value = txtcantPLU.Text
-                dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
-                dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
+                dtproductos.Rows(fila).Cells(3).Value = filasProd(i)("descripcion")
+                dtproductos.Rows(fila).Cells(4).Value = filasProd(i)("iva")
                 dtproductos.Rows(fila).Cells(5).Value = precio
                 dtproductos.Rows(fila).Cells(6).Value = FormatNumber(txtcantPLU.Text) * precio
+                dtproductos.Rows(fila).Cells(8).Value = filasProd(i)("impuestoFijo01")
+                dtproductos.Rows(fila).Cells(9).Value = filasProd(i)("impuestoFijo02")
                 GuardarHistorialProducto(fila)
             End If
         Next
@@ -1911,6 +1929,7 @@ Public Class puntoventa
             Dim iva21 As Double = FormatNumber(lblfactiva21.Text, 2)
             Dim iva105 As Double = FormatNumber(lblfactiva105.Text, 2)
 
+            Dim otrosTibutos As Double = FormatNumber(lblOtrosTributos.Text)
             Dim iva0 As Double = 0
             Dim subtotal As Double = 0
             Dim ivatotal As Double = 0
@@ -1924,13 +1943,13 @@ Public Class puntoventa
                     iva0 = 0
                     subtotal = FormatNumber(lblfactsubtotal.Text, 2) 'Math.Round(sub21 + sub105, 2)
                     ivatotal = 0 'Math.Round(iva21 + iva105, 2)
-                    total = subtotal ' Math.Round(subtotal + ivatotal, 2)
+                    total = subtotal  ' Math.Round(subtotal + ivatotal, 2)
                 Case Else
-                    ' MsgBox("otro ")
+                    ' MsgBox("responsable inscripto factura a o b ")
                     iva0 = 0
                     subtotal = Math.Round(sub21 + sub105 + sub0, 2)
                     ivatotal = Math.Round(iva21 + iva105, 2)
-                    total = Math.Round(subtotal + ivatotal, 2)
+                    total = Math.Round(subtotal + ivatotal + otrosTibutos, 2)
             End Select
             'MsgBox(total)
             ' Exit Sub
@@ -2047,6 +2066,7 @@ Public Class puntoventa
                         fe.F1DetalleIvaBaseImp = sub105
                         fe.F1DetalleIvaImporte = iva105
 
+
                     ElseIf iva105 <> 0 And iva21 = 0 And sub0 = 0 Then
                         '      MsgBox("3")
                         fe.F1DetalleIvaItemCantidad = 1
@@ -2156,11 +2176,12 @@ Public Class puntoventa
                 fe.F1DetalleImpNeto = subtotal
                 fe.F1DetalleImpIva = ivatotal
 
-                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"
+                fe.F1DetalleQRArchivo = Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".png"
                 fe.f1detalleqrtolerancia = 1
                 fe.f1detalleqrresolucion = 4
-                fe.f1detalleqrformato = 6
+                fe.f1detalleqrformato = 8
 
+                '#####generam
                 If fe.f1qrGenerar(99) = False Then
                     '    MsgBox("gráfico generado con los datos. " + fe.f1qrmanualTexto)
                     'Else
@@ -2716,6 +2737,7 @@ Public Class puntoventa
                 .AddWithValue("?vendedor", vendedor)
             End With
             comandoadd.ExecuteNonQuery()
+            Idcliente = comandoadd.LastInsertedId
             cargarCliente(True)
         End If
 
@@ -2740,6 +2762,32 @@ Public Class puntoventa
     End Sub
 
     Private Sub chkPreciosFinales_CheckedChanged(sender As Object, e As EventArgs) Handles chkPreciosFinales.CheckedChanged
+
+    End Sub
+
+    Private Sub txtdescripcionPLU_TextChanged(sender As Object, e As EventArgs) Handles txtdescripcionPLU.TextChanged
+
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Dim monto As String
+
+        monto = InputBox("Igrese el monto a facturar del item seleccionado", "facturar por importe", "100")
+        If monto <> "" Or IsNumeric(monto) Then
+            Dim filaSeleccionada As DataGridViewRow
+            Dim idc As Double = 0
+            Dim icl As Double = 0
+            filaSeleccionada = dtproductos.CurrentRow
+
+            Dim montoPesos = FormatNumber(monto)
+            Dim precioUnitario = FormatNumber(filaSeleccionada.Cells("PUnit").Value)
+            idc = FormatNumber(filaSeleccionada.Cells("impuestoFijo01").Value)
+            icl = FormatNumber(filaSeleccionada.Cells("impuestoFijo02").Value)
+            Dim cantidadObtenida = montoPesos / (precioUnitario + idc + icl)
+            filaSeleccionada.Cells("cant").Value = Math.Round(cantidadObtenida, 2)
+            filaSeleccionada.Cells("PTotal").Value = Math.Round(cantidadObtenida * precioUnitario, 2)
+            CalcularTotales()
+        End If
 
     End Sub
 End Class

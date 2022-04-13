@@ -48,45 +48,47 @@
     End Sub
 
     Private Sub dtpersonal_DoubleClick(sender As Object, e As EventArgs) Handles dtproductos.DoubleClick, dtproductos.DoubleClick
-        Try
-            Select Case LLAMA
-                Case "nuevaventa"
-                    If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
-                        CType(frmprincipal.ActiveMdiChild, nuevaventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
-                    Else
-                        CType(frmprincipal.ActiveMdiChild, nuevaventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                    End If
-                    CType(frmprincipal.ActiveMdiChild, nuevaventa).cargarProdCod(fila)
-                    CType(frmprincipal.ActiveMdiChild, nuevaventa).CalcularTotales()
+        'Try
+        '    Select Case LLAMA
+        '        Case "nuevaventa"
+        '            If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
+        '                CType(frmprincipal.ActiveMdiChild, nuevaventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
+        '            Else
+        '                CType(frmprincipal.ActiveMdiChild, nuevaventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+        '            End If
+        '            CType(frmprincipal.ActiveMdiChild, nuevaventa).cargarProdCod(fila)
+        '            CType(frmprincipal.ActiveMdiChild, nuevaventa).CalcularTotales()
 
-                Case "nuevopedido"
-                    If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
-                        CType(frmprincipal.ActiveMdiChild, nuevopedido).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
-                    Else
-                        CType(frmprincipal.ActiveMdiChild, nuevopedido).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                    End If
-                    CType(frmprincipal.ActiveMdiChild, nuevopedido).cargarProdCod(fila)
-                    CType(frmprincipal.ActiveMdiChild, nuevopedido).CalcularTotales()
+        '        Case "nuevopedido"
+        '            If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
+        '                CType(frmprincipal.ActiveMdiChild, nuevopedido).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
+        '            Else
+        '                CType(frmprincipal.ActiveMdiChild, nuevopedido).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+        '            End If
+        '            CType(frmprincipal.ActiveMdiChild, nuevopedido).cargarProdCod(fila)
+        '            CType(frmprincipal.ActiveMdiChild, nuevopedido).CalcularTotales()
 
-                Case "fichaequipo"
-                    CType(frmprincipal.ActiveMdiChild, fichaequipo).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
-                    CType(frmprincipal.ActiveMdiChild, fichaequipo).cargarProdCod(fila)
-                    CType(frmprincipal.ActiveMdiChild, fichaequipo).CalcularTotales()
+        '        Case "fichaequipo"
+        '            CType(frmprincipal.ActiveMdiChild, fichaequipo).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
+        '            CType(frmprincipal.ActiveMdiChild, fichaequipo).cargarProdCod(fila)
+        '            CType(frmprincipal.ActiveMdiChild, fichaequipo).CalcularTotales()
 
-                Case "ptovta"
-                    If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
-                        CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
-                    Else
-                        CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
-                    End If
-                    CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdCod(fila)
-                    CType(frmprincipal.ActiveMdiChild, puntoventa).CalcularTotales()
+        '        Case "ptovta"
+        '            If dtproductos.CurrentRow.Cells.Item(3).Value.ToString = "" Then
+        '                CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(0).Value
+        '                CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdCod(fila)
+        '            Else
+        '                CType(frmprincipal.ActiveMdiChild, puntoventa).dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+        '                CType(frmprincipal.ActiveMdiChild, puntoventa).cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
+        '            End If
 
-            End Select
-            Me.Close()
-        Catch ex As Exception
+        '            CType(frmprincipal.ActiveMdiChild, puntoventa).CalcularTotales()
 
-        End Try
+        '    End Select
+        '    Me.Close()
+        'Catch ex As Exception
+
+        'End Try
     End Sub
 
     Private Sub dtproductos_KeyDown(sender As Object, e As KeyEventArgs) Handles  dtproductos.KeyDown

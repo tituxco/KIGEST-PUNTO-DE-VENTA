@@ -24,7 +24,7 @@ Partial Class listadoPublicidades
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(listadoPublicidades))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
-        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.tabListadoSerivicios = New System.Windows.Forms.TabPage()
         Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.chksinFact = New System.Windows.Forms.CheckBox()
@@ -49,14 +49,14 @@ Partial Class listadoPublicidades
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
-        Me.TabPage1.SuspendLayout()
+        Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
         '
-        Me.TabControl1.Controls.Add(Me.TabPage1)
+        Me.TabControl1.Controls.Add(Me.tabListadoSerivicios)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
@@ -64,17 +64,17 @@ Partial Class listadoPublicidades
         Me.TabControl1.Size = New System.Drawing.Size(1222, 453)
         Me.TabControl1.TabIndex = 76
         '
-        'TabPage1
+        'tabListadoSerivicios
         '
-        Me.TabPage1.Controls.Add(Me.dgvPrestamos)
-        Me.TabPage1.Controls.Add(Me.pnnavegacion)
-        Me.TabPage1.Location = New System.Drawing.Point(4, 22)
-        Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3)
-        Me.TabPage1.Size = New System.Drawing.Size(1214, 427)
-        Me.TabPage1.TabIndex = 0
-        Me.TabPage1.Text = "Listado de publicidades"
-        Me.TabPage1.UseVisualStyleBackColor = True
+        Me.tabListadoSerivicios.Controls.Add(Me.dgvPrestamos)
+        Me.tabListadoSerivicios.Controls.Add(Me.pnnavegacion)
+        Me.tabListadoSerivicios.Location = New System.Drawing.Point(4, 22)
+        Me.tabListadoSerivicios.Name = "tabListadoSerivicios"
+        Me.tabListadoSerivicios.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabListadoSerivicios.Size = New System.Drawing.Size(1214, 427)
+        Me.tabListadoSerivicios.TabIndex = 0
+        Me.tabListadoSerivicios.Text = "Listado"
+        Me.tabListadoSerivicios.UseVisualStyleBackColor = True
         '
         'dgvPrestamos
         '
@@ -386,7 +386,7 @@ Partial Class listadoPublicidades
         Me.Text = "listadoPublicidades"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.TabControl1.ResumeLayout(False)
-        Me.TabPage1.ResumeLayout(False)
+        Me.tabListadoSerivicios.ResumeLayout(False)
         Me.pnnavegacion.ResumeLayout(False)
         Me.pnnavegacion.PerformLayout()
         Me.pntitulo.ResumeLayout(False)
@@ -396,7 +396,7 @@ Partial Class listadoPublicidades
     End Sub
 
     Friend WithEvents TabControl1 As TabControl
-    Friend WithEvents TabPage1 As TabPage
+    Friend WithEvents tabListadoSerivicios As TabPage
     Friend WithEvents dgvPrestamos As DGVPaginado
     Friend WithEvents pnnavegacion As Panel
     Friend WithEvents cmdbuscar As Button

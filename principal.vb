@@ -85,9 +85,12 @@ Public Class frmprincipal
             consulta.Fill(tablacl)
 
 
-            'listaConexiones.DropDownItems.Add()
-
             infocl = tablacl.Select("")
+            'listaConexiones.DropDownItems.Add()
+            If tablacl.Rows.Count > 6 Then
+                DatosAcceso.ServMensual = infocl(6)(2)
+            End If
+
             If InStr(DatosAcceso.Moduloacc, "1") = False Then cmdclientes.Visible = False
 
             If InStr(DatosAcceso.Moduloacc, "2") = False Then cmdproductos.Visible = False
@@ -96,10 +99,6 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "2c") = False Then ManejoDePreciosToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "2d") = False Then StockToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "CONFTERM") = False Then ConfiguracionDeTerminalToolStripMenuItem.Visible = False
-
-
-            'If InStr(DatosAcceso.Moduloacc, "2e") = False Then cmdProduccion.Visible = False
-
 
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then MostradorToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "AR01") = False Then EtiquetasEnBlancoToolStripMenuItem.Visible = False
@@ -125,7 +124,11 @@ Public Class frmprincipal
             If InStr(DatosAcceso.Moduloacc, "5KIBIT") = False Then CLOUDSERVERToolStripMenuItem.Visible = False
             If InStr(DatosAcceso.Moduloacc, "5RYM") = False Then cmdPrestamos.Visible = False
             If InStr(DatosAcceso.Moduloacc, "6") = False Then EmpleadosToolStripMenuItem.Visible = False
-            If InStr(DatosAcceso.Moduloacc, "5PUBLICIDAD") = False Then PublicidadToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5PUBLICIDAD") = False Then
+                PublicidadToolStripMenuItem.Visible = False
+            Else
+                PublicidadToolStripMenuItem.Text = DatosAcceso.ServMensual
+            End If
             If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
 
             FacturaElectro.puntovtaelect = infocl(0)(2)
@@ -134,9 +137,9 @@ Public Class frmprincipal
             FacturaElectro.passcertificado = infocl(3)(2)
             FacturaElectro.licencia = infocl(5)(2)
             ' MsgBox(tablacl.Rows.Count)
-            If tablacl.Rows.Count > 6 Then
-                DatosAcceso.ServMensual = infocl(6)(2)
-            End If
+            'If tablacl.Rows.Count > 6 Then
+            '    DatosAcceso.ServMensual = infocl(6)(2)
+            'End If
             Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico from cm_usuarios where id=" & DatosAcceso.UsuarioINT, conexionPrinc)
             Dim tabla2 As New DataTable
             Dim info2() As DataRow
