@@ -795,6 +795,9 @@ Module funciones_Globales
             Dim unidad As String = ""
             Dim detalle As String = ""
             Dim valoruni As String = ""
+            Dim valorImpuestos As String = ""
+
+
             Dim valortot As String = ""
             Dim tabulacion As String = ""
             Dim compensador As Integer = 0
@@ -810,7 +813,10 @@ Module funciones_Globales
             Dim facSubtotal As String = ""
             Dim FacIva21 As String = ""
             Dim FacIva105 As String = ""
+
             Dim FacNoGravado As String = ""
+            Dim FacIDC As String = ""
+            Dim FacICL As String = ""
 
             Dim facCAE As String = ""
             Dim facVtoCAE As String = ""
@@ -840,6 +846,8 @@ Module funciones_Globales
             format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
+            format(replace(impuestoFijo01,',','.'),2,'es_AR') as idc,
+            format(replace(impuestoFijo02,',','.'),2,'es_AR') as icl,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
             from fact_items where id_fact=" & idFactura, conexionPrinc)
             Dim tablaProd As New DataTable
@@ -848,8 +856,12 @@ Module funciones_Globales
             facTotal = tablaEmpresa.Rows(0).Item(30)
             facSubtotal = tablaEmpresa.Rows(0).Item(31)
             FacIva21 = tablaEmpresa.Rows(0).Item(21)
+
             FacIva105 = ""
-            FacNoGravado = tablaEmpresa.Rows(0).Item("noGravado")
+            FacIDC = tablaProd.Rows(0).Item("idc")
+            FacICL = tablaProd.Rows(0).Item("icl")
+            FacNoGravado = CDbl(FacIDC) + CDbl(FacICL)
+
 
             facCAE = tablaEmpresa.Rows(0).Item(25)
             facCodBARRA = tablaEmpresa.Rows(0).Item(29)
@@ -890,12 +902,22 @@ Module funciones_Globales
             Dim car As Integer
 
             For i = 0 To tablaProd.Rows.Count - 1
-                codigo = tablaProd.Rows(i).Item(0)
-                unidad = tablaProd(i).Item(1)
-                detalle = tablaProd(i).Item(2)
-                valoruni = tablaProd(i).Item(4)
-                valortot = FormatNumber(tablaProd(i).Item(5), 2)
-                ivaProd = tablaProd(i).Item(3)
+                codigo = tablaProd.Rows(i).Item("plu")
+                unidad = tablaProd(i).Item("cant")
+                detalle = tablaProd(i).Item("descripcion")
+                valoruni = tablaProd(i).Item("punit")
+                valorImpuestos = FacNoGravado
+                If TipoFact <= 3 Then
+                    valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
+                    'valortot = CDbl(valortot) + CDbl(valorImpuestos)
+                    'valortot = FormatNumber(valortot, 2)
+                Else
+                    valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
+                    valortot = CDbl(valortot) + CDbl(valorImpuestos)
+                    valortot = FormatNumber(valortot, 2)
+                End If
+
+                ivaProd = tablaProd(i).Item("iva")
                 texto = unidad & " x " & valoruni & Chr(9) & "  (" & ivaProd & ")"
                 yPos = 290 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea            
 
@@ -918,7 +940,7 @@ Module funciones_Globales
 
                 End If
 
-
+                'MsgBox(valortot & "   " & valorImpuestos & "=" & CDbl(valortot) + CDbl(valorImpuestos))
                 'If Not row.IsNewRow Then
                 e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 0, yPos)
                 count += 1
@@ -954,7 +976,9 @@ Module funciones_Globales
             yPos += 20
             Dim textosub As String = "Neto Gravado"
             Dim textoIva21 As String = "IVA"
-            Dim textoNoGravado As String = "No Gravado"
+            Dim textoNoGravado As String = "Otros Tributos:"
+            Dim textoIDC As String = "I.D.C."
+            Dim textoICL As String = "I.C.L."
             Dim textoTotal As String = "Total"
 
 
@@ -984,22 +1008,32 @@ Module funciones_Globales
                 yPos += 12
                 e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
                 yPos += 40
+                e.Graphics.DrawString(textoIDC & " $" & FacIDC & "|" & textoICL & " $" & FacICL, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+                yPos += 40
             Else
                 XXX = 32 - (textosub.Length + facTotal.Length)
                 lineatotal = StrDup(XXX, ".")
                 yPos += 12
                 e.Graphics.DrawString(textosub & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
 
-                XXX = 32 - (textoIva21.Length + 1)
-                lineatotal = StrDup(XXX, ".")
-                yPos += 12
-                e.Graphics.DrawString(textoIva21 & lineatotal & "0", font3, System.Drawing.Brushes.Black, 0, yPos)
-                'MsgBox(facTotal)
+                'XXX = 32 - (textoIva21.Length + 1)
+                'lineatotal = StrDup(XXX, ".")
+                'yPos += 12
+                'e.Graphics.DrawString(textoIva21 & lineatotal & "0", font3, System.Drawing.Brushes.Black, 0, yPos)
+                ''MsgBox(facTotal)
+
+                'XXX = 32 - (textoNoGravado.Length + FacNoGravado.Length)
+                'lineatotal = StrDup(XXX, ".")
+                'yPos += 12
+                'e.Graphics.DrawString(textoNoGravado & lineatotal & FacNoGravado, font3, System.Drawing.Brushes.Black, 0, yPos)
+
                 XXX = 32 - (textoTotal.Length + facTotal.Length)
                 lineatotal = StrDup(XXX, ".")
                 yPos += 12
                 e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
                 yPos += 40
+                'e.Graphics.DrawString(textoIDC & " $" & FacIDC & "|" & textoICL & " $" & FacICL, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+                'yPos += 40
             End If
 
 
@@ -1023,7 +1057,7 @@ Module funciones_Globales
             'bm_dest.Height + 1)
             'codigoQRBOX.Image = bm_dest
 
-            e.Graphics.DrawImage(codigoQRBOX.Image, 0, yPos)
+            e.Graphics.DrawImage(bm_source, 0, yPos)
             yPos += 190
 
             e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 20, yPos)

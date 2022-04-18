@@ -275,6 +275,9 @@ Public Class puntoventa
             Dim otrosTributos As Double = 0
             Dim idc As Double = 0
             Dim icl As Double = 0
+            Dim totIDC As Double = 0
+            Dim totICL As Double = 0
+            Dim cant As Double = 0
             lblfactiva105.Text = 0
             lblfactiva21.Text = 0
             lblfactsubtotal.Text = 0
@@ -302,9 +305,16 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+
+                        cant = FormatNumber(producto.Cells("cant").Value, 2)
                         idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        totIDC += cant * idc
+
                         icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
-                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
+                        totICL += cant * icl
+
+                        otrosTributos = totICL + totIDC
+
                         subtotal = Math.Round(subtotal105 + subtotal21 + subtotal00, My.Settings.numDecimales)
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21 + otrosTributos, My.Settings.numDecimales)
@@ -320,9 +330,14 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+                        cant = FormatNumber(producto.Cells("cant").Value, 2)
                         idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        totIDC += cant * idc
+
                         icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
-                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
+                        totICL += cant * icl
+
+                        otrosTributos = totICL + totIDC
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
@@ -345,9 +360,14 @@ Public Class puntoventa
                                 Exit Sub
                             End If
                         End If
+                        cant = FormatNumber(producto.Cells("cant").Value, 2)
                         idc = FormatNumber(producto.Cells("impuestoFijo01").Value, 3)
+                        totIDC += cant * idc
+
                         icl = FormatNumber(producto.Cells("impuestoFijo02").Value, 3)
-                        otrosTributos += (idc + icl) * FormatNumber(producto.Cells("cant").Value, 3)
+                        totICL += cant * icl
+
+                        otrosTributos = totICL + totIDC
                         iva105 = Math.Round(subtotal105 * (10.5 / 100), My.Settings.numDecimales)
                         iva21 = Math.Round(subtotal21 * (21 / 100), My.Settings.numDecimales)
                         lblfactiva105.Text = iva105
@@ -359,7 +379,9 @@ Public Class puntoventa
                         lblfactsubtotal.Text = subtotal
                         lblfacttotal.Text = Math.Round(subtotal + iva105 + iva21 + otrosTributos, My.Settings.numDecimales)
                 End Select
-                lblOtrosTributos.Text = Math.Round(otrosTributos, 3)
+                lblOtrosTributos.Text = Math.Round(otrosTributos, 2)
+                txttotalIDC.Text = Math.Round(totIDC, 2)
+                txttotalICL.Text = Math.Round(totICL, 2)
             Next
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -836,6 +858,7 @@ Public Class puntoventa
         Dim iva105 As String = remplazarPunto(lblfactiva105.Text)
         Dim iva21 As String = remplazarPunto(lblfactiva21.Text)
         Dim total As String = remplazarPunto(lblfacttotal.Text)
+        Dim otrostributos As String = remplazarPunto(lblOtrosTributos.Text)
         Dim vendedor As Integer = lblfacvendedor.Text
         'Dim tipoFact As Integer = cmbtipofac.SelectedValue
         Dim obs2 As String = ""
@@ -852,10 +875,11 @@ Public Class puntoventa
         Dim punit As String
         Dim ptotal As String
         Dim codbar As String
+        Dim otrosImpuestosProd As String
         Dim i As Integer
         Dim codigo_qr As Byte()
         If ptovta = FacturaElectro.puntovtaelect Then
-            codigo_qr = Imagen_Bytes(Image.FromFile(Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".jpg"))
+            codigo_qr = Imagen_Bytes(Image.FromFile(Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".png"))
         End If
         'comprobamos que se seleccione un vendedor
         'If cmbvendedor.SelectedValue = 0 Then
@@ -907,8 +931,9 @@ Public Class puntoventa
             'GUARDO LOS DATOS DE LA FACTURA
             sqlQuery = "insert into fact_facturas  
             (tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,
-            condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,observaciones,codigo_qr) values 
-            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?transp,?codigo_qr)"
+            condvta,subtotal,iva105,iva21,otroiva,total,vendedor,observaciones2,cae,vtocae,codbarra,observaciones,codigo_qr) values 
+            (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,
+            ?otroiva,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?transp,?codigo_qr)"
             comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
@@ -925,6 +950,7 @@ Public Class puntoventa
                 .AddWithValue("?subt", subtotal)
                 .AddWithValue("?105", iva105)
                 .AddWithValue("?21", iva21)
+                .AddWithValue("?otroiva", otrostributos)
                 .AddWithValue("?tot", total)
                 .AddWithValue("?vend", vendedor)
                 .AddWithValue("?obs2", obs2)
@@ -961,6 +987,7 @@ Public Class puntoventa
                 iva = itemsFact.Cells(4).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
                 punit = itemsFact.Cells(5).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
                 ptotal = itemsFact.Cells(6).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
+                otrosImpuestosProd = (CDbl(itemsFact.Cells("impuestoFijo01").Value) + CDbl(itemsFact.Cells("impuestoFijo02").Value)) * CDbl(itemsFact.Cells("cant").Value)
 
                 'para quitar de stock
                 If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
@@ -1014,8 +1041,8 @@ Public Class puntoventa
                 'guardamos los items
                 Reconectar()
                 sqlQuery = "insert into fact_items " _
-                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact) values" _
-                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
+                & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact,otrosImpuestos) values" _
+                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?otrosImpuestos)"
 
                 comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 With comandoadd.Parameters
@@ -1030,6 +1057,7 @@ Public Class puntoventa
                     .AddWithValue("?idAlmacen", IDALMACEN) '''''ahora ponemos el almacen de donde se saco la mercaderia, se sigue llamando ptovta
                     .AddWithValue("?idCaja", My.Settings.CajaDef)
                     .AddWithValue("?id_fact", IdFactura)
+                    .AddWithValue("?otrosImpuestos", otrosImpuestosProd)
                 End With
                 comandoadd.Transaction = Transaccion
                 comandoadd.ExecuteNonQuery()
@@ -1930,6 +1958,9 @@ Public Class puntoventa
             Dim iva105 As Double = FormatNumber(lblfactiva105.Text, 2)
 
             Dim otrosTibutos As Double = FormatNumber(lblOtrosTributos.Text)
+            Dim totalIDC As Double = FormatNumber(txttotalIDC.Text)
+            Dim totalICL As Double = FormatNumber(txttotalICL.Text)
+
             Dim iva0 As Double = 0
             Dim subtotal As Double = 0
             Dim ivatotal As Double = 0
@@ -2172,6 +2203,14 @@ Public Class puntoventa
                     fe.F1DetalleCbtesAsocFecha = ObtenerFechaFacturaElectro(cbteAsoc, tipoCompAsoc)
                 End If
                 fe.F1DetalleImpTotal = total
+                If otrosTibutos > 0 Then
+                    fe.F1DetalleTributoItemCantidad = 1
+                    fe.f1IndiceItem = 0
+                    fe.F1DetalleTributoId = 1
+                    fe.F1DetalleTributoDesc = "IMPUESTOS COMBUSTIBLES"
+                    fe.F1DetalleTributoImporte = otrosTibutos
+                End If
+                fe.F1DetalleImpTrib = otrosTibutos
                 fe.F1DetalleImpTotalConc = 0
                 fe.F1DetalleImpNeto = subtotal
                 fe.F1DetalleImpIva = ivatotal
@@ -2644,28 +2683,30 @@ Public Class puntoventa
                     Exit Sub
                 End If
                 AFIPEstadoClave = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.estadoClave", "", 0, 0)
-                    AFIPNombreApellido = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.apellido", "", 0, 0) & ", " & fe.p1LeerPropiedad("p1getPersona", "datosGenerales.nombre", "", 0, 0)
-                    AFIPRazonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.razonsocial", "", 0, 0)
-                    AFIPLocalidad = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0)
-                    AFIPDireccion = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0)
+                AFIPNombreApellido = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.apellido", "", 0, 0) & ", " & fe.p1LeerPropiedad("p1getPersona", "datosGenerales.nombre", "", 0, 0)
+                AFIPRazonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.razonsocial", "", 0, 0)
+                AFIPLocalidad = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0)
+                AFIPDireccion = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0)
 
-                    If fe.p1VerificarImpuesto(20, "activo") Then
-                        AFIPTipoContribuyente = "MONOTRIBUTO"
-                    End If
+                If fe.p1VerificarImpuesto(20, "activo") Then
+                    AFIPTipoContribuyente = "MONOTRIBUTO"
+                End If
 
-                    If fe.p1VerificarImpuesto(30, "activo") Then
-                        AFIPTipoContribuyente = "RESPONSABLE INSCRIPTO"
-                    End If
+                If fe.p1VerificarImpuesto(30, "activo") Then
+                    AFIPTipoContribuyente = "RESPONSABLE INSCRIPTO"
+                End If
 
-                    If fe.p1VerificarImpuesto(32, "activo") Then
-                        AFIPTipoContribuyente = "EXENTO"
-                    End If
+                If fe.p1VerificarImpuesto(32, "activo") Then
+                    AFIPTipoContribuyente = "EXENTO"
+                End If
 
-                Else
-                    MsgBox("NO SE PUEDE OBTENER EL TIKET DE ACCESO " & vbNewLine & fe.UltimoMensajeError)
+            Else
+                MsgBox("NO SE PUEDE OBTENER EL TIKET DE ACCESO " & vbNewLine & fe.UltimoMensajeError)
+                Exit Sub
             End If
         Else
             MsgBox("NO SE PUDO INICIAR EL SERVICIO DE CONSULTA DE PADRON DE CONTRIBUYENTES, REINTENTE" & vbNewLine & fe.UltimoMensajeError)
+            Exit Sub
         End If
         txtclierazon.Text = AFIPNombreApellido
 
@@ -2773,21 +2814,36 @@ Public Class puntoventa
         Dim monto As String
 
         monto = InputBox("Igrese el monto a facturar del item seleccionado", "facturar por importe", "100")
-        If monto <> "" Or IsNumeric(monto) Then
+        If monto <> "" And IsNumeric(monto) Then
             Dim filaSeleccionada As DataGridViewRow
             Dim idc As Double = 0
             Dim icl As Double = 0
+            Dim iva As Double = 0
             filaSeleccionada = dtproductos.CurrentRow
 
             Dim montoPesos = FormatNumber(monto)
             Dim precioUnitario = FormatNumber(filaSeleccionada.Cells("PUnit").Value)
             idc = FormatNumber(filaSeleccionada.Cells("impuestoFijo01").Value)
             icl = FormatNumber(filaSeleccionada.Cells("impuestoFijo02").Value)
-            Dim cantidadObtenida = montoPesos / (precioUnitario + idc + icl)
-            filaSeleccionada.Cells("cant").Value = Math.Round(cantidadObtenida, 2)
-            filaSeleccionada.Cells("PTotal").Value = Math.Round(cantidadObtenida * precioUnitario, 2)
-            CalcularTotales()
+            iva = (FormatNumber(filaSeleccionada.Cells("iva").Value) + 100) / 100
+            If chkPreciosFinales.Checked = True And (tipofact = 6 Or tipofact = 7 Or tipofact = 8) Then
+                Dim cantidadObtenida = montoPesos / (precioUnitario + idc + icl)
+                filaSeleccionada.Cells("cant").Value = Math.Round(cantidadObtenida, 2)
+                filaSeleccionada.Cells("PTotal").Value = Math.Round(cantidadObtenida * precioUnitario, 2)
+                CalcularTotales()
+            ElseIf chkPreciosFinales.Checked = True And (tipofact = 1 Or tipofact = 2 Or tipofact = 3) Then
+                Dim cantidadObtenida = montoPesos / ((precioUnitario * iva) + idc + icl)
+                filaSeleccionada.Cells("cant").Value = Math.Round(cantidadObtenida, 2)
+                filaSeleccionada.Cells("PTotal").Value = Math.Round(cantidadObtenida * precioUnitario, 2)
+                CalcularTotales()
+            End If
+
         End If
 
+    End Sub
+
+    Private Sub dtproductos_KeyUp(sender As Object, e As KeyEventArgs) Handles dtproductos.KeyUp
+        SendKeys.Send("{UP}")
+        SendKeys.Send("{TAB}")
     End Sub
 End Class
