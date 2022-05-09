@@ -692,7 +692,7 @@ Public Class productos
             End If
             txtmultiplStock.Text = infoProd(0)("desc_cantidad")
 
-            If IsDBNull(infoProd(0)(28)) Then
+            If IsDBNull(infoProd(0)("stock")) Then
                 ' MsgBox("nada")
 
                 lblstock.Text = "0"
@@ -700,7 +700,7 @@ Public Class productos
             Else
                 'MsgBox(infoProd(0)("id") & "_____" & infoProd(0)("stock"))
                 'MsgBox("haystock--" & infoProd(0)(27))
-                lblstock.Text = infoProd(0)(28) '.ToString
+                lblstock.Text = infoProd(0)("stock") '.ToString
                 Reconectar()
                 dtlotesprov.DataSource = Nothing
                 If cmbtipoprod.SelectedIndex = 0 Then

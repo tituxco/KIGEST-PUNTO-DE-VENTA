@@ -533,7 +533,7 @@ Module funciones_Globales
         ' letra
         'Dim font1 As New Font("EAN-13", 40)
         Dim anchoTiket As Integer = My.Settings.TipoEtiqueta
-        If anchoTiket = 1 Or anchoTiket = 2 Then
+        If anchoTiket = 0 Or anchoTiket = 1 Or anchoTiket = 2 Then
 
             Dim printfont As New Font("Courier New", 6)
             Dim font3 As New Font("Courier New", 8)
@@ -909,6 +909,7 @@ Module funciones_Globales
                 valorImpuestos = FacNoGravado
                 If TipoFact <= 3 Then
                     valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
+
                     'valortot = CDbl(valortot) + CDbl(valorImpuestos)
                     'valortot = FormatNumber(valortot, 2)
                 Else

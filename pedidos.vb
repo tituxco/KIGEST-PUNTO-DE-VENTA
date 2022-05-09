@@ -492,7 +492,7 @@
         End If
         Dim vta As New puntoventa
         vta.MdiParent = Me.MdiParent
-        vta.idfacrap = 8 'es el codigo de nota de credito x de este punto de venta
+        vta.idfacrap = My.Settings.idDevolucion
 
         'Dim ptovtapedido As String = CInt(Strings.Left(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 4))
         'Dim itemPedido As String = CInt(Strings.Right(dgvPedidos.dgvVista.CurrentRow.Cells(1).Value, 8))

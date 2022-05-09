@@ -2786,12 +2786,21 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             txtresultadoconsulta.Text &= "Fecha del Comprobante: " & fe.F1DetalleCbteFch & vbNewLine
 
             txtresultadoconsulta.Text &= "Importe de la factura: " & fe.F1DetalleImpTotal & vbNewLine & "Neto: " _
-            & fe.F1DetalleImpNeto & vbNewLine & "ALICUOTAS:" & fe.F1DetalleIvaItemCantidad & vbNewLine & vbNewLine
+            & fe.F1DetalleImpNeto & vbNewLine & "ALICUOTAS:" & fe.F1DetalleIvaItemCantidad & " total: " & fe.F1DetalleImpIva & vbNewLine &
+             "OTROS TRIBUTOS: " & fe.F1DetalleTributoItemCantidad & " total: " & fe.F1DetalleImpTrib & vbNewLine & vbNewLine
             Dim i As Integer
             For i = 0 To fe.F1DetalleIvaItemCantidad - 1
                 fe.f1IndiceItem = i
-                txtresultadoconsulta.Text &= "alicuota " & fe.F1DetalleIvaId & vbNewLine & "importe neto:" & fe.F1DetalleIvaBaseImp & vbNewLine & vbNewLine
+                txtresultadoconsulta.Text &= "alicuota ID " & fe.F1DetalleIvaId & vbNewLine & " importe neto:" & fe.F1DetalleIvaBaseImp & " importeIva: " & fe.F1DetalleIvaImporte & vbNewLine & vbNewLine
             Next
+            txtresultadoconsulta.Text &= "OTROS TRIBUTOS: " & fe.F1DetalleTributoItemCantidad & vbNewLine & vbNewLine
+            Dim j As Integer
+            For j = 0 To fe.F1DetalleTributoItemCantidad - 1
+                fe.f1IndiceItem = j
+                txtresultadoconsulta.Text &= "Tributo: " & fe.F1DetalleTributoDesc & " Importe: " & fe.F1DetalleTributoImporte & vbNewLine & vbNewLine
+            Next
+
+
             txtresultadoconsulta.Text &= "Codigo de barras: " & fe.f1CodigoDeBarraAFIP & vbNewLine & vbNewLine
 
         Else
@@ -5925,6 +5934,26 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub Button51_Click(sender As Object, e As EventArgs) Handles Button51.Click
         GenerarExcel(dgvDatosEjercicio)
+
+    End Sub
+
+    Private Sub tabcontable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabcontable.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabControl3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl3.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabControl2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl2.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabControl4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl4.SelectedIndexChanged
 
     End Sub
 End Class

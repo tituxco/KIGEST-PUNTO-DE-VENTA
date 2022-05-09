@@ -157,8 +157,8 @@
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        Try
-            If rdseleccionadas.Checked = True Then
+        'Try
+        If rdseleccionadas.Checked = True Then
                 Reconectar()
                 Dim sqlquery As String
                 Dim DATABASE As String
@@ -178,14 +178,17 @@
                     sqlquery = txtsentencias.Text
                     conexionSEC.ChangeDatabase(DATABASE)
                     Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionSEC)
-                    comandoadd.ExecuteNonQuery()
-                    Console.WriteLine(ListBox1.Items(i) & " se ha modificado")
+                On Error Resume Next
+                comandoadd.ExecuteNonQuery()
+
+
+                Console.WriteLine(ListBox1.Items(i) & " se ha modificado")
                 Next
                 MsgBox("todas las bases de datos se han modificado")
             End If
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
+        'End Try
     End Sub
 
     Private Sub rdprefijo_CheckedChanged(sender As Object, e As EventArgs) Handles rdprefijo.CheckedChanged
@@ -198,6 +201,7 @@
 
     Private Sub txtprefijobd_KeyDown(sender As Object, e As KeyEventArgs) Handles txtprefijobd.KeyDown
         If e.KeyCode = Keys.Enter Then
+            ListBox1.Items.Clear()
             For Each servicio As DataGridViewRow In dtcloud.Rows
                 If InStr(servicio.Cells("DBClie").Value, txtprefijobd.Text) <> 0 And ExisteBD(servicio.Cells("DBClie").Value) = False Then
                     ListBox1.Items.Add(servicio.Cells("DBClie").Value)
