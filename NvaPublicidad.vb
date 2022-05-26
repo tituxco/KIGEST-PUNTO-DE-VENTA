@@ -99,9 +99,9 @@
         txtPrestamo.Text = NoPrestamo
         Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
 
-        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto) 
+        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto,observaciones) 
         values('" & NoPrestamo & "','" & fecha & "','" & idCliente & "','" & txtPlazo.Text & "','" &
-        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "')", Today.Date)
+        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "','" & txtObservaciones.Text.ToUpper & "')", Today.Date)
 
 
         Dim Plazo As Integer = txtPlazo.Text

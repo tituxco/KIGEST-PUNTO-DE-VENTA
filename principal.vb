@@ -129,6 +129,7 @@ Public Class frmprincipal
             Else
                 PublicidadToolStripMenuItem.Text = DatosAcceso.ServMensual
             End If
+
             If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
 
             FacturaElectro.puntovtaelect = infocl(0)(2)

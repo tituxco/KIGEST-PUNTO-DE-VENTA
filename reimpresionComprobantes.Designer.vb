@@ -65,6 +65,7 @@ Partial Class reimpresionComprobantes
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdesdeCobranza = New System.Windows.Forms.DateTimePicker()
         Me.dthastaCobranza = New System.Windows.Forms.DateTimePicker()
+        Me.lblTotal = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -475,6 +476,7 @@ Partial Class reimpresionComprobantes
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel1.Controls.Add(Me.lblTotal)
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.chksinPagar)
         Me.Panel1.Controls.Add(Me.Button3)
@@ -600,6 +602,19 @@ Partial Class reimpresionComprobantes
         Me.dthastaCobranza.Size = New System.Drawing.Size(117, 23)
         Me.dthastaCobranza.TabIndex = 43
         '
+        'lblTotal
+        '
+        Me.lblTotal.AutoSize = True
+        Me.lblTotal.Dock = System.Windows.Forms.DockStyle.Right
+        Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblTotal.Location = New System.Drawing.Point(1050, 0)
+        Me.lblTotal.Name = "lblTotal"
+        Me.lblTotal.Size = New System.Drawing.Size(62, 25)
+        Me.lblTotal.TabIndex = 82
+        Me.lblTotal.Text = "Total:"
+        Me.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'reimpresionComprobantes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -674,4 +689,5 @@ Partial Class reimpresionComprobantes
     Friend WithEvents Button2 As Button
     Friend WithEvents Button7 As Button
     Friend WithEvents Button8 As Button
+    Friend WithEvents lblTotal As Label
 End Class

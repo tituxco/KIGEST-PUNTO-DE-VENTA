@@ -1184,4 +1184,22 @@
     Private Sub cmbtipofac_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbtipofac.SelectedIndexChanged
 
     End Sub
+
+    Private Sub dtopcheques_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtopcheques.CellContentClick
+
+    End Sub
+
+    Private Sub dtopcheques_UserDeletedRow(sender As Object, e As DataGridViewRowEventArgs) Handles dtopcheques.UserDeletedRow
+        CalcularTotalespago()
+
+    End Sub
+
+    Private Sub dtmovimientocheques_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtmovimientocheques.CellContentClick
+
+    End Sub
+
+    Private Sub dtmovimientocheques_UserDeletedRow(sender As Object, e As DataGridViewRowEventArgs) Handles dtmovimientocheques.UserDeletedRow
+        CalcularTotalesMovimiento()
+
+    End Sub
 End Class

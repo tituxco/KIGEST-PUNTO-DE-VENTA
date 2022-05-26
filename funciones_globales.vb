@@ -242,7 +242,15 @@ Module funciones_Globales
         Return cotizacion
     End Function
 
-
+    Public Function SumartTotalesColumnaTabla(NombreColumna As String, tabla As DataGridView) As Double
+        Dim total As Double
+        Dim monto As Double
+        For Each fila As DataGridViewRow In tabla.Rows
+            monto = FormatNumber(fila.Cells(NombreColumna).Value, 2)
+            total += monto
+        Next
+        Return total
+    End Function
 
     Public Function calcularPrecioProducto(IdProd As String, listaPrecios As Integer, tipofact As Integer) As Double
         Try

@@ -68,18 +68,27 @@ Partial Class frmServiciosCloud
         Dim TreeNode44 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("IMPRESION DE ETIQUETAS")
         Dim TreeNode45 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("MODULOS KIBIT")
         Dim TreeNode46 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PRESTAMOS")
-        Dim TreeNode47 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PUBLICIDAD")
-        Dim TreeNode48 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("TECNICO")
-        Dim TreeNode49 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ESPECIALES-SERVICIOS", New System.Windows.Forms.TreeNode() {TreeNode44, TreeNode45, TreeNode46, TreeNode47, TreeNode48})
-        Dim TreeNode50 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod SUELDOS")
-        Dim TreeNode51 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURAR TERMINAL")
-        Dim TreeNode52 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURACIONES VARIAS")
-        Dim TreeNode53 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("HISTORIAL Y CONFIGURACION DE USUARIOS")
-        Dim TreeNode54 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod CONFIGURACIONES", New System.Windows.Forms.TreeNode() {TreeNode51, TreeNode52, TreeNode53})
-        Dim TreeNode55 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode17, TreeNode43, TreeNode49, TreeNode50, TreeNode54})
+        Dim TreeNode47 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("VENTANA OPERADOR")
+        Dim TreeNode48 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("PUBLICIDAD", New System.Windows.Forms.TreeNode() {TreeNode47})
+        Dim TreeNode49 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("TECNICO")
+        Dim TreeNode50 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ESPECIALES-SERVICIOS", New System.Windows.Forms.TreeNode() {TreeNode44, TreeNode45, TreeNode46, TreeNode48, TreeNode49})
+        Dim TreeNode51 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod SUELDOS")
+        Dim TreeNode52 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURAR TERMINAL")
+        Dim TreeNode53 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("CONFIGURACIONES VARIAS")
+        Dim TreeNode54 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("HISTORIAL Y CONFIGURACION DE USUARIOS")
+        Dim TreeNode55 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Mod CONFIGURACIONES", New System.Windows.Forms.TreeNode() {TreeNode52, TreeNode53, TreeNode54})
+        Dim TreeNode56 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("KIGEST_FACT_SIGT", New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode7, TreeNode17, TreeNode43, TreeNode50, TreeNode51, TreeNode55})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmServiciosCloud))
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.dtcloud = New System.Windows.Forms.DataGridView()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DBClie = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.trvmodulos = New System.Windows.Forms.TreeView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.lblresultados = New System.Windows.Forms.Label()
@@ -108,14 +117,6 @@ Partial Class frmServiciosCloud
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DBClie = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel12.SuspendLayout()
         CType(Me.dtcloud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -150,6 +151,49 @@ Partial Class frmServiciosCloud
         Me.dtcloud.Size = New System.Drawing.Size(933, 339)
         Me.dtcloud.TabIndex = 71
         '
+        'id
+        '
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Cliente"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Sistema"
+        Me.Column2.Name = "Column2"
+        '
+        'DBClie
+        '
+        Me.DBClie.HeaderText = "CLOUD-bd"
+        Me.DBClie.Name = "DBClie"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "AUTH-Usuario"
+        Me.Column9.Name = "Column9"
+        '
+        'Column10
+        '
+        Me.Column10.HeaderText = "AUTH-Clave"
+        Me.Column10.Name = "Column10"
+        '
+        'Column12
+        '
+        Me.Column12.FillWeight = 300.0!
+        Me.Column12.HeaderText = "Modulo"
+        Me.Column12.Name = "Column12"
+        Me.Column12.Visible = False
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Autorizado"
+        Me.Column6.Name = "Column6"
+        '
         'trvmodulos
         '
         Me.trvmodulos.CheckBoxes = True
@@ -181,7 +225,7 @@ Partial Class frmServiciosCloud
         TreeNode8.Tag = "3a"
         TreeNode8.Text = "FC NOTAS DE CREDITO Y DEBITO"
         TreeNode9.Name = "Nodo0"
-        TreeNode9.Tag = "AR01"
+        TreeNode9.Tag = "3b-AR01"
         TreeNode9.Text = "LISTA DE CARGA"
         TreeNode10.Name = "Nodo10"
         TreeNode10.Tag = "3b"
@@ -292,33 +336,36 @@ Partial Class frmServiciosCloud
         TreeNode46.Tag = "5RYM"
         TreeNode46.Text = "PRESTAMOS"
         TreeNode47.Name = "Nodo0"
-        TreeNode47.Tag = "5PUBLICIDAD"
-        TreeNode47.Text = "PUBLICIDAD"
-        TreeNode48.Name = "Nodo28"
-        TreeNode48.Tag = "5TALLER"
-        TreeNode48.Text = "TECNICO"
-        TreeNode49.Name = "Nodo29"
-        TreeNode49.Tag = "5"
-        TreeNode49.Text = "ESPECIALES-SERVICIOS"
-        TreeNode50.Name = "Nodo1"
-        TreeNode50.Tag = "6"
-        TreeNode50.Text = "Mod SUELDOS"
-        TreeNode51.Name = "Nodo2"
-        TreeNode51.Tag = "CONFTERM"
-        TreeNode51.Text = "CONFIGURAR TERMINAL"
-        TreeNode52.Name = "Nodo3"
-        TreeNode52.Tag = "CONFVAR"
-        TreeNode52.Text = "CONFIGURACIONES VARIAS"
-        TreeNode53.Name = "Nodo0"
-        TreeNode53.Tag = "CONFUSER"
-        TreeNode53.Text = "HISTORIAL Y CONFIGURACION DE USUARIOS"
-        TreeNode54.Name = "Nodo1"
-        TreeNode54.Tag = "CONF"
-        TreeNode54.Text = "Mod CONFIGURACIONES"
-        TreeNode55.Name = "Nodo0"
-        TreeNode55.Tag = "KIGEST_FACT_SIGT"
-        TreeNode55.Text = "KIGEST_FACT_SIGT"
-        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode55})
+        TreeNode47.Tag = "5PUBLICIDAD-OPERADORRAD"
+        TreeNode47.Text = "VENTANA OPERADOR"
+        TreeNode48.Name = "Nodo0"
+        TreeNode48.Tag = "5PUBLICIDAD"
+        TreeNode48.Text = "PUBLICIDAD"
+        TreeNode49.Name = "Nodo28"
+        TreeNode49.Tag = "5TALLER"
+        TreeNode49.Text = "TECNICO"
+        TreeNode50.Name = "Nodo29"
+        TreeNode50.Tag = "5"
+        TreeNode50.Text = "ESPECIALES-SERVICIOS"
+        TreeNode51.Name = "Nodo1"
+        TreeNode51.Tag = "6"
+        TreeNode51.Text = "Mod SUELDOS"
+        TreeNode52.Name = "Nodo2"
+        TreeNode52.Tag = "CONFTERM"
+        TreeNode52.Text = "CONFIGURAR TERMINAL"
+        TreeNode53.Name = "Nodo3"
+        TreeNode53.Tag = "CONFVAR"
+        TreeNode53.Text = "CONFIGURACIONES VARIAS"
+        TreeNode54.Name = "Nodo0"
+        TreeNode54.Tag = "CONFUSER"
+        TreeNode54.Text = "HISTORIAL Y CONFIGURACION DE USUARIOS"
+        TreeNode55.Name = "Nodo1"
+        TreeNode55.Tag = "CONF"
+        TreeNode55.Text = "Mod CONFIGURACIONES"
+        TreeNode56.Name = "Nodo0"
+        TreeNode56.Tag = "KIGEST_FACT_SIGT"
+        TreeNode56.Text = "KIGEST_FACT_SIGT"
+        Me.trvmodulos.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode56})
         Me.trvmodulos.Size = New System.Drawing.Size(321, 339)
         Me.trvmodulos.TabIndex = 12
         '
@@ -600,49 +647,6 @@ Partial Class frmServiciosCloud
         Me.DataGridViewTextBoxColumn8.HeaderText = "Autorizado"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         Me.DataGridViewTextBoxColumn8.Width = 148
-        '
-        'id
-        '
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Cliente"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Sistema"
-        Me.Column2.Name = "Column2"
-        '
-        'DBClie
-        '
-        Me.DBClie.HeaderText = "CLOUD-bd"
-        Me.DBClie.Name = "DBClie"
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "AUTH-Usuario"
-        Me.Column9.Name = "Column9"
-        '
-        'Column10
-        '
-        Me.Column10.HeaderText = "AUTH-Clave"
-        Me.Column10.Name = "Column10"
-        '
-        'Column12
-        '
-        Me.Column12.FillWeight = 300.0!
-        Me.Column12.HeaderText = "Modulo"
-        Me.Column12.Name = "Column12"
-        Me.Column12.Visible = False
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Autorizado"
-        Me.Column6.Name = "Column6"
         '
         'frmServiciosCloud
         '

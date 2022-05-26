@@ -44,6 +44,8 @@ Partial Class cheques_en_cartera
         Me.txtfiltrapropios = New System.Windows.Forms.TextBox()
         Me.cmbpropiosSellAll = New System.Windows.Forms.Button()
         Me.cmbpropiosSellNone = New System.Windows.Forms.Button()
+        Me.rdTransferidos = New System.Windows.Forms.RadioButton()
+        Me.rdEnCartera = New System.Windows.Forms.RadioButton()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -169,6 +171,8 @@ Partial Class cheques_en_cartera
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.rdEnCartera)
+        Me.Panel2.Controls.Add(Me.rdTransferidos)
         Me.Panel2.Controls.Add(Me.Label2)
         Me.Panel2.Controls.Add(Me.txtfiltraterceros)
         Me.Panel2.Controls.Add(Me.cmbtercerosSelAll)
@@ -306,6 +310,30 @@ Partial Class cheques_en_cartera
         Me.cmbpropiosSellNone.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmbpropiosSellNone.UseVisualStyleBackColor = False
         '
+        'rdTransferidos
+        '
+        Me.rdTransferidos.AutoSize = True
+        Me.rdTransferidos.ForeColor = System.Drawing.Color.White
+        Me.rdTransferidos.Location = New System.Drawing.Point(269, 3)
+        Me.rdTransferidos.Name = "rdTransferidos"
+        Me.rdTransferidos.Size = New System.Drawing.Size(138, 17)
+        Me.rdTransferidos.TabIndex = 5
+        Me.rdTransferidos.Text = "Transferidos a esta caja"
+        Me.rdTransferidos.UseVisualStyleBackColor = True
+        '
+        'rdEnCartera
+        '
+        Me.rdEnCartera.AutoSize = True
+        Me.rdEnCartera.Checked = True
+        Me.rdEnCartera.ForeColor = System.Drawing.Color.White
+        Me.rdEnCartera.Location = New System.Drawing.Point(269, 26)
+        Me.rdEnCartera.Name = "rdEnCartera"
+        Me.rdEnCartera.Size = New System.Drawing.Size(115, 17)
+        Me.rdEnCartera.TabIndex = 6
+        Me.rdEnCartera.TabStop = True
+        Me.rdEnCartera.Text = "En Cartera General"
+        Me.rdEnCartera.UseVisualStyleBackColor = True
+        '
         'cheques_en_cartera
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -353,4 +381,6 @@ Partial Class cheques_en_cartera
     Friend WithEvents txtfiltraterceros As System.Windows.Forms.TextBox
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtfiltrapropios As System.Windows.Forms.TextBox
+    Friend WithEvents rdEnCartera As RadioButton
+    Friend WithEvents rdTransferidos As RadioButton
 End Class

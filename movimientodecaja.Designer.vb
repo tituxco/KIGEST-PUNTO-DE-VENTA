@@ -1087,7 +1087,6 @@ Partial Class movimientodecaja
         Me.dtopcheques.Name = "dtopcheques"
         Me.dtopcheques.ReadOnly = True
         Me.dtopcheques.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtopcheques.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.dtopcheques.Size = New System.Drawing.Size(559, 116)
         Me.dtopcheques.TabIndex = 86
         '
@@ -1185,7 +1184,6 @@ Partial Class movimientodecaja
         Me.dtfacturaspago.MultiSelect = False
         Me.dtfacturaspago.Name = "dtfacturaspago"
         Me.dtfacturaspago.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtfacturaspago.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.dtfacturaspago.Size = New System.Drawing.Size(423, 109)
         Me.dtfacturaspago.TabIndex = 96
         '
@@ -1575,7 +1573,6 @@ Partial Class movimientodecaja
         Me.dtmovimientocheques.Name = "dtmovimientocheques"
         Me.dtmovimientocheques.ReadOnly = True
         Me.dtmovimientocheques.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtmovimientocheques.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.dtmovimientocheques.Size = New System.Drawing.Size(559, 227)
         Me.dtmovimientocheques.TabIndex = 86
         '

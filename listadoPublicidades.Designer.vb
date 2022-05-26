@@ -25,14 +25,13 @@ Partial Class listadoPublicidades
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(listadoPublicidades))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tabListadoSerivicios = New System.Windows.Forms.TabPage()
-        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.chksinFact = New System.Windows.Forms.CheckBox()
         Me.rdAVencer = New System.Windows.Forms.RadioButton()
         Me.rdvigentes = New System.Windows.Forms.RadioButton()
         Me.chkSoloMorosos = New System.Windows.Forms.CheckBox()
         Me.chkMostarInfo = New System.Windows.Forms.CheckBox()
-        Me.Button3 = New System.Windows.Forms.Button()
+        Me.btnFacturar = New System.Windows.Forms.Button()
         Me.dthastafact = New System.Windows.Forms.DateTimePicker()
         Me.dtdesdefact = New System.Windows.Forms.DateTimePicker()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -40,14 +39,16 @@ Partial Class listadoPublicidades
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtdiasmora = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Button2 = New System.Windows.Forms.Button()
+        Me.btnNuevaPublicidad = New System.Windows.Forms.Button()
         Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.cmdver = New System.Windows.Forms.Button()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnExportar = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.rdOper = New System.Windows.Forms.RadioButton()
+        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -76,23 +77,16 @@ Partial Class listadoPublicidades
         Me.tabListadoSerivicios.Text = "Listado"
         Me.tabListadoSerivicios.UseVisualStyleBackColor = True
         '
-        'dgvPrestamos
-        '
-        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
-        Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvPrestamos.TabIndex = 78
-        '
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.rdOper)
         Me.pnnavegacion.Controls.Add(Me.chksinFact)
         Me.pnnavegacion.Controls.Add(Me.rdAVencer)
         Me.pnnavegacion.Controls.Add(Me.rdvigentes)
         Me.pnnavegacion.Controls.Add(Me.chkSoloMorosos)
         Me.pnnavegacion.Controls.Add(Me.chkMostarInfo)
-        Me.pnnavegacion.Controls.Add(Me.Button3)
+        Me.pnnavegacion.Controls.Add(Me.btnFacturar)
         Me.pnnavegacion.Controls.Add(Me.dthastafact)
         Me.pnnavegacion.Controls.Add(Me.dtdesdefact)
         Me.pnnavegacion.Controls.Add(Me.Label8)
@@ -100,12 +94,12 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Controls.Add(Me.Label3)
         Me.pnnavegacion.Controls.Add(Me.txtdiasmora)
         Me.pnnavegacion.Controls.Add(Me.Label2)
-        Me.pnnavegacion.Controls.Add(Me.Button2)
+        Me.pnnavegacion.Controls.Add(Me.btnNuevaPublicidad)
         Me.pnnavegacion.Controls.Add(Me.cmdbuscar)
         Me.pnnavegacion.Controls.Add(Me.Label36)
         Me.pnnavegacion.Controls.Add(Me.cmdver)
         Me.pnnavegacion.Controls.Add(Me.txtbuscar)
-        Me.pnnavegacion.Controls.Add(Me.Button1)
+        Me.pnnavegacion.Controls.Add(Me.btnExportar)
         Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnnavegacion.Location = New System.Drawing.Point(3, 3)
         Me.pnnavegacion.Name = "pnnavegacion"
@@ -127,7 +121,7 @@ Partial Class listadoPublicidades
         '
         Me.rdAVencer.AutoSize = True
         Me.rdAVencer.ForeColor = System.Drawing.Color.White
-        Me.rdAVencer.Location = New System.Drawing.Point(175, 15)
+        Me.rdAVencer.Location = New System.Drawing.Point(156, 15)
         Me.rdAVencer.Name = "rdAVencer"
         Me.rdAVencer.Size = New System.Drawing.Size(68, 17)
         Me.rdAVencer.TabIndex = 200
@@ -170,23 +164,24 @@ Partial Class listadoPublicidades
         Me.chkMostarInfo.TabIndex = 196
         Me.chkMostarInfo.Text = "Ver/ocultar informacion"
         Me.chkMostarInfo.UseVisualStyleBackColor = True
+        Me.chkMostarInfo.Visible = False
         '
-        'Button3
+        'btnFacturar
         '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button3.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.factura
-        Me.Button3.Location = New System.Drawing.Point(738, 0)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(92, 89)
-        Me.Button3.TabIndex = 195
-        Me.Button3.Text = "Facturar"
-        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button3.UseVisualStyleBackColor = True
+        Me.btnFacturar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnFacturar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnFacturar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnFacturar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFacturar.ForeColor = System.Drawing.Color.White
+        Me.btnFacturar.Image = Global.SIGT__KIGEST.My.Resources.Resources.factura
+        Me.btnFacturar.Location = New System.Drawing.Point(738, 0)
+        Me.btnFacturar.Name = "btnFacturar"
+        Me.btnFacturar.Size = New System.Drawing.Size(92, 89)
+        Me.btnFacturar.TabIndex = 195
+        Me.btnFacturar.Text = "Facturar"
+        Me.btnFacturar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnFacturar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.btnFacturar.UseVisualStyleBackColor = True
         '
         'dthastafact
         '
@@ -265,22 +260,22 @@ Partial Class listadoPublicidades
         Me.Label2.TabIndex = 186
         Me.Label2.Text = "DiasMora"
         '
-        'Button2
+        'btnNuevaPublicidad
         '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Commercial_64px
-        Me.Button2.Location = New System.Drawing.Point(830, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(92, 89)
-        Me.Button2.TabIndex = 185
-        Me.Button2.Text = "Nueva"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button2.UseVisualStyleBackColor = True
+        Me.btnNuevaPublicidad.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnNuevaPublicidad.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnNuevaPublicidad.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnNuevaPublicidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNuevaPublicidad.ForeColor = System.Drawing.Color.White
+        Me.btnNuevaPublicidad.Image = Global.SIGT__KIGEST.My.Resources.Resources.Commercial_64px
+        Me.btnNuevaPublicidad.Location = New System.Drawing.Point(830, 0)
+        Me.btnNuevaPublicidad.Name = "btnNuevaPublicidad"
+        Me.btnNuevaPublicidad.Size = New System.Drawing.Size(92, 89)
+        Me.btnNuevaPublicidad.TabIndex = 185
+        Me.btnNuevaPublicidad.Text = "Nueva"
+        Me.btnNuevaPublicidad.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnNuevaPublicidad.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.btnNuevaPublicidad.UseVisualStyleBackColor = True
         '
         'cmdbuscar
         '
@@ -337,22 +332,22 @@ Partial Class listadoPublicidades
         Me.txtbuscar.Size = New System.Drawing.Size(237, 22)
         Me.txtbuscar.TabIndex = 169
         '
-        'Button1
+        'btnExportar
         '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.Microsoft_Excel_64px
-        Me.Button1.Location = New System.Drawing.Point(1106, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(102, 89)
-        Me.Button1.TabIndex = 168
-        Me.Button1.Text = "Exportar"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.btnExportar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnExportar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.btnExportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnExportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnExportar.ForeColor = System.Drawing.Color.White
+        Me.btnExportar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Microsoft_Excel_64px
+        Me.btnExportar.Location = New System.Drawing.Point(1106, 0)
+        Me.btnExportar.Name = "btnExportar"
+        Me.btnExportar.Size = New System.Drawing.Size(102, 89)
+        Me.btnExportar.TabIndex = 168
+        Me.btnExportar.Text = "Exportar"
+        Me.btnExportar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnExportar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.btnExportar.UseVisualStyleBackColor = True
         '
         'pntitulo
         '
@@ -374,6 +369,25 @@ Partial Class listadoPublicidades
         Me.Label1.Size = New System.Drawing.Size(281, 39)
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
+        '
+        'rdOper
+        '
+        Me.rdOper.AutoSize = True
+        Me.rdOper.ForeColor = System.Drawing.Color.White
+        Me.rdOper.Location = New System.Drawing.Point(457, 32)
+        Me.rdOper.Name = "rdOper"
+        Me.rdOper.Size = New System.Drawing.Size(74, 17)
+        Me.rdOper.TabIndex = 202
+        Me.rdOper.Text = "Vista Oper"
+        Me.rdOper.UseVisualStyleBackColor = True
+        '
+        'dgvPrestamos
+        '
+        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
+        Me.dgvPrestamos.Name = "dgvPrestamos"
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvPrestamos.TabIndex = 78
         '
         'listadoPublicidades
         '
@@ -403,10 +417,10 @@ Partial Class listadoPublicidades
     Friend WithEvents Label36 As Label
     Friend WithEvents cmdver As Button
     Friend WithEvents txtbuscar As TextBox
-    Friend WithEvents Button1 As Button
+    Friend WithEvents btnExportar As Button
     Friend WithEvents pntitulo As Panel
     Friend WithEvents Label1 As Label
-    Friend WithEvents Button2 As Button
+    Friend WithEvents btnNuevaPublicidad As Button
     Friend WithEvents txtdiasmora As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
@@ -414,10 +428,11 @@ Partial Class listadoPublicidades
     Friend WithEvents dthastafact As DateTimePicker
     Friend WithEvents dtdesdefact As DateTimePicker
     Friend WithEvents Label8 As Label
-    Friend WithEvents Button3 As Button
+    Friend WithEvents btnFacturar As Button
     Friend WithEvents chkMostarInfo As CheckBox
     Friend WithEvents rdAVencer As RadioButton
     Friend WithEvents rdvigentes As RadioButton
     Friend WithEvents chkSoloMorosos As CheckBox
     Friend WithEvents chksinFact As CheckBox
+    Friend WithEvents rdOper As RadioButton
 End Class

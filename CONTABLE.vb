@@ -5282,11 +5282,15 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 MsgBox("Para cerrar el periodo debe visualizar LISTADO DE CUENTAS CON SALDO")
                 Exit Sub
             End If
-
+            If dgvListadoCuentaConSaldos.RowCount = 0 Then
+                MsgBox("No existen saldos en esta cuenta para este periodo, presione actualizar")
+                Exit Sub
+            End If
             If ConsultarPeriodoCerrado(cmbperiodoLibroDiario.Text) = True Then
                 MsgBox("el periodo ya esta cerrado")
                 Exit Sub
             Else
+
                 If MsgBox("Esta seguro que desea cerrar el periodo? no se podran agregar ni modificar asientos contables luego de esta operacion", vbYesNo + vbQuestion, "Cerrar periodo") = vbNo Then
                     Exit Sub
                 Else

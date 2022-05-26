@@ -866,7 +866,7 @@ Public Class reimpresionComprobantes
             dgvlistadoCobranza.Columns(0).Visible = False
             dgvlistadoCobranza.Columns(9).Visible = False
 
-
+            lblTotal.Text = "Total: $" & SumartTotalesColumnaTabla("total", dgvlistadoCobranza)
 
             EnProgreso.Close()
         Catch ex As Exception

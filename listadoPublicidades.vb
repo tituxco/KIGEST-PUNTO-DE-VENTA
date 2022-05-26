@@ -23,7 +23,7 @@
 
         Reconectar()
         If rdvigentes.Checked = True Then
-            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,(SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO, 
 		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
@@ -38,17 +38,18 @@
             )AS MOROSO_MESES,        
         round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
         ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        pr.OBSERVACIONES,
         (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes" &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
         ElseIf rdAVencer.Checked = True Then
-            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
 		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
@@ -62,16 +63,27 @@
             and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
             )AS MOROSO_MESES,        
         round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
-        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,
+        pr.OBSERVACIONES,
         (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes
         having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')")
+        ElseIf rdOper.Checked = True Then
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
+		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
+        cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+		pr.CONCEPTO,
+        pr.OBSERVACIONES,        		
+        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
+        FROM rym_prestamo as pr, fact_clientes as cl
+        where pr.ID_CLIENTE=cl.idclientes " &
+        fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
         End If
         'MsgBox()
     End Sub
@@ -80,8 +92,10 @@
         Reconectar()
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
         cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
+
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
         'MsgBox(cmd.CommandText)
         ds = New DataSet
@@ -120,7 +134,7 @@
         Catch ex As Exception
         End Try
     End Sub
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnNuevaPublicidad.Click
         Dim i As Integer
         For i = 0 To Me.MdiChildren.Length - 1
             If MdiChildren(i).Name = "NvaPublicidad" Then
@@ -137,6 +151,17 @@
 
     Private Sub listadoPublicidades_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+        If InStr(DatosAcceso.Moduloacc, "OPERADORRAD") <> 0 Then
+            rdOper.Checked = True
+            rdAVencer.Visible = False
+            rdvigentes.Visible = False
+            btnExportar.Visible = False
+            btnFacturar.Visible = False
+            btnNuevaPublicidad.Visible = False
+            cmdver.Visible = False
+
+
+        End If
         Me.Text = "LISTADO " & DatosAcceso.ServMensual
         dtdesdefact.Value = obtenerPrimerDiaMes()
         Label1.Text = DatosAcceso.ServMensual
@@ -149,7 +174,7 @@
         Me.Close()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
         Try
 
             If ElementoFacturado("#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value) = True Then
@@ -208,7 +233,7 @@
         End If
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
         GenerarExcel(dgvPrestamos.dgvVista)
     End Sub
 End Class

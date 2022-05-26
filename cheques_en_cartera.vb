@@ -16,16 +16,24 @@
 
     Private Sub CargarChequesDeTerceros()
         Reconectar()
+        Dim busq As String
+
+        If rdEnCartera.Checked = True Then
+            busq = " where che.tipo_cheque=1 and che.estado_cheque=1"
+        ElseIf rdTransferidos.Checked = True Then
+            busq = " where che.tipo_cheque=1 and che.estado_cheque=3 and che.cuenta=" & My.Settings.CajaDef
+        End If
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select che.id, che.banco, che.serie, che.fecha_cobro, che.importe " _
             & "from fact_cheques as che " _
-            & "where che.tipo_cheque=1 and che.estado_cheque=1 ", conexionPrinc)
+            & busq, conexionPrinc)
+        ' MsgBox(consulta.SelectCommand.CommandText)
         Dim tablacheques As New DataTable
         consulta.Fill(tablacheques)
         filterceros.DataSource = tablacheques
         dtchequesterceros.DataSource = filterceros
-        dtchequesterceros.Columns(1).Visible = False
+        'dtchequesterceros.Columns(1).Visible = True
         dtchequesterceros.ClearSelection()
-        dtchequesterceros.Columns(0).ReadOnly = False
+        'dtchequesterceros.Columns(0).Visible = False
 
     End Sub
 
@@ -107,13 +115,13 @@
             Dim total As Double
             For Each terc As DataGridViewRow In dtchequesterceros.Rows
                 If terc.Selected = True Then
-                    total += terc.Cells(4).Value
+                    total += FormatNumber(terc.Cells(4).Value.ToString.Replace(".", ","))
                 End If
             Next
 
             For Each prop As DataGridViewRow In dtchequespropios.Rows
                 If prop.Selected = True Then
-                    total += prop.Cells(4).Value
+                    total += FormatNumber(prop.Cells(4).Value.ToString.Replace(".", ","))
                 End If
             Next
 
@@ -147,5 +155,14 @@
 
     Private Sub cmbtercerosSelAll_Click(sender As Object, e As EventArgs) Handles cmbtercerosSelAll.Click
 
+    End Sub
+
+    Private Sub rdTransferidos_CheckedChanged(sender As Object, e As EventArgs) Handles rdTransferidos.CheckedChanged
+        CargarChequesDeTerceros()
+
+    End Sub
+
+    Private Sub rdEnCartera_CheckedChanged(sender As Object, e As EventArgs) Handles rdEnCartera.CheckedChanged
+        CargarChequesDeTerceros()
     End Sub
 End Class
