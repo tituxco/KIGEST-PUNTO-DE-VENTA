@@ -591,13 +591,13 @@ Public Class CONTABLE
         Else
             vendedor = cmbvendedorctacte.SelectedValue
         End If
-
+        Dim filtro As String = ""
+        If chkIgnorarCerosYNegativos.Checked = True Then
+            filtro = "having saldo <>0 and saldo >0"
+        End If
         Try
-            Dim consultaResumenCtaCte As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from resumen_cta_cte where vendedor LIKE '" & vendedor & "'", conexionPrinc)
-
-
-
-
+            Dim consultaResumenCtaCte As New MySql.Data.MySqlClient.MySqlDataAdapter(
+                "select * from resumen_cta_cte where vendedor LIKE '" & vendedor & "'  " & filtro, conexionPrinc)
 
             Dim tablaResumenCtaCte As New DataTable
 
@@ -1522,6 +1522,8 @@ Public Class CONTABLE
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles cmdverestadocuentas.Click
         cargarEstadodeCuentas()
+        lbltotctacte.Text = FormatNumber(SumartTotalesColumnaTabla("saldo", dtestadocuentas), 2)
+
     End Sub
 
 

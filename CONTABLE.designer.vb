@@ -640,136 +640,137 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn62 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn63 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn64 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.pntitulo.SuspendLayout
-        Me.balance.SuspendLayout
-        Me.TabControl1.SuspendLayout
-        Me.tabBalDiario.SuspendLayout
-        CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel29.SuspendLayout
-        Me.grpbalancefecha.SuspendLayout
-        Me.tabBalHistorico.SuspendLayout
-        CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel28.SuspendLayout
-        Me.grpbalanceintervalo.SuspendLayout
-        Me.Panel27.SuspendLayout
-        Me.tabconfiguracion.SuspendLayout
-        Me.TabControl2.SuspendLayout
-        Me.TabPage14.SuspendLayout
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage9.SuspendLayout
-        Me.TabControl4.SuspendLayout
-        Me.TabPage8.SuspendLayout
-        CType(Me.dtlistasprecio, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage10.SuspendLayout
-        CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.tabmoneda.SuspendLayout
-        CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage12.SuspendLayout
-        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage15.SuspendLayout
-        CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage13.SuspendLayout
-        CType(Me.dtfiscal, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage1.SuspendLayout
-        CType(Me.dtvendedores, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.servidorCorreo.SuspendLayout
-        CType(Me.dgvServidorCorreo, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel31.SuspendLayout
-        Me.TabPage3.SuspendLayout
-        CType(Me.dtconceptosingresos, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage4.SuspendLayout
-        CType(Me.dtconceptosegresos, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.TabPage5.SuspendLayout
-        Me.tabdtostecni.SuspendLayout
-        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel26.SuspendLayout
-        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel25.SuspendLayout
-        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel24.SuspendLayout
-        Me.tabUsuarios.SuspendLayout
-        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.tabLog.SuspendLayout
-        CType(Me.dgvLog, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel17.SuspendLayout
-        Me.tabgraficas.SuspendLayout
-        Me.TabControl3.SuspendLayout
-        Me.TabPage2.SuspendLayout
-        CType(Me.chrestad, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel10.SuspendLayout
-        Me.tabstockvalorizado.SuspendLayout
-        CType(Me.dtstockvalorizado, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel19.SuspendLayout
-        CType(Me.dttotstock, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.tabBalanceCtas.SuspendLayout
-        CType(Me.dgvListadoCuentaConSaldos, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel15.SuspendLayout
-        CType(Me.dgvTotales, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel4.SuspendLayout
-        Me.tablibromayor.SuspendLayout
-        CType(Me.dgvLibroDiario, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel3.SuspendLayout
-        CType(Me.dgvLibroMayor, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel1.SuspendLayout
-        Me.tabplancuentas.SuspendLayout
-        CType(Me.dgvPlanCuentas, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel21.SuspendLayout
-        Me.Panel30.SuspendLayout
-        Me.Panel20.SuspendLayout
-        Me.grpMantenimientoCuenta.SuspendLayout
-        Me.tabcuentasproveedores.SuspendLayout
-        CType(Me.dtcuentaprov, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel14.SuspendLayout
-        CType(Me.dttotalesprov, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel2.SuspendLayout
-        Me.tabcuentasclientes.SuspendLayout
-        CType(Me.dtcuentaclie, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel12.SuspendLayout
-        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel7.SuspendLayout
-        Me.Panel13.SuspendLayout
-        Me.tabestadocuentas.SuspendLayout
-        CType(Me.dtestadocuentas, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel18.SuspendLayout
-        Me.tabchequespropios.SuspendLayout
-        CType(Me.dtchequespropios, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel9.SuspendLayout
-        Me.tabcheques.SuspendLayout
-        CType(Me.dtcheques, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel8.SuspendLayout
-        Me.tabremitos.SuspendLayout
-        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel22.SuspendLayout
-        Me.ivaVentas.SuspendLayout
-        CType(Me.dtivaventas, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel11.SuspendLayout
-        Me.GroupBox4.SuspendLayout
-        Me.GroupBox3.SuspendLayout
-        Me.tabcobranzas.SuspendLayout
-        CType(Me.dtlistacob, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel6.SuspendLayout
-        Me.GroupBox6.SuspendLayout
-        Me.GroupBox2.SuspendLayout
-        Me.GroupBox1.SuspendLayout
-        Me.tabcomprobantes.SuspendLayout
-        CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel5.SuspendLayout
-        Me.GroupBox5.SuspendLayout
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.grpcomprobantes.SuspendLayout
-        Me.grpacciones.SuspendLayout
-        Me.grpperiodo.SuspendLayout
-        Me.grpfiltrar.SuspendLayout
-        Me.grpagrupar.SuspendLayout
-        Me.tabcontable.SuspendLayout
-        Me.tabCompras.SuspendLayout
-        CType(Me.dtlibrocomp, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel32.SuspendLayout
-        Me.GroupBox8.SuspendLayout
-        Me.tabEjercicios.SuspendLayout
-        CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).BeginInit
-        Me.Panel33.SuspendLayout
-        Me.SuspendLayout
+        Me.chkIgnorarCerosYNegativos = New System.Windows.Forms.CheckBox()
+        Me.pntitulo.SuspendLayout()
+        Me.balance.SuspendLayout()
+        Me.TabControl1.SuspendLayout()
+        Me.tabBalDiario.SuspendLayout()
+        CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel29.SuspendLayout()
+        Me.grpbalancefecha.SuspendLayout()
+        Me.tabBalHistorico.SuspendLayout()
+        CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel28.SuspendLayout()
+        Me.grpbalanceintervalo.SuspendLayout()
+        Me.Panel27.SuspendLayout()
+        Me.tabconfiguracion.SuspendLayout()
+        Me.TabControl2.SuspendLayout()
+        Me.TabPage14.SuspendLayout()
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage9.SuspendLayout()
+        Me.TabControl4.SuspendLayout()
+        Me.TabPage8.SuspendLayout()
+        CType(Me.dtlistasprecio, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage10.SuspendLayout()
+        CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabmoneda.SuspendLayout()
+        CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage12.SuspendLayout()
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage15.SuspendLayout()
+        CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage13.SuspendLayout()
+        CType(Me.dtfiscal, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage1.SuspendLayout()
+        CType(Me.dtvendedores, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.servidorCorreo.SuspendLayout()
+        CType(Me.dgvServidorCorreo, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel31.SuspendLayout()
+        Me.TabPage3.SuspendLayout()
+        CType(Me.dtconceptosingresos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.dtconceptosegresos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TabPage5.SuspendLayout()
+        Me.tabdtostecni.SuspendLayout()
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel26.SuspendLayout()
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel25.SuspendLayout()
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel24.SuspendLayout()
+        Me.tabUsuarios.SuspendLayout()
+        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabLog.SuspendLayout()
+        CType(Me.dgvLog, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel17.SuspendLayout()
+        Me.tabgraficas.SuspendLayout()
+        Me.TabControl3.SuspendLayout()
+        Me.TabPage2.SuspendLayout()
+        CType(Me.chrestad, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel10.SuspendLayout()
+        Me.tabstockvalorizado.SuspendLayout()
+        CType(Me.dtstockvalorizado, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel19.SuspendLayout()
+        CType(Me.dttotstock, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabBalanceCtas.SuspendLayout()
+        CType(Me.dgvListadoCuentaConSaldos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel15.SuspendLayout()
+        CType(Me.dgvTotales, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
+        Me.tablibromayor.SuspendLayout()
+        CType(Me.dgvLibroDiario, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel3.SuspendLayout()
+        CType(Me.dgvLibroMayor, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.tabplancuentas.SuspendLayout()
+        CType(Me.dgvPlanCuentas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel21.SuspendLayout()
+        Me.Panel30.SuspendLayout()
+        Me.Panel20.SuspendLayout()
+        Me.grpMantenimientoCuenta.SuspendLayout()
+        Me.tabcuentasproveedores.SuspendLayout()
+        CType(Me.dtcuentaprov, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel14.SuspendLayout()
+        CType(Me.dttotalesprov, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
+        Me.tabcuentasclientes.SuspendLayout()
+        CType(Me.dtcuentaclie, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel12.SuspendLayout()
+        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel7.SuspendLayout()
+        Me.Panel13.SuspendLayout()
+        Me.tabestadocuentas.SuspendLayout()
+        CType(Me.dtestadocuentas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel18.SuspendLayout()
+        Me.tabchequespropios.SuspendLayout()
+        CType(Me.dtchequespropios, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel9.SuspendLayout()
+        Me.tabcheques.SuspendLayout()
+        CType(Me.dtcheques, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel8.SuspendLayout()
+        Me.tabremitos.SuspendLayout()
+        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel22.SuspendLayout()
+        Me.ivaVentas.SuspendLayout()
+        CType(Me.dtivaventas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel11.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.tabcobranzas.SuspendLayout()
+        CType(Me.dtlistacob, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel6.SuspendLayout()
+        Me.GroupBox6.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
+        Me.GroupBox1.SuspendLayout()
+        Me.tabcomprobantes.SuspendLayout()
+        CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel5.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grpcomprobantes.SuspendLayout()
+        Me.grpacciones.SuspendLayout()
+        Me.grpperiodo.SuspendLayout()
+        Me.grpfiltrar.SuspendLayout()
+        Me.grpagrupar.SuspendLayout()
+        Me.tabcontable.SuspendLayout()
+        Me.tabCompras.SuspendLayout()
+        CType(Me.dtlibrocomp, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel32.SuspendLayout()
+        Me.GroupBox8.SuspendLayout()
+        Me.tabEjercicios.SuspendLayout()
+        CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel33.SuspendLayout()
+        Me.SuspendLayout()
         '
         'pntitulo
         '
@@ -4058,6 +4059,7 @@ Partial Class CONTABLE
         '
         'Panel18
         '
+        Me.Panel18.Controls.Add(Me.chkIgnorarCerosYNegativos)
         Me.Panel18.Controls.Add(Me.Button9)
         Me.Panel18.Controls.Add(Me.lbltotctacte)
         Me.Panel18.Controls.Add(Me.Label16)
@@ -7082,6 +7084,18 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn64.Name = "DataGridViewTextBoxColumn64"
         Me.DataGridViewTextBoxColumn64.Width = 158
         '
+        'chkIgnorarCerosYNegativos
+        '
+        Me.chkIgnorarCerosYNegativos.AutoSize = True
+        Me.chkIgnorarCerosYNegativos.Checked = True
+        Me.chkIgnorarCerosYNegativos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkIgnorarCerosYNegativos.Location = New System.Drawing.Point(490, 58)
+        Me.chkIgnorarCerosYNegativos.Name = "chkIgnorarCerosYNegativos"
+        Me.chkIgnorarCerosYNegativos.Size = New System.Drawing.Size(145, 17)
+        Me.chkIgnorarCerosYNegativos.TabIndex = 100
+        Me.chkIgnorarCerosYNegativos.Text = "Ignorar ceros y negativos"
+        Me.chkIgnorarCerosYNegativos.UseVisualStyleBackColor = True
+        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -7094,167 +7108,167 @@ Partial Class CONTABLE
         Me.Text = "CONTABLE"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
-        Me.pntitulo.PerformLayout
+        Me.pntitulo.PerformLayout()
         Me.balance.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
         Me.tabBalDiario.ResumeLayout(False)
-        CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel29.ResumeLayout(False)
         Me.grpbalancefecha.ResumeLayout(False)
         Me.tabBalHistorico.ResumeLayout(False)
-        CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.lstbalancehistorico, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel28.ResumeLayout(False)
         Me.grpbalanceintervalo.ResumeLayout(False)
-        Me.grpbalanceintervalo.PerformLayout
+        Me.grpbalanceintervalo.PerformLayout()
         Me.Panel27.ResumeLayout(False)
-        Me.Panel27.PerformLayout
+        Me.Panel27.PerformLayout()
         Me.tabconfiguracion.ResumeLayout(False)
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage14.ResumeLayout(False)
-        Me.TabPage14.PerformLayout
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit
+        Me.TabPage14.PerformLayout()
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage9.ResumeLayout(False)
         Me.TabControl4.ResumeLayout(False)
         Me.TabPage8.ResumeLayout(False)
-        CType(Me.dtlistasprecio, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtlistasprecio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage10.ResumeLayout(False)
-        Me.TabPage10.PerformLayout
-        CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).EndInit
+        Me.TabPage10.PerformLayout()
+        CType(Me.dtcategorias, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabmoneda.ResumeLayout(False)
-        CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtmoneda, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage12.ResumeLayout(False)
-        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DataGridView6, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage15.ResumeLayout(False)
-        CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage13.ResumeLayout(False)
-        Me.TabPage13.PerformLayout
-        CType(Me.dtfiscal, System.ComponentModel.ISupportInitialize).EndInit
+        Me.TabPage13.PerformLayout()
+        CType(Me.dtfiscal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage1.ResumeLayout(False)
-        CType(Me.dtvendedores, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtvendedores, System.ComponentModel.ISupportInitialize).EndInit()
         Me.servidorCorreo.ResumeLayout(False)
-        CType(Me.dgvServidorCorreo, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvServidorCorreo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel31.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
-        CType(Me.dtconceptosingresos, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtconceptosingresos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage4.ResumeLayout(False)
-        CType(Me.dtconceptosegresos, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtconceptosegresos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage5.ResumeLayout(False)
-        Me.TabPage5.PerformLayout
+        Me.TabPage5.PerformLayout()
         Me.tabdtostecni.ResumeLayout(False)
-        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DataGridView5, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel26.ResumeLayout(False)
-        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DataGridView4, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel25.ResumeLayout(False)
-        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.DataGridView3, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel24.ResumeLayout(False)
         Me.tabUsuarios.ResumeLayout(False)
-        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvUsuarios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabLog.ResumeLayout(False)
-        CType(Me.dgvLog, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvLog, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel17.ResumeLayout(False)
-        Me.Panel17.PerformLayout
+        Me.Panel17.PerformLayout()
         Me.tabgraficas.ResumeLayout(False)
         Me.TabControl3.ResumeLayout(False)
         Me.TabPage2.ResumeLayout(False)
-        CType(Me.chrestad, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.chrestad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel10.ResumeLayout(False)
         Me.tabstockvalorizado.ResumeLayout(False)
-        CType(Me.dtstockvalorizado, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtstockvalorizado, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel19.ResumeLayout(False)
-        CType(Me.dttotstock, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dttotstock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabBalanceCtas.ResumeLayout(False)
-        Me.tabBalanceCtas.PerformLayout
-        CType(Me.dgvListadoCuentaConSaldos, System.ComponentModel.ISupportInitialize).EndInit
+        Me.tabBalanceCtas.PerformLayout()
+        CType(Me.dgvListadoCuentaConSaldos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel15.ResumeLayout(False)
-        CType(Me.dgvTotales, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvTotales, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
-        Me.Panel4.PerformLayout
+        Me.Panel4.PerformLayout()
         Me.tablibromayor.ResumeLayout(False)
-        CType(Me.dgvLibroDiario, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvLibroDiario, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
-        Me.Panel3.PerformLayout
-        CType(Me.dgvLibroMayor, System.ComponentModel.ISupportInitialize).EndInit
+        Me.Panel3.PerformLayout()
+        CType(Me.dgvLibroMayor, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel1.ResumeLayout(False)
-        Me.Panel1.PerformLayout
+        Me.Panel1.PerformLayout()
         Me.tabplancuentas.ResumeLayout(False)
-        CType(Me.dgvPlanCuentas, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvPlanCuentas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel21.ResumeLayout(False)
         Me.Panel30.ResumeLayout(False)
-        Me.Panel30.PerformLayout
+        Me.Panel30.PerformLayout()
         Me.Panel20.ResumeLayout(False)
         Me.grpMantenimientoCuenta.ResumeLayout(False)
-        Me.grpMantenimientoCuenta.PerformLayout
+        Me.grpMantenimientoCuenta.PerformLayout()
         Me.tabcuentasproveedores.ResumeLayout(False)
-        CType(Me.dtcuentaprov, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtcuentaprov, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel14.ResumeLayout(False)
-        CType(Me.dttotalesprov, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dttotalesprov, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel2.ResumeLayout(False)
-        Me.Panel2.PerformLayout
+        Me.Panel2.PerformLayout()
         Me.tabcuentasclientes.ResumeLayout(False)
-        CType(Me.dtcuentaclie, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtcuentaclie, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel12.ResumeLayout(False)
-        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel7.ResumeLayout(False)
         Me.Panel13.ResumeLayout(False)
-        Me.Panel13.PerformLayout
+        Me.Panel13.PerformLayout()
         Me.tabestadocuentas.ResumeLayout(False)
-        CType(Me.dtestadocuentas, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtestadocuentas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel18.ResumeLayout(False)
-        Me.Panel18.PerformLayout
+        Me.Panel18.PerformLayout()
         Me.tabchequespropios.ResumeLayout(False)
-        CType(Me.dtchequespropios, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtchequespropios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel9.ResumeLayout(False)
-        Me.Panel9.PerformLayout
+        Me.Panel9.PerformLayout()
         Me.tabcheques.ResumeLayout(False)
-        CType(Me.dtcheques, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtcheques, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel8.ResumeLayout(False)
-        Me.Panel8.PerformLayout
+        Me.Panel8.PerformLayout()
         Me.tabremitos.ResumeLayout(False)
-        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtremitos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel22.ResumeLayout(False)
-        Me.Panel22.PerformLayout
+        Me.Panel22.PerformLayout()
         Me.ivaVentas.ResumeLayout(False)
-        CType(Me.dtivaventas, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtivaventas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel11.ResumeLayout(False)
-        Me.Panel11.PerformLayout
+        Me.Panel11.PerformLayout()
         Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout
+        Me.GroupBox4.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout
+        Me.GroupBox3.PerformLayout()
         Me.tabcobranzas.ResumeLayout(False)
-        CType(Me.dtlistacob, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtlistacob, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel6.ResumeLayout(False)
-        Me.Panel6.PerformLayout
+        Me.Panel6.PerformLayout()
         Me.GroupBox6.ResumeLayout(False)
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout
+        Me.GroupBox2.PerformLayout()
         Me.GroupBox1.ResumeLayout(False)
-        Me.GroupBox1.PerformLayout
+        Me.GroupBox1.PerformLayout()
         Me.tabcomprobantes.ResumeLayout(False)
-        CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpcomprobantes.ResumeLayout(False)
-        Me.grpcomprobantes.PerformLayout
+        Me.grpcomprobantes.PerformLayout()
         Me.grpacciones.ResumeLayout(False)
         Me.grpperiodo.ResumeLayout(False)
-        Me.grpperiodo.PerformLayout
+        Me.grpperiodo.PerformLayout()
         Me.grpfiltrar.ResumeLayout(False)
-        Me.grpfiltrar.PerformLayout
+        Me.grpfiltrar.PerformLayout()
         Me.grpagrupar.ResumeLayout(False)
-        Me.grpagrupar.PerformLayout
+        Me.grpagrupar.PerformLayout()
         Me.tabcontable.ResumeLayout(False)
         Me.tabCompras.ResumeLayout(False)
-        CType(Me.dtlibrocomp, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dtlibrocomp, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel32.ResumeLayout(False)
-        Me.Panel32.PerformLayout
+        Me.Panel32.PerformLayout()
         Me.GroupBox8.ResumeLayout(False)
-        Me.GroupBox8.PerformLayout
+        Me.GroupBox8.PerformLayout()
         Me.tabEjercicios.ResumeLayout(False)
-        CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel33.ResumeLayout(False)
-        Me.Panel33.PerformLayout
+        Me.Panel33.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -7819,4 +7833,5 @@ Partial Class CONTABLE
     Friend WithEvents rdSumaEjercicio As RadioButton
     Friend WithEvents txtconceptoEjercicio As TextBox
     Friend WithEvents Label100 As Label
+    Friend WithEvents chkIgnorarCerosYNegativos As CheckBox
 End Class

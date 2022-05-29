@@ -44,7 +44,7 @@
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
+        cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes" &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
@@ -70,7 +70,7 @@
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
+        cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes
         having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')")
@@ -80,7 +80,7 @@
         cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
 		pr.CONCEPTO,
         pr.OBSERVACIONES,        		
-        (SELECT concat(apellido,', ',nombre) from fact_vendedor where id =cl.vendedor) as VENDEDOR
+        cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes " &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)

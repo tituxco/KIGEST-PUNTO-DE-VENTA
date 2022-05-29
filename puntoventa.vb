@@ -1101,20 +1101,22 @@ Public Class puntoventa
                     comandoupd.ExecuteNonQuery()
                 End If
 
-                ' CUENTAS DE VENTAS DISTINTAS PARA RADIO AMANECER   **campo exclusivo para radio amanecer por el momento
-                If InStr(itemsFact.Cells(3).Value, "TV") Then
-                    ventaCta = 76
-                ElseIf InStr(itemsFact.Cells(3).Value, "RADIO") Then
-                    ventaCta = 75
-                Else
-                    Dim numCta = InputBox("A que cuenta desea enviar esta factura?" &
+                If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                    ' CUENTAS DE VENTAS DISTINTAS PARA RADIO AMANECER   **campo exclusivo para radio amanecer por el momento
+                    If InStr(itemsFact.Cells(3).Value, "TV") Then
+                        ventaCta = 76
+                    ElseIf InStr(itemsFact.Cells(3).Value, "RADIO") Then
+                        ventaCta = 75
+                    Else
+                        Dim numCta = InputBox("A que cuenta desea enviar esta factura?" & vbNewLine &
                                           "75 - Ventas Publicidad Radio" & vbNewLine &
                                           "76 - Ventas Publicidad Television" & vbNewLine &
                                           "77 - Ventas Pequeños Anunciantes", "Envio a cuentas contables", "77")
-                    If IsNumeric(numCta) Then
-                        ventaCta = numCta
-                    Else
-                        ventaCta = 77
+                        If IsNumeric(numCta) Then
+                            ventaCta = numCta
+                        Else
+                            ventaCta = 77
+                        End If
                     End If
                 End If
             Next
