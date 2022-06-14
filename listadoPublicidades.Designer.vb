@@ -25,14 +25,14 @@ Partial Class listadoPublicidades
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(listadoPublicidades))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tabListadoSerivicios = New System.Windows.Forms.TabPage()
+        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.rdOper = New System.Windows.Forms.RadioButton()
         Me.chksinFact = New System.Windows.Forms.CheckBox()
         Me.rdAVencer = New System.Windows.Forms.RadioButton()
         Me.rdvigentes = New System.Windows.Forms.RadioButton()
         Me.chkSoloMorosos = New System.Windows.Forms.CheckBox()
-        Me.chkMostarInfo = New System.Windows.Forms.CheckBox()
         Me.btnFacturar = New System.Windows.Forms.Button()
-        Me.dthastafact = New System.Windows.Forms.DateTimePicker()
         Me.dtdesdefact = New System.Windows.Forms.DateTimePicker()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
@@ -47,8 +47,8 @@ Partial Class listadoPublicidades
         Me.btnExportar = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.rdOper = New System.Windows.Forms.RadioButton()
-        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.cmbvendedor = New System.Windows.Forms.ComboBox()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -77,17 +77,25 @@ Partial Class listadoPublicidades
         Me.tabListadoSerivicios.Text = "Listado"
         Me.tabListadoSerivicios.UseVisualStyleBackColor = True
         '
+        'dgvPrestamos
+        '
+        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
+        Me.dgvPrestamos.Name = "dgvPrestamos"
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvPrestamos.TabIndex = 78
+        '
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.cmbvendedor)
+        Me.pnnavegacion.Controls.Add(Me.Label5)
         Me.pnnavegacion.Controls.Add(Me.rdOper)
         Me.pnnavegacion.Controls.Add(Me.chksinFact)
         Me.pnnavegacion.Controls.Add(Me.rdAVencer)
         Me.pnnavegacion.Controls.Add(Me.rdvigentes)
         Me.pnnavegacion.Controls.Add(Me.chkSoloMorosos)
-        Me.pnnavegacion.Controls.Add(Me.chkMostarInfo)
         Me.pnnavegacion.Controls.Add(Me.btnFacturar)
-        Me.pnnavegacion.Controls.Add(Me.dthastafact)
         Me.pnnavegacion.Controls.Add(Me.dtdesdefact)
         Me.pnnavegacion.Controls.Add(Me.Label8)
         Me.pnnavegacion.Controls.Add(Me.Label4)
@@ -105,6 +113,17 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(1208, 89)
         Me.pnnavegacion.TabIndex = 76
+        '
+        'rdOper
+        '
+        Me.rdOper.AutoSize = True
+        Me.rdOper.ForeColor = System.Drawing.Color.White
+        Me.rdOper.Location = New System.Drawing.Point(230, 15)
+        Me.rdOper.Name = "rdOper"
+        Me.rdOper.Size = New System.Drawing.Size(74, 17)
+        Me.rdOper.TabIndex = 202
+        Me.rdOper.Text = "Vista Oper"
+        Me.rdOper.UseVisualStyleBackColor = True
         '
         'chksinFact
         '
@@ -152,20 +171,6 @@ Partial Class listadoPublicidades
         Me.chkSoloMorosos.Text = "Solo morosos"
         Me.chkSoloMorosos.UseVisualStyleBackColor = True
         '
-        'chkMostarInfo
-        '
-        Me.chkMostarInfo.AutoSize = True
-        Me.chkMostarInfo.Checked = True
-        Me.chkMostarInfo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkMostarInfo.ForeColor = System.Drawing.Color.White
-        Me.chkMostarInfo.Location = New System.Drawing.Point(457, 10)
-        Me.chkMostarInfo.Name = "chkMostarInfo"
-        Me.chkMostarInfo.Size = New System.Drawing.Size(136, 17)
-        Me.chkMostarInfo.TabIndex = 196
-        Me.chkMostarInfo.Text = "Ver/ocultar informacion"
-        Me.chkMostarInfo.UseVisualStyleBackColor = True
-        Me.chkMostarInfo.Visible = False
-        '
         'btnFacturar
         '
         Me.btnFacturar.Dock = System.Windows.Forms.DockStyle.Right
@@ -183,23 +188,12 @@ Partial Class listadoPublicidades
         Me.btnFacturar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.btnFacturar.UseVisualStyleBackColor = True
         '
-        'dthastafact
-        '
-        Me.dthastafact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dthastafact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.dthastafact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dthastafact.Location = New System.Drawing.Point(615, 10)
-        Me.dthastafact.Name = "dthastafact"
-        Me.dthastafact.Size = New System.Drawing.Size(117, 23)
-        Me.dthastafact.TabIndex = 193
-        Me.dthastafact.Visible = False
-        '
         'dtdesdefact
         '
         Me.dtdesdefact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdesdefact.Location = New System.Drawing.Point(288, 32)
+        Me.dtdesdefact.Location = New System.Drawing.Point(331, 32)
         Me.dtdesdefact.Name = "dtdesdefact"
         Me.dtdesdefact.Size = New System.Drawing.Size(117, 23)
         Me.dtdesdefact.TabIndex = 192
@@ -210,7 +204,7 @@ Partial Class listadoPublicidades
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(285, 15)
+        Me.Label8.Location = New System.Drawing.Point(328, 15)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(77, 17)
         Me.Label8.TabIndex = 194
@@ -221,7 +215,7 @@ Partial Class listadoPublicidades
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(285, 0)
+        Me.Label4.Location = New System.Drawing.Point(328, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(91, 16)
         Me.Label4.TabIndex = 191
@@ -343,7 +337,7 @@ Partial Class listadoPublicidades
         Me.btnExportar.Location = New System.Drawing.Point(1106, 0)
         Me.btnExportar.Name = "btnExportar"
         Me.btnExportar.Size = New System.Drawing.Size(102, 89)
-        Me.btnExportar.TabIndex = 168
+        Me.btnExportar.TabIndex = 0
         Me.btnExportar.Text = "Exportar"
         Me.btnExportar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnExportar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
@@ -370,24 +364,28 @@ Partial Class listadoPublicidades
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
         '
-        'rdOper
+        'Label5
         '
-        Me.rdOper.AutoSize = True
-        Me.rdOper.ForeColor = System.Drawing.Color.White
-        Me.rdOper.Location = New System.Drawing.Point(457, 32)
-        Me.rdOper.Name = "rdOper"
-        Me.rdOper.Size = New System.Drawing.Size(74, 17)
-        Me.rdOper.TabIndex = 202
-        Me.rdOper.Text = "Vista Oper"
-        Me.rdOper.UseVisualStyleBackColor = True
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.ForeColor = System.Drawing.Color.White
+        Me.Label5.Location = New System.Drawing.Point(470, 15)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(76, 16)
+        Me.Label5.TabIndex = 203
+        Me.Label5.Text = "Vendedor"
         '
-        'dgvPrestamos
+        'cmbvendedor
         '
-        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
-        Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvPrestamos.TabIndex = 78
+        Me.cmbvendedor.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmbvendedor.Enabled = False
+        Me.cmbvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbvendedor.ForeColor = System.Drawing.Color.White
+        Me.cmbvendedor.FormattingEnabled = True
+        Me.cmbvendedor.Location = New System.Drawing.Point(473, 32)
+        Me.cmbvendedor.Name = "cmbvendedor"
+        Me.cmbvendedor.Size = New System.Drawing.Size(185, 23)
+        Me.cmbvendedor.TabIndex = 204
         '
         'listadoPublicidades
         '
@@ -425,14 +423,14 @@ Partial Class listadoPublicidades
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Label4 As Label
-    Friend WithEvents dthastafact As DateTimePicker
     Friend WithEvents dtdesdefact As DateTimePicker
     Friend WithEvents Label8 As Label
     Friend WithEvents btnFacturar As Button
-    Friend WithEvents chkMostarInfo As CheckBox
     Friend WithEvents rdAVencer As RadioButton
     Friend WithEvents rdvigentes As RadioButton
     Friend WithEvents chkSoloMorosos As CheckBox
     Friend WithEvents chksinFact As CheckBox
     Friend WithEvents rdOper As RadioButton
+    Friend WithEvents Label5 As Label
+    Friend WithEvents cmbvendedor As ComboBox
 End Class

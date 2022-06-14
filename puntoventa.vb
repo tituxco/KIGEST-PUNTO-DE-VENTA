@@ -2082,7 +2082,7 @@ Public Class puntoventa
                     Exit Sub
             End Select
             'MsgBox(FacturaElectro.cuit & "-" & FacturaElectro.certificado & "-" & FacturaElectro.licencia & "-" & FacturaElectro.passcertificado)
-            lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
+            lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit.Replace("-", ""), Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
             fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
             If lresultado = True Then
                 lresultado = fe.f1ObtenerTicketAcceso()
@@ -2321,7 +2321,20 @@ Public Class puntoventa
                     pncaeaprobado.Visible = False
                 End If
             Else
-                MsgBox("Error en el tiket " & vbNewLine & "Error: " & fe.UltimoMensajeError)
+
+                MsgBox("Error en el tiket " & vbNewLine &
+                       "ULTIMO mje Error: " & fe.UltimoMensajeError & vbNewLine &
+                        "ULTIMO numero Error: " & fe.UltimoNumeroError & vbNewLine &
+                        "modo: " & fe.Modo & vbNewLine &
+                        "cuit: " & fe.cuit & vbNewLine &
+                        "token: " & fe.f1token & vbNewLine &
+                        "firma: " & fe.f1sign & vbNewLine &
+                        "licencia codigo: " & fe.LicenciaCodigo & vbNewLine &
+                        "licenciadatos: " & fe.LicenciaDatos & vbNewLine &
+                        "licenciafecha: " & fe.LicenciaFecha & vbNewLine &
+                        "licenciavalida2020: " & fe.LicenciaValida2020 & vbNewLine &
+                        "licencia valida cae: " & fe.f1LicenciaValidaCae & vbNewLine
+                )
             End If
         Catch ex As Exception
             tmrcontrolarnumfact.Enabled = True

@@ -2776,6 +2776,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
         If lresultado Then
             lresultado = fe.f1ObtenerTicketAcceso()
+            MsgBox("Informacion de Tiket AFIP " & vbNewLine &
+                       "ULTIMO mje Error: " & fe.UltimoMensajeError & vbNewLine &
+                        "ULTIMO numero Error: " & fe.UltimoNumeroError & vbNewLine &
+                        "modo: " & fe.Modo & vbNewLine &
+                        "cuit: " & fe.cuit & vbNewLine &
+                        "token: " & fe.f1token & vbNewLine &
+                        "firma: " & fe.f1sign & vbNewLine &
+                        "licencia codigo: " & fe.LicenciaCodigo & vbNewLine &
+                        "licenciadatos: " & fe.LicenciaDatos & vbNewLine &
+                        "licenciafecha: " & fe.LicenciaFecha & vbNewLine &
+                        "licenciavalida2020: " & fe.LicenciaValida2020 & vbNewLine &
+                        "licencia valida cae: " & fe.f1LicenciaValidaCae & vbNewLine)
         End If
 
         existecomp = fe.F1CompConsultar(txtptovtaconsul.Text, txttipocbte.Text, txtfacturaconsul.Text)
@@ -5960,6 +5972,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub TabControl4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl4.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabPage14_Click(sender As Object, e As EventArgs) Handles TabPage14.Click
 
     End Sub
 End Class

@@ -209,31 +209,125 @@
         End Try
     End Sub
 
-    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles chkMostarInfo.CheckedChanged
+    Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs)
 
     End Sub
 
-    Private Sub chkMostarInfo_Click(sender As Object, e As EventArgs) Handles chkMostarInfo.Click
-        If chkMostarInfo.Checked = False Then
-            dgvPrestamos.dgvVista.Columns("idclientes").Visible = False
-            dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = False
-            dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = False
-            dgvPrestamos.dgvVista.Columns("MOROSO_MESES").Visible = False
-            dgvPrestamos.dgvVista.Columns("MONTO_MENSUAL").Visible = False
-            dgvPrestamos.dgvVista.Columns("SALDO").Visible = False
-            dgvPrestamos.dgvVista.Columns("vendedor").Visible = False
-        Else
-            dgvPrestamos.dgvVista.Columns("idclientes").Visible = True
-            dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = True
-            dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = True
-            dgvPrestamos.dgvVista.Columns("MOROSO_MESES").Visible = True
-            dgvPrestamos.dgvVista.Columns("MONTO_MENSUAL").Visible = True
-            dgvPrestamos.dgvVista.Columns("SALDO").Visible = True
-            dgvPrestamos.dgvVista.Columns("vendedor").Visible = True
-        End If
-    End Sub
+    'Private Sub chkMostarInfo_Click(sender As Object, e As EventArgs)
+    '    If chkMostarInfo.Checked = False Then
+    '        dgvPrestamos.dgvVista.Columns("idclientes").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("MOROSO_MESES").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("MONTO_MENSUAL").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("SALDO").Visible = False
+    '        dgvPrestamos.dgvVista.Columns("vendedor").Visible = False
+    '    Else
+    '        dgvPrestamos.dgvVista.Columns("idclientes").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("MOROSO_MESES").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("MONTO_MENSUAL").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("SALDO").Visible = True
+    '        dgvPrestamos.dgvVista.Columns("vendedor").Visible = True
+    '    End If
+    'End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        GenerarExcel(dgvPrestamos.dgvVista)
+        'GenerarExcel(dgvPrestamos.dgvVista)
+        Dim EnProgreso As New Form
+        Try
+            EnProgreso.ControlBox = False
+            EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+            EnProgreso.Size = New Point(430, 30)
+            EnProgreso.StartPosition = FormStartPosition.CenterScreen
+            EnProgreso.TopMost = True
+            Dim Etiqueta As New Label
+            Etiqueta.AutoSize = True
+            Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+            Etiqueta.Location = New Point(5, 5)
+            EnProgreso.Controls.Add(Etiqueta)
+            'Dim Barra As New ProgressBar
+            'Barra.Style = ProgressBarStyle.Marquee
+            'Barra.Size = New Point(270, 40)
+            'Barra.Location = New Point(10, 30)
+            'Barra.Value = 100
+            'EnProgreso.Controls.Add(Barra)
+            EnProgreso.Show()
+            Application.DoEvents()
+
+            'Dim idFactura As Integer = dtfacturas.CurrentRow.Cells(0).Value
+            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim fac As New datosfacturas
+
+            Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
+            'Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
+            Dim parambusq As String = ""
+            'If cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = False Then
+            '    MsgBox("No selecciono tipo de factura")
+            '    Exit Sub
+            'ElseIf cmbtipofac.SelectedValue <> 0 And chktodosfact.Checked = False Then
+            '    parambusq = " and fac.tipofact=" & cmbtipofac.SelectedValue
+            'ElseIf cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = True Then
+            '    parambusq = " and fac.tipofact in (select id from fact_conffiscal where tip=1)"
+            'End If
+
+            'If chktodosvendedores.Checked = False And cmbvendedor.SelectedValue = 0 Then
+            '    MsgBox("debe seleccionar un vendedor")
+            '    Exit Sub
+            'ElseIf chktodosvendedores.Checked = False And cmbvendedor.SelectedValue <> 0 Then
+            '    parambusq &= " and fac.vendedor=" & cmbvendedor.SelectedValue
+            'End If
+
+            Dim vendedor As String
+            If cmbvendedor.SelectedValue = 0 Then
+                vendedor = "TODOS"
+            Else
+                vendedor = cmbvendedor.Text
+            End If
+            'MsgBox(vendedor)
+            Reconectar()
+
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
+            & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
+            & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
+            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+
+            tabEmp.Fill(fac.Tables("membreteenca"))
+            Reconectar()
+
+            'tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT " _
+            '& " fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,fac.fecha,fac.razon,fac.direccion, " _
+            '& " fac.localidad, con.condicion, " _
+            '& " case when fis.debcred='C' then " _
+            '& " concat('-',format(fac.total,2,'es_AR')) " _
+            '& " else format(fac.total,2,'es_AR') end as total, " _
+            '& " fac.observaciones from fact_conffiscal as fis, fact_facturas as fac, fact_condventas as con " _
+            '& " where fis.donfdesc=fac.tipofact and con.id=fac.condvta " _
+            '& " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+            'tabFac.Fill(fac.Tables("listadofacturas"))
+            'Dim imprimirx As New imprimirFX
+            'Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            'parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", vendedor))
+            'With imprimirx
+            '    .MdiParent = Me.MdiParent
+            '    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+            '    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadofacturas.rdlc"
+            '    .rptfx.LocalReport.DataSources.Clear()
+            '    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
+            '    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadofacturas")))
+            '    .rptfx.LocalReport.SetParameters(parameters)
+            '    .rptfx.DocumentMapCollapsed = True
+            '    .rptfx.RefreshReport()
+            '    .Show()
+            'End With
+            'EnProgreso.Close()
+        Catch ex As Exception
+            EnProgreso.Close()
+            MsgBox(ex.Message)
+        End Try
+
     End Sub
 End Class

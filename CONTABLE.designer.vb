@@ -377,6 +377,7 @@ Partial Class CONTABLE
         Me.tabestadocuentas = New System.Windows.Forms.TabPage()
         Me.dtestadocuentas = New System.Windows.Forms.DataGridView()
         Me.Panel18 = New System.Windows.Forms.Panel()
+        Me.chkIgnorarCerosYNegativos = New System.Windows.Forms.CheckBox()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.lbltotctacte = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -640,7 +641,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn62 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn63 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn64 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.chkIgnorarCerosYNegativos = New System.Windows.Forms.CheckBox()
         Me.pntitulo.SuspendLayout()
         Me.balance.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -4074,6 +4074,18 @@ Partial Class CONTABLE
         Me.Panel18.Size = New System.Drawing.Size(1217, 81)
         Me.Panel18.TabIndex = 84
         '
+        'chkIgnorarCerosYNegativos
+        '
+        Me.chkIgnorarCerosYNegativos.AutoSize = True
+        Me.chkIgnorarCerosYNegativos.Checked = True
+        Me.chkIgnorarCerosYNegativos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkIgnorarCerosYNegativos.Location = New System.Drawing.Point(490, 58)
+        Me.chkIgnorarCerosYNegativos.Name = "chkIgnorarCerosYNegativos"
+        Me.chkIgnorarCerosYNegativos.Size = New System.Drawing.Size(145, 17)
+        Me.chkIgnorarCerosYNegativos.TabIndex = 100
+        Me.chkIgnorarCerosYNegativos.Text = "Ignorar ceros y negativos"
+        Me.chkIgnorarCerosYNegativos.UseVisualStyleBackColor = True
+        '
         'Button9
         '
         Me.Button9.Location = New System.Drawing.Point(386, 48)
@@ -7083,18 +7095,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn64.HeaderText = "DESCUENTO %"
         Me.DataGridViewTextBoxColumn64.Name = "DataGridViewTextBoxColumn64"
         Me.DataGridViewTextBoxColumn64.Width = 158
-        '
-        'chkIgnorarCerosYNegativos
-        '
-        Me.chkIgnorarCerosYNegativos.AutoSize = True
-        Me.chkIgnorarCerosYNegativos.Checked = True
-        Me.chkIgnorarCerosYNegativos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkIgnorarCerosYNegativos.Location = New System.Drawing.Point(490, 58)
-        Me.chkIgnorarCerosYNegativos.Name = "chkIgnorarCerosYNegativos"
-        Me.chkIgnorarCerosYNegativos.Size = New System.Drawing.Size(145, 17)
-        Me.chkIgnorarCerosYNegativos.TabIndex = 100
-        Me.chkIgnorarCerosYNegativos.Text = "Ignorar ceros y negativos"
-        Me.chkIgnorarCerosYNegativos.UseVisualStyleBackColor = True
         '
         'CONTABLE
         '

@@ -141,7 +141,6 @@
 
     Private Sub dtcloud_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellEndEdit
         If e.ColumnIndex = 5 Then
-
             Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dtcloud.CurrentRow.Cells(5).Value & "') where id=" & dtcloud.CurrentRow.Cells(0).Value
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             comandoadd.ExecuteNonQuery()
@@ -149,6 +148,30 @@
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 7 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set autorizado =" & dtcloud.CurrentRow.Cells(7).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 4 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set codus =" & dtcloud.CurrentRow.Cells(4).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 3 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set bd =" & dtcloud.CurrentRow.Cells(3).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 2 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set sistema =" & dtcloud.CurrentRow.Cells(2).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd.ExecuteNonQuery()
+            CargaServiciosCloud()
+            dtcloud.Rows(e.RowIndex).Selected = True
+        ElseIf e.ColumnIndex = 1 Then
+            Dim sqlQuery As String = "update AuthServ.CliAuth set cliente =" & dtcloud.CurrentRow.Cells(1).Value & " where id=" & dtcloud.CurrentRow.Cells(0).Value
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()

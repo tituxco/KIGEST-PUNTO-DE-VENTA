@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>346</ApplicationRevision>
+    <ApplicationRevision>348</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -156,7 +156,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="WSAFIPFE, Version=97.3.0.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
+    <Reference Include="WSAFIPFE, Version=99.8.6.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KIGEST - SISTEMAS PUBLICADOS\WSAFIPFE\WSAFIPFE.dll</HintPath>
     </Reference>
@@ -1049,6 +1049,9 @@
     </EmbeddedResource>
     <Content Include="reportes\planCuentas.rdlc">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\listadoOrdenes.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="selprod.resx">
