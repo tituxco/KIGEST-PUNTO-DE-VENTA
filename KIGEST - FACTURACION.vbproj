@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>348</ApplicationRevision>
+    <ApplicationRevision>354</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -235,6 +235,7 @@
     <Compile Include="CajaDiaria.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="carton.vb" />
     <Compile Include="cheques_en_cartera.Designer.vb">
       <DependentUpon>cheques_en_cartera.vb</DependentUpon>
     </Compile>
@@ -251,6 +252,7 @@
     <Compile Include="configuracion.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="cuadro.vb" />
     <Compile Include="datasets\DatasetRecibos.designer.vb">
       <DependentUpon>DatasetRecibos.vb</DependentUpon>
     </Compile>
@@ -471,6 +473,7 @@
     <Compile Include="mantenimiento.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="modBingo.vb" />
     <Compile Include="movimientodecaja.Designer.vb">
       <DependentUpon>movimientodecaja.vb</DependentUpon>
     </Compile>
@@ -772,6 +775,7 @@
     <None Include="Resources\iconos\Microsoft Excel_64px.png" />
     <None Include="Resources\iconos\peso 26px.png" />
     <None Include="Resources\iconos\transaction_26px.png" />
+    <None Include="Resources\iconos\microsoft_excel_32px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

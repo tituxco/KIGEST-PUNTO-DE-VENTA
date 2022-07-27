@@ -265,22 +265,6 @@
             Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
             'Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
             Dim parambusq As String = ""
-            'If cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = False Then
-            '    MsgBox("No selecciono tipo de factura")
-            '    Exit Sub
-            'ElseIf cmbtipofac.SelectedValue <> 0 And chktodosfact.Checked = False Then
-            '    parambusq = " and fac.tipofact=" & cmbtipofac.SelectedValue
-            'ElseIf cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = True Then
-            '    parambusq = " and fac.tipofact in (select id from fact_conffiscal where tip=1)"
-            'End If
-
-            'If chktodosvendedores.Checked = False And cmbvendedor.SelectedValue = 0 Then
-            '    MsgBox("debe seleccionar un vendedor")
-            '    Exit Sub
-            'ElseIf chktodosvendedores.Checked = False And cmbvendedor.SelectedValue <> 0 Then
-            '    parambusq &= " and fac.vendedor=" & cmbvendedor.SelectedValue
-            'End If
-
             Dim vendedor As String
             If cmbvendedor.SelectedValue = 0 Then
                 vendedor = "TODOS"
@@ -298,32 +282,53 @@
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
 
-            'tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT " _
-            '& " fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,fac.fecha,fac.razon,fac.direccion, " _
-            '& " fac.localidad, con.condicion, " _
-            '& " case when fis.debcred='C' then " _
-            '& " concat('-',format(fac.total,2,'es_AR')) " _
-            '& " else format(fac.total,2,'es_AR') end as total, " _
-            '& " fac.observaciones from fact_conffiscal as fis, fact_facturas as fac, fact_condventas as con " _
-            '& " where fis.donfdesc=fac.tipofact and con.id=fac.condvta " _
-            '& " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
-            'tabFac.Fill(fac.Tables("listadofacturas"))
-            'Dim imprimirx As New imprimirFX
-            'Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-            'parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", vendedor))
-            'With imprimirx
-            '    .MdiParent = Me.MdiParent
-            '    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-            '    .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadofacturas.rdlc"
-            '    .rptfx.LocalReport.DataSources.Clear()
-            '    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
-            '    .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("listadofacturas")))
-            '    .rptfx.LocalReport.SetParameters(parameters)
-            '    .rptfx.DocumentMapCollapsed = True
-            '    .rptfx.RefreshReport()
-            '    .Show()
-            'End With
-            'EnProgreso.Close()
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
+            date_sub((select MAX(fecha) from rym_detalle_prestamo As DTP where DTP.ID_PRESTAMO= pr.ID_PRESTAMO), interval 1 month) As FIN,
+        cl.idclientes, cl.nomapell_razon As CLIENTE, pr.DESCRIPCION As DESCRIPCION,        
+        (select count(*) from rym_detalle_prestamo as DTP 
+	    	where DTP.ID_PRESTAMO 
+		    Not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO And DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+            And DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+            )AS MESES_DEBE,
+        (select count(*) from rym_detalle_prestamo as DTP 
+		    where DTP.ID_PRESTAMO 
+		    Not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+            And DTP.ID_PRESTAMO=pr.ID_PRESTAMO And DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+            )AS MOROSO_MESES,        
+        round(pr.MONTO_PRESTAMO, 2) As MONTO_TOTAL, round(pr.CUOTA,2) As MONTO_MENSUAL, 
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)As SALDO, pr.CONCEPTO,
+        pr.OBSERVACIONES,
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas As fact, fact_items As itm, tipos_comprobantes as comp where
+        itm.id_fact = fact.id And fact.tipofact = comp.donfdesc And
+        itm.plu Like concat('%#',pr.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+            cl.vendedor
+            From rym_prestamo As pr, fact_clientes As cl
+            Where pr.ID_CLIENTE = cl.idclientes
+            having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')", conexionPrinc)
+            'MsgBox(tabFac.SelectCommand.CommandText)
+            tabFac.SelectCommand.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
+            '.Add("@DIASMORA", txtdiasmora.Text)
+            tabFac.Fill(fac.Tables("datosOrdenPublicidad"))
+
+            Dim imprimirx As New imprimirFX
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", cmbvendedor.Text))
+
+            With imprimirx
+                .MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoOrdenes.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("datosOrdenPublicidad")))
+                .rptfx.LocalReport.SetParameters(parameters)
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+            EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()
             MsgBox(ex.Message)

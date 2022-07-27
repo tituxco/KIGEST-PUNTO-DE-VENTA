@@ -23,8 +23,8 @@ Partial Class caja
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(caja))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -36,6 +36,11 @@ Partial Class caja
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.grpdetalleCaja = New System.Windows.Forms.GroupBox()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblefectivo = New System.Windows.Forms.Label()
+        Me.lblcheques = New System.Windows.Forms.Label()
+        Me.lbltarjeta = New System.Windows.Forms.Label()
         Me.cmdnuevomov = New System.Windows.Forms.Button()
         Me.cmdcerrarcaja = New System.Windows.Forms.Button()
         Me.dttotales = New System.Windows.Forms.DataGridView()
@@ -52,18 +57,14 @@ Partial Class caja
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.grpdetalleCaja = New System.Windows.Forms.GroupBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.lblefectivo = New System.Windows.Forms.Label()
-        Me.lblcheques = New System.Windows.Forms.Label()
-        Me.lbltarjeta = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel2.SuspendLayout()
+        Me.grpdetalleCaja.SuspendLayout()
         CType(Me.dttotales, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grpdetalleCaja.SuspendLayout()
         Me.SuspendLayout()
         '
         'pnnavegacion
@@ -194,6 +195,7 @@ Partial Class caja
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.Button1)
         Me.Panel2.Controls.Add(Me.grpdetalleCaja)
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
         Me.Panel2.Controls.Add(Me.cmdcerrarcaja)
@@ -202,155 +204,6 @@ Partial Class caja
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(1015, 103)
         Me.Panel2.TabIndex = 85
-        '
-        'cmdnuevomov
-        '
-        Me.cmdnuevomov.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdnuevomov.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdnuevomov.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdnuevomov.ForeColor = System.Drawing.Color.White
-        Me.cmdnuevomov.Image = CType(resources.GetObject("cmdnuevomov.Image"), System.Drawing.Image)
-        Me.cmdnuevomov.Location = New System.Drawing.Point(95, 0)
-        Me.cmdnuevomov.Name = "cmdnuevomov"
-        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 103)
-        Me.cmdnuevomov.TabIndex = 1
-        Me.cmdnuevomov.Text = "Nuevo mov"
-        Me.cmdnuevomov.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdnuevomov.UseVisualStyleBackColor = False
-        '
-        'cmdcerrarcaja
-        '
-        Me.cmdcerrarcaja.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdcerrarcaja.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdcerrarcaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdcerrarcaja.ForeColor = System.Drawing.Color.White
-        Me.cmdcerrarcaja.Image = CType(resources.GetObject("cmdcerrarcaja.Image"), System.Drawing.Image)
-        Me.cmdcerrarcaja.Location = New System.Drawing.Point(0, 0)
-        Me.cmdcerrarcaja.Name = "cmdcerrarcaja"
-        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 103)
-        Me.cmdcerrarcaja.TabIndex = 0
-        Me.cmdcerrarcaja.Text = "Cerrar caja"
-        Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdcerrarcaja.UseVisualStyleBackColor = False
-        '
-        'dttotales
-        '
-        Me.dttotales.AllowUserToDeleteRows = False
-        Me.dttotales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dttotales.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dttotales.BackgroundColor = System.Drawing.Color.White
-        Me.dttotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dttotales.ColumnHeadersVisible = False
-        Me.dttotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
-        Me.dttotales.Dock = System.Windows.Forms.DockStyle.Top
-        Me.dttotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dttotales.Enabled = False
-        Me.dttotales.Location = New System.Drawing.Point(0, 0)
-        Me.dttotales.MultiSelect = False
-        Me.dttotales.Name = "dttotales"
-        Me.dttotales.ReadOnly = True
-        Me.dttotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dttotales.Size = New System.Drawing.Size(1015, 23)
-        Me.dttotales.TabIndex = 84
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        DataGridViewCellStyle3.Format = "d"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Concepto"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Detalle"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Ingreso"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Egreso"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        '
-        'dtcaja
-        '
-        Me.dtcaja.AllowUserToAddRows = False
-        Me.dtcaja.AllowUserToDeleteRows = False
-        Me.dtcaja.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dtcaja.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dtcaja.BackgroundColor = System.Drawing.Color.White
-        Me.dtcaja.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dtcaja.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column6, Me.Column2, Me.Column3, Me.Column4, Me.Column5})
-        Me.dtcaja.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dtcaja.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtcaja.Location = New System.Drawing.Point(0, 128)
-        Me.dtcaja.MultiSelect = False
-        Me.dtcaja.Name = "dtcaja"
-        Me.dtcaja.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtcaja.Size = New System.Drawing.Size(1015, 191)
-        Me.dtcaja.TabIndex = 83
-        '
-        'Column1
-        '
-        DataGridViewCellStyle4.Format = "d"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle4
-        Me.Column1.FillWeight = 50.0!
-        Me.Column1.HeaderText = "Fecha"
-        Me.Column1.Name = "Column1"
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Concepto"
-        Me.Column6.Name = "Column6"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Detalle"
-        Me.Column2.Name = "Column2"
-        '
-        'Column3
-        '
-        Me.Column3.FillWeight = 40.0!
-        Me.Column3.HeaderText = "Ingreso"
-        Me.Column3.Name = "Column3"
-        '
-        'Column4
-        '
-        Me.Column4.FillWeight = 40.0!
-        Me.Column4.HeaderText = "Egreso"
-        Me.Column4.Name = "Column4"
-        '
-        'Column5
-        '
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Saldo"
-        Me.Column5.Name = "Column5"
         '
         'grpdetalleCaja
         '
@@ -409,6 +262,170 @@ Partial Class caja
         Me.lbltarjeta.TabIndex = 52
         Me.lbltarjeta.Text = "TARJETA:"
         '
+        'cmdnuevomov
+        '
+        Me.cmdnuevomov.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdnuevomov.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdnuevomov.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdnuevomov.ForeColor = System.Drawing.Color.White
+        Me.cmdnuevomov.Image = CType(resources.GetObject("cmdnuevomov.Image"), System.Drawing.Image)
+        Me.cmdnuevomov.Location = New System.Drawing.Point(95, 0)
+        Me.cmdnuevomov.Name = "cmdnuevomov"
+        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 103)
+        Me.cmdnuevomov.TabIndex = 1
+        Me.cmdnuevomov.Text = "Nuevo mov"
+        Me.cmdnuevomov.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdnuevomov.UseVisualStyleBackColor = False
+        '
+        'cmdcerrarcaja
+        '
+        Me.cmdcerrarcaja.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdcerrarcaja.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdcerrarcaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdcerrarcaja.ForeColor = System.Drawing.Color.White
+        Me.cmdcerrarcaja.Image = CType(resources.GetObject("cmdcerrarcaja.Image"), System.Drawing.Image)
+        Me.cmdcerrarcaja.Location = New System.Drawing.Point(0, 0)
+        Me.cmdcerrarcaja.Name = "cmdcerrarcaja"
+        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 103)
+        Me.cmdcerrarcaja.TabIndex = 0
+        Me.cmdcerrarcaja.Text = "Cerrar caja"
+        Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdcerrarcaja.UseVisualStyleBackColor = False
+        '
+        'dttotales
+        '
+        Me.dttotales.AllowUserToDeleteRows = False
+        Me.dttotales.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dttotales.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dttotales.BackgroundColor = System.Drawing.Color.White
+        Me.dttotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dttotales.ColumnHeadersVisible = False
+        Me.dttotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
+        Me.dttotales.Dock = System.Windows.Forms.DockStyle.Top
+        Me.dttotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dttotales.Enabled = False
+        Me.dttotales.Location = New System.Drawing.Point(0, 0)
+        Me.dttotales.MultiSelect = False
+        Me.dttotales.Name = "dttotales"
+        Me.dttotales.ReadOnly = True
+        Me.dttotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dttotales.Size = New System.Drawing.Size(1015, 23)
+        Me.dttotales.TabIndex = 84
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle1
+        Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Concepto"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Detalle"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Ingreso"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "Egreso"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.FillWeight = 40.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.ReadOnly = True
+        '
+        'dtcaja
+        '
+        Me.dtcaja.AllowUserToAddRows = False
+        Me.dtcaja.AllowUserToDeleteRows = False
+        Me.dtcaja.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dtcaja.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dtcaja.BackgroundColor = System.Drawing.Color.White
+        Me.dtcaja.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dtcaja.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column1, Me.Column6, Me.Column2, Me.Column3, Me.Column4, Me.Column5})
+        Me.dtcaja.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dtcaja.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dtcaja.Location = New System.Drawing.Point(0, 128)
+        Me.dtcaja.MultiSelect = False
+        Me.dtcaja.Name = "dtcaja"
+        Me.dtcaja.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dtcaja.Size = New System.Drawing.Size(1015, 191)
+        Me.dtcaja.TabIndex = 83
+        '
+        'Column1
+        '
+        DataGridViewCellStyle2.Format = "d"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column1.FillWeight = 50.0!
+        Me.Column1.HeaderText = "Fecha"
+        Me.Column1.Name = "Column1"
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Concepto"
+        Me.Column6.Name = "Column6"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Detalle"
+        Me.Column2.Name = "Column2"
+        '
+        'Column3
+        '
+        Me.Column3.FillWeight = 40.0!
+        Me.Column3.HeaderText = "Ingreso"
+        Me.Column3.Name = "Column3"
+        '
+        'Column4
+        '
+        Me.Column4.FillWeight = 40.0!
+        Me.Column4.HeaderText = "Egreso"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Saldo"
+        Me.Column5.Name = "Column5"
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(185, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(90, 103)
+        Me.Button1.TabIndex = 95
+        Me.Button1.Text = "Exportar"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.UseVisualStyleBackColor = False
+        '
         'caja
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -428,10 +445,10 @@ Partial Class caja
         Me.pntitulo.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
-        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpdetalleCaja.ResumeLayout(False)
         Me.grpdetalleCaja.PerformLayout()
+        CType(Me.dttotales, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dtcaja, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -469,4 +486,5 @@ Partial Class caja
     Friend WithEvents lblefectivo As Label
     Friend WithEvents lblcheques As Label
     Friend WithEvents lbltarjeta As Label
+    Friend WithEvents Button1 As Button
 End Class

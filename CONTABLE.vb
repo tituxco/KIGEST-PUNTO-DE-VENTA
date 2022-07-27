@@ -2850,10 +2850,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
     Private Sub dtlistasprecio_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistasprecio.CellEndEdit
         Reconectar()
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_listas_precio set nombre=?nmb, utilidad=?util where id=?id", conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_listas_precio set nombre=?nmb, utilidad=?util,auxcol=?auxcol where id=?id", conexionPrinc)
         With comandoadd.Parameters
             .AddWithValue("?nmb", dtlistasprecio.Rows(e.RowIndex).Cells(1).Value)
             .AddWithValue("?util", dtlistasprecio.Rows(e.RowIndex).Cells(2).Value)
+            .AddWithValue("?auxcol", dtlistasprecio.Rows(e.RowIndex).Cells(3).Value)
             .AddWithValue("?id", dtlistasprecio.Rows(e.RowIndex).Cells(0).Value)
         End With
         comandoadd.ExecuteNonQuery()
@@ -3209,7 +3210,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  fact.fecha,tip.abrev as tipocom, concat(lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,'8','0')) as nufac, 
             fact.razon,trim(fact.cuit) as cuit, fact.tipocontr, round(fact.subtotal,2) as neto, round(fact.iva21,2) as iva21,
-            round(fact.iva105,2) as iva105, round(fact.otroiva,2) as otroiva, 'ret_iva','ret_ib','ret_gan',round(fact.total,2)as total, 
+            round(fact.iva105,2) as iva105, round(fact.otroiva,2) as otroiva, 0 as ret_iva, 0 as ret_ib,0 as ret_gan,round(fact.total,2)as total, 
             fact.observaciones as observa, fact.id
             FROM fact_facturas as fact, tipos_comprobantes as tip
             where fact.tipofact in (select donfdesc from tipos_comprobantes where leg=1) and
@@ -3441,9 +3442,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             TablaPeriodo.Fill(readPeriodo)
             cmbperiodosincronizar.DataSource = readPeriodo.Tables(0)
             cmbperiodosincronizar.DisplayMember = readPeriodo.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbperiodosincronizar.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
 
             cmbperiodosincronizarCOMP.DataSource = readPeriodo.Tables(0)
             cmbperiodosincronizarCOMP.DisplayMember = readPeriodo.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbperiodosincronizarCOMP.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -3451,108 +3454,86 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
-        'Try
+        For Each facturaVenta As DataGridViewRow In dtivaventas.Rows
+            Dim fecha As String = Format(CDate(facturaVenta.Cells("fecha").Value.ToString()), "yyyy-MM-dd")
+            Dim tipocomp As String = ""
+            Select Case facturaVenta.Cells("tipocom").Value.ToString()
+                Case "NCA", "NCB", "NCC"
+                    tipocomp = "NC"
+                Case "NDA", "NDB", "NDC"
+                    tipocomp = "ND"
+                Case Else
+                    tipocomp = facturaVenta.Cells("tipocom").Value
+            End Select
 
-        '    Dim fecha As String = Format(dtpfechacomp.Value, "yyyy-MM-dd")
-        '    Dim tipocomp As String = lblabrev.Text
-        '    Dim numfac As String = txtfaciz.Text & "-" & txtfacder.Text
-        '    Dim razon As String = cmbrazonComp.Text
-        '    Dim cuit As String = txtcuitComp.Text
-        '    Dim conIVA As String = cmbcondivaComp.Text
-        '    Dim neto21 As String = txtnetoComp.Text
-        '    Dim neto105 As String = txtnetocom105.Text
-        '    Dim neto27 As String = txtnetocom27.Text
-        '    Dim iva As String = txtivamontoComp.Text
-        '    Dim monot As String = txtmontmonotComp.Text
-        '    Dim pcuenta As String = txtpagoacuentaComp.Text
-        '    Dim nogrex As String = txtnogrComp.Text
-        '    Dim periv As String = txtpercivComp.Text
-        '    Dim perib As String = txtperibComp.Text
-        '    Dim total As String = txttotalComp.Text
-        '    Dim observa As String = txtobservacionesComp.Text
-        '    Dim bienuso As Integer = chkcomprabiendeuso.CheckState
-        '    Dim sqlQuery As String
+            Dim numfac As String = facturaVenta.Cells("nufac").Value
+            Dim razon As String = facturaVenta.Cells("razon").Value
+            Dim cuit As String = facturaVenta.Cells("cuit").Value
+            Dim conIVA As String = ""
+            Select Case facturaVenta.Cells("tipocontr").Value.ToString()
+                Case "RESPONSABLE INSCRIPTO"
+                    conIVA = "RI"
+                Case "EXCENTO", "EXENTO"
+                    conIVA = "EX"
+                Case "CONSUMIDOR FINAL"
+                    conIVA = "CF"
+                Case "MONOTRIBUTO"
+                    conIVA = "MON"
+            End Select
+            Dim neto As String = facturaVenta.Cells("neto").Value
+            Dim iva105 As String = facturaVenta.Cells("iva105").Value
+            Dim iva21 As String = facturaVenta.Cells("iva21").Value
+            Dim otroiva As String = facturaVenta.Cells("otroiva").Value
+            Dim total As String = facturaVenta.Cells("total").Value
+            Dim observa As String = ""
+            Dim retIV As String = facturaVenta.Cells("ret_iva").Value
+            Dim retIB As String = facturaVenta.Cells("ret_ib").Value
+            Dim retGAN As String = facturaVenta.Cells("ret_gan").Value
+            Dim PTOventa As String = FacturaElectro.puntovtaelect.ToString()
+            Dim Provincia As Integer = 1
+            Dim bienuso As Integer = 0
+            Dim IDPeriodo As Integer = cmbperiodosincronizar.SelectedValue
+            Dim sqlQuery As String
 
-        '    If comprobarComprobanteCompra(numfac, cuit) = True Then
-        '        MsgBox("el comprobante ya fue cargado, por favor verifique")
-        '        Exit Sub
-        '    End If
+            'If tipocomp = "NC" Then
+            '    If neto <> 0 Then neto = "-" & neto
+            '    If iva105 <> 0 Then iva105 = "-" & iva105
+            '    If iva21 <> 0 Then iva21 = "-" & iva21
+            '    If otroiva <> 0 Then otroiva = "-" & otroiva
+            '    If retIV <> 0 Then retIV = "-" & retIV
+            '    If retIB <> 0 Then retIB = "-" & retIB
+            '    If retGAN <> 0 Then retGAN = "-" & retGAN
+            '    If total <> 0 Then total = "-" & total
+            'End If
 
-        '    If tipocomp = "NC" Then
-        '        If neto21 <> 0 Then neto21 = "-" & neto21
-        '        If neto105 <> 0 Then neto105 = "-" & neto105
-        '        If neto27 <> 0 Then neto27 = "-" & neto27
-        '        If iva <> 0 Then iva = "-" & iva
-        '        If monot <> 0 Then monot = "-" & monot
-        '        If pcuenta <> 0 Then pcuenta = "-" & pcuenta
-        '        If nogrex <> 0 Then nogrex = "-" & nogrex
-        '        If periv <> 0 Then periv = "-" & periv
-        '        If perib <> 0 Then perib = "-" & perib
-        '        If perib <> 0 Then total = "-" & total
-        '    End If
-
-        '    If cmbrazonComp.SelectedValue = 0 And cmbrazonComp.Text <> "" Then
-
-        '        Reconectar()
-        '        sqlQuery = "insert into iv_proveedores(razon, cuit,cond_iva) values(?razon,?cuit,?iva)"
-        '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionEmp)
-        '        With comandoadd.Parameters
-        '            .AddWithValue("?razon", cmbrazonComp.Text.ToUpper)
-        '            .AddWithValue("?cuit", txtcuitComp.Text.ToUpper)
-        '            .AddWithValue("?iva", cmbcondivaComp.SelectedValue)
-        '        End With
-        '        comandoadd.ExecuteNonQuery()
-
-        '    End If
-
-        '    Dim lector As System.Data.IDataReader
-        '    Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-        '    sql.Connection = conexionPrinc
-        '    sql.CommandText = "SELECT abrev from cm_condicion_iva where id = " & cmbcondivaComp.SelectedValue
-        '    sql.CommandType = CommandType.Text
-        '    lector = sql.ExecuteReader
-        '    lector.Read()
-        '    conIVA = lector("abrev").ToString
-        '    If chkcomprabiendeuso.CheckState = 1 Then
-        '        observa = "BIEN DE USO"
-        '    End If
-        '    Reconectar()
-        '    sqlQuery = "insert into iv_items_compras(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
-        '        & "acuenta,nogr,perciva,percib,total,obs,bien_uso) " _
-        '        & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien)"
-        '    Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionEmp)
-        '    With additem.Parameters
-        '        .AddWithValue("?per", IDperiodo)
-        '        .AddWithValue("?fech", fecha)
-        '        .AddWithValue("?tcomp", tipocomp)
-        '        .AddWithValue("?nfac", numfac)
-        '        .AddWithValue("?raz", razon)
-        '        .AddWithValue("?cuit", cuit)
-        '        .AddWithValue("?tcontr", conIVA)
-        '        .AddWithValue("?neto21", neto21)
-        '        .AddWithValue("?neto105", neto105)
-        '        .AddWithValue("?neto27", neto27)
-        '        .AddWithValue("?iva", iva)
-        '        .AddWithValue("?mon", monot)
-        '        .AddWithValue("?acuenta", pcuenta)
-        '        .AddWithValue("?nogr", nogrex)
-        '        .AddWithValue("?periva", periv)
-        '        .AddWithValue("?perib", perib)
-        '        .AddWithValue("?tot", total)
-        '        .AddWithValue("?obs", observa.ToUpper)
-        '        .AddWithValue("?bien", bienuso)
-        '    End With
-        '    additem.ExecuteNonQuery()
-        '    dtlibrocomp.Rows.Add(fecha, tipocomp, numfac, razon, cuit, conIVA, neto21, neto105, neto27, iva, monot, pcuenta, nogrex, periv, perib, total, observa.ToUpper, additem.LastInsertedId)
-        '    If tipocomp = "NC" Then
-        '        dtlibrocomp.Rows(dtlibrocomp.RowCount - 1).DefaultCellStyle.BackColor = Color.Red
-        '    End If
-        '    CargarDtosGrales()
-        '    'cargarDtosComp()
-        '    VaciarControles()
-        '    dtpfechacomp.Focus()
-        'Catch ex As Exception
-        'End Try
+            Reconectar()
+            sqlQuery = "insert into iv_items_ventas(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto,iva105, iva21,otroiva,total,obs,ret_iva,ret_ib,ret_gan,provincia,actividad,bien_uso) " _
+                & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto,?iva105,?iva21,?otroiva,?tot,?obs,?retiva,?retib,?retgan,?prov,?activ,?bien)"
+            Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+            With additem.Parameters
+                .AddWithValue("?per", IDperiodo)
+                .AddWithValue("?fech", fecha)
+                .AddWithValue("?tcomp", tipocomp)
+                .AddWithValue("?nfac", numfac)
+                .AddWithValue("?raz", razon)
+                .AddWithValue("?cuit", cuit)
+                .AddWithValue("?tcontr", conIVA)
+                .AddWithValue("?neto", neto)
+                .AddWithValue("?iva105", iva105)
+                .AddWithValue("?iva21", iva21)
+                .AddWithValue("?otroiva", otroiva)
+                .AddWithValue("?tot", total)
+                .AddWithValue("?obs", observa.ToUpper)
+                .AddWithValue("?retiva", retIV)
+                .AddWithValue("?retib", retIB)
+                .AddWithValue("?retgan", retGAN)
+                .AddWithValue("?prov", Provincia)
+                .AddWithValue("?activ", 376)
+                .AddWithValue("?bien", bienuso)
+            End With
+            additem.ExecuteNonQuery()
+        Next
+        MsgBox("Sincronizacion finalizada")
     End Sub
 
     Private Sub tablibromayor_Click(sender As Object, e As EventArgs) Handles tablibromayor.Click
@@ -5653,11 +5634,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             TablaPeriodo.Fill(readPeriodo)
             cmbperiodosincronizar.DataSource = readPeriodo.Tables(0)
             cmbperiodosincronizar.DisplayMember = readPeriodo.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbperiodosincronizar.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
 
             'Dim readPeriodo As New DataSet
             '  TablaPeriodo.Fill(readPeriodo)
             cmbperiodosincronizarCOMP.DataSource = readPeriodo.Tables(0)
             cmbperiodosincronizarCOMP.DisplayMember = readPeriodo.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbperiodosincronizarCOMP.ValueMember = readPeriodo.Tables(0).Columns(0).Caption.ToString.ToUpper
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -5977,5 +5960,94 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub TabPage14_Click(sender As Object, e As EventArgs) Handles TabPage14.Click
 
+    End Sub
+
+    Private Sub dtlistasprecio_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistasprecio.CellContentClick
+
+    End Sub
+
+    Private Sub Button43_Click(sender As Object, e As EventArgs) Handles Button43.Click
+        Try
+
+            For Each facturaCompra As DataGridViewRow In dtlibrocomp.Rows
+
+
+
+
+                Dim fecha As String = Format(CDate(facturaCompra.Cells("fecha").Value), "yyyy-MM-dd")
+                Dim tipocomp As String = facturaCompra.Cells("TipoComp").Value
+                Dim numfac As String = facturaCompra.Cells("nufac").Value
+                Dim razon As String = facturaCompra.Cells("razonComp").Value
+                Dim cuit As String = facturaCompra.Cells("cuit").Value
+                Dim conIVA As String = facturaCompra.Cells("TCont").Value
+                Dim neto21 As String = facturaCompra.Cells("neto21").Value
+                Dim neto105 As String = facturaCompra.Cells("neto105").Value
+                Dim neto27 As String = facturaCompra.Cells("neto27").Value
+                Dim iva As String = facturaCompra.Cells("ivamon").Value
+                Dim monot As String = facturaCompra.Cells("monot").Value
+                Dim pcuenta As String = facturaCompra.Cells("acuenta").Value
+                Dim nogrex As String = facturaCompra.Cells("nogrexe").Value
+                Dim periv As String = facturaCompra.Cells("perciva").Value
+                Dim perib As String = facturaCompra.Cells("perib").Value
+                Dim total As String = facturaCompra.Cells("total").Value
+                Dim observa As String = facturaCompra.Cells("observ").Value
+                Dim bienuso As Integer = 0
+                Dim IdPeriodo As Integer = cmbperiodosincronizarCOMP.SelectedValue
+                Dim sqlQuery As String
+
+                'If comprobarComprobanteCompra(numfac, cuit, conexionSEC) = True Then
+                '    MsgBox("el comprobante ya fue cargado, por favor verifique")
+                '    Exit Sub
+                'End If
+
+                'If tipocomp = "NC" Then
+                '    If neto21 <> 0 Then neto21 = "-" & neto21
+                '    If neto105 <> 0 Then neto105 = "-" & neto105
+                '    If neto27 <> 0 Then neto27 = "-" & neto27
+                '    If iva <> 0 Then iva = "-" & iva
+                '    If monot <> 0 Then monot = "-" & monot
+                '    If pcuenta <> 0 Then pcuenta = "-" & pcuenta
+                '    If nogrex <> 0 Then nogrex = "-" & nogrex
+                '    If periv <> 0 Then periv = "-" & periv
+                '    If perib <> 0 Then perib = "-" & perib
+                '    If perib <> 0 Then total = "-" & total
+                'End If
+
+                Reconectar()
+                sqlQuery = "insert into iv_items_compras(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
+                    & "acuenta,nogr,perciva,percib,total,obs,bien_uso) " _
+                    & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien)"
+                Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+                With additem.Parameters
+                    .AddWithValue("?per", IDperiodo)
+                    .AddWithValue("?fech", fecha)
+                    .AddWithValue("?tcomp", tipocomp)
+                    .AddWithValue("?nfac", numfac)
+                    .AddWithValue("?raz", razon)
+                    .AddWithValue("?cuit", cuit)
+                    .AddWithValue("?tcontr", conIVA)
+                    .AddWithValue("?neto21", neto21)
+                    .AddWithValue("?neto105", neto105)
+                    .AddWithValue("?neto27", neto27)
+                    .AddWithValue("?iva", iva)
+                    .AddWithValue("?mon", monot)
+                    .AddWithValue("?acuenta", pcuenta)
+                    .AddWithValue("?nogr", nogrex)
+                    .AddWithValue("?periva", periv)
+                    .AddWithValue("?perib", perib)
+                    .AddWithValue("?tot", total)
+                    .AddWithValue("?obs", observa.ToUpper)
+                    .AddWithValue("?bien", bienuso)
+                End With
+                additem.ExecuteNonQuery()
+            Next
+
+            MsgBox("Sincronización Finalizada")
+        Catch ex As Exception
+        End Try
+    End Sub
+
+    Private Sub Button48_Click(sender As Object, e As EventArgs) Handles Button48.Click
+        GenerarExcel(dgvLibroMayor)
     End Sub
 End Class

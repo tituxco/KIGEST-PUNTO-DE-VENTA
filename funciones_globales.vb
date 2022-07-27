@@ -1072,6 +1072,294 @@ Module funciones_Globales
             e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 20, yPos)
             yPos += 10
             e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 20, yPos)
+        ElseIf anchoTiket = 4 Then
+
+            Dim printfont As New Font("Courier New", 8)
+            Dim font3 As New Font("Courier New", 10)
+            Dim font4 As New Font("Courier New", 18)
+            Dim font5 As New Font("Courier New", 8)
+            Dim fontCAE As New Font("Courier New", 6, FontStyle.Italic)
+
+            Dim alto As Single = 0
+            Dim topMargin As Double '= e.MarginBounds.Top
+            Dim yPos As Integer = 0
+            Dim count As Integer = 0
+            Dim texto As String = ""
+
+            Dim codigo As String = ""
+            Dim unidad As String = ""
+            Dim detalle As String = ""
+            Dim valoruni As String = ""
+            Dim valorImpuestos As String = ""
+
+
+            Dim valortot As String = ""
+            Dim tabulacion As String = ""
+            Dim compensador As Integer = 0
+            Dim total As String = ""
+            Dim lvalor As String
+            Dim lineatotal As String
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim ivaProd As String = ""
+            Dim fac As New datosfacturas
+
+            Dim facTotal As String = ""
+            Dim facSubtotal As String = ""
+            Dim FacIva21 As String = ""
+            Dim FacIva105 As String = ""
+
+            'Dim FacNoGravado As String = ""
+            'Dim FacIDC As String = ""
+            'Dim FacICL As String = ""
+
+            Dim facCAE As String = ""
+            Dim facVtoCAE As String = ""
+            Dim facCodBARRA As String = ""
+
+
+
+            Reconectar()
+
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR'), fac.codigo_qr, format(fac.otroiva,2,'es_AR') as noGravado
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & idFactura, conexionPrinc)
+
+            Dim tablaEmpresa As New DataTable
+            tabEmp.Fill(tablaEmpresa)
+
+            Reconectar()
+
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+            plu,
+            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
+            format(replace(iva,',','.'),2,'es_AR') as iva ,
+            format(replace(punit,',','.'),2,'es_AR') as punit ,
+            format(replace(impuestoFijo01,',','.'),2,'es_AR') as idc,
+            format(replace(impuestoFijo02,',','.'),2,'es_AR') as icl,
+            format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
+            from fact_items where id_fact=" & idFactura, conexionPrinc)
+            Dim tablaProd As New DataTable
+            tabFac.Fill(tablaProd)
+
+            facTotal = tablaEmpresa.Rows(0).Item(30)
+            facSubtotal = tablaEmpresa.Rows(0).Item(31)
+            FacIva21 = tablaEmpresa.Rows(0).Item(21)
+
+            FacIva105 = tablaEmpresa.Rows(0).Item(20)
+            'FacIDC = tablaProd.Rows(0).Item("idc")
+            'FacICL = tablaProd.Rows(0).Item("icl")
+            'FacNoGravado = CDbl(FacIDC) + CDbl(FacICL)
+
+
+            facCAE = tablaEmpresa.Rows(0).Item(25)
+            facCodBARRA = tablaEmpresa.Rows(0).Item(29)
+            facVtoCAE = tablaEmpresa.Rows(0).Item(28)
+            Dim TipoFact As Integer = tablaEmpresa.Rows(0).Item(24)
+
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(1), font5, Brushes.Black, 0, 100) 'RAZON SOCIAL
+            e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(4), font5, Brushes.Black, 0, 110) '
+            e.Graphics.DrawString("Ing. Brutos: " & tablaEmpresa.Rows(0).Item(5).ToString, font5, Brushes.Black, 0, 120) '
+            e.Graphics.DrawString("Domicilio: " & tablaEmpresa.Rows(0).Item(2), font5, Brushes.Black, 0, 130)
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(3), font5, Brushes.Black, 0, 140) '
+            e.Graphics.DrawString("Inicio de actividades: " & tablaEmpresa.Rows(0).Item(7), font5, Brushes.Black, 0, 150)
+            e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(6), font5, Brushes.Black, 0, 160)
+
+            e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 170)
+            e.Graphics.DrawString("FACTURA '" & tablaEmpresa.Rows(0).Item(26) & "' (" & tablaEmpresa.Rows(0).Item(27) & ")", font5, Brushes.Black, 0, 180)
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(10).ToString, font5, Brushes.Black, 0, 190)
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(11).ToString, font5, Brushes.Black, 0, 200)
+            e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 210)
+
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(12), font5, Brushes.Black, 0, 220)
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(13), font5, Brushes.Black, 0, 230)
+            e.Graphics.DrawString(tablaEmpresa.Rows(0).Item(14), font5, Brushes.Black, 0, 240)
+            e.Graphics.DrawString("CUIT Nro: " & tablaEmpresa.Rows(0).Item(16), font5, Brushes.Black, 0, 250)
+            e.Graphics.DrawString("IVA " & tablaEmpresa.Rows(0).Item(15), font5, Brushes.Black, 0, 260)
+            e.Graphics.DrawString("CONDICION DE VENTA " & tablaEmpresa.Rows(0).Item(18), font5, Brushes.Black, 0, 270)
+            e.Graphics.DrawString(StrDup(65, "*"), font5, Brushes.Black, 0, 280)
+
+            Dim codigoQRBOX As New PictureBox
+            '            codigoQRBOX.SizeMode = PictureBoxSizeMode
+            'codigoQRBOX.Width = 100
+            'codigoQRBOX.Height = 100
+            codigoQRBOX.Image = Bytes_Imagen(tablaEmpresa.Rows(0).Item(32))
+
+
+            Dim i As Integer
+            Dim j As Integer
+            Dim car As Integer
+
+            For i = 0 To tablaProd.Rows.Count - 1
+                codigo = tablaProd.Rows(i).Item("plu")
+                unidad = tablaProd(i).Item("cant")
+                detalle = tablaProd(i).Item("descripcion")
+                valoruni = tablaProd(i).Item("punit")
+                'valorImpuestos = FacNoGravado
+                If TipoFact <= 3 Then
+                    valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
+
+                    'valortot = CDbl(valortot) + CDbl(valorImpuestos)
+                    'valortot = FormatNumber(valortot, 2)
+                Else
+                    valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
+                    valortot = CDbl(valortot) + CDbl(valorImpuestos)
+                    valortot = FormatNumber(valortot, 2)
+                End If
+
+                ivaProd = tablaProd(i).Item("iva")
+                texto = unidad & " x " & valoruni & Chr(9) & "  (" & ivaProd & ")"
+                yPos = 290 + topMargin + (count * printfont.GetHeight(e.Graphics)) ' Calcula la posición en la que se escribe la línea            
+
+
+                If detalle.Length <= 25 Then
+                    car = 25 - detalle.Length
+                    For j = 0 To car
+                        detalle &= " "
+                    Next
+                Else
+                    car = detalle.Length - 25
+                    detalle = detalle.Remove(26, car - 1)
+                End If
+
+                If valortot.Length <= 11 Then
+                    car = 11 - valortot.Length
+                    For j = 0 To car
+                        valortot = " " & valortot
+                    Next
+
+                End If
+
+                'MsgBox(valortot & "   " & valorImpuestos & "=" & CDbl(valortot) + CDbl(valorImpuestos))
+                'If Not row.IsNewRow Then
+                e.Graphics.DrawString(texto, printfont, System.Drawing.Brushes.Black, 0, yPos)
+                count += 1
+                yPos = yPos + 10
+                e.Graphics.DrawString(detalle & "  " & valortot, printfont, System.Drawing.Brushes.Black, 0, yPos)
+                'total += valor
+                'End If
+                count += 1
+
+            Next
+            If FacIva21.Length <= 7 Then
+                car = 7 - FacIva21.Length
+                For j = 0 To car
+                    FacIva21 = " " & FacIva21
+                Next
+
+            End If
+
+            If facSubtotal.Length <= 7 Then
+                car = 7 - facSubtotal.Length
+                For j = 0 To car
+                    facSubtotal = " " & facSubtotal
+                Next
+            End If
+
+            If facTotal.Length <= 7 Then
+                car = 7 - facTotal.Length
+                For j = 0 To car
+                    facTotal = " " & facTotal
+                Next
+            End If
+
+            yPos += 20
+            Dim textosub As String = "Neto Gravado"
+            Dim textoIva21 As String = "IVA"
+            'Dim textoNoGravado As String = "Otros Tributos:"
+            ' Dim textoIDC As String = "I.D.C."
+            'Dim textoICL As String = "I.C.L."
+            Dim textoTotal As String = "Total"
+
+
+
+            Dim lineaSep = StrDup(32, " ")
+            e.Graphics.DrawString(lineaSep & "_______________", printfont, System.Drawing.Brushes.Black, 0, yPos)
+            Dim XXX As Integer = 0
+            If TipoFact <= 3 Then
+
+                XXX = 32 - (textosub.Length + facSubtotal.Length)
+                lineatotal = StrDup(XXX, ".")
+                yPos += 12
+                e.Graphics.DrawString(textosub & lineatotal & facSubtotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+                XXX = 32 - (textoIva21.Length + FacIva21.Length)
+                lineatotal = StrDup(XXX, ".")
+                yPos += 12
+                e.Graphics.DrawString(textoIva21 & lineatotal & FacIva21, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+                '  XXX = 32 - (textoNoGravado.Length + FacNoGravado.Length)
+                ' lineatotal = StrDup(XXX, ".")
+                ' yPos += 12
+                'e.Graphics.DrawString(textoNoGravado & lineatotal & FacNoGravado, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+                XXX = 32 - (textoTotal.Length + facTotal.Length)
+                lineatotal = StrDup(XXX, ".")
+                yPos += 12
+                ' e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+                'yPos += 40
+                'e.Graphics.DrawString(textoIDC & " $" & FacIDC & "|" & textoICL & " $" & FacICL, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+                'yPos += 40
+            Else
+                XXX = 32 - (textosub.Length + facTotal.Length)
+                lineatotal = StrDup(XXX, ".")
+                yPos += 12
+                e.Graphics.DrawString(textosub & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+                'XXX = 32 - (textoIva21.Length + 1)
+                'lineatotal = StrDup(XXX, ".")
+                'yPos += 12
+                'e.Graphics.DrawString(textoIva21 & lineatotal & "0", font3, System.Drawing.Brushes.Black, 0, yPos)
+                ''MsgBox(facTotal)
+
+                'XXX = 32 - (textoNoGravado.Length + FacNoGravado.Length)
+                'lineatotal = StrDup(XXX, ".")
+                'yPos += 12
+                'e.Graphics.DrawString(textoNoGravado & lineatotal & FacNoGravado, font3, System.Drawing.Brushes.Black, 0, yPos)
+
+                XXX = 32 - (textoTotal.Length + facTotal.Length)
+                lineatotal = StrDup(XXX, ".")
+                yPos += 12
+                e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+                yPos += 40
+                'e.Graphics.DrawString(textoIDC & " $" & FacIDC & "|" & textoICL & " $" & FacICL, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+                'yPos += 40
+            End If
+
+
+
+            e.Graphics.DrawString("COMPROBANTE AUTORIZADO POR WEB SERVICE", fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+            yPos += 10
+
+            e.Graphics.DrawString("CAE: " & facCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+            yPos += 10
+
+            e.Graphics.DrawString("F. Vto CAE: " & facVtoCAE, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
+            yPos += 10
+
+            Dim bm_source As New Bitmap(codigoQRBOX.Image, 150, 150)
+            bm_source.SetResolution(100.0F, 100.0F)
+            'Dim bm_dest As New Bitmap(100, 100)
+            'bm_dest.SetResolution(100.0F, 100.0F)
+            'Dim gr_dest As Graphics = Graphics.FromImage(bm_dest)
+            'gr_dest.DrawImage(bm_source, 0, 0,
+            'bm_dest.Width + 1,
+            'bm_dest.Height + 1)
+            'codigoQRBOX.Image = bm_dest
+
+            e.Graphics.DrawImage(bm_source, 0, yPos)
+            yPos += 190
+
+            e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 20, yPos)
+            yPos += 10
+            e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 20, yPos)
+
 
 
         End If
@@ -1741,7 +2029,9 @@ Module funciones_Globales
             Next
             For Fila As Integer = 0 To NRow - 1
                 For Col As Integer = 0 To NCol - 1
-                    exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Cells(Col).Value
+                    If Not IsNothing(ElGrid.Rows(Fila).Cells(Col).Value) Then
+                        exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Cells(Col).Value.ToString
+                    End If
                 Next
             Next
             'Titulo en negrita, Alineado al centro y que el tamaño de la columna se ajuste al texto
@@ -1758,6 +2048,22 @@ Module funciones_Globales
         End Try
     End Sub
 
+    Public Function comprobarComprobanteCompra(ByRef comprobante As String, ByRef contribuyente As String, conexion As MySql.Data.MySqlClient.MySqlConnection) As Boolean
+        Try
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from iv_items_compras where nufac like '" & comprobante & "' and " _
+            & "replace(cuit,'-','') like '" & Replace(contribuyente, "-", "") & "'", conexion)
+            Dim tablacl As New DataTable
+            consulta.Fill(tablacl)
+            If tablacl.Rows.Count <> 0 Then
+                Return True
+            Else
+                Return False
+            End If
+
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
     Public Function ComprobarCliente(ByVal parametro As String) As Boolean
 
         Dim busqtxt As String

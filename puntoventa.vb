@@ -1672,7 +1672,7 @@ Public Class puntoventa
     Private Sub puntoventa_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
         Try
             Select Case e.KeyCode
-                Case Keys.F1
+                Case Keys.F1 'CONDICION DE VENTA
                     If condVta = 1 Then
                         condVta = 2
                         lblfactcondvta.Text = "CTA. CTE."
@@ -1680,28 +1680,28 @@ Public Class puntoventa
                         condVta = 1
                         lblfactcondvta.Text = "CONTADO"
                     End If
-                Case Keys.F2
+                Case Keys.F2 ' LISTA DE PRECIOS
 
                     selListaPrecios.Show()
                     selListaPrecios.TopMost = True
 
-                Case Keys.F3
+                Case Keys.F3 'SOLICITA CAE A AFIP 
                     If cmdsolicitarcae.Enabled = True Then
                         cmdsolicitarcae.PerformClick()
                     End If
-                Case Keys.F4
+                Case Keys.F4 'GUARDA FACTURA
                     If cmdguardar.Enabled = True Then
                         cmdguardar.PerformClick()
                     End If
-                Case Keys.F5
+                Case Keys.F5 ' IMPRIME FACTURA
                     If cmdimprimir.Enabled = True Then
                         cmdimprimir.PerformClick()
                     End If
-                Case Keys.F6
+                Case Keys.F6 'CIERRA LA PANTALLA
                     Me.Close()
-                Case Keys.F7
+                Case Keys.F7 'REINICIA FACTURA
                     Button1.PerformClick()
-                Case Keys.F8
+                Case Keys.F8 'CAMBIA TIPO DE COMPROBANTE
                     If cmdguardar.Enabled = False And dtproductos.Rows.Count <> 0 And cmdsolicitarcae.Enabled = False Then
                         MsgBox("debe iniciar un comprobante en blanco antes")
                         Exit Sub
@@ -1738,13 +1738,70 @@ Public Class puntoventa
                         End If
                         CalcularTotales()
                     End With
-                Case Keys.F9
+                Case Keys.F9 'CAMBIA ALMACEN DE DONDE SALE EL STOCK
                     Dim NvoAlmacen As String = InputBox("Ingrese codigo de ALMACEN", "CAMBIO DE ALMACEN DE VENTA")
                     If IsNumeric(NvoAlmacen) Then
                         IDALMACEN = NvoAlmacen
                         lblfacIdAlmacen.Text = NvoAlmacen
                     End If
-                Case Keys.F12
+                Case Keys.F10
+                    If cmdguardar.Enabled = False And dtproductos.Rows.Count <> 0 And cmdsolicitarcae.Enabled = False Then
+                        MsgBox("debe iniciar un comprobante en blanco antes")
+                        Exit Sub
+                    End If
+                    'Dim pTOvTA As Integer
+                    Reconectar()
+                    Dim consultaPtoVta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(numero,' - ',descripcion) 
+                    FROM fact_puntosventa where id not in(select valor from fact_configuraciones where id=1)", conexionPrinc)
+                    Dim tablaPtoVta As New DataTable
+                    consultaPtoVta.Fill(tablaPtoVta)
+                    Dim textoInput As String = "Ingrese Numero de punto de Venta: " & vbNewLine & vbNewLine
+                    For Each pVta As DataRow In tablaPtoVta.Rows
+                        textoInput &= pVta.Item(0) & vbNewLine
+                    Next
+                    textoInput &= vbNewLine
+
+                    My.Settings.idPtoVta = InputBox(textoInput, "Cambiar tipo de comprobante", "1")
+                    ptovta = My.Settings.idPtoVta
+
+                    'llamamos para seleccionar otro tipo de factura
+                    Dim idFacRap As Integer
+                    Reconectar()
+                    Dim consultaFacRap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+                concat(fr.id,': ' , fr.nombre)
+                From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta
+                Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And (fr.punto_venta=" & My.Settings.idPtoVta & " or fr.punto_venta=" & FacturaElectro.puntovtaelect & ")
+                order by fr.id asc", conexionPrinc)
+                    Dim tablaFacRap As New DataTable
+                    consultaFacRap.Fill(tablaFacRap)
+                    Dim textoInpu As String = "Ingrese codigo de comprobante: " & vbNewLine & vbNewLine
+                    For Each factRap As DataRow In tablaFacRap.Rows
+                        textoInpu &= factRap.Item(0) & vbNewLine
+                    Next
+                    textoInpu &= vbNewLine
+
+                    idFacRap = InputBox(textoInpu, "Cambiar tipo de comprobante", "1")
+                    With Me
+                        .idfacrap = idFacRap
+                        .cmdguardar.Enabled = False
+                        .cmdsolicitarcae.Enabled = True
+                        .txtcodPLU.Focus()
+                        .cargar_datos_factura()
+                        .Idcliente = txtcliecta.Text
+                        .cargarCliente(False)
+                        If tipofact = 1 Or tipofact = 2 Or tipofact = 3 Then
+                            For Each producto As DataGridViewRow In dtproductos.Rows
+                                producto.Cells(5).Value = CDbl(producto.Cells(5).Value) / ((CDbl(producto.Cells(4).Value) + 100) / 100)
+                                producto.Cells(6).Value = CDbl(producto.Cells(5).Value) * CDbl(producto.Cells(2).Value)
+                            Next
+                        End If
+                        CalcularTotales()
+                    End With
+
+                Case Keys.F11
+
+
+                Case Keys.F12 'CAMBIA FECHA DE FACTURA
                     Dim nvafech As String = InputBox("ingrese nueva fecha", "cambio de fecha de factura")
                     If nvafech <> "" And IsDate(nvafech) Then
                         fechagral = nvafech
@@ -2904,5 +2961,9 @@ Public Class puntoventa
             SendKeys.Send("{UP}")
             SendKeys.Send("{TAB}")
         End If
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs)
+
     End Sub
 End Class

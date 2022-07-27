@@ -908,4 +908,9 @@ Public Class frmprincipal
         'tec.txtclierazon.Focus()
         tec.Show()
     End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) 
+        modBingo.Main()
+
+    End Sub
 End Class

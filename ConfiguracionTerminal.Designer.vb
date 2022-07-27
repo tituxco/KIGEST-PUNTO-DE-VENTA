@@ -56,6 +56,7 @@ Partial Class ConfiguracionTerminal
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.txtidDevolucion = New System.Windows.Forms.TextBox()
+        Me.cmbtipoTiketEtiqueta = New System.Windows.Forms.ComboBox()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -119,21 +120,23 @@ Partial Class ConfiguracionTerminal
         '
         'txttipoetiqueta
         '
-        Me.txttipoetiqueta.Location = New System.Drawing.Point(108, 200)
+        Me.txttipoetiqueta.Location = New System.Drawing.Point(408, 388)
         Me.txttipoetiqueta.Name = "txttipoetiqueta"
         Me.txttipoetiqueta.Size = New System.Drawing.Size(54, 20)
         Me.txttipoetiqueta.TabIndex = 129
         Me.txttipoetiqueta.Text = "0"
+        Me.txttipoetiqueta.Visible = False
         '
         'Label60
         '
         Me.Label60.AutoSize = True
         Me.Label60.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label60.Location = New System.Drawing.Point(9, 201)
+        Me.Label60.Location = New System.Drawing.Point(309, 389)
         Me.Label60.Name = "Label60"
         Me.Label60.Size = New System.Drawing.Size(97, 16)
         Me.Label60.TabIndex = 128
         Me.Label60.Text = "TipoEtiqueta"
+        Me.Label60.Visible = False
         '
         'txtunidadDef
         '
@@ -166,7 +169,7 @@ Partial Class ConfiguracionTerminal
         '
         Me.txtimptiketsnombre.Location = New System.Drawing.Point(210, 120)
         Me.txtimptiketsnombre.Name = "txtimptiketsnombre"
-        Me.txtimptiketsnombre.Size = New System.Drawing.Size(174, 20)
+        Me.txtimptiketsnombre.Size = New System.Drawing.Size(114, 20)
         Me.txtimptiketsnombre.TabIndex = 124
         '
         'Label57
@@ -379,12 +382,22 @@ Partial Class ConfiguracionTerminal
         Me.txtidDevolucion.Size = New System.Drawing.Size(100, 20)
         Me.txtidDevolucion.TabIndex = 142
         '
+        'cmbtipoTiketEtiqueta
+        '
+        Me.cmbtipoTiketEtiqueta.FormattingEnabled = True
+        Me.cmbtipoTiketEtiqueta.Items.AddRange(New Object() {"0 - TIKET 58MM EMP1", "1 - TIKET 58MM EMP2", "2 - TIKET 58MM EMP3", "3 - TIKET 80MM - COMBUSTIBLES", "4 - TIKET 80MM - GENERAL"})
+        Me.cmbtipoTiketEtiqueta.Location = New System.Drawing.Point(330, 119)
+        Me.cmbtipoTiketEtiqueta.Name = "cmbtipoTiketEtiqueta"
+        Me.cmbtipoTiketEtiqueta.Size = New System.Drawing.Size(160, 21)
+        Me.cmbtipoTiketEtiqueta.TabIndex = 144
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(497, 421)
+        Me.Controls.Add(Me.cmbtipoTiketEtiqueta)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtidDevolucion)
         Me.Controls.Add(Me.txtidmoneda)
@@ -462,4 +475,5 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
     Friend WithEvents txtidDevolucion As TextBox
+    Friend WithEvents cmbtipoTiketEtiqueta As ComboBox
 End Class

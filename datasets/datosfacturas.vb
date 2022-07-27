@@ -1,4 +1,11 @@
 ﻿Partial Class datosfacturas
+    Partial Public Class datosOrdenPublicidadDataTable
+        Private Sub datosOrdenPublicidadDataTable_datosOrdenPublicidadRowChanging(sender As Object, e As datosOrdenPublicidadRowChangeEvent) Handles Me.datosOrdenPublicidadRowChanging
+
+        End Sub
+
+    End Class
+
     Partial Public Class factura_encaDataTable
         Private Sub factura_encaDataTable_ColumnChanging(sender As Object, e As DataColumnChangeEventArgs) Handles Me.ColumnChanging
             If (e.Column.ColumnName = Me.codigo_qrColumn.ColumnName) Then

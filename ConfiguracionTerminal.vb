@@ -4,6 +4,7 @@
         txtptovtadef.Text = My.Settings.idPtoVta
         txtidalmacen.Text = My.Settings.idAlmacen
         txtunidadDef.Text = My.Settings.UnidDef
+        cmbtipoTiketEtiqueta.SelectedIndex = My.Settings.TipoEtiqueta
         txttipoetiqueta.Text = My.Settings.TipoEtiqueta
         txtcajaDef.Text = My.Settings.CajaDef
         txtEtiquetaNombre.Text = My.Settings.EtiquetadoraNmb
@@ -29,7 +30,7 @@
         DatosAcceso.IdPtoVtaDef = txtptovtadef.Text
         DatosAcceso.IdAlmacen = txtidalmacen.Text
         My.Settings.UnidDef = txtunidadDef.Text
-        My.Settings.TipoEtiqueta = txttipoetiqueta.Text
+        My.Settings.TipoEtiqueta = cmbtipoTiketEtiqueta.SelectedIndex
         My.Settings.EtiquetadoraNmb = txtEtiquetaNombre.Text
         My.Settings.CajaDef = txtcajaDef.Text
         My.Settings.TextoPieTiket = txtTextoPietiket.Text

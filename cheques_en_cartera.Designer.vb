@@ -33,6 +33,8 @@ Partial Class cheques_en_cartera
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.dtchequesterceros = New System.Windows.Forms.DataGridView()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.rdEnCartera = New System.Windows.Forms.RadioButton()
+        Me.rdTransferidos = New System.Windows.Forms.RadioButton()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.txtfiltraterceros = New System.Windows.Forms.TextBox()
         Me.cmbtercerosSelAll = New System.Windows.Forms.Button()
@@ -44,8 +46,6 @@ Partial Class cheques_en_cartera
         Me.txtfiltrapropios = New System.Windows.Forms.TextBox()
         Me.cmbpropiosSellAll = New System.Windows.Forms.Button()
         Me.cmbpropiosSellNone = New System.Windows.Forms.Button()
-        Me.rdTransferidos = New System.Windows.Forms.RadioButton()
-        Me.rdEnCartera = New System.Windows.Forms.RadioButton()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.TabControl1.SuspendLayout()
@@ -183,6 +183,30 @@ Partial Class cheques_en_cartera
         Me.Panel2.Size = New System.Drawing.Size(519, 43)
         Me.Panel2.TabIndex = 14
         '
+        'rdEnCartera
+        '
+        Me.rdEnCartera.AutoSize = True
+        Me.rdEnCartera.Checked = True
+        Me.rdEnCartera.ForeColor = System.Drawing.Color.White
+        Me.rdEnCartera.Location = New System.Drawing.Point(269, 26)
+        Me.rdEnCartera.Name = "rdEnCartera"
+        Me.rdEnCartera.Size = New System.Drawing.Size(115, 17)
+        Me.rdEnCartera.TabIndex = 6
+        Me.rdEnCartera.TabStop = True
+        Me.rdEnCartera.Text = "En Cartera General"
+        Me.rdEnCartera.UseVisualStyleBackColor = True
+        '
+        'rdTransferidos
+        '
+        Me.rdTransferidos.AutoSize = True
+        Me.rdTransferidos.ForeColor = System.Drawing.Color.White
+        Me.rdTransferidos.Location = New System.Drawing.Point(269, 3)
+        Me.rdTransferidos.Name = "rdTransferidos"
+        Me.rdTransferidos.Size = New System.Drawing.Size(138, 17)
+        Me.rdTransferidos.TabIndex = 5
+        Me.rdTransferidos.Text = "Transferidos a esta caja"
+        Me.rdTransferidos.UseVisualStyleBackColor = True
+        '
         'Label2
         '
         Me.Label2.AutoSize = True
@@ -309,30 +333,6 @@ Partial Class cheques_en_cartera
         Me.cmbpropiosSellNone.TabIndex = 1
         Me.cmbpropiosSellNone.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmbpropiosSellNone.UseVisualStyleBackColor = False
-        '
-        'rdTransferidos
-        '
-        Me.rdTransferidos.AutoSize = True
-        Me.rdTransferidos.ForeColor = System.Drawing.Color.White
-        Me.rdTransferidos.Location = New System.Drawing.Point(269, 3)
-        Me.rdTransferidos.Name = "rdTransferidos"
-        Me.rdTransferidos.Size = New System.Drawing.Size(138, 17)
-        Me.rdTransferidos.TabIndex = 5
-        Me.rdTransferidos.Text = "Transferidos a esta caja"
-        Me.rdTransferidos.UseVisualStyleBackColor = True
-        '
-        'rdEnCartera
-        '
-        Me.rdEnCartera.AutoSize = True
-        Me.rdEnCartera.Checked = True
-        Me.rdEnCartera.ForeColor = System.Drawing.Color.White
-        Me.rdEnCartera.Location = New System.Drawing.Point(269, 26)
-        Me.rdEnCartera.Name = "rdEnCartera"
-        Me.rdEnCartera.Size = New System.Drawing.Size(115, 17)
-        Me.rdEnCartera.TabIndex = 6
-        Me.rdEnCartera.TabStop = True
-        Me.rdEnCartera.Text = "En Cartera General"
-        Me.rdEnCartera.UseVisualStyleBackColor = True
         '
         'cheques_en_cartera
         '
