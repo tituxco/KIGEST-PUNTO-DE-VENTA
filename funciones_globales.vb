@@ -2031,6 +2031,7 @@ Module funciones_Globales
                 For Col As Integer = 0 To NCol - 1
                     If Not IsNothing(ElGrid.Rows(Fila).Cells(Col).Value) Then
                         exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Cells(Col).Value.ToString
+                        exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
                     End If
                 Next
             Next
