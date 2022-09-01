@@ -46,7 +46,7 @@
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes" &
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
         ElseIf rdAVencer.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
@@ -72,7 +72,7 @@
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
         having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')")
         ElseIf rdOper.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
@@ -82,10 +82,10 @@
         pr.OBSERVACIONES,        		
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes " &
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
         End If
-        'MsgBox()
+        'MsgBox(Consultas())
     End Sub
 
     Public Sub Consultas(ByVal Cadena As String)
@@ -97,7 +97,7 @@
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-        'MsgBox(cmd.CommandText)
+        ' MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
         'MsgBox(Cadena)

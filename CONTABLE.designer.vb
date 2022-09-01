@@ -23,62 +23,62 @@ Partial Class CONTABLE
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
-        Dim Series1 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle29 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle30 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle31 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle32 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle33 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle34 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle35 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle36 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle37 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle38 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle39 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle40 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle41 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle42 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle46 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle47 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle48 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle49 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle50 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle51 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle52 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CONTABLE))
+        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend2 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
+        Dim Series2 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim DataGridViewCellStyle53 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle54 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle55 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle56 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle57 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle58 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle59 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle60 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle61 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle62 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle63 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle64 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle65 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle66 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle67 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle68 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle69 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle70 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle71 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle72 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle73 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle74 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle75 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle76 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle77 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle78 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle79 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle80 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle81 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle82 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle83 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle84 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle85 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle86 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle87 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle88 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle89 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle90 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle91 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle92 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle93 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle94 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle95 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle96 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle97 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle98 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle99 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle100 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle101 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle102 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle103 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle104 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.BackgroundWorker1 = New System.ComponentModel.BackgroundWorker()
@@ -90,11 +90,14 @@ Partial Class CONTABLE
         Me.tabBalDiario = New System.Windows.Forms.TabPage()
         Me.lstbalancecomprobantes = New System.Windows.Forms.DataGridView()
         Me.Panel29 = New System.Windows.Forms.Panel()
+        Me.cmdbalanceGuardar = New System.Windows.Forms.Button()
+        Me.cmdbalancebuscar = New System.Windows.Forms.Button()
         Me.grpbalancefecha = New System.Windows.Forms.GroupBox()
         Me.dtpbalancefecha = New System.Windows.Forms.DateTimePicker()
         Me.tabBalHistorico = New System.Windows.Forms.TabPage()
         Me.lstbalancehistorico = New System.Windows.Forms.DataGridView()
         Me.Panel28 = New System.Windows.Forms.Panel()
+        Me.cmdbalhistorbuscar = New System.Windows.Forms.Button()
         Me.grpbalanceintervalo = New System.Windows.Forms.GroupBox()
         Me.Label61 = New System.Windows.Forms.Label()
         Me.dtpbalancehasta = New System.Windows.Forms.DateTimePicker()
@@ -115,6 +118,7 @@ Partial Class CONTABLE
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cmbdatosemptipoiva = New System.Windows.Forms.ComboBox()
         Me.Button7 = New System.Windows.Forms.Button()
+        Me.pctdatosemplogo = New System.Windows.Forms.PictureBox()
         Me.Label33 = New System.Windows.Forms.Label()
         Me.txtdatosempinicioact = New System.Windows.Forms.TextBox()
         Me.txtdatosempdrei = New System.Windows.Forms.TextBox()
@@ -226,10 +230,15 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn71 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn72 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Button47 = New System.Windows.Forms.Button()
+        Me.Button40 = New System.Windows.Forms.Button()
         Me.rdBalance = New System.Windows.Forms.RadioButton()
         Me.rdCtaSaldo = New System.Windows.Forms.RadioButton()
+        Me.Button38 = New System.Windows.Forms.Button()
         Me.Label80 = New System.Windows.Forms.Label()
         Me.cmbBalCtasPeriodo = New System.Windows.Forms.ComboBox()
+        Me.Button37 = New System.Windows.Forms.Button()
+        Me.Button41 = New System.Windows.Forms.Button()
         Me.Label81 = New System.Windows.Forms.Label()
         Me.tablibromayor = New System.Windows.Forms.TabPage()
         Me.dgvLibroDiario = New System.Windows.Forms.DataGridView()
@@ -244,17 +253,25 @@ Partial Class CONTABLE
         Me.Panel34 = New System.Windows.Forms.Panel()
         Me.Label79 = New System.Windows.Forms.Label()
         Me.lblSaldoCtaLibroMayor = New System.Windows.Forms.Label()
+        Me.Button48 = New System.Windows.Forms.Button()
         Me.rdTodasCuentas = New System.Windows.Forms.RadioButton()
         Me.rdCuentasIndividuales = New System.Windows.Forms.RadioButton()
         Me.Label78 = New System.Windows.Forms.Label()
         Me.Label77 = New System.Windows.Forms.Label()
         Me.cmbPeriodoLibroMayor = New System.Windows.Forms.ComboBox()
+        Me.Button35 = New System.Windows.Forms.Button()
+        Me.Button36 = New System.Windows.Forms.Button()
         Me.cmbCuentas = New System.Windows.Forms.ComboBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.dgvLibroMayor = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.cmbperiodoLibroDiario = New System.Windows.Forms.ComboBox()
+        Me.Button32 = New System.Windows.Forms.Button()
+        Me.Button26 = New System.Windows.Forms.Button()
+        Me.Button29 = New System.Windows.Forms.Button()
+        Me.Button30 = New System.Windows.Forms.Button()
+        Me.Button31 = New System.Windows.Forms.Button()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.tabplancuentas = New System.Windows.Forms.TabPage()
         Me.dgvPlanCuentas = New System.Windows.Forms.DataGridView()
@@ -269,10 +286,16 @@ Partial Class CONTABLE
         Me.cuentaResultado = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel21 = New System.Windows.Forms.Panel()
         Me.Panel30 = New System.Windows.Forms.Panel()
+        Me.Button46 = New System.Windows.Forms.Button()
+        Me.Button34 = New System.Windows.Forms.Button()
+        Me.Button28 = New System.Windows.Forms.Button()
+        Me.btnBuscarPlanCta = New System.Windows.Forms.Button()
         Me.Label72 = New System.Windows.Forms.Label()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.Panel20 = New System.Windows.Forms.Panel()
         Me.grpMantenimientoCuenta = New System.Windows.Forms.GroupBox()
+        Me.Button33 = New System.Windows.Forms.Button()
+        Me.Button27 = New System.Windows.Forms.Button()
         Me.chkCuentaResultados = New System.Windows.Forms.CheckBox()
         Me.chkCuentaMovimiento = New System.Windows.Forms.CheckBox()
         Me.txtCuentaNombre = New System.Windows.Forms.TextBox()
@@ -377,6 +400,7 @@ Partial Class CONTABLE
         Me.lbltotalchequespropios = New System.Windows.Forms.Label()
         Me.Label37 = New System.Windows.Forms.Label()
         Me.Button10 = New System.Windows.Forms.Button()
+        Me.cmdbuscarchequepropio = New System.Windows.Forms.Button()
         Me.Label38 = New System.Windows.Forms.Label()
         Me.Label39 = New System.Windows.Forms.Label()
         Me.dtdechequepropio = New System.Windows.Forms.DateTimePicker()
@@ -395,6 +419,8 @@ Partial Class CONTABLE
         Me.chkchequeclie = New System.Windows.Forms.CheckBox()
         Me.lbltotalcheques = New System.Windows.Forms.Label()
         Me.Label19 = New System.Windows.Forms.Label()
+        Me.cmbimplistacheques = New System.Windows.Forms.Button()
+        Me.cmdbuscarcheques = New System.Windows.Forms.Button()
         Me.Label20 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
         Me.dtpchequesde = New System.Windows.Forms.DateTimePicker()
@@ -402,9 +428,11 @@ Partial Class CONTABLE
         Me.tabremitos = New System.Windows.Forms.TabPage()
         Me.dtremitos = New System.Windows.Forms.DataGridView()
         Me.Panel22 = New System.Windows.Forms.Panel()
+        Me.Button18 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.cmdlistadoremitos = New System.Windows.Forms.Button()
         Me.cmdreimprimirremitos = New System.Windows.Forms.Button()
+        Me.cmdbuscarremitos = New System.Windows.Forms.Button()
         Me.Label43 = New System.Windows.Forms.Label()
         Me.Label44 = New System.Windows.Forms.Label()
         Me.dtderemitos = New System.Windows.Forms.DateTimePicker()
@@ -412,12 +440,15 @@ Partial Class CONTABLE
         Me.ivaVentas = New System.Windows.Forms.TabPage()
         Me.dtivaventas = New System.Windows.Forms.DataGridView()
         Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.Button24 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
         Me.Label69 = New System.Windows.Forms.Label()
         Me.cmbperiodosincronizar = New System.Windows.Forms.ComboBox()
         Me.txtbdSincronizar = New System.Windows.Forms.TextBox()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.cmbperiodocarg = New System.Windows.Forms.ComboBox()
         Me.Label15 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.Label65 = New System.Windows.Forms.Label()
         Me.txtvtatotgral = New System.Windows.Forms.TextBox()
         Me.GroupBox4 = New System.Windows.Forms.GroupBox()
@@ -438,12 +469,14 @@ Partial Class CONTABLE
         Me.txtvtatotexc = New System.Windows.Forms.TextBox()
         Me.txtvtatotcf = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
+        Me.Button25 = New System.Windows.Forms.Button()
         Me.tabcobranzas = New System.Windows.Forms.TabPage()
         Me.dtlistacob = New System.Windows.Forms.DataGridView()
         Me.Panel6 = New System.Windows.Forms.Panel()
         Me.GroupBox6 = New System.Windows.Forms.GroupBox()
         Me.lbltotcob = New System.Windows.Forms.Label()
         Me.lbltotalnombre = New System.Windows.Forms.Label()
+        Me.cmdbuscarcomp = New System.Windows.Forms.Button()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.cmbTarjetasMarcas = New System.Windows.Forms.ComboBox()
         Me.rdefectivo = New System.Windows.Forms.RadioButton()
@@ -468,8 +501,10 @@ Partial Class CONTABLE
         Me.dtfacturas = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
+        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.grpcomprobantes = New System.Windows.Forms.GroupBox()
         Me.cmbtipofac = New System.Windows.Forms.ComboBox()
         Me.chktodosfact = New System.Windows.Forms.CheckBox()
@@ -537,6 +572,8 @@ Partial Class CONTABLE
         Me.txtTotiva = New System.Windows.Forms.TextBox()
         Me.Label97 = New System.Windows.Forms.Label()
         Me.txtTotNeto = New System.Windows.Forms.TextBox()
+        Me.Button42 = New System.Windows.Forms.Button()
+        Me.Button43 = New System.Windows.Forms.Button()
         Me.Label83 = New System.Windows.Forms.Label()
         Me.cmbperiodosincronizarCOMP = New System.Windows.Forms.ComboBox()
         Me.txtbdsincronizarCOMP = New System.Windows.Forms.TextBox()
@@ -545,6 +582,8 @@ Partial Class CONTABLE
         Me.Label85 = New System.Windows.Forms.Label()
         Me.cmbPeriodoComp = New System.Windows.Forms.ComboBox()
         Me.Label86 = New System.Windows.Forms.Label()
+        Me.Button44 = New System.Windows.Forms.Button()
+        Me.Button45 = New System.Windows.Forms.Button()
         Me.tabEjercicios = New System.Windows.Forms.TabPage()
         Me.dgvDatosEjercicio = New System.Windows.Forms.DataGridView()
         Me.Panel33 = New System.Windows.Forms.Panel()
@@ -556,6 +595,8 @@ Partial Class CONTABLE
         Me.Label87 = New System.Windows.Forms.Label()
         Me.cmbCuentaEjercicio = New System.Windows.Forms.ComboBox()
         Me.cmbañoEjercicio = New System.Windows.Forms.ComboBox()
+        Me.Button51 = New System.Windows.Forms.Button()
+        Me.btnActualizarEjercicio = New System.Windows.Forms.Button()
         Me.Label98 = New System.Windows.Forms.Label()
         Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn19 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -602,47 +643,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn62 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn63 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn64 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
-        Me.cmdbuscar = New System.Windows.Forms.Button()
-        Me.cmdbuscarcomp = New System.Windows.Forms.Button()
-        Me.Button24 = New System.Windows.Forms.Button()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.Button25 = New System.Windows.Forms.Button()
-        Me.Button42 = New System.Windows.Forms.Button()
-        Me.Button43 = New System.Windows.Forms.Button()
-        Me.Button44 = New System.Windows.Forms.Button()
-        Me.Button45 = New System.Windows.Forms.Button()
-        Me.Button18 = New System.Windows.Forms.Button()
-        Me.cmdbuscarremitos = New System.Windows.Forms.Button()
-        Me.cmbimplistacheques = New System.Windows.Forms.Button()
-        Me.cmdbuscarcheques = New System.Windows.Forms.Button()
-        Me.cmdbuscarchequepropio = New System.Windows.Forms.Button()
-        Me.Button46 = New System.Windows.Forms.Button()
-        Me.Button34 = New System.Windows.Forms.Button()
-        Me.Button28 = New System.Windows.Forms.Button()
-        Me.btnBuscarPlanCta = New System.Windows.Forms.Button()
-        Me.Button33 = New System.Windows.Forms.Button()
-        Me.Button27 = New System.Windows.Forms.Button()
-        Me.Button48 = New System.Windows.Forms.Button()
-        Me.Button35 = New System.Windows.Forms.Button()
-        Me.Button36 = New System.Windows.Forms.Button()
-        Me.Button32 = New System.Windows.Forms.Button()
-        Me.Button26 = New System.Windows.Forms.Button()
-        Me.Button29 = New System.Windows.Forms.Button()
-        Me.Button30 = New System.Windows.Forms.Button()
-        Me.Button31 = New System.Windows.Forms.Button()
-        Me.Button47 = New System.Windows.Forms.Button()
-        Me.Button40 = New System.Windows.Forms.Button()
-        Me.Button38 = New System.Windows.Forms.Button()
-        Me.Button37 = New System.Windows.Forms.Button()
-        Me.Button41 = New System.Windows.Forms.Button()
-        Me.Button51 = New System.Windows.Forms.Button()
-        Me.btnActualizarEjercicio = New System.Windows.Forms.Button()
-        Me.pctdatosemplogo = New System.Windows.Forms.PictureBox()
-        Me.cmdbalanceGuardar = New System.Windows.Forms.Button()
-        Me.cmdbalancebuscar = New System.Windows.Forms.Button()
-        Me.cmdbalhistorbuscar = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout
         Me.balance.SuspendLayout
         Me.TabControl1.SuspendLayout
@@ -658,6 +658,7 @@ Partial Class CONTABLE
         Me.tabconfiguracion.SuspendLayout
         Me.TabControl2.SuspendLayout
         Me.TabPage14.SuspendLayout
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit
         Me.TabPage9.SuspendLayout
         Me.TabControl4.SuspendLayout
         Me.TabPage8.SuspendLayout
@@ -758,6 +759,7 @@ Partial Class CONTABLE
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).BeginInit
         Me.Panel5.SuspendLayout
         Me.GroupBox5.SuspendLayout
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit
         Me.grpcomprobantes.SuspendLayout
         Me.grpacciones.SuspendLayout
         Me.grpperiodo.SuspendLayout
@@ -771,8 +773,6 @@ Partial Class CONTABLE
         Me.tabEjercicios.SuspendLayout
         CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).BeginInit
         Me.Panel33.SuspendLayout
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).BeginInit
         Me.SuspendLayout
         '
         'pntitulo
@@ -865,6 +865,36 @@ Partial Class CONTABLE
         Me.Panel29.Size = New System.Drawing.Size(1220, 100)
         Me.Panel29.TabIndex = 14
         '
+        'cmdbalanceGuardar
+        '
+        Me.cmdbalanceGuardar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbalanceGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbalanceGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbalanceGuardar.ForeColor = System.Drawing.Color.White
+        Me.cmdbalanceGuardar.Image = CType(resources.GetObject("cmdbalanceGuardar.Image"), System.Drawing.Image)
+        Me.cmdbalanceGuardar.Location = New System.Drawing.Point(1060, 0)
+        Me.cmdbalanceGuardar.Name = "cmdbalanceGuardar"
+        Me.cmdbalanceGuardar.Size = New System.Drawing.Size(80, 100)
+        Me.cmdbalanceGuardar.TabIndex = 85
+        Me.cmdbalanceGuardar.Text = "Guardar"
+        Me.cmdbalanceGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbalanceGuardar.UseVisualStyleBackColor = True
+        '
+        'cmdbalancebuscar
+        '
+        Me.cmdbalancebuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbalancebuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbalancebuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbalancebuscar.ForeColor = System.Drawing.Color.White
+        Me.cmdbalancebuscar.Image = CType(resources.GetObject("cmdbalancebuscar.Image"), System.Drawing.Image)
+        Me.cmdbalancebuscar.Location = New System.Drawing.Point(1140, 0)
+        Me.cmdbalancebuscar.Name = "cmdbalancebuscar"
+        Me.cmdbalancebuscar.Size = New System.Drawing.Size(80, 100)
+        Me.cmdbalancebuscar.TabIndex = 84
+        Me.cmdbalancebuscar.Text = "Buscar"
+        Me.cmdbalancebuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbalancebuscar.UseVisualStyleBackColor = True
+        '
         'grpbalancefecha
         '
         Me.grpbalancefecha.Controls.Add(Me.dtpbalancefecha)
@@ -924,6 +954,21 @@ Partial Class CONTABLE
         Me.Panel28.Name = "Panel28"
         Me.Panel28.Size = New System.Drawing.Size(1220, 100)
         Me.Panel28.TabIndex = 0
+        '
+        'cmdbalhistorbuscar
+        '
+        Me.cmdbalhistorbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbalhistorbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbalhistorbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbalhistorbuscar.ForeColor = System.Drawing.Color.White
+        Me.cmdbalhistorbuscar.Image = CType(resources.GetObject("cmdbalhistorbuscar.Image"), System.Drawing.Image)
+        Me.cmdbalhistorbuscar.Location = New System.Drawing.Point(1140, 0)
+        Me.cmdbalhistorbuscar.Name = "cmdbalhistorbuscar"
+        Me.cmdbalhistorbuscar.Size = New System.Drawing.Size(80, 100)
+        Me.cmdbalhistorbuscar.TabIndex = 85
+        Me.cmdbalhistorbuscar.Text = "Buscar"
+        Me.cmdbalhistorbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbalhistorbuscar.UseVisualStyleBackColor = True
         '
         'grpbalanceintervalo
         '
@@ -1175,6 +1220,15 @@ Partial Class CONTABLE
         Me.Button7.Text = "Guardar"
         Me.Button7.UseVisualStyleBackColor = True
         Me.Button7.Visible = False
+        '
+        'pctdatosemplogo
+        '
+        Me.pctdatosemplogo.Location = New System.Drawing.Point(3, 231)
+        Me.pctdatosemplogo.Name = "pctdatosemplogo"
+        Me.pctdatosemplogo.Size = New System.Drawing.Size(330, 84)
+        Me.pctdatosemplogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.pctdatosemplogo.TabIndex = 20
+        Me.pctdatosemplogo.TabStop = False
         '
         'Label33
         '
@@ -2127,17 +2181,17 @@ Partial Class CONTABLE
         'chrestad
         '
         Me.chrestad.BackColor = System.Drawing.Color.Transparent
-        ChartArea1.Name = "ChartArea1"
-        Me.chrestad.ChartAreas.Add(ChartArea1)
+        ChartArea2.Name = "ChartArea1"
+        Me.chrestad.ChartAreas.Add(ChartArea2)
         Me.chrestad.Dock = System.Windows.Forms.DockStyle.Fill
-        Legend1.Name = "Legend1"
-        Me.chrestad.Legends.Add(Legend1)
+        Legend2.Name = "Legend1"
+        Me.chrestad.Legends.Add(Legend2)
         Me.chrestad.Location = New System.Drawing.Point(3, 38)
         Me.chrestad.Name = "chrestad"
-        Series1.ChartArea = "ChartArea1"
-        Series1.Legend = "Legend1"
-        Series1.Name = "Series1"
-        Me.chrestad.Series.Add(Series1)
+        Series2.ChartArea = "ChartArea1"
+        Series2.Legend = "Legend1"
+        Series2.Name = "Series1"
+        Me.chrestad.Series.Add(Series2)
         Me.chrestad.Size = New System.Drawing.Size(1226, 454)
         Me.chrestad.TabIndex = 91
         Me.chrestad.Text = "Chart1"
@@ -2231,9 +2285,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn27
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle53.Format = "N2"
+        DataGridViewCellStyle53.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn27.DefaultCellStyle = DataGridViewCellStyle53
         Me.DataGridViewTextBoxColumn27.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn27.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn27.Name = "DataGridViewTextBoxColumn27"
@@ -2327,40 +2381,40 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn68
         '
-        DataGridViewCellStyle2.Format = "N2"
-        Me.DataGridViewTextBoxColumn68.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle54.Format = "N2"
+        Me.DataGridViewTextBoxColumn68.DefaultCellStyle = DataGridViewCellStyle54
         Me.DataGridViewTextBoxColumn68.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn68.HeaderText = ""
         Me.DataGridViewTextBoxColumn68.Name = "DataGridViewTextBoxColumn68"
         '
         'DataGridViewTextBoxColumn69
         '
-        DataGridViewCellStyle3.Format = "N2"
-        Me.DataGridViewTextBoxColumn69.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle55.Format = "N2"
+        Me.DataGridViewTextBoxColumn69.DefaultCellStyle = DataGridViewCellStyle55
         Me.DataGridViewTextBoxColumn69.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn69.HeaderText = ""
         Me.DataGridViewTextBoxColumn69.Name = "DataGridViewTextBoxColumn69"
         '
         'DataGridViewTextBoxColumn70
         '
-        DataGridViewCellStyle4.Format = "N2"
-        Me.DataGridViewTextBoxColumn70.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle56.Format = "N2"
+        Me.DataGridViewTextBoxColumn70.DefaultCellStyle = DataGridViewCellStyle56
         Me.DataGridViewTextBoxColumn70.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn70.HeaderText = ""
         Me.DataGridViewTextBoxColumn70.Name = "DataGridViewTextBoxColumn70"
         '
         'DataGridViewTextBoxColumn71
         '
-        DataGridViewCellStyle5.Format = "N2"
-        Me.DataGridViewTextBoxColumn71.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle57.Format = "N2"
+        Me.DataGridViewTextBoxColumn71.DefaultCellStyle = DataGridViewCellStyle57
         Me.DataGridViewTextBoxColumn71.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn71.HeaderText = ""
         Me.DataGridViewTextBoxColumn71.Name = "DataGridViewTextBoxColumn71"
         '
         'DataGridViewTextBoxColumn72
         '
-        DataGridViewCellStyle6.Format = "N2"
-        Me.DataGridViewTextBoxColumn72.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle58.Format = "N2"
+        Me.DataGridViewTextBoxColumn72.DefaultCellStyle = DataGridViewCellStyle58
         Me.DataGridViewTextBoxColumn72.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn72.HeaderText = ""
         Me.DataGridViewTextBoxColumn72.Name = "DataGridViewTextBoxColumn72"
@@ -2383,6 +2437,36 @@ Partial Class CONTABLE
         Me.Panel4.Name = "Panel4"
         Me.Panel4.Size = New System.Drawing.Size(1234, 70)
         Me.Panel4.TabIndex = 19
+        '
+        'Button47
+        '
+        Me.Button47.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button47.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button47.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button47.ForeColor = System.Drawing.Color.White
+        Me.Button47.Image = Global.SIGT__KIGEST.My.Resources.Resources.delete_document_32px
+        Me.Button47.Location = New System.Drawing.Point(808, 0)
+        Me.Button47.Name = "Button47"
+        Me.Button47.Size = New System.Drawing.Size(87, 70)
+        Me.Button47.TabIndex = 96
+        Me.Button47.Text = "Ejercicio"
+        Me.Button47.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button47.UseVisualStyleBackColor = True
+        '
+        'Button40
+        '
+        Me.Button40.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button40.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button40.ForeColor = System.Drawing.Color.White
+        Me.Button40.Image = Global.SIGT__KIGEST.My.Resources.Resources.delete_document_32px
+        Me.Button40.Location = New System.Drawing.Point(895, 0)
+        Me.Button40.Name = "Button40"
+        Me.Button40.Size = New System.Drawing.Size(87, 70)
+        Me.Button40.TabIndex = 95
+        Me.Button40.Text = "Cerrar"
+        Me.Button40.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button40.UseVisualStyleBackColor = True
         '
         'rdBalance
         '
@@ -2408,6 +2492,22 @@ Partial Class CONTABLE
         Me.rdCtaSaldo.Text = "Listado de cuentas con saldo"
         Me.rdCtaSaldo.UseVisualStyleBackColor = True
         '
+        'Button38
+        '
+        Me.Button38.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button38.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button38.ForeColor = System.Drawing.Color.White
+        Me.Button38.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
+        Me.Button38.Location = New System.Drawing.Point(982, 0)
+        Me.Button38.Name = "Button38"
+        Me.Button38.Size = New System.Drawing.Size(87, 70)
+        Me.Button38.TabIndex = 92
+        Me.Button38.Text = "Balance"
+        Me.Button38.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button38.UseVisualStyleBackColor = True
+        Me.Button38.Visible = False
+        '
         'Label80
         '
         Me.Label80.AutoSize = True
@@ -2427,6 +2527,36 @@ Partial Class CONTABLE
         Me.cmbBalCtasPeriodo.Name = "cmbBalCtasPeriodo"
         Me.cmbBalCtasPeriodo.Size = New System.Drawing.Size(288, 32)
         Me.cmbBalCtasPeriodo.TabIndex = 90
+        '
+        'Button37
+        '
+        Me.Button37.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button37.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button37.ForeColor = System.Drawing.Color.White
+        Me.Button37.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
+        Me.Button37.Location = New System.Drawing.Point(1069, 0)
+        Me.Button37.Name = "Button37"
+        Me.Button37.Size = New System.Drawing.Size(87, 70)
+        Me.Button37.TabIndex = 89
+        Me.Button37.Text = "Imprimir"
+        Me.Button37.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button37.UseVisualStyleBackColor = True
+        '
+        'Button41
+        '
+        Me.Button41.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button41.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button41.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button41.ForeColor = System.Drawing.Color.White
+        Me.Button41.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button41.Location = New System.Drawing.Point(1156, 0)
+        Me.Button41.Name = "Button41"
+        Me.Button41.Size = New System.Drawing.Size(78, 70)
+        Me.Button41.TabIndex = 88
+        Me.Button41.Text = "Actualiz"
+        Me.Button41.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button41.UseVisualStyleBackColor = True
         '
         'Label81
         '
@@ -2496,18 +2626,18 @@ Partial Class CONTABLE
         '
         'Column18
         '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.Column18.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle59.Format = "N2"
+        DataGridViewCellStyle59.NullValue = "0"
+        Me.Column18.DefaultCellStyle = DataGridViewCellStyle59
         Me.Column18.FillWeight = 30.0!
         Me.Column18.HeaderText = "Total Debe"
         Me.Column18.Name = "Column18"
         '
         'Column12
         '
-        DataGridViewCellStyle8.Format = "N2"
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.Column12.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle60.Format = "N2"
+        DataGridViewCellStyle60.NullValue = "0"
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle60
         Me.Column12.FillWeight = 30.0!
         Me.Column12.HeaderText = "Total Haber"
         Me.Column12.Name = "Column12"
@@ -2572,6 +2702,21 @@ Partial Class CONTABLE
         Me.lblSaldoCtaLibroMayor.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.lblSaldoCtaLibroMayor.Visible = False
         '
+        'Button48
+        '
+        Me.Button48.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button48.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button48.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button48.ForeColor = System.Drawing.Color.White
+        Me.Button48.Image = Global.SIGT__KIGEST.My.Resources.Resources.microsoft_excel_32px
+        Me.Button48.Location = New System.Drawing.Point(1000, 0)
+        Me.Button48.Name = "Button48"
+        Me.Button48.Size = New System.Drawing.Size(78, 70)
+        Me.Button48.TabIndex = 99
+        Me.Button48.Text = "Exporta"
+        Me.Button48.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button48.UseVisualStyleBackColor = True
+        '
         'rdTodasCuentas
         '
         Me.rdTodasCuentas.AutoSize = True
@@ -2624,6 +2769,36 @@ Partial Class CONTABLE
         Me.cmbPeriodoLibroMayor.Name = "cmbPeriodoLibroMayor"
         Me.cmbPeriodoLibroMayor.Size = New System.Drawing.Size(211, 32)
         Me.cmbPeriodoLibroMayor.TabIndex = 92
+        '
+        'Button35
+        '
+        Me.Button35.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button35.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button35.ForeColor = System.Drawing.Color.White
+        Me.Button35.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
+        Me.Button35.Location = New System.Drawing.Point(1078, 0)
+        Me.Button35.Name = "Button35"
+        Me.Button35.Size = New System.Drawing.Size(78, 70)
+        Me.Button35.TabIndex = 91
+        Me.Button35.Text = "Imprimir"
+        Me.Button35.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button35.UseVisualStyleBackColor = True
+        '
+        'Button36
+        '
+        Me.Button36.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button36.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button36.ForeColor = System.Drawing.Color.White
+        Me.Button36.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button36.Location = New System.Drawing.Point(1156, 0)
+        Me.Button36.Name = "Button36"
+        Me.Button36.Size = New System.Drawing.Size(78, 70)
+        Me.Button36.TabIndex = 90
+        Me.Button36.Text = "Actualiz"
+        Me.Button36.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button36.UseVisualStyleBackColor = True
         '
         'cmbCuentas
         '
@@ -2699,6 +2874,81 @@ Partial Class CONTABLE
         Me.cmbperiodoLibroDiario.Name = "cmbperiodoLibroDiario"
         Me.cmbperiodoLibroDiario.Size = New System.Drawing.Size(288, 32)
         Me.cmbperiodoLibroDiario.TabIndex = 90
+        '
+        'Button32
+        '
+        Me.Button32.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button32.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button32.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button32.ForeColor = System.Drawing.Color.White
+        Me.Button32.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
+        Me.Button32.Location = New System.Drawing.Point(844, 0)
+        Me.Button32.Name = "Button32"
+        Me.Button32.Size = New System.Drawing.Size(78, 70)
+        Me.Button32.TabIndex = 89
+        Me.Button32.Text = "Imprimir"
+        Me.Button32.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button32.UseVisualStyleBackColor = True
+        '
+        'Button26
+        '
+        Me.Button26.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button26.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button26.ForeColor = System.Drawing.Color.White
+        Me.Button26.Image = Global.SIGT__KIGEST.My.Resources.Resources.not_equal_32px
+        Me.Button26.Location = New System.Drawing.Point(922, 0)
+        Me.Button26.Name = "Button26"
+        Me.Button26.Size = New System.Drawing.Size(78, 70)
+        Me.Button26.TabIndex = 85
+        Me.Button26.Text = "Dif."
+        Me.Button26.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button26.UseVisualStyleBackColor = True
+        '
+        'Button29
+        '
+        Me.Button29.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button29.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button29.ForeColor = System.Drawing.Color.White
+        Me.Button29.Image = Global.SIGT__KIGEST.My.Resources.Resources.Edit_32px
+        Me.Button29.Location = New System.Drawing.Point(1000, 0)
+        Me.Button29.Name = "Button29"
+        Me.Button29.Size = New System.Drawing.Size(78, 70)
+        Me.Button29.TabIndex = 86
+        Me.Button29.Text = "Modif"
+        Me.Button29.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button29.UseVisualStyleBackColor = True
+        '
+        'Button30
+        '
+        Me.Button30.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button30.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button30.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button30.ForeColor = System.Drawing.Color.White
+        Me.Button30.Image = Global.SIGT__KIGEST.My.Resources.Resources.Plus_32px
+        Me.Button30.Location = New System.Drawing.Point(1078, 0)
+        Me.Button30.Name = "Button30"
+        Me.Button30.Size = New System.Drawing.Size(78, 70)
+        Me.Button30.TabIndex = 87
+        Me.Button30.Text = "Agregar"
+        Me.Button30.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button30.UseVisualStyleBackColor = True
+        '
+        'Button31
+        '
+        Me.Button31.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button31.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button31.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button31.ForeColor = System.Drawing.Color.White
+        Me.Button31.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.Button31.Location = New System.Drawing.Point(1156, 0)
+        Me.Button31.Name = "Button31"
+        Me.Button31.Size = New System.Drawing.Size(78, 70)
+        Me.Button31.TabIndex = 88
+        Me.Button31.Text = "Actualiz"
+        Me.Button31.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button31.UseVisualStyleBackColor = True
         '
         'Label2
         '
@@ -2823,6 +3073,66 @@ Partial Class CONTABLE
         Me.Panel30.Size = New System.Drawing.Size(1234, 105)
         Me.Panel30.TabIndex = 47
         '
+        'Button46
+        '
+        Me.Button46.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button46.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button46.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button46.ForeColor = System.Drawing.Color.White
+        Me.Button46.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_64px1
+        Me.Button46.Location = New System.Drawing.Point(912, 0)
+        Me.Button46.Name = "Button46"
+        Me.Button46.Size = New System.Drawing.Size(80, 103)
+        Me.Button46.TabIndex = 90
+        Me.Button46.Text = "Imprimir"
+        Me.Button46.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button46.UseVisualStyleBackColor = True
+        '
+        'Button34
+        '
+        Me.Button34.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button34.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button34.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button34.ForeColor = System.Drawing.Color.White
+        Me.Button34.Image = Global.SIGT__KIGEST.My.Resources.Resources.Edit_64px
+        Me.Button34.Location = New System.Drawing.Point(992, 0)
+        Me.Button34.Name = "Button34"
+        Me.Button34.Size = New System.Drawing.Size(80, 103)
+        Me.Button34.TabIndex = 53
+        Me.Button34.Text = "Modifica"
+        Me.Button34.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button34.UseVisualStyleBackColor = True
+        '
+        'Button28
+        '
+        Me.Button28.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button28.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button28.ForeColor = System.Drawing.Color.White
+        Me.Button28.Image = Global.SIGT__KIGEST.My.Resources.Resources.Plus_64px
+        Me.Button28.Location = New System.Drawing.Point(1072, 0)
+        Me.Button28.Name = "Button28"
+        Me.Button28.Size = New System.Drawing.Size(80, 103)
+        Me.Button28.TabIndex = 52
+        Me.Button28.Text = "Agregar"
+        Me.Button28.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button28.UseVisualStyleBackColor = True
+        '
+        'btnBuscarPlanCta
+        '
+        Me.btnBuscarPlanCta.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnBuscarPlanCta.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnBuscarPlanCta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnBuscarPlanCta.ForeColor = System.Drawing.Color.White
+        Me.btnBuscarPlanCta.Image = CType(resources.GetObject("btnBuscarPlanCta.Image"), System.Drawing.Image)
+        Me.btnBuscarPlanCta.Location = New System.Drawing.Point(1152, 0)
+        Me.btnBuscarPlanCta.Name = "btnBuscarPlanCta"
+        Me.btnBuscarPlanCta.Size = New System.Drawing.Size(80, 103)
+        Me.btnBuscarPlanCta.TabIndex = 51
+        Me.btnBuscarPlanCta.Text = "Buscar"
+        Me.btnBuscarPlanCta.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnBuscarPlanCta.UseVisualStyleBackColor = True
+        '
         'Label72
         '
         Me.Label72.AutoSize = True
@@ -2878,6 +3188,36 @@ Partial Class CONTABLE
         Me.grpMantenimientoCuenta.TabIndex = 66
         Me.grpMantenimientoCuenta.TabStop = False
         Me.grpMantenimientoCuenta.Text = " "
+        '
+        'Button33
+        '
+        Me.Button33.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button33.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button33.ForeColor = System.Drawing.Color.White
+        Me.Button33.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cancel_64px
+        Me.Button33.Location = New System.Drawing.Point(1062, 49)
+        Me.Button33.Name = "Button33"
+        Me.Button33.Size = New System.Drawing.Size(80, 100)
+        Me.Button33.TabIndex = 89
+        Me.Button33.Text = "Cancela"
+        Me.Button33.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button33.UseVisualStyleBackColor = True
+        '
+        'Button27
+        '
+        Me.Button27.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button27.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button27.ForeColor = System.Drawing.Color.White
+        Me.Button27.Image = CType(resources.GetObject("Button27.Image"), System.Drawing.Image)
+        Me.Button27.Location = New System.Drawing.Point(1148, 49)
+        Me.Button27.Name = "Button27"
+        Me.Button27.Size = New System.Drawing.Size(80, 100)
+        Me.Button27.TabIndex = 88
+        Me.Button27.Text = "Guardar"
+        Me.Button27.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button27.UseVisualStyleBackColor = True
         '
         'chkCuentaResultados
         '
@@ -3087,9 +3427,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle9.Format = "d"
-        DataGridViewCellStyle9.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle61.Format = "d"
+        DataGridViewCellStyle61.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle61
         Me.DataGridViewTextBoxColumn8.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn8.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
@@ -3104,9 +3444,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn10
         '
-        DataGridViewCellStyle10.Format = "d"
-        DataGridViewCellStyle10.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle62.Format = "d"
+        DataGridViewCellStyle62.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle62
         Me.DataGridViewTextBoxColumn10.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn10.HeaderText = "Debe"
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
@@ -3176,8 +3516,8 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn14
         '
-        DataGridViewCellStyle11.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle63.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn14.DefaultCellStyle = DataGridViewCellStyle63
         Me.DataGridViewTextBoxColumn14.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn14.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn14.Name = "DataGridViewTextBoxColumn14"
@@ -3193,9 +3533,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn16
         '
-        DataGridViewCellStyle12.Format = "N2"
-        DataGridViewCellStyle12.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle64.Format = "N2"
+        DataGridViewCellStyle64.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn16.DefaultCellStyle = DataGridViewCellStyle64
         Me.DataGridViewTextBoxColumn16.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn16.HeaderText = "Debe"
         Me.DataGridViewTextBoxColumn16.Name = "DataGridViewTextBoxColumn16"
@@ -3203,9 +3543,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn17
         '
-        DataGridViewCellStyle13.Format = "N2"
-        DataGridViewCellStyle13.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn17.DefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle65.Format = "N2"
+        DataGridViewCellStyle65.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn17.DefaultCellStyle = DataGridViewCellStyle65
         Me.DataGridViewTextBoxColumn17.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn17.HeaderText = "Haber"
         Me.DataGridViewTextBoxColumn17.Name = "DataGridViewTextBoxColumn17"
@@ -3221,9 +3561,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn18
         '
-        DataGridViewCellStyle14.Format = "N2"
-        DataGridViewCellStyle14.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle66.Format = "N2"
+        DataGridViewCellStyle66.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn18.DefaultCellStyle = DataGridViewCellStyle66
         Me.DataGridViewTextBoxColumn18.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn18.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn18.Name = "DataGridViewTextBoxColumn18"
@@ -3375,9 +3715,9 @@ Partial Class CONTABLE
         '
         'Column10
         '
-        DataGridViewCellStyle15.Format = "d"
-        DataGridViewCellStyle15.NullValue = Nothing
-        Me.Column10.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle67.Format = "d"
+        DataGridViewCellStyle67.NullValue = Nothing
+        Me.Column10.DefaultCellStyle = DataGridViewCellStyle67
         Me.Column10.FillWeight = 30.0!
         Me.Column10.HeaderText = "Fecha"
         Me.Column10.Name = "Column10"
@@ -3507,9 +3847,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle16.Format = "d"
-        DataGridViewCellStyle16.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle68.Format = "d"
+        DataGridViewCellStyle68.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle68
         Me.DataGridViewTextBoxColumn2.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn2.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
@@ -4005,6 +4345,21 @@ Partial Class CONTABLE
         Me.Button10.Text = "Imprimir listado"
         Me.Button10.UseVisualStyleBackColor = False
         '
+        'cmdbuscarchequepropio
+        '
+        Me.cmdbuscarchequepropio.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdbuscarchequepropio.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscarchequepropio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscarchequepropio.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscarchequepropio.Image = CType(resources.GetObject("cmdbuscarchequepropio.Image"), System.Drawing.Image)
+        Me.cmdbuscarchequepropio.Location = New System.Drawing.Point(1150, 0)
+        Me.cmdbuscarchequepropio.Name = "cmdbuscarchequepropio"
+        Me.cmdbuscarchequepropio.Size = New System.Drawing.Size(90, 105)
+        Me.cmdbuscarchequepropio.TabIndex = 48
+        Me.cmdbuscarchequepropio.Text = "Buscar"
+        Me.cmdbuscarchequepropio.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscarchequepropio.UseVisualStyleBackColor = False
+        '
         'Label38
         '
         Me.Label38.AutoSize = True
@@ -4215,6 +4570,38 @@ Partial Class CONTABLE
         Me.Label19.TabIndex = 64
         Me.Label19.Text = "TOTAL"
         '
+        'cmbimplistacheques
+        '
+        Me.cmbimplistacheques.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmbimplistacheques.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmbimplistacheques.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmbimplistacheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbimplistacheques.ForeColor = System.Drawing.Color.White
+        Me.cmbimplistacheques.Image = CType(resources.GetObject("cmbimplistacheques.Image"), System.Drawing.Image)
+        Me.cmbimplistacheques.Location = New System.Drawing.Point(1080, 0)
+        Me.cmbimplistacheques.Name = "cmbimplistacheques"
+        Me.cmbimplistacheques.Size = New System.Drawing.Size(80, 105)
+        Me.cmbimplistacheques.TabIndex = 58
+        Me.cmbimplistacheques.Text = "Exportar"
+        Me.cmbimplistacheques.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmbimplistacheques.UseVisualStyleBackColor = False
+        '
+        'cmdbuscarcheques
+        '
+        Me.cmdbuscarcheques.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdbuscarcheques.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscarcheques.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscarcheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscarcheques.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscarcheques.Image = CType(resources.GetObject("cmdbuscarcheques.Image"), System.Drawing.Image)
+        Me.cmdbuscarcheques.Location = New System.Drawing.Point(1160, 0)
+        Me.cmdbuscarcheques.Name = "cmdbuscarcheques"
+        Me.cmdbuscarcheques.Size = New System.Drawing.Size(80, 105)
+        Me.cmdbuscarcheques.TabIndex = 48
+        Me.cmdbuscarcheques.Text = " "
+        Me.cmdbuscarcheques.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscarcheques.UseVisualStyleBackColor = False
+        '
         'Label20
         '
         Me.Label20.AutoSize = True
@@ -4307,6 +4694,21 @@ Partial Class CONTABLE
         Me.Panel22.Size = New System.Drawing.Size(1234, 105)
         Me.Panel22.TabIndex = 11
         '
+        'Button18
+        '
+        Me.Button18.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button18.ForeColor = System.Drawing.Color.White
+        Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
+        Me.Button18.Location = New System.Drawing.Point(1074, 0)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(80, 105)
+        Me.Button18.TabIndex = 61
+        Me.Button18.Text = "Nuevo"
+        Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button18.UseVisualStyleBackColor = True
+        '
         'Button13
         '
         Me.Button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -4339,6 +4741,21 @@ Partial Class CONTABLE
         Me.cmdreimprimirremitos.TabIndex = 57
         Me.cmdreimprimirremitos.Text = "Reimprimir comprobante"
         Me.cmdreimprimirremitos.UseVisualStyleBackColor = True
+        '
+        'cmdbuscarremitos
+        '
+        Me.cmdbuscarremitos.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscarremitos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscarremitos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscarremitos.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscarremitos.Image = CType(resources.GetObject("cmdbuscarremitos.Image"), System.Drawing.Image)
+        Me.cmdbuscarremitos.Location = New System.Drawing.Point(1154, 0)
+        Me.cmdbuscarremitos.Name = "cmdbuscarremitos"
+        Me.cmdbuscarremitos.Size = New System.Drawing.Size(80, 105)
+        Me.cmdbuscarremitos.TabIndex = 48
+        Me.cmdbuscarremitos.Text = "Buscar"
+        Me.cmdbuscarremitos.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscarremitos.UseVisualStyleBackColor = True
         '
         'Label43
         '
@@ -4436,6 +4853,32 @@ Partial Class CONTABLE
         Me.Panel11.Size = New System.Drawing.Size(1234, 148)
         Me.Panel11.TabIndex = 10
         '
+        'Button24
+        '
+        Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button24.ForeColor = System.Drawing.Color.White
+        Me.Button24.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
+        Me.Button24.Location = New System.Drawing.Point(820, 73)
+        Me.Button24.Name = "Button24"
+        Me.Button24.Size = New System.Drawing.Size(33, 29)
+        Me.Button24.TabIndex = 78
+        Me.Button24.UseVisualStyleBackColor = True
+        '
+        'Button3
+        '
+        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px
+        Me.Button3.Location = New System.Drawing.Point(990, 0)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(84, 148)
+        Me.Button3.TabIndex = 77
+        Me.Button3.Text = "Sincro"
+        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button3.UseVisualStyleBackColor = True
+        '
         'Label69
         '
         Me.Label69.AutoSize = True
@@ -4496,6 +4939,21 @@ Partial Class CONTABLE
         Me.Label15.Size = New System.Drawing.Size(215, 20)
         Me.Label15.TabIndex = 71
         Me.Label15.Text = "PERIODO VISUALIZADO"
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(1074, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(80, 148)
+        Me.Button1.TabIndex = 70
+        Me.Button1.Text = "Exportar"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'Label65
         '
@@ -4735,6 +5193,21 @@ Partial Class CONTABLE
         Me.Label59.TabIndex = 40
         Me.Label59.Text = "CONS. FINAL."
         '
+        'Button25
+        '
+        Me.Button25.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button25.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button25.ForeColor = System.Drawing.Color.White
+        Me.Button25.Image = CType(resources.GetObject("Button25.Image"), System.Drawing.Image)
+        Me.Button25.Location = New System.Drawing.Point(1154, 0)
+        Me.Button25.Name = "Button25"
+        Me.Button25.Size = New System.Drawing.Size(80, 148)
+        Me.Button25.TabIndex = 48
+        Me.Button25.Text = "Buscar"
+        Me.Button25.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button25.UseVisualStyleBackColor = True
+        '
         'tabcobranzas
         '
         Me.tabcobranzas.Controls.Add(Me.dtlistacob)
@@ -4815,6 +5288,21 @@ Partial Class CONTABLE
         Me.lbltotalnombre.TabIndex = 64
         Me.lbltotalnombre.Text = "TOTAL"
         Me.lbltotalnombre.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
+        'cmdbuscarcomp
+        '
+        Me.cmdbuscarcomp.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscarcomp.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscarcomp.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscarcomp.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscarcomp.Image = CType(resources.GetObject("cmdbuscarcomp.Image"), System.Drawing.Image)
+        Me.cmdbuscarcomp.Location = New System.Drawing.Point(1160, 0)
+        Me.cmdbuscarcomp.Name = "cmdbuscarcomp"
+        Me.cmdbuscarcomp.Size = New System.Drawing.Size(80, 105)
+        Me.cmdbuscarcomp.TabIndex = 48
+        Me.cmdbuscarcomp.Text = "Buscar"
+        Me.cmdbuscarcomp.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscarcomp.UseVisualStyleBackColor = True
         '
         'GroupBox2
         '
@@ -5096,6 +5584,16 @@ Partial Class CONTABLE
         Me.GroupBox5.TabIndex = 74
         Me.GroupBox5.TabStop = False
         '
+        'PictureBox1
+        '
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 52)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(153, 30)
+        Me.PictureBox1.TabIndex = 73
+        Me.PictureBox1.TabStop = False
+        Me.PictureBox1.Visible = False
+        '
         'lbltotalfact
         '
         Me.lbltotalfact.Dock = System.Windows.Forms.DockStyle.Top
@@ -5118,6 +5616,21 @@ Partial Class CONTABLE
         Me.Label10.TabIndex = 64
         Me.Label10.Text = "TOTAL"
         Me.Label10.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'cmdbuscar
+        '
+        Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1154, 0)
+        Me.cmdbuscar.Name = "cmdbuscar"
+        Me.cmdbuscar.Size = New System.Drawing.Size(80, 105)
+        Me.cmdbuscar.TabIndex = 48
+        Me.cmdbuscar.Text = "Buscar"
+        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscar.UseVisualStyleBackColor = False
         '
         'grpcomprobantes
         '
@@ -5471,9 +5984,9 @@ Partial Class CONTABLE
         '
         'fecha
         '
-        DataGridViewCellStyle17.Format = "d"
-        DataGridViewCellStyle17.NullValue = Nothing
-        Me.fecha.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle69.Format = "d"
+        DataGridViewCellStyle69.NullValue = Nothing
+        Me.fecha.DefaultCellStyle = DataGridViewCellStyle69
         Me.fecha.HeaderText = "Fecha"
         Me.fecha.Name = "fecha"
         Me.fecha.Width = 62
@@ -5482,19 +5995,19 @@ Partial Class CONTABLE
         '
         Me.TipoComp.HeaderText = "Tipo Comp"
         Me.TipoComp.Name = "TipoComp"
-        Me.TipoComp.Width = 83
+        Me.TipoComp.Width = 77
         '
         'nufac
         '
         Me.nufac.HeaderText = "Num Fact"
         Me.nufac.Name = "nufac"
-        Me.nufac.Width = 78
+        Me.nufac.Width = 72
         '
         'razonComp
         '
         Me.razonComp.HeaderText = "Razon Social"
         Me.razonComp.Name = "razonComp"
-        Me.razonComp.Width = 95
+        Me.razonComp.Width = 87
         '
         'cuit
         '
@@ -5506,91 +6019,91 @@ Partial Class CONTABLE
         '
         Me.TCont.HeaderText = "Tipo Contrib"
         Me.TCont.Name = "TCont"
-        Me.TCont.Width = 89
+        Me.TCont.Width = 82
         '
         'neto21
         '
-        DataGridViewCellStyle18.Format = "N2"
-        DataGridViewCellStyle18.NullValue = Nothing
-        Me.neto21.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle70.Format = "N2"
+        DataGridViewCellStyle70.NullValue = Nothing
+        Me.neto21.DefaultCellStyle = DataGridViewCellStyle70
         Me.neto21.HeaderText = "Neto 21"
         Me.neto21.Name = "neto21"
         Me.neto21.ToolTipText = "21"
-        Me.neto21.Width = 70
+        Me.neto21.Width = 65
         '
         'neto105
         '
         Me.neto105.HeaderText = "Neto 10,5"
         Me.neto105.Name = "neto105"
         Me.neto105.ToolTipText = "10.5"
-        Me.neto105.Width = 79
+        Me.neto105.Width = 73
         '
         'neto27
         '
         Me.neto27.HeaderText = "Neto 27"
         Me.neto27.Name = "neto27"
         Me.neto27.ToolTipText = "27"
-        Me.neto27.Width = 70
+        Me.neto27.Width = 65
         '
         'ivamon
         '
-        DataGridViewCellStyle19.Format = "N2"
-        DataGridViewCellStyle19.NullValue = Nothing
-        Me.ivamon.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle71.Format = "N2"
+        DataGridViewCellStyle71.NullValue = Nothing
+        Me.ivamon.DefaultCellStyle = DataGridViewCellStyle71
         Me.ivamon.HeaderText = "IVA"
         Me.ivamon.Name = "ivamon"
         Me.ivamon.Width = 49
         '
         'monot
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = Nothing
-        Me.monot.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle72.Format = "N2"
+        DataGridViewCellStyle72.NullValue = Nothing
+        Me.monot.DefaultCellStyle = DataGridViewCellStyle72
         Me.monot.HeaderText = "Monot"
         Me.monot.Name = "monot"
         Me.monot.Width = 62
         '
         'acuenta
         '
-        DataGridViewCellStyle21.Format = "N2"
-        DataGridViewCellStyle21.NullValue = Nothing
-        Me.acuenta.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle73.Format = "N2"
+        DataGridViewCellStyle73.NullValue = Nothing
+        Me.acuenta.DefaultCellStyle = DataGridViewCellStyle73
         Me.acuenta.HeaderText = "P. cta/Per.IVA"
         Me.acuenta.Name = "acuenta"
-        Me.acuenta.Width = 101
+        Me.acuenta.Width = 93
         '
         'nogrexe
         '
-        DataGridViewCellStyle22.Format = "N2"
-        DataGridViewCellStyle22.NullValue = "0"
-        Me.nogrexe.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle74.Format = "N2"
+        DataGridViewCellStyle74.NullValue = "0"
+        Me.nogrexe.DefaultCellStyle = DataGridViewCellStyle74
         Me.nogrexe.HeaderText = "No gravado/Exc"
         Me.nogrexe.Name = "nogrexe"
         Me.nogrexe.Width = 102
         '
         'perciva
         '
-        DataGridViewCellStyle23.Format = "N2"
-        DataGridViewCellStyle23.NullValue = "0"
-        Me.perciva.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle75.Format = "N2"
+        DataGridViewCellStyle75.NullValue = "0"
+        Me.perciva.DefaultCellStyle = DataGridViewCellStyle75
         Me.perciva.HeaderText = "Percep IVA"
         Me.perciva.Name = "perciva"
         Me.perciva.Width = 79
         '
         'perib
         '
-        DataGridViewCellStyle24.Format = "N2"
-        DataGridViewCellStyle24.NullValue = Nothing
-        Me.perib.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle76.Format = "N2"
+        DataGridViewCellStyle76.NullValue = Nothing
+        Me.perib.DefaultCellStyle = DataGridViewCellStyle76
         Me.perib.HeaderText = "Percep. IB"
         Me.perib.Name = "perib"
         Me.perib.Width = 76
         '
         'total
         '
-        DataGridViewCellStyle25.Format = "N2"
-        DataGridViewCellStyle25.NullValue = Nothing
-        Me.total.DefaultCellStyle = DataGridViewCellStyle25
+        DataGridViewCellStyle77.Format = "N2"
+        DataGridViewCellStyle77.NullValue = Nothing
+        Me.total.DefaultCellStyle = DataGridViewCellStyle77
         Me.total.HeaderText = "TOTAL"
         Me.total.Name = "total"
         Me.total.Width = 67
@@ -5857,6 +6370,32 @@ Partial Class CONTABLE
         Me.txtTotNeto.TabIndex = 49
         Me.txtTotNeto.Text = "0"
         '
+        'Button42
+        '
+        Me.Button42.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button42.ForeColor = System.Drawing.Color.White
+        Me.Button42.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
+        Me.Button42.Location = New System.Drawing.Point(801, 89)
+        Me.Button42.Name = "Button42"
+        Me.Button42.Size = New System.Drawing.Size(33, 29)
+        Me.Button42.TabIndex = 78
+        Me.Button42.UseVisualStyleBackColor = True
+        '
+        'Button43
+        '
+        Me.Button43.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button43.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button43.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button43.ForeColor = System.Drawing.Color.White
+        Me.Button43.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px
+        Me.Button43.Location = New System.Drawing.Point(990, 0)
+        Me.Button43.Name = "Button43"
+        Me.Button43.Size = New System.Drawing.Size(84, 148)
+        Me.Button43.TabIndex = 77
+        Me.Button43.Text = "Sincro"
+        Me.Button43.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button43.UseVisualStyleBackColor = True
+        '
         'Label83
         '
         Me.Label83.AutoSize = True
@@ -5939,6 +6478,36 @@ Partial Class CONTABLE
         Me.Label86.Size = New System.Drawing.Size(215, 20)
         Me.Label86.TabIndex = 71
         Me.Label86.Text = "PERIODO VISUALIZADO"
+        '
+        'Button44
+        '
+        Me.Button44.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button44.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button44.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button44.ForeColor = System.Drawing.Color.White
+        Me.Button44.Image = CType(resources.GetObject("Button44.Image"), System.Drawing.Image)
+        Me.Button44.Location = New System.Drawing.Point(1074, 0)
+        Me.Button44.Name = "Button44"
+        Me.Button44.Size = New System.Drawing.Size(80, 148)
+        Me.Button44.TabIndex = 70
+        Me.Button44.Text = "Exportar"
+        Me.Button44.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button44.UseVisualStyleBackColor = True
+        '
+        'Button45
+        '
+        Me.Button45.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button45.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button45.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button45.ForeColor = System.Drawing.Color.White
+        Me.Button45.Image = CType(resources.GetObject("Button45.Image"), System.Drawing.Image)
+        Me.Button45.Location = New System.Drawing.Point(1154, 0)
+        Me.Button45.Name = "Button45"
+        Me.Button45.Size = New System.Drawing.Size(80, 148)
+        Me.Button45.TabIndex = 48
+        Me.Button45.Text = "Buscar"
+        Me.Button45.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button45.UseVisualStyleBackColor = True
         '
         'tabEjercicios
         '
@@ -6074,6 +6643,36 @@ Partial Class CONTABLE
         Me.cmbañoEjercicio.Size = New System.Drawing.Size(100, 32)
         Me.cmbañoEjercicio.TabIndex = 90
         '
+        'Button51
+        '
+        Me.Button51.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button51.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button51.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button51.ForeColor = System.Drawing.Color.White
+        Me.Button51.Image = Global.SIGT__KIGEST.My.Resources.Resources.microsoft_excel_32px
+        Me.Button51.Location = New System.Drawing.Point(1069, 0)
+        Me.Button51.Name = "Button51"
+        Me.Button51.Size = New System.Drawing.Size(87, 70)
+        Me.Button51.TabIndex = 89
+        Me.Button51.Text = "Exporta"
+        Me.Button51.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button51.UseVisualStyleBackColor = True
+        '
+        'btnActualizarEjercicio
+        '
+        Me.btnActualizarEjercicio.Dock = System.Windows.Forms.DockStyle.Right
+        Me.btnActualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnActualizarEjercicio.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnActualizarEjercicio.ForeColor = System.Drawing.Color.White
+        Me.btnActualizarEjercicio.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
+        Me.btnActualizarEjercicio.Location = New System.Drawing.Point(1156, 0)
+        Me.btnActualizarEjercicio.Name = "btnActualizarEjercicio"
+        Me.btnActualizarEjercicio.Size = New System.Drawing.Size(78, 70)
+        Me.btnActualizarEjercicio.TabIndex = 88
+        Me.btnActualizarEjercicio.Text = "Actualiz"
+        Me.btnActualizarEjercicio.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnActualizarEjercicio.UseVisualStyleBackColor = True
+        '
         'Label98
         '
         Me.Label98.Dock = System.Windows.Forms.DockStyle.Left
@@ -6119,8 +6718,8 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn22
         '
-        DataGridViewCellStyle26.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle26
+        DataGridViewCellStyle78.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn22.DefaultCellStyle = DataGridViewCellStyle78
         Me.DataGridViewTextBoxColumn22.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn22.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn22.Name = "DataGridViewTextBoxColumn22"
@@ -6138,9 +6737,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn24
         '
-        DataGridViewCellStyle27.Format = "N2"
-        DataGridViewCellStyle27.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle27
+        DataGridViewCellStyle79.Format = "N2"
+        DataGridViewCellStyle79.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn24.DefaultCellStyle = DataGridViewCellStyle79
         Me.DataGridViewTextBoxColumn24.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn24.HeaderText = "Debe"
         Me.DataGridViewTextBoxColumn24.Name = "DataGridViewTextBoxColumn24"
@@ -6149,9 +6748,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn25
         '
-        DataGridViewCellStyle28.Format = "N2"
-        DataGridViewCellStyle28.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle28
+        DataGridViewCellStyle80.Format = "N2"
+        DataGridViewCellStyle80.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn25.DefaultCellStyle = DataGridViewCellStyle80
         Me.DataGridViewTextBoxColumn25.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn25.HeaderText = "Haber"
         Me.DataGridViewTextBoxColumn25.Name = "DataGridViewTextBoxColumn25"
@@ -6199,9 +6798,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn33
         '
-        DataGridViewCellStyle29.Format = "N2"
-        DataGridViewCellStyle29.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn33.DefaultCellStyle = DataGridViewCellStyle29
+        DataGridViewCellStyle81.Format = "N2"
+        DataGridViewCellStyle81.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn33.DefaultCellStyle = DataGridViewCellStyle81
         Me.DataGridViewTextBoxColumn33.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn33.HeaderText = "Nombre"
         Me.DataGridViewTextBoxColumn33.Name = "DataGridViewTextBoxColumn33"
@@ -6216,9 +6815,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn35
         '
-        DataGridViewCellStyle30.Format = "N2"
-        DataGridViewCellStyle30.NullValue = "0"
-        Me.DataGridViewTextBoxColumn35.DefaultCellStyle = DataGridViewCellStyle30
+        DataGridViewCellStyle82.Format = "N2"
+        DataGridViewCellStyle82.NullValue = "0"
+        Me.DataGridViewTextBoxColumn35.DefaultCellStyle = DataGridViewCellStyle82
         Me.DataGridViewTextBoxColumn35.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn35.HeaderText = "Descripcion"
         Me.DataGridViewTextBoxColumn35.Name = "DataGridViewTextBoxColumn35"
@@ -6228,9 +6827,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn36
         '
-        DataGridViewCellStyle31.Format = "N2"
-        DataGridViewCellStyle31.NullValue = "0"
-        Me.DataGridViewTextBoxColumn36.DefaultCellStyle = DataGridViewCellStyle31
+        DataGridViewCellStyle83.Format = "N2"
+        DataGridViewCellStyle83.NullValue = "0"
+        Me.DataGridViewTextBoxColumn36.DefaultCellStyle = DataGridViewCellStyle83
         Me.DataGridViewTextBoxColumn36.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn36.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn36.Name = "DataGridViewTextBoxColumn36"
@@ -6248,9 +6847,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn38
         '
-        DataGridViewCellStyle32.Format = "d"
-        DataGridViewCellStyle32.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn38.DefaultCellStyle = DataGridViewCellStyle32
+        DataGridViewCellStyle84.Format = "d"
+        DataGridViewCellStyle84.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn38.DefaultCellStyle = DataGridViewCellStyle84
         Me.DataGridViewTextBoxColumn38.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn38.HeaderText = "Column26"
         Me.DataGridViewTextBoxColumn38.Name = "DataGridViewTextBoxColumn38"
@@ -6259,9 +6858,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn39
         '
-        DataGridViewCellStyle33.Format = "N2"
-        DataGridViewCellStyle33.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn39.DefaultCellStyle = DataGridViewCellStyle33
+        DataGridViewCellStyle85.Format = "N2"
+        DataGridViewCellStyle85.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn39.DefaultCellStyle = DataGridViewCellStyle85
         Me.DataGridViewTextBoxColumn39.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn39.HeaderText = "Descripcion"
         Me.DataGridViewTextBoxColumn39.Name = "DataGridViewTextBoxColumn39"
@@ -6271,9 +6870,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn40
         '
-        DataGridViewCellStyle34.Format = "N2"
-        DataGridViewCellStyle34.NullValue = "0"
-        Me.DataGridViewTextBoxColumn40.DefaultCellStyle = DataGridViewCellStyle34
+        DataGridViewCellStyle86.Format = "N2"
+        DataGridViewCellStyle86.NullValue = "0"
+        Me.DataGridViewTextBoxColumn40.DefaultCellStyle = DataGridViewCellStyle86
         Me.DataGridViewTextBoxColumn40.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn40.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn40.Name = "DataGridViewTextBoxColumn40"
@@ -6284,9 +6883,9 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn41
         '
         Me.DataGridViewTextBoxColumn41.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle35.Format = "N2"
-        DataGridViewCellStyle35.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn41.DefaultCellStyle = DataGridViewCellStyle35
+        DataGridViewCellStyle87.Format = "N2"
+        DataGridViewCellStyle87.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn41.DefaultCellStyle = DataGridViewCellStyle87
         Me.DataGridViewTextBoxColumn41.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn41.HeaderText = "Caja"
         Me.DataGridViewTextBoxColumn41.Name = "DataGridViewTextBoxColumn41"
@@ -6295,9 +6894,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn42
         '
-        DataGridViewCellStyle36.Format = "d"
-        DataGridViewCellStyle36.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn42.DefaultCellStyle = DataGridViewCellStyle36
+        DataGridViewCellStyle88.Format = "d"
+        DataGridViewCellStyle88.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn42.DefaultCellStyle = DataGridViewCellStyle88
         Me.DataGridViewTextBoxColumn42.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn42.HeaderText = "Concepto"
         Me.DataGridViewTextBoxColumn42.Name = "DataGridViewTextBoxColumn42"
@@ -6308,9 +6907,9 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn43
         '
         Me.DataGridViewTextBoxColumn43.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle37.Format = "N2"
-        DataGridViewCellStyle37.NullValue = "0"
-        Me.DataGridViewTextBoxColumn43.DefaultCellStyle = DataGridViewCellStyle37
+        DataGridViewCellStyle89.Format = "N2"
+        DataGridViewCellStyle89.NullValue = "0"
+        Me.DataGridViewTextBoxColumn43.DefaultCellStyle = DataGridViewCellStyle89
         Me.DataGridViewTextBoxColumn43.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn43.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn43.Name = "DataGridViewTextBoxColumn43"
@@ -6328,9 +6927,9 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn45
         '
         Me.DataGridViewTextBoxColumn45.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle38.Format = "N2"
-        DataGridViewCellStyle38.NullValue = "0"
-        Me.DataGridViewTextBoxColumn45.DefaultCellStyle = DataGridViewCellStyle38
+        DataGridViewCellStyle90.Format = "N2"
+        DataGridViewCellStyle90.NullValue = "0"
+        Me.DataGridViewTextBoxColumn45.DefaultCellStyle = DataGridViewCellStyle90
         Me.DataGridViewTextBoxColumn45.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn45.HeaderText = "Concepto"
         Me.DataGridViewTextBoxColumn45.Name = "DataGridViewTextBoxColumn45"
@@ -6338,9 +6937,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn46
         '
-        DataGridViewCellStyle39.Format = "N2"
-        DataGridViewCellStyle39.NullValue = "0"
-        Me.DataGridViewTextBoxColumn46.DefaultCellStyle = DataGridViewCellStyle39
+        DataGridViewCellStyle91.Format = "N2"
+        DataGridViewCellStyle91.NullValue = "0"
+        Me.DataGridViewTextBoxColumn46.DefaultCellStyle = DataGridViewCellStyle91
         Me.DataGridViewTextBoxColumn46.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn46.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn46.Name = "DataGridViewTextBoxColumn46"
@@ -6349,9 +6948,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn47
         '
-        DataGridViewCellStyle40.Format = "N2"
-        DataGridViewCellStyle40.NullValue = "0"
-        Me.DataGridViewTextBoxColumn47.DefaultCellStyle = DataGridViewCellStyle40
+        DataGridViewCellStyle92.Format = "N2"
+        DataGridViewCellStyle92.NullValue = "0"
+        Me.DataGridViewTextBoxColumn47.DefaultCellStyle = DataGridViewCellStyle92
         Me.DataGridViewTextBoxColumn47.FillWeight = 25.0!
         Me.DataGridViewTextBoxColumn47.HeaderText = "Codigo"
         Me.DataGridViewTextBoxColumn47.Name = "DataGridViewTextBoxColumn47"
@@ -6360,9 +6959,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn48
         '
-        DataGridViewCellStyle41.Format = "N2"
-        DataGridViewCellStyle41.NullValue = "0"
-        Me.DataGridViewTextBoxColumn48.DefaultCellStyle = DataGridViewCellStyle41
+        DataGridViewCellStyle93.Format = "N2"
+        DataGridViewCellStyle93.NullValue = "0"
+        Me.DataGridViewTextBoxColumn48.DefaultCellStyle = DataGridViewCellStyle93
         Me.DataGridViewTextBoxColumn48.FillWeight = 150.0!
         Me.DataGridViewTextBoxColumn48.HeaderText = "Producto"
         Me.DataGridViewTextBoxColumn48.Name = "DataGridViewTextBoxColumn48"
@@ -6372,18 +6971,18 @@ Partial Class CONTABLE
         'DataGridViewTextBoxColumn49
         '
         Me.DataGridViewTextBoxColumn49.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        DataGridViewCellStyle42.Format = "N2"
-        DataGridViewCellStyle42.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn49.DefaultCellStyle = DataGridViewCellStyle42
+        DataGridViewCellStyle94.Format = "N2"
+        DataGridViewCellStyle94.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn49.DefaultCellStyle = DataGridViewCellStyle94
         Me.DataGridViewTextBoxColumn49.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn49.HeaderText = "Ventas"
         Me.DataGridViewTextBoxColumn49.Name = "DataGridViewTextBoxColumn49"
         '
         'DataGridViewTextBoxColumn50
         '
-        DataGridViewCellStyle43.Format = "N2"
-        DataGridViewCellStyle43.NullValue = "0"
-        Me.DataGridViewTextBoxColumn50.DefaultCellStyle = DataGridViewCellStyle43
+        DataGridViewCellStyle95.Format = "N2"
+        DataGridViewCellStyle95.NullValue = "0"
+        Me.DataGridViewTextBoxColumn50.DefaultCellStyle = DataGridViewCellStyle95
         Me.DataGridViewTextBoxColumn50.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn50.HeaderText = "Importe"
         Me.DataGridViewTextBoxColumn50.Name = "DataGridViewTextBoxColumn50"
@@ -6391,9 +6990,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn51
         '
-        DataGridViewCellStyle44.Format = "N2"
-        DataGridViewCellStyle44.NullValue = "0"
-        Me.DataGridViewTextBoxColumn51.DefaultCellStyle = DataGridViewCellStyle44
+        DataGridViewCellStyle96.Format = "N2"
+        DataGridViewCellStyle96.NullValue = "0"
+        Me.DataGridViewTextBoxColumn51.DefaultCellStyle = DataGridViewCellStyle96
         Me.DataGridViewTextBoxColumn51.FillWeight = 25.0!
         Me.DataGridViewTextBoxColumn51.HeaderText = "Codigo"
         Me.DataGridViewTextBoxColumn51.Name = "DataGridViewTextBoxColumn51"
@@ -6403,9 +7002,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn52
         '
-        DataGridViewCellStyle45.Format = "N2"
-        DataGridViewCellStyle45.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn52.DefaultCellStyle = DataGridViewCellStyle45
+        DataGridViewCellStyle97.Format = "N2"
+        DataGridViewCellStyle97.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn52.DefaultCellStyle = DataGridViewCellStyle97
         Me.DataGridViewTextBoxColumn52.FillWeight = 150.0!
         Me.DataGridViewTextBoxColumn52.HeaderText = "Producto"
         Me.DataGridViewTextBoxColumn52.Name = "DataGridViewTextBoxColumn52"
@@ -6414,9 +7013,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn53
         '
-        DataGridViewCellStyle46.Format = "N2"
-        DataGridViewCellStyle46.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn53.DefaultCellStyle = DataGridViewCellStyle46
+        DataGridViewCellStyle98.Format = "N2"
+        DataGridViewCellStyle98.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn53.DefaultCellStyle = DataGridViewCellStyle98
         Me.DataGridViewTextBoxColumn53.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn53.HeaderText = "Ventas"
         Me.DataGridViewTextBoxColumn53.Name = "DataGridViewTextBoxColumn53"
@@ -6426,9 +7025,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn54
         '
-        DataGridViewCellStyle47.Format = "N2"
-        DataGridViewCellStyle47.NullValue = "0"
-        Me.DataGridViewTextBoxColumn54.DefaultCellStyle = DataGridViewCellStyle47
+        DataGridViewCellStyle99.Format = "N2"
+        DataGridViewCellStyle99.NullValue = "0"
+        Me.DataGridViewTextBoxColumn54.DefaultCellStyle = DataGridViewCellStyle99
         Me.DataGridViewTextBoxColumn54.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn54.HeaderText = "Importe"
         Me.DataGridViewTextBoxColumn54.Name = "DataGridViewTextBoxColumn54"
@@ -6438,9 +7037,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn55
         '
-        DataGridViewCellStyle48.Format = "N2"
-        DataGridViewCellStyle48.NullValue = "0"
-        Me.DataGridViewTextBoxColumn55.DefaultCellStyle = DataGridViewCellStyle48
+        DataGridViewCellStyle100.Format = "N2"
+        DataGridViewCellStyle100.NullValue = "0"
+        Me.DataGridViewTextBoxColumn55.DefaultCellStyle = DataGridViewCellStyle100
         Me.DataGridViewTextBoxColumn55.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn55.HeaderText = "COMPRA MIN"
         Me.DataGridViewTextBoxColumn55.Name = "DataGridViewTextBoxColumn55"
@@ -6449,9 +7048,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn56
         '
-        DataGridViewCellStyle49.Format = "N2"
-        DataGridViewCellStyle49.NullValue = "0"
-        Me.DataGridViewTextBoxColumn56.DefaultCellStyle = DataGridViewCellStyle49
+        DataGridViewCellStyle101.Format = "N2"
+        DataGridViewCellStyle101.NullValue = "0"
+        Me.DataGridViewTextBoxColumn56.DefaultCellStyle = DataGridViewCellStyle101
         Me.DataGridViewTextBoxColumn56.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn56.HeaderText = "DESCUENTO %"
         Me.DataGridViewTextBoxColumn56.Name = "DataGridViewTextBoxColumn56"
@@ -6459,9 +7058,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn57
         '
-        DataGridViewCellStyle50.Format = "N2"
-        DataGridViewCellStyle50.NullValue = "0"
-        Me.DataGridViewTextBoxColumn57.DefaultCellStyle = DataGridViewCellStyle50
+        DataGridViewCellStyle102.Format = "N2"
+        DataGridViewCellStyle102.NullValue = "0"
+        Me.DataGridViewTextBoxColumn57.DefaultCellStyle = DataGridViewCellStyle102
         Me.DataGridViewTextBoxColumn57.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn57.HeaderText = "saldoMes"
         Me.DataGridViewTextBoxColumn57.Name = "DataGridViewTextBoxColumn57"
@@ -6469,9 +7068,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn58
         '
-        DataGridViewCellStyle51.Format = "N2"
-        DataGridViewCellStyle51.NullValue = "0"
-        Me.DataGridViewTextBoxColumn58.DefaultCellStyle = DataGridViewCellStyle51
+        DataGridViewCellStyle103.Format = "N2"
+        DataGridViewCellStyle103.NullValue = "0"
+        Me.DataGridViewTextBoxColumn58.DefaultCellStyle = DataGridViewCellStyle103
         Me.DataGridViewTextBoxColumn58.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn58.HeaderText = "saldoFinal"
         Me.DataGridViewTextBoxColumn58.Name = "DataGridViewTextBoxColumn58"
@@ -6488,9 +7087,9 @@ Partial Class CONTABLE
         '
         'DataGridViewTextBoxColumn60
         '
-        DataGridViewCellStyle52.Format = "N2"
-        DataGridViewCellStyle52.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn60.DefaultCellStyle = DataGridViewCellStyle52
+        DataGridViewCellStyle104.Format = "N2"
+        DataGridViewCellStyle104.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn60.DefaultCellStyle = DataGridViewCellStyle104
         Me.DataGridViewTextBoxColumn60.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn60.HeaderText = "Saldo"
         Me.DataGridViewTextBoxColumn60.Name = "DataGridViewTextBoxColumn60"
@@ -6524,605 +7123,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn64.Name = "DataGridViewTextBoxColumn64"
         Me.DataGridViewTextBoxColumn64.Width = 158
         '
-        'PictureBox1
-        '
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.PictureBox1.Location = New System.Drawing.Point(3, 52)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(153, 30)
-        Me.PictureBox1.TabIndex = 73
-        Me.PictureBox1.TabStop = False
-        Me.PictureBox1.Visible = False
-        '
-        'cmdbuscar
-        '
-        Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1154, 0)
-        Me.cmdbuscar.Name = "cmdbuscar"
-        Me.cmdbuscar.Size = New System.Drawing.Size(80, 105)
-        Me.cmdbuscar.TabIndex = 48
-        Me.cmdbuscar.Text = "Buscar"
-        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscar.UseVisualStyleBackColor = False
-        '
-        'cmdbuscarcomp
-        '
-        Me.cmdbuscarcomp.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscarcomp.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscarcomp.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscarcomp.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscarcomp.Image = CType(resources.GetObject("cmdbuscarcomp.Image"), System.Drawing.Image)
-        Me.cmdbuscarcomp.Location = New System.Drawing.Point(1160, 0)
-        Me.cmdbuscarcomp.Name = "cmdbuscarcomp"
-        Me.cmdbuscarcomp.Size = New System.Drawing.Size(80, 105)
-        Me.cmdbuscarcomp.TabIndex = 48
-        Me.cmdbuscarcomp.Text = "Buscar"
-        Me.cmdbuscarcomp.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscarcomp.UseVisualStyleBackColor = True
-        '
-        'Button24
-        '
-        Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button24.ForeColor = System.Drawing.Color.White
-        Me.Button24.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
-        Me.Button24.Location = New System.Drawing.Point(820, 73)
-        Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(33, 29)
-        Me.Button24.TabIndex = 78
-        Me.Button24.UseVisualStyleBackColor = True
-        '
-        'Button3
-        '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px
-        Me.Button3.Location = New System.Drawing.Point(990, 0)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(84, 148)
-        Me.Button3.TabIndex = 77
-        Me.Button3.Text = "Sincro"
-        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(1074, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 148)
-        Me.Button1.TabIndex = 70
-        Me.Button1.Text = "Exportar"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'Button25
-        '
-        Me.Button25.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button25.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button25.ForeColor = System.Drawing.Color.White
-        Me.Button25.Image = CType(resources.GetObject("Button25.Image"), System.Drawing.Image)
-        Me.Button25.Location = New System.Drawing.Point(1154, 0)
-        Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(80, 148)
-        Me.Button25.TabIndex = 48
-        Me.Button25.Text = "Buscar"
-        Me.Button25.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button25.UseVisualStyleBackColor = True
-        '
-        'Button42
-        '
-        Me.Button42.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button42.ForeColor = System.Drawing.Color.White
-        Me.Button42.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
-        Me.Button42.Location = New System.Drawing.Point(801, 89)
-        Me.Button42.Name = "Button42"
-        Me.Button42.Size = New System.Drawing.Size(33, 29)
-        Me.Button42.TabIndex = 78
-        Me.Button42.UseVisualStyleBackColor = True
-        '
-        'Button43
-        '
-        Me.Button43.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button43.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button43.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button43.ForeColor = System.Drawing.Color.White
-        Me.Button43.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px
-        Me.Button43.Location = New System.Drawing.Point(990, 0)
-        Me.Button43.Name = "Button43"
-        Me.Button43.Size = New System.Drawing.Size(84, 148)
-        Me.Button43.TabIndex = 77
-        Me.Button43.Text = "Sincro"
-        Me.Button43.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button43.UseVisualStyleBackColor = True
-        '
-        'Button44
-        '
-        Me.Button44.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button44.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button44.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button44.ForeColor = System.Drawing.Color.White
-        Me.Button44.Image = CType(resources.GetObject("Button44.Image"), System.Drawing.Image)
-        Me.Button44.Location = New System.Drawing.Point(1074, 0)
-        Me.Button44.Name = "Button44"
-        Me.Button44.Size = New System.Drawing.Size(80, 148)
-        Me.Button44.TabIndex = 70
-        Me.Button44.Text = "Exportar"
-        Me.Button44.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button44.UseVisualStyleBackColor = True
-        '
-        'Button45
-        '
-        Me.Button45.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button45.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button45.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button45.ForeColor = System.Drawing.Color.White
-        Me.Button45.Image = CType(resources.GetObject("Button45.Image"), System.Drawing.Image)
-        Me.Button45.Location = New System.Drawing.Point(1154, 0)
-        Me.Button45.Name = "Button45"
-        Me.Button45.Size = New System.Drawing.Size(80, 148)
-        Me.Button45.TabIndex = 48
-        Me.Button45.Text = "Buscar"
-        Me.Button45.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button45.UseVisualStyleBackColor = True
-        '
-        'Button18
-        '
-        Me.Button18.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button18.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button18.ForeColor = System.Drawing.Color.White
-        Me.Button18.Image = CType(resources.GetObject("Button18.Image"), System.Drawing.Image)
-        Me.Button18.Location = New System.Drawing.Point(1074, 0)
-        Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(80, 105)
-        Me.Button18.TabIndex = 61
-        Me.Button18.Text = "Nuevo"
-        Me.Button18.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button18.UseVisualStyleBackColor = True
-        '
-        'cmdbuscarremitos
-        '
-        Me.cmdbuscarremitos.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscarremitos.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscarremitos.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscarremitos.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscarremitos.Image = CType(resources.GetObject("cmdbuscarremitos.Image"), System.Drawing.Image)
-        Me.cmdbuscarremitos.Location = New System.Drawing.Point(1154, 0)
-        Me.cmdbuscarremitos.Name = "cmdbuscarremitos"
-        Me.cmdbuscarremitos.Size = New System.Drawing.Size(80, 105)
-        Me.cmdbuscarremitos.TabIndex = 48
-        Me.cmdbuscarremitos.Text = "Buscar"
-        Me.cmdbuscarremitos.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscarremitos.UseVisualStyleBackColor = True
-        '
-        'cmbimplistacheques
-        '
-        Me.cmbimplistacheques.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmbimplistacheques.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmbimplistacheques.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmbimplistacheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbimplistacheques.ForeColor = System.Drawing.Color.White
-        Me.cmbimplistacheques.Image = CType(resources.GetObject("cmbimplistacheques.Image"), System.Drawing.Image)
-        Me.cmbimplistacheques.Location = New System.Drawing.Point(1080, 0)
-        Me.cmbimplistacheques.Name = "cmbimplistacheques"
-        Me.cmbimplistacheques.Size = New System.Drawing.Size(80, 105)
-        Me.cmbimplistacheques.TabIndex = 58
-        Me.cmbimplistacheques.Text = "Exportar"
-        Me.cmbimplistacheques.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmbimplistacheques.UseVisualStyleBackColor = False
-        '
-        'cmdbuscarcheques
-        '
-        Me.cmdbuscarcheques.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdbuscarcheques.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscarcheques.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscarcheques.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscarcheques.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscarcheques.Image = CType(resources.GetObject("cmdbuscarcheques.Image"), System.Drawing.Image)
-        Me.cmdbuscarcheques.Location = New System.Drawing.Point(1160, 0)
-        Me.cmdbuscarcheques.Name = "cmdbuscarcheques"
-        Me.cmdbuscarcheques.Size = New System.Drawing.Size(80, 105)
-        Me.cmdbuscarcheques.TabIndex = 48
-        Me.cmdbuscarcheques.Text = " "
-        Me.cmdbuscarcheques.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscarcheques.UseVisualStyleBackColor = False
-        '
-        'cmdbuscarchequepropio
-        '
-        Me.cmdbuscarchequepropio.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdbuscarchequepropio.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscarchequepropio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscarchequepropio.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscarchequepropio.Image = CType(resources.GetObject("cmdbuscarchequepropio.Image"), System.Drawing.Image)
-        Me.cmdbuscarchequepropio.Location = New System.Drawing.Point(1150, 0)
-        Me.cmdbuscarchequepropio.Name = "cmdbuscarchequepropio"
-        Me.cmdbuscarchequepropio.Size = New System.Drawing.Size(90, 105)
-        Me.cmdbuscarchequepropio.TabIndex = 48
-        Me.cmdbuscarchequepropio.Text = "Buscar"
-        Me.cmdbuscarchequepropio.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscarchequepropio.UseVisualStyleBackColor = False
-        '
-        'Button46
-        '
-        Me.Button46.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button46.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button46.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button46.ForeColor = System.Drawing.Color.White
-        Me.Button46.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_64px1
-        Me.Button46.Location = New System.Drawing.Point(912, 0)
-        Me.Button46.Name = "Button46"
-        Me.Button46.Size = New System.Drawing.Size(80, 103)
-        Me.Button46.TabIndex = 90
-        Me.Button46.Text = "Imprimir"
-        Me.Button46.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button46.UseVisualStyleBackColor = True
-        '
-        'Button34
-        '
-        Me.Button34.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button34.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button34.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button34.ForeColor = System.Drawing.Color.White
-        Me.Button34.Image = Global.SIGT__KIGEST.My.Resources.Resources.Edit_64px
-        Me.Button34.Location = New System.Drawing.Point(992, 0)
-        Me.Button34.Name = "Button34"
-        Me.Button34.Size = New System.Drawing.Size(80, 103)
-        Me.Button34.TabIndex = 53
-        Me.Button34.Text = "Modifica"
-        Me.Button34.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button34.UseVisualStyleBackColor = True
-        '
-        'Button28
-        '
-        Me.Button28.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button28.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button28.ForeColor = System.Drawing.Color.White
-        Me.Button28.Image = Global.SIGT__KIGEST.My.Resources.Resources.Plus_64px
-        Me.Button28.Location = New System.Drawing.Point(1072, 0)
-        Me.Button28.Name = "Button28"
-        Me.Button28.Size = New System.Drawing.Size(80, 103)
-        Me.Button28.TabIndex = 52
-        Me.Button28.Text = "Agregar"
-        Me.Button28.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button28.UseVisualStyleBackColor = True
-        '
-        'btnBuscarPlanCta
-        '
-        Me.btnBuscarPlanCta.Dock = System.Windows.Forms.DockStyle.Right
-        Me.btnBuscarPlanCta.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnBuscarPlanCta.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnBuscarPlanCta.ForeColor = System.Drawing.Color.White
-        Me.btnBuscarPlanCta.Image = CType(resources.GetObject("btnBuscarPlanCta.Image"), System.Drawing.Image)
-        Me.btnBuscarPlanCta.Location = New System.Drawing.Point(1152, 0)
-        Me.btnBuscarPlanCta.Name = "btnBuscarPlanCta"
-        Me.btnBuscarPlanCta.Size = New System.Drawing.Size(80, 103)
-        Me.btnBuscarPlanCta.TabIndex = 51
-        Me.btnBuscarPlanCta.Text = "Buscar"
-        Me.btnBuscarPlanCta.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnBuscarPlanCta.UseVisualStyleBackColor = True
-        '
-        'Button33
-        '
-        Me.Button33.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button33.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button33.ForeColor = System.Drawing.Color.White
-        Me.Button33.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cancel_64px
-        Me.Button33.Location = New System.Drawing.Point(1062, 49)
-        Me.Button33.Name = "Button33"
-        Me.Button33.Size = New System.Drawing.Size(80, 100)
-        Me.Button33.TabIndex = 89
-        Me.Button33.Text = "Cancela"
-        Me.Button33.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button33.UseVisualStyleBackColor = True
-        '
-        'Button27
-        '
-        Me.Button27.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button27.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button27.ForeColor = System.Drawing.Color.White
-        Me.Button27.Image = CType(resources.GetObject("Button27.Image"), System.Drawing.Image)
-        Me.Button27.Location = New System.Drawing.Point(1148, 49)
-        Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(80, 100)
-        Me.Button27.TabIndex = 88
-        Me.Button27.Text = "Guardar"
-        Me.Button27.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button27.UseVisualStyleBackColor = True
-        '
-        'Button48
-        '
-        Me.Button48.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button48.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button48.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button48.ForeColor = System.Drawing.Color.White
-        Me.Button48.Image = Global.SIGT__KIGEST.My.Resources.Resources.microsoft_excel_32px
-        Me.Button48.Location = New System.Drawing.Point(1000, 0)
-        Me.Button48.Name = "Button48"
-        Me.Button48.Size = New System.Drawing.Size(78, 70)
-        Me.Button48.TabIndex = 99
-        Me.Button48.Text = "Exporta"
-        Me.Button48.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button48.UseVisualStyleBackColor = True
-        '
-        'Button35
-        '
-        Me.Button35.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button35.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button35.ForeColor = System.Drawing.Color.White
-        Me.Button35.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
-        Me.Button35.Location = New System.Drawing.Point(1078, 0)
-        Me.Button35.Name = "Button35"
-        Me.Button35.Size = New System.Drawing.Size(78, 70)
-        Me.Button35.TabIndex = 91
-        Me.Button35.Text = "Imprimir"
-        Me.Button35.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button35.UseVisualStyleBackColor = True
-        '
-        'Button36
-        '
-        Me.Button36.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button36.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button36.ForeColor = System.Drawing.Color.White
-        Me.Button36.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.Button36.Location = New System.Drawing.Point(1156, 0)
-        Me.Button36.Name = "Button36"
-        Me.Button36.Size = New System.Drawing.Size(78, 70)
-        Me.Button36.TabIndex = 90
-        Me.Button36.Text = "Actualiz"
-        Me.Button36.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button36.UseVisualStyleBackColor = True
-        '
-        'Button32
-        '
-        Me.Button32.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button32.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button32.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button32.ForeColor = System.Drawing.Color.White
-        Me.Button32.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
-        Me.Button32.Location = New System.Drawing.Point(844, 0)
-        Me.Button32.Name = "Button32"
-        Me.Button32.Size = New System.Drawing.Size(78, 70)
-        Me.Button32.TabIndex = 89
-        Me.Button32.Text = "Imprimir"
-        Me.Button32.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button32.UseVisualStyleBackColor = True
-        '
-        'Button26
-        '
-        Me.Button26.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button26.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button26.ForeColor = System.Drawing.Color.White
-        Me.Button26.Image = Global.SIGT__KIGEST.My.Resources.Resources.not_equal_32px
-        Me.Button26.Location = New System.Drawing.Point(922, 0)
-        Me.Button26.Name = "Button26"
-        Me.Button26.Size = New System.Drawing.Size(78, 70)
-        Me.Button26.TabIndex = 85
-        Me.Button26.Text = "Dif."
-        Me.Button26.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button26.UseVisualStyleBackColor = True
-        '
-        'Button29
-        '
-        Me.Button29.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button29.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button29.ForeColor = System.Drawing.Color.White
-        Me.Button29.Image = Global.SIGT__KIGEST.My.Resources.Resources.Edit_32px
-        Me.Button29.Location = New System.Drawing.Point(1000, 0)
-        Me.Button29.Name = "Button29"
-        Me.Button29.Size = New System.Drawing.Size(78, 70)
-        Me.Button29.TabIndex = 86
-        Me.Button29.Text = "Modif"
-        Me.Button29.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button29.UseVisualStyleBackColor = True
-        '
-        'Button30
-        '
-        Me.Button30.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button30.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button30.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button30.ForeColor = System.Drawing.Color.White
-        Me.Button30.Image = Global.SIGT__KIGEST.My.Resources.Resources.Plus_32px
-        Me.Button30.Location = New System.Drawing.Point(1078, 0)
-        Me.Button30.Name = "Button30"
-        Me.Button30.Size = New System.Drawing.Size(78, 70)
-        Me.Button30.TabIndex = 87
-        Me.Button30.Text = "Agregar"
-        Me.Button30.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button30.UseVisualStyleBackColor = True
-        '
-        'Button31
-        '
-        Me.Button31.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button31.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button31.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button31.ForeColor = System.Drawing.Color.White
-        Me.Button31.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.Button31.Location = New System.Drawing.Point(1156, 0)
-        Me.Button31.Name = "Button31"
-        Me.Button31.Size = New System.Drawing.Size(78, 70)
-        Me.Button31.TabIndex = 88
-        Me.Button31.Text = "Actualiz"
-        Me.Button31.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button31.UseVisualStyleBackColor = True
-        '
-        'Button47
-        '
-        Me.Button47.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button47.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button47.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button47.ForeColor = System.Drawing.Color.White
-        Me.Button47.Image = Global.SIGT__KIGEST.My.Resources.Resources.delete_document_32px
-        Me.Button47.Location = New System.Drawing.Point(808, 0)
-        Me.Button47.Name = "Button47"
-        Me.Button47.Size = New System.Drawing.Size(87, 70)
-        Me.Button47.TabIndex = 96
-        Me.Button47.Text = "Ejercicio"
-        Me.Button47.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button47.UseVisualStyleBackColor = True
-        '
-        'Button40
-        '
-        Me.Button40.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button40.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button40.ForeColor = System.Drawing.Color.White
-        Me.Button40.Image = Global.SIGT__KIGEST.My.Resources.Resources.delete_document_32px
-        Me.Button40.Location = New System.Drawing.Point(895, 0)
-        Me.Button40.Name = "Button40"
-        Me.Button40.Size = New System.Drawing.Size(87, 70)
-        Me.Button40.TabIndex = 95
-        Me.Button40.Text = "Cerrar"
-        Me.Button40.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button40.UseVisualStyleBackColor = True
-        '
-        'Button38
-        '
-        Me.Button38.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button38.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button38.ForeColor = System.Drawing.Color.White
-        Me.Button38.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
-        Me.Button38.Location = New System.Drawing.Point(982, 0)
-        Me.Button38.Name = "Button38"
-        Me.Button38.Size = New System.Drawing.Size(87, 70)
-        Me.Button38.TabIndex = 92
-        Me.Button38.Text = "Balance"
-        Me.Button38.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button38.UseVisualStyleBackColor = True
-        Me.Button38.Visible = False
-        '
-        'Button37
-        '
-        Me.Button37.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button37.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button37.ForeColor = System.Drawing.Color.White
-        Me.Button37.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_32px
-        Me.Button37.Location = New System.Drawing.Point(1069, 0)
-        Me.Button37.Name = "Button37"
-        Me.Button37.Size = New System.Drawing.Size(87, 70)
-        Me.Button37.TabIndex = 89
-        Me.Button37.Text = "Imprimir"
-        Me.Button37.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button37.UseVisualStyleBackColor = True
-        '
-        'Button41
-        '
-        Me.Button41.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button41.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button41.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button41.ForeColor = System.Drawing.Color.White
-        Me.Button41.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.Button41.Location = New System.Drawing.Point(1156, 0)
-        Me.Button41.Name = "Button41"
-        Me.Button41.Size = New System.Drawing.Size(78, 70)
-        Me.Button41.TabIndex = 88
-        Me.Button41.Text = "Actualiz"
-        Me.Button41.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button41.UseVisualStyleBackColor = True
-        '
-        'Button51
-        '
-        Me.Button51.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button51.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button51.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button51.ForeColor = System.Drawing.Color.White
-        Me.Button51.Image = Global.SIGT__KIGEST.My.Resources.Resources.microsoft_excel_32px
-        Me.Button51.Location = New System.Drawing.Point(1069, 0)
-        Me.Button51.Name = "Button51"
-        Me.Button51.Size = New System.Drawing.Size(87, 70)
-        Me.Button51.TabIndex = 89
-        Me.Button51.Text = "Exporta"
-        Me.Button51.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button51.UseVisualStyleBackColor = True
-        '
-        'btnActualizarEjercicio
-        '
-        Me.btnActualizarEjercicio.Dock = System.Windows.Forms.DockStyle.Right
-        Me.btnActualizarEjercicio.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.btnActualizarEjercicio.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnActualizarEjercicio.ForeColor = System.Drawing.Color.White
-        Me.btnActualizarEjercicio.Image = Global.SIGT__KIGEST.My.Resources.Resources.Sync_32px
-        Me.btnActualizarEjercicio.Location = New System.Drawing.Point(1156, 0)
-        Me.btnActualizarEjercicio.Name = "btnActualizarEjercicio"
-        Me.btnActualizarEjercicio.Size = New System.Drawing.Size(78, 70)
-        Me.btnActualizarEjercicio.TabIndex = 88
-        Me.btnActualizarEjercicio.Text = "Actualiz"
-        Me.btnActualizarEjercicio.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnActualizarEjercicio.UseVisualStyleBackColor = True
-        '
-        'pctdatosemplogo
-        '
-        Me.pctdatosemplogo.Location = New System.Drawing.Point(3, 231)
-        Me.pctdatosemplogo.Name = "pctdatosemplogo"
-        Me.pctdatosemplogo.Size = New System.Drawing.Size(330, 84)
-        Me.pctdatosemplogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.pctdatosemplogo.TabIndex = 20
-        Me.pctdatosemplogo.TabStop = False
-        '
-        'cmdbalanceGuardar
-        '
-        Me.cmdbalanceGuardar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbalanceGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbalanceGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbalanceGuardar.ForeColor = System.Drawing.Color.White
-        Me.cmdbalanceGuardar.Image = CType(resources.GetObject("cmdbalanceGuardar.Image"), System.Drawing.Image)
-        Me.cmdbalanceGuardar.Location = New System.Drawing.Point(1060, 0)
-        Me.cmdbalanceGuardar.Name = "cmdbalanceGuardar"
-        Me.cmdbalanceGuardar.Size = New System.Drawing.Size(80, 100)
-        Me.cmdbalanceGuardar.TabIndex = 85
-        Me.cmdbalanceGuardar.Text = "Guardar"
-        Me.cmdbalanceGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbalanceGuardar.UseVisualStyleBackColor = True
-        '
-        'cmdbalancebuscar
-        '
-        Me.cmdbalancebuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbalancebuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbalancebuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbalancebuscar.ForeColor = System.Drawing.Color.White
-        Me.cmdbalancebuscar.Image = CType(resources.GetObject("cmdbalancebuscar.Image"), System.Drawing.Image)
-        Me.cmdbalancebuscar.Location = New System.Drawing.Point(1140, 0)
-        Me.cmdbalancebuscar.Name = "cmdbalancebuscar"
-        Me.cmdbalancebuscar.Size = New System.Drawing.Size(80, 100)
-        Me.cmdbalancebuscar.TabIndex = 84
-        Me.cmdbalancebuscar.Text = "Buscar"
-        Me.cmdbalancebuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbalancebuscar.UseVisualStyleBackColor = True
-        '
-        'cmdbalhistorbuscar
-        '
-        Me.cmdbalhistorbuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbalhistorbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbalhistorbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbalhistorbuscar.ForeColor = System.Drawing.Color.White
-        Me.cmdbalhistorbuscar.Image = CType(resources.GetObject("cmdbalhistorbuscar.Image"), System.Drawing.Image)
-        Me.cmdbalhistorbuscar.Location = New System.Drawing.Point(1140, 0)
-        Me.cmdbalhistorbuscar.Name = "cmdbalhistorbuscar"
-        Me.cmdbalhistorbuscar.Size = New System.Drawing.Size(80, 100)
-        Me.cmdbalhistorbuscar.TabIndex = 85
-        Me.cmdbalhistorbuscar.Text = "Buscar"
-        Me.cmdbalhistorbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbalhistorbuscar.UseVisualStyleBackColor = True
-        '
         'CONTABLE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -7153,6 +7153,7 @@ Partial Class CONTABLE
         Me.TabControl2.ResumeLayout(False)
         Me.TabPage14.ResumeLayout(False)
         Me.TabPage14.PerformLayout
+        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit
         Me.TabPage9.ResumeLayout(False)
         Me.TabControl4.ResumeLayout(False)
         Me.TabPage8.ResumeLayout(False)
@@ -7276,6 +7277,7 @@ Partial Class CONTABLE
         CType(Me.dtfacturas, System.ComponentModel.ISupportInitialize).EndInit
         Me.Panel5.ResumeLayout(False)
         Me.GroupBox5.ResumeLayout(False)
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit
         Me.grpcomprobantes.ResumeLayout(False)
         Me.grpcomprobantes.PerformLayout
         Me.grpacciones.ResumeLayout(False)
@@ -7296,8 +7298,6 @@ Partial Class CONTABLE
         CType(Me.dgvDatosEjercicio, System.ComponentModel.ISupportInitialize).EndInit
         Me.Panel33.ResumeLayout(False)
         Me.Panel33.PerformLayout
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.pctdatosemplogo, System.ComponentModel.ISupportInitialize).EndInit
         Me.ResumeLayout(False)
 
     End Sub

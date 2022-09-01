@@ -8,15 +8,19 @@
 
     Public Sub Cargar_Datos(dt As DataTable)
         Try
-            todos_los_datos = dt
-            total = dt.Rows.Count
-            lblregistros.Text = total
-            maximo_paginas = Math.Ceiling(total / items_por_pagina)
+            If Not IsNothing(dt) Then
 
-            lblPaginasTotales.Text = maximo_paginas
-            dgvVista.DataSource = Split(todos_los_datos)
-            dgvVista.Columns(0).Visible = False
-            HabilitarBotones()
+
+                todos_los_datos = dt
+                total = dt.Rows.Count
+                lblregistros.Text = total
+                maximo_paginas = Math.Ceiling(total / items_por_pagina)
+
+                lblPaginasTotales.Text = maximo_paginas
+                dgvVista.DataSource = Split(todos_los_datos)
+                dgvVista.Columns(0).Visible = False
+                HabilitarBotones()
+            End If
         Catch ex As Exception
         End Try
     End Sub

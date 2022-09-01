@@ -3891,7 +3891,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 lblSaldoCtaLibroMayor.Text = FormatCurrency(saldoAnteriorCuenta, 2)
 
                 Reconectar()
-                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT LD.comprobanteInterno, date_format(LM.fecha,'%d-%m-%Y') as fecha,LM.concepto, asi.importeDebe, asi.importeHaber 
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
                 LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%' and
@@ -6049,5 +6049,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub Button48_Click(sender As Object, e As EventArgs) Handles Button48.Click
         GenerarExcel(dgvLibroMayor)
+    End Sub
+
+    Private Sub Button47_Click(sender As Object, e As EventArgs) Handles Button47.Click
+        MsgBox("contactar administrador")
+    End Sub
+
+    Private Sub cmbperiodoLibroDiario_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedIndexChanged
+
     End Sub
 End Class
