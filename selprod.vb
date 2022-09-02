@@ -131,6 +131,11 @@
                         End If
 
                         CType(frmprincipal.ActiveMdiChild, puntoventa).CalcularTotales()
+                    Case "prodlote"
+                        ' MsgBox(dtproductos.CurrentRow.Cells.Item(3).Value)                       
+                        addProductosLote.dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+                        addProductosLote.cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
+                        addProductosLote.calcularPrecios2(fila)
                 End Select
                 Me.Close()
             End If

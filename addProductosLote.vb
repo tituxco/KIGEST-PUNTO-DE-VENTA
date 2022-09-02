@@ -3,6 +3,7 @@
     Dim cerrada As Boolean = False
     Dim AuxCol As Integer
     Dim UtilGral As Double
+    Dim cargaManual As Boolean = False
 
 
     Private Sub cargarCategoriasProd()
@@ -128,8 +129,11 @@
             'lblproveedor.Text = "Proveedor: " & infocl(0)(0)
             'lblcomprobante.Text = "Comprobante: NUM " & infocl(0)(1) & "      FECHA " & infocl(0)(2).ToString & "       MONTO: " & infocl(0)(3)
             If infocl(0)(5) = 1 Then
-                MsgBox("ya se cargaron los productos de esta factura, no se puede agregar mas")
-                cerrada = True
+                If MsgBox("YA SE CARGARON PRODUCTOS EN ESTA FACTURA, DESEA AGREGAR MAS ARTICULOS DE OTRA CATEGORIA?", vbYesNo + vbQuestion) = vbNo Then
+                    cerrada = True
+                Else
+                    cerrada = False
+                End If
             End If
 
             Reconectar()
@@ -206,12 +210,12 @@
 
         filasProd = tablaprod.Select("")
 
-        For Each fila As DataGridViewRow In dtproductos.Rows
-            If fila.Cells(1).Value = codPLU Then
-                contarprod += 1
-                encuentraprod = fila.Index
-            End If
-        Next
+        'For Each fila As DataGridViewRow In dtproductos.Rows
+        '    If fila.Cells(1).Value = codPLU Then
+        '        contarprod += 1
+        '        encuentraprod = fila.Index
+        '    End If
+        'Next
         Dim utilidadAux As String
         Select Case AuxCol
             Case 0
@@ -224,25 +228,40 @@
                 utilidadAux = tablaprod(0)(5)
 
         End Select
-        If contarprod <> 0 And idfila = -1 Then
-            dtproductos.Rows(encuentraprod).Cells(2).Value += 1
-        ElseIf contarprod <> 0 And idfila <> -1 Then
-            dtproductos.CurrentRow.Cells(0).Value = filasProd(0)("id")
-            dtproductos.CurrentRow.Cells(1).Value = filasProd(0)("codigo")
-            dtproductos.CurrentRow.Cells(2).Value = txtcantPLU.Text
-            dtproductos.CurrentRow.Cells(3).Value = filasProd(0)("descripcion")
-            dtproductos.CurrentRow.Cells(4).Value = filasProd(0)("iva")
-            dtproductos.CurrentRow.Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
-            dtproductos.CurrentRow.Cells(6).Value = utilidadAux
-            dtproductos.CurrentRow.Cells(7).Value = 0
+        'MsgBox(idfila)
+        If cargaManual = False Then
+            If contarprod <> 0 And idfila = -1 Then
+                dtproductos.Rows(encuentraprod).Cells(2).Value += 1
+
+            ElseIf contarprod <> 0 And idfila <> -1 Then
+                dtproductos.CurrentRow.Cells(0).Value = filasProd(0)("id")
+                dtproductos.CurrentRow.Cells(1).Value = filasProd(0)("codigo")
+                dtproductos.CurrentRow.Cells(2).Value = txtcantPLU.Text
+                dtproductos.CurrentRow.Cells(3).Value = filasProd(0)("descripcion")
+                dtproductos.CurrentRow.Cells(4).Value = filasProd(0)("iva")
+                dtproductos.CurrentRow.Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
+                dtproductos.CurrentRow.Cells(6).Value = utilidadAux
+                dtproductos.CurrentRow.Cells(7).Value = 0
 
 
-            'dtproductos.Rows.Add(filasProd(0)(0), codigo, txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
-            'filasProd(0)(4), utilidadAux, 0)
-        Else contarprod = 0 And
+                'dtproductos.Rows.Add(filasProd(0)(0), codigo, txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
+                'filasProd(0)(4), utilidadAux, 0)
+            Else contarprod = 0 And
             dtproductos.Rows.Add(filasProd(0)("id"), filasProd(0)("codigo"), txtcantPLU.Text, filasProd(0)("descripcion"), filasProd(0)("iva"),
                                     filasProd(0)("precio"), utilidadAux, 0)
+            End If
+        Else
+            dtproductos.Rows(idfila).Cells(0).Value = filasProd(0)("id")
+            dtproductos.Rows(idfila).Cells(1).Value = filasProd(0)("codigo")
+            dtproductos.Rows(idfila).Cells(2).Value = 1
+            dtproductos.Rows(idfila).Cells(3).Value = filasProd(0)("descripcion")
+            dtproductos.Rows(idfila).Cells(4).Value = filasProd(0)("iva")
+            dtproductos.Rows(idfila).Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
+            dtproductos.Rows(idfila).Cells(6).Value = utilidadAux
+            dtproductos.Rows(idfila).Cells(7).Value = 0
+
         End If
+
 
         calcularPrecios2(dtproductos.Rows.Count - 2)
 
@@ -250,12 +269,11 @@
 
 
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
+        SendKeys.Send("{UP}")
+        SendKeys.Send("{TAB}")
         Dim costo As String
         Dim precio As String = dtproductos.Item(5, e.RowIndex).Value
         Dim iva As String = dtproductos.Item(4, e.RowIndex).Value
-        SendKeys.Send("{UP}")
-        SendKeys.Send("{TAB}")
-
         Try
             If e.ColumnIndex = 5 And chkcalcularcosto.CheckState = CheckState.Checked Then
                 costo = Math.Round(FormatNumber(precio, 2) / ((FormatNumber(iva, 2) + 100) / 100), 2)
@@ -265,6 +283,17 @@
                     'MsgBox(dtproductos.CurrentCell.Value)
                     cargarProdPLU(dtproductos.CurrentCell.Value, e.ColumnIndex)
                 End If
+            ElseIf e.ColumnIndex = 3 Then
+
+                'If dtproductos.CurrentRow.Cells(1).Value = "" Then
+                selprod.busqueda = dtproductos.CurrentCell.Value()
+                selprod.fila = dtproductos.CurrentCellAddress.Y
+                'MsgBox(dtproductos.CurrentCellAddress.Y)
+                selprod.LLAMA = "prodlote"
+                cargaManual = True
+                selprod.Show()
+                selprod.TopMost = True
+                'End If
             End If
 
             calcularPrecios()
@@ -628,7 +657,7 @@
 
         End Try
     End Sub
-    Private Sub calcularPrecios2(idFila As Integer)
+    Public Sub calcularPrecios2(idFila As Integer)
         Try
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad,auxcol FROM fact_listas_precio  where id=" & cmblista.SelectedValue, conexionPrinc)
@@ -680,16 +709,11 @@
             UtilProd = (UtilProd + 100) / 100
             utilgral2 = (UtilGral + 100) / 100
             'MsgBox("costo:" & precioCosto & " ___iva:" & iva & "cotizacion:" & cotizacion)
-            'MsgBox("costo:" & precioCosto & " ___final:" & costoFinal & "utilprod:" & UtilProd & " Gral: " & utilgral2 & "-----" & utilGralSum)
+            '      MsgBox("costo:" & precioCosto & " ___final:" & costoFinal & "utilprod:" & UtilProd & " Gral: " & utilgral2 & "-----" & utilGralSum)
 
-            Select Case AuxCol
-                Case 0
-                    dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd
-                Case 1
-                    dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilgral2 * UtilProd
-                Case 2
-                    dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilGralSum
-            End Select
+
+            dtproductos.Rows(idFila).Cells(7).Value = costoFinal * utilGralSum
+            'End Select
 
         Catch ex As Exception
 
@@ -822,4 +846,7 @@
 
     End Function
 
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+    End Sub
 End Class
