@@ -827,37 +827,35 @@ Public Class nuevaventa
             End With
             comandoadd.Transaction = Transaccion
             comandoadd.ExecuteNonQuery()
-            'Select Case cmbcondvta.SelectedValue
-            '    Case 2 'cuenta corriente
-            '        MsgBox("Cuenta corriente actualizada")
+            Dim ventaCta As Integer
+            If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                ' CUENTAS DE VENTAS DISTINTAS PARA RADIO AMANECER   **campo exclusivo para radio amanecer por el momento
 
-            '    Case 1 'contado genero un recibo
+                Dim numCta = InputBox("A que cuenta desea enviar esta factura?" & vbNewLine &
+                                          "75 - Ventas Publicidad Radio" & vbNewLine &
+                                          "76 - Ventas Publicidad Television" & vbNewLine &
+                                          "77 - Ventas Pequeños Anunciantes", "Envio a cuentas contables", "77")
+                    If IsNumeric(numCta) Then
+                        ventaCta = numCta
+                    Else
+                        ventaCta = 77
+                    End If
 
-            '        Dim j As Integer
-            '        For j = 0 To frmprincipal.MdiChildren.Length - 1
-            '            If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
-            '                'frmprincipal.MdiChildren(i).BringToFront()
-            '                MsgBox("La ventana de movimiento de caja esta abierta")
-            '                Exit Sub
-            '            End If
-            '        Next
-            '        Dim mov As New movimientodecaja
-            '        mov.MdiParent = Me.MdiParent
-            '        mov.Show()
-            '        mov.cmbtipofac.SelectedValue = 5
-            '        mov.txtctaclie.Text = txtctaclie.Text
-            '        mov.cargarCliente()
-            '        mov.dtconceptos.Rows.Add(comandoadd.LastInsertedId, cmbtipofac.Text & " " & txtptovta.Text & " - " & txtnufac.Text, txttotal.Text, idFactura)
-            '        mov.dtconceptos.Enabled = False
-            '        mov.cmbtipofac.Enabled = False
-            '        mov.Button4.Enabled = False
-            '        mov.txttotalefectivo.Focus()
-            '        mov.AcceptButton = mov.Button1
-            '        mov.CalcularTotalescobro()
-            'End Select
 
-            'PONEMOS FACTURADO AL PEDIDO
-            If rdpedido.Checked = True Then
+                Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                    If tipoFact = 13 Then
+                    GuardarAsientoContable(numAsiento, cantidad, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                               "NOTA DE CREDITO " & txtrazon.Text, CDbl(total.Replace(".", ",")), ventaCta, CDbl(total.Replace(".", ",")), 11, 2, fecha)
+                ElseIf tipoFact = 11 Or tipoFact = 12 Then
+                    GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                                               "PUBLICIDAD " & txtrazon.Text, CDbl(total.Replace(".", ",")), 11, CDbl(total.Replace(".", ",")), ventaCta, 2, fecha)
+                End If
+
+                End If
+
+
+                'PONEMOS FACTURADO AL PEDIDO
+                If rdpedido.Checked = True Then
                 For Each pedido As DataGridViewRow In dtpedidosfact.Rows
                     If pedido.Cells(0).Value.ToString <> "" Then
                         sqlQuery = "update fact_facturas set observaciones='FACTURADO' where id=" & pedido.Cells(0).Value

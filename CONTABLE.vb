@@ -305,7 +305,9 @@ Public Class CONTABLE
                 fact.localidad, con.condicion, 
                 case when fis.debcred='C' then 
                 concat('-',FORMAT(fact.total,2,'es_AR')) 
+
                 else FORMAT(fact.total,2,'es_AR') end as total, 
+                (select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
                 fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta
                 from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
                 where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
@@ -332,8 +334,8 @@ Public Class CONTABLE
 
             dtfacturas.DataSource = tablaprod
             dtfacturas.Columns(0).Visible = False
-            dtfacturas.Columns(9).Visible = False
             dtfacturas.Columns(10).Visible = False
+            dtfacturas.Columns(11).Visible = False
             lbltotalfact.Text = SumarTotal(dtfacturas, columna)
 
             EnProgreso.Close()
@@ -1603,18 +1605,22 @@ Public Class CONTABLE
                 dtlistacob.DataSource = tablacob
             End If
             If rdcobranzaintervalo.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, fact.fecha,fact.razon, 
                 format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
                 if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
                 format(replace(total,',','.') -
                 (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo,
                 
-                format(replace(total,',','.'),2,'es_AR') as totalRecibo			
+                format(replace(total,',','.'),2,'es_AR') as totalRecibo,
+
+                (select codigoAsiento from cm_libroDiario where comprobanteInterno like ReciboNumero limit 1) as NumeroAsiento
                 
-                FROM fact_facturas as fact 
-                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
+                FROM fact_facturas as fact, fact_conffiscal as fis
+
+                where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and  fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
                 "order by id desc", conexionPrinc)
                 columna = 6
+                'MsgBox(consulta.SelectCommand.CommandText)
 
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
@@ -4270,6 +4276,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
                 order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                consSaldoCuenta.SelectCommand.CommandTimeout = 300
+
+                'MsgBox(consSaldoCuenta.SelectCommand.CommandText)
                 Dim tabSaldoCuenta As New DataTable
 
                 consSaldoCuenta.Fill(tabSaldoCuenta)
@@ -4335,6 +4344,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim tabBalance As New DataTable
                 Dim infoBalance() As DataRow
                 'MsgBox(consbalance.SelectCommand.CommandText)
+                consbalance.SelectCommand.CommandTimeout = 300
                 consbalance.Fill(tabBalance)
                 Dim tablaBalanceSumas As New DataTable
 

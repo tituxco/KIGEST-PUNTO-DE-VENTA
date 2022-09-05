@@ -10,8 +10,6 @@ Imports Microsoft.Reporting.WinForms
 Module funciones_Globales
 
     Public idFactura As Integer
-
-
     Public Function cargarInfoFactCobro(idFactura As Integer) As String()
         ReDim cargarInfoFactCobro(3)
         Dim infoFact As String()
