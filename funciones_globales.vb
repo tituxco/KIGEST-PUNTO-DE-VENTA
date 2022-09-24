@@ -82,8 +82,7 @@ Module funciones_Globales
             Reconectar()
             Dim consItmFacturado As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.num_fact FROM fact_facturas as fact, fact_items as itm where
             itm.id_fact=fact.id and
-            itm.plu like '%" & descripcion & "%' and 
-            date_format(fact.fecha,'%Y-%m') like '" & Format(Now(), "yyyy-MM") & "'", conexionPrinc)
+            itm.descripcion like '%" & descripcion & "%'", conexionPrinc)
             Dim tabItmFacturado As New DataTable
             consItmFacturado.Fill(tabItmFacturado)
             If tabItmFacturado.Rows.Count <> 0 Then
@@ -802,7 +801,7 @@ Module funciones_Globales
             Dim detalle As String = ""
             Dim valoruni As String = ""
             Dim valorImpuestos As String = ""
-
+            Dim valorTotal As String = ""
 
             Dim valortot As String = ""
             Dim tabulacion As String = ""
@@ -913,6 +912,7 @@ Module funciones_Globales
                 detalle = tablaProd(i).Item("descripcion")
                 valoruni = tablaProd(i).Item("punit")
                 valorImpuestos = FacNoGravado
+
                 If TipoFact <= 3 Then
                     valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
 

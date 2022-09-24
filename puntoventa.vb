@@ -1011,6 +1011,8 @@ Public Class puntoventa
                 Dim cnt As Double = CDbl(itemsFact.Cells("cant").Value)
                 Dim idc As Double = Math.Round(CDbl(itemsFact.Cells("impuestoFijo01").Value) * cnt, 2)
                 Dim icl As Double = Math.Round(CDbl(itemsFact.Cells("impuestoFijo02").Value) * cnt, 2)
+                Dim punitFinal As Double = punit + idc + icl
+
                 'Dim punitIMP
                 'If tipofact = 6 Or tipofact = 7 Or tipofact = 8 Then
                 '    punitIMP = Math.Round(CDbl(itemsFact.Cells("punit").Value) + CDbl(itemsFact.Cells("impuestoFijo01").Value) + CDbl(itemsFact.Cells("impuestoFijo02").Value), 2)
@@ -1080,7 +1082,7 @@ Public Class puntoventa
                     .AddWithValue("?cant", cantidad)
                     .AddWithValue("?desc", descripcion)
                     .AddWithValue("?iva", iva)
-                    .AddWithValue("?punit", punit)
+                    .AddWithValue("?punit", punitFinal)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tipofact", tipofact)
                     .AddWithValue("?idAlmacen", IDALMACEN) '''''ahora ponemos el almacen de donde se saco la mercaderia, se sigue llamando ptovta

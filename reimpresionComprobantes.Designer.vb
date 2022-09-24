@@ -56,6 +56,7 @@ Partial Class reimpresionComprobantes
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.dgvlistadoCobranza = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.lblTotal = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.chksinPagar = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -65,7 +66,6 @@ Partial Class reimpresionComprobantes
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdesdeCobranza = New System.Windows.Forms.DateTimePicker()
         Me.dthastaCobranza = New System.Windows.Forms.DateTimePicker()
-        Me.lblTotal = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -492,6 +492,19 @@ Partial Class reimpresionComprobantes
         Me.Panel1.Size = New System.Drawing.Size(1255, 70)
         Me.Panel1.TabIndex = 15
         '
+        'lblTotal
+        '
+        Me.lblTotal.AutoSize = True
+        Me.lblTotal.Dock = System.Windows.Forms.DockStyle.Right
+        Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblTotal.Location = New System.Drawing.Point(1050, 0)
+        Me.lblTotal.Name = "lblTotal"
+        Me.lblTotal.Size = New System.Drawing.Size(62, 25)
+        Me.lblTotal.TabIndex = 82
+        Me.lblTotal.Text = "Total:"
+        Me.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        '
         'Button2
         '
         Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -601,19 +614,6 @@ Partial Class reimpresionComprobantes
         Me.dthastaCobranza.Name = "dthastaCobranza"
         Me.dthastaCobranza.Size = New System.Drawing.Size(117, 23)
         Me.dthastaCobranza.TabIndex = 43
-        '
-        'lblTotal
-        '
-        Me.lblTotal.AutoSize = True
-        Me.lblTotal.Dock = System.Windows.Forms.DockStyle.Right
-        Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblTotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblTotal.Location = New System.Drawing.Point(1050, 0)
-        Me.lblTotal.Name = "lblTotal"
-        Me.lblTotal.Size = New System.Drawing.Size(62, 25)
-        Me.lblTotal.TabIndex = 82
-        Me.lblTotal.Text = "Total:"
-        Me.lblTotal.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
         'reimpresionComprobantes
         '

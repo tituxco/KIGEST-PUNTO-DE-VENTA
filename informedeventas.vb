@@ -1,4 +1,6 @@
-﻿Public Class informedeventas
+﻿Imports System.Windows.Forms.DataVisualization.Charting
+
+Public Class informedeventas
 
     Dim ComisionVendedor As Double = 0
     Dim IdVendedorSel As Integer = 0
@@ -885,7 +887,7 @@
                     .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\informeVentasCompleto.rdlc"
                 End If
                 .MdiParent = Me.MdiParent
-                    .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("ventasTotales", datosInformes.Tables("ventasTotales")))
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("devoluciones", datosInformes.Tables("devoluciones")))
                 .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("comisionesObjetivos", datosInformes.Tables("ComisionesProdObj")))
@@ -1023,6 +1025,46 @@
             Next
 
             dgvHistorialVtasCliente.DataSource = HistorialCliente
+
+            'cargamos el grafico
+            Dim tablaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) 
+FROM fact_facturas where tipofact in (select donfdesc from tipos_comprobantes where debcred='D')  and vendedor=" & cmbVendedorHistorial.SelectedValue & "
+and fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & txtmeseshistorial.Text & "  month) and date_format(now(),'%Y-%m-%d')
+group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+
+            Dim readvtas As New DataTable
+            tablaVTAS.Fill(readvtas)
+
+            Dim grafvtascob As New DataTable
+            grafvtascob.Columns.Add("periodo")
+
+            grafvtascob.Columns.Add("ventas")
+            grafvtascob.Columns(1).DataType = GetType(Decimal)
+            For i = 0 To readvtas.Rows.Count - 1
+                'If readvtas.Rows(i).Item(0).ToString = readcobr.Rows(i).Item(0).ToString Then
+                grafvtascob.Rows.Add(readvtas.Rows(i).Item(0), readvtas.Rows(i).Item(1))
+                'End If
+            Next
+
+            Chart1.DataSource = grafvtascob
+
+            Dim ventas As New Series
+            Chart1.Series.Add(ventas)
+            ventas.Name = "ventas"
+
+            Chart1.Series(ventas.Name).XValueMember = "periodo"
+            Chart1.Series(ventas.Name).YValueMembers = "ventas"
+            'chrestad.Series(ventas.Name).YValueMembers = "cobranza"
+
+            Chart1.Series.Item(0).ChartType = SeriesChartType.Line
+            Chart1.Series.Item(0).BorderWidth = 3
+
+
+
+
+
+
             EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()

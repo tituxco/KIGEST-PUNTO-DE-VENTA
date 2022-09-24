@@ -336,7 +336,8 @@ Public Class CONTABLE
             dtfacturas.Columns(0).Visible = False
             dtfacturas.Columns(10).Visible = False
             dtfacturas.Columns(11).Visible = False
-            lbltotalfact.Text = SumarTotal(dtfacturas, columna)
+            lbltotalfact.Text = SumarTotal(dtfacturas, columna, 0)
+            lbltotalCobrado.Text = SumarTotal(dtfacturas, columna, 1)
 
             EnProgreso.Close()
         Catch ex As Exception
@@ -655,7 +656,7 @@ Public Class CONTABLE
             'dtestadocuentas.DataSource = estadocuentas
             'dtestadocuentas.Columns(0).FillWeight = 30
             'dtestadocuentas.Columns(2).FillWeight = 30
-            SumarTotal(dtestadocuentas, 4)
+            SumarTotal(dtestadocuentas, 4, 0)
             EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()
@@ -1463,59 +1464,60 @@ Public Class CONTABLE
         End Try
     End Sub
 
-    Private Function SumarTotal(ByRef list As DataGridView, ByVal columna As Integer) As Double
+    Private Function SumarTotal(ByRef list As DataGridView, ByVal columna As Integer, ByVal param As Integer) As Double
         Try
-
+            'param 0 es sin instruccion
+            'param 1 es para sumar lo cobrado con recibos aplicados
 
             Dim total As Double = 0
+
+            'ESTE PROCESO ES PARA PODER SUMAR LA COLUMNA INDICADA
             Dim i As Integer
             For i = 0 To list.RowCount - 1
-                total += FormatNumber(list.Rows(i).Cells(columna).Value, 2)
-
+                If param = 1 Then
+                    If list.Rows(i).Cells("ReciboAplicado").Value <> "" Then
+                        total += FormatNumber(list.Rows(i).Cells(columna).Value, 2)
+                    End If
+                Else
+                    total += FormatNumber(list.Rows(i).Cells(columna).Value, 2)
+                End If
             Next
             Return total
-            'Dim numcol As Integer
-            'If tabcontable.SelectedTab.Name = "VENTAS" Then
-            '    If rdninguno.Checked = True Then numcol = 7
-            '    If rdcliente.Checked = True Then numcol = 4
-            '    If rdvendedor.Checked = True Then numcol = 1
-            '    If rdproducto.Checked = True Then numcol = 3
-            'ElseIf tabcontable.SelectedTab.Name = "COBRANZAS" Then
-            '    If chkcobselvendedor.Checked = True Then numcol = 10
-            '    If chkcobselvendedor.Checked = False Then numcol = 10
-            'End If
 
-            For Each fila As DataGridViewRow In dtfacturas.Rows
-                total += FormatNumber(fila.Cells(columna).Value, 2)
-            Next
+            'For Each fila As DataGridViewRow In dtfacturas.Rows
+            '    If fila.Cells("ReciboAplicado").Value <> "" Then
+            '        totalCobrado += FormatNumber(fila.Cells(columna).Value, 2)
+            '    End If
+            '    total += FormatNumber(fila.Cells(columna).Value, 2)
+            'Next
 
-            lbltotalfact.Text = total
+            'lbltotalfact.Text = total
+            'lbltotalCobrado.Text = "$" & totalCobrado
 
+            'For Each fila As DataGridViewRow In dtlistacob.Rows
+            '    total += FormatNumber(fila.Cells(columna).Value, 2)
+            'Next
+            'lbltotcob.Text = total
 
-            For Each fila As DataGridViewRow In dtlistacob.Rows
-                total += FormatNumber(fila.Cells(columna).Value, 2)
-            Next
-            lbltotcob.Text = total
+            'total = 0
 
-            total = 0
+            'For Each fila As DataGridViewRow In dtestadocuentas.Rows
+            '    total += FormatNumber(fila.Cells(columna).Value, 2)
+            'Next
+            'lbltotctacte.Text = total
 
-            For Each fila As DataGridViewRow In dtestadocuentas.Rows
-                total += FormatNumber(fila.Cells(columna).Value, 2)
-            Next
-            lbltotctacte.Text = total
+            'total = 0
 
-            total = 0
+            'For Each fila As DataGridViewRow In dtcheques.Rows
+            '    total += FormatNumber(fila.Cells(columna).Value, 2)
+            'Next
+            'lbltotalcheques.Text = total
 
-            For Each fila As DataGridViewRow In dtcheques.Rows
-                total += FormatNumber(fila.Cells(columna).Value, 2)
-            Next
-            lbltotalcheques.Text = total
-
-            total = 0
-            For Each fila As DataGridViewRow In dtchequespropios.Rows
-                total += FormatNumber(fila.Cells(columna).Value, 2)
-            Next
-            lbltotalchequespropios.Text = total
+            'total = 0
+            'For Each fila As DataGridViewRow In dtchequespropios.Rows
+            '    total += FormatNumber(fila.Cells(columna).Value, 2)
+            'Next
+            'lbltotalchequespropios.Text = total
 
         Catch ex As Exception
 
@@ -1653,7 +1655,7 @@ Public Class CONTABLE
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
-            lbltotcob.Text = SumarTotal(dtlistacob, columna)
+            lbltotcob.Text = SumarTotal(dtlistacob, columna, 0)
             EnProgreso.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -1705,7 +1707,7 @@ Public Class CONTABLE
 
             consulta.Fill(tablacheques)
             dtcheques.DataSource = tablacheques
-            lbltotalcheques.Text = SumarTotal(dtcheques, 7)
+            lbltotalcheques.Text = SumarTotal(dtcheques, 7, 0)
         Catch ex As Exception
 
         End Try
@@ -1802,7 +1804,7 @@ Public Class CONTABLE
 
             consulta.Fill(tablacheques)
             dtchequespropios.DataSource = tablacheques
-            lbltotalchequespropios.Text = SumarTotal(dtchequespropios, 6)
+            lbltotalchequespropios.Text = SumarTotal(dtchequespropios, 6, 0)
         Catch ex As Exception
 
         End Try
@@ -2477,7 +2479,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             dtremitos.DataSource = tablaprod
             'dtfacturas.Columns(0).Visible = False
 
-            lbltotalfact.Text = SumarTotal(dtfacturas, columna)
+            lbltotalfact.Text = SumarTotal(dtfacturas, columna, 0)
             'filasProd = tablaprod.Select(" num_fact >0")
             'dtfacturas.Rows.Clear()
 
@@ -3047,9 +3049,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             consulta.Fill(tablabal)
             lstbalancehistorico.DataSource = tablabal
-            lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(lstbalancehistorico, 2), 2)
-            lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(lstbalancehistorico, 1), 2)
-            lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(lstbalancehistorico, 3), 2)
+            lblbalancecosto.Text = "Total costo: $" & Math.Round(SumarTotal(lstbalancehistorico, 2, 0), 2)
+            lblbalanceventas.Text = "Total ventas: $" & Math.Round(SumarTotal(lstbalancehistorico, 1, 0), 2)
+            lblbalanceganancia.Text = "Total ganancia: $" & Math.Round(SumarTotal(lstbalancehistorico, 3, 0), 2)
             EnProgreso.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -3086,7 +3088,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         s.Close()
                     End If
                 End If
-                    If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic") Then
+                If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic") Then
                     If Not IsDBNull(infoAFIP(1)(2)) Then
                         Dim licencia As Byte() = infoAFIP(1)(2)
                         Dim sL As IO.FileStream
@@ -3095,7 +3097,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         sL.Close()
                     End If
                 End If
-                    If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg") Then
+                If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg") Then
                     If Not IsDBNull(infoAFIP(2)(2)) Then
                         Dim logo As Byte() = infoAFIP(2)(2)
                         Dim sL As IO.FileStream
@@ -3104,7 +3106,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         sL.Close()
                     End If
                 End If
-                End If
+            End If
             MsgBox("los certificados y los archivos se han descargado correctamente")
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -3182,13 +3184,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             If rdcobranzadiaria.Checked = True Then
                 If e.ColumnIndex <= 6 And e.ColumnIndex >= 1 Then
                     'MsgBox(e.ColumnIndex)
-                    lbltotcob.Text = SumarTotal(dtlistacob, e.ColumnIndex)
+                    lbltotcob.Text = SumarTotal(dtlistacob, e.ColumnIndex, 0)
                     lbltotalnombre.Text = "TOTAL " & dtlistacob.Columns(e.ColumnIndex).Name
                 End If
             ElseIf rdcobranzaintervalo.Checked = True Then
                 If e.ColumnIndex <= 11 And e.ColumnIndex >= 6 Then
                     'MsgBox(e.ColumnIndex)
-                    lbltotcob.Text = SumarTotal(dtlistacob, e.ColumnIndex)
+                    lbltotcob.Text = SumarTotal(dtlistacob, e.ColumnIndex, 0)
                     lbltotalnombre.Text = "TOTAL " & dtlistacob.Columns(e.ColumnIndex).Name
                 End If
             End If
@@ -5730,9 +5732,15 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                 Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
                 delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
-                delete  FROM fact_cuentaclie where idcomp=@idComprobante;", conexionPrinc)
+                delete  FROM fact_cuentaclie where idcomp=@idComprobante;
+                 delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
-                comandofact.Parameters("@idComprobante").Value = dtfacturas.CurrentRow.Cells(0).Value
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters("@idComprobante").Value = dtlistacob.CurrentRow.Cells(0).Value
+                comandofact.Parameters("@codigoAsiento").Value = dtlistacob.CurrentRow.Cells("NumeroAsiento").Value
 
                 comandofact.ExecuteNonQuery()
 
@@ -5775,11 +5783,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
                 Reconectar()
 
-                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("
+                delete  FROM fact_facturas where id=@idComprobante;
                 delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
-                delete  FROM fact_cuentaclie where idcomp=@idComprobante;", conexionPrinc)
+                delete  FROM fact_cuentaclie where idcomp=@idComprobante;
+                delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters("@idComprobante").Value = dtlistacob.CurrentRow.Cells(0).Value
+                comandofact.Parameters("@codigoAsiento").Value = dtlistacob.CurrentRow.Cells("NumeroAsiento").Value
 
                 comandofact.ExecuteNonQuery()
 
@@ -5814,7 +5829,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber, '' as saldoDeudor,'' as saldoAcreedor
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
-                LM.fecha like '" & cmbañoEjercicio.Text & "-%%-%%' and
+                LM.fecha between (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-01') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 month),'%Y-%m-%d')) and
+                (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-30') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 year),'%Y-%m-%d'))
+                and
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
                 asi.cuentaHaberId= " & cmbCuentaEjercicio.SelectedValue & " ) and
@@ -5884,7 +5901,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT MONTHNAME(LM.fecha) AS MES,SUM(asi.importeDebe) AS DEBE, SUM(asi.importeHaber) AS HABER 
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
-                LM.fecha like '" & cmbañoEjercicio.Text & "-%%-%%' and
+                LM.fecha between (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-01') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 month),'%Y-%m-%d')) and
+                (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-30') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 year),'%Y-%m-%d'))
+                and
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
                 asi.cuentaHaberId=" & cmbCuentaEjercicio.SelectedValue & " ) and
@@ -6066,6 +6085,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub cmbperiodoLibroDiario_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
 
     End Sub
 End Class

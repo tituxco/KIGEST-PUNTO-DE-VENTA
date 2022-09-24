@@ -194,7 +194,7 @@
         ElseIf Not IsNumeric(codPLU) Then
             Busq = "where codigo Like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
         End If
-
+        'MsgBox(idfila)
         Reconectar()
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,precio, ganancia, utilidad1, utilidad2 FROM fact_insumos " & Busq, conexionPrinc)
         Dim tablaprod As New DataTable
@@ -210,12 +210,12 @@
 
         filasProd = tablaprod.Select("")
 
-        'For Each fila As DataGridViewRow In dtproductos.Rows
-        '    If fila.Cells(1).Value = codPLU Then
-        '        contarprod += 1
-        '        encuentraprod = fila.Index
-        '    End If
-        'Next
+        For Each fila As DataGridViewRow In dtproductos.Rows
+            If fila.Cells(1).Value = codPLU Then
+                contarprod += 1
+                encuentraprod = fila.Index
+            End If
+        Next
         Dim utilidadAux As String
         Select Case AuxCol
             Case 0
@@ -228,12 +228,23 @@
                 utilidadAux = tablaprod(0)(5)
 
         End Select
-        'MsgBox(idfila)
-        If cargaManual = False Then
-            If contarprod <> 0 And idfila = -1 Then
-                dtproductos.Rows(encuentraprod).Cells(2).Value += 1
+        If contarprod <> 0 And idfila = -1 Then
+            dtproductos.Rows(encuentraprod).Cells(2).Value += 1
+        ElseIf contarprod <> 0 And idfila <> -1 Then
 
-            ElseIf contarprod <> 0 And idfila <> -1 Then
+            If cargaManual = True Then
+                'MsgBox(" manual 11")
+                dtproductos.Rows(idfila).Cells(0).Value = filasProd(0)("id")
+                dtproductos.Rows(idfila).Cells(1).Value = filasProd(0)("codigo")
+                dtproductos.Rows(idfila).Cells(2).Value = txtcantPLU.Text
+                dtproductos.Rows(idfila).Cells(3).Value = filasProd(0)("descripcion")
+                dtproductos.Rows(idfila).Cells(4).Value = filasProd(0)("iva")
+                dtproductos.Rows(idfila).Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
+                dtproductos.Rows(idfila).Cells(6).Value = utilidadAux
+                dtproductos.Rows(idfila).Cells(7).Value = 0
+                cargaManual = False
+            Else
+                'MsgBox(" normal 11")
                 dtproductos.CurrentRow.Cells(0).Value = filasProd(0)("id")
                 dtproductos.CurrentRow.Cells(1).Value = filasProd(0)("codigo")
                 dtproductos.CurrentRow.Cells(2).Value = txtcantPLU.Text
@@ -242,28 +253,20 @@
                 dtproductos.CurrentRow.Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
                 dtproductos.CurrentRow.Cells(6).Value = utilidadAux
                 dtproductos.CurrentRow.Cells(7).Value = 0
+                cargaManual = False
+            End If
 
 
-                'dtproductos.Rows.Add(filasProd(0)(0), codigo, txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
-                'filasProd(0)(4), utilidadAux, 0)
-            Else contarprod = 0 And
+            'dtproductos.Rows.Add(filasProd(0)(0), codigo, txtcantPLU.Text, filasProd(0)(3), filasProd(0)(2),
+            'filasProd(0)(4), utilidadAux, 0)
+        Else contarprod = 0 And idfila <> -1
+            ' MsgBox("resp 22")
             dtproductos.Rows.Add(filasProd(0)("id"), filasProd(0)("codigo"), txtcantPLU.Text, filasProd(0)("descripcion"), filasProd(0)("iva"),
                                     filasProd(0)("precio"), utilidadAux, 0)
-            End If
-        Else
-            dtproductos.Rows(idfila).Cells(0).Value = filasProd(0)("id")
-            dtproductos.Rows(idfila).Cells(1).Value = filasProd(0)("codigo")
-            dtproductos.Rows(idfila).Cells(2).Value = 1
-            dtproductos.Rows(idfila).Cells(3).Value = filasProd(0)("descripcion")
-            dtproductos.Rows(idfila).Cells(4).Value = filasProd(0)("iva")
-            dtproductos.Rows(idfila).Cells(5).Value = FormatNumber(filasProd(0)("precio"), 2)
-            dtproductos.Rows(idfila).Cells(6).Value = utilidadAux
-            dtproductos.Rows(idfila).Cells(7).Value = 0
-
         End If
 
-
         calcularPrecios2(dtproductos.Rows.Count - 2)
+
 
     End Sub
 
@@ -285,15 +288,15 @@
                 End If
             ElseIf e.ColumnIndex = 3 Then
 
-                'If dtproductos.CurrentRow.Cells(1).Value = "" Then
-                selprod.busqueda = dtproductos.CurrentCell.Value()
-                selprod.fila = dtproductos.CurrentCellAddress.Y
-                'MsgBox(dtproductos.CurrentCellAddress.Y)
-                selprod.LLAMA = "prodlote"
-                cargaManual = True
-                selprod.Show()
-                selprod.TopMost = True
-                'End If
+                ''If dtproductos.CurrentRow.Cells(1).Value = "" Then
+                'selprod.busqueda = dtproductos.CurrentCell.Value()
+                'selprod.fila = dtproductos.CurrentCellAddress.Y
+                ''MsgBox(dtproductos.CurrentCellAddress.Y)
+                'selprod.LLAMA = "prodlote"
+                'cargaManual = True
+                'selprod.Show()
+                'selprod.TopMost = True
+                ''End If
             End If
 
             calcularPrecios()

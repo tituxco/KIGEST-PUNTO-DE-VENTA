@@ -844,7 +844,7 @@ Public Class nuevaventa
 
                 Dim numAsiento As Integer = ObtenerNumeroAsiento()
                     If tipoFact = 13 Then
-                    GuardarAsientoContable(numAsiento, cantidad, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                    GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
                                                "NOTA DE CREDITO " & txtrazon.Text, CDbl(total.Replace(".", ",")), ventaCta, CDbl(total.Replace(".", ",")), 11, 2, fecha)
                 ElseIf tipoFact = 11 Or tipoFact = 12 Then
                     GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
