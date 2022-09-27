@@ -58,12 +58,13 @@ Public Class CONTABLE
     End Sub
     Private Sub CONTABLE_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        dtdesdefact.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        dtpdecob.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
+        dtdesdefact.Value = obtenerPrimerDiaMes()
+        dtpdecob.Value = obtenerPrimerDiaMes()
         'dtpdeestado.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        dtpchequesde.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        dtpdesdedetallecta.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
-        dtdesdecuentaprov.Value = CDate("01-" & Month(Now) & "-" & Year(Now))
+        dtpchequesde.Value = obtenerPrimerDiaMes()
+        dtpdesdedetallecta.Value = obtenerPrimerDiaMes()
+        dtdesdecuentaprov.Value = obtenerPrimerDiaMes()
+        dtpgastosdesde.Value = obtenerPrimerDiaMes()
         balance.Parent = Nothing
         cmbMovimientosHistoricos.SelectedIndex = 1
         If InStr(DatosAcceso.Moduloacc, "CONFVAR") = False Then tabconfiguracion.Parent = Nothing
@@ -207,6 +208,20 @@ Public Class CONTABLE
             cmbinforalmacen.DataSource = readAlmacen.Tables(0)
             cmbinforalmacen.DisplayMember = readAlmacen.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbinforalmacen.ValueMember = readAlmacen.Tables(0).Columns(0).Caption.ToString
+
+            Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
+            Dim readCajas As New DataSet
+            tablaCajas.Fill(readCajas)
+            cmbGtosCaja.DataSource = readCajas.Tables(0)
+            cmbGtosCaja.DisplayMember = readCajas.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbGtosCaja.ValueMember = readCajas.Tables(0).Columns(0).Caption.ToString
+
+            Dim tablaConceptos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", conexionPrinc)
+            Dim readConceptos As New DataSet
+            tablaConceptos.Fill(readConceptos)
+            cmbGtosConcepto.DataSource = readConceptos.Tables(0)
+            cmbGtosConcepto.DisplayMember = readConceptos.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbGtosConcepto.ValueMember = readConceptos.Tables(0).Columns(0).Caption.ToString
 
             'cmbvendedor.SelectedIndex = -1
 
@@ -1476,10 +1491,10 @@ Public Class CONTABLE
             For i = 0 To list.RowCount - 1
                 If param = 1 Then
                     If list.Rows(i).Cells("ReciboAplicado").Value <> "" Then
-                        total += FormatNumber(list.Rows(i).Cells(columna).Value, 2)
+                        total += FormatNumber(list.Rows(i).Cells(columna).Value, 2, , , TriState.True)
                     End If
                 Else
-                    total += FormatNumber(list.Rows(i).Cells(columna).Value, 2)
+                    total += FormatNumber(list.Rows(i).Cells(columna).Value, 2, , , TriState.True)
                 End If
             Next
             Return total
@@ -2411,8 +2426,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub cmdAplicarRecibo_Click(sender As Object, e As EventArgs) Handles cmdAplicarRecibo.Click
         Try
-            If dtcuentaclie.CurrentRow.Cells(7).Value = 5 Then
-                MsgBox("aplicar recibo")
+            If dtcuentaclie.CurrentRow.Cells(7).Value = 996 Then
+                'MsgBox("aplicar recibo")
                 With selfac
                     .LLAMA = "ingreso"
                     .provclie = txtcuentabus.Text
@@ -5733,7 +5748,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
                 delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
                 delete  FROM fact_cuentaclie where idcomp=@idComprobante;
-                 delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
                 delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
                 delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
 
@@ -6089,6 +6104,78 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
+
+    End Sub
+
+    Private Sub Button49_Click(sender As Object, e As EventArgs) Handles Button49.Click
+        Dim EnProgreso As New Form
+        EnProgreso.ControlBox = False
+        EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        EnProgreso.Size = New Point(430, 30)
+        EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        EnProgreso.TopMost = True
+        Dim Etiqueta As New Label
+        Etiqueta.AutoSize = True
+        Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        Etiqueta.Location = New Point(5, 5)
+        EnProgreso.Controls.Add(Etiqueta)
+        'Dim Barra As New ProgressBar
+        'Barra.Style = ProgressBarStyle.Marquee
+        'Barra.Size = New Point(270, 40)
+        'Barra.Location = New Point(10, 30)
+        'Barra.Value = 100
+        'EnProgreso.Controls.Add(Barra)
+        EnProgreso.Show()
+        Application.DoEvents()
+
+        Try
+            Reconectar()
+            Dim columna As Integer
+            Dim desde As String = Format(CDate(dtpgastosdesde.Value), "yyyy-MM-dd")
+            Dim hasta As String = Format(CDate(dtpgastoshasta.Value), "yyyy-MM-dd")
+            Dim tablagtos As New DataTable
+            Dim consGtos As String
+
+
+            consGtos = " and Pfact.fecha between '" & desde & "' and '" & hasta & "'"
+
+            If cmbGtosConcepto.SelectedIndex = -1 Then
+                consGtos &= " and ie.concepto like '%' "
+            Else
+                consGtos &= " and ie.concepto like '" & cmbGtosConcepto.SelectedValue & "' "
+            End If
+
+            If cmbGtosCaja.SelectedIndex = -1 Then
+                consGtos &= " and ie.caja like '%' "
+            Else
+                consGtos &= " and ie.caja like '" & cmbGtosCaja.SelectedValue & "' "
+            End If
+
+            tablagtos.Clear()
+            ' Dim parambusq As String = " and fac.tipofact in ('5') "
+
+            'If rdefectivo.Checked = True Then
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  Pfact.fecha,ec.concepto, prov.razon,ie.descripcion as detalles, concat(tip.abrev,' ', Pfact.numero) as comprobante,format(replace(Pfact.monto,',','.'),2,'es_AR') as monto, caja.descripcion
+            FROM fact_proveedores_fact as Pfact, tipos_comprobantes as tip, fact_cajas as caja,
+            fact_proveedores as prov,fact_ingreso_egreso as ie, fact_egresos_concepto as ec
+            where Pfact.tipo=tip.donfdesc and Pfact.idproveedor=prov.id and ie.comprobante=Pfact.id and Pfact.tipo=993 and ec.id= ie.concepto and ie.tipo=2
+            and caja.id=ie.caja            
+            " & consGtos & "
+            order by Pfact.fecha asc", conexionPrinc)
+            columna = 5
+            consulta.Fill(tablagtos)
+            dgvgastos.DataSource = tablagtos
+            'dtlistacob.Columns(0).Visible = False
+            'End If
+            lblGtosTot.Text = SumarTotal(dgvgastos, columna, 0)
+            EnProgreso.Close()
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            EnProgreso.Close()
+        End Try
+    End Sub
+
+    Private Sub DateTimePicker2_ValueChanged(sender As Object, e As EventArgs) Handles dtpgastoshasta.ValueChanged
 
     End Sub
 End Class

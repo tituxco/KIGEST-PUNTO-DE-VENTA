@@ -54,7 +54,7 @@
                         Dim i As Integer
                         For i = 0 To dtfacturas.RowCount - 1
                             If dtfacturas.Rows(i).Selected = True Then
-                                Dim consupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_facturas set observaciones = '" & fila & "' where id=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
+                                Dim consupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_facturas set observaciones2 = '" & fila & "' where id=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
                                 Dim consupd2 As New MySql.Data.MySqlClient.MySqlCommand("update fact_cuentaclie set pago = 1 where idcomp=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
                                 consupd.ExecuteNonQuery()
                                 consupd2.ExecuteNonQuery()
@@ -98,7 +98,7 @@
                             Dim i As Integer
                             For i = 0 To dtfacturas.RowCount - 1
                                 If dtfacturas.Rows(i).Selected = True Then
-                                    Dim consupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_facturas set observaciones = '" & fila & "' where id=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
+                                    Dim consupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_facturas set observaciones2 = '" & fila & "' where id=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
                                     Dim consupd2 As New MySql.Data.MySqlClient.MySqlCommand("update fact_cuentaclie set pago = 1 where idcomp=" & dtfacturas.Rows(i).Cells(4).Value, conexionPrinc)
                                     consupd.ExecuteNonQuery()
                                     consupd2.ExecuteNonQuery()

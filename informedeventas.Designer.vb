@@ -26,6 +26,8 @@ Partial Class informedeventas
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -35,8 +37,6 @@ Partial Class informedeventas
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim ChartArea1 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Legend1 As System.Windows.Forms.DataVisualization.Charting.Legend = New System.Windows.Forms.DataVisualization.Charting.Legend()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.pndatosgenerales = New System.Windows.Forms.Panel()
@@ -109,6 +109,7 @@ Partial Class informedeventas
         Me.tabseguimientoVendedores = New System.Windows.Forms.TabPage()
         Me.dgvHistorialVtasCliente = New System.Windows.Forms.DataGridView()
         Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
         Me.txtmeseshistorial = New System.Windows.Forms.TextBox()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label16 = New System.Windows.Forms.Label()
@@ -118,6 +119,7 @@ Partial Class informedeventas
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.tabseguimientoProductos = New System.Windows.Forms.TabPage()
+        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.cmbseguimientoProductosVendedores = New System.Windows.Forms.ComboBox()
@@ -167,8 +169,6 @@ Partial Class informedeventas
         Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.cmdbuscar = New System.Windows.Forms.Button()
-        Me.Chart1 = New System.Windows.Forms.DataVisualization.Charting.Chart()
-        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pndatosgenerales.SuspendLayout()
@@ -191,6 +191,7 @@ Partial Class informedeventas
         Me.tabseguimientoVendedores.SuspendLayout()
         CType(Me.dgvHistorialVtasCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel5.SuspendLayout()
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel8.SuspendLayout()
         Me.tabseguimientoProductos.SuspendLayout()
         Me.Panel7.SuspendLayout()
@@ -210,7 +211,6 @@ Partial Class informedeventas
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpperiodo.SuspendLayout()
-        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -1107,6 +1107,18 @@ Partial Class informedeventas
         Me.Panel5.Size = New System.Drawing.Size(1212, 74)
         Me.Panel5.TabIndex = 3
         '
+        'Chart1
+        '
+        ChartArea1.Name = "ChartArea1"
+        Me.Chart1.ChartAreas.Add(ChartArea1)
+        Legend1.Name = "Legend1"
+        Me.Chart1.Legends.Add(Legend1)
+        Me.Chart1.Location = New System.Drawing.Point(350, 0)
+        Me.Chart1.Name = "Chart1"
+        Me.Chart1.Size = New System.Drawing.Size(700, 74)
+        Me.Chart1.TabIndex = 74
+        Me.Chart1.Text = "Chart1"
+        '
         'txtmeseshistorial
         '
         Me.txtmeseshistorial.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -1213,6 +1225,14 @@ Partial Class informedeventas
         Me.tabseguimientoProductos.TabIndex = 2
         Me.tabseguimientoProductos.Text = "SEGUIMIENTO DE PRODUCTOS"
         Me.tabseguimientoProductos.UseVisualStyleBackColor = True
+        '
+        'dgvSeguimientoProductos
+        '
+        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
+        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
+        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
+        Me.dgvSeguimientoProductos.TabIndex = 6
         '
         'Panel7
         '
@@ -1874,26 +1894,6 @@ Partial Class informedeventas
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdbuscar.UseVisualStyleBackColor = False
         '
-        'Chart1
-        '
-        ChartArea1.Name = "ChartArea1"
-        Me.Chart1.ChartAreas.Add(ChartArea1)
-        Legend1.Name = "Legend1"
-        Me.Chart1.Legends.Add(Legend1)
-        Me.Chart1.Location = New System.Drawing.Point(350, 0)
-        Me.Chart1.Name = "Chart1"
-        Me.Chart1.Size = New System.Drawing.Size(700, 74)
-        Me.Chart1.TabIndex = 74
-        Me.Chart1.Text = "Chart1"
-        '
-        'dgvSeguimientoProductos
-        '
-        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
-        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
-        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
-        Me.dgvSeguimientoProductos.TabIndex = 6
-        '
         'informedeventas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1937,6 +1937,7 @@ Partial Class informedeventas
         CType(Me.dgvHistorialVtasCliente, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel5.ResumeLayout(False)
         Me.Panel5.PerformLayout()
+        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel8.ResumeLayout(False)
         Me.Panel8.PerformLayout()
         Me.tabseguimientoProductos.ResumeLayout(False)
@@ -1967,7 +1968,6 @@ Partial Class informedeventas
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpperiodo.ResumeLayout(False)
         Me.grpperiodo.PerformLayout()
-        CType(Me.Chart1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
