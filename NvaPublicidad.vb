@@ -88,6 +88,9 @@
 
     Private Sub GeneraPrestamo()
 
+
+
+
         If txtCuota.Text = "" Or txtCuota.Text = "0" Then
             MsgBox("debe calcular primero la cuota")
             Exit Sub
