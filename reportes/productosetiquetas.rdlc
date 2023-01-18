@@ -24,7 +24,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!PLU.Value</Value>
+                                  <Value>="Cod: " &amp; Fields!PLU.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -81,9 +81,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="Precio: $" &amp; Fields!precio.Value</Value>
+                                  <Value>="$" &amp; Fields!precio.Value</Value>
                                   <Style>
-                                    <FontSize>20pt</FontSize>
+                                    <FontSize>15pt</FontSize>
+                                    <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
                               </TextRuns>

@@ -325,7 +325,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>MONTO TOTAL</Value>
+                                  <Value>MONTO MENSUAL</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
@@ -594,14 +594,14 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="MONTO_TOTAL">
+                        <Textbox Name="MONTO_MENSUAL">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!MONTO_TOTAL.Value</Value>
+                                  <Value>=Fields!MONTO_MENSUAL.Value</Value>
                                   <Style>
                                     <FontSize>8pt</FontSize>
                                   </Style>
@@ -610,7 +610,7 @@
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>MONTO_TOTAL</rd:DefaultName>
+                          <rd:DefaultName>MONTO_MENSUAL</rd:DefaultName>
                           <Style>
                             <Border>
                               <Style>Solid</Style>

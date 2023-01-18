@@ -1620,7 +1620,7 @@ Public Class productos
             If cmbcatProdGral.SelectedValue > 0 Then
                 catsel = " where categoria =" & cmbcatProdGral.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<6 "
             Else
-                catsel = "where length(" & My.Settings.obtCodProd & ")<6 "
+                catsel = " where length(" & My.Settings.obtCodProd & ")<6 "
             End If
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 as ProxCod FROM fact_insumos " & catsel &

@@ -448,15 +448,13 @@
                 Else
                     'MsgBox("Producto existe, no se agrega")
                     producto.Cells(0).Value = IdProductoObtener(codbar)
-                    Dim sqlQuery = "update fact_insumos set precio=?precio, ganancia=?util0, utilidad1=?util1,utilidad2=?util2 where id=?idProducto"
+                    Dim sqlQuery = "update fact_insumos set precio=?precio, ganancia=?util0 where id=?idProducto"
 
                     Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                     With comandoadd.Parameters
                         .AddWithValue("?idProducto", IdProductoObtener(codbar))
                         .AddWithValue("?precio", precio)
                         .AddWithValue("?util0", util0)
-                        .AddWithValue("?util1", util1)
-                        .AddWithValue("?util2", util2)
                     End With
                     comandoadd.ExecuteNonQuery()
                 End If

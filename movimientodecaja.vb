@@ -1202,4 +1202,17 @@
         CalcularTotalesMovimiento()
 
     End Sub
+
+    Private Sub dttarjetas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dttarjetas.CellContentClick
+
+    End Sub
+
+    Private Sub dttarjetas_RowLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dttarjetas.RowLeave
+        'Dim row As DataGridViewRow = dttarjetas.Rows(e.RowIndex)
+        'For Each cell As DataGridViewCell In row.Cells
+        '    If IsNothing(cell.Value) And row.Index = dttarjetas.RowCount - 1 Then
+        '        MsgBox("debe completar todos los campos requeridos de tarjeta  " & e.RowIndex & " de " & dttarjetas.RowCount)
+        '    End If
+        'Next
+    End Sub
 End Class

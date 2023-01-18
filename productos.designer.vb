@@ -24,13 +24,13 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -71,7 +71,6 @@ Partial Class productos
         Me.cmbpresentacion = New System.Windows.Forms.ComboBox()
         Me.Label27 = New System.Windows.Forms.Label()
         Me.cmbunidades = New System.Windows.Forms.ComboBox()
-        Me.chkpreciobase = New System.Windows.Forms.CheckBox()
         Me.Label13 = New System.Windows.Forms.Label()
         Me.cmbcatprod = New System.Windows.Forms.ComboBox()
         Me.txtcodigo = New System.Windows.Forms.TextBox()
@@ -208,6 +207,7 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.chkpreciobase = New System.Windows.Forms.CheckBox()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -549,7 +549,6 @@ Partial Class productos
         Me.TabPage1.Controls.Add(Me.cmbpresentacion)
         Me.TabPage1.Controls.Add(Me.Label27)
         Me.TabPage1.Controls.Add(Me.cmbunidades)
-        Me.TabPage1.Controls.Add(Me.chkpreciobase)
         Me.TabPage1.Controls.Add(Me.Label13)
         Me.TabPage1.Controls.Add(Me.cmbcatprod)
         Me.TabPage1.Controls.Add(Me.txtcodigo)
@@ -762,20 +761,6 @@ Partial Class productos
         Me.cmbunidades.Name = "cmbunidades"
         Me.cmbunidades.Size = New System.Drawing.Size(170, 24)
         Me.cmbunidades.TabIndex = 231
-        '
-        'chkpreciobase
-        '
-        Me.chkpreciobase.AutoSize = True
-        Me.chkpreciobase.Checked = True
-        Me.chkpreciobase.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkpreciobase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkpreciobase.Location = New System.Drawing.Point(554, 24)
-        Me.chkpreciobase.Name = "chkpreciobase"
-        Me.chkpreciobase.Size = New System.Drawing.Size(132, 20)
-        Me.chkpreciobase.TabIndex = 230
-        Me.chkpreciobase.Text = "Calcular precio"
-        Me.chkpreciobase.UseVisualStyleBackColor = True
-        Me.chkpreciobase.Visible = False
         '
         'Label13
         '
@@ -1129,6 +1114,7 @@ Partial Class productos
         '
         'tabcostos
         '
+        Me.tabcostos.Controls.Add(Me.chkpreciobase)
         Me.tabcostos.Controls.Add(Me.grpImpuestosCombustibles)
         Me.tabcostos.Controls.Add(Me.txtutilidad5)
         Me.tabcostos.Controls.Add(Me.lblutilidad5)
@@ -2157,18 +2143,18 @@ Partial Class productos
         '
         'Column4
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle15.Format = "N2"
+        DataGridViewCellStyle15.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle15
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle2.Format = "C3"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle16.Format = "C3"
+        DataGridViewCellStyle16.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle16
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -2197,9 +2183,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle17.Format = "N2"
+        DataGridViewCellStyle17.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -2208,9 +2194,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle18.Format = "C2"
+        DataGridViewCellStyle18.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle18
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -2220,9 +2206,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle19.Format = "C2"
+        DataGridViewCellStyle19.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle19
         Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn4.HeaderText = "%"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
@@ -2241,9 +2227,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle20.Format = "N2"
+        DataGridViewCellStyle20.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle20
         Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn6.HeaderText = "idpromo"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
@@ -2251,9 +2237,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle7.Format = "C2"
-        DataGridViewCellStyle7.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle21.Format = "C2"
+        DataGridViewCellStyle21.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle21
         Me.DataGridViewTextBoxColumn7.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "DESCRIPCION"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -2277,6 +2263,20 @@ Partial Class productos
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
+        '
+        'chkpreciobase
+        '
+        Me.chkpreciobase.AutoSize = True
+        Me.chkpreciobase.Checked = True
+        Me.chkpreciobase.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkpreciobase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkpreciobase.Location = New System.Drawing.Point(663, 103)
+        Me.chkpreciobase.Name = "chkpreciobase"
+        Me.chkpreciobase.Size = New System.Drawing.Size(132, 20)
+        Me.chkpreciobase.TabIndex = 245
+        Me.chkpreciobase.Text = "Calcular precio"
+        Me.chkpreciobase.UseVisualStyleBackColor = True
+        Me.chkpreciobase.Visible = False
         '
         'productos
         '
@@ -2397,7 +2397,6 @@ Partial Class productos
     Friend WithEvents Panel3 As System.Windows.Forms.Panel
     Friend WithEvents txtcodigo As System.Windows.Forms.TextBox
     Friend WithEvents Label35 As System.Windows.Forms.Label
-    Friend WithEvents chkpreciobase As System.Windows.Forms.CheckBox
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents tabimporlista As System.Windows.Forms.TabPage
     Friend WithEvents Panel2 As System.Windows.Forms.Panel
@@ -2514,4 +2513,5 @@ Partial Class productos
     Friend WithEvents Column5 As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents chkpreciobase As CheckBox
 End Class

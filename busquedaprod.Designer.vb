@@ -85,6 +85,8 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.txtInfoExtraProducto = New System.Windows.Forms.TextBox()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel4.SuspendLayout()
@@ -100,6 +102,7 @@ Partial Class busquedaprod
         Me.Panel3.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -152,7 +155,7 @@ Partial Class busquedaprod
         Me.chkstock.ForeColor = System.Drawing.Color.White
         Me.chkstock.Location = New System.Drawing.Point(560, 63)
         Me.chkstock.Name = "chkstock"
-        Me.chkstock.Size = New System.Drawing.Size(121, 20)
+        Me.chkstock.Size = New System.Drawing.Size(120, 20)
         Me.chkstock.TabIndex = 183
         Me.chkstock.Text = "Solo en stock"
         Me.chkstock.UseVisualStyleBackColor = True
@@ -175,7 +178,7 @@ Partial Class busquedaprod
         Me.Label36.ForeColor = System.Drawing.Color.White
         Me.Label36.Location = New System.Drawing.Point(422, 43)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(95, 16)
+        Me.Label36.Size = New System.Drawing.Size(94, 16)
         Me.Label36.TabIndex = 182
         Me.Label36.Text = "Ordenar por:"
         '
@@ -238,7 +241,7 @@ Partial Class busquedaprod
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(6, 16)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(80, 16)
+        Me.Label7.Size = New System.Drawing.Size(79, 16)
         Me.Label7.TabIndex = 166
         Me.Label7.Text = "Categoria:"
         '
@@ -293,7 +296,7 @@ Partial Class busquedaprod
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(422, 3)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(81, 16)
+        Me.Label2.Size = New System.Drawing.Size(80, 16)
         Me.Label2.TabIndex = 176
         Me.Label2.Text = "Proveedor"
         '
@@ -390,6 +393,7 @@ Partial Class busquedaprod
         'Panel1
         '
         Me.Panel1.AutoScroll = True
+        Me.Panel1.Controls.Add(Me.GroupBox4)
         Me.Panel1.Controls.Add(Me.GroupBox3)
         Me.Panel1.Controls.Add(Me.GroupBox2)
         Me.Panel1.Controls.Add(Me.grplistasImprimir)
@@ -411,9 +415,9 @@ Partial Class busquedaprod
         Me.GroupBox3.Controls.Add(Me.PictureBox1)
         Me.GroupBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.GroupBox3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.GroupBox3.Location = New System.Drawing.Point(6, 317)
+        Me.GroupBox3.Location = New System.Drawing.Point(6, 548)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(326, 562)
+        Me.GroupBox3.Size = New System.Drawing.Size(326, 331)
         Me.GroupBox3.TabIndex = 234
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Extras "
@@ -471,7 +475,7 @@ Partial Class busquedaprod
         Me.Label4.ForeColor = System.Drawing.Color.Black
         Me.Label4.Location = New System.Drawing.Point(6, 179)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(177, 16)
+        Me.Label4.Size = New System.Drawing.Size(176, 16)
         Me.Label4.TabIndex = 3
         Me.Label4.Text = "Imagen de Promo SLIDE"
         '
@@ -491,7 +495,7 @@ Partial Class busquedaprod
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(6, 21)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(146, 16)
+        Me.Label3.Size = New System.Drawing.Size(145, 16)
         Me.Label3.TabIndex = 1
         Me.Label3.Text = "Imagen de producto"
         '
@@ -764,6 +768,28 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn7.Visible = False
         Me.DataGridViewTextBoxColumn7.Width = 317
         '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.txtInfoExtraProducto)
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.GroupBox4.Location = New System.Drawing.Point(6, 317)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(329, 144)
+        Me.GroupBox4.TabIndex = 235
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Información extra del producto"
+        '
+        'txtInfoExtraProducto
+        '
+        Me.txtInfoExtraProducto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtInfoExtraProducto.Location = New System.Drawing.Point(3, 18)
+        Me.txtInfoExtraProducto.Multiline = True
+        Me.txtInfoExtraProducto.Name = "txtInfoExtraProducto"
+        Me.txtInfoExtraProducto.Size = New System.Drawing.Size(323, 123)
+        Me.txtInfoExtraProducto.TabIndex = 0
+        Me.txtInfoExtraProducto.Text = "Detalles:"
+        '
         'busquedaprod
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -796,6 +822,8 @@ Partial Class busquedaprod
         Me.Panel3.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -858,4 +886,6 @@ Partial Class busquedaprod
     Friend WithEvents cmbOrdenarPor As ComboBox
     Friend WithEvents Label36 As Label
     Friend WithEvents chkstock As CheckBox
+    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents txtInfoExtraProducto As TextBox
 End Class

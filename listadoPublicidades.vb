@@ -7,6 +7,7 @@
         Dim morosoBusq As String = ""
         Dim clienteBusq As String = ""
         Dim facturadosBusq As String = ""
+        Dim vendedorBusq As String = ""
         fechaBusq = " having FIN >= '" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "'" ' and FIN >="
 
         If chkSoloMorosos.Checked = True Then
@@ -21,10 +22,14 @@
             facturadosBusq = " and FACTURA_ACTUAL IS NULL "
         End If
 
+        If cmbvendedor.SelectedIndex <> -1 Then
+            vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
+        End If
+
         Reconectar()
         If rdvigentes.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,(SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO, 
-		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
+		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
 	    	where DTP.ID_PRESTAMO 
@@ -47,10 +52,10 @@
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
-        fechaBusq & morosoBusq & clienteBusq & facturadosBusq)
+        fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq)
         ElseIf rdAVencer.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
-		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
+        (select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
 	    	where DTP.ID_PRESTAMO 
@@ -73,10 +78,10 @@
         cl.vendedor
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
-        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')")
+        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq)
         ElseIf rdOper.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
-		date_sub((select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO), interval 1 month) as FIN,
+		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
 		pr.CONCEPTO,
         pr.OBSERVACIONES,        		
@@ -150,6 +155,14 @@
     End Sub
 
     Private Sub listadoPublicidades_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", conexionPrinc)
+        Dim readvend As New DataSet
+        tablavend.Fill(readvend)
+        cmbvendedor.DataSource = readvend.Tables(0)
+        cmbvendedor.DisplayMember = readvend.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
+
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         If InStr(DatosAcceso.Moduloacc, "OPERADORRAD") <> 0 Then
             rdOper.Checked = True
@@ -264,14 +277,28 @@
 
             Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
             'Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
-            Dim parambusq As String = ""
-            Dim vendedor As String
-            If cmbvendedor.SelectedValue = 0 Then
-                vendedor = "TODOS"
-            Else
-                vendedor = cmbvendedor.Text
+            Dim fechaBusq As String = ""
+            Dim morosoBusq As String = ""
+            Dim clienteBusq As String = ""
+            Dim facturadosBusq As String = ""
+            Dim vendedorBusq As String = ""
+            fechaBusq = " having FIN >= '" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "'" ' and FIN >="
+
+            If chkSoloMorosos.Checked = True Then
+                morosoBusq = " and MOROSO_MESES>0 "
             End If
-            'MsgBox(vendedor)
+
+            If txtbuscar.Text <> "" Then
+                clienteBusq = " and CLIENTE LIKE '%" & txtbuscar.Text.Replace(" ", "%") & "%' "
+            End If
+
+            If chksinFact.Checked = True Then
+                facturadosBusq = " and FACTURA_ACTUAL IS NULL "
+            End If
+
+            If cmbvendedor.SelectedIndex <> -1 Then
+                vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
+            End If
             Reconectar()
 
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
@@ -281,32 +308,66 @@
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
+            Dim consultatxt = ""
 
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
-            date_sub((select MAX(fecha) from rym_detalle_prestamo As DTP where DTP.ID_PRESTAMO= pr.ID_PRESTAMO), interval 1 month) As FIN,
-        cl.idclientes, cl.nomapell_razon As CLIENTE, pr.DESCRIPCION As DESCRIPCION,        
+            If rdvigentes.Checked = True Then
+                consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,(SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO, 
+		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
+        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
 	    	where DTP.ID_PRESTAMO 
-		    Not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO And DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
-            And DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
             )AS MESES_DEBE,
         (select count(*) from rym_detalle_prestamo as DTP 
 		    where DTP.ID_PRESTAMO 
-		    Not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
-            And DTP.ID_PRESTAMO=pr.ID_PRESTAMO And DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
             )AS MOROSO_MESES,        
-        round(pr.MONTO_PRESTAMO, 2) As MONTO_TOTAL, round(pr.CUOTA,2) As MONTO_MENSUAL, 
-        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)As SALDO, pr.CONCEPTO,
+        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
         pr.OBSERVACIONES,
         (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
-        fact_facturas As fact, fact_items As itm, tipos_comprobantes as comp where
-        itm.id_fact = fact.id And fact.tipofact = comp.donfdesc And
-        itm.plu Like concat('%#',pr.ID_PRESTAMO,'%') and
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-            cl.vendedor
-            From rym_prestamo As pr, fact_clientes As cl
-            Where pr.ID_CLIENTE = cl.idclientes
-            having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')", conexionPrinc)
+        cl.vendedor
+        FROM rym_prestamo as pr, fact_clientes as cl
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
+            fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & " order by ID_PUBLICIDAD asc"
+            ElseIf rdAVencer.Checked = True Then
+                consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
+        (select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
+        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+        (select count(*) from rym_detalle_prestamo as DTP 
+	    	where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+            )AS MESES_DEBE,
+        (select count(*) from rym_detalle_prestamo as DTP 
+		    where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+            )AS MOROSO_MESES,        
+        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,
+        pr.OBSERVACIONES,
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+        cl.vendedor
+        FROM rym_prestamo as pr, fact_clientes as cl
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
+        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & " order by ID_PUBLICIDAD asc"
+
+            End If
+
+
+
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand(consultatxt, conexionPrinc)
             'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.SelectCommand.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
             '.Add("@DIASMORA", txtdiasmora.Text)

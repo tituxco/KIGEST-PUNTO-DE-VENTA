@@ -277,7 +277,7 @@ Public Class CONTABLE
 
                 parambusq = " and fact.tipofact=" & cmbtipofac.SelectedValue & " and fact.ptovta=" & SelPtoVta
             ElseIf cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = True Then
-                parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where debcred like 'D')"
+                parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where tip =1)"
             End If
             If cmbinforalmacen.SelectedValue = 0 Then
                 consAlmacen = " and itm.idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
@@ -1664,7 +1664,8 @@ Public Class CONTABLE
                 (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo	
                 FROM fact_facturas as fact 
                 where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
-                "order by id desc", conexionPrinc)
+                " having totalEfectivo<>0
+                order by id desc", conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
@@ -3921,7 +3922,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & idCuentaSel & " or 
                 asi.cuentaHaberId=" & idCuentaSel & ")
-                order by LM.fecha asc,LD.comprobanteInterno  asc", conexionPrinc)
+                order by LM.fecha asc,LD.id asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 Dim saldoDeudor As Double = 0
@@ -4832,7 +4833,16 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             saldoFinal += partida.Cells(7).Value
             ' End If
         Next
-        dgvTotales.Rows.Add("", "", "", "", debitosMes, creditosMes, saldoMes, saldoFinal)
+        dgvTotales.Columns(0).Visible = False
+        dgvTotales.Columns(1).Width = dgvListadoCuentaConSaldos.Columns("numCuenta").Width
+        dgvTotales.Columns(2).Width = dgvListadoCuentaConSaldos.Columns("nombreCuenta").Width
+        dgvTotales.Columns(3).Width = dgvListadoCuentaConSaldos.Columns("saldoAnterior").Width
+        dgvTotales.Columns(4).Width = dgvListadoCuentaConSaldos.Columns("debitosMes").Width
+        dgvTotales.Columns(5).Width = dgvListadoCuentaConSaldos.Columns("creditosMes").Width
+        dgvTotales.Columns(6).Width = dgvListadoCuentaConSaldos.Columns("saldoMes").Width
+        dgvTotales.Columns(7).Width = dgvListadoCuentaConSaldos.Columns("saldoFinal").Width
+
+        dgvTotales.Rows.Add("", "", "", "", FormatNumber(debitosMes, 2), FormatNumber(creditosMes, 2), FormatNumber(saldoMes, 2), FormatNumber(saldoFinal, 2))
 
 
     End Sub
@@ -5221,6 +5231,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Button26_Click_1(sender As Object, e As EventArgs) Handles Button26.Click
+        Dialog1.periodo = cmbperiodoLibroDiario.Text
         Dialog1.Show()
 
     End Sub
@@ -6159,7 +6170,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             FROM fact_proveedores_fact as Pfact, tipos_comprobantes as tip, fact_cajas as caja,
             fact_proveedores as prov,fact_ingreso_egreso as ie, fact_egresos_concepto as ec
             where Pfact.tipo=tip.donfdesc and Pfact.idproveedor=prov.id and ie.comprobante=Pfact.id and Pfact.tipo=993 and ec.id= ie.concepto and ie.tipo=2
-            and caja.id=ie.caja            
+            and caja.id=ie.caja and tip.ptovta=caja.id            
             " & consGtos & "
             order by Pfact.fecha asc", conexionPrinc)
             columna = 5
@@ -6177,5 +6188,16 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub DateTimePicker2_ValueChanged(sender As Object, e As EventArgs) Handles dtpgastoshasta.ValueChanged
 
+    End Sub
+
+    Private Sub Button50_Click(sender As Object, e As EventArgs) Handles Button50.Click
+
+        For Each fila As DataGridViewRow In dgvLibroMayor.Rows
+            If fila.Cells("Concepto").Value.ToString().Contains("PUBLICIDAD ") Then
+                fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("PUBLICIDAD ", "")
+            ElseIf fila.Cells("Concepto").Value.ToString().Contains("PAGO FACTURA ") Then
+                fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("PAGO FACTURA ", "")
+            End If
+        Next
     End Sub
 End Class

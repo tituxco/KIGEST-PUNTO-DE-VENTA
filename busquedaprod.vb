@@ -124,6 +124,9 @@ Public Class busquedaprod
                 consulta.Fill(tablaprod)
 
                 dgvProductos.Cargar_Datos(tablaprod)
+                dgvProductos.dgvVista.Columns("PLU").Width = 100
+                dgvProductos.dgvVista.Columns("Stock").Width = 100
+
                 'dtproductos.DataSource = tablaprod
 
 
@@ -136,7 +139,7 @@ Public Class busquedaprod
                 Dim fac As New datosfacturas
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.id as CodInterno, pro.descripcion, pro.codigo as PLU,
                 (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock,   
-                case (select position('%' in listas.utilidad) from fact_listas_precio as listas where listas.id=@idlst)
+                case (select valor from fact_configuraciones where id=7)
                 when 0 then
                 format(
 						replace(replace(pro.precio,'.',''),',','.') *
@@ -160,10 +163,25 @@ Public Class busquedaprod
 				,2,'es_AR')
                 when 1 then
                 format(
+
 						replace(replace(pro.precio,'.',''),',','.') *
 						((select mon.cotizacion from fact_moneda as mon where mon.id=pro.moneda)) *
-						((pro.iva+100)/100) *						
-						(((select substring(listas.utilidad from 2) from fact_listas_precio as listas where listas.id=@idlst)+100)/100)
+						((pro.iva+100)/100) *((
+                        case(select listas.auxcol from fact_listas_precio as listas where listas.id=@idlst) 
+							when 0 then
+								((replace(replace(pro.ganancia,'.',''),',','.') +100)/100)
+							when 1 then
+								((replace(replace(pro.utilidad1,'.',''),',','.')+100)/100)
+							when 2 then
+								((replace(replace(pro.utilidad2,'.',''),',','.')+100)/100)
+							when 3 then
+								((replace(replace(pro.utilidad3,'.',''),',','.')+100)/100)
+							when 4 then
+								((replace(replace(pro.utilidad4,'.',''),',','.')+100)/100)
+							when 5 then
+								((replace(replace(pro.utilidad5,'.',''),',','.')+100)/100)
+                                end +
+                        (((select listas.utilidad from fact_listas_precio as listas where listas.id=@idlst)+100)/100))-1)
 				,2,'es_AR')
                 end as precio, 
                 
@@ -273,7 +291,7 @@ Public Class busquedaprod
     Public Sub calcularPrecios(idProd As Integer)
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select prod.precio, (select mon.cotizacion from fact_moneda as mon where mon.id=prod.moneda) as cotizacion,  " &
-            "prod.iva, prod.ganancia,prod.utilidad1,prod.utilidad2,prod.utilidad3,prod.utilidad4,prod.utilidad5 from fact_insumos as prod where prod.id=" & idProd, conexionPrinc)
+            "prod.iva, prod.ganancia,prod.utilidad1,prod.utilidad2,prod.utilidad3,prod.utilidad4,prod.utilidad5,prod.detalles from fact_insumos as prod where prod.id=" & idProd, conexionPrinc)
             Dim tablaprod As New DataTable
             Dim infoprod() As DataRow
             consultaPRod.Fill(tablaprod)
@@ -292,6 +310,7 @@ Public Class busquedaprod
 
             Dim costoUtil As Double
             Dim costoFinal As Double
+            txtInfoExtraProducto.Text = "Detalles:" & vbNewLine & infoprod(0)("detalles").ToString
 
             costoFinal = precioCosto * iva * cotizacion
 
@@ -627,4 +646,7 @@ Public Class busquedaprod
         End Try
     End Sub
 
+    Private Sub dgvProductos_Load(sender As Object, e As EventArgs) Handles dgvProductos.Load
+
+    End Sub
 End Class

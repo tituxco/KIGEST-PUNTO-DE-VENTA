@@ -29,21 +29,35 @@
         dgvPublicidad.Columns.Add("Fechavencimiento", "Fecha Vencimiento")
         dgvPublicidad.Columns.Add("Montomensual", "Monto Mensual")
 
-        Dim fecha As String = Format(CDate(DateTimePicker1.Value.AddMonths(1)), "yyyy-MM-dd")
+
+
 
         Dim Plazo As Integer = txtPlazo.Text
         Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
         Dim InteresAnual As Double = FormatNumber(txtTasaAnual.Text, 2)
         Dim capitalAmortizado As Double = 0
-        Dim FechaPago As Date = DateTimePicker1.Value.AddMonths(1)
+        Dim fechaVenc As Date
+        Dim FechaGuardar As String
+        Dim FechaPago As Date
+
+
+        If chkAdelantado.Checked = True Then
+            FechaPago = DateTimePicker1.Value
+            fechaVenc = DateTimePicker1.Value.AddDays(-1)
+            'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+        Else
+            'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+            FechaPago = DateTimePicker1.Value.AddMonths(1).AddDays(-1)
+        End If
+
+
         Dim MiCuota As Double = 0
 
         Dim SaldoInicial As Double = FormatNumber(txtmonto.Text, 2)
         Dim CapitalPagado As Double = 0
         Dim InteresPagado As Double = 0
         Dim capitalRestante As Double = FormatNumber(txtmonto.Text, 2)
-
-        MsgBox(FechaPago)
+        'MsgBox(FechaPago)
         For i As Integer = 1 To Plazo
             '    MsgBox(fecha)
             MiCuota = txtCuota.Text
@@ -53,10 +67,18 @@
             capitalAmortizado = capitalAmortizado + CapitalPagado
 
             'cuotaPrestamo = tablaPrestamo.NewRow
-            dgvPublicidad.Rows.Add(fecha, MiCuota)
+            If chkAdelantado.Checked = True And i = 1 Then
+                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
+                FechaPago = fechaVenc
+            Else
+                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
+            End If
+
+            dgvPublicidad.Rows.Add(FechaGuardar, MiCuota)
+
 
             FechaPago = FechaPago.AddMonths(1)
-            fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
+            'FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
             SaldoInicial = SaldoInicial - CapitalPagado
         Next
 
@@ -97,10 +119,24 @@
 
         NoPrestamo = NoPrestamo.ToString.PadLeft(5, "0")
         txtPrestamo.Text = NoPrestamo
-        Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+
+        Dim fechaVenc As Date
+        Dim FechaGuardar As String
+        Dim FechaPago As Date
+
+        If chkAdelantado.Checked = True Then
+            FechaPago = DateTimePicker1.Value
+            fechaVenc = DateTimePicker1.Value.AddDays(-1)
+            FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+        Else
+            FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+            FechaPago = DateTimePicker1.Value.AddMonths(1).AddDays(-1)
+        End If
+
+        'Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
 
         Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto,observaciones) 
-        values('" & NoPrestamo & "','" & fecha & "','" & idCliente & "','" & txtPlazo.Text & "','" &
+        values('" & NoPrestamo & "','" & FechaGuardar & "','" & idCliente & "','" & txtPlazo.Text & "','" &
         txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "','" & txtObservaciones.Text.ToUpper & "')", Today.Date)
 
 
@@ -108,8 +144,6 @@
         Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
         Dim InteresAnual As Double = FormatNumber(txtTasaAnual.Text, 2)
         Dim capitalAmortizado As Double = 0
-        Dim FechaPago As Date = CDate(fecha).AddMonths(1) 'DateTimePicker1.Value.AddMonths(1) 'DateTimePicker1.Value
-        fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
         Dim MiCuota As Double = 0
 
         Dim SaldoInicial As Double = FormatNumber(txtmonto.Text, 2)
@@ -125,13 +159,21 @@
             capitalRestante = capitalRestante - CapitalPagado
             capitalAmortizado = capitalAmortizado + CapitalPagado
 
+
+            If chkAdelantado.Checked = True And i = 1 Then
+                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
+                FechaPago = fechaVenc
+            Else
+                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
+            End If
+
             Operaciones.Guardar("insert into rym_detalle_prestamo(id_prestamo,periodo,fecha,cuota,interes,amortizacion,capital_restante,capital_amortizado,
             amortizacion_anticipada) 
-            values('" & NoPrestamo & "','" & i & "','" & fecha & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
+            values('" & NoPrestamo & "','" & i & "','" & FechaGuardar & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
             FormatNumber(CapitalPagado, 2) & "','" & FormatNumber(capitalRestante, 2) & "','" & FormatNumber(capitalAmortizado, 2) & "',0)", Today.Date)
 
             FechaPago = FechaPago.AddMonths(1)
-            fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
+            'fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
 
             SaldoInicial = SaldoInicial - CapitalPagado
             'MsgBox(MiCuota & "-" & InteresPagado & "-" & capitalRestante & "-" & capitalRestante & "-" & capitalAmortizado)
@@ -182,11 +224,11 @@
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
 		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO,
-        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        (select group_concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
-        date_format(fact.fecha,'%Y-%m') = date_format(DTP.FECHA,'%Y-%m') 
+        date_format(fact.fecha,'%Y-%m') = date_format(DTP.FECHA,'%Y-%m')
         ) AS FACTURA
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
         Reconectar()
@@ -312,5 +354,9 @@
     Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Nva " & DatosAcceso.ServMensual
         Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
+    End Sub
+
+    Private Sub chkAdelantado_CheckedChanged(sender As Object, e As EventArgs) Handles chkAdelantado.CheckedChanged
+
     End Sub
 End Class

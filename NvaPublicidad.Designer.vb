@@ -22,7 +22,7 @@ Partial Class NvaPublicidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnPagar = New System.Windows.Forms.Button()
         Me.txtclientenombre = New System.Windows.Forms.TextBox()
@@ -56,6 +56,7 @@ Partial Class NvaPublicidad
         Me.txtconcepto = New System.Windows.Forms.TextBox()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
         Me.Label13 = New System.Windows.Forms.Label()
+        Me.chkAdelantado = New System.Windows.Forms.CheckBox()
         Me.pntitulo.SuspendLayout()
         CType(Me.dgvPublicidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -84,9 +85,9 @@ Partial Class NvaPublicidad
         'txtclientenombre
         '
         Me.txtclientenombre.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtclientenombre.Location = New System.Drawing.Point(449, 43)
+        Me.txtclientenombre.Location = New System.Drawing.Point(531, 43)
         Me.txtclientenombre.Name = "txtclientenombre"
-        Me.txtclientenombre.Size = New System.Drawing.Size(339, 22)
+        Me.txtclientenombre.Size = New System.Drawing.Size(257, 22)
         Me.txtclientenombre.TabIndex = 116
         '
         'txtmonto
@@ -123,7 +124,7 @@ Partial Class NvaPublicidad
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(309, 46)
+        Me.Label8.Location = New System.Drawing.Point(391, 46)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(52, 16)
         Me.Label8.TabIndex = 113
@@ -183,14 +184,14 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPublicidad.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPublicidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.Desktop
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvPublicidad.Location = New System.Drawing.Point(1, 234)
         Me.dgvPublicidad.Name = "dgvPublicidad"
         Me.dgvPublicidad.ReadOnly = True
@@ -202,7 +203,7 @@ Partial Class NvaPublicidad
         'txtInteresMensual
         '
         Me.txtInteresMensual.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtInteresMensual.Location = New System.Drawing.Point(667, 95)
+        Me.txtInteresMensual.Location = New System.Drawing.Point(685, 302)
         Me.txtInteresMensual.Name = "txtInteresMensual"
         Me.txtInteresMensual.Size = New System.Drawing.Size(121, 22)
         Me.txtInteresMensual.TabIndex = 98
@@ -213,7 +214,7 @@ Partial Class NvaPublicidad
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(310, 93)
+        Me.Label9.Location = New System.Drawing.Point(392, 93)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(45, 16)
         Me.Label9.TabIndex = 110
@@ -222,7 +223,7 @@ Partial Class NvaPublicidad
         'txtPrestamo
         '
         Me.txtPrestamo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtPrestamo.Location = New System.Drawing.Point(370, 90)
+        Me.txtPrestamo.Location = New System.Drawing.Point(452, 90)
         Me.txtPrestamo.Name = "txtPrestamo"
         Me.txtPrestamo.ReadOnly = True
         Me.txtPrestamo.Size = New System.Drawing.Size(121, 22)
@@ -251,7 +252,7 @@ Partial Class NvaPublicidad
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(539, 98)
+        Me.Label5.Location = New System.Drawing.Point(557, 305)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(105, 16)
         Me.Label5.TabIndex = 108
@@ -262,7 +263,7 @@ Partial Class NvaPublicidad
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(259, 71)
+        Me.Label4.Location = New System.Drawing.Point(341, 71)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(102, 16)
         Me.Label4.TabIndex = 107
@@ -272,7 +273,7 @@ Partial Class NvaPublicidad
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(497, 73)
+        Me.Label3.Location = New System.Drawing.Point(515, 280)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(144, 16)
         Me.Label3.TabIndex = 105
@@ -312,7 +313,7 @@ Partial Class NvaPublicidad
         'txtCuota
         '
         Me.txtCuota.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCuota.Location = New System.Drawing.Point(370, 67)
+        Me.txtCuota.Location = New System.Drawing.Point(452, 67)
         Me.txtCuota.Name = "txtCuota"
         Me.txtCuota.ReadOnly = True
         Me.txtCuota.Size = New System.Drawing.Size(121, 22)
@@ -321,7 +322,7 @@ Partial Class NvaPublicidad
         'txtTasaAnual
         '
         Me.txtTasaAnual.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtTasaAnual.Location = New System.Drawing.Point(667, 70)
+        Me.txtTasaAnual.Location = New System.Drawing.Point(685, 277)
         Me.txtTasaAnual.Name = "txtTasaAnual"
         Me.txtTasaAnual.Size = New System.Drawing.Size(121, 22)
         Me.txtTasaAnual.TabIndex = 97
@@ -340,7 +341,7 @@ Partial Class NvaPublicidad
         'txtclientecuenta
         '
         Me.txtclientecuenta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtclientecuenta.Location = New System.Drawing.Point(370, 43)
+        Me.txtclientecuenta.Location = New System.Drawing.Point(452, 43)
         Me.txtclientecuenta.Name = "txtclientecuenta"
         Me.txtclientecuenta.ReadOnly = True
         Me.txtclientecuenta.Size = New System.Drawing.Size(73, 22)
@@ -406,11 +407,22 @@ Partial Class NvaPublicidad
         Me.Label13.TabIndex = 122
         Me.Label13.Text = "Observaciones"
         '
+        'chkAdelantado
+        '
+        Me.chkAdelantado.AutoSize = True
+        Me.chkAdelantado.Location = New System.Drawing.Point(259, 44)
+        Me.chkAdelantado.Name = "chkAdelantado"
+        Me.chkAdelantado.Size = New System.Drawing.Size(108, 17)
+        Me.chkAdelantado.TabIndex = 124
+        Me.chkAdelantado.Text = "Pago Adelantado"
+        Me.chkAdelantado.UseVisualStyleBackColor = True
+        '
         'NvaPublicidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(875, 381)
+        Me.Controls.Add(Me.chkAdelantado)
         Me.Controls.Add(Me.txtObservaciones)
         Me.Controls.Add(Me.Label13)
         Me.Controls.Add(Me.txtconcepto)
@@ -489,4 +501,5 @@ Partial Class NvaPublicidad
     Public WithEvents txtconcepto As TextBox
     Public WithEvents txtObservaciones As TextBox
     Friend WithEvents Label13 As Label
+    Friend WithEvents chkAdelantado As CheckBox
 End Class

@@ -81,7 +81,7 @@ Module funciones_Globales
         Try
             Reconectar()
             Dim consItmFacturado As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.num_fact FROM fact_facturas as fact, fact_items as itm where
-            itm.id_fact=fact.id and
+            itm.id_fact=fact.id and month(fact.fecha) = month(now()) and
             itm.descripcion like '%" & descripcion & "%'", conexionPrinc)
             Dim tabItmFacturado As New DataTable
             consItmFacturado.Fill(tabItmFacturado)
@@ -320,6 +320,8 @@ Module funciones_Globales
                 Else
                     PrecioSinIva = precioCosto * cotizacion * ((lista + utilidad) - 1)
                     PrecioVenta = PrecioSinIva * iva
+                    'Console.WriteLine(PrecioSinIva & "----" & PrecioVenta)
+
                 End If
 
             End If
