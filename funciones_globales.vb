@@ -1072,6 +1072,7 @@ Module funciones_Globales
             e.Graphics.DrawString(My.Settings.TextoPieTiket, font3, System.Drawing.Brushes.Black, 20, yPos)
             yPos += 10
             e.Graphics.DrawString("Gracias por tu compra!!!", font3, System.Drawing.Brushes.Black, 20, yPos)
+
         ElseIf anchoTiket = 4 Then
 
             Dim printfont As New Font("Courier New", 8)
@@ -1201,7 +1202,7 @@ Module funciones_Globales
                 unidad = tablaProd(i).Item("cant")
                 detalle = tablaProd(i).Item("descripcion")
                 valoruni = tablaProd(i).Item("punit")
-                'valorImpuestos = FacNoGravado
+                valorImpuestos = 0
                 If TipoFact <= 3 Then
                     valortot = FormatNumber(tablaProd(i).Item("ptotal"), 2)
 
@@ -1302,8 +1303,8 @@ Module funciones_Globales
                 XXX = 32 - (textoTotal.Length + facTotal.Length)
                 lineatotal = StrDup(XXX, ".")
                 yPos += 12
-                ' e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
-                'yPos += 40
+                e.Graphics.DrawString(textoTotal & lineatotal & facTotal, font3, System.Drawing.Brushes.Black, 0, yPos)
+                yPos += 40
                 'e.Graphics.DrawString(textoIDC & " $" & FacIDC & "|" & textoICL & " $" & FacICL, fontCAE, System.Drawing.Brushes.Black, 0, yPos)
                 'yPos += 40
             Else

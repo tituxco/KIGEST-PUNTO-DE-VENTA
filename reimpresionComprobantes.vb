@@ -1,6 +1,10 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports System.Security
+Imports WhatsAppApi
+'Imports WhatsAppApi
+Imports WhatsAppApi.WhatsApp
+
 Public Class reimpresionComprobantes
     Dim IdFactura As Integer
     Private Sub cmdbuscar_Click_1(sender As Object, e As EventArgs) Handles cmdbuscar.Click
@@ -525,6 +529,7 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub reimpresionComprobantes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Reconectar()
         dtdesdeCobranza.Value = obtenerPrimerDiaMes()
         dtderemitos.Value = obtenerPrimerDiaMes()
@@ -894,18 +899,21 @@ Public Class reimpresionComprobantes
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Try
+
+
+
             Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
             IdFactura = dtfacturas.CurrentRow.Cells(0).Value
             Dim para As String = ""
 
 
             Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-                Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-                Dim fac As New datosfacturas
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim fac As New datosfacturas
 
-                Reconectar()
+            Reconectar()
 
-                tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
@@ -915,10 +923,10 @@ Public Class reimpresionComprobantes
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
-                tabEmp.Fill(fac.Tables("factura_enca"))
-                Reconectar()
+            tabEmp.Fill(fac.Tables("factura_enca"))
+            Reconectar()
 
-                tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
             plu,
             format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
             format(replace(iva,',','.'),2,'es_AR') as iva ,

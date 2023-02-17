@@ -6,7 +6,26 @@
         CargarTipoEquipo()
         cargarMarcas()
         CargarUsuarios()
+        ocultarControlesSegunTaller(My.Settings.tipoTaller)
+
     End Sub
+
+    Public Sub ocultarControlesSegunTaller(ByRef tipoTaller)
+        'por el momento solo para taller de lonas tipoTaller: 1
+        If tipoTaller = 1 Then
+            lblserial.Text = "Patente:"
+            lblmarca.Visible = False
+            cmbmarcas.Visible = False
+
+            lblmodelo.Visible = False
+            cmbmodelos.Visible = False
+            panelAccesorios.Visible = False
+            lblmotivo.Text = "Trabajo a realizar:"
+        End If
+
+    End Sub
+
+
     Private Sub VaciarInfoclie(ByRef llamador As Control)
         Try
             For Each Cont As Control In panelcliente.Controls
@@ -126,7 +145,7 @@
             cmbmarcas.DataSource = readmarc.Tables(0)
             cmbmarcas.DisplayMember = readmarc.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbmarcas.ValueMember = readmarc.Tables(0).Columns(0).Caption.ToString
-            cmbmarcas.SelectedIndex = -1
+            cmbmarcas.SelectedIndex = 0
 
         Catch ex As Exception
 
@@ -144,7 +163,7 @@
             cmbmodelos.DataSource = readmod.Tables(0)
             cmbmodelos.DisplayMember = readmod.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbmodelos.ValueMember = readmod.Tables(0).Columns(0).Caption.ToString
-            cmbmodelos.SelectedIndex = -1
+            cmbmodelos.SelectedIndex = 0
 
         Catch ex As Exception
 
@@ -337,7 +356,13 @@
             With imping
                 .MdiParent = Me.MdiParent
                 .rptingreso.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                If My.Settings.tipoTaller = 0 Then
+                    '.rptingreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                    .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                ElseIf My.Settings.tipoTaller = 1 Then
+                    '.rptingreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaingresoTaller1.rdlc"
+                    .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingresoTaller1.rdlc"
+                End If
                 .rptingreso.LocalReport.DataSources.Clear()
                 .rptingreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosEmp", dsFacturacion.Tables("datosEmpresa")))
                 .rptingreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosFing", dsDTGFicha.Tables("datosFichaIngreso")))
@@ -644,6 +669,174 @@
     End Sub
 
     Private Sub cmbmodelos_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbmodelos.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub pntitulo_Paint(sender As Object, e As PaintEventArgs) Handles pntitulo.Paint
+
+    End Sub
+
+    Private Sub txtcasavendedora_TextChanged(sender As Object, e As EventArgs) Handles txtcasavendedora.TextChanged
+
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
+    End Sub
+
+    Private Sub panelcliente_Paint(sender As Object, e As PaintEventArgs) Handles panelcliente.Paint
+
+    End Sub
+
+    Private Sub Label23_Click(sender As Object, e As EventArgs) Handles Label23.Click
+
+    End Sub
+
+    Private Sub txttelefono_TextChanged(sender As Object, e As EventArgs) Handles txttelefono.TextChanged
+
+    End Sub
+
+    Private Sub Label16_Click(sender As Object, e As EventArgs) Handles Label16.Click
+
+    End Sub
+
+    Private Sub txtmail_TextChanged(sender As Object, e As EventArgs) Handles txtmail.TextChanged
+
+    End Sub
+
+    Private Sub lblcodexistente_Click(sender As Object, e As EventArgs) Handles lblcodexistente.Click
+
+    End Sub
+
+    Private Sub cmbrecibeusuario_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbrecibeusuario.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label2_Click(sender As Object, e As EventArgs) Handles Label2.Click
+
+    End Sub
+
+    Private Sub Label17_Click(sender As Object, e As EventArgs) Handles Label17.Click
+
+    End Sub
+
+    Private Sub txtdomicilio_TextChanged(sender As Object, e As EventArgs) Handles txtdomicilio.TextChanged
+
+    End Sub
+
+    Private Sub Label8_Click(sender As Object, e As EventArgs) Handles Label8.Click
+
+    End Sub
+
+    Private Sub Label7_Click(sender As Object, e As EventArgs) Handles Label7.Click
+
+    End Sub
+
+    Private Sub pninfoextra_Paint(sender As Object, e As PaintEventArgs) Handles pninfoextra.Paint
+
+    End Sub
+
+    Private Sub Label15_Click(sender As Object, e As EventArgs) Handles Label15.Click
+
+    End Sub
+
+    Private Sub Label3_Click(sender As Object, e As EventArgs) Handles Label3.Click
+
+    End Sub
+
+    Private Sub txtinfoextra_TextChanged(sender As Object, e As EventArgs) Handles txtinfoextra.TextChanged
+
+    End Sub
+
+    Private Sub lblequipo_Click(sender As Object, e As EventArgs) Handles lblequipo.Click
+
+    End Sub
+
+    Private Sub paneldatosadicionales_Paint(sender As Object, e As PaintEventArgs)
+
+    End Sub
+
+    Private Sub chkcables_CheckedChanged(sender As Object, e As EventArgs) Handles chkcables.CheckedChanged
+
+    End Sub
+
+    Private Sub chkbateria_CheckedChanged(sender As Object, e As EventArgs) Handles chkbateria.CheckedChanged
+
+    End Sub
+
+    Private Sub chkcargador_CheckedChanged(sender As Object, e As EventArgs) Handles chkcargador.CheckedChanged
+
+    End Sub
+
+    Private Sub chkcaja_CheckedChanged(sender As Object, e As EventArgs) Handles chkcaja.CheckedChanged
+
+    End Sub
+
+    Private Sub txtobservaciones_TextChanged(sender As Object, e As EventArgs) Handles txtobservaciones.TextChanged
+
+    End Sub
+
+    Private Sub Label14_Click(sender As Object, e As EventArgs) Handles Label14.Click
+
+    End Sub
+
+    Private Sub txtmotivo_TextChanged(sender As Object, e As EventArgs) Handles txtmotivo.TextChanged
+
+    End Sub
+
+    Private Sub Label13_Click(sender As Object, e As EventArgs) Handles lblmotivo.Click
+
+    End Sub
+
+    Private Sub txtaccesorios_TextChanged(sender As Object, e As EventArgs) Handles txtaccesorios.TextChanged
+
+    End Sub
+
+    Private Sub Label12_Click(sender As Object, e As EventArgs) Handles Label12.Click
+
+    End Sub
+
+    Private Sub panelequipo_Paint(sender As Object, e As PaintEventArgs) Handles panelequipo.Paint
+
+    End Sub
+
+    Private Sub Label11_Click(sender As Object, e As EventArgs) Handles lblserial.Click
+
+    End Sub
+
+    Private Sub Label10_Click(sender As Object, e As EventArgs) Handles lblmodelo.Click
+
+    End Sub
+
+    Private Sub Label9_Click(sender As Object, e As EventArgs) Handles lblmarca.Click
+
+    End Sub
+
+    Private Sub Label6_Click(sender As Object, e As EventArgs) Handles Label6.Click
+
+    End Sub
+
+    Private Sub cmbcattrab_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbcattrab.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Label4_Click(sender As Object, e As EventArgs) Handles Label4.Click
+
+    End Sub
+
+    Private Sub lblfecha_Click(sender As Object, e As EventArgs) Handles lblfecha.Click
+
+    End Sub
+
+    Private Sub panelingreso_Paint(sender As Object, e As PaintEventArgs) Handles panelingreso.Paint
+
+    End Sub
+
+    Private Sub panelAccesorios_Paint(sender As Object, e As PaintEventArgs)
+
+    End Sub
+
+    Private Sub cmbtipoequ_SizeChanged(sender As Object, e As EventArgs) Handles cmbtipoequ.SizeChanged
 
     End Sub
 End Class

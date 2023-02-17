@@ -57,6 +57,10 @@ Partial Class ConfiguracionTerminal
         Me.Label6 = New System.Windows.Forms.Label()
         Me.txtidDevolucion = New System.Windows.Forms.TextBox()
         Me.cmbtipoTiketEtiqueta = New System.Windows.Forms.ComboBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.cmbMetodoBusquedaProd = New System.Windows.Forms.ComboBox()
+        Me.txttipotaller = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -102,9 +106,9 @@ Partial Class ConfiguracionTerminal
         '
         Me.Label64.AutoSize = True
         Me.Label64.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label64.Location = New System.Drawing.Point(9, 227)
+        Me.Label64.Location = New System.Drawing.Point(4, 230)
         Me.Label64.Name = "Label64"
-        Me.Label64.Size = New System.Drawing.Size(125, 16)
+        Me.Label64.Size = New System.Drawing.Size(124, 16)
         Me.Label64.TabIndex = 131
         Me.Label64.Text = "Caja por Defecto"
         '
@@ -114,13 +118,13 @@ Partial Class ConfiguracionTerminal
         Me.Label63.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label63.Location = New System.Drawing.Point(168, 204)
         Me.Label63.Name = "Label63"
-        Me.Label63.Size = New System.Drawing.Size(156, 16)
+        Me.Label63.Size = New System.Drawing.Size(155, 16)
         Me.Label63.TabIndex = 130
         Me.Label63.Text = "Nombre Etiquetadora"
         '
         'txttipoetiqueta
         '
-        Me.txttipoetiqueta.Location = New System.Drawing.Point(408, 388)
+        Me.txttipoetiqueta.Location = New System.Drawing.Point(431, 236)
         Me.txttipoetiqueta.Name = "txttipoetiqueta"
         Me.txttipoetiqueta.Size = New System.Drawing.Size(54, 20)
         Me.txttipoetiqueta.TabIndex = 129
@@ -131,9 +135,9 @@ Partial Class ConfiguracionTerminal
         '
         Me.Label60.AutoSize = True
         Me.Label60.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label60.Location = New System.Drawing.Point(309, 389)
+        Me.Label60.Location = New System.Drawing.Point(332, 237)
         Me.Label60.Name = "Label60"
-        Me.Label60.Size = New System.Drawing.Size(97, 16)
+        Me.Label60.Size = New System.Drawing.Size(96, 16)
         Me.Label60.TabIndex = 128
         Me.Label60.Text = "TipoEtiqueta"
         Me.Label60.Visible = False
@@ -151,7 +155,7 @@ Partial Class ConfiguracionTerminal
         Me.Label59.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label59.Location = New System.Drawing.Point(8, 175)
         Me.Label59.Name = "Label59"
-        Me.Label59.Size = New System.Drawing.Size(111, 16)
+        Me.Label59.Size = New System.Drawing.Size(110, 16)
         Me.Label59.TabIndex = 126
         Me.Label59.Text = "Unidad por def"
         '
@@ -178,7 +182,7 @@ Partial Class ConfiguracionTerminal
         Me.Label57.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label57.Location = New System.Drawing.Point(28, 121)
         Me.Label57.Name = "Label57"
-        Me.Label57.Size = New System.Drawing.Size(176, 16)
+        Me.Label57.Size = New System.Drawing.Size(175, 16)
         Me.Label57.TabIndex = 123
         Me.Label57.Text = "ImpresoraTiketsNombre"
         '
@@ -195,7 +199,7 @@ Partial Class ConfiguracionTerminal
         Me.Label50.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label50.Location = New System.Drawing.Point(5, 96)
         Me.Label50.Name = "Label50"
-        Me.Label50.Size = New System.Drawing.Size(81, 16)
+        Me.Label50.Size = New System.Drawing.Size(80, 16)
         Me.Label50.TabIndex = 121
         Me.Label50.Text = "IdAlmacen"
         '
@@ -212,7 +216,7 @@ Partial Class ConfiguracionTerminal
         Me.Label49.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label49.Location = New System.Drawing.Point(5, 72)
         Me.Label49.Name = "Label49"
-        Me.Label49.Size = New System.Drawing.Size(78, 16)
+        Me.Label49.Size = New System.Drawing.Size(77, 16)
         Me.Label49.TabIndex = 119
         Me.Label49.Text = "PtoVtaDef"
         '
@@ -222,13 +226,13 @@ Partial Class ConfiguracionTerminal
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(4, 46)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(81, 16)
+        Me.Label9.Size = New System.Drawing.Size(80, 16)
         Me.Label9.TabIndex = 118
         Me.Label9.Text = "idFACRAP"
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(7, 386)
+        Me.Button18.Location = New System.Drawing.Point(7, 420)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(136, 23)
         Me.Button18.TabIndex = 117
@@ -248,7 +252,7 @@ Partial Class ConfiguracionTerminal
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(9, 146)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(106, 16)
+        Me.Label2.Size = New System.Drawing.Size(105, 16)
         Me.Label2.TabIndex = 134
         Me.Label2.Text = "Texto pie tiket"
         '
@@ -263,9 +267,9 @@ Partial Class ConfiguracionTerminal
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(8, 257)
+        Me.Label3.Location = New System.Drawing.Point(4, 257)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(156, 16)
+        Me.Label3.Size = New System.Drawing.Size(155, 16)
         Me.Label3.TabIndex = 136
         Me.Label3.Text = "ObtenerCodigoAutom"
         '
@@ -309,7 +313,7 @@ Partial Class ConfiguracionTerminal
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(4, 291)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(222, 16)
+        Me.Label4.Size = New System.Drawing.Size(221, 16)
         Me.Label4.TabIndex = 138
         Me.Label4.Text = "Formula de calculo de precios:"
         '
@@ -361,7 +365,7 @@ Partial Class ConfiguracionTerminal
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(7, 343)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(101, 16)
+        Me.Label5.Size = New System.Drawing.Size(100, 16)
         Me.Label5.TabIndex = 140
         Me.Label5.Text = "IdMonedaDef"
         '
@@ -371,7 +375,7 @@ Partial Class ConfiguracionTerminal
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(207, 46)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(99, 16)
+        Me.Label6.Size = New System.Drawing.Size(98, 16)
         Me.Label6.TabIndex = 143
         Me.Label6.Text = "idDevolucion"
         '
@@ -391,12 +395,53 @@ Partial Class ConfiguracionTerminal
         Me.cmbtipoTiketEtiqueta.Size = New System.Drawing.Size(160, 21)
         Me.cmbtipoTiketEtiqueta.TabIndex = 144
         '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(174, 343)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(152, 16)
+        Me.Label7.TabIndex = 145
+        Me.Label7.Text = "Modo busquedaProd"
+        '
+        'cmbMetodoBusquedaProd
+        '
+        Me.cmbMetodoBusquedaProd.FormattingEnabled = True
+        Me.cmbMetodoBusquedaProd.Items.AddRange(New Object() {"0 - Restrictiva (descripcion%)", "1 - Inclusiva (%descripcion%)"})
+        Me.cmbMetodoBusquedaProd.Location = New System.Drawing.Point(325, 341)
+        Me.cmbMetodoBusquedaProd.Name = "cmbMetodoBusquedaProd"
+        Me.cmbMetodoBusquedaProd.Size = New System.Drawing.Size(160, 21)
+        Me.cmbMetodoBusquedaProd.TabIndex = 146
+        '
+        'txttipotaller
+        '
+        Me.txttipotaller.Location = New System.Drawing.Point(79, 374)
+        Me.txttipotaller.Name = "txttipotaller"
+        Me.txttipotaller.Size = New System.Drawing.Size(64, 20)
+        Me.txttipotaller.TabIndex = 148
+        Me.txttipotaller.Text = "0"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(8, 374)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(74, 16)
+        Me.Label8.TabIndex = 147
+        Me.Label8.Text = "tipoTaller"
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(497, 421)
+        Me.ClientSize = New System.Drawing.Size(497, 455)
+        Me.Controls.Add(Me.txttipotaller)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.cmbMetodoBusquedaProd)
+        Me.Controls.Add(Me.Label7)
         Me.Controls.Add(Me.cmbtipoTiketEtiqueta)
         Me.Controls.Add(Me.Label6)
         Me.Controls.Add(Me.txtidDevolucion)
@@ -476,4 +521,8 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents Label6 As Label
     Friend WithEvents txtidDevolucion As TextBox
     Friend WithEvents cmbtipoTiketEtiqueta As ComboBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents cmbMetodoBusquedaProd As ComboBox
+    Friend WithEvents txttipotaller As TextBox
+    Friend WithEvents Label8 As Label
 End Class

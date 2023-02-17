@@ -139,7 +139,8 @@
             & "concat('ACCESORIOS: ',tall.accesorios) as accesorios, " _
             & "concat('MOTIVO: ', tall.motivo_ing) as motivo, " _
             & "concat('DIRECCION: ', cl.dir_domicilio,'TEL: ',cl.telefono,'| CEL: ',cl.celular) as clientedire, " _
-            & "concat('SERIE: ', tall.serie) as equiposerie " _
+            & "concat('SERIE: ', tall.serie) as equiposerie, " _
+            & My.Settings.tipoTaller & " as tipoTaller " _
             & "from tecni_taller as tall, fact_clientes as cl, cm_usuarios as us, fact_marcas as ma, fact_modelos as mo, tecni_equipos_tipo as et, " _
             & "tecni_equipos as eq " _
             & "where " _
@@ -157,8 +158,14 @@
             With imping
                 .MdiParent = Me.MdiParent
                 .rptingreso.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptingreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
-                .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                If My.Settings.tipoTaller = 0 Then
+                    .rptingreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                    .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingreso.rdlc"
+                ElseIf My.Settings.tipoTaller = 1 Then
+                    .rptingreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaingresoTaller1.rdlc"
+                    .rptingreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaingresoTaller1.rdlc"
+                End If
+
                 .rptingreso.LocalReport.DataSources.Clear()
                 .rptingreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosEmp", dsFacturacion.Tables("datosEmpresa")))
                 .rptingreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosFing", dsDTGFicha.Tables("datosFichaIngreso")))

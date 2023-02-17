@@ -68,7 +68,7 @@ Partial Class fichaequipo
         Me.lblcodexistente = New System.Windows.Forms.Label()
         Me.lblmodelo = New System.Windows.Forms.Label()
         Me.txtnumeroSerie = New System.Windows.Forms.TextBox()
-        Me.lblSerie = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
         Me.Label10 = New System.Windows.Forms.Label()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -82,7 +82,7 @@ Partial Class fichaequipo
         Me.txtobservaciones = New System.Windows.Forms.TextBox()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.txtmotivo = New System.Windows.Forms.TextBox()
-        Me.lblmotivo = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
         Me.txtaccesorios = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -124,12 +124,6 @@ Partial Class fichaequipo
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.paneltipoEquipo = New System.Windows.Forms.Panel()
-        Me.panelMarca = New System.Windows.Forms.Panel()
-        Me.panelModelo = New System.Windows.Forms.Panel()
-        Me.panelSerie = New System.Windows.Forms.Panel()
-        Me.panelfallaPresupuesto = New System.Windows.Forms.Panel()
-        Me.Panel5 = New System.Windows.Forms.Panel()
         Me.pntitulo.SuspendLayout()
         Me.panelingreso.SuspendLayout()
         Me.panelcliente.SuspendLayout()
@@ -139,12 +133,6 @@ Partial Class fichaequipo
         Me.Panel4.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
-        Me.paneltipoEquipo.SuspendLayout()
-        Me.panelMarca.SuspendLayout()
-        Me.panelModelo.SuspendLayout()
-        Me.panelSerie.SuspendLayout()
-        Me.panelfallaPresupuesto.SuspendLayout()
-        Me.Panel5.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -155,7 +143,7 @@ Partial Class fichaequipo
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1224, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1034, 40)
         Me.pntitulo.TabIndex = 97
         '
         'lblalerta
@@ -163,7 +151,7 @@ Partial Class fichaequipo
         Me.lblalerta.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblalerta.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblalerta.ForeColor = System.Drawing.Color.Red
-        Me.lblalerta.Location = New System.Drawing.Point(577, 0)
+        Me.lblalerta.Location = New System.Drawing.Point(387, 0)
         Me.lblalerta.Name = "lblalerta"
         Me.lblalerta.Size = New System.Drawing.Size(647, 40)
         Me.lblalerta.TabIndex = 3
@@ -205,7 +193,7 @@ Partial Class fichaequipo
         Me.panelingreso.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelingreso.Location = New System.Drawing.Point(0, 40)
         Me.panelingreso.Name = "panelingreso"
-        Me.panelingreso.Size = New System.Drawing.Size(1224, 60)
+        Me.panelingreso.Size = New System.Drawing.Size(1034, 60)
         Me.panelingreso.TabIndex = 102
         '
         'lblfechafin
@@ -240,7 +228,7 @@ Partial Class fichaequipo
         Me.cmbbaja.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbbaja.ForeColor = System.Drawing.Color.White
         Me.cmbbaja.Image = CType(resources.GetObject("cmbbaja.Image"), System.Drawing.Image)
-        Me.cmbbaja.Location = New System.Drawing.Point(1156, 0)
+        Me.cmbbaja.Location = New System.Drawing.Point(966, 0)
         Me.cmbbaja.Name = "cmbbaja"
         Me.cmbbaja.Size = New System.Drawing.Size(68, 60)
         Me.cmbbaja.TabIndex = 64
@@ -414,7 +402,7 @@ Partial Class fichaequipo
         Me.panelcliente.ForeColor = System.Drawing.Color.White
         Me.panelcliente.Location = New System.Drawing.Point(0, 100)
         Me.panelcliente.Name = "panelcliente"
-        Me.panelcliente.Size = New System.Drawing.Size(1224, 51)
+        Me.panelcliente.Size = New System.Drawing.Size(1034, 51)
         Me.panelcliente.TabIndex = 104
         '
         'chkenviamail
@@ -475,7 +463,7 @@ Partial Class fichaequipo
         Me.cmdguardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdguardar.ForeColor = System.Drawing.Color.White
         Me.cmdguardar.Image = CType(resources.GetObject("cmdguardar.Image"), System.Drawing.Image)
-        Me.cmdguardar.Location = New System.Drawing.Point(1022, 0)
+        Me.cmdguardar.Location = New System.Drawing.Point(832, 0)
         Me.cmdguardar.Name = "cmdguardar"
         Me.cmdguardar.Size = New System.Drawing.Size(68, 51)
         Me.cmdguardar.TabIndex = 60
@@ -493,7 +481,7 @@ Partial Class fichaequipo
         Me.cmdfinalizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdfinalizar.ForeColor = System.Drawing.Color.White
         Me.cmdfinalizar.Image = CType(resources.GetObject("cmdfinalizar.Image"), System.Drawing.Image)
-        Me.cmdfinalizar.Location = New System.Drawing.Point(1090, 0)
+        Me.cmdfinalizar.Location = New System.Drawing.Point(900, 0)
         Me.cmdfinalizar.Name = "cmdfinalizar"
         Me.cmdfinalizar.Size = New System.Drawing.Size(67, 51)
         Me.cmdfinalizar.TabIndex = 246
@@ -512,7 +500,7 @@ Partial Class fichaequipo
         Me.cmdimprimir.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdimprimir.ForeColor = System.Drawing.Color.White
         Me.cmdimprimir.Image = CType(resources.GetObject("cmdimprimir.Image"), System.Drawing.Image)
-        Me.cmdimprimir.Location = New System.Drawing.Point(1157, 0)
+        Me.cmdimprimir.Location = New System.Drawing.Point(967, 0)
         Me.cmdimprimir.Name = "cmdimprimir"
         Me.cmdimprimir.Size = New System.Drawing.Size(67, 51)
         Me.cmdimprimir.TabIndex = 59
@@ -559,17 +547,21 @@ Partial Class fichaequipo
         '
         'panelequipo
         '
-        Me.panelequipo.Controls.Add(Me.panelSerie)
-        Me.panelequipo.Controls.Add(Me.panelModelo)
-        Me.panelequipo.Controls.Add(Me.panelMarca)
-        Me.panelequipo.Controls.Add(Me.paneltipoEquipo)
         Me.panelequipo.Controls.Add(Me.lblcodexistente)
         Me.panelequipo.Controls.Add(Me.lblmodelo)
+        Me.panelequipo.Controls.Add(Me.txtnumeroSerie)
+        Me.panelequipo.Controls.Add(Me.Label11)
+        Me.panelequipo.Controls.Add(Me.Label10)
+        Me.panelequipo.Controls.Add(Me.Label9)
+        Me.panelequipo.Controls.Add(Me.Label6)
+        Me.panelequipo.Controls.Add(Me.cmbmodelos)
+        Me.panelequipo.Controls.Add(Me.cmbmarcas)
+        Me.panelequipo.Controls.Add(Me.cmbtipoequ)
         Me.panelequipo.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelequipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 6.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.panelequipo.Location = New System.Drawing.Point(0, 151)
         Me.panelequipo.Name = "panelequipo"
-        Me.panelequipo.Size = New System.Drawing.Size(1224, 48)
+        Me.panelequipo.Size = New System.Drawing.Size(1034, 48)
         Me.panelequipo.TabIndex = 105
         '
         'lblcodexistente
@@ -594,27 +586,27 @@ Partial Class fichaequipo
         '
         'txtnumeroSerie
         '
-        Me.txtnumeroSerie.Location = New System.Drawing.Point(6, 24)
+        Me.txtnumeroSerie.Location = New System.Drawing.Point(524, 24)
         Me.txtnumeroSerie.Name = "txtnumeroSerie"
         Me.txtnumeroSerie.ReadOnly = True
-        Me.txtnumeroSerie.Size = New System.Drawing.Size(171, 18)
+        Me.txtnumeroSerie.Size = New System.Drawing.Size(297, 18)
         Me.txtnumeroSerie.TabIndex = 10
         '
-        'lblSerie
+        'Label11
         '
-        Me.lblSerie.AutoSize = True
-        Me.lblSerie.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSerie.Location = New System.Drawing.Point(3, 3)
-        Me.lblSerie.Name = "lblSerie"
-        Me.lblSerie.Size = New System.Drawing.Size(147, 16)
-        Me.lblSerie.TabIndex = 225
-        Me.lblSerie.Text = "NUMERO DE SERIE"
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(521, 3)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(147, 16)
+        Me.Label11.TabIndex = 225
+        Me.Label11.Text = "NUMERO DE SERIE"
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(2, 3)
+        Me.Label10.Location = New System.Drawing.Point(354, 3)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(70, 16)
         Me.Label10.TabIndex = 224
@@ -624,7 +616,7 @@ Partial Class fichaequipo
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(3, 3)
+        Me.Label9.Location = New System.Drawing.Point(169, 3)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(60, 16)
         Me.Label9.TabIndex = 223
@@ -646,7 +638,7 @@ Partial Class fichaequipo
         Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbmodelos.Enabled = False
         Me.cmbmodelos.FormattingEnabled = True
-        Me.cmbmodelos.Location = New System.Drawing.Point(5, 22)
+        Me.cmbmodelos.Location = New System.Drawing.Point(357, 22)
         Me.cmbmodelos.Name = "cmbmodelos"
         Me.cmbmodelos.Size = New System.Drawing.Size(155, 20)
         Me.cmbmodelos.TabIndex = 9
@@ -657,7 +649,7 @@ Partial Class fichaequipo
         Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbmarcas.Enabled = False
         Me.cmbmarcas.FormattingEnabled = True
-        Me.cmbmarcas.Location = New System.Drawing.Point(6, 22)
+        Me.cmbmarcas.Location = New System.Drawing.Point(172, 22)
         Me.cmbmarcas.Name = "cmbmarcas"
         Me.cmbmarcas.Size = New System.Drawing.Size(178, 20)
         Me.cmbmarcas.TabIndex = 8
@@ -677,7 +669,7 @@ Partial Class fichaequipo
         '
         Me.Label24.AutoSize = True
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label24.Location = New System.Drawing.Point(715, 0)
+        Me.Label24.Location = New System.Drawing.Point(715, 68)
         Me.Label24.Name = "Label24"
         Me.Label24.Size = New System.Drawing.Size(125, 16)
         Me.Label24.TabIndex = 239
@@ -691,27 +683,27 @@ Partial Class fichaequipo
         Me.txtpresupuesto.BackColor = System.Drawing.Color.White
         Me.txtpresupuesto.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtpresupuesto.ForeColor = System.Drawing.Color.Red
-        Me.txtpresupuesto.Location = New System.Drawing.Point(720, 19)
+        Me.txtpresupuesto.Location = New System.Drawing.Point(720, 87)
         Me.txtpresupuesto.Name = "txtpresupuesto"
-        Me.txtpresupuesto.Size = New System.Drawing.Size(497, 35)
+        Me.txtpresupuesto.Size = New System.Drawing.Size(307, 35)
         Me.txtpresupuesto.TabIndex = 238
         Me.txtpresupuesto.Text = "0"
         '
         'txtfalla
         '
         Me.txtfalla.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.txtfalla.Location = New System.Drawing.Point(6, 19)
+        Me.txtfalla.Location = New System.Drawing.Point(6, 87)
         Me.txtfalla.Multiline = True
         Me.txtfalla.Name = "txtfalla"
         Me.txtfalla.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtfalla.Size = New System.Drawing.Size(700, 35)
+        Me.txtfalla.Size = New System.Drawing.Size(707, 35)
         Me.txtfalla.TabIndex = 224
         '
         'Label3
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(3, 0)
+        Me.Label3.Location = New System.Drawing.Point(3, 68)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(148, 16)
         Me.Label3.TabIndex = 225
@@ -727,7 +719,7 @@ Partial Class fichaequipo
         Me.txtobservaciones.Multiline = True
         Me.txtobservaciones.Name = "txtobservaciones"
         Me.txtobservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtobservaciones.Size = New System.Drawing.Size(499, 44)
+        Me.txtobservaciones.Size = New System.Drawing.Size(309, 44)
         Me.txtobservaciones.TabIndex = 13
         '
         'Label14
@@ -750,15 +742,15 @@ Partial Class fichaequipo
         Me.txtmotivo.Size = New System.Drawing.Size(414, 43)
         Me.txtmotivo.TabIndex = 12
         '
-        'lblmotivo
+        'Label13
         '
-        Me.lblmotivo.AutoSize = True
-        Me.lblmotivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblmotivo.Location = New System.Drawing.Point(296, 3)
-        Me.lblmotivo.Name = "lblmotivo"
-        Me.lblmotivo.Size = New System.Drawing.Size(162, 16)
-        Me.lblmotivo.TabIndex = 221
-        Me.lblmotivo.Text = "MOTIVO DE INGRESO"
+        Me.Label13.AutoSize = True
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(296, 3)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(162, 16)
+        Me.Label13.TabIndex = 221
+        Me.Label13.Text = "MOTIVO DE INGRESO"
         '
         'txtaccesorios
         '
@@ -857,9 +849,9 @@ Partial Class fichaequipo
         Me.Panel2.Controls.Add(Me.txtmanoobra)
         Me.Panel2.Controls.Add(Me.Label4)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel2.Location = New System.Drawing.Point(1012, 0)
+        Me.Panel2.Location = New System.Drawing.Point(822, 328)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(212, 125)
+        Me.Panel2.Size = New System.Drawing.Size(212, 220)
         Me.Panel2.TabIndex = 248
         '
         'txttotaltrabajo
@@ -1010,7 +1002,7 @@ Partial Class fichaequipo
         Me.txtresolucion.Location = New System.Drawing.Point(3, 28)
         Me.txtresolucion.Name = "txtresolucion"
         Me.txtresolucion.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
-        Me.txtresolucion.Size = New System.Drawing.Size(491, 72)
+        Me.txtresolucion.Size = New System.Drawing.Size(491, 122)
         Me.txtresolucion.TabIndex = 255
         Me.txtresolucion.Text = ""
         '
@@ -1023,7 +1015,7 @@ Partial Class fichaequipo
         Me.txtespecificaciones.Location = New System.Drawing.Point(496, 28)
         Me.txtespecificaciones.Name = "txtespecificaciones"
         Me.txtespecificaciones.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical
-        Me.txtespecificaciones.Size = New System.Drawing.Size(512, 72)
+        Me.txtespecificaciones.Size = New System.Drawing.Size(322, 122)
         Me.txtespecificaciones.TabIndex = 256
         Me.txtespecificaciones.Text = ""
         '
@@ -1039,7 +1031,7 @@ Partial Class fichaequipo
         Me.dtproductos.MultiSelect = False
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtproductos.Size = New System.Drawing.Size(1012, 92)
+        Me.dtproductos.Size = New System.Drawing.Size(822, 92)
         Me.dtproductos.TabIndex = 245
         '
         'Column7
@@ -1112,17 +1104,20 @@ Partial Class fichaequipo
         '
         'Panel4
         '
-        Me.Panel4.Controls.Add(Me.panelfallaPresupuesto)
+        Me.Panel4.Controls.Add(Me.Label3)
         Me.Panel4.Controls.Add(Me.Label12)
+        Me.Panel4.Controls.Add(Me.txtfalla)
         Me.Panel4.Controls.Add(Me.txtaccesorios)
-        Me.Panel4.Controls.Add(Me.lblmotivo)
+        Me.Panel4.Controls.Add(Me.Label24)
+        Me.Panel4.Controls.Add(Me.Label13)
         Me.Panel4.Controls.Add(Me.txtmotivo)
+        Me.Panel4.Controls.Add(Me.txtpresupuesto)
         Me.Panel4.Controls.Add(Me.Label14)
         Me.Panel4.Controls.Add(Me.txtobservaciones)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel4.Location = New System.Drawing.Point(0, 199)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(1224, 129)
+        Me.Panel4.Size = New System.Drawing.Size(1034, 129)
         Me.Panel4.TabIndex = 107
         '
         'Panel1
@@ -1132,9 +1127,9 @@ Partial Class fichaequipo
         Me.Panel1.Controls.Add(Me.Label16)
         Me.Panel1.Controls.Add(Me.cmblistaprecio)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel1.Location = New System.Drawing.Point(0, 103)
+        Me.Panel1.Location = New System.Drawing.Point(0, 431)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1012, 119)
+        Me.Panel1.Size = New System.Drawing.Size(822, 119)
         Me.Panel1.TabIndex = 257
         '
         'Panel3
@@ -1147,81 +1142,20 @@ Partial Class fichaequipo
         Me.Panel3.Controls.Add(Me.cmdCargarInfoEspecificaciones)
         Me.Panel3.Controls.Add(Me.txtresolucion)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel3.Location = New System.Drawing.Point(0, 0)
+        Me.Panel3.Location = New System.Drawing.Point(0, 328)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(1012, 103)
+        Me.Panel3.Size = New System.Drawing.Size(822, 103)
         Me.Panel3.TabIndex = 258
-        '
-        'paneltipoEquipo
-        '
-        Me.paneltipoEquipo.Controls.Add(Me.Label6)
-        Me.paneltipoEquipo.Controls.Add(Me.cmbtipoequ)
-        Me.paneltipoEquipo.Dock = System.Windows.Forms.DockStyle.Left
-        Me.paneltipoEquipo.Location = New System.Drawing.Point(0, 0)
-        Me.paneltipoEquipo.Name = "paneltipoEquipo"
-        Me.paneltipoEquipo.Size = New System.Drawing.Size(166, 48)
-        Me.paneltipoEquipo.TabIndex = 228
-        '
-        'panelMarca
-        '
-        Me.panelMarca.Controls.Add(Me.Label9)
-        Me.panelMarca.Controls.Add(Me.cmbmarcas)
-        Me.panelMarca.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelMarca.Location = New System.Drawing.Point(166, 0)
-        Me.panelMarca.Name = "panelMarca"
-        Me.panelMarca.Size = New System.Drawing.Size(188, 48)
-        Me.panelMarca.TabIndex = 229
-        '
-        'panelModelo
-        '
-        Me.panelModelo.Controls.Add(Me.Label10)
-        Me.panelModelo.Controls.Add(Me.cmbmodelos)
-        Me.panelModelo.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelModelo.Location = New System.Drawing.Point(354, 0)
-        Me.panelModelo.Name = "panelModelo"
-        Me.panelModelo.Size = New System.Drawing.Size(166, 48)
-        Me.panelModelo.TabIndex = 230
-        '
-        'panelSerie
-        '
-        Me.panelSerie.Controls.Add(Me.lblSerie)
-        Me.panelSerie.Controls.Add(Me.txtnumeroSerie)
-        Me.panelSerie.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelSerie.Location = New System.Drawing.Point(520, 0)
-        Me.panelSerie.Name = "panelSerie"
-        Me.panelSerie.Size = New System.Drawing.Size(193, 48)
-        Me.panelSerie.TabIndex = 231
-        '
-        'panelfallaPresupuesto
-        '
-        Me.panelfallaPresupuesto.Controls.Add(Me.Label3)
-        Me.panelfallaPresupuesto.Controls.Add(Me.txtfalla)
-        Me.panelfallaPresupuesto.Controls.Add(Me.Label24)
-        Me.panelfallaPresupuesto.Controls.Add(Me.txtpresupuesto)
-        Me.panelfallaPresupuesto.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.panelfallaPresupuesto.Location = New System.Drawing.Point(0, 74)
-        Me.panelfallaPresupuesto.Name = "panelfallaPresupuesto"
-        Me.panelfallaPresupuesto.Size = New System.Drawing.Size(1224, 55)
-        Me.panelfallaPresupuesto.TabIndex = 240
-        '
-        'Panel5
-        '
-        Me.Panel5.Controls.Add(Me.Panel1)
-        Me.Panel5.Controls.Add(Me.Panel3)
-        Me.Panel5.Controls.Add(Me.Panel2)
-        Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel5.Location = New System.Drawing.Point(0, 328)
-        Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(1224, 125)
-        Me.Panel5.TabIndex = 259
         '
         'fichaequipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1224, 453)
-        Me.Controls.Add(Me.Panel5)
+        Me.ClientSize = New System.Drawing.Size(1034, 548)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.Panel3)
+        Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.Panel4)
         Me.Controls.Add(Me.panelequipo)
         Me.Controls.Add(Me.panelcliente)
@@ -1248,17 +1182,6 @@ Partial Class fichaequipo
         Me.Panel1.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
-        Me.paneltipoEquipo.ResumeLayout(False)
-        Me.paneltipoEquipo.PerformLayout()
-        Me.panelMarca.ResumeLayout(False)
-        Me.panelMarca.PerformLayout()
-        Me.panelModelo.ResumeLayout(False)
-        Me.panelModelo.PerformLayout()
-        Me.panelSerie.ResumeLayout(False)
-        Me.panelSerie.PerformLayout()
-        Me.panelfallaPresupuesto.ResumeLayout(False)
-        Me.panelfallaPresupuesto.PerformLayout()
-        Me.Panel5.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -1280,7 +1203,7 @@ Partial Class fichaequipo
     Friend WithEvents lblcliente As System.Windows.Forms.Label
     Friend WithEvents panelequipo As System.Windows.Forms.Panel
     Friend WithEvents txtnumeroSerie As System.Windows.Forms.TextBox
-    Friend WithEvents lblSerie As System.Windows.Forms.Label
+    Friend WithEvents Label11 As System.Windows.Forms.Label
     Friend WithEvents Label10 As System.Windows.Forms.Label
     Friend WithEvents Label9 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
@@ -1292,7 +1215,7 @@ Partial Class fichaequipo
     Friend WithEvents txtobservaciones As System.Windows.Forms.TextBox
     Friend WithEvents Label14 As System.Windows.Forms.Label
     Friend WithEvents txtmotivo As System.Windows.Forms.TextBox
-    Friend WithEvents lblmotivo As System.Windows.Forms.Label
+    Friend WithEvents Label13 As System.Windows.Forms.Label
     Friend WithEvents txtaccesorios As System.Windows.Forms.TextBox
     Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents cmbtecnico As System.Windows.Forms.ComboBox
@@ -1356,10 +1279,4 @@ Partial Class fichaequipo
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Panel3 As Panel
-    Friend WithEvents panelSerie As Panel
-    Friend WithEvents panelModelo As Panel
-    Friend WithEvents panelMarca As Panel
-    Friend WithEvents paneltipoEquipo As Panel
-    Friend WithEvents panelfallaPresupuesto As Panel
-    Friend WithEvents Panel5 As Panel
 End Class

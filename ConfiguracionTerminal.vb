@@ -11,6 +11,10 @@
         txtTextoPietiket.Text = My.Settings.TextoPieTiket
         txtidmoneda.Text = My.Settings.monedaDef
         txtidDevolucion.Text = My.Settings.idDevolucion
+        cmbMetodoBusquedaProd.SelectedIndex = My.Settings.metodoBusquedaProd
+        txttipotaller.Text = My.Settings.tipoTaller
+
+
         If My.Settings.ImprTikets = 1 Then
             chkimprimirtikets.CheckState = CheckState.Checked
             txtimptiketsnombre.Text = My.Settings.ImprTiketsNombre
@@ -36,11 +40,13 @@
         My.Settings.TextoPieTiket = txtTextoPietiket.Text
         My.Settings.monedaDef = txtidmoneda.Text
         My.Settings.idDevolucion = txtidDevolucion.Text
+        My.Settings.metodoBusquedaProd = cmbMetodoBusquedaProd.SelectedIndex
         If rdcod_bar.Checked = True Then My.Settings.obtCodProd ="cod_bar" Else My.Settings.obtCodProd ="id"
 
         If rdcalculo2.Checked = True Then My.Settings.metodoCalculo = 0 Else My.Settings.metodoCalculo = 1
-
+        My.Settings.tipoTaller = txttipotaller.Text
         My.Settings.Save()
+
         MsgBox("Configuración Guardada")
 
     End Sub

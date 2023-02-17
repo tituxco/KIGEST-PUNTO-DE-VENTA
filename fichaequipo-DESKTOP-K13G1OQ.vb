@@ -69,22 +69,9 @@
                 CargarListas()
                 cargarOrden()
             End If
-            ocultarControlesSegunTaller(My.Settings.tipoTaller)
         Catch ex As Exception
 
         End Try
-    End Sub
-    Public Sub ocultarControlesSegunTaller(ByRef tipoTaller)
-        'por el momento solo para taller de lonas tipoTaller: 1
-        If tipoTaller = 1 Then
-            lblSerie.Text = "Patente:"
-            panelMarca.Visible = False
-            panelModelo.Visible = False
-
-            panelfallaPresupuesto.Visible = False
-            lblmotivo.Text = "Trabajo a realizar:"
-        End If
-
     End Sub
     Private Sub cargarOrden()
         Try
@@ -996,7 +983,7 @@
         
     End Sub
 
-    Private Sub Label11_Click(sender As Object, e As EventArgs) Handles lblSerie.Click
+    Private Sub Label11_Click(sender As Object, e As EventArgs) Handles Label11.Click
         txtnumeroSerie.Text = InputBox("Ingrese numero de serie", "cambio de numero de serie", txtnumeroSerie.Text).ToUpper
 
     End Sub

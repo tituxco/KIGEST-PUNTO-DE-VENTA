@@ -79,9 +79,14 @@ Public Class busquedaprod
             End Select
 
             Dim BusquedaComp As String
-
-            BusquedaComp = Replace(nombre, " ", "%")
-            busqtxt = " pro.descripcion like '%" & BusquedaComp & "%' or cat.id= pro.categoria and pro.codigo like '" & nombre & "'"
+            If My.Settings.metodoBusquedaProd = 1 Then
+                BusquedaComp = Replace(nombre, " ", "%")
+                busqtxt = " pro.descripcion like '%" & BusquedaComp & "%' or cat.id= pro.categoria and pro.codigo like '" & nombre & "'"
+            ElseIf My.Settings.metodoBusquedaProd = 0 Then
+                busqtxt = " pro.descripcion like '" & nombre & "%'  or cat.id= pro.categoria and pro.codigo like '" & nombre & "'"
+            Else
+                busqtxt = " pro.descripcion like '%'"
+            End If
 
             If nombre = "" Then
                 busqNomb = " where cat.id=pro.categoria  and  pro.descripcion like '%' "
@@ -116,7 +121,7 @@ Public Class busquedaprod
 
             If imprimirlist = False And imprimiretiq = False Then
                 'MsgBox(cadenaComp)
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU, 
                 (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'MsgBox(consulta.SelectCommand.CommandText)
@@ -428,6 +433,8 @@ Public Class busquedaprod
         cargarListas()
         cargarProveedores()
         cargarCategoriasProd()
+        cmbOrdenarPor.SelectedIndex = 0
+
     End Sub
 
 

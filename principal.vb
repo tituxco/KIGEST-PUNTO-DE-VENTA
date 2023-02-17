@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Net
+Imports System.Security.Cryptography.X509Certificates
 
 Public Class frmprincipal
     Public loged As Boolean
@@ -79,7 +80,7 @@ Public Class frmprincipal
     End Sub
     Private Sub cargar_valores_generales()
         Try
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_configuraciones", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_configuraciones order by id asc", conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -88,7 +89,7 @@ Public Class frmprincipal
             infocl = tablacl.Select("")
             'listaConexiones.DropDownItems.Add()
             If tablacl.Rows.Count > 6 Then
-                DatosAcceso.ServMensual = infocl(6)(2)
+                DatosAcceso.ServMensual = infocl(7)(2) 'como se llama el servicio de mensualidad
             End If
 
             If InStr(DatosAcceso.Moduloacc, "1") = False Then cmdclientes.Visible = False
@@ -154,7 +155,7 @@ Public Class frmprincipal
             DatosAcceso.idFacRap = My.Settings.idfacRap
             DatosAcceso.IdPtoVtaDef = My.Settings.idPtoVta
 
-
+            Dim certificadoFacturacion As String
             Dim consAFIP As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_archivos order by id asc", conexionPrinc)
             Dim tablaAFIP As New DataTable
             Dim infoAFIP() As DataRow
@@ -180,6 +181,7 @@ Public Class frmprincipal
                             s = IO.File.Open(Application.StartupPath & "\" & infoAFIP(0)(1) & ".pfx", IO.FileMode.Append)
                             s.Write(certificado, 0, certificado.Length)
                             s.Close()
+
                         End If
                     End If
                     If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic") Then
@@ -200,6 +202,25 @@ Public Class frmprincipal
                             sL.Close()
                         End If
                     End If
+                End If
+
+
+                Dim fe As New WSAFIPFE.Factura
+                Dim lresultado As Boolean
+
+                lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
+                fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+
+                lresultado = fe.f1ObtenerTicketAcceso()
+                Dim fechaActual As String = Now().ToString()
+                Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
+
+                Dim diasrestantes As Long
+                diasrestantes = DateDiff(DateInterval.Day, Now(), Convert.ToDateTime(ExpiracionCertificado))
+                ' MsgBox(diasrestantes)
+                lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
+                If diasrestantes < 30 Then
+                    lblEstadoCertificado.ForeColor = Color.Red
                 End If
                 Reconectar()
                 Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)

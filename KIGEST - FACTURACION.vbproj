@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>381</ApplicationRevision>
+    <ApplicationRevision>394</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -102,9 +102,8 @@
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.Office.Interop.Excel.15.0.4795.1001\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>bin\Debug\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1404.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
@@ -121,6 +120,12 @@
     <Reference Include="MySql.Data, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files (x86)\MySQL\MySQL Connector Net 6.8.3\Assemblies\v4.0\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="QRCoder, Version=1.4.1.0, Culture=neutral, PublicKeyToken=1b6e0edf35469599, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\QRCoder.dll</HintPath>
     </Reference>
     <Reference Include="Rebex.Common, Version=5.0.7501.0, Culture=neutral, PublicKeyToken=1c4638788972655d, processorArchitecture=MSIL">
       <HintPath>packages\Rebex.Common.5.0.7501\lib\net46\Rebex.Common.dll</HintPath>
@@ -147,6 +152,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="WhatsAppApi, Version=1.0.2.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Whatsapp.NET.1.2.2\lib\WhatsAppApi.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
     <Reference Include="WSAFIPFE, Version=99.8.6.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\KIGEST - SISTEMAS PUBLICADOS\WSAFIPFE\WSAFIPFE.dll</HintPath>
@@ -414,6 +423,12 @@
       <DependentUpon>ingresoequipo.vb</DependentUpon>
     </Compile>
     <Compile Include="ingresoequipo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ingresoEquipo2.Designer.vb">
+      <DependentUpon>ingresoEquipo2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ingresoEquipo2.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ingreso_valores_propios.Designer.vb">
@@ -854,6 +869,9 @@
     <EmbeddedResource Include="informedeventas.resx">
       <DependentUpon>informedeventas.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ingresoEquipo2.resx">
+      <DependentUpon>ingresoEquipo2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="listadoPrestamos.resx">
       <DependentUpon>listadoPrestamos.vb</DependentUpon>
     </EmbeddedResource>
@@ -1047,6 +1065,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="reportes\listadoOrdenes.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="reportes\fichaingresoTaller1.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="selprod.resx">

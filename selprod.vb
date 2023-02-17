@@ -12,34 +12,47 @@
         End If
     End Sub
     Private Sub SELPAC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        chkstock.CheckState = My.Settings.mostrarSoloStock
         CargarProductos()
     End Sub
     Public Sub CargarProductos()
         Try
-            Dim separador() As String = {"-", " "}
-            Dim buscStr = busqueda.Split(separador, StringSplitOptions.None)
-            Dim i As Integer
-            Dim busqtxt As String
-            For i = 0 To buscStr.Length - 1
-                If i = 0 Then
-                    busqtxt &= " descripcion like '%" & buscStr(i) & "%'"
-                Else
-                    busqtxt &= " and descripcion like '%" & buscStr(i) & "%'"
-                End If
+            Dim busquedatxt As String
+            Dim busqtxt
+            If My.Settings.metodoBusquedaProd = 1 Then
+                busquedatxt = Replace(busqueda, " ", "%")
+                busqtxt = " descripcion like '%" & busquedatxt & "%' "
+            ElseIf My.Settings.metodoBusquedaProd = 0 Then
+                busqtxt = " descripcion like '" & busqueda & "%'"
+            Else
+                busqtxt = " descripcion like '%' "
+            End If
 
-            Next
+            Dim busqStock As String = ""
+            If chkstock.Checked = True Then
+                busqStock = " having stock >0"
+            End If
+
 
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, descripcion, " _
-            & "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD from fact_insumos as ins " _
-            & " where " & busqtxt & "and eliminado=0 order by stock desc limit 20", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, concat(descripcion,' ', detalles) as descripcion, " _
+            & "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD, round((replace(precio,',','.') * 1.21),2) as precioLista from fact_insumos as ins " _
+            & " where " & busqtxt & " and eliminado=0 order by descripcion asc limit 30", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
             consulta.Fill(tablaPers)
             dtproductos.DataSource = tablaPers
+            If chkstock.Checked = True Then
+                Dim filtro As DataTable = DirectCast(dtproductos.DataSource, DataTable)
+                dtproductos.DataSource = filtro.AsEnumerable() _
+                    .Where(Function(r) r.Field(Of Double)("stock") > 0) _
+                    .CopyToDataTable()
+            End If
+
+
             'dtpersonal.Columns(2).Visible = False
             'dtproductos.Columns(0).Visible = False
         Catch ex As Exception
@@ -153,6 +166,13 @@
     End Sub
 
     Private Sub dtproductos_MouseCaptureChanged(sender As Object, e As EventArgs) Handles  dtproductos.MouseCaptureChanged
+
+    End Sub
+
+    Private Sub chkstock_CheckedChanged(sender As Object, e As EventArgs) Handles chkstock.CheckedChanged
+        My.Settings.mostrarSoloStock = chkstock.CheckState
+        My.Settings.Save()
+        CargarProductos()
 
     End Sub
 End Class

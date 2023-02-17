@@ -25,6 +25,8 @@ Public Class productos
         cargarPresentacion()
         cargarProveedores()
         If My.Settings.calcCosto = 1 Then chkcalcularcosto.CheckState = CheckState.Checked
+        cmbOrdenarPor.SelectedIndex = 0
+
     End Sub
     Private Sub cargarCategoriasProd()
         Try
@@ -318,9 +320,14 @@ Public Class productos
 
             Dim BusquedaComp As String
 
-            BusquedaComp = Replace(nombre, " ", "%")
-            busqtxt = " descripcion like '%" & BusquedaComp & "%' or codigo like '" & nombre & "'"
-
+            If My.Settings.metodoBusquedaProd = 1 Then
+                BusquedaComp = Replace(nombre, " ", "%")
+                busqtxt = " descripcion like '%" & BusquedaComp & "%' or codigo like '" & nombre & "'"
+            ElseIf My.Settings.metodoBusquedaProd = 0 Then
+                busqtxt = " descripcion like '" & nombre & "%' or codigo like '" & nombre & "'"
+            Else
+                busqtxt = " descripcion like '%' or codigo like '" & nombre & "'"
+            End If
             If chkstock.CheckState = CheckState.Checked Then
                 busqStock = " having stock>0 "
             Else
@@ -1616,23 +1623,17 @@ Public Class productos
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
         Try
-            Dim catsel As String = ""
-            If cmbcatProdGral.SelectedValue > 0 Then
-                catsel = " where categoria =" & cmbcatProdGral.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<6 "
-            Else
-                catsel = " where length(" & My.Settings.obtCodProd & ")<6 "
-            End If
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 as ProxCod FROM fact_insumos " & catsel &
-            "having ProxCod not in(select " & My.Settings.obtCodProd & " from fact_insumos )", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 as ProxCod FROM fact_insumos 
+            having ProxCod not in(select " & My.Settings.obtCodProd & " from fact_insumos )", conexionPrinc)
             Dim tablaprod As New DataTable
             consulta.Fill(tablaprod)
-            If tablaprod.Rows.Count <> 0 Then
-                txtcodigo.Text = tablaprod(0)(0)
-            Else
-                Dim numaleat As New Random(CInt(DateTime.Now.Ticks And 999999))
-                txtcodigo.Text = numaleat.Next
-            End If
+            'If tablaprod.Rows.Count <> 0 Then
+            txtcodigo.Text = tablaprod(0)(0)
+            'Else
+            'Dim numaleat As New Random(CInt(DateTime.Now.Ticks And 999999))
+            '    txtcodigo.Text = numaleat.Next
+            'End If
             conexionPrinc.Close()
         Catch ex As Exception
 

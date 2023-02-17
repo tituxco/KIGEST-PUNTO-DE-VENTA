@@ -468,7 +468,7 @@ Public Class puntoventa
 
 			End If
 			Reconectar()
-			Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
+			Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,concat(descripcion,' ' detalles) FROM fact_insumos " & Busq, conexionPrinc)
 			Dim tablaprod As New DataTable
 			Dim filasProd() As DataRow
 			consulta.Fill(tablaprod)
@@ -617,7 +617,7 @@ Public Class puntoventa
 		'End If
 
 		Reconectar()
-		Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,impuestoFijo01,impuestoFijo02 FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
+		Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,concat(descripcion, ' ',detalles) as descripcion,impuestoFijo01,impuestoFijo02 FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
 		Dim tablaprod As New DataTable
 		Dim filasProd() As DataRow
 		consulta.Fill(tablaprod)
@@ -2150,6 +2150,7 @@ Public Class puntoventa
 			'MsgBox(FacturaElectro.cuit & "-" & FacturaElectro.certificado & "-" & FacturaElectro.licencia & "-" & FacturaElectro.passcertificado)
 			lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit.Replace("-", ""), Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
 			fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+
 			If lresultado = True Then
 				lresultado = fe.f1ObtenerTicketAcceso()
 				'MsgBox("Tiket obtenido" )
@@ -2799,6 +2800,7 @@ Public Class puntoventa
 			fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
 			fe.p1Version = 5
 
+
 			If fe.p1ObtenerTicketAcceso() Then
 				bresultado = fe.p1GetPersona(txtcliecuitcuil.Text)
 				If fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0) <> "" Then
@@ -2909,16 +2911,7 @@ Public Class puntoventa
 	End Sub
 
 	Private Sub txtcliecuitcuil_KeyUp(sender As Object, e As KeyEventArgs) Handles txtcliecuitcuil.KeyUp
-		If e.KeyCode = Keys.Enter Then
-			If ComprobarClienteCUIT(txtcliecuitcuil.Text) = False Then
-				If MsgBox("El cliente no existe en su base de datos, desea agregarlo automaticamente consultando el padron de contribuyentes?", vbYesNo + vbQuestion) = vbYes Then
-					Button5.PerformClick()
-				End If
-			Else
-				cargarCliente(True)
-			End If
 
-		End If
 	End Sub
 
 	Private Sub txtcliecuitcuil_TextChanged(sender As Object, e As EventArgs) Handles txtcliecuitcuil.TextChanged
@@ -2972,7 +2965,16 @@ Public Class puntoventa
 		End If
 	End Sub
 
-	Private Sub Button4_Click(sender As Object, e As EventArgs)
+	Private Sub txtcliecuitcuil_KeyDown(sender As Object, e As KeyEventArgs) Handles txtcliecuitcuil.KeyDown
+		If e.KeyCode = Keys.Enter Then
+			If ComprobarClienteCUIT(txtcliecuitcuil.Text) = False Then
+				If MsgBox("El cliente no existe en su base de datos, desea agregarlo automaticamente consultando el padron de contribuyentes?", vbYesNo + vbQuestion) = vbYes Then
+					Button5.PerformClick()
+				End If
+			Else
+				cargarCliente(True)
+			End If
 
+		End If
 	End Sub
 End Class

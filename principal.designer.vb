@@ -74,6 +74,7 @@ Partial Class frmprincipal
         Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.dtconexiones = New System.Windows.Forms.DataGridView()
+        Me.lblEstadoCertificado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         CType(Me.dtconexiones, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,7 +82,7 @@ Partial Class frmprincipal
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.lblEstadoCertificado, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1211, 24)
@@ -583,6 +584,14 @@ Partial Class frmprincipal
         Me.dtconexiones.TabIndex = 17
         Me.dtconexiones.Visible = False
         '
+        'lblEstadoCertificado
+        '
+        Me.lblEstadoCertificado.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEstadoCertificado.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblEstadoCertificado.Name = "lblEstadoCertificado"
+        Me.lblEstadoCertificado.Size = New System.Drawing.Size(156, 19)
+        Me.lblEstadoCertificado.Text = "VencimientoCertificado:"
+        '
         'frmprincipal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -661,4 +670,5 @@ Partial Class frmprincipal
     Friend WithEvents listaConexiones As ToolStripDropDownButton
     Friend WithEvents dtconexiones As DataGridView
     Friend WithEvents PublicidadToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents lblEstadoCertificado As ToolStripStatusLabel
 End Class

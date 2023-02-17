@@ -144,14 +144,10 @@
           <DataField>equiposerie</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="tipoTaller">
-          <DataField>tipoTaller</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datostaller</rd:DataSetName>
-        <rd:SchemaPath>C:\Users\rquat\OneDrive\Desarrollos\KIGEST-PUNTO DE VENTA\datasets\datostaller.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Importante\creaciones\kigest\sigt\datasets\datostaller.xsd</rd:SchemaPath>
         <rd:TableName>fichaIngreso</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />
@@ -591,9 +587,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>=IIF(First(Fields!tipoTaller.Value, "datosOrden")=0,
-First(Fields!equipomarcamodelo.Value, "datosOrden"),
-"")</Value>
+                    <Value>=First(Fields!equipomarcamodelo.Value, "datosOrden")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -1232,7 +1226,7 @@ First(Fields!equipomarcamodelo.Value, "datosOrden"),
               </Border>
             </Style>
           </Line>
-          <Rectangle Name="objPatron">
+          <Rectangle Name="Rectangle3">
             <ReportItems>
               <Line Name="Line5">
                 <Top>1.93332cm</Top>

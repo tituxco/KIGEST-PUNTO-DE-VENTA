@@ -25,6 +25,7 @@ Partial Class selprod
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
+        Me.chkstock = New System.Windows.Forms.CheckBox()
         Me.pntitulo.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -32,11 +33,12 @@ Partial Class selprod
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pntitulo.Controls.Add(Me.chkstock)
         Me.pntitulo.Controls.Add(Me.Label1)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(742, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(645, 40)
         Me.pntitulo.TabIndex = 31
         '
         'Label1
@@ -64,14 +66,26 @@ Partial Class selprod
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtproductos.Size = New System.Drawing.Size(742, 330)
+        Me.dtproductos.Size = New System.Drawing.Size(645, 330)
         Me.dtproductos.TabIndex = 64
+        '
+        'chkstock
+        '
+        Me.chkstock.AutoSize = True
+        Me.chkstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkstock.ForeColor = System.Drawing.Color.White
+        Me.chkstock.Location = New System.Drawing.Point(522, 12)
+        Me.chkstock.Name = "chkstock"
+        Me.chkstock.Size = New System.Drawing.Size(120, 20)
+        Me.chkstock.TabIndex = 184
+        Me.chkstock.Text = "Solo en stock"
+        Me.chkstock.UseVisualStyleBackColor = True
         '
         'selprod
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(742, 370)
+        Me.ClientSize = New System.Drawing.Size(645, 370)
         Me.Controls.Add(Me.dtproductos)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
@@ -89,4 +103,5 @@ Partial Class selprod
     Friend WithEvents pntitulo As System.Windows.Forms.Panel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents dtproductos As DataGridView
+    Friend WithEvents chkstock As CheckBox
 End Class

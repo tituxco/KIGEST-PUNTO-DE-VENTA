@@ -61,15 +61,15 @@
             Dim busqNomb As String
             Dim busqStock As String
 
-            Dim separador() As String = {"-", " "}
-            Dim buscStr = nombre.Split(separador, StringSplitOptions.None)
-            Dim i As Integer
-
             Dim BusquedaComp As String
-
-            BusquedaComp = Replace(nombre, " ", "%")
-            busqtxt = " (pro.descripcion like '%" & BusquedaComp & "%' or pro.codigo like '" & nombre & "')"
-
+            If My.Settings.metodoBusquedaProd = 1 Then
+                BusquedaComp = Replace(nombre, " ", "%")
+                busqtxt = " pro.descripcion like '%" & BusquedaComp & "%' or pro.codigo like '" & nombre & "'"
+            ElseIf My.Settings.metodoBusquedaProd = 0 Then
+                busqtxt = " pro.descripcion like '" & nombre & "%'  or pro.codigo like '" & nombre & "'"
+            Else
+                busqtxt = " pro.descripcion like '%'"
+            End If
             If nombre = "" Then
                 busqNomb = "where pro.eliminado=0 and  pro.descripcion like '%' "
             Else
@@ -95,9 +95,9 @@
             cadenaComp = busqNomb & " And " & busqCat & " And " & busqProv & busqStock & busqCod
             'MsgBox(cadenaComp)
             If imprimirlist = False And imprimiretiq = False Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU, 
             pro.precio as costosiniva, pro.ganancia,pro.utilidad1,pro.utilidad2, (select sum(stock) from fact_insumos_lotes  
-            where idproducto=pro.id) as Stock,pro.iva  from fact_insumos as pro " & cadenaComp, conexionPrinc)
+            where idproducto=pro.id) as Stock,pro.iva  from fact_insumos as pro " & cadenaComp & " order by pro.descripcion asc", conexionPrinc)
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)

@@ -1,4 +1,6 @@
-﻿Public Class NvaFacturaCompra
+﻿Imports System.Windows.Controls
+
+Public Class NvaFacturaCompra
     Public idProveedor As Integer
     Dim CondIva As Integer
 
@@ -44,6 +46,15 @@
                 MsgBox("el comprobante ya fue cargado, por favor verifique")
                 Exit Sub
             End If
+            Dim tipoComprobante As Integer
+            Select Case tipocomp
+                Case "FA"
+                    tipoComprobante = 1
+                Case "FB"
+                    tipoComprobante = 6
+                Case "FC"
+                    tipoComprobante = 11
+            End Select
 
             If tipocomp = "NC" Then
                 If neto21 <> 0 Then neto21 = "-" & neto21
@@ -63,7 +74,7 @@
             Dim addFactProvStock As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With addFactProvStock.Parameters
                 .AddWithValue("?fecha", fecha)
-                .AddWithValue("?tipo", tipocomp)
+                .AddWithValue("?tipo", tipoComprobante)
                 .AddWithValue("?numero", numfac)
                 .AddWithValue("?monto", total)
                 .AddWithValue("?vencimiento", fecha)

@@ -18,7 +18,7 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.77162cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -466,7 +466,7 @@
         <Top>7.71292cm</Top>
         <Left>0.17639cm</Left>
         <Height>1.83528cm</Height>
-        <Width>19.09502cm</Width>
+        <Width>19.36664cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -1072,7 +1072,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Condición de venta: " &amp; First(Fields!faccondvta.Value, "encabezado")</Value>
+                    <Value>="Condición de venta: " &amp; iif(First(Fields!faccondvta.Value, "encabezado")=1,"CONTADO","CTA. CTE")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontWeight>Bold</FontWeight>

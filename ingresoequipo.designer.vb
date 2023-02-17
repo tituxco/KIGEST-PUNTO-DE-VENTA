@@ -49,28 +49,6 @@ Partial Class ingresoequipo
         Me.txtcasavendedora = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.txtinfoextra = New System.Windows.Forms.TextBox()
-        Me.lblequipo = New System.Windows.Forms.Label()
-        Me.paneldatosadicionales = New System.Windows.Forms.Panel()
-        Me.chkcables = New System.Windows.Forms.CheckBox()
-        Me.chkbateria = New System.Windows.Forms.CheckBox()
-        Me.chkcargador = New System.Windows.Forms.CheckBox()
-        Me.chkcaja = New System.Windows.Forms.CheckBox()
-        Me.txtobservaciones = New System.Windows.Forms.TextBox()
-        Me.Label14 = New System.Windows.Forms.Label()
-        Me.txtmotivo = New System.Windows.Forms.TextBox()
-        Me.Label13 = New System.Windows.Forms.Label()
-        Me.txtaccesorios = New System.Windows.Forms.TextBox()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.panelequipo = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmbmodelos = New System.Windows.Forms.ComboBox()
-        Me.txtnumeroSerie = New System.Windows.Forms.TextBox()
-        Me.Label11 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.cmbmarcas = New System.Windows.Forms.ComboBox()
-        Me.cmbtipoequ = New System.Windows.Forms.ComboBox()
         Me.tmrComprobarOR = New System.Windows.Forms.Timer(Me.components)
         Me.Label5 = New System.Windows.Forms.Label()
         Me.txtnumor = New System.Windows.Forms.TextBox()
@@ -79,12 +57,36 @@ Partial Class ingresoequipo
         Me.lblfecha = New System.Windows.Forms.Label()
         Me.panelingreso = New System.Windows.Forms.Panel()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.panelAccesorios = New System.Windows.Forms.Panel()
+        Me.chkbateria = New System.Windows.Forms.CheckBox()
+        Me.chkcargador = New System.Windows.Forms.CheckBox()
+        Me.txtaccesorios = New System.Windows.Forms.TextBox()
+        Me.chkcaja = New System.Windows.Forms.CheckBox()
+        Me.chkcables = New System.Windows.Forms.CheckBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtobservaciones = New System.Windows.Forms.TextBox()
+        Me.txtmotivo = New System.Windows.Forms.TextBox()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.lblmotivo = New System.Windows.Forms.Label()
+        Me.panelequipo = New System.Windows.Forms.Panel()
+        Me.cmbtipoequ = New System.Windows.Forms.ComboBox()
+        Me.cmbmarcas = New System.Windows.Forms.ComboBox()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.lblmarca = New System.Windows.Forms.Label()
+        Me.lblmodelo = New System.Windows.Forms.Label()
+        Me.lblserial = New System.Windows.Forms.Label()
+        Me.txtnumeroSerie = New System.Windows.Forms.TextBox()
+        Me.cmbmodelos = New System.Windows.Forms.ComboBox()
+        Me.lblequipo = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.panelcliente.SuspendLayout()
         Me.pninfoextra.SuspendLayout()
-        Me.paneldatosadicionales.SuspendLayout()
-        Me.panelequipo.SuspendLayout()
         Me.panelingreso.SuspendLayout()
+        Me.panelAccesorios.SuspendLayout()
+        Me.Panel1.SuspendLayout()
+        Me.panelequipo.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -150,7 +152,7 @@ Partial Class ingresoequipo
         Me.Label23.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label23.Location = New System.Drawing.Point(3, 78)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(92, 16)
+        Me.Label23.Size = New System.Drawing.Size(91, 16)
         Me.Label23.TabIndex = 232
         Me.Label23.Text = "TELEFONO:"
         '
@@ -170,7 +172,7 @@ Partial Class ingresoequipo
         Me.Label16.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label16.Location = New System.Drawing.Point(353, 76)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(56, 16)
+        Me.Label16.Size = New System.Drawing.Size(55, 16)
         Me.Label16.TabIndex = 230
         Me.Label16.Text = "E-Mail:"
         '
@@ -258,7 +260,7 @@ Partial Class ingresoequipo
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(559, 16)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(73, 16)
+        Me.Label2.Size = New System.Drawing.Size(72, 16)
         Me.Label2.TabIndex = 56
         Me.Label2.Text = "COD INT:"
         '
@@ -268,7 +270,7 @@ Partial Class ingresoequipo
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(3, 51)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(72, 16)
+        Me.Label17.Size = New System.Drawing.Size(71, 16)
         Me.Label17.TabIndex = 54
         Me.Label17.Text = "RECIBIO:"
         '
@@ -286,7 +288,7 @@ Partial Class ingresoequipo
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(3, 27)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(87, 16)
+        Me.Label8.Size = New System.Drawing.Size(86, 16)
         Me.Label8.TabIndex = 39
         Me.Label8.Text = "DOMICILIO:"
         '
@@ -303,7 +305,7 @@ Partial Class ingresoequipo
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(3, 4)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(75, 16)
+        Me.Label7.Size = New System.Drawing.Size(74, 16)
         Me.Label7.TabIndex = 0
         Me.Label7.Text = "CLIENTE:"
         '
@@ -328,7 +330,7 @@ Partial Class ingresoequipo
         Me.Label15.ForeColor = System.Drawing.Color.White
         Me.Label15.Location = New System.Drawing.Point(389, 8)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(129, 16)
+        Me.Label15.Size = New System.Drawing.Size(128, 16)
         Me.Label15.TabIndex = 54
         Me.Label15.Text = "Casa Vendedora:"
         '
@@ -346,7 +348,7 @@ Partial Class ingresoequipo
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(3, 8)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(89, 16)
+        Me.Label3.Size = New System.Drawing.Size(88, 16)
         Me.Label3.TabIndex = 52
         Me.Label3.Text = "Propietario:"
         '
@@ -356,236 +358,6 @@ Partial Class ingresoequipo
         Me.txtinfoextra.Name = "txtinfoextra"
         Me.txtinfoextra.Size = New System.Drawing.Size(273, 20)
         Me.txtinfoextra.TabIndex = 17
-        '
-        'lblequipo
-        '
-        Me.lblequipo.AutoSize = True
-        Me.lblequipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblequipo.ForeColor = System.Drawing.Color.White
-        Me.lblequipo.Location = New System.Drawing.Point(759, 24)
-        Me.lblequipo.Name = "lblequipo"
-        Me.lblequipo.Size = New System.Drawing.Size(0, 16)
-        Me.lblequipo.TabIndex = 55
-        '
-        'paneldatosadicionales
-        '
-        Me.paneldatosadicionales.AutoScroll = True
-        Me.paneldatosadicionales.BackColor = System.Drawing.Color.White
-        Me.paneldatosadicionales.Controls.Add(Me.chkcables)
-        Me.paneldatosadicionales.Controls.Add(Me.chkbateria)
-        Me.paneldatosadicionales.Controls.Add(Me.chkcargador)
-        Me.paneldatosadicionales.Controls.Add(Me.chkcaja)
-        Me.paneldatosadicionales.Controls.Add(Me.txtobservaciones)
-        Me.paneldatosadicionales.Controls.Add(Me.Label14)
-        Me.paneldatosadicionales.Controls.Add(Me.txtmotivo)
-        Me.paneldatosadicionales.Controls.Add(Me.Label13)
-        Me.paneldatosadicionales.Controls.Add(Me.txtaccesorios)
-        Me.paneldatosadicionales.Controls.Add(Me.Label12)
-        Me.paneldatosadicionales.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.paneldatosadicionales.Location = New System.Drawing.Point(0, 212)
-        Me.paneldatosadicionales.Name = "paneldatosadicionales"
-        Me.paneldatosadicionales.Size = New System.Drawing.Size(1059, 324)
-        Me.paneldatosadicionales.TabIndex = 95
-        '
-        'chkcables
-        '
-        Me.chkcables.AutoSize = True
-        Me.chkcables.Location = New System.Drawing.Point(235, 135)
-        Me.chkcables.Name = "chkcables"
-        Me.chkcables.Size = New System.Drawing.Size(85, 17)
-        Me.chkcables.TabIndex = 27
-        Me.chkcables.Text = "CABLE USB"
-        Me.chkcables.UseVisualStyleBackColor = True
-        '
-        'chkbateria
-        '
-        Me.chkbateria.AutoSize = True
-        Me.chkbateria.Location = New System.Drawing.Point(157, 135)
-        Me.chkbateria.Name = "chkbateria"
-        Me.chkbateria.Size = New System.Drawing.Size(72, 17)
-        Me.chkbateria.TabIndex = 26
-        Me.chkbateria.Text = "BATERIA"
-        Me.chkbateria.UseVisualStyleBackColor = True
-        '
-        'chkcargador
-        '
-        Me.chkcargador.AutoSize = True
-        Me.chkcargador.Location = New System.Drawing.Point(64, 135)
-        Me.chkcargador.Name = "chkcargador"
-        Me.chkcargador.Size = New System.Drawing.Size(87, 17)
-        Me.chkcargador.TabIndex = 25
-        Me.chkcargador.Text = "CARGADOR"
-        Me.chkcargador.UseVisualStyleBackColor = True
-        '
-        'chkcaja
-        '
-        Me.chkcaja.AutoSize = True
-        Me.chkcaja.Location = New System.Drawing.Point(6, 135)
-        Me.chkcaja.Name = "chkcaja"
-        Me.chkcaja.Size = New System.Drawing.Size(52, 17)
-        Me.chkcaja.TabIndex = 24
-        Me.chkcaja.Text = "CAJA"
-        Me.chkcaja.UseVisualStyleBackColor = True
-        '
-        'txtobservaciones
-        '
-        Me.txtobservaciones.Location = New System.Drawing.Point(6, 284)
-        Me.txtobservaciones.Multiline = True
-        Me.txtobservaciones.Name = "txtobservaciones"
-        Me.txtobservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtobservaciones.Size = New System.Drawing.Size(750, 56)
-        Me.txtobservaciones.TabIndex = 30
-        '
-        'Label14
-        '
-        Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label14.Location = New System.Drawing.Point(3, 265)
-        Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(136, 16)
-        Me.Label14.TabIndex = 223
-        Me.Label14.Text = "OBSERVACIONES"
-        '
-        'txtmotivo
-        '
-        Me.txtmotivo.Location = New System.Drawing.Point(6, 205)
-        Me.txtmotivo.Multiline = True
-        Me.txtmotivo.Name = "txtmotivo"
-        Me.txtmotivo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtmotivo.Size = New System.Drawing.Size(750, 56)
-        Me.txtmotivo.TabIndex = 29
-        '
-        'Label13
-        '
-        Me.Label13.AutoSize = True
-        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label13.Location = New System.Drawing.Point(3, 186)
-        Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(163, 16)
-        Me.Label13.TabIndex = 221
-        Me.Label13.Text = "MOTIVO DE INGRESO"
-        '
-        'txtaccesorios
-        '
-        Me.txtaccesorios.Location = New System.Drawing.Point(6, 158)
-        Me.txtaccesorios.Name = "txtaccesorios"
-        Me.txtaccesorios.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
-        Me.txtaccesorios.Size = New System.Drawing.Size(750, 20)
-        Me.txtaccesorios.TabIndex = 28
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label12.Location = New System.Drawing.Point(3, 108)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(105, 16)
-        Me.Label12.TabIndex = 219
-        Me.Label12.Text = "ACCESORIOS"
-        '
-        'panelequipo
-        '
-        Me.panelequipo.Controls.Add(Me.Button1)
-        Me.panelequipo.Controls.Add(Me.lblequipo)
-        Me.panelequipo.Controls.Add(Me.cmbmodelos)
-        Me.panelequipo.Controls.Add(Me.txtnumeroSerie)
-        Me.panelequipo.Controls.Add(Me.Label11)
-        Me.panelequipo.Controls.Add(Me.Label10)
-        Me.panelequipo.Controls.Add(Me.Label9)
-        Me.panelequipo.Controls.Add(Me.Label6)
-        Me.panelequipo.Controls.Add(Me.cmbmarcas)
-        Me.panelequipo.Controls.Add(Me.cmbtipoequ)
-        Me.panelequipo.Dock = System.Windows.Forms.DockStyle.Top
-        Me.panelequipo.Location = New System.Drawing.Point(0, 212)
-        Me.panelequipo.Name = "panelequipo"
-        Me.panelequipo.Size = New System.Drawing.Size(1059, 100)
-        Me.panelequipo.TabIndex = 19
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(729, 22)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(24, 21)
-        Me.Button1.TabIndex = 226
-        Me.Button1.Text = "..."
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'cmbmodelos
-        '
-        Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbmodelos.FormattingEnabled = True
-        Me.cmbmodelos.Location = New System.Drawing.Point(520, 22)
-        Me.cmbmodelos.Name = "cmbmodelos"
-        Me.cmbmodelos.Size = New System.Drawing.Size(208, 21)
-        Me.cmbmodelos.TabIndex = 22
-        '
-        'txtnumeroSerie
-        '
-        Me.txtnumeroSerie.Location = New System.Drawing.Point(6, 75)
-        Me.txtnumeroSerie.Name = "txtnumeroSerie"
-        Me.txtnumeroSerie.Size = New System.Drawing.Size(750, 20)
-        Me.txtnumeroSerie.TabIndex = 23
-        '
-        'Label11
-        '
-        Me.Label11.AutoSize = True
-        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label11.Location = New System.Drawing.Point(3, 56)
-        Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(148, 16)
-        Me.Label11.TabIndex = 225
-        Me.Label11.Text = "NUMERO DE SERIE"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(517, 3)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(71, 16)
-        Me.Label10.TabIndex = 224
-        Me.Label10.Text = "MODELO"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(260, 3)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(61, 16)
-        Me.Label9.TabIndex = 223
-        Me.Label9.Text = "MARCA"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(3, 3)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(129, 16)
-        Me.Label6.TabIndex = 222
-        Me.Label6.Text = "TIPO DE EQUIPO"
-        '
-        'cmbmarcas
-        '
-        Me.cmbmarcas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbmarcas.FormattingEnabled = True
-        Me.cmbmarcas.Location = New System.Drawing.Point(263, 22)
-        Me.cmbmarcas.Name = "cmbmarcas"
-        Me.cmbmarcas.Size = New System.Drawing.Size(236, 21)
-        Me.cmbmarcas.TabIndex = 21
-        '
-        'cmbtipoequ
-        '
-        Me.cmbtipoequ.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbtipoequ.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbtipoequ.FormattingEnabled = True
-        Me.cmbtipoequ.Location = New System.Drawing.Point(6, 22)
-        Me.cmbtipoequ.Name = "cmbtipoequ"
-        Me.cmbtipoequ.Size = New System.Drawing.Size(242, 21)
-        Me.cmbtipoequ.TabIndex = 20
         '
         'tmrComprobarOR
         '
@@ -599,7 +371,7 @@ Partial Class ingresoequipo
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(429, 11)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(89, 16)
+        Me.Label5.Size = New System.Drawing.Size(88, 16)
         Me.Label5.TabIndex = 35
         Me.Label5.Text = "OR numero:"
         '
@@ -630,7 +402,7 @@ Partial Class ingresoequipo
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(3, 11)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(119, 16)
+        Me.Label4.Size = New System.Drawing.Size(118, 16)
         Me.Label4.TabIndex = 39
         Me.Label4.Text = "Tipo de trabajo:"
         '
@@ -665,13 +437,253 @@ Partial Class ingresoequipo
         '
         Me.Timer1.Interval = 300
         '
+        'panelAccesorios
+        '
+        Me.panelAccesorios.BackColor = System.Drawing.Color.White
+        Me.panelAccesorios.Controls.Add(Me.Label12)
+        Me.panelAccesorios.Controls.Add(Me.chkcables)
+        Me.panelAccesorios.Controls.Add(Me.chkcaja)
+        Me.panelAccesorios.Controls.Add(Me.txtaccesorios)
+        Me.panelAccesorios.Controls.Add(Me.chkcargador)
+        Me.panelAccesorios.Controls.Add(Me.chkbateria)
+        Me.panelAccesorios.Dock = System.Windows.Forms.DockStyle.Top
+        Me.panelAccesorios.Location = New System.Drawing.Point(0, 314)
+        Me.panelAccesorios.Name = "panelAccesorios"
+        Me.panelAccesorios.Size = New System.Drawing.Size(1059, 75)
+        Me.panelAccesorios.TabIndex = 0
+        '
+        'chkbateria
+        '
+        Me.chkbateria.AutoSize = True
+        Me.chkbateria.Location = New System.Drawing.Point(157, 26)
+        Me.chkbateria.Name = "chkbateria"
+        Me.chkbateria.Size = New System.Drawing.Size(72, 17)
+        Me.chkbateria.TabIndex = 26
+        Me.chkbateria.Text = "BATERIA"
+        Me.chkbateria.UseVisualStyleBackColor = True
+        '
+        'chkcargador
+        '
+        Me.chkcargador.AutoSize = True
+        Me.chkcargador.Location = New System.Drawing.Point(64, 26)
+        Me.chkcargador.Name = "chkcargador"
+        Me.chkcargador.Size = New System.Drawing.Size(87, 17)
+        Me.chkcargador.TabIndex = 25
+        Me.chkcargador.Text = "CARGADOR"
+        Me.chkcargador.UseVisualStyleBackColor = True
+        '
+        'txtaccesorios
+        '
+        Me.txtaccesorios.Location = New System.Drawing.Point(6, 49)
+        Me.txtaccesorios.Name = "txtaccesorios"
+        Me.txtaccesorios.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtaccesorios.Size = New System.Drawing.Size(750, 20)
+        Me.txtaccesorios.TabIndex = 28
+        '
+        'chkcaja
+        '
+        Me.chkcaja.AutoSize = True
+        Me.chkcaja.Location = New System.Drawing.Point(6, 26)
+        Me.chkcaja.Name = "chkcaja"
+        Me.chkcaja.Size = New System.Drawing.Size(52, 17)
+        Me.chkcaja.TabIndex = 24
+        Me.chkcaja.Text = "CAJA"
+        Me.chkcaja.UseVisualStyleBackColor = True
+        '
+        'chkcables
+        '
+        Me.chkcables.AutoSize = True
+        Me.chkcables.Location = New System.Drawing.Point(235, 26)
+        Me.chkcables.Name = "chkcables"
+        Me.chkcables.Size = New System.Drawing.Size(85, 17)
+        Me.chkcables.TabIndex = 27
+        Me.chkcables.Text = "CABLE USB"
+        Me.chkcables.UseVisualStyleBackColor = True
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(3, 0)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(104, 16)
+        Me.Label12.TabIndex = 219
+        Me.Label12.Text = "ACCESORIOS"
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.White
+        Me.Panel1.Controls.Add(Me.lblmotivo)
+        Me.Panel1.Controls.Add(Me.Label14)
+        Me.Panel1.Controls.Add(Me.txtmotivo)
+        Me.Panel1.Controls.Add(Me.txtobservaciones)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel1.Location = New System.Drawing.Point(0, 389)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(1059, 191)
+        Me.Panel1.TabIndex = 224
+        '
+        'txtobservaciones
+        '
+        Me.txtobservaciones.Location = New System.Drawing.Point(4, 140)
+        Me.txtobservaciones.Multiline = True
+        Me.txtobservaciones.Name = "txtobservaciones"
+        Me.txtobservaciones.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtobservaciones.Size = New System.Drawing.Size(750, 42)
+        Me.txtobservaciones.TabIndex = 30
+        '
+        'txtmotivo
+        '
+        Me.txtmotivo.Location = New System.Drawing.Point(4, 19)
+        Me.txtmotivo.Multiline = True
+        Me.txtmotivo.Name = "txtmotivo"
+        Me.txtmotivo.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.txtmotivo.Size = New System.Drawing.Size(750, 99)
+        Me.txtmotivo.TabIndex = 29
+        '
+        'Label14
+        '
+        Me.Label14.AutoSize = True
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label14.Location = New System.Drawing.Point(1, 121)
+        Me.Label14.Name = "Label14"
+        Me.Label14.Size = New System.Drawing.Size(135, 16)
+        Me.Label14.TabIndex = 223
+        Me.Label14.Text = "OBSERVACIONES"
+        '
+        'lblmotivo
+        '
+        Me.lblmotivo.AutoSize = True
+        Me.lblmotivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblmotivo.Location = New System.Drawing.Point(1, 0)
+        Me.lblmotivo.Name = "lblmotivo"
+        Me.lblmotivo.Size = New System.Drawing.Size(162, 16)
+        Me.lblmotivo.TabIndex = 221
+        Me.lblmotivo.Text = "MOTIVO DE INGRESO"
+        '
+        'panelequipo
+        '
+        Me.panelequipo.Controls.Add(Me.Button1)
+        Me.panelequipo.Controls.Add(Me.lblequipo)
+        Me.panelequipo.Controls.Add(Me.cmbmodelos)
+        Me.panelequipo.Controls.Add(Me.txtnumeroSerie)
+        Me.panelequipo.Controls.Add(Me.lblserial)
+        Me.panelequipo.Controls.Add(Me.lblmodelo)
+        Me.panelequipo.Controls.Add(Me.lblmarca)
+        Me.panelequipo.Controls.Add(Me.Label6)
+        Me.panelequipo.Controls.Add(Me.cmbmarcas)
+        Me.panelequipo.Controls.Add(Me.cmbtipoequ)
+        Me.panelequipo.Dock = System.Windows.Forms.DockStyle.Top
+        Me.panelequipo.Location = New System.Drawing.Point(0, 212)
+        Me.panelequipo.Name = "panelequipo"
+        Me.panelequipo.Size = New System.Drawing.Size(1059, 102)
+        Me.panelequipo.TabIndex = 19
+        '
+        'cmbtipoequ
+        '
+        Me.cmbtipoequ.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbtipoequ.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbtipoequ.FormattingEnabled = True
+        Me.cmbtipoequ.Location = New System.Drawing.Point(6, 22)
+        Me.cmbtipoequ.Name = "cmbtipoequ"
+        Me.cmbtipoequ.Size = New System.Drawing.Size(242, 21)
+        Me.cmbtipoequ.TabIndex = 20
+        '
+        'cmbmarcas
+        '
+        Me.cmbmarcas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbmarcas.FormattingEnabled = True
+        Me.cmbmarcas.Location = New System.Drawing.Point(263, 22)
+        Me.cmbmarcas.Name = "cmbmarcas"
+        Me.cmbmarcas.Size = New System.Drawing.Size(236, 21)
+        Me.cmbmarcas.TabIndex = 21
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(3, 3)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(128, 16)
+        Me.Label6.TabIndex = 222
+        Me.Label6.Text = "TIPO DE EQUIPO"
+        '
+        'lblmarca
+        '
+        Me.lblmarca.AutoSize = True
+        Me.lblmarca.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblmarca.Location = New System.Drawing.Point(260, 3)
+        Me.lblmarca.Name = "lblmarca"
+        Me.lblmarca.Size = New System.Drawing.Size(60, 16)
+        Me.lblmarca.TabIndex = 223
+        Me.lblmarca.Text = "MARCA"
+        '
+        'lblmodelo
+        '
+        Me.lblmodelo.AutoSize = True
+        Me.lblmodelo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblmodelo.Location = New System.Drawing.Point(517, 3)
+        Me.lblmodelo.Name = "lblmodelo"
+        Me.lblmodelo.Size = New System.Drawing.Size(70, 16)
+        Me.lblmodelo.TabIndex = 224
+        Me.lblmodelo.Text = "MODELO"
+        '
+        'lblserial
+        '
+        Me.lblserial.AutoSize = True
+        Me.lblserial.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblserial.Location = New System.Drawing.Point(3, 56)
+        Me.lblserial.Name = "lblserial"
+        Me.lblserial.Size = New System.Drawing.Size(147, 16)
+        Me.lblserial.TabIndex = 225
+        Me.lblserial.Text = "NUMERO DE SERIE"
+        '
+        'txtnumeroSerie
+        '
+        Me.txtnumeroSerie.Location = New System.Drawing.Point(6, 75)
+        Me.txtnumeroSerie.Name = "txtnumeroSerie"
+        Me.txtnumeroSerie.Size = New System.Drawing.Size(750, 20)
+        Me.txtnumeroSerie.TabIndex = 23
+        '
+        'cmbmodelos
+        '
+        Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbmodelos.FormattingEnabled = True
+        Me.cmbmodelos.Location = New System.Drawing.Point(520, 22)
+        Me.cmbmodelos.Name = "cmbmodelos"
+        Me.cmbmodelos.Size = New System.Drawing.Size(208, 21)
+        Me.cmbmodelos.TabIndex = 22
+        '
+        'lblequipo
+        '
+        Me.lblequipo.AutoSize = True
+        Me.lblequipo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblequipo.ForeColor = System.Drawing.Color.White
+        Me.lblequipo.Location = New System.Drawing.Point(759, 24)
+        Me.lblequipo.Name = "lblequipo"
+        Me.lblequipo.Size = New System.Drawing.Size(0, 16)
+        Me.lblequipo.TabIndex = 55
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(729, 22)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(24, 21)
+        Me.Button1.TabIndex = 226
+        Me.Button1.Text = "..."
+        Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
+        '
         'ingresoequipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1059, 536)
+        Me.ClientSize = New System.Drawing.Size(1059, 694)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.panelAccesorios)
         Me.Controls.Add(Me.panelequipo)
-        Me.Controls.Add(Me.paneldatosadicionales)
         Me.Controls.Add(Me.pninfoextra)
         Me.Controls.Add(Me.panelcliente)
         Me.Controls.Add(Me.panelingreso)
@@ -685,12 +697,14 @@ Partial Class ingresoequipo
         Me.panelcliente.PerformLayout()
         Me.pninfoextra.ResumeLayout(False)
         Me.pninfoextra.PerformLayout()
-        Me.paneldatosadicionales.ResumeLayout(False)
-        Me.paneldatosadicionales.PerformLayout()
-        Me.panelequipo.ResumeLayout(False)
-        Me.panelequipo.PerformLayout()
         Me.panelingreso.ResumeLayout(False)
         Me.panelingreso.PerformLayout()
+        Me.panelAccesorios.ResumeLayout(False)
+        Me.panelAccesorios.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
+        Me.panelequipo.ResumeLayout(False)
+        Me.panelequipo.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -708,22 +722,7 @@ Partial Class ingresoequipo
     Friend WithEvents pninfoextra As System.Windows.Forms.Panel
     Friend WithEvents Label3 As System.Windows.Forms.Label
     Friend WithEvents txtinfoextra As System.Windows.Forms.TextBox
-    Friend WithEvents paneldatosadicionales As System.Windows.Forms.Panel
-    Friend WithEvents txtmotivo As System.Windows.Forms.TextBox
-    Friend WithEvents Label13 As System.Windows.Forms.Label
-    Friend WithEvents txtaccesorios As System.Windows.Forms.TextBox
-    Friend WithEvents Label12 As System.Windows.Forms.Label
     Friend WithEvents cmdimprimir As System.Windows.Forms.Button
-    Friend WithEvents txtobservaciones As System.Windows.Forms.TextBox
-    Friend WithEvents Label14 As System.Windows.Forms.Label
-    Friend WithEvents panelequipo As System.Windows.Forms.Panel
-    Friend WithEvents txtnumeroSerie As System.Windows.Forms.TextBox
-    Friend WithEvents Label11 As System.Windows.Forms.Label
-    Friend WithEvents Label10 As System.Windows.Forms.Label
-    Friend WithEvents Label9 As System.Windows.Forms.Label
-    Friend WithEvents Label6 As System.Windows.Forms.Label
-    Friend WithEvents cmbmarcas As System.Windows.Forms.ComboBox
-    Friend WithEvents cmbtipoequ As System.Windows.Forms.ComboBox
     Friend WithEvents cmdguardar As System.Windows.Forms.Button
     Friend WithEvents Label15 As System.Windows.Forms.Label
     Friend WithEvents txtcasavendedora As System.Windows.Forms.TextBox
@@ -734,14 +733,7 @@ Partial Class ingresoequipo
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents lblfecha As System.Windows.Forms.Label
     Friend WithEvents panelingreso As System.Windows.Forms.Panel
-    Friend WithEvents cmbmodelos As System.Windows.Forms.ComboBox
     Friend WithEvents cmbrecibeusuario As System.Windows.Forms.ComboBox
-    Friend WithEvents lblequipo As System.Windows.Forms.Label
-    Friend WithEvents chkcables As System.Windows.Forms.CheckBox
-    Friend WithEvents chkbateria As System.Windows.Forms.CheckBox
-    Friend WithEvents chkcargador As System.Windows.Forms.CheckBox
-    Friend WithEvents chkcaja As System.Windows.Forms.CheckBox
-    Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents lblcodexistente As System.Windows.Forms.Label
     Friend WithEvents Timer1 As System.Windows.Forms.Timer
     Friend WithEvents Label16 As System.Windows.Forms.Label
@@ -749,4 +741,27 @@ Partial Class ingresoequipo
     Friend WithEvents Label23 As System.Windows.Forms.Label
     Friend WithEvents txttelefono As System.Windows.Forms.TextBox
     Friend WithEvents chkenviamail As System.Windows.Forms.CheckBox
+    Friend WithEvents panelAccesorios As Panel
+    Friend WithEvents Label12 As Label
+    Friend WithEvents chkcables As CheckBox
+    Friend WithEvents chkcaja As CheckBox
+    Friend WithEvents txtaccesorios As TextBox
+    Friend WithEvents chkcargador As CheckBox
+    Friend WithEvents chkbateria As CheckBox
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents lblmotivo As Label
+    Friend WithEvents Label14 As Label
+    Friend WithEvents txtmotivo As TextBox
+    Friend WithEvents txtobservaciones As TextBox
+    Friend WithEvents panelequipo As Panel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents lblequipo As Label
+    Friend WithEvents cmbmodelos As ComboBox
+    Friend WithEvents txtnumeroSerie As TextBox
+    Friend WithEvents lblserial As Label
+    Friend WithEvents lblmodelo As Label
+    Friend WithEvents lblmarca As Label
+    Friend WithEvents Label6 As Label
+    Friend WithEvents cmbmarcas As ComboBox
+    Friend WithEvents cmbtipoequ As ComboBox
 End Class

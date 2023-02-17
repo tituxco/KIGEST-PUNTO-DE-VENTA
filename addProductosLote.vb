@@ -20,7 +20,7 @@
             cmbcatprod.DataSource = readcat.Tables(0)
             cmbcatprod.DisplayMember = readcat.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbcatprod.ValueMember = readcat.Tables(0).Columns(0).Caption.ToString
-            cmbcatprod.SelectedIndex = -1
+            cmbcatprod.SelectedIndex = 0
 
         Catch ex As Exception
 
@@ -51,7 +51,7 @@
         cmblista.DataSource = tablalist.Tables(0)
         cmblista.DisplayMember = tablalist.Tables(0).Columns(1).Caption.ToString.ToUpper
         cmblista.ValueMember = tablalist.Tables(0).Columns(0).Caption.ToString
-        cmblista.SelectedValue = 1
+        cmblista.SelectedIndex = 0
     End Sub
     Private Sub romaneo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         cargarAlmacenes()
@@ -60,7 +60,7 @@
         cargarListas()
         'dtproductos.Columns(4).DefaultCellStyle.NullValue = My.Settings.ivaDef
         chkcalcularcosto.CheckState = My.Settings.calcCosto
-
+        chkBusquedaProd.CheckState = My.Settings.busquedaProd
         If idcomprobante <> 0 Then
             CargarFactCompra()
             For Each Cont As Control In pnDatosFact.Controls
@@ -107,7 +107,7 @@
         cmbalmacen.DataSource = readprov.Tables(0)
         cmbalmacen.DisplayMember = readprov.Tables(0).Columns(1).Caption.ToString.ToUpper
         cmbalmacen.ValueMember = readprov.Tables(0).Columns(0).Caption.ToString
-        cmbalmacen.SelectedIndex = -1
+        cmbalmacen.SelectedIndex = 0
     End Sub
     Private Sub CargarFactCompra()
         Try
@@ -287,18 +287,18 @@
                     cargarProdPLU(dtproductos.CurrentCell.Value, e.ColumnIndex)
                 End If
             ElseIf e.ColumnIndex = 3 Then
-
-                ''If dtproductos.CurrentRow.Cells(1).Value = "" Then
-                'selprod.busqueda = dtproductos.CurrentCell.Value()
-                'selprod.fila = dtproductos.CurrentCellAddress.Y
-                ''MsgBox(dtproductos.CurrentCellAddress.Y)
-                'selprod.LLAMA = "prodlote"
-                'cargaManual = True
-                'selprod.Show()
-                'selprod.TopMost = True
-                ''End If
+                If chkBusquedaProd.Checked = True Then
+                    'If dtproductos.CurrentRow.Cells(1).Value = "" Then
+                    selprod.busqueda = dtproductos.CurrentCell.Value()
+                    selprod.fila = dtproductos.CurrentCellAddress.Y
+                    'MsgBox(dtproductos.CurrentCellAddress.Y)
+                    selprod.LLAMA = "prodlote"
+                    cargaManual = True
+                    selprod.Show()
+                    selprod.TopMost = True
+                    'End If
+                End If
             End If
-
             calcularPrecios()
         Catch ex As Exception
 
@@ -824,21 +824,23 @@
     Private Function ObternerCodigoSiguiente() As Integer
         Try
             Dim catsel As String = ""
-            If cmbcatprod.SelectedValue > 0 Then
-                catsel = " where categoria =" & cmbcatprod.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<7"
-            Else
-                catsel = "where length(" & My.Settings.obtCodProd & ")<7"
-            End If
+            'If cmbcatprod.SelectedValue > 0 Then
+            '    catsel = " where categoria =" & cmbcatprod.SelectedValue & " and length(" & My.Settings.obtCodProd & ")<7"
+            'Else
+            '    catsel = "where length(" & My.Settings.obtCodProd & ")<7"
+            'End If
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 FROM fact_insumos " & catsel, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 FROM fact_insumos ", conexionPrinc)
             Dim tablaprod As New DataTable
+            ' MsgBox(consulta.SelectCommand.CommandText)
+
             consulta.Fill(tablaprod)
-            If tablaprod.Rows.Count <> 0 Then
-                Return tablaprod(0)(0)
-            Else
-                Dim numaleat As New Random(CInt(Date.Now.Ticks And 99999))
-                Return numaleat.Next
-            End If
+            'If tablaprod.Rows.Count <> 0 Then
+            Return tablaprod(0)(0)
+            'Else
+            '    Dim numaleat As New Random(CInt(Date.Now.Ticks And 99999))
+            '    Return numaleat.Next
+            'End If
             conexionPrinc.Close()
 
         Catch ex As Exception
@@ -849,5 +851,24 @@
 
     Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
 
+    End Sub
+
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        idcomprobante = 1
+        CargarFactCompra()
+    End Sub
+
+    Private Sub dtproductos_CellContextMenuStripChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContextMenuStripChanged
+
+    End Sub
+
+    Private Sub pnadd_Paint(sender As Object, e As PaintEventArgs) Handles pnadd.Paint
+
+    End Sub
+
+    Private Sub chkBusquedaProd_CheckedChanged(sender As Object, e As EventArgs) Handles chkBusquedaProd.CheckedChanged
+
+        My.Settings.busquedaProd = chkBusquedaProd.CheckState
+        My.Settings.Save()
     End Sub
 End Class
