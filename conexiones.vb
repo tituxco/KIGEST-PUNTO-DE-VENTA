@@ -67,7 +67,7 @@ Module Conexiones
             Dim leerAuth As IDataReader
             Dim i As Integer
 
-            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,cliente,sistema, usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt from CliAuth where clave like sha('" & clav & "') and codus like '" & user & "'", conexionAuth)
+            Dim consultaauth As New MySql.Data.MySqlClient.MySqlDataAdapter("select codus, pass,cliente,sistema, usuario,autorizado, servidor, bd, puerto,modulo,servidor_resp,idInt,debe,mensaje from CliAuth where clave like sha('" & clav & "') and codus like '" & user & "'", conexionAuth)
             Dim tablaauth As New DataTable
             Dim infoauth() As DataRow
             consultaauth.Fill(tablaauth)
@@ -100,6 +100,8 @@ Module Conexiones
                 DatosAcceso.Moduloacc = infoauth(0)("modulo")
                 DatosAcceso.RESPserv = infoauth(0)("servidor_resp")
                 DatosAcceso.UsuarioINT = infoauth(0)("idInt")
+                DatosAcceso.debe = infoauth(0)("debe")
+                DatosAcceso.mensaje = infoauth(0)("mensaje")
                 'If conectar(serv, port, user, pass, database) = True Then
                 'Return True
                 'End If

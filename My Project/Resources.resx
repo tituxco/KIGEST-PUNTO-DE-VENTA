@@ -151,6 +151,9 @@
   <data name="Refund_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Refund_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Paper_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\Paper_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Save_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Save_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -171,9 +174,6 @@
   </data>
   <data name="Save (Custom)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save (Custom).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="facturaelectro" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\reportes\facturaelectro.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="estadocuentas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\estadocuentas.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -232,6 +232,9 @@
   <data name="Automation_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Automation_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ALERTA" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\ALERTA.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="pedido" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\pedido.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -250,8 +253,8 @@
   <data name="listadoproductos" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\listadoproductos.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Paper_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\Paper_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="listadorecibos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\reportes\listadorecibos.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Save (Custom) (Custom)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save (Custom) (Custom).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -277,9 +280,6 @@
   <data name="Cloud Storage_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Cloud Storage_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="listadorecibos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\reportes\listadorecibos.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="Bank Building_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Bank Building_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -289,14 +289,14 @@
   <data name="Cash Register_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Cash Register_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8_Versions_64px_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\icons8_Versions_64px_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="business_chat_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\business_chat_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="resumenventasrubros" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\resumenventasrubros.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="New Copy_64px2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\New Copy_64px2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8_Versions_64px_11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\icons8_Versions_64px_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Export_32px_WHITE" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Export_32px_WHITE.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -307,8 +307,8 @@
   <data name="Save (Custom) (Custom) (2)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Save (Custom) (Custom) (2).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Bank Building_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\Bank Building_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="facturaelectro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\reportes\facturaelectro.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="listadofacturas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\listadofacturas.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -316,11 +316,14 @@
   <data name="Search Property_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Search Property_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Add (Custom)" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Add (Custom).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="microsoft_excel_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\microsoft_excel_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="listacarga" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\listacarga.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="New Copy_64px2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\New Copy_64px2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="fichaingreso" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\fichaingreso.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -330,6 +333,9 @@
   </data>
   <data name="secured_letter_48px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\secured_letter_48px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Random Experimental House" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Random Experimental House.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Math" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Math.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -343,8 +349,14 @@
   <data name="Subtract, lock (Custom)" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Subtract, lock (Custom).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Add (Custom)" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Add (Custom).png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="notacredleg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\notacredleg.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Bank Building_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\Bank Building_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Computer Support_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Computer Support_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -394,8 +406,8 @@
   <data name="remito" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\reportes\remito.rdlc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="Random Experimental House" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Random Experimental House.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="alerta_32" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\alerta_32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Cash in Hand_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\iconos\Cash in Hand_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -412,7 +424,7 @@
   <data name="OOo Math" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\OOo Math.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="microsoft_excel_32px" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\iconos\microsoft_excel_32px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="forward_message_64px" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\iconos\forward_message_64px.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

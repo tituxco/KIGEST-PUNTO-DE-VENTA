@@ -26,6 +26,7 @@ Partial Class frmprincipal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmprincipal))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblEstadoCertificado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusBDprinc = New System.Windows.Forms.ToolStripStatusLabel()
@@ -72,9 +73,8 @@ Partial Class frmprincipal
         Me.SIMULADORToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LISTADOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SincronizacionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNotificaciones = New System.Windows.Forms.ToolStripMenuItem()
         Me.dtconexiones = New System.Windows.Forms.DataGridView()
-        Me.lblEstadoCertificado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
         CType(Me.dtconexiones, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -85,7 +85,7 @@ Partial Class frmprincipal
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.lblEstadoCertificado, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(1211, 24)
+        Me.StatusStrip1.Size = New System.Drawing.Size(1270, 24)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -95,6 +95,14 @@ Partial Class frmprincipal
         Me.lblPrincipalDolar.Name = "lblPrincipalDolar"
         Me.lblPrincipalDolar.Size = New System.Drawing.Size(60, 19)
         Me.lblPrincipalDolar.Text = "DOLAR:"
+        '
+        'lblEstadoCertificado
+        '
+        Me.lblEstadoCertificado.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblEstadoCertificado.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblEstadoCertificado.Name = "lblEstadoCertificado"
+        Me.lblEstadoCertificado.Size = New System.Drawing.Size(156, 19)
+        Me.lblEstadoCertificado.Text = "VencimientoCertificado:"
         '
         'pbprincipal
         '
@@ -161,10 +169,10 @@ Partial Class frmprincipal
         '
         Me.menugral.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.menugral.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdServicios, Me.EmpleadosToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.SincronizacionToolStripMenuItem})
+        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdServicios, Me.EmpleadosToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.btnNotificaciones})
         Me.menugral.Location = New System.Drawing.Point(0, 0)
         Me.menugral.Name = "menugral"
-        Me.menugral.Size = New System.Drawing.Size(1211, 40)
+        Me.menugral.Size = New System.Drawing.Size(1270, 40)
         Me.menugral.TabIndex = 15
         Me.menugral.Text = "MenuStrip1"
         '
@@ -560,12 +568,15 @@ Partial Class frmprincipal
         Me.SALIRToolStripMenuItem.Size = New System.Drawing.Size(88, 36)
         Me.SALIRToolStripMenuItem.Text = "SALIR"
         '
-        'SincronizacionToolStripMenuItem
+        'btnNotificaciones
         '
-        Me.SincronizacionToolStripMenuItem.Name = "SincronizacionToolStripMenuItem"
-        Me.SincronizacionToolStripMenuItem.Size = New System.Drawing.Size(123, 36)
-        Me.SincronizacionToolStripMenuItem.Text = "Sincronizacion"
-        Me.SincronizacionToolStripMenuItem.Visible = False
+        Me.btnNotificaciones.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.btnNotificaciones.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnNotificaciones.ForeColor = System.Drawing.Color.White
+        Me.btnNotificaciones.Image = Global.SIGT__KIGEST.My.Resources.Resources.alerta_32
+        Me.btnNotificaciones.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
+        Me.btnNotificaciones.Name = "btnNotificaciones"
+        Me.btnNotificaciones.Size = New System.Drawing.Size(44, 36)
         '
         'dtconexiones
         '
@@ -580,17 +591,9 @@ Partial Class frmprincipal
         Me.dtconexiones.Location = New System.Drawing.Point(0, 235)
         Me.dtconexiones.Name = "dtconexiones"
         Me.dtconexiones.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtconexiones.Size = New System.Drawing.Size(1211, 153)
+        Me.dtconexiones.Size = New System.Drawing.Size(1270, 153)
         Me.dtconexiones.TabIndex = 17
         Me.dtconexiones.Visible = False
-        '
-        'lblEstadoCertificado
-        '
-        Me.lblEstadoCertificado.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblEstadoCertificado.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblEstadoCertificado.Name = "lblEstadoCertificado"
-        Me.lblEstadoCertificado.Size = New System.Drawing.Size(156, 19)
-        Me.lblEstadoCertificado.Text = "VencimientoCertificado:"
         '
         'frmprincipal
         '
@@ -599,7 +602,7 @@ Partial Class frmprincipal
         Me.BackColor = System.Drawing.Color.White
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
-        Me.ClientSize = New System.Drawing.Size(1211, 412)
+        Me.ClientSize = New System.Drawing.Size(1270, 412)
         Me.Controls.Add(Me.dtconexiones)
         Me.Controls.Add(Me.StatusStrip1)
         Me.Controls.Add(Me.menugral)
@@ -639,7 +642,6 @@ Partial Class frmprincipal
     Friend WithEvents cmdfacturacion As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NuevaEfacturaToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents NuevoPedidoToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SincronizacionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents cmdPrestamos As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AgendaDeVencimientosToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents reciboconsfinal As ToolStripMenuItem
@@ -671,4 +673,5 @@ Partial Class frmprincipal
     Friend WithEvents dtconexiones As DataGridView
     Friend WithEvents PublicidadToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents lblEstadoCertificado As ToolStripStatusLabel
+    Friend WithEvents btnNotificaciones As ToolStripMenuItem
 End Class

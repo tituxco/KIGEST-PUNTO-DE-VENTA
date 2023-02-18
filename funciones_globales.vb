@@ -53,6 +53,7 @@ Module funciones_Globales
     End Sub
     Public Sub GuardarLog(Clie As String, usuario As String, bd As String, tarea As String, ip As String)
         Try
+
             Reconectar()
             Dim agregarLog As String = "insert into AuthServ.LogAcc(Clie,usuario,bd,tarea,ip) values(
             ?Clie,?usuario,?bd,?tarea,?ip)"
@@ -62,7 +63,7 @@ Module funciones_Globales
                 .AddWithValue("?usuario", usuario)
                 .AddWithValue("?bd", bd)
                 .AddWithValue("?tarea", tarea)
-                .AddWithValue("?ip", ip)
+                .AddWithValue("?ip", ip & " V:" & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString)
             End With
             comandoLog.ExecuteNonQuery()
         Catch ex As Exception

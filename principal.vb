@@ -212,7 +212,7 @@ Public Class frmprincipal
                 fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
 
                 lresultado = fe.f1ObtenerTicketAcceso()
-                Dim fechaActual As String = Now().ToString()
+                ' Dim fechaActual As String = Now().ToString()
                 Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
 
                 Dim diasrestantes As Long
@@ -221,6 +221,23 @@ Public Class frmprincipal
                 lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
                 If diasrestantes < 30 Then
                     lblEstadoCertificado.ForeColor = Color.Red
+                End If
+                If diasrestantes < 7 Then
+                    MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP VENCE EN " & diasrestantes & " DIAS" & vbNewLine &
+                            "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                            "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                            "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                ElseIf diasrestantes < 0 Then
+                    MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP ESTA VENCIDO HACE " & diasrestantes & " DIAS" & vbNewLine &
+                            "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                            "NO PODRA REALIZAR FACTURAS ELECTRONICAS HASTA QUE SE GENERE UN CERTIFICADO NUEVO" & vbNewLine &
+                            "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                            "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                End If
+                If DatosAcceso.debe = 0 Then
+                    btnNotificaciones.Visible = False
+                Else
+                    btnNotificaciones.Visible = True
                 End If
                 Reconectar()
                 Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
@@ -446,7 +463,7 @@ Public Class frmprincipal
         tec.Show()
     End Sub
 
-    Private Sub SincronizacionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SincronizacionToolStripMenuItem.Click
+    Private Sub SincronizacionToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Try
             SincronizarBD()
         Catch ex As Exception
@@ -933,5 +950,15 @@ Public Class frmprincipal
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) 
         modBingo.Main()
 
+    End Sub
+
+    Private Sub btnNotificaciones_Click(sender As Object, e As EventArgs) Handles btnNotificaciones.Click
+        If DatosAcceso.debe = 1 Then 'MENSAJE DE DEUDA
+            MsgBox("ATENCION: SU CUENTA DE CLOUDING REGISTRA DEUDA" & vbNewLine &
+            "POR FAVOR REGULARICE SU SITUACION, COMUNIQUESE AL TEL: 3482-621473" & vbNewLine & DatosAcceso.mensaje)
+        ElseIf DatosAcceso.debe = 2 Then 'solo un mensaje
+            MsgBox("ATENCION MENSAJE DEL ADMINISTRADOR:" & vbNewLine & DatosAcceso.mensaje & vbNewLine &
+            "POR CUALQUIER DUDA, COMUNIQUESE AL TEL: 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR" & vbNewLine)
+        End If
     End Sub
 End Class

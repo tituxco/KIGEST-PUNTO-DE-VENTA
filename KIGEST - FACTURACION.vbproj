@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>394</ApplicationRevision>
+    <ApplicationRevision>395</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -782,6 +782,10 @@
     <None Include="Resources\iconos\peso 26px.png" />
     <None Include="Resources\iconos\transaction_26px.png" />
     <None Include="Resources\iconos\microsoft_excel_32px.png" />
+    <None Include="Resources\iconos\ALERTA.png" />
+    <None Include="Resources\iconos\alerta_32.png" />
+    <None Include="Resources\iconos\business_chat_64px.png" />
+    <None Include="Resources\iconos\forward_message_64px.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

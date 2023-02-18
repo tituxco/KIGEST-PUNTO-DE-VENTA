@@ -5,7 +5,7 @@
         Try
             dtcloud.Rows.Clear()
             Reconectar()
-            Dim consultacloud As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, cliente, sistema,bd, codus, clave, modulo,autorizado 
+            Dim consultacloud As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, cliente, sistema,bd, codus, clave, modulo,autorizado,debe 
             from AuthServ.CliAuth order by autorizado, sistema, cliente asc", conexionPrinc)
             Dim tablacloud As New DataTable
             Dim infocloud() As DataRow
@@ -19,6 +19,12 @@
 
                     dtcloud.Rows(dtcloud.RowCount - 2).DefaultCellStyle.BackColor = Color.OrangeRed
                 End If
+                If infocloud(i)(8) = 1 Then
+                    dtcloud.Rows(dtcloud.RowCount - 2).DefaultCellStyle.BackColor = Color.Green
+                ElseIf infocloud(i)(8) = 2 Then
+                    dtcloud.Rows(dtcloud.RowCount - 2).DefaultCellStyle.BackColor = Color.Yellow
+                End If
+
             Next
 
         Catch ex As Exception
@@ -265,5 +271,37 @@
 
     Private Sub Button27_Click(sender As Object, e As EventArgs)
 
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        If MsgBox("esta seguro que desea cambiar el estado deudor del cliente?", vbYesNo + vbQuestion) = vbNo Then
+            Exit Sub
+        End If
+        Dim mensaje As String = InputBox("Ingrese mensaje", "pasar cliente a deudor", "IMPORTE DEUDA VENCIDA: $")
+        Dim sqlQuery As String = "update AuthServ.CliAuth set debe=if(debe=1,0,1), mensaje='" & mensaje & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+
+        comandoadd.ExecuteNonQuery()
+        If dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Green Then
+            dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.White
+        Else
+            dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Green
+        End If
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        If MsgBox("esta seguro que desea enviar mensaje al cliente?", vbYesNo + vbQuestion) = vbNo Then
+            Exit Sub
+        End If
+        Dim mensaje As String = InputBox("Ingrese mensaje", "enviar mensaje", "MENSAJE: $")
+        Dim sqlQuery As String = "update AuthServ.CliAuth set debe=if(debe=2,0,2), mensaje='" & mensaje & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+
+        comandoadd.ExecuteNonQuery()
+        If dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Yellow Then
+            dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.White
+        Else
+            dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Yellow
+        End If
     End Sub
 End Class

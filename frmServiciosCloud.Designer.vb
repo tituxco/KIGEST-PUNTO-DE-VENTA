@@ -82,25 +82,13 @@ Partial Class frmServiciosCloud
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmServiciosCloud))
         Me.Panel12 = New System.Windows.Forms.Panel()
         Me.dtcloud = New System.Windows.Forms.DataGridView()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DBClie = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.trvmodulos = New System.Windows.Forms.TreeView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.lblresultados = New System.Windows.Forms.Label()
         Me.lblBusqueda = New System.Windows.Forms.Label()
         Me.Panel11 = New System.Windows.Forms.Panel()
-        Me.Button3 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.txtbuscaemp = New System.Windows.Forms.TextBox()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.Panel20 = New System.Windows.Forms.Panel()
         Me.GroupBox5 = New System.Windows.Forms.GroupBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
@@ -118,6 +106,20 @@ Partial Class frmServiciosCloud
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DBClie = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.Panel12.SuspendLayout()
         CType(Me.dtcloud, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel1.SuspendLayout()
@@ -151,49 +153,6 @@ Partial Class frmServiciosCloud
         Me.dtcloud.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtcloud.Size = New System.Drawing.Size(933, 339)
         Me.dtcloud.TabIndex = 71
-        '
-        'id
-        '
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.HeaderText = "Cliente"
-        Me.Column1.Name = "Column1"
-        '
-        'Column2
-        '
-        Me.Column2.HeaderText = "Sistema"
-        Me.Column2.Name = "Column2"
-        '
-        'DBClie
-        '
-        Me.DBClie.HeaderText = "CLOUD-bd"
-        Me.DBClie.Name = "DBClie"
-        '
-        'Column9
-        '
-        Me.Column9.HeaderText = "AUTH-Usuario"
-        Me.Column9.Name = "Column9"
-        '
-        'Column10
-        '
-        Me.Column10.HeaderText = "AUTH-Clave"
-        Me.Column10.Name = "Column10"
-        '
-        'Column12
-        '
-        Me.Column12.FillWeight = 300.0!
-        Me.Column12.HeaderText = "Modulo"
-        Me.Column12.Name = "Column12"
-        Me.Column12.Visible = False
-        '
-        'Column6
-        '
-        Me.Column6.HeaderText = "Autorizado"
-        Me.Column6.Name = "Column6"
         '
         'trvmodulos
         '
@@ -408,6 +367,8 @@ Partial Class frmServiciosCloud
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.Button6)
+        Me.Panel11.Controls.Add(Me.Button5)
         Me.Panel11.Controls.Add(Me.Button3)
         Me.Panel11.Controls.Add(Me.Button2)
         Me.Panel11.Controls.Add(Me.Label17)
@@ -421,40 +382,6 @@ Partial Class frmServiciosCloud
         Me.Panel11.Name = "Panel11"
         Me.Panel11.Size = New System.Drawing.Size(1254, 99)
         Me.Panel11.TabIndex = 3
-        '
-        'Button3
-        '
-        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button3.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button3.ForeColor = System.Drawing.Color.White
-        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.duplicate_contacts_64px
-        Me.Button3.Location = New System.Drawing.Point(886, 0)
-        Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(92, 99)
-        Me.Button3.TabIndex = 93
-        Me.Button3.Text = "Duplicar"
-        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button3.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Add_User_Male_64px
-        Me.Button2.Location = New System.Drawing.Point(978, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(92, 99)
-        Me.Button2.TabIndex = 92
-        Me.Button2.Text = "Agregar"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'Label17
         '
@@ -471,42 +398,8 @@ Partial Class frmServiciosCloud
         '
         Me.txtbuscaemp.Location = New System.Drawing.Point(441, 73)
         Me.txtbuscaemp.Name = "txtbuscaemp"
-        Me.txtbuscaemp.Size = New System.Drawing.Size(303, 20)
+        Me.txtbuscaemp.Size = New System.Drawing.Size(222, 20)
         Me.txtbuscaemp.TabIndex = 90
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(1070, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(92, 99)
-        Me.Button1.TabIndex = 89
-        Me.Button1.Text = "Guardar privilegios"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'cmdbuscar
-        '
-        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1162, 0)
-        Me.cmdbuscar.Name = "cmdbuscar"
-        Me.cmdbuscar.Size = New System.Drawing.Size(92, 99)
-        Me.cmdbuscar.TabIndex = 74
-        Me.cmdbuscar.Text = "Buscar"
-        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdbuscar.UseVisualStyleBackColor = True
         '
         'Panel20
         '
@@ -652,6 +545,151 @@ Partial Class frmServiciosCloud
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         Me.DataGridViewTextBoxColumn8.Width = 148
         '
+        'id
+        '
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.HeaderText = "Cliente"
+        Me.Column1.Name = "Column1"
+        '
+        'Column2
+        '
+        Me.Column2.HeaderText = "Sistema"
+        Me.Column2.Name = "Column2"
+        '
+        'DBClie
+        '
+        Me.DBClie.HeaderText = "CLOUD-bd"
+        Me.DBClie.Name = "DBClie"
+        '
+        'Column9
+        '
+        Me.Column9.HeaderText = "AUTH-Usuario"
+        Me.Column9.Name = "Column9"
+        '
+        'Column10
+        '
+        Me.Column10.HeaderText = "AUTH-Clave"
+        Me.Column10.Name = "Column10"
+        '
+        'Column12
+        '
+        Me.Column12.FillWeight = 300.0!
+        Me.Column12.HeaderText = "Modulo"
+        Me.Column12.Name = "Column12"
+        Me.Column12.Visible = False
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "Autorizado"
+        Me.Column6.Name = "Column6"
+        '
+        'Button6
+        '
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = Global.SIGT__KIGEST.My.Resources.Resources.forward_message_64px
+        Me.Button6.Location = New System.Drawing.Point(702, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(92, 99)
+        Me.Button6.TabIndex = 95
+        Me.Button6.Text = "Mensaje"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button6.UseVisualStyleBackColor = True
+        '
+        'Button5
+        '
+        Me.Button5.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button5.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button5.ForeColor = System.Drawing.Color.White
+        Me.Button5.Image = Global.SIGT__KIGEST.My.Resources.Resources.business_chat_64px
+        Me.Button5.Location = New System.Drawing.Point(794, 0)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(92, 99)
+        Me.Button5.TabIndex = 94
+        Me.Button5.Text = "Deudor"
+        Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button5.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button5.UseVisualStyleBackColor = True
+        '
+        'Button3
+        '
+        Me.Button3.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button3.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button3.ForeColor = System.Drawing.Color.White
+        Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.duplicate_contacts_64px
+        Me.Button3.Location = New System.Drawing.Point(886, 0)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(92, 99)
+        Me.Button3.TabIndex = 93
+        Me.Button3.Text = "Duplicar"
+        Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'Button2
+        '
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Add_User_Male_64px
+        Me.Button2.Location = New System.Drawing.Point(978, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(92, 99)
+        Me.Button2.TabIndex = 92
+        Me.Button2.Text = "Agregar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button2.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(1070, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(92, 99)
+        Me.Button1.TabIndex = 89
+        Me.Button1.Text = "Guardar privilegios"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'cmdbuscar
+        '
+        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1162, 0)
+        Me.cmdbuscar.Name = "cmdbuscar"
+        Me.cmdbuscar.Size = New System.Drawing.Size(92, 99)
+        Me.cmdbuscar.TabIndex = 74
+        Me.cmdbuscar.Text = "Buscar"
+        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdbuscar.UseVisualStyleBackColor = True
+        '
         'frmServiciosCloud
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -715,4 +753,6 @@ Partial Class frmServiciosCloud
     Friend WithEvents Column10 As DataGridViewTextBoxColumn
     Friend WithEvents Column12 As DataGridViewTextBoxColumn
     Friend WithEvents Column6 As DataGridViewTextBoxColumn
+    Friend WithEvents Button5 As Button
+    Friend WithEvents Button6 As Button
 End Class
