@@ -101,13 +101,18 @@ Module Conexiones
                 DatosAcceso.RESPserv = infoauth(0)("servidor_resp")
                 DatosAcceso.UsuarioINT = infoauth(0)("idInt")
                 DatosAcceso.debe = infoauth(0)("debe")
-                DatosAcceso.mensaje = infoauth(0)("mensaje")
+                If IsDBNull(infoauth(0)("mensaje")) Then
+                    DatosAcceso.mensaje = ""
+                Else
+                    DatosAcceso.mensaje = infoauth(0)("mensaje")
+                End If
+
                 'If conectar(serv, port, user, pass, database) = True Then
                 'Return True
                 'End If
                 Return True
-            Else
-                MsgBox("El servidor de acceso indica que no tiene autorización para acceder al sistema, por favor comuniquese con el administrador")
+                Else
+                    MsgBox("El servidor de acceso indica que no tiene autorización para acceder al sistema, por favor comuniquese con el administrador")
                 Return False
             End If
         Catch ex As Exception

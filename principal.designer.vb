@@ -577,6 +577,7 @@ Partial Class frmprincipal
         Me.btnNotificaciones.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.btnNotificaciones.Name = "btnNotificaciones"
         Me.btnNotificaciones.Size = New System.Drawing.Size(44, 36)
+        Me.btnNotificaciones.Visible = False
         '
         'dtconexiones
         '

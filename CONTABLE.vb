@@ -5765,8 +5765,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
-                comandofact.Parameters("@idComprobante").Value = dtlistacob.CurrentRow.Cells(0).Value
-                comandofact.Parameters("@codigoAsiento").Value = dtlistacob.CurrentRow.Cells("NumeroAsiento").Value
+                comandofact.Parameters("@idComprobante").Value = dtfacturas.CurrentRow.Cells(0).Value
+                comandofact.Parameters("@codigoAsiento").Value = dtfacturas.CurrentRow.Cells("NumeroAsiento").Value
 
                 comandofact.ExecuteNonQuery()
 
@@ -5855,8 +5855,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber, '' as saldoDeudor,'' as saldoAcreedor
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
-                LM.fecha between (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-01') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 month),'%Y-%m-%d')) and
-                (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-30') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 year),'%Y-%m-%d'))
+                LM.fecha between 
+                (select date_add(date_add(last_day(concat(periodofiscal,'-',periodoCierre,'-01')),interval -1 year),interval 1 day) from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "') and
+                (select last_day(concat(periodofiscal,'-',periodoCierre,'-01')) from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "')
                 and
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
@@ -5864,6 +5865,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 				LM.concepto like '%" & txtconceptoEjercicio.Text.Replace(" ", "%") & "%'
                 order by LM.fecha asc,LD.comprobanteInterno asc", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
+                'MsgBox(consLibroMayor.SelectCommand.CommandText)
                 consLibroMayor.Fill(tabLibroMayor)
                 dgvDatosEjercicio.DataSource = tabLibroMayor
                 Dim saldoDeudor As Double = 0
@@ -5924,11 +5926,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
 
             ElseIf rdSumaEjercicio.Checked = True Then
-                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT MONTHNAME(LM.fecha) AS MES,SUM(asi.importeDebe) AS DEBE, SUM(asi.importeHaber) AS HABER 
+                Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT MONTHNAME(LM.fecha) AS MES,format(SUM(asi.importeDebe),2,'es_AR') AS DEBE, format(SUM(asi.importeHaber),2,'es_AR') AS HABER 
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
-                LM.fecha between (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-01') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 month),'%Y-%m-%d')) and
-                (select date_format(date_add((select concat(periodofiscal,'-',periodoCierre,'-30') from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "'),interval 1 year),'%Y-%m-%d'))
+                LM.fecha between 
+                (select date_add(date_add(last_day(concat(periodofiscal,'-',periodoCierre,'-01')),interval -1 year),interval 1 day) from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "') and
+                (select last_day(concat(periodofiscal,'-',periodoCierre,'-01')) from cm_ejercicios_cerrados where periodofiscal like '" & cmbañoEjercicio.Text & "')
                 and
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
@@ -5937,6 +5940,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 group by month(LM.fecha)", conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
+                'MsgBox(consLibroMayor.SelectCommand.CommandText)
                 dgvDatosEjercicio.DataSource = tabLibroMayor
             End If
             EnProgreso.Close()

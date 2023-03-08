@@ -271,7 +271,10 @@ Public Class NvaFacturaCompra
     End Sub
 
     Private Sub txtcomprobanteFcompra_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtcomprobanteFcompra.KeyPress
-        Dim texto As String = DirectCast(sender, TextBox).Text
+        Dim texto As String = txtcomprobanteFcompra.Text
+        'If TypeOf (sender) Is TextBox Then
+        'End If
+        'texto
         Dim longitud As Integer = texto.Length
         Dim caracter As Char = e.KeyChar
         Dim caracterAlfa As Boolean = False

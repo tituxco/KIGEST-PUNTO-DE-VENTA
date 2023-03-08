@@ -213,31 +213,33 @@ Public Class frmprincipal
 
                 lresultado = fe.f1ObtenerTicketAcceso()
                 ' Dim fechaActual As String = Now().ToString()
-                Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
+                If lresultado Then
+                    Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
 
-                Dim diasrestantes As Long
-                diasrestantes = DateDiff(DateInterval.Day, Now(), Convert.ToDateTime(ExpiracionCertificado))
-                ' MsgBox(diasrestantes)
-                lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
-                If diasrestantes < 30 Then
-                    lblEstadoCertificado.ForeColor = Color.Red
-                End If
-                If diasrestantes < 7 Then
-                    MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP VENCE EN " & diasrestantes & " DIAS" & vbNewLine &
-                            "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
-                            "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
-                            "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
-                ElseIf diasrestantes < 0 Then
-                    MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP ESTA VENCIDO HACE " & diasrestantes & " DIAS" & vbNewLine &
-                            "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
-                            "NO PODRA REALIZAR FACTURAS ELECTRONICAS HASTA QUE SE GENERE UN CERTIFICADO NUEVO" & vbNewLine &
-                            "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
-                            "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
-                End If
-                If DatosAcceso.debe = 0 Then
-                    btnNotificaciones.Visible = False
-                Else
-                    btnNotificaciones.Visible = True
+                    Dim diasrestantes As Long
+                    diasrestantes = DateDiff(DateInterval.Day, Now(), Convert.ToDateTime(ExpiracionCertificado))
+                    ' MsgBox(diasrestantes)
+                    lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
+                    If diasrestantes < 30 Then
+                        lblEstadoCertificado.ForeColor = Color.Red
+                    End If
+                    If diasrestantes < 7 And diasrestantes > 0 Then
+                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP VENCE EN " & diasrestantes & " DIAS" & vbNewLine &
+                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                    ElseIf diasrestantes < 0 Then
+                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP ESTA VENCIDO HACE " & diasrestantes & " DIAS" & vbNewLine &
+                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                                "NO PODRA REALIZAR FACTURAS ELECTRONICAS HASTA QUE SE GENERE UN CERTIFICADO NUEVO" & vbNewLine &
+                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                    End If
+                    If DatosAcceso.debe = 0 Then
+                        btnNotificaciones.Visible = False
+                    Else
+                        btnNotificaciones.Visible = True
+                    End If
                 End If
                 Reconectar()
                 Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
