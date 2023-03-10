@@ -2427,7 +2427,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub cmdAplicarRecibo_Click(sender As Object, e As EventArgs) Handles cmdAplicarRecibo.Click
         Try
-            If dtcuentaclie.CurrentRow.Cells(7).Value = 996 Then
+            If dtcuentaclie.CurrentRow.Cells(7).Value = 996 Or dtcuentaclie.CurrentRow.Cells(7).Value = 991 Or
+                dtcuentaclie.CurrentRow.Cells(7).Value = 13 Or dtcuentaclie.CurrentRow.Cells(7).Value = 3 Or
+                dtcuentaclie.CurrentRow.Cells(7).Value = 8 Then
                 'MsgBox("aplicar recibo")
                 With selfac
                     .LLAMA = "ingreso"

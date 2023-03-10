@@ -85,7 +85,11 @@
         Try
             '  MsgBox(e.ColumnIndex)
             'If e.RowIndex = 0 Then Exit Sub
+            If dgvPartidas.Columns(e.ColumnIndex).Name = "DEBE" And Not IsNumeric(dgvPartidas.CurrentCell.Value) Or
+                dgvPartidas.Columns(e.ColumnIndex).Name = "HABER" And Not IsNumeric(dgvPartidas.CurrentCell.Value) Then
+                dgvPartidas.CurrentCell.Value = 0
 
+            End If
             If e.ColumnIndex = 1 Then 'dgvPartidas.Columns("Cuenta").Index Then
                 If ComprobarCuenta(dgvPartidas.Rows(e.RowIndex).Cells("Cuenta").Value) = False Then
                     MsgBox("la cuenta seleccionada no admite movimientos directos, seleccione una subcuenta")

@@ -3488,7 +3488,7 @@ Partial Class CONTABLE
         Me.cmdAplicarRecibo.Name = "cmdAplicarRecibo"
         Me.cmdAplicarRecibo.Size = New System.Drawing.Size(95, 30)
         Me.cmdAplicarRecibo.TabIndex = 88
-        Me.cmdAplicarRecibo.Text = "Aplicar Recibo"
+        Me.cmdAplicarRecibo.Text = "Aplicar RBO/NC"
         Me.cmdAplicarRecibo.UseVisualStyleBackColor = True
         '
         'Button6
@@ -6772,7 +6772,7 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn34.HeaderText = "mensual"
         Me.DataGridViewTextBoxColumn34.Name = "DataGridViewTextBoxColumn34"
         Me.DataGridViewTextBoxColumn34.ToolTipText = "10.5"
-        Me.DataGridViewTextBoxColumn34.Width = 5
+        Me.DataGridViewTextBoxColumn34.Width = 266
         '
         'DataGridViewTextBoxColumn35
         '
@@ -6856,7 +6856,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn41.Name = "DataGridViewTextBoxColumn41"
         Me.DataGridViewTextBoxColumn41.ReadOnly = True
         Me.DataGridViewTextBoxColumn41.Visible = False
-        Me.DataGridViewTextBoxColumn41.Width = 76
         '
         'DataGridViewTextBoxColumn42
         '
@@ -6881,7 +6880,6 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn43.Name = "DataGridViewTextBoxColumn43"
         Me.DataGridViewTextBoxColumn43.ReadOnly = True
         Me.DataGridViewTextBoxColumn43.Visible = False
-        Me.DataGridViewTextBoxColumn43.Width = 103
         '
         'DataGridViewTextBoxColumn44
         '
@@ -6902,7 +6900,7 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn45.HeaderText = "Concepto"
         Me.DataGridViewTextBoxColumn45.Name = "DataGridViewTextBoxColumn45"
         Me.DataGridViewTextBoxColumn45.ReadOnly = True
-        Me.DataGridViewTextBoxColumn45.Width = 776
+        Me.DataGridViewTextBoxColumn45.Width = 311
         '
         'DataGridViewTextBoxColumn46
         '
@@ -6947,7 +6945,7 @@ Partial Class CONTABLE
         Me.DataGridViewTextBoxColumn49.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn49.HeaderText = "Ventas"
         Me.DataGridViewTextBoxColumn49.Name = "DataGridViewTextBoxColumn49"
-        Me.DataGridViewTextBoxColumn49.Width = 621
+        Me.DataGridViewTextBoxColumn49.Width = 124
         '
         'DataGridViewTextBoxColumn50
         '
