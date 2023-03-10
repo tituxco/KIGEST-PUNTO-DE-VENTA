@@ -1188,7 +1188,7 @@ Public Class puntoventa
 				If tipofact = 13 Then
 					GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
 										   "NOTA DE CREDITO " & txtclierazon.Text, CDbl(total.Replace(".", ",")), ventaCta, CDbl(total.Replace(".", ",")), 11, 2, fecha)
-				ElseIf tipofact = 11 Or tipofact = 12 Then
+				ElseIf tipofact = 11 Or tipofact = 12 Or tipofact = 999 Then
 					GuardarAsientoContable(numAsiento, lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text,
 										   "PUBLICIDAD " & txtclierazon.Text, CDbl(total.Replace(".", ",")), 11, CDbl(total.Replace(".", ",")), ventaCta, 2, fecha)
 				End If

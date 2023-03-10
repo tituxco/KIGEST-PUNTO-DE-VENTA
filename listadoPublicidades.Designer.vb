@@ -49,6 +49,7 @@ Partial Class listadoPublicidades
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
+        Me.rdAFacturar = New System.Windows.Forms.RadioButton()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -80,6 +81,7 @@ Partial Class listadoPublicidades
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.rdAFacturar)
         Me.pnnavegacion.Controls.Add(Me.cmbvendedor)
         Me.pnnavegacion.Controls.Add(Me.Label5)
         Me.pnnavegacion.Controls.Add(Me.rdOper)
@@ -112,7 +114,7 @@ Partial Class listadoPublicidades
         Me.cmbvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbvendedor.ForeColor = System.Drawing.Color.White
         Me.cmbvendedor.FormattingEnabled = True
-        Me.cmbvendedor.Location = New System.Drawing.Point(473, 32)
+        Me.cmbvendedor.Location = New System.Drawing.Point(550, 32)
         Me.cmbvendedor.Name = "cmbvendedor"
         Me.cmbvendedor.Size = New System.Drawing.Size(185, 23)
         Me.cmbvendedor.TabIndex = 204
@@ -122,9 +124,9 @@ Partial Class listadoPublicidades
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(470, 15)
+        Me.Label5.Location = New System.Drawing.Point(547, 15)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(75, 16)
+        Me.Label5.Size = New System.Drawing.Size(76, 16)
         Me.Label5.TabIndex = 203
         Me.Label5.Text = "Vendedor"
         '
@@ -132,7 +134,7 @@ Partial Class listadoPublicidades
         '
         Me.rdOper.AutoSize = True
         Me.rdOper.ForeColor = System.Drawing.Color.White
-        Me.rdOper.Location = New System.Drawing.Point(230, 15)
+        Me.rdOper.Location = New System.Drawing.Point(84, 38)
         Me.rdOper.Name = "rdOper"
         Me.rdOper.Size = New System.Drawing.Size(74, 17)
         Me.rdOper.TabIndex = 202
@@ -143,7 +145,7 @@ Partial Class listadoPublicidades
         '
         Me.chksinFact.AutoSize = True
         Me.chksinFact.ForeColor = System.Drawing.Color.White
-        Me.chksinFact.Location = New System.Drawing.Point(175, 38)
+        Me.chksinFact.Location = New System.Drawing.Point(230, 38)
         Me.chksinFact.Name = "chksinFact"
         Me.chksinFact.Size = New System.Drawing.Size(107, 17)
         Me.chksinFact.TabIndex = 201
@@ -178,7 +180,7 @@ Partial Class listadoPublicidades
         '
         Me.chkSoloMorosos.AutoSize = True
         Me.chkSoloMorosos.ForeColor = System.Drawing.Color.White
-        Me.chkSoloMorosos.Location = New System.Drawing.Point(84, 38)
+        Me.chkSoloMorosos.Location = New System.Drawing.Point(230, 16)
         Me.chkSoloMorosos.Name = "chkSoloMorosos"
         Me.chkSoloMorosos.Size = New System.Drawing.Size(89, 17)
         Me.chkSoloMorosos.TabIndex = 198
@@ -207,7 +209,7 @@ Partial Class listadoPublicidades
         Me.dtdesdefact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdesdefact.Location = New System.Drawing.Point(331, 32)
+        Me.dtdesdefact.Location = New System.Drawing.Point(408, 32)
         Me.dtdesdefact.Name = "dtdesdefact"
         Me.dtdesdefact.Size = New System.Drawing.Size(117, 23)
         Me.dtdesdefact.TabIndex = 192
@@ -218,7 +220,7 @@ Partial Class listadoPublicidades
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(328, 15)
+        Me.Label8.Location = New System.Drawing.Point(405, 15)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(77, 17)
         Me.Label8.TabIndex = 194
@@ -229,9 +231,9 @@ Partial Class listadoPublicidades
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(328, 0)
+        Me.Label4.Location = New System.Drawing.Point(405, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(90, 16)
+        Me.Label4.Size = New System.Drawing.Size(91, 16)
         Me.Label4.TabIndex = 191
         Me.Label4.Text = "Periodo FIN"
         '
@@ -242,7 +244,7 @@ Partial Class listadoPublicidades
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(81, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(50, 16)
+        Me.Label3.Size = New System.Drawing.Size(51, 16)
         Me.Label3.TabIndex = 188
         Me.Label3.Text = "Filtros"
         '
@@ -264,7 +266,7 @@ Partial Class listadoPublicidades
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(5, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(74, 16)
+        Me.Label2.Size = New System.Drawing.Size(75, 16)
         Me.Label2.TabIndex = 186
         Me.Label2.Text = "DiasMora"
         '
@@ -309,7 +311,7 @@ Partial Class listadoPublicidades
         Me.Label36.ForeColor = System.Drawing.Color.White
         Me.Label36.Location = New System.Drawing.Point(5, 42)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(55, 16)
+        Me.Label36.Size = New System.Drawing.Size(56, 16)
         Me.Label36.TabIndex = 183
         Me.Label36.Text = "Cliente"
         '
@@ -386,6 +388,17 @@ Partial Class listadoPublicidades
         Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
         Me.dgvPrestamos.TabIndex = 78
         '
+        'rdAFacturar
+        '
+        Me.rdAFacturar.AutoSize = True
+        Me.rdAFacturar.ForeColor = System.Drawing.Color.White
+        Me.rdAFacturar.Location = New System.Drawing.Point(156, 38)
+        Me.rdAFacturar.Name = "rdAFacturar"
+        Me.rdAFacturar.Size = New System.Drawing.Size(74, 17)
+        Me.rdAFacturar.TabIndex = 205
+        Me.rdAFacturar.Text = "A Facturar"
+        Me.rdAFacturar.UseVisualStyleBackColor = True
+        '
         'listadoPublicidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -432,4 +445,5 @@ Partial Class listadoPublicidades
     Friend WithEvents rdOper As RadioButton
     Friend WithEvents Label5 As Label
     Friend WithEvents cmbvendedor As ComboBox
+    Friend WithEvents rdAFacturar As RadioButton
 End Class

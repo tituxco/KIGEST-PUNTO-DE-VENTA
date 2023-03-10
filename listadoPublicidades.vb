@@ -28,7 +28,8 @@
 
         Reconectar()
         If rdvigentes.Checked = True Then
-            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,(SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO, 
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,
+        (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
 		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
@@ -53,8 +54,37 @@
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
         fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq)
+        ElseIf rdAFacturar.Checked = True Then
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,
+        (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month)) and 
+        YEAR(fecha)=YEAR(now())) as VencActual, 
+		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
+        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+        (select count(*) from rym_detalle_prestamo as DTP 
+	    	where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+            )AS MESES_DEBE,
+        (select count(*) from rym_detalle_prestamo as DTP 
+		    where DTP.ID_PRESTAMO 
+		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+            )AS MOROSO_MESES,        
+        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        pr.OBSERVACIONES,
+        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+        cl.vendedor
+        FROM rym_prestamo as pr, fact_clientes as cl
+        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " & " having VencActual is not null " &
+             morosoBusq & clienteBusq & facturadosBusq & vendedorBusq)
         ElseIf rdAVencer.Checked = True Then
-            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+        (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
         (select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
         (select count(*) from rym_detalle_prestamo as DTP 
@@ -80,7 +110,8 @@
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
         having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq)
         ElseIf rdOper.Checked = True Then
-            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, (SELECT min(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO) as 1erVENCIMIENTO,
+            Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+        (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
 		(select MAX(fecha) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
         cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
 		pr.CONCEPTO,
@@ -102,7 +133,7 @@
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-        ' MsgBox(cmd.CommandText)
+        MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
         'MsgBox(Cadena)
@@ -394,6 +425,15 @@
             EnProgreso.Close()
             MsgBox(ex.Message)
         End Try
+
+    End Sub
+
+    Private Sub rdAFacturar_CheckedChanged(sender As Object, e As EventArgs) Handles rdAFacturar.CheckedChanged
+        If rdAFacturar.Checked = True Then
+            dtdesdefact.Enabled = False
+        Else
+            dtdesdefact.Enabled = True
+        End If
 
     End Sub
 End Class

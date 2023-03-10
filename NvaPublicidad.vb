@@ -42,12 +42,12 @@
 
 
         If chkAdelantado.Checked = True Then
-            FechaPago = DateTimePicker1.Value
-            fechaVenc = DateTimePicker1.Value.AddDays(-1)
+            FechaPago = dtpFechaInicio.Value
+            fechaVenc = dtpFechaInicio.Value.AddDays(-1)
             'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
         Else
             'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
-            FechaPago = DateTimePicker1.Value.AddMonths(1).AddDays(-1)
+            FechaPago = dtpFechaInicio.Value.AddMonths(1).AddDays(-1)
         End If
 
 
@@ -128,12 +128,12 @@
         Dim FechaPago As Date
 
         If chkAdelantado.Checked = True Then
-            FechaPago = DateTimePicker1.Value
-            fechaVenc = DateTimePicker1.Value.AddDays(-1)
-            FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
+            FechaPago = dtpFechaInicio.Value
+            fechaVenc = dtpFechaInicio.Value.AddDays(-1)
+            FechaGuardar = Format(CDate(dtpFechaInicio.Value), "yyyy-MM-dd")
         Else
-            FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
-            FechaPago = DateTimePicker1.Value.AddMonths(1).AddDays(-1)
+            FechaGuardar = Format(CDate(dtpFechaInicio.Value), "yyyy-MM-dd")
+            FechaPago = dtpFechaInicio.Value.AddMonths(1).AddDays(-1)
         End If
 
         'Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
@@ -251,7 +251,7 @@
             txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
             txtconcepto.Text = DatosPrestamo(0).Item("CONCEPTO")
             txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
-
+            dtpFechaInicio.Value = CDate(DatosPrestamo(0).Item("FECHA").ToString())
             txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
             For Each cont As Control In Me.Controls
                 If TypeOf cont Is TextBox Then

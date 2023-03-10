@@ -562,7 +562,7 @@ Partial Class puntoventa
         Me.txttotalICL.ForeColor = System.Drawing.Color.Black
         Me.txttotalICL.Location = New System.Drawing.Point(84, 38)
         Me.txttotalICL.Name = "txttotalICL"
-        Me.txttotalICL.Size = New System.Drawing.Size(15, 16)
+        Me.txttotalICL.Size = New System.Drawing.Size(16, 16)
         Me.txttotalICL.TabIndex = 65
         Me.txttotalICL.Text = "0"
         '
@@ -573,7 +573,7 @@ Partial Class puntoventa
         Me.txttotalIDC.ForeColor = System.Drawing.Color.Black
         Me.txttotalIDC.Location = New System.Drawing.Point(3, 38)
         Me.txttotalIDC.Name = "txttotalIDC"
-        Me.txttotalIDC.Size = New System.Drawing.Size(15, 16)
+        Me.txttotalIDC.Size = New System.Drawing.Size(16, 16)
         Me.txttotalIDC.TabIndex = 64
         Me.txttotalIDC.Text = "0"
         '
@@ -584,7 +584,7 @@ Partial Class puntoventa
         Me.lblOtrosTributos.ForeColor = System.Drawing.Color.Black
         Me.lblOtrosTributos.Location = New System.Drawing.Point(152, 18)
         Me.lblOtrosTributos.Name = "lblOtrosTributos"
-        Me.lblOtrosTributos.Size = New System.Drawing.Size(15, 16)
+        Me.lblOtrosTributos.Size = New System.Drawing.Size(16, 16)
         Me.lblOtrosTributos.TabIndex = 63
         Me.lblOtrosTributos.Text = "0"
         '
@@ -594,7 +594,7 @@ Partial Class puntoventa
         Me.Label27.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label27.Location = New System.Drawing.Point(0, 18)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(157, 16)
+        Me.Label27.Size = New System.Drawing.Size(158, 16)
         Me.Label27.TabIndex = 62
         Me.Label27.Text = "OTROS TRIBUTOS $:"
         '
@@ -604,9 +604,9 @@ Partial Class puntoventa
         Me.lblfactiva105.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactiva105.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfactiva105.ForeColor = System.Drawing.Color.Black
-        Me.lblfactiva105.Location = New System.Drawing.Point(96, 0)
+        Me.lblfactiva105.Location = New System.Drawing.Point(97, 0)
         Me.lblfactiva105.Name = "lblfactiva105"
-        Me.lblfactiva105.Size = New System.Drawing.Size(15, 16)
+        Me.lblfactiva105.Size = New System.Drawing.Size(16, 16)
         Me.lblfactiva105.TabIndex = 59
         Me.lblfactiva105.Text = "0"
         '
@@ -617,7 +617,7 @@ Partial Class puntoventa
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(0, 0)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(96, 16)
+        Me.Label15.Size = New System.Drawing.Size(97, 16)
         Me.Label15.TabIndex = 49
         Me.Label15.Text = "IVA 10,5 %: $"
         '
@@ -637,9 +637,9 @@ Partial Class puntoventa
         Me.lblfactiva21.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactiva21.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfactiva21.ForeColor = System.Drawing.Color.Black
-        Me.lblfactiva21.Location = New System.Drawing.Point(80, 0)
+        Me.lblfactiva21.Location = New System.Drawing.Point(81, 0)
         Me.lblfactiva21.Name = "lblfactiva21"
-        Me.lblfactiva21.Size = New System.Drawing.Size(15, 16)
+        Me.lblfactiva21.Size = New System.Drawing.Size(16, 16)
         Me.lblfactiva21.TabIndex = 58
         Me.lblfactiva21.Text = "0"
         '
@@ -650,7 +650,7 @@ Partial Class puntoventa
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(0, 0)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(80, 16)
+        Me.Label14.Size = New System.Drawing.Size(81, 16)
         Me.Label14.TabIndex = 45
         Me.Label14.Text = "IVA 21%: $"
         '
@@ -675,9 +675,9 @@ Partial Class puntoventa
         Me.lblfactsubtotal.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactsubtotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfactsubtotal.ForeColor = System.Drawing.Color.Black
-        Me.lblfactsubtotal.Location = New System.Drawing.Point(65, 0)
+        Me.lblfactsubtotal.Location = New System.Drawing.Point(66, 0)
         Me.lblfactsubtotal.Name = "lblfactsubtotal"
-        Me.lblfactsubtotal.Size = New System.Drawing.Size(15, 16)
+        Me.lblfactsubtotal.Size = New System.Drawing.Size(16, 16)
         Me.lblfactsubtotal.TabIndex = 57
         Me.lblfactsubtotal.Text = "0"
         '
@@ -698,7 +698,7 @@ Partial Class puntoventa
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(0, 0)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(65, 16)
+        Me.Label13.Size = New System.Drawing.Size(66, 16)
         Me.Label13.TabIndex = 45
         Me.Label13.Text = "NETO: $"
         '
@@ -1208,7 +1208,7 @@ Partial Class puntoventa
         Me.Label25.ForeColor = System.Drawing.Color.White
         Me.Label25.Location = New System.Drawing.Point(2, 16)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(97, 16)
+        Me.Label25.Size = New System.Drawing.Size(98, 16)
         Me.Label25.TabIndex = 59
         Me.Label25.Text = "Ingresar PLU"
         '
@@ -1273,9 +1273,9 @@ Partial Class puntoventa
         Me.lblfacIdAlmacen.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfacIdAlmacen.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfacIdAlmacen.ForeColor = System.Drawing.Color.Black
-        Me.lblfacIdAlmacen.Location = New System.Drawing.Point(450, 0)
+        Me.lblfacIdAlmacen.Location = New System.Drawing.Point(457, 0)
         Me.lblfacIdAlmacen.Name = "lblfacIdAlmacen"
-        Me.lblfacIdAlmacen.Size = New System.Drawing.Size(12, 16)
+        Me.lblfacIdAlmacen.Size = New System.Drawing.Size(13, 16)
         Me.lblfacIdAlmacen.TabIndex = 66
         Me.lblfacIdAlmacen.Text = "-"
         Me.lblfacIdAlmacen.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1286,9 +1286,9 @@ Partial Class puntoventa
         Me.Label26.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label26.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label26.Location = New System.Drawing.Point(368, 0)
+        Me.Label26.Location = New System.Drawing.Point(374, 0)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(82, 16)
+        Me.Label26.Size = New System.Drawing.Size(83, 16)
         Me.Label26.TabIndex = 65
         Me.Label26.Text = "ALMACEN:"
         Me.Label26.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1300,9 +1300,9 @@ Partial Class puntoventa
         Me.lblfacvendedor.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfacvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfacvendedor.ForeColor = System.Drawing.Color.Black
-        Me.lblfacvendedor.Location = New System.Drawing.Point(356, 0)
+        Me.lblfacvendedor.Location = New System.Drawing.Point(361, 0)
         Me.lblfacvendedor.Name = "lblfacvendedor"
-        Me.lblfacvendedor.Size = New System.Drawing.Size(12, 16)
+        Me.lblfacvendedor.Size = New System.Drawing.Size(13, 16)
         Me.lblfacvendedor.TabIndex = 64
         Me.lblfacvendedor.Text = "-"
         Me.lblfacvendedor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1313,9 +1313,9 @@ Partial Class puntoventa
         Me.Label8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label8.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(260, 0)
+        Me.Label8.Location = New System.Drawing.Point(264, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(96, 16)
+        Me.Label8.Size = New System.Drawing.Size(97, 16)
         Me.Label8.TabIndex = 63
         Me.Label8.Text = "VENDEDOR:"
         Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1327,9 +1327,9 @@ Partial Class puntoventa
         Me.lblfactlistaprecios.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactlistaprecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfactlistaprecios.ForeColor = System.Drawing.Color.Black
-        Me.lblfactlistaprecios.Location = New System.Drawing.Point(248, 0)
+        Me.lblfactlistaprecios.Location = New System.Drawing.Point(251, 0)
         Me.lblfactlistaprecios.Name = "lblfactlistaprecios"
-        Me.lblfactlistaprecios.Size = New System.Drawing.Size(12, 16)
+        Me.lblfactlistaprecios.Size = New System.Drawing.Size(13, 16)
         Me.lblfactlistaprecios.TabIndex = 62
         Me.lblfactlistaprecios.Text = "-"
         Me.lblfactlistaprecios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1340,9 +1340,9 @@ Partial Class puntoventa
         Me.Label6.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label6.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(104, 0)
+        Me.Label6.Location = New System.Drawing.Point(106, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(144, 16)
+        Me.Label6.Size = New System.Drawing.Size(145, 16)
         Me.Label6.TabIndex = 61
         Me.Label6.Text = "LISTA DE PRECIOS"
         Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1354,9 +1354,9 @@ Partial Class puntoventa
         Me.lblfactcondvta.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblfactcondvta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfactcondvta.ForeColor = System.Drawing.Color.Black
-        Me.lblfactcondvta.Location = New System.Drawing.Point(92, 0)
+        Me.lblfactcondvta.Location = New System.Drawing.Point(93, 0)
         Me.lblfactcondvta.Name = "lblfactcondvta"
-        Me.lblfactcondvta.Size = New System.Drawing.Size(12, 16)
+        Me.lblfactcondvta.Size = New System.Drawing.Size(13, 16)
         Me.lblfactcondvta.TabIndex = 59
         Me.lblfactcondvta.Text = "-"
         Me.lblfactcondvta.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1369,7 +1369,7 @@ Partial Class puntoventa
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(0, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(92, 16)
+        Me.Label5.Size = New System.Drawing.Size(93, 16)
         Me.Label5.TabIndex = 58
         Me.Label5.Text = "COND. VTA:"
         Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1396,9 +1396,9 @@ Partial Class puntoventa
         Me.lblclietipocontr.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblclietipocontr.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblclietipocontr.ForeColor = System.Drawing.Color.Black
-        Me.lblclietipocontr.Location = New System.Drawing.Point(281, 0)
+        Me.lblclietipocontr.Location = New System.Drawing.Point(286, 0)
         Me.lblclietipocontr.Name = "lblclietipocontr"
-        Me.lblclietipocontr.Size = New System.Drawing.Size(12, 16)
+        Me.lblclietipocontr.Size = New System.Drawing.Size(13, 16)
         Me.lblclietipocontr.TabIndex = 57
         Me.lblclietipocontr.Text = "-"
         Me.lblclietipocontr.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1409,9 +1409,9 @@ Partial Class puntoventa
         Me.Label4.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label4.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(178, 0)
+        Me.Label4.Location = New System.Drawing.Point(182, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(103, 16)
+        Me.Label4.Size = New System.Drawing.Size(104, 16)
         Me.Label4.TabIndex = 56
         Me.Label4.Text = "TIPO CONTR."
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1423,9 +1423,9 @@ Partial Class puntoventa
         Me.lblclieciudad.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblclieciudad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblclieciudad.ForeColor = System.Drawing.Color.Black
-        Me.lblclieciudad.Location = New System.Drawing.Point(166, 0)
+        Me.lblclieciudad.Location = New System.Drawing.Point(169, 0)
         Me.lblclieciudad.Name = "lblclieciudad"
-        Me.lblclieciudad.Size = New System.Drawing.Size(12, 16)
+        Me.lblclieciudad.Size = New System.Drawing.Size(13, 16)
         Me.lblclieciudad.TabIndex = 54
         Me.lblclieciudad.Text = "-"
         Me.lblclieciudad.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1436,9 +1436,9 @@ Partial Class puntoventa
         Me.Label3.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Label3.Dock = System.Windows.Forms.DockStyle.Left
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(98, 0)
+        Me.Label3.Location = New System.Drawing.Point(100, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(68, 16)
+        Me.Label3.Size = New System.Drawing.Size(69, 16)
         Me.Label3.TabIndex = 53
         Me.Label3.Text = "CUIDAD:"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1450,9 +1450,9 @@ Partial Class puntoventa
         Me.lblcliedomicilio.Dock = System.Windows.Forms.DockStyle.Left
         Me.lblcliedomicilio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblcliedomicilio.ForeColor = System.Drawing.Color.Black
-        Me.lblcliedomicilio.Location = New System.Drawing.Point(86, 0)
+        Me.lblcliedomicilio.Location = New System.Drawing.Point(87, 0)
         Me.lblcliedomicilio.Name = "lblcliedomicilio"
-        Me.lblcliedomicilio.Size = New System.Drawing.Size(12, 16)
+        Me.lblcliedomicilio.Size = New System.Drawing.Size(13, 16)
         Me.lblcliedomicilio.TabIndex = 50
         Me.lblcliedomicilio.Text = "-"
         Me.lblcliedomicilio.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1465,7 +1465,7 @@ Partial Class puntoventa
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(0, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(86, 16)
+        Me.Label2.Size = New System.Drawing.Size(87, 16)
         Me.Label2.TabIndex = 49
         Me.Label2.Text = "DOMICILIO:"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
