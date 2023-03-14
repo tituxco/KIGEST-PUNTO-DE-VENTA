@@ -133,7 +133,7 @@
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-        MsgBox(cmd.CommandText)
+        'MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
         'MsgBox(Cadena)
@@ -167,7 +167,9 @@
             tec.Button1.Enabled = False
             tec.btnCalcular.Enabled = False
             tec.diasMora = txtdiasmora.Text
+            tec.idVendedor = dgvPrestamos.dgvVista.CurrentRow.Cells("VENDEDOR").Value
         Catch ex As Exception
+            MsgBox(ex.Message)
         End Try
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnNuevaPublicidad.Click
@@ -435,5 +437,15 @@
             dtdesdefact.Enabled = True
         End If
 
+    End Sub
+
+    Private Sub txtbuscar_TextChanged(sender As Object, e As EventArgs) Handles txtbuscar.TextChanged
+
+    End Sub
+
+    Private Sub txtbuscar_KeyUp(sender As Object, e As KeyEventArgs) Handles txtbuscar.KeyUp
+        If e.KeyCode = Keys.Enter Then
+            cmdbuscar.PerformClick()
+        End If
     End Sub
 End Class

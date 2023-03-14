@@ -4,6 +4,7 @@
     Private ds As DataSet
     Public idCliente As Integer
     Public diasMora As String
+    Public idVendedor As Integer
 
     Private Sub btnCalcular_Click(sender As Object, e As EventArgs) Handles btnCalcular.Click
         txtCuota.Text = Operaciones.Calculacuota(CDbl(txtmonto.Text), CDbl(txtTasaAnual.Text), CInt(txtPlazo.Text))
@@ -206,20 +207,26 @@
     End Sub
 
     Private Sub btnPagar_Click(sender As Object, e As EventArgs) Handles btnPagar.Click
-        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  *  FROM  rym_detalle_prestamo where periodo not in 
-        (select periodo from rym_pagos where id_prestamo='" & txtBuscaPrestamo.Text & "') and id_prestamo='" & txtBuscaPrestamo.Text &
-        "' and periodo <> 0 order by fecha asc limit 1", conexionPrinc)
-        Dim ds As New DataSet
-        da.Fill(ds)
-        If ds.Tables(0).Rows.Count > 0 Then
-            pagosForm.Show()
-            pagosForm.lbPrestamo.Text = txtBuscaPrestamo.Text
-            pagosForm.lbPeriodo.Text = ds.Tables(0).Rows(0).Item("periodo").ToString
-            pagosForm.txtCuota.Text = ds.Tables(0).Rows(0).Item("cuota")
-            pagosForm.txtFecha.Text = ds.Tables(0).Rows(0).Item("fecha").ToString
-            pagosForm.txtRestante.Text = CDbl(ds.Tables(0).Rows(0).Item("capital_restante")) + CDbl(ds.Tables(0).Rows(0).Item("amortizacion"))
-            pagosForm.txtTotal.Text = ds.Tables(0).Rows(0).Item("cuota")
-        End If
+        Dim vta As New puntoventa
+        vta.MdiParent = Me.MdiParent
+        vta.idfacrap = My.Settings.idfacRap
+
+        Dim ptovtapedido As String = My.Settings.idPtoVta
+        With vta
+            .Idcliente = txtclientecuenta.Text 'dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
+            .condVta = 2
+            .cargarCliente(False)
+            .txtcodPLU.Focus()
+            .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
+             txtconcepto.Text & " #" &
+             txtPrestamo.Text & " - " &
+             Format(CDate(dgvPublicidad.CurrentRow.Cells("VENCIMIENTO").Value.ToString), "MMMM yyyy"), "21",
+             dgvPublicidad.CurrentRow.Cells("MONTO").Value,
+             dgvPublicidad.CurrentRow.Cells("MONTO").Value)
+            .condVta = 2
+            .lblfacvendedor.Text = idVendedor
+            .Show()
+        End With
     End Sub
     Private Sub txtBuscaPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtBuscaPrestamo.TextChanged
         Consultas("select 
@@ -231,7 +238,33 @@
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
-        date_format(fact.fecha,'%Y-%m') = date_format(DTP.FECHA,'%Y-%m')
+        date_format(DTP.FECHA,'%Y-%m')=
+        date_format(str_to_date(
+         CASE WHEN INSTR(trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion))),'ENERO')<>0 THEN
+         REPLACE (trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion)+1)),'ENERO','JANUARY')
+         WHEN INSTR(trim(substring(descripcion,locate('FEBRERO',descripcion), length(descripcion)-locate('FEBRERO',descripcion))),'FEBRERO')<>0 THEN
+         REPLACE (trim(substring(descripcion,locate('FEBRERO',descripcion), length(descripcion)-locate('FEBRERO',descripcion)+1)),'FEBRERO','FEBRUARY')
+         WHEN INSTR(trim(substring(descripcion,locate('MARZO',descripcion), length(descripcion)-locate('MARZO',descripcion))),'MARZO')<>0 THEN
+         REPLACE (trim(substring(descripcion,locate('MARZO',descripcion), length(descripcion)-locate('MARZO',descripcion)+1)),'MARZO','MARCH')
+         WHEN INSTR(trim(substring(descripcion,locate('ABRIL',descripcion), length(descripcion)-locate('ABRIL',descripcion))),'ABRIL')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('ABRIL',descripcion), length(descripcion)-locate('ABRIL',descripcion)+1)),'ABRIL','APRIL')
+         WHEN INSTR(trim(substring(descripcion,locate('MAYO',descripcion), length(descripcion)-locate('MAYO',descripcion))),'MAYO')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('MAYO',descripcion), length(descripcion)-locate('MAYO',descripcion)+1)),'MAYO','MAY')
+         WHEN INSTR(trim(substring(descripcion,locate('JUNIO',descripcion), length(descripcion)-locate('JUNIO',descripcion))),'JUNIO')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('JUNIO',descripcion), length(descripcion)-locate('JUNIO',descripcion)+1)),'JUNIO','JUNE')
+         WHEN INSTR(trim(substring(descripcion,locate('JULIO',descripcion), length(descripcion)-locate('JULIO',descripcion))),'JULIO')<>0 THEN
+         REPLACE (trim(substring(descripcion,locate('JULIO',descripcion), length(descripcion)-locate('JULIO',descripcion)+1)),'JULIO','JULY')
+         WHEN INSTR(trim(substring(descripcion,locate('AGOSTO',descripcion), length(descripcion)-locate('AGOSTO',descripcion))),'AGOSTO')<>0 THEN
+         REPLACE (trim(substring(descripcion,locate('AGOSTO',descripcion), length(descripcion)-locate('AGOSTO',descripcion)+1)),'AGOSTO','AUGUST')
+         WHEN INSTR(trim(substring(descripcion,locate('SEPTIEMBRE',descripcion), length(descripcion)-locate('SEPTIEMBRE',descripcion))),'SEPTIEMBRE')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('SEPTIEMBRE',descripcion), length(descripcion)-locate('SEPTIEMBRE',descripcion)+1)),'SEPTIEMBRE','SEPTEMBER')
+         WHEN INSTR(trim(substring(descripcion,locate('OCTUBRE',descripcion), length(descripcion)-locate('OCTUBRE',descripcion))),'OCTUBRE')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('OCTUBRE',descripcion), length(descripcion)-locate('OCTUBRE',descripcion)+1)),'OCTUBRE','OCTOBER')
+         WHEN INSTR(trim(substring(descripcion,locate('NOVIEMBRE',descripcion), length(descripcion)-locate('NOVIEMBRE',descripcion))),'NOVIEMBRE')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('NOVIEMBRE',descripcion), length(descripcion)-locate('NOVIEMBRE',descripcion)+1)),'NOVIEMBRE','NOVEMBER')
+         WHEN INSTR(trim(substring(descripcion,locate('DICIEMBRE',descripcion), length(descripcion)-locate('DICIEMBRE',descripcion))),'DICIEMBRE')<>0 THEN 
+         REPLACE (trim(substring(descripcion,locate('DICIEMBRE',descripcion), length(descripcion)-locate('DICIEMBRE',descripcion)+1)),'DICIEMBRE','DECEMBER')
+         ELSE '1' END,'%M %Y'),'%Y-%m')
         ) AS FACTURA
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
         Reconectar()
@@ -242,6 +275,7 @@
         and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
         Dim DatosPrestamo As New DataTable
         ConsultaPrestamo.Fill(DatosPrestamo)
+        ' MsgBox(ConsultaPrestamo.SelectCommand.CommandText)
         If DatosPrestamo.Rows.Count <> 0 Then
             txtclientecuenta.Text = DatosPrestamo(0).Item("idclientes")
             txtclientenombre.Text = DatosPrestamo(0).Item("nomapell_razon")
@@ -253,6 +287,7 @@
             txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
             dtpFechaInicio.Value = CDate(DatosPrestamo(0).Item("FECHA").ToString())
             txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
+            txtPrestamo.Text = DatosPrestamo(0).Item("ID_PRESTAMO")
             For Each cont As Control In Me.Controls
                 If TypeOf cont Is TextBox Then
                     Dim tex As TextBox

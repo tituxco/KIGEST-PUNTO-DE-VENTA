@@ -48,8 +48,8 @@ Partial Class listadoPublicidades
         Me.btnExportar = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.rdAFacturar = New System.Windows.Forms.RadioButton()
+        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -380,14 +380,6 @@ Partial Class listadoPublicidades
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
         '
-        'dgvPrestamos
-        '
-        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
-        Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvPrestamos.TabIndex = 78
-        '
         'rdAFacturar
         '
         Me.rdAFacturar.AutoSize = True
@@ -398,6 +390,14 @@ Partial Class listadoPublicidades
         Me.rdAFacturar.TabIndex = 205
         Me.rdAFacturar.Text = "A Facturar"
         Me.rdAFacturar.UseVisualStyleBackColor = True
+        '
+        'dgvPrestamos
+        '
+        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
+        Me.dgvPrestamos.Name = "dgvPrestamos"
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvPrestamos.TabIndex = 78
         '
         'listadoPublicidades
         '
