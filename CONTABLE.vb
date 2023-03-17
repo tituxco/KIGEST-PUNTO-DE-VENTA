@@ -500,16 +500,16 @@ Public Class CONTABLE
             consulta.Fill(tabla)
             Dim tablacta() As DataRow
             tablacta = tabla.Select("")
-
+            MsgBox(consulta.SelectCommand.CommandText)
             Dim i As Integer
             dtcuentaprov.Rows.Clear()
-            'MsgBox(tabla.Rows.Count)
+
             For i = 0 To tablacta.GetUpperBound(0)
                 Dim fechacomprob As Date = CType(tablacta(i)(1).ToString, Date)
                 Dim fechainicio As Date = CType(dtdesdecuentaprov.Value, Date)
                 Dim dias As Integer = DateDiff(DateInterval.Day, fechacomprob, fechainicio)
                 Select Case tablacta(i)(6)
-                    Case 1, 2, 3, 4
+                    Case 1, 2, 6, 7, 11, 12, 999, 992
                         If dias <= 0 Then
                             debegral = debegral + tablacta(i)(4)
                             saldo = FormatNumber(debegral - habergral, 2)
@@ -521,7 +521,7 @@ Public Class CONTABLE
                             debegral = debegral + tablacta(i)(4)
                             saldoant = FormatNumber(debegral - habergral, 2)
                         End If
-                    Case 6
+                    Case 3, 8, 13, 991, 993
                         If dias <= 0 Then
                             If tablacta(i)(7) = 2 Then
                                 habergral = habergral + tablacta(i)(4)
