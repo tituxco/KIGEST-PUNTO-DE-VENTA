@@ -2866,7 +2866,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Dim mov As New movimientodecaja
         mov.MdiParent = Me.MdiParent
         mov.movrap = True
-        mov.movraptip = 6
+        mov.movraptip = 993
         mov.movrapclie = cmbproveedores.SelectedValue
         mov.Show()
     End Sub

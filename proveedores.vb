@@ -114,8 +114,9 @@ Public Class proveedores
         Try
             dtcomprobantes.Rows.Clear()
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, fa.fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada " _
-            & "from fact_proveedores_fact as fa where idproveedor= " & idProv & " order by fa.fecha desc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, fa.fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada 
+            from fact_proveedores_fact as fa where idproveedor= " & idProv & " and fa.tipo in (select donfdesc from tipos_comprobantes where debcred like 'D')
+            order by fa.fecha desc", conexionPrinc)
             Dim tablacta As New DataTable
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
@@ -125,8 +126,11 @@ Public Class proveedores
             itemCta = tablacta.Select()
 
             For i = 0 To itemCta.GetUpperBound(0)
-                dtcomprobantes.Rows.Add(itemCta(i)(0), itemCta(i)(1), itemCta(i)(2), itemCta(i)(3), itemCta(i)(4), itemCta(i)(5), itemCta(i)(6))
-
+                dtcomprobantes.Rows.Add(itemCta(i)("id"), itemCta(i)("fecha"), itemCta(i)("tipo"), itemCta(i)("numero"),
+                                        itemCta(i)("monto"), itemCta(i)("vencimiento"), itemCta(i)("observaciones"))
+                If itemCta(i)("pagada") = 1 Then
+                    dtcomprobantes.Rows(dtcomprobantes.RowCount - 1).DefaultCellStyle.BackColor = Color.GreenYellow
+                End If
             Next
 
         Catch ex As Exception
@@ -625,5 +629,23 @@ Public Class proveedores
 
     Private Sub txtcuit_TextChanged(sender As Object, e As EventArgs) Handles txtcuit.TextChanged
 
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim i As Integer
+        For i = 0 To frmprincipal.MdiChildren.Length - 1
+            If frmprincipal.MdiChildren(i).Name = "movimientocaja" Then
+                'frmprincipal.MdiChildren(i).BringToFront()
+                MsgBox("la ventana de movimiento de cuenta ya esta abierta, por favor complete la operacion antes de efectuar otra", vbCritical)
+                Exit Sub
+            End If
+        Next
+
+        Dim mov As New movimientodecaja
+        mov.MdiParent = Me.MdiParent
+        mov.movrap = True
+        mov.movraptip = 993
+        mov.movrapclie = dtpersonal.CurrentRow.Cells("Cuenta").Value
+        mov.Show()
     End Sub
 End Class
