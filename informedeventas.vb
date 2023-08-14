@@ -59,6 +59,11 @@ Public Class informedeventas
         cmbseguimientoProductosVendedores.ValueMember = readVend.Tables(0).Columns(0).Caption.ToString
         cmbseguimientoProductosVendedores.SelectedIndex = -1
 
+        cmbvendedorCotejo.DataSource = readVend.Tables(0)
+        cmbvendedorCotejo.DisplayMember = readVend.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbvendedorCotejo.ValueMember = readVend.Tables(0).Columns(0).Caption.ToString
+        cmbvendedorCotejo.SelectedIndex = -1
+
         If InStr(DatosAcceso.Moduloacc, "4f") = False Then tabseguimientoVendedores.Parent = Nothing
 
         Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
@@ -1300,4 +1305,89 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub dgvLecturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLecturas.CellContentClick
 
     End Sub
+
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub TabPage4_Click(sender As Object, e As EventArgs) Handles TabPage4.Click
+
+    End Sub
+
+    Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
+        Try
+            Dim desde As String = Format(CDate(dtdeCotejo.Value), "yyyy-MM-dd")
+            Dim hasta As String = Format(CDate(dtHastaCotejo.Value), "yyyy-MM-dd")
+
+            Dim consultaPedidos As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente,fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
+            where fact.tipofact in(995) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ") and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            group by fact.id_cliente
+            order by fact.razon asc", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+            Dim tablaPedidos As New DataTable
+            consultaPedidos.Fill(tablaPedidos)
+
+            Dim consultaFacturas As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
+            where fact.tipofact in(1,2,999,11,12) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            group by fact.id_cliente
+            order by fact.razon asc", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+            Dim tablaFacturas As New DataTable
+            consultaFacturas.Fill(tablaFacturas)
+
+            Dim consultaDevoluciones As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
+            where fact.tipofact in(3,991,13) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            group by fact.id_cliente
+            order by fact.razon asc", conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
+            Dim tablaDevoluciones As New DataTable
+            consultaDevoluciones.Fill(tablaDevoluciones)
+
+            Dim fac As New datosfacturas
+            ''Dim tabladiferencias = New datosfacturas.cote
+            For Each fila As DataRow In tablaPedidos.Rows
+
+                Dim idcliente As Integer = fila.Item("id_cliente")
+                Dim razon As String = fila.Item("razon")
+                Dim totalPedidos As Decimal = Decimal.Parse(fila.Item("totalITM"))
+                Dim filaFactura() As DataRow = tablaFacturas.Select("id_cliente=" & idcliente)
+                Dim filaDevolucion() As DataRow = tablaDevoluciones.Select("id_cliente=" & idcliente)
+
+                Dim totalFacturas As Decimal
+                If filaFactura.Count <> 0 Then
+                    totalFacturas = Decimal.Parse(filaFactura(0).Item("totalITM"))
+                Else
+                    totalFacturas = 0
+                End If
+
+                Dim totalDevoluciones As Decimal
+                If filaDevolucion.Count <> 0 Then
+                    totalDevoluciones = Decimal.Parse(filaDevolucion(0).Item("totalITM"))
+                Else
+                    totalDevoluciones = 0
+                End If
+                fac.Tables("cotejoPedidosFacturas").Rows.Add(idcliente, razon, totalPedidos, totalFacturas, totalDevoluciones, Math.Round((totalFacturas - totalDevoluciones) - totalPedidos, 2))
+            Next
+
+
+            dgvdetalles.DataSource = fac.Tables("cotejoPedidosFacturas")
+            lbltotalpedidos.Text = sumarcolumna(dgvdetalles, 2)
+            lbltotalfacturado.Text = sumarcolumna(dgvdetalles, 3)
+            lbltotaldevoluciones.Text = sumarcolumna(dgvdetalles, 4)
+            lbltotaldiferencias.Text = sumarcolumna(dgvdetalles, 5)
+            lbltotalFacturadoEfectivo.Text = "Facturacion (FACT-DEV): $" & sumarcolumna(dgvdetalles, 3) - sumarcolumna(dgvdetalles, 4)
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Function sumarcolumna(tabla As DataGridView, columna As Integer)
+        Dim total As Decimal
+        For Each fila As DataGridViewRow In tabla.Rows
+            Dim importe As Decimal = Decimal.Parse(fila.Cells(columna).Value)
+            total += importe
+        Next
+        Return Math.Round(total)
+    End Function
 End Class

@@ -5,6 +5,7 @@
     Public idCliente As Integer
     Public diasMora As String
     Public idVendedor As Integer
+    Public NvaPubli As Boolean
 
     Private Sub btnCalcular_Click(sender As Object, e As EventArgs) Handles btnCalcular.Click
         txtCuota.Text = Operaciones.Calculacuota(CDbl(txtmonto.Text), CDbl(txtTasaAnual.Text), CInt(txtPlazo.Text))
@@ -29,9 +30,7 @@
 
         dgvPublicidad.Columns.Add("Fechavencimiento", "Fecha Vencimiento")
         dgvPublicidad.Columns.Add("Montomensual", "Monto Mensual")
-
-
-
+        dgvPublicidad.ReadOnly = False
 
         Dim Plazo As Integer = txtPlazo.Text
         Dim InteresMensual As Double = FormatNumber(txtTasaAnual.Text, 2) / 100 / 12
@@ -48,7 +47,7 @@
             'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
         Else
             'FechaGuardar = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
-            FechaPago = dtpFechaInicio.Value.AddMonths(1).AddDays(-1)
+            FechaPago = dtpFechaInicio.Value.AddMonths(1)
         End If
 
 
@@ -76,9 +75,12 @@
             End If
 
             dgvPublicidad.Rows.Add(FechaGuardar, MiCuota)
-
-
+            'MsgBox(i & "  ---  " & Plazo)
+            'If i = Plazo - 1 Then
+            '    FechaPago = FechaPago.AddMonths(1).AddDays(-1)
+            'Else
             FechaPago = FechaPago.AddMonths(1)
+            'End If
             'FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
             SaldoInicial = SaldoInicial - CapitalPagado
         Next
@@ -88,9 +90,6 @@
     End Sub
 
     Private Sub GeneraPrestamo()
-
-
-
 
         If txtCuota.Text = "" Or txtCuota.Text = "0" Then
             MsgBox("debe calcular primero la cuota")
@@ -155,34 +154,31 @@
         Dim InteresPagado As Double = 0
         Dim capitalRestante As Double = FormatNumber(txtmonto.Text, 2)
 
-        For i As Integer = 1 To Plazo
-
-            MiCuota = txtCuota.Text
+        For Each periodo As DataGridViewRow In dgvPublicidad.Rows
+            'MsgBox(periodo.Cells("Montomensual").Value)
+            MiCuota = periodo.Cells("Montomensual").Value
+            ' txtCuota.Text
             InteresPagado = SaldoInicial * InteresMensual
             CapitalPagado = MiCuota - InteresPagado
             capitalRestante = capitalRestante - CapitalPagado
             capitalAmortizado = capitalAmortizado + CapitalPagado
 
-
-            If chkAdelantado.Checked = True And i = 1 Then
-                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
-                FechaPago = fechaVenc
-            Else
-                FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
-            End If
+            FechaGuardar = Format(CDate(periodo.Cells("Fechavencimiento").Value.ToString), "yyyy-MM-dd")
 
             Operaciones.Guardar("insert into rym_detalle_prestamo(id_prestamo,periodo,fecha,cuota,interes,amortizacion,capital_restante,capital_amortizado,
             amortizacion_anticipada) 
-            values('" & NoPrestamo & "','" & i & "','" & FechaGuardar & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
+            values('" & NoPrestamo & "','" & periodo.Index + 1 & "','" & FechaGuardar & "','" & FormatNumber(MiCuota, 2) & "','" & FormatNumber(InteresPagado, 2) & "','" &
             FormatNumber(CapitalPagado, 2) & "','" & FormatNumber(capitalRestante, 2) & "','" & FormatNumber(capitalAmortizado, 2) & "',0)", Today.Date)
 
-            FechaPago = FechaPago.AddMonths(1)
+            'FechaPago = FechaPago.AddMonths(1)
             'fecha = Format(CDate(FechaPago), "yyyy-MM-dd")
 
             SaldoInicial = SaldoInicial - CapitalPagado
             'MsgBox(MiCuota & "-" & InteresPagado & "-" & capitalRestante & "-" & capitalRestante & "-" & capitalAmortizado)
         Next
-
+        dgvPublicidad.ReadOnly = True
+        NvaPubli = False
+        btnPagar.Enabled = True
         txtBuscaPrestamo.Text = NoPrestamo
     End Sub
 
@@ -194,11 +190,13 @@
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = diasMora
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
-
+        'MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
 
-        If ds.Tables(0).Rows.Count > 0 Then
+        If ds.Tables(0).Rows.Count > 0 And NvaPubli = False Then
+            dgvPublicidad.Columns.Clear()
+            dgvPublicidad.Rows.Clear()
             dgvPublicidad.DataSource = ds.Tables(0)
         Else
             dgvPublicidad.DataSource = Nothing
@@ -238,7 +236,7 @@
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
-        date_format(DTP.FECHA,'%Y-%m')=
+        date_format(date_add(DTP.FECHA, interval -1 month),'%Y-%m')=
         date_format(str_to_date(
          CASE WHEN INSTR(trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion))),'ENERO')<>0 THEN
          REPLACE (trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion)+1)),'ENERO','JANUARY')
@@ -376,7 +374,7 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         GeneraPrestamo()
-
+        Button1.Enabled = False
     End Sub
 
     Private Sub txtclientenombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtclientenombre.KeyDown
@@ -395,6 +393,22 @@
     End Sub
 
     Private Sub chkAdelantado_CheckedChanged(sender As Object, e As EventArgs) Handles chkAdelantado.CheckedChanged
+
+    End Sub
+
+    Private Sub dgvPublicidad_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellContentClick
+
+    End Sub
+
+    Private Sub txtPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtPrestamo.TextChanged
+
+    End Sub
+
+    Private Sub txtclientenombre_TextChanged(sender As Object, e As EventArgs) Handles txtclientenombre.TextChanged
+
+    End Sub
+
+    Private Sub txtclientenombre_QueryContinueDrag(sender As Object, e As QueryContinueDragEventArgs) Handles txtclientenombre.QueryContinueDrag
 
     End Sub
 End Class

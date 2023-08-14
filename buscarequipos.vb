@@ -234,8 +234,14 @@
             With imping
                 .MdiParent = Me.MdiParent
                 .rptegreso.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptegreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaegreso.rdlc"
-                .rptegreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaegreso.rdlc"
+                If My.Settings.tipoTaller = 0 Then
+                    .rptegreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaegreso.rdlc"
+                    .rptegreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaegreso.rdlc"
+                ElseIf My.Settings.tipoTaller = 1 Then
+                    .rptegreso.LocalReport.ReportEmbeddedResource = System.Environment.CurrentDirectory & "\reportes\fichaegresoTaller1.rdlc"
+                    .rptegreso.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\fichaegresoTaller1.rdlc"
+                End If
+
                 .rptegreso.LocalReport.DataSources.Clear()
                 .rptegreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosEmp", dsFacturacion.Tables("datosEmpresa")))
                 .rptegreso.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("datosPieEg", dsDTGFicha.Tables("datosFichaEgreso")))

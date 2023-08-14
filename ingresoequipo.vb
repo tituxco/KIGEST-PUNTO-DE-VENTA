@@ -16,6 +16,8 @@
             lblserial.Text = "Patente:"
             lblmarca.Visible = False
             cmbmarcas.Visible = False
+            cmbmarcas.SelectedValue = 0
+            cmbmodelos.SelectedValue = 0
 
             lblmodelo.Visible = False
             cmbmodelos.Visible = False

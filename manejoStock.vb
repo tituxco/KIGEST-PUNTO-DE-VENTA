@@ -85,8 +85,8 @@ Public Class manejoStock
             End If
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod as CodInterno, pro.descripcion, sum(itm.cantidad) as ventasTotalesPeriodo,
-            (select sum(stock) from fact_insumos_lotes where idproducto=pro.id and " & buscAlm2 & " ) as StockActualEnAlmacen
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod as CodInterno, pro.descripcion, round(sum(itm.cantidad),2) as ventasTotalesPeriodo,
+            (select round(sum(replace(stock,',','.')),2) from fact_insumos_lotes where idproducto=pro.id and " & buscAlm2 & " ) as StockActualEnAlmacen
             FROM fact_items as itm, fact_facturas as fa , fact_insumos as pro
             where fa.id=itm.id_fact and itm.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
             and itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D')

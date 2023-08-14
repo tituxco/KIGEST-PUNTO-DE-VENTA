@@ -685,7 +685,7 @@
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "cantidad as cant, descripcion,iva,punit,ptotal,plu as codigo from fact_items where " _
+            & "cantidad as cant, descripcion,replace(iva,'.',',') as iva,replace(punit,'.',',') as punit,replace(ptotal,'.',',') as ptotal,plu as codigo from fact_items where " _
             & "id_fact=" & idFactura, conexionPrinc)
             tabFac.Fill(fac.Tables("facturax"))
 

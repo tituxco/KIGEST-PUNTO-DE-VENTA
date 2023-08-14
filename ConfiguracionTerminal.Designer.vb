@@ -25,7 +25,6 @@ Partial Class ConfiguracionTerminal
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtcajaDef = New System.Windows.Forms.TextBox()
-        Me.txtEtiquetaNombre = New System.Windows.Forms.TextBox()
         Me.Label64 = New System.Windows.Forms.Label()
         Me.Label63 = New System.Windows.Forms.Label()
         Me.txttipoetiqueta = New System.Windows.Forms.TextBox()
@@ -33,7 +32,6 @@ Partial Class ConfiguracionTerminal
         Me.txtunidadDef = New System.Windows.Forms.TextBox()
         Me.Label59 = New System.Windows.Forms.Label()
         Me.chkimprimirtikets = New System.Windows.Forms.CheckBox()
-        Me.txtimptiketsnombre = New System.Windows.Forms.TextBox()
         Me.Label57 = New System.Windows.Forms.Label()
         Me.txtidalmacen = New System.Windows.Forms.TextBox()
         Me.Label50 = New System.Windows.Forms.Label()
@@ -61,6 +59,11 @@ Partial Class ConfiguracionTerminal
         Me.cmbMetodoBusquedaProd = New System.Windows.Forms.ComboBox()
         Me.txttipotaller = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
+        Me.cmbVisualizacionProd = New System.Windows.Forms.ComboBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
+        Me.cmbimpresoraTiket = New System.Windows.Forms.ComboBox()
+        Me.cmbImpresoraEtiquetas = New System.Windows.Forms.ComboBox()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -94,13 +97,6 @@ Partial Class ConfiguracionTerminal
         Me.txtcajaDef.Name = "txtcajaDef"
         Me.txtcajaDef.Size = New System.Drawing.Size(64, 20)
         Me.txtcajaDef.TabIndex = 133
-        '
-        'txtEtiquetaNombre
-        '
-        Me.txtEtiquetaNombre.Location = New System.Drawing.Point(330, 200)
-        Me.txtEtiquetaNombre.Name = "txtEtiquetaNombre"
-        Me.txtEtiquetaNombre.Size = New System.Drawing.Size(160, 20)
-        Me.txtEtiquetaNombre.TabIndex = 132
         '
         'Label64
         '
@@ -168,13 +164,6 @@ Partial Class ConfiguracionTerminal
         Me.chkimprimirtikets.Size = New System.Drawing.Size(15, 14)
         Me.chkimprimirtikets.TabIndex = 125
         Me.chkimprimirtikets.UseVisualStyleBackColor = True
-        '
-        'txtimptiketsnombre
-        '
-        Me.txtimptiketsnombre.Location = New System.Drawing.Point(210, 120)
-        Me.txtimptiketsnombre.Name = "txtimptiketsnombre"
-        Me.txtimptiketsnombre.Size = New System.Drawing.Size(114, 20)
-        Me.txtimptiketsnombre.TabIndex = 124
         '
         'Label57
         '
@@ -390,9 +379,9 @@ Partial Class ConfiguracionTerminal
         '
         Me.cmbtipoTiketEtiqueta.FormattingEnabled = True
         Me.cmbtipoTiketEtiqueta.Items.AddRange(New Object() {"0 - TIKET 58MM EMP1", "1 - TIKET 58MM EMP2", "2 - TIKET 58MM EMP3", "3 - TIKET 80MM - COMBUSTIBLES", "4 - TIKET 80MM - GENERAL"})
-        Me.cmbtipoTiketEtiqueta.Location = New System.Drawing.Point(330, 119)
+        Me.cmbtipoTiketEtiqueta.Location = New System.Drawing.Point(351, 119)
         Me.cmbtipoTiketEtiqueta.Name = "cmbtipoTiketEtiqueta"
-        Me.cmbtipoTiketEtiqueta.Size = New System.Drawing.Size(160, 21)
+        Me.cmbtipoTiketEtiqueta.Size = New System.Drawing.Size(139, 21)
         Me.cmbtipoTiketEtiqueta.TabIndex = 144
         '
         'Label7
@@ -432,12 +421,55 @@ Partial Class ConfiguracionTerminal
         Me.Label8.TabIndex = 147
         Me.Label8.Text = "tipoTaller"
         '
+        'cmbVisualizacionProd
+        '
+        Me.cmbVisualizacionProd.FormattingEnabled = True
+        Me.cmbVisualizacionProd.Items.AddRange(New Object() {"0 - Descripcion + Detalle", "1 - Descripcion solamente"})
+        Me.cmbVisualizacionProd.Location = New System.Drawing.Point(351, 376)
+        Me.cmbVisualizacionProd.Name = "cmbVisualizacionProd"
+        Me.cmbVisualizacionProd.Size = New System.Drawing.Size(134, 21)
+        Me.cmbVisualizacionProd.TabIndex = 150
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(174, 378)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(171, 16)
+        Me.Label10.TabIndex = 149
+        Me.Label10.Text = "ModoVisualizacionProd"
+        '
+        'PrintDialog1
+        '
+        Me.PrintDialog1.UseEXDialog = True
+        '
+        'cmbimpresoraTiket
+        '
+        Me.cmbimpresoraTiket.FormattingEnabled = True
+        Me.cmbimpresoraTiket.Location = New System.Drawing.Point(205, 119)
+        Me.cmbimpresoraTiket.Name = "cmbimpresoraTiket"
+        Me.cmbimpresoraTiket.Size = New System.Drawing.Size(140, 21)
+        Me.cmbimpresoraTiket.TabIndex = 151
+        '
+        'cmbImpresoraEtiquetas
+        '
+        Me.cmbImpresoraEtiquetas.FormattingEnabled = True
+        Me.cmbImpresoraEtiquetas.Location = New System.Drawing.Point(325, 203)
+        Me.cmbImpresoraEtiquetas.Name = "cmbImpresoraEtiquetas"
+        Me.cmbImpresoraEtiquetas.Size = New System.Drawing.Size(160, 21)
+        Me.cmbImpresoraEtiquetas.TabIndex = 152
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(497, 455)
+        Me.Controls.Add(Me.cmbImpresoraEtiquetas)
+        Me.Controls.Add(Me.cmbimpresoraTiket)
+        Me.Controls.Add(Me.cmbVisualizacionProd)
+        Me.Controls.Add(Me.Label10)
         Me.Controls.Add(Me.txttipotaller)
         Me.Controls.Add(Me.Label8)
         Me.Controls.Add(Me.cmbMetodoBusquedaProd)
@@ -454,7 +486,6 @@ Partial Class ConfiguracionTerminal
         Me.Controls.Add(Me.txtTextoPietiket)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.txtcajaDef)
-        Me.Controls.Add(Me.txtEtiquetaNombre)
         Me.Controls.Add(Me.Label64)
         Me.Controls.Add(Me.Label63)
         Me.Controls.Add(Me.txttipoetiqueta)
@@ -462,7 +493,6 @@ Partial Class ConfiguracionTerminal
         Me.Controls.Add(Me.txtunidadDef)
         Me.Controls.Add(Me.Label59)
         Me.Controls.Add(Me.chkimprimirtikets)
-        Me.Controls.Add(Me.txtimptiketsnombre)
         Me.Controls.Add(Me.Label57)
         Me.Controls.Add(Me.txtidalmacen)
         Me.Controls.Add(Me.Label50)
@@ -489,7 +519,6 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents pntitulo As Panel
     Friend WithEvents Label1 As Label
     Friend WithEvents txtcajaDef As TextBox
-    Friend WithEvents txtEtiquetaNombre As TextBox
     Friend WithEvents Label64 As Label
     Friend WithEvents Label63 As Label
     Friend WithEvents txttipoetiqueta As TextBox
@@ -497,7 +526,6 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents txtunidadDef As TextBox
     Friend WithEvents Label59 As Label
     Friend WithEvents chkimprimirtikets As CheckBox
-    Friend WithEvents txtimptiketsnombre As TextBox
     Friend WithEvents Label57 As Label
     Friend WithEvents txtidalmacen As TextBox
     Friend WithEvents Label50 As Label
@@ -525,4 +553,9 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents cmbMetodoBusquedaProd As ComboBox
     Friend WithEvents txttipotaller As TextBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents cmbVisualizacionProd As ComboBox
+    Friend WithEvents Label10 As Label
+    Friend WithEvents PrintDialog1 As PrintDialog
+    Friend WithEvents cmbimpresoraTiket As ComboBox
+    Friend WithEvents cmbImpresoraEtiquetas As ComboBox
 End Class

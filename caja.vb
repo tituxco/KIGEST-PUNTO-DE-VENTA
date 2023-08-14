@@ -313,4 +313,8 @@
         GenerarExcel(dtcaja)
 
     End Sub
+
+    Private Sub dtcaja_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtcaja.CellContentClick
+
+    End Sub
 End Class

@@ -40,6 +40,10 @@ Public Class NvaFacturaCompra
         Dim total As String = txttotalComp.Text
         Dim observa As String = txtobservacionesComp.Text
         Dim bienuso As Integer = chkcomprabiendeuso.CheckState
+        Dim cuenta_contable As Integer = cmbCtaContable.SelectedValue
+        If cmbCtaContable.Items.Count = 0 Then
+            cuenta_contable = 0
+        End If
         Dim sqlQuery As String
         Try
             If comprobarComprobanteCompra(numfac, cuit) = True Then
@@ -54,6 +58,11 @@ Public Class NvaFacturaCompra
                     tipoComprobante = 6
                 Case "FC"
                     tipoComprobante = 11
+                Case "FX"
+                    tipoComprobante = 999
+                Case "FM"
+                    tipoComprobante = 51
+
             End Select
 
             If tipocomp = "NC" Then
@@ -89,8 +98,8 @@ Public Class NvaFacturaCompra
             End If
             Reconectar()
             sqlQuery = "insert into fact_proveedores_fact_items(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
-            & "acuenta,nogr,perciva,percib,total,obs,bien_uso) " _
-            & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien)"
+            & "acuenta,nogr,perciva,percib,total,obs,bien_uso,cuenta_contable) " _
+            & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien,?cuenta_contable)"
             Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             With additem.Parameters
                 .AddWithValue("?per", 0)
@@ -112,6 +121,7 @@ Public Class NvaFacturaCompra
                 .AddWithValue("?tot", total)
                 .AddWithValue("?obs", observa.ToUpper)
                 .AddWithValue("?bien", bienuso)
+                .AddWithValue("?cuenta_contable", cuenta_contable)
             End With
             additem.ExecuteNonQuery()
 
@@ -155,6 +165,15 @@ Public Class NvaFacturaCompra
         End If
 
         txtcuitComp.Text = tablaProv.Rows(0).Item("cuit")
+
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, nombreCuenta FROM cm_planDeCuentas", conexionPrinc)
+        Dim tablacl As New DataSet
+        consulta.Fill(tablacl)
+
+        cmbCtaContable.DataSource = tablacl.Tables(0)
+        cmbCtaContable.DisplayMember = tablacl.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbCtaContable.ValueMember = tablacl.Tables(0).Columns(0).Caption.ToString
+        cmbCtaContable.SelectedIndex = 0
 
 
 
@@ -319,5 +338,9 @@ Public Class NvaFacturaCompra
             'MsgBox("la puta que me pario que funcione")
             SendKeys.Send("{TAB}")
         End If
+    End Sub
+
+    Private Sub Label1_Click(sender As Object, e As EventArgs) Handles Label1.Click
+
     End Sub
 End Class

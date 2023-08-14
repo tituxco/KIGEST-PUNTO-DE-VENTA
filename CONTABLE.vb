@@ -1127,7 +1127,7 @@ Public Class CONTABLE
             ElseIf cmbtipofac.SelectedValue <> 0 And chktodosfact.Checked = False Then
                 parambusq = " and fac.tipofact=" & cmbtipofac.SelectedValue
             ElseIf cmbtipofac.SelectedValue = 0 And chktodosfact.Checked = True Then
-                parambusq = " and fac.tipofact in (select id from fact_conffiscal where tip=1)"
+                parambusq = " and fac.tipofact in (select donfdesc from fact_conffiscal where tip=1)"
             End If
 
             If chktodosvendedores.Checked = False And cmbvendedor.SelectedValue = 0 Then
@@ -1138,7 +1138,7 @@ Public Class CONTABLE
             End If
 
             Dim vendedor As String
-            If cmbvendedor.SelectedValue = 0 Then
+            If chktodosvendedores.Checked = True Then
                 vendedor = "TODOS"
             Else
                 vendedor = cmbvendedor.Text
@@ -1163,6 +1163,7 @@ Public Class CONTABLE
             & " fac.observaciones from fact_conffiscal as fis, fact_facturas as fac, fact_condventas as con " _
             & " where fis.donfdesc=fac.tipofact and con.id=fac.condvta " _
             & " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+            'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
@@ -3753,24 +3754,24 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tablibromayor_Enter(sender As Object, e As EventArgs) Handles tablibromayor.Enter
-        Try
-            Reconectar()
-            Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
+        If cmbperiodoLibroDiario.Items.Count = 0 And cmbCuentas.Items.Count = 0 Then
+            IniciarLibroMayor()
+        End If
+    End Sub
+
+    Private Sub IniciarLibroMayor()
+        Reconectar()
+        Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
             FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
-            Dim dsPlanCuentas As New DataSet
-            consPlanCuentas.Fill(dsPlanCuentas)
+        Dim dsPlanCuentas As New DataSet
+        consPlanCuentas.Fill(dsPlanCuentas)
 
-            cmbCuentas.DataSource = dsPlanCuentas.Tables(0)
-            cmbCuentas.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
-            cmbCuentas.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
+        cmbCuentas.DataSource = dsPlanCuentas.Tables(0)
+        cmbCuentas.DisplayMember = dsPlanCuentas.Tables(0).Columns("nombreCuenta").Caption
+        cmbCuentas.ValueMember = dsPlanCuentas.Tables(0).Columns("id").Caption
 
-            CargarPeriodos()
+        CargarPeriodos()
 
-
-
-        Catch ex As Exception
-
-        End Try
     End Sub
 
     Public Sub CargarPeriodos()
@@ -5000,7 +5001,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tabBalanceCtas_Enter(sender As Object, e As EventArgs) Handles tabBalanceCtas.Enter
-        CargarPeriodos()
+        If cmbBalCtasPeriodo.Items.Count = 0 Then
+            CargarPeriodos()
+        End If
+
 
     End Sub
 
@@ -5059,13 +5063,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
 
-    Private Sub cmbperiodoLibroDiario_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedValueChanged
-        CargarLibroDiario()
+    Private Sub cmbperiodoLibroDiario_SelectedValueChangedComitted(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectionChangeCommitted
+
+
 
     End Sub
 
     Private Sub cmbCuentas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedIndexChanged
-
+        'CargarLibroDiario()
     End Sub
 
     Private Sub rdCtaSaldo_CheckedChanged(sender As Object, e As EventArgs) Handles rdCtaSaldo.CheckedChanged
@@ -5453,9 +5458,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim perib As String = factura.Item("percib").ToString
                 Dim total As String = factura.Item("total").ToString
                 Dim observa As String = factura.Item("obs").ToString
+                Dim cuenta_contable As Integer = factura.Item("cuenta_contable").ToString
                 Dim idfcomp As Integer = factura.Item("id")
 
-                dtlibrocomp.Rows.Add(fecha, tipocomp, numfac, razon, cuit, conIVA, neto21, neto105, neto27, iva, monot, pcuenta, nogrex, periv, perib, total, observa.ToUpper, idfcomp)
+                dtlibrocomp.Rows.Add(fecha, tipocomp, numfac, razon, cuit, conIVA, neto21, neto105, neto27, iva, monot, pcuenta, nogrex, periv, perib, total, observa.ToUpper, cuenta_contable, idfcomp)
                 If tipocomp = "NC" Then
                     dtlibrocomp.Rows(dtlibrocomp.RowCount - 1).DefaultCellStyle.BackColor = Color.Red
                 End If
@@ -5951,6 +5957,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
     Private Sub tabEjercicios_Enter(sender As Object, e As EventArgs) Handles tabEjercicios.Enter
+        If cmbañoEjercicio.Items.Count = 0 Then
+            CargarEjerciciosAnteriores()
+        End If
+    End Sub
+
+    Private Sub CargarEjerciciosAnteriores()
         Reconectar()
         Dim consEjerciciosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT periodoFiscal from cm_ejercicios_cerrados", conexionPrinc)
         Dim dsEjerciciosAnteriores As New DataSet
@@ -6152,6 +6164,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim hasta As String = Format(CDate(dtpgastoshasta.Value), "yyyy-MM-dd")
             Dim tablagtos As New DataTable
             Dim consGtos As String
+            Dim consRazonDetalles As String
 
 
             consGtos = " and Pfact.fecha between '" & desde & "' and '" & hasta & "'"
@@ -6167,22 +6180,23 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Else
                 consGtos &= " and ie.caja like '" & cmbGtosCaja.SelectedValue & "' "
             End If
+            consRazonDetalles = "having razon like '%" & txtBusquedaRazonOP.Text.Replace(" ", "%") & "%' or detalles like '%" & txtBusquedaRazonOP.Text.Replace(" ", "%") & "%'"
 
             tablagtos.Clear()
             ' Dim parambusq As String = " and fac.tipofact in ('5') "
 
             'If rdefectivo.Checked = True Then
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  Pfact.fecha,ec.concepto, prov.razon,ie.descripcion as detalles, concat(tip.abrev,' ', Pfact.numero) as comprobante,format(replace(Pfact.monto,',','.'),2,'es_AR') as monto, caja.descripcion
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  Pfact.id, Pfact.fecha,ec.concepto, prov.razon,ie.descripcion as detalles, concat(tip.abrev,' ', Pfact.numero) as comprobante,format(replace(Pfact.monto,',','.'),2,'es_AR') as monto, caja.descripcion
             FROM fact_proveedores_fact as Pfact, tipos_comprobantes as tip, fact_cajas as caja,
             fact_proveedores as prov,fact_ingreso_egreso as ie, fact_egresos_concepto as ec
             where Pfact.tipo=tip.donfdesc and Pfact.idproveedor=prov.id and ie.comprobante=Pfact.id and Pfact.tipo=993 and ec.id= ie.concepto and ie.tipo=2
             and caja.id=ie.caja and tip.ptovta=caja.id            
-            " & consGtos & "
+            " & consGtos & consRazonDetalles & "
             order by Pfact.fecha asc", conexionPrinc)
-            columna = 5
+            columna = 6
             consulta.Fill(tablagtos)
             dgvgastos.DataSource = tablagtos
-            'dtlistacob.Columns(0).Visible = False
+            dgvgastos.Columns(0).Visible = False
             'End If
             lblGtosTot.Text = SumarTotal(dgvgastos, columna, 0)
             EnProgreso.Close()
@@ -6205,5 +6219,97 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("PAGO FACTURA ", "")
             End If
         Next
+    End Sub
+
+    Private Sub Button52_Click(sender As Object, e As EventArgs) Handles Button52.Click
+        Try
+            Dim tabItmIVcomp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim ds As New DatasetRecibos
+            ' Dim lector As System.Data.IDataReader
+
+
+            Dim empsel As String = DatosAcceso.Cliente
+            Dim perisel As String = cmbPeriodoComp.Text
+            'Dim hojacomp As Integer = lector("hojacomp")
+            Reconectar()
+
+            tabItmIVcomp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * from fact_proveedores_fact_items where fecha like '" & cmbPeriodoComp.Text & "-%%'", conexionPrinc)
+            tabItmIVcomp.Fill(ds.Tables("IvaCompraItems"))
+
+            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("empresa", empsel))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", perisel))
+            Dim ivshow As New ImprimirIvaCompra
+            With ivshow
+                .MdiParent = Me.MdiParent
+                .rptivacompra.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptivacompra.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\Reportes\LibroIvaCompraDetalles.rdlc"
+                .rptivacompra.LocalReport.DataSources.Clear()
+                .rptivacompra.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("DataSet1", ds.Tables("IvaCompraItems")))
+                .rptivacompra.LocalReport.SetParameters(parameters)
+                .rptivacompra.DocumentMapCollapsed = True
+                .rptivacompra.RefreshReport()
+                .tipolibro = "compra"
+                .hojasant = 0
+                .Show()
+            End With
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub dgvgastos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvgastos.CellContentClick
+
+    End Sub
+
+    Private Sub dgvgastos_CellStyleContentChanged(sender As Object, e As DataGridViewCellStyleContentChangedEventArgs) Handles dgvgastos.CellStyleContentChanged
+
+    End Sub
+
+    Private Sub dgvgastos_KeyUp(sender As Object, e As KeyEventArgs) Handles dgvgastos.KeyUp
+        If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+        ElseIf e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") <> False Then
+
+            If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
+                Reconectar()
+
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete  FROM fact_facturas where id=@idComprobante;
+                delete  FROM fact_ingreso_egreso where comprobante=@idComprobante;
+                delete  FROM fact_cuentaclie where idcomp=@idComprobante;
+                delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
+                comandofact.Parameters("@idComprobante").Value = dtfacturas.CurrentRow.Cells(0).Value
+                comandofact.Parameters("@codigoAsiento").Value = dtfacturas.CurrentRow.Cells("NumeroAsiento").Value
+
+                comandofact.ExecuteNonQuery()
+
+                MsgBox("Comprobante eliminado")
+                cmdbuscar.PerformClick()
+
+            End If
+
+        End If
+    End Sub
+
+    Private Sub dgvLibroDiario_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLibroDiario.CellContentClick
+
+    End Sub
+
+    Private Sub Panel33_Paint(sender As Object, e As PaintEventArgs) Handles Panel33.Paint
+
+    End Sub
+
+    Private Sub Button53_Click(sender As Object, e As EventArgs) Handles Button53.Click
+        Dim idfactura = dgvgastos.CurrentRow.Cells(0).Value
+        ImprimirOrdenDePago(idfactura)
+    End Sub
+
+    Private Sub cmbperiodoLibroDiario_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedValueChanged
+        CargarLibroDiario()
     End Sub
 End Class

@@ -20,9 +20,9 @@ Option Explicit On
  Global.System.ComponentModel.DesignerCategoryAttribute("code"),  _
  Global.System.ComponentModel.ToolboxItem(true),  _
  Global.System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema"),  _
- Global.System.Xml.Serialization.XmlRootAttribute("DatasetRecibos"),  _
+ Global.System.Xml.Serialization.XmlRootAttribute("datasetRecibos"),  _
  Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")>  _
-Partial Public Class DatasetRecibos
+Partial Public Class datasetRecibos
     Inherits Global.System.Data.DataSet
     
     Private tableReciboEncabeza As ReciboEncabezaDataTable
@@ -188,7 +188,7 @@ Partial Public Class DatasetRecibos
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Public Overrides Function Clone() As Global.System.Data.DataSet
-        Dim cln As DatasetRecibos = CType(MyBase.Clone,DatasetRecibos)
+        Dim cln As datasetRecibos = CType(MyBase.Clone,datasetRecibos)
         cln.InitVars
         cln.SchemaSerializationMode = Me.SchemaSerializationMode
         Return cln
@@ -295,9 +295,9 @@ Partial Public Class DatasetRecibos
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Private Sub InitClass()
-        Me.DataSetName = "DatasetRecibos"
+        Me.DataSetName = "datasetRecibos"
         Me.Prefix = ""
-        Me.Namespace = "http://tempuri.org/DatasetRecibos.xsd"
+        Me.Namespace = "http://tempuri.org/datasetRecibos.xsd"
         Me.EnforceConstraints = true
         Me.SchemaSerializationMode = Global.System.Data.SchemaSerializationMode.IncludeSchema
         Me.tableReciboEncabeza = New ReciboEncabezaDataTable()
@@ -353,7 +353,7 @@ Partial Public Class DatasetRecibos
     <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
     Public Shared Function GetTypedDataSetSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
-        Dim ds As DatasetRecibos = New DatasetRecibos()
+        Dim ds As datasetRecibos = New datasetRecibos()
         Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
         Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
         Dim any As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
@@ -929,7 +929,7 @@ Partial Public Class DatasetRecibos
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As DatasetRecibos = New DatasetRecibos()
+            Dim ds As datasetRecibos = New datasetRecibos()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -1260,7 +1260,7 @@ Partial Public Class DatasetRecibos
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As DatasetRecibos = New DatasetRecibos()
+            Dim ds As datasetRecibos = New datasetRecibos()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -1358,7 +1358,7 @@ Partial Public Class DatasetRecibos
         
         Private columnperciva As Global.System.Data.DataColumn
         
-        Private columnperciibb As Global.System.Data.DataColumn
+        Private columnpercib As Global.System.Data.DataColumn
         
         Private columntotal As Global.System.Data.DataColumn
         
@@ -1513,9 +1513,9 @@ Partial Public Class DatasetRecibos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public ReadOnly Property perciibbColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property percibColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnperciibb
+                Return Me.columnpercib
             End Get
         End Property
         
@@ -1587,11 +1587,11 @@ Partial Public Class DatasetRecibos
                     ByVal acuenta As Double,  _
                     ByVal nogr As Double,  _
                     ByVal perciva As Double,  _
-                    ByVal perciibb As Double,  _
+                    ByVal percib As Double,  _
                     ByVal total As Double,  _
                     ByVal obs As String) As IvaCompraItemsRow
             Dim rowIvaCompraItemsRow As IvaCompraItemsRow = CType(Me.NewRow,IvaCompraItemsRow)
-            Dim columnValuesArray() As Object = New Object() {fecha, tipocom, nufac, razon, cuit, tipocontr, neto21, neto105, neto27, iva, monot, acuenta, nogr, perciva, perciibb, total, obs}
+            Dim columnValuesArray() As Object = New Object() {fecha, tipocom, nufac, razon, cuit, tipocontr, neto21, neto105, neto27, iva, monot, acuenta, nogr, perciva, percib, total, obs}
             rowIvaCompraItemsRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowIvaCompraItemsRow)
             Return rowIvaCompraItemsRow
@@ -1628,7 +1628,7 @@ Partial Public Class DatasetRecibos
             Me.columnacuenta = MyBase.Columns("acuenta")
             Me.columnnogr = MyBase.Columns("nogr")
             Me.columnperciva = MyBase.Columns("perciva")
-            Me.columnperciibb = MyBase.Columns("perciibb")
+            Me.columnpercib = MyBase.Columns("percib")
             Me.columntotal = MyBase.Columns("total")
             Me.columnobs = MyBase.Columns("obs")
         End Sub
@@ -1664,13 +1664,13 @@ Partial Public Class DatasetRecibos
             MyBase.Columns.Add(Me.columnnogr)
             Me.columnperciva = New Global.System.Data.DataColumn("perciva", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnperciva)
-            Me.columnperciibb = New Global.System.Data.DataColumn("perciibb", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnperciibb)
+            Me.columnpercib = New Global.System.Data.DataColumn("percib", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnpercib)
             Me.columntotal = New Global.System.Data.DataColumn("total", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columntotal)
             Me.columnobs = New Global.System.Data.DataColumn("obs", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnobs)
-            Me.columnfecha.DateTimeMode = Global.System.Data.DataSetDateTime.Local
+            Me.columnpercib.Caption = "perciibb"
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -1738,7 +1738,7 @@ Partial Public Class DatasetRecibos
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As DatasetRecibos = New DatasetRecibos()
+            Dim ds As datasetRecibos = New datasetRecibos()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -2092,7 +2092,6 @@ Partial Public Class DatasetRecibos
             MyBase.Columns.Add(Me.columnret_ib)
             Me.columnret_gan = New Global.System.Data.DataColumn("ret_gan", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnret_gan)
-            Me.columnfecha.DateTimeMode = Global.System.Data.DataSetDateTime.Local
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -2160,7 +2159,7 @@ Partial Public Class DatasetRecibos
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As DatasetRecibos = New DatasetRecibos()
+            Dim ds As datasetRecibos = New datasetRecibos()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -2451,7 +2450,7 @@ Partial Public Class DatasetRecibos
         Public Shared Function GetTypedTableSchema(ByVal xs As Global.System.Xml.Schema.XmlSchemaSet) As Global.System.Xml.Schema.XmlSchemaComplexType
             Dim type As Global.System.Xml.Schema.XmlSchemaComplexType = New Global.System.Xml.Schema.XmlSchemaComplexType()
             Dim sequence As Global.System.Xml.Schema.XmlSchemaSequence = New Global.System.Xml.Schema.XmlSchemaSequence()
-            Dim ds As DatasetRecibos = New DatasetRecibos()
+            Dim ds As datasetRecibos = New datasetRecibos()
             Dim any1 As Global.System.Xml.Schema.XmlSchemaAny = New Global.System.Xml.Schema.XmlSchemaAny()
             any1.Namespace = "http://www.w3.org/2001/XMLSchema"
             any1.MinOccurs = New Decimal(0)
@@ -3578,16 +3577,16 @@ Partial Public Class DatasetRecibos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Property perciibb() As Double
+        Public Property percib() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tableIvaCompraItems.perciibbColumn),Double)
+                    Return CType(Me(Me.tableIvaCompraItems.percibColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'perciibb' de la tabla 'IvaCompraItems' es DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'percib' de la tabla 'IvaCompraItems' es DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tableIvaCompraItems.perciibbColumn) = value
+                Me(Me.tableIvaCompraItems.percibColumn) = value
             End Set
         End Property
         
@@ -3791,14 +3790,14 @@ Partial Public Class DatasetRecibos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Function IsperciibbNull() As Boolean
-            Return Me.IsNull(Me.tableIvaCompraItems.perciibbColumn)
+        Public Function IspercibNull() As Boolean
+            Return Me.IsNull(Me.tableIvaCompraItems.percibColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")>  _
-        Public Sub SetperciibbNull()
-            Me(Me.tableIvaCompraItems.perciibbColumn) = Global.System.Convert.DBNull
+        Public Sub SetpercibNull()
+            Me(Me.tableIvaCompraItems.percibColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _

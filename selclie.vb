@@ -27,7 +27,7 @@
         Next
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, dir_domicilio as Domicilio from fact_clientes where " & busqtxt, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, dir_domicilio as Domicilio, vendedor from fact_clientes where " & busqtxt, conexionPrinc)
             Dim tablaPers As New DataTable
 
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
@@ -94,6 +94,8 @@
                         .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
                         .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
                         .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                        .idVendedor = dtpersonal.CurrentRow.Cells.Item(3).Value
+
                     End With
                     Me.Close()
                 Case "fichaequipo"
@@ -175,6 +177,7 @@
                             .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
                             .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
                             .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
+                            .idVendedor = dtpersonal.CurrentRow.Cells.Item(3).Value
                         End With
                         Me.Close()
                     Case "fichaequipo"
@@ -192,5 +195,7 @@
         End Try
     End Sub
 
+    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
 
+    End Sub
 End Class

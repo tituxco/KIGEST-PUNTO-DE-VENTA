@@ -1,8 +1,4 @@
 ﻿
 
-Partial Public Class DatasetRecibos
-End Class
-
-
-Partial Public Class DatasetRecibos
+Partial Class datasetRecibos
 End Class

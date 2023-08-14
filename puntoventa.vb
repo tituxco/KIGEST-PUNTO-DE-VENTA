@@ -467,8 +467,15 @@ Public Class puntoventa
 				Busq = "where id=" & codPLU & " or codigo like '" & codPLU & "'"
 
 			End If
+
+			Dim visProd As String = ""
+			If My.Settings.visualizacionProducto = 0 Then
+				visProd = "concat(descripcion,' ', detalles) as descripcion "
+			ElseIf My.Settings.visualizacionProducto = 1 Then
+				visProd = "descripcion "
+			End If
 			Reconectar()
-			Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,concat(descripcion,' ' detalles) FROM fact_insumos " & Busq, conexionPrinc)
+			Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva," & visProd & " FROM fact_insumos " & Busq, conexionPrinc)
 			Dim tablaprod As New DataTable
 			Dim filasProd() As DataRow
 			consulta.Fill(tablaprod)
@@ -616,8 +623,14 @@ Public Class puntoventa
 		Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
 		'End If
 
+		Dim visProd As String = ""
+		If My.Settings.visualizacionProducto = 0 Then
+			visProd = "concat(descripcion,' ', detalles) as descripcion, "
+		ElseIf My.Settings.visualizacionProducto = 1 Then
+			visProd = "descripcion, "
+		End If
 		Reconectar()
-		Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,concat(descripcion, ' ',detalles) as descripcion,impuestoFijo01,impuestoFijo02 FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
+		Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva," & visProd & " impuestoFijo01,impuestoFijo02 FROM fact_insumos " & Busq & " and eliminado=0 group by cod_bar", conexionPrinc)
 		Dim tablaprod As New DataTable
 		Dim filasProd() As DataRow
 		consulta.Fill(tablaprod)
@@ -1896,7 +1909,7 @@ Public Class puntoventa
 			lblfacvendedor.Text = infoped(0)(2)
 			IdPedido = infoped(0)(0)
 			Reconectar()
-			Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & IdPedido, conexionPrinc)
+			Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, replace(iva,'.',','), replace(punit,'.',','), replace(ptotal,'.',',') from fact_items where id_fact=" & IdPedido, conexionPrinc)
 			Dim tablaitm As New DataTable
 			Dim infoitm() As DataRow
 			consultapedidoitems.Fill(tablaitm)

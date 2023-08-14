@@ -1,4 +1,11 @@
 ﻿Partial Class datosfacturas
+    Partial Public Class cotejoPedidosFacturasDataTable
+        Private Sub cotejoPedidosFacturasDataTable_cotejoPedidosFacturasRowChanging(sender As Object, e As cotejoPedidosFacturasRowChangeEvent) Handles Me.cotejoPedidosFacturasRowChanging
+
+        End Sub
+
+    End Class
+
     Partial Public Class datosOrdenPublicidadDataTable
         Private Sub datosOrdenPublicidadDataTable_datosOrdenPublicidadRowChanging(sender As Object, e As datosOrdenPublicidadRowChangeEvent) Handles Me.datosOrdenPublicidadRowChanging
 

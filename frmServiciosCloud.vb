@@ -63,6 +63,14 @@
 
     Private Sub dtcloud_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellEnter
         EstablecerModulosTreeView(trvmodulos.Nodes)
+        Reconectar()
+        Dim consultacloud As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fecha_hora, Clie, usuario, tarea, ip 
+        FROM AuthServ.LogAcc where bd like '" & dtcloud.CurrentRow.Cells("DBClie").Value & "' order by id desc limit 0,20", conexionAuth)
+        Dim tablacloud As New DataTable
+        'Dim infocloud() As DataRow
+        consultacloud.Fill(tablacloud)
+        dgvLog.DataSource = tablacloud
+        'MsgBox(consultacloud.SelectCommand.CommandText)
     End Sub
 
     Private Sub dtcloud_RowValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.RowValidated

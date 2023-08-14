@@ -339,6 +339,7 @@ Partial Class movimientodecaja
         Me.txtptovta.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtptovta.Location = New System.Drawing.Point(417, 10)
         Me.txtptovta.Name = "txtptovta"
+        Me.txtptovta.ReadOnly = True
         Me.txtptovta.Size = New System.Drawing.Size(44, 22)
         Me.txtptovta.TabIndex = 1
         Me.txtptovta.Text = "0001"

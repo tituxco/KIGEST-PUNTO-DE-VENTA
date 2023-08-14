@@ -1370,7 +1370,6 @@ Module funciones_Globales
     End Sub
     Public Sub ImprimirFactura(idfact As Integer, ptovta As Integer, directo As Boolean)
         Try
-            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim fac As New datosfacturas
@@ -1549,7 +1548,7 @@ Module funciones_Globales
 
             Reconectar()
             tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "banco, serie as numero, fecha_cobro as fcobro, importe as importe from fact_cheques where comprobante = " & idRecibo, conexionPrinc)
+            & "banco, serie as numero, fecha_cobro as fcobro, format(importe,2,'es_AR') as importe from fact_cheques where comprobante = " & idRecibo, conexionPrinc)
             tabVal.Fill(fac.Tables("valoresrecibo"))
 
 
@@ -1567,10 +1566,10 @@ Module funciones_Globales
             Reconectar()
             totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
                     fact.id,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
-                    FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
+                    FORMAT(IFNULL((SELECT sum(replace(importe,',','.')) FROM fact_cheques WHERE comprobante = fact.id ),0),2,'es_AR') as cheques,
+                    FORMAT(IFNULL((SELECT sum(replace(importe,',','.')) FROM fact_transferencias WHERE comprobante = fact.id ),0),2,'es_AR') as transferencias,
+                    FORMAT(IFNULL((SELECT sum(replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
+                    FORMAT(IFNULL((SELECT sum(replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
                     FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
                     FROM fact_facturas as fact where fact.id= " & idRecibo, conexionPrinc)
             totrec.Fill(fac.Tables("totalesrecibo"))
@@ -1595,6 +1594,77 @@ Module funciones_Globales
         End Try
     End Sub
 
+    Public Sub ImprimirOrdenDePago(idOP As Integer)
+        Try
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabVal As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabtarj As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim totrec As New MySql.Data.MySqlClient.MySqlDataAdapter
+
+            Dim fac As New datosfacturas
+
+            Reconectar()
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia As empnombre, emp.razonsocial As emprazon, emp.direccion As empdire, emp.localidad As emploca, 
+            emp.cuit As empcuit, emp.ingbrutos As empib, emp.ivatipo As empcontr, emp.inicioact As empinicioact, emp.drei As empdrei, emp.logo As emplogo, 
+
+            concat(fis.abrev,' ', fac.numero) as facnum, fac.id, fac.fecha as facfech, concat(prov.id,'-',prov.razon) as facrazon, 
+            prov.direccion As facdire, '0' as facloca, iva.tipo As factipocontr, prov.cuit As faccuit, '0' as  facvend, 
+            '0' as faccondvta, '0' as iva105, '0' as iva21,fac.monto,  
+            fac.observaciones as facobserva 
+            FROM fact_conffiscal as fis, fact_empresa as emp, fact_proveedores_fact as fac, fact_proveedores as prov, fact_ivatipo as iva
+            where emp.id=1 and 
+            fis.donfdesc=fac.tipo and
+            prov.id=fac.idproveedor and
+            iva.id=prov.tipo_iva and 
+            fis.ptovta=mid(fac.numero,4,1) and 
+            fac.id=" & idOP, conexionPrinc)
+            tabEmp.Fill(fac.Tables("factura_enca"))
+
+            Reconectar()
+            tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            & "banco, serie as numero, fecha_cobro as fcobro, importe as importe from fact_cheques where comprobante_eg = " & idOP, conexionPrinc)
+            tabVal.Fill(fac.Tables("valoresrecibo"))
+
+
+            Reconectar()
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            & "descripcion,ptotal as ptotal from fact_pagoitems where " _
+            & "num_fact=" & idOP, conexionPrinc)
+            tabFac.Fill(fac.Tables("reciboitems"))
+
+
+
+            Reconectar()
+            totrec.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
+                    fact.id,
+                    FORMAT(IFNULL((SELECT sum(replace(importe,',','.')) FROM fact_cheques WHERE comprobante_eg = fact.id ),0),2,'es_AR') as cheques,
+                    '0' as transferencias,
+                    '0' as retenciones,
+                    '0' AS tarjeta,                                                            
+                    FORMAT(replace(fact.monto,',','.'),2,'es_AR') as total 
+                    FROM fact_proveedores_fact as fact where fact.id= " & idOP, conexionPrinc)
+            totrec.Fill(fac.Tables("totalesrecibo"))
+
+            Dim imprimirx As New imprimirFX
+            With imprimirx
+                '.MdiParent = Me.MdiParent
+                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & " \reportes\ordenPago.rdlc"
+                .rptfx.LocalReport.DataSources.Clear()
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("encabezado", fac.Tables("factura_enca")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("valores", fac.Tables("valoresrecibo")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("reciboitems")))
+                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("totalesrecibo", fac.Tables("totalesrecibo")))
+                .rptfx.DocumentMapCollapsed = True
+                .rptfx.RefreshReport()
+                .Show()
+            End With
+        Catch ex As Exception
+
+        End Try
+    End Sub
     'Private Shared Function SendMessage(ByVal hWnd As IntPtr, ByVal msg As Integer, ByVal wParam As Integer, <MarshalAs(UnmanagedType.LPWStr)> ByVal lParam As String) As Int32
     'End Function
     Public Function RepararNumeracionComprobantes() As Boolean

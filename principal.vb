@@ -963,4 +963,8 @@ Public Class frmprincipal
             "POR CUALQUIER DUDA, COMUNIQUESE AL TEL: 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR" & vbNewLine)
         End If
     End Sub
+
+    Private Sub frmprincipal_MaximumSizeChanged(sender As Object, e As EventArgs) Handles Me.MaximumSizeChanged
+
+    End Sub
 End Class

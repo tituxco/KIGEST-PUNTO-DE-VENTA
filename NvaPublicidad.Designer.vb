@@ -22,7 +22,7 @@ Partial Class NvaPublicidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.btnPagar = New System.Windows.Forms.Button()
         Me.txtclientenombre = New System.Windows.Forms.TextBox()
@@ -74,6 +74,7 @@ Partial Class NvaPublicidad
         'btnPagar
         '
         Me.btnPagar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnPagar.Enabled = False
         Me.btnPagar.Location = New System.Drawing.Point(332, 201)
         Me.btnPagar.Name = "btnPagar"
         Me.btnPagar.Size = New System.Drawing.Size(133, 27)
@@ -125,7 +126,7 @@ Partial Class NvaPublicidad
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(391, 46)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(52, 16)
+        Me.Label8.Size = New System.Drawing.Size(51, 16)
         Me.Label8.TabIndex = 113
         Me.Label8.Text = "Cliente:"
         '
@@ -136,7 +137,7 @@ Partial Class NvaPublicidad
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(66, 212)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(128, 16)
+        Me.Label10.Size = New System.Drawing.Size(127, 16)
         Me.Label10.TabIndex = 94
         Me.Label10.Text = "Consultar Prestamo:"
         Me.Label10.Visible = False
@@ -183,14 +184,14 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPublicidad.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPublicidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.Desktop
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle4
         Me.dgvPublicidad.Location = New System.Drawing.Point(1, 234)
         Me.dgvPublicidad.Name = "dgvPublicidad"
         Me.dgvPublicidad.ReadOnly = True
@@ -215,7 +216,7 @@ Partial Class NvaPublicidad
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(392, 93)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(45, 16)
+        Me.Label9.Size = New System.Drawing.Size(44, 16)
         Me.Label9.TabIndex = 110
         Me.Label9.Text = "Publi#"
         '
@@ -234,7 +235,7 @@ Partial Class NvaPublicidad
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(24, 98)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(102, 16)
+        Me.Label7.Size = New System.Drawing.Size(101, 16)
         Me.Label7.TabIndex = 109
         Me.Label7.Text = "Fecha de inicio:"
         '
@@ -253,7 +254,7 @@ Partial Class NvaPublicidad
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.Location = New System.Drawing.Point(557, 305)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(105, 16)
+        Me.Label5.Size = New System.Drawing.Size(104, 16)
         Me.Label5.TabIndex = 108
         Me.Label5.Text = "Interes mensual:"
         Me.Label5.Visible = False
@@ -264,7 +265,7 @@ Partial Class NvaPublicidad
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(341, 71)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(102, 16)
+        Me.Label4.Size = New System.Drawing.Size(101, 16)
         Me.Label4.TabIndex = 107
         Me.Label4.Text = "Monto mensual:"
         '
@@ -274,7 +275,7 @@ Partial Class NvaPublicidad
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(515, 280)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(144, 16)
+        Me.Label3.Size = New System.Drawing.Size(143, 16)
         Me.Label3.TabIndex = 105
         Me.Label3.Text = "Tasa de interés: anual:"
         Me.Label3.Visible = False
@@ -285,7 +286,7 @@ Partial Class NvaPublicidad
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(1, 67)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(128, 16)
+        Me.Label2.Size = New System.Drawing.Size(127, 16)
         Me.Label2.TabIndex = 104
         Me.Label2.Text = "Cantidad de meses:"
         '
@@ -295,7 +296,7 @@ Partial Class NvaPublicidad
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(53, 43)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(73, 16)
+        Me.Label6.Size = New System.Drawing.Size(72, 16)
         Me.Label6.TabIndex = 101
         Me.Label6.Text = "Monto toal:"
         '
@@ -352,7 +353,7 @@ Partial Class NvaPublicidad
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(43, 124)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(83, 16)
+        Me.Label11.Size = New System.Drawing.Size(82, 16)
         Me.Label11.TabIndex = 118
         Me.Label11.Text = "Descripcion:"
         '
@@ -372,7 +373,7 @@ Partial Class NvaPublicidad
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(43, 167)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(66, 16)
+        Me.Label12.Size = New System.Drawing.Size(65, 16)
         Me.Label12.TabIndex = 120
         Me.Label12.Text = "Concepto"
         '
@@ -402,7 +403,7 @@ Partial Class NvaPublicidad
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(446, 124)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(100, 16)
+        Me.Label13.Size = New System.Drawing.Size(99, 16)
         Me.Label13.TabIndex = 122
         Me.Label13.Text = "Observaciones"
         '

@@ -300,7 +300,7 @@
                         txtconceptos.Text = movrapConc
                         cargarCliente()
                         '                        MsgBox("(" & movrapFact & ")" & cargarInfoFactCobro(movrapFact)(0) & "__" & cargarInfoFactCobro(movrapFact)(1) & "__" & cargarInfoFactCobro(movrapFact)(2) & "__" & cargarInfoFactCobro(movrapFact)(3))
-                        dtconceptos.Rows.Add(cargarInfoFactCobro(movrapFact)(0), cargarInfoFactCobro(movrapFact)(1), cargarInfoFactCobro(movrapFact)(2), cargarInfoFactCobro(movrapFact)(3))
+                        'dtconceptos.Rows.Add(cargarInfoFactCobro(movrapFact)(0), cargarInfoFactCobro(movrapFact)(1), cargarInfoFactCobro(movrapFact)(2), cargarInfoFactCobro(movrapFact)(3))
                     Case 993
                         cmbtipofac.SelectedValue = movraptip
                         txtctaclie.Text = movrapclie

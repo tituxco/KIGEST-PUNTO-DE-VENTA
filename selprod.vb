@@ -33,11 +33,16 @@
                 busqStock = " having stock >0"
             End If
 
-
+            Dim visProd As String = ""
+            If My.Settings.visualizacionProducto = 0 Then
+                visProd = "concat(descripcion,' ', detalles) as descripcion, "
+            ElseIf My.Settings.visualizacionProducto = 1 Then
+                visProd = "descripcion, "
+            End If
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, concat(descripcion,' ', detalles) as descripcion, " _
-            & "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD, round((replace(precio,',','.') * 1.21),2) as precioLista from fact_insumos as ins " _
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, " & visProd &
+            "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD, round((replace(precio,',','.') * 1.21),2) as precioLista from fact_insumos as ins " _
             & " where " & busqtxt & " and eliminado=0 order by descripcion asc limit 30", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet

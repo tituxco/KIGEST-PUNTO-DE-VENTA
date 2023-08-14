@@ -25,6 +25,8 @@ Partial Class NvaFacturaCompra
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.cmbCtaContable = New System.Windows.Forms.ComboBox()
+        Me.Label23 = New System.Windows.Forms.Label()
         Me.txtcomprobanteFcompra = New System.Windows.Forms.TextBox()
         Me.gbFactComb = New System.Windows.Forms.GroupBox()
         Me.Label76 = New System.Windows.Forms.Label()
@@ -119,6 +121,8 @@ Partial Class NvaFacturaCompra
         Me.Panel3.AutoScroll = True
         Me.Panel3.BackColor = System.Drawing.Color.White
         Me.Panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel3.Controls.Add(Me.cmbCtaContable)
+        Me.Panel3.Controls.Add(Me.Label23)
         Me.Panel3.Controls.Add(Me.txtcomprobanteFcompra)
         Me.Panel3.Controls.Add(Me.gbFactComb)
         Me.Panel3.Controls.Add(Me.GbTiketPeaje)
@@ -165,6 +169,26 @@ Partial Class NvaFacturaCompra
         Me.Panel3.Name = "Panel3"
         Me.Panel3.Size = New System.Drawing.Size(317, 520)
         Me.Panel3.TabIndex = 21
+        '
+        'cmbCtaContable
+        '
+        Me.cmbCtaContable.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbCtaContable.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbCtaContable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbCtaContable.FormattingEnabled = True
+        Me.cmbCtaContable.Location = New System.Drawing.Point(112, 333)
+        Me.cmbCtaContable.Name = "cmbCtaContable"
+        Me.cmbCtaContable.Size = New System.Drawing.Size(199, 21)
+        Me.cmbCtaContable.TabIndex = 502
+        '
+        'Label23
+        '
+        Me.Label23.AutoSize = True
+        Me.Label23.Location = New System.Drawing.Point(109, 317)
+        Me.Label23.Name = "Label23"
+        Me.Label23.Size = New System.Drawing.Size(122, 13)
+        Me.Label23.TabIndex = 501
+        Me.Label23.Text = "Cuenta contable destino"
         '
         'txtcomprobanteFcompra
         '
@@ -535,7 +559,7 @@ Partial Class NvaFacturaCompra
         '
         'cmdFinalizar
         '
-        Me.cmdFinalizar.Location = New System.Drawing.Point(6, 449)
+        Me.cmdFinalizar.Location = New System.Drawing.Point(3, 449)
         Me.cmdFinalizar.Name = "cmdFinalizar"
         Me.cmdFinalizar.Size = New System.Drawing.Size(89, 21)
         Me.cmdFinalizar.TabIndex = 113
@@ -547,7 +571,7 @@ Partial Class NvaFacturaCompra
         Me.cmbtipocomComp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbtipocomComp.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbtipocomComp.FormattingEnabled = True
-        Me.cmbtipocomComp.Items.AddRange(New Object() {"FA", "FB", "FC"})
+        Me.cmbtipocomComp.Items.AddRange(New Object() {"FA", "FM", "FB", "FC", "NC", "ND", "FX"})
         Me.cmbtipocomComp.Location = New System.Drawing.Point(6, 132)
         Me.cmbtipocomComp.Name = "cmbtipocomComp"
         Me.cmbtipocomComp.Size = New System.Drawing.Size(129, 21)
@@ -571,7 +595,7 @@ Partial Class NvaFacturaCompra
         Me.Label20.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label20.Location = New System.Drawing.Point(5, 357)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(113, 16)
+        Me.Label20.Size = New System.Drawing.Size(112, 16)
         Me.Label20.TabIndex = 28
         Me.Label20.Text = "TOTAL Factura"
         '
@@ -694,11 +718,11 @@ Partial Class NvaFacturaCompra
         'Label5
         '
         Me.Label5.AutoSize = True
-        Me.Label5.Location = New System.Drawing.Point(88, 238)
+        Me.Label5.Location = New System.Drawing.Point(125, 277)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(62, 13)
+        Me.Label5.Size = New System.Drawing.Size(86, 13)
         Me.Label5.TabIndex = 11
-        Me.Label5.Text = "P. a cuenta"
+        Me.Label5.Text = "Perc. Ganancias"
         '
         'Label3
         '
@@ -745,7 +769,7 @@ Partial Class NvaFacturaCompra
         '
         'txtpagoacuentaComp
         '
-        Me.txtpagoacuentaComp.Location = New System.Drawing.Point(91, 255)
+        Me.txtpagoacuentaComp.Location = New System.Drawing.Point(128, 294)
         Me.txtpagoacuentaComp.Name = "txtpagoacuentaComp"
         Me.txtpagoacuentaComp.Size = New System.Drawing.Size(66, 20)
         Me.txtpagoacuentaComp.TabIndex = 108
@@ -849,4 +873,6 @@ Partial Class NvaFacturaCompra
     Friend WithEvents txtpagoacuentaComp As TextBox
     Friend WithEvents txtmontmonotComp As TextBox
     Friend WithEvents txtcomprobanteFcompra As TextBox
+    Friend WithEvents cmbCtaContable As ComboBox
+    Friend WithEvents Label23 As Label
 End Class

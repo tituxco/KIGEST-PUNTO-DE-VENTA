@@ -37,6 +37,9 @@ Partial Class informedeventas
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
         Me.pndatosgenerales = New System.Windows.Forms.Panel()
@@ -169,6 +172,32 @@ Partial Class informedeventas
         Me.lbltotalfact = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.cmdbuscar = New System.Windows.Forms.Button()
+        Me.TabPage4 = New System.Windows.Forms.TabPage()
+        Me.dgvdetalles = New System.Windows.Forms.DataGridView()
+        Me.Panel16 = New System.Windows.Forms.Panel()
+        Me.lbltotalFacturadoEfectivo = New System.Windows.Forms.Label()
+        Me.lbltotaldiferencias = New System.Windows.Forms.Label()
+        Me.Label50 = New System.Windows.Forms.Label()
+        Me.lbltotaldevoluciones = New System.Windows.Forms.Label()
+        Me.Label48 = New System.Windows.Forms.Label()
+        Me.lbltotalfacturado = New System.Windows.Forms.Label()
+        Me.Label46 = New System.Windows.Forms.Label()
+        Me.lbltotalpedidos = New System.Windows.Forms.Label()
+        Me.Label44 = New System.Windows.Forms.Label()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button9 = New System.Windows.Forms.Button()
+        Me.Panel17 = New System.Windows.Forms.Panel()
+        Me.cmbvendedorCotejo = New System.Windows.Forms.ComboBox()
+        Me.Label38 = New System.Windows.Forms.Label()
+        Me.Label39 = New System.Windows.Forms.Label()
+        Me.ComboBox2 = New System.Windows.Forms.ComboBox()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Label41 = New System.Windows.Forms.Label()
+        Me.dtHastaCotejo = New System.Windows.Forms.DateTimePicker()
+        Me.dtdeCotejo = New System.Windows.Forms.DateTimePicker()
+        Me.Label42 = New System.Windows.Forms.Label()
+        Me.Panel18 = New System.Windows.Forms.Panel()
+        Me.Label43 = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pndatosgenerales.SuspendLayout()
@@ -211,6 +240,12 @@ Partial Class informedeventas
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grpperiodo.SuspendLayout()
+        Me.TabPage4.SuspendLayout()
+        CType(Me.dgvdetalles, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel16.SuspendLayout()
+        Me.Panel17.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.Panel18.SuspendLayout()
         Me.SuspendLayout()
         '
         'TabControl1
@@ -220,6 +255,7 @@ Partial Class informedeventas
         Me.TabControl1.Controls.Add(Me.tabseguimientoProductos)
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Controls.Add(Me.TabPage3)
+        Me.TabControl1.Controls.Add(Me.TabPage4)
         Me.TabControl1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.Location = New System.Drawing.Point(0, 0)
@@ -1874,7 +1910,7 @@ Partial Class informedeventas
         Me.Label35.ForeColor = System.Drawing.Color.White
         Me.Label35.Location = New System.Drawing.Point(1006, 5)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(57, 16)
+        Me.Label35.Size = New System.Drawing.Size(56, 16)
         Me.Label35.TabIndex = 64
         Me.Label35.Text = "TOTAL"
         Me.Label35.Visible = False
@@ -1893,6 +1929,338 @@ Partial Class informedeventas
         Me.cmdbuscar.Text = "Buscar"
         Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdbuscar.UseVisualStyleBackColor = False
+        '
+        'TabPage4
+        '
+        Me.TabPage4.Controls.Add(Me.dgvdetalles)
+        Me.TabPage4.Controls.Add(Me.Panel16)
+        Me.TabPage4.Controls.Add(Me.Panel18)
+        Me.TabPage4.Location = New System.Drawing.Point(4, 22)
+        Me.TabPage4.Name = "TabPage4"
+        Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
+        Me.TabPage4.Size = New System.Drawing.Size(1218, 581)
+        Me.TabPage4.TabIndex = 5
+        Me.TabPage4.Text = "TabPage4"
+        Me.TabPage4.UseVisualStyleBackColor = True
+        '
+        'dgvdetalles
+        '
+        Me.dgvdetalles.AllowUserToAddRows = False
+        Me.dgvdetalles.AllowUserToDeleteRows = False
+        Me.dgvdetalles.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvdetalles.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvdetalles.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvdetalles.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
+        Me.dgvdetalles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvdetalles.DefaultCellStyle = DataGridViewCellStyle14
+        Me.dgvdetalles.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvdetalles.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dgvdetalles.Location = New System.Drawing.Point(3, 166)
+        Me.dgvdetalles.Name = "dgvdetalles"
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvdetalles.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
+        Me.dgvdetalles.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvdetalles.Size = New System.Drawing.Size(1212, 412)
+        Me.dgvdetalles.TabIndex = 36
+        '
+        'Panel16
+        '
+        Me.Panel16.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel16.Controls.Add(Me.lbltotalFacturadoEfectivo)
+        Me.Panel16.Controls.Add(Me.lbltotaldiferencias)
+        Me.Panel16.Controls.Add(Me.Label50)
+        Me.Panel16.Controls.Add(Me.lbltotaldevoluciones)
+        Me.Panel16.Controls.Add(Me.Label48)
+        Me.Panel16.Controls.Add(Me.lbltotalfacturado)
+        Me.Panel16.Controls.Add(Me.Label46)
+        Me.Panel16.Controls.Add(Me.lbltotalpedidos)
+        Me.Panel16.Controls.Add(Me.Label44)
+        Me.Panel16.Controls.Add(Me.Button8)
+        Me.Panel16.Controls.Add(Me.Button9)
+        Me.Panel16.Controls.Add(Me.Panel17)
+        Me.Panel16.Controls.Add(Me.GroupBox3)
+        Me.Panel16.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel16.Location = New System.Drawing.Point(3, 43)
+        Me.Panel16.Name = "Panel16"
+        Me.Panel16.Size = New System.Drawing.Size(1212, 123)
+        Me.Panel16.TabIndex = 31
+        '
+        'lbltotalFacturadoEfectivo
+        '
+        Me.lbltotalFacturadoEfectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalFacturadoEfectivo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lbltotalFacturadoEfectivo.Location = New System.Drawing.Point(368, 66)
+        Me.lbltotalFacturadoEfectivo.Name = "lbltotalFacturadoEfectivo"
+        Me.lbltotalFacturadoEfectivo.Size = New System.Drawing.Size(458, 25)
+        Me.lbltotalFacturadoEfectivo.TabIndex = 107
+        Me.lbltotalFacturadoEfectivo.Text = "Facturacion efectiva: $"
+        '
+        'lbltotaldiferencias
+        '
+        Me.lbltotaldiferencias.AutoSize = True
+        Me.lbltotaldiferencias.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotaldiferencias.ForeColor = System.Drawing.Color.White
+        Me.lbltotaldiferencias.Location = New System.Drawing.Point(832, 34)
+        Me.lbltotaldiferencias.Name = "lbltotaldiferencias"
+        Me.lbltotaldiferencias.Size = New System.Drawing.Size(34, 25)
+        Me.lbltotaldiferencias.TabIndex = 106
+        Me.lbltotaldiferencias.Text = "$0"
+        '
+        'Label50
+        '
+        Me.Label50.AutoSize = True
+        Me.Label50.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label50.ForeColor = System.Drawing.Color.White
+        Me.Label50.Location = New System.Drawing.Point(832, 9)
+        Me.Label50.Name = "Label50"
+        Me.Label50.Size = New System.Drawing.Size(216, 25)
+        Me.Label50.TabIndex = 105
+        Me.Label50.Text = "TOTAL DIFERENCIAS"
+        '
+        'lbltotaldevoluciones
+        '
+        Me.lbltotaldevoluciones.AutoSize = True
+        Me.lbltotaldevoluciones.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotaldevoluciones.ForeColor = System.Drawing.Color.White
+        Me.lbltotaldevoluciones.Location = New System.Drawing.Point(583, 34)
+        Me.lbltotaldevoluciones.Name = "lbltotaldevoluciones"
+        Me.lbltotaldevoluciones.Size = New System.Drawing.Size(34, 25)
+        Me.lbltotaldevoluciones.TabIndex = 104
+        Me.lbltotaldevoluciones.Text = "$0"
+        '
+        'Label48
+        '
+        Me.Label48.AutoSize = True
+        Me.Label48.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label48.ForeColor = System.Drawing.Color.White
+        Me.Label48.Location = New System.Drawing.Point(583, 9)
+        Me.Label48.Name = "Label48"
+        Me.Label48.Size = New System.Drawing.Size(243, 25)
+        Me.Label48.TabIndex = 103
+        Me.Label48.Text = "TOTAL DEVOLUCIONES"
+        '
+        'lbltotalfacturado
+        '
+        Me.lbltotalfacturado.AutoSize = True
+        Me.lbltotalfacturado.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalfacturado.ForeColor = System.Drawing.Color.White
+        Me.lbltotalfacturado.Location = New System.Drawing.Point(368, 34)
+        Me.lbltotalfacturado.Name = "lbltotalfacturado"
+        Me.lbltotalfacturado.Size = New System.Drawing.Size(34, 25)
+        Me.lbltotalfacturado.TabIndex = 102
+        Me.lbltotalfacturado.Text = "$0"
+        '
+        'Label46
+        '
+        Me.Label46.AutoSize = True
+        Me.Label46.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label46.ForeColor = System.Drawing.Color.White
+        Me.Label46.Location = New System.Drawing.Point(368, 9)
+        Me.Label46.Name = "Label46"
+        Me.Label46.Size = New System.Drawing.Size(209, 25)
+        Me.Label46.TabIndex = 101
+        Me.Label46.Text = "TOTAL FACTURADO"
+        '
+        'lbltotalpedidos
+        '
+        Me.lbltotalpedidos.AutoSize = True
+        Me.lbltotalpedidos.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalpedidos.ForeColor = System.Drawing.Color.White
+        Me.lbltotalpedidos.Location = New System.Drawing.Point(189, 34)
+        Me.lbltotalpedidos.Name = "lbltotalpedidos"
+        Me.lbltotalpedidos.Size = New System.Drawing.Size(34, 25)
+        Me.lbltotalpedidos.TabIndex = 100
+        Me.lbltotalpedidos.Text = "$0"
+        '
+        'Label44
+        '
+        Me.Label44.AutoSize = True
+        Me.Label44.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label44.ForeColor = System.Drawing.Color.White
+        Me.Label44.Location = New System.Drawing.Point(189, 9)
+        Me.Label44.Name = "Label44"
+        Me.Label44.Size = New System.Drawing.Size(173, 25)
+        Me.Label44.TabIndex = 99
+        Me.Label44.Text = "TOTAL PEDIDOS"
+        '
+        'Button8
+        '
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print_64px
+        Me.Button8.Location = New System.Drawing.Point(1052, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(80, 91)
+        Me.Button8.TabIndex = 98
+        Me.Button8.Text = "Imprimir"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.UseVisualStyleBackColor = True
+        '
+        'Button9
+        '
+        Me.Button9.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button9.ForeColor = System.Drawing.Color.White
+        Me.Button9.Image = CType(resources.GetObject("Button9.Image"), System.Drawing.Image)
+        Me.Button9.Location = New System.Drawing.Point(1132, 0)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(80, 91)
+        Me.Button9.TabIndex = 97
+        Me.Button9.Text = "Buscar"
+        Me.Button9.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button9.UseVisualStyleBackColor = True
+        '
+        'Panel17
+        '
+        Me.Panel17.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel17.Controls.Add(Me.cmbvendedorCotejo)
+        Me.Panel17.Controls.Add(Me.Label38)
+        Me.Panel17.Controls.Add(Me.Label39)
+        Me.Panel17.Controls.Add(Me.ComboBox2)
+        Me.Panel17.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Panel17.Location = New System.Drawing.Point(0, 91)
+        Me.Panel17.Name = "Panel17"
+        Me.Panel17.Size = New System.Drawing.Size(1212, 32)
+        Me.Panel17.TabIndex = 89
+        '
+        'cmbvendedorCotejo
+        '
+        Me.cmbvendedorCotejo.FormattingEnabled = True
+        Me.cmbvendedorCotejo.Location = New System.Drawing.Point(236, 6)
+        Me.cmbvendedorCotejo.Name = "cmbvendedorCotejo"
+        Me.cmbvendedorCotejo.Size = New System.Drawing.Size(119, 21)
+        Me.cmbvendedorCotejo.TabIndex = 94
+        '
+        'Label38
+        '
+        Me.Label38.AutoSize = True
+        Me.Label38.ForeColor = System.Drawing.Color.White
+        Me.Label38.Location = New System.Drawing.Point(3, 9)
+        Me.Label38.Name = "Label38"
+        Me.Label38.Size = New System.Drawing.Size(48, 13)
+        Me.Label38.TabIndex = 91
+        Me.Label38.Text = "Almacen"
+        '
+        'Label39
+        '
+        Me.Label39.AutoSize = True
+        Me.Label39.ForeColor = System.Drawing.Color.White
+        Me.Label39.Location = New System.Drawing.Point(182, 9)
+        Me.Label39.Name = "Label39"
+        Me.Label39.Size = New System.Drawing.Size(53, 13)
+        Me.Label39.TabIndex = 93
+        Me.Label39.Text = "Vendedor"
+        '
+        'ComboBox2
+        '
+        Me.ComboBox2.FormattingEnabled = True
+        Me.ComboBox2.Location = New System.Drawing.Point(57, 6)
+        Me.ComboBox2.Name = "ComboBox2"
+        Me.ComboBox2.Size = New System.Drawing.Size(119, 21)
+        Me.ComboBox2.TabIndex = 92
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.Label41)
+        Me.GroupBox3.Controls.Add(Me.dtHastaCotejo)
+        Me.GroupBox3.Controls.Add(Me.dtdeCotejo)
+        Me.GroupBox3.Controls.Add(Me.Label42)
+        Me.GroupBox3.ForeColor = System.Drawing.Color.White
+        Me.GroupBox3.Location = New System.Drawing.Point(3, 9)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(183, 71)
+        Me.GroupBox3.TabIndex = 82
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Intervalo"
+        '
+        'Label41
+        '
+        Me.Label41.AutoSize = True
+        Me.Label41.BackColor = System.Drawing.Color.Transparent
+        Me.Label41.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label41.ForeColor = System.Drawing.Color.White
+        Me.Label41.Location = New System.Drawing.Point(6, 20)
+        Me.Label41.Name = "Label41"
+        Me.Label41.Size = New System.Drawing.Size(49, 17)
+        Me.Label41.TabIndex = 44
+        Me.Label41.Text = "Desde"
+        '
+        'dtHastaCotejo
+        '
+        Me.dtHastaCotejo.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtHastaCotejo.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtHastaCotejo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtHastaCotejo.Location = New System.Drawing.Point(61, 41)
+        Me.dtHastaCotejo.Name = "dtHastaCotejo"
+        Me.dtHastaCotejo.Size = New System.Drawing.Size(117, 23)
+        Me.dtHastaCotejo.TabIndex = 43
+        '
+        'dtdeCotejo
+        '
+        Me.dtdeCotejo.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdeCotejo.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dtdeCotejo.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtdeCotejo.Location = New System.Drawing.Point(61, 15)
+        Me.dtdeCotejo.Name = "dtdeCotejo"
+        Me.dtdeCotejo.Size = New System.Drawing.Size(117, 23)
+        Me.dtdeCotejo.TabIndex = 42
+        '
+        'Label42
+        '
+        Me.Label42.AutoSize = True
+        Me.Label42.BackColor = System.Drawing.Color.Transparent
+        Me.Label42.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label42.ForeColor = System.Drawing.Color.White
+        Me.Label42.Location = New System.Drawing.Point(6, 46)
+        Me.Label42.Name = "Label42"
+        Me.Label42.Size = New System.Drawing.Size(45, 17)
+        Me.Label42.TabIndex = 45
+        Me.Label42.Text = "Hasta"
+        '
+        'Panel18
+        '
+        Me.Panel18.AutoScroll = True
+        Me.Panel18.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel18.Controls.Add(Me.Label43)
+        Me.Panel18.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel18.Location = New System.Drawing.Point(3, 3)
+        Me.Panel18.Name = "Panel18"
+        Me.Panel18.Size = New System.Drawing.Size(1212, 40)
+        Me.Panel18.TabIndex = 30
+        '
+        'Label43
+        '
+        Me.Label43.AutoSize = True
+        Me.Label43.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label43.ForeColor = System.Drawing.Color.White
+        Me.Label43.Location = New System.Drawing.Point(3, 0)
+        Me.Label43.Name = "Label43"
+        Me.Label43.Size = New System.Drawing.Size(577, 39)
+        Me.Label43.TabIndex = 2
+        Me.Label43.Text = "Cotejo de Pedidos vs. Facturacion"
         '
         'informedeventas
         '
@@ -1968,6 +2336,16 @@ Partial Class informedeventas
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grpperiodo.ResumeLayout(False)
         Me.grpperiodo.PerformLayout()
+        Me.TabPage4.ResumeLayout(False)
+        CType(Me.dgvdetalles, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel16.ResumeLayout(False)
+        Me.Panel16.PerformLayout()
+        Me.Panel17.ResumeLayout(False)
+        Me.Panel17.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.Panel18.ResumeLayout(False)
+        Me.Panel18.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
@@ -2104,4 +2482,30 @@ Partial Class informedeventas
     Friend WithEvents Label37 As Label
     Friend WithEvents Label36 As Label
     Friend WithEvents Chart1 As DataVisualization.Charting.Chart
+    Friend WithEvents TabPage4 As TabPage
+    Friend WithEvents dgvdetalles As DataGridView
+    Friend WithEvents Panel16 As Panel
+    Friend WithEvents Button8 As Button
+    Friend WithEvents Button9 As Button
+    Friend WithEvents Panel17 As Panel
+    Friend WithEvents cmbvendedorCotejo As ComboBox
+    Friend WithEvents Label38 As Label
+    Friend WithEvents Label39 As Label
+    Friend WithEvents ComboBox2 As ComboBox
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Label41 As Label
+    Friend WithEvents dtHastaCotejo As DateTimePicker
+    Friend WithEvents dtdeCotejo As DateTimePicker
+    Friend WithEvents Label42 As Label
+    Friend WithEvents Panel18 As Panel
+    Friend WithEvents Label43 As Label
+    Friend WithEvents lbltotaldevoluciones As Label
+    Friend WithEvents Label48 As Label
+    Friend WithEvents lbltotalfacturado As Label
+    Friend WithEvents Label46 As Label
+    Friend WithEvents lbltotalpedidos As Label
+    Friend WithEvents Label44 As Label
+    Friend WithEvents lbltotaldiferencias As Label
+    Friend WithEvents Label50 As Label
+    Friend WithEvents lbltotalFacturadoEfectivo As Label
 End Class
