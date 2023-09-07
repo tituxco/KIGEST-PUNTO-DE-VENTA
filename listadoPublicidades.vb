@@ -138,7 +138,7 @@ Public Class listadoPublicidades
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
 
-        'MsgBox(cmd.CommandText)
+        ' MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
         'MsgBox(Cadena)

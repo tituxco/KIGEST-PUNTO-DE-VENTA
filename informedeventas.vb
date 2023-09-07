@@ -1302,18 +1302,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         dgvProduccionEnvasados.DataSource = TablaEnvasados
     End Sub
 
-    Private Sub dgvLecturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLecturas.CellContentClick
-
-    End Sub
-
-    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabPage4_Click(sender As Object, e As EventArgs) Handles TabPage4.Click
-
-    End Sub
-
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         Try
             Dim desde As String = Format(CDate(dtdeCotejo.Value), "yyyy-MM-dd")
@@ -1321,6 +1309,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             Dim consultaPedidos As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente,fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
             where fact.tipofact in(995) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ") and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            and fact.observaciones like 'FACTURADO'
             group by fact.id_cliente
             order by fact.razon asc", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
