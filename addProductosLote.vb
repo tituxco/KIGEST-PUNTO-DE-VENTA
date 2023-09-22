@@ -319,18 +319,22 @@
         Dim gtiacodigo As String
         Dim gtiameses As String
         Dim gtiacompcompra As Integer
-        Dim lotstock As Integer
+        Dim lotstock As String
         Dim lotidprod As String
         Dim lotfact As Integer
-        Dim lotcompracant As Integer
+        Dim lotcompracant As String
         Dim lottipoprod As Integer
         Dim sqlQuery As String
 
         Try
             'If MsgBox("Esta seguro que desea grabar este lote de productos? no podra agregar productos despues", vbYesNo + vbQuestion, "Carga de lote") = vbYes Then
             For Each loteprod As DataGridViewRow In dtproductos.Rows
+                If loteprod.IsNewRow Then
+                    Exit For
+                End If
                 Reconectar()
                 lotstock = loteprod.Cells(2).Value
+
                 lotidprod = loteprod.Cells(0).Value
                 lotfact = idcomprobante
                 lotcompracant = lotstock
