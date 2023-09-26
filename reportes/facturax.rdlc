@@ -12,16 +12,16 @@
               <Width>2.85603cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>10.56788cm</Width>
+              <Width>9.40862cm</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1.52841cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.38546cm</Width>
+              <Width>2.12139cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.86713cm</Width>
+              <Width>2.29046cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -378,6 +378,7 @@
                               <Value>=Fields!punit.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -411,6 +412,7 @@
                               <Value>=Fields!ptotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -490,6 +492,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -568,6 +571,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -646,6 +650,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -724,6 +729,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>

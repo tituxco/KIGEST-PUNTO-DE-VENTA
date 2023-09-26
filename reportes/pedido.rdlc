@@ -12,13 +12,13 @@
               <Width>2.5cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>10.11443cm</Width>
+              <Width>9.336cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.5cm</Width>
+              <Width>2.87042cm</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>2.77162cm</Width>
+              <Width>3.11558cm</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -304,6 +304,7 @@
                               <Value>=Fields!punit.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -336,6 +337,7 @@
                               <Value>=Fields!ptotal.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -413,6 +415,7 @@
                               <Style>
                                 <FontSize>8pt</FontSize>
                                 <FontWeight>Bold</FontWeight>
+                                <Format>#,0.00</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -466,7 +469,7 @@
         <Top>7.71292cm</Top>
         <Left>0.17639cm</Left>
         <Height>1.83528cm</Height>
-        <Width>19.36664cm</Width>
+        <Width>19.30259cm</Width>
         <Style>
           <Border>
             <Style>Solid</Style>

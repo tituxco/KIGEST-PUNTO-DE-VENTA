@@ -180,8 +180,8 @@
                 subtotal += FormatNumber(dtproductos.Rows(i).Cells(6).Value)
             Next
 
-            txtsubtotal.Text = Math.Round(subtotal, 2)
-            txttotal.Text = subtotal + iva105 + iva21
+            txtsubtotal.Text = FormatNumber(Math.Round(subtotal, 2))
+            txttotal.Text = FormatNumber(subtotal + iva105 + iva21, 2)
         Catch ex As Exception
 
         End Try
