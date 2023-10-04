@@ -291,6 +291,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>datosInformes.xsd</DependentUpon>
     </Compile>
+    <Compile Include="datosMysql.vb" />
     <Compile Include="Dialog1.Designer.vb">
       <DependentUpon>Dialog1.vb</DependentUpon>
     </Compile>

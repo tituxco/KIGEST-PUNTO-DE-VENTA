@@ -112,13 +112,7 @@ Public Class informedeventas
     End Sub
 
     Private Sub rdInforgeneral_Click(sender As Object, e As EventArgs) Handles rdInforgeneral.Click
-        If rdInforgeneral.Checked = True Then
-            cmbInforCateg.Enabled = False
-            cmbInforProv.Enabled = False
-            txtInforProd.Enabled = False
-            txtdiasventa.Enabled = False
 
-        End If
     End Sub
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
 
@@ -1051,6 +1045,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 grafvtascob.Rows.Add(readvtas.Rows(i).Item(0), readvtas.Rows(i).Item(1))
                 'End If
             Next
+            Chart1.Series.Clear()
 
             Chart1.DataSource = grafvtascob
 
@@ -1379,4 +1374,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Next
         Return Math.Round(total)
     End Function
+
+    Private Sub rdInforgeneral_CheckedChanged(sender As Object, e As EventArgs) Handles rdInforgeneral.CheckedChanged
+        If rdInforgeneral.Checked = True Then
+            cmbInforCateg.Enabled = False
+            cmbInforProv.Enabled = False
+            'txtInforProd.Enabled = False
+            txtdiasventa.Enabled = False
+
+        End If
+    End Sub
+
+    Private Sub rdInforClientes_CheckedChanged(sender As Object, e As EventArgs) Handles rdInforClientes.CheckedChanged
+
+    End Sub
 End Class

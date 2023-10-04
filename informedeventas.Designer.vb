@@ -122,7 +122,6 @@ Partial Class informedeventas
         Me.Panel8 = New System.Windows.Forms.Panel()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.tabseguimientoProductos = New System.Windows.Forms.TabPage()
-        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.Panel7 = New System.Windows.Forms.Panel()
         Me.Label25 = New System.Windows.Forms.Label()
         Me.cmbseguimientoProductosVendedores = New System.Windows.Forms.ComboBox()
@@ -198,6 +197,7 @@ Partial Class informedeventas
         Me.Label42 = New System.Windows.Forms.Label()
         Me.Panel18 = New System.Windows.Forms.Panel()
         Me.Label43 = New System.Windows.Forms.Label()
+        Me.dgvSeguimientoProductos = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.pndatosgenerales.SuspendLayout()
@@ -924,7 +924,6 @@ Partial Class informedeventas
         '
         'txtInforProd
         '
-        Me.txtInforProd.Enabled = False
         Me.txtInforProd.Location = New System.Drawing.Point(336, 14)
         Me.txtInforProd.Name = "txtInforProd"
         Me.txtInforProd.Size = New System.Drawing.Size(181, 20)
@@ -1261,14 +1260,6 @@ Partial Class informedeventas
         Me.tabseguimientoProductos.TabIndex = 2
         Me.tabseguimientoProductos.Text = "SEGUIMIENTO DE PRODUCTOS"
         Me.tabseguimientoProductos.UseVisualStyleBackColor = True
-        '
-        'dgvSeguimientoProductos
-        '
-        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
-        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
-        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
-        Me.dgvSeguimientoProductos.TabIndex = 6
         '
         'Panel7
         '
@@ -1940,7 +1931,7 @@ Partial Class informedeventas
         Me.TabPage4.Padding = New System.Windows.Forms.Padding(3)
         Me.TabPage4.Size = New System.Drawing.Size(1218, 581)
         Me.TabPage4.TabIndex = 5
-        Me.TabPage4.Text = "TabPage4"
+        Me.TabPage4.Text = "DIFERENCIAS DE PEDIDO/FACT"
         Me.TabPage4.UseVisualStyleBackColor = True
         '
         'dgvdetalles
@@ -2261,6 +2252,14 @@ Partial Class informedeventas
         Me.Label43.Size = New System.Drawing.Size(577, 39)
         Me.Label43.TabIndex = 2
         Me.Label43.Text = "Cotejo de Pedidos vs. Facturacion"
+        '
+        'dgvSeguimientoProductos
+        '
+        Me.dgvSeguimientoProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvSeguimientoProductos.Location = New System.Drawing.Point(3, 120)
+        Me.dgvSeguimientoProductos.Name = "dgvSeguimientoProductos"
+        Me.dgvSeguimientoProductos.Size = New System.Drawing.Size(1212, 458)
+        Me.dgvSeguimientoProductos.TabIndex = 6
         '
         'informedeventas
         '
