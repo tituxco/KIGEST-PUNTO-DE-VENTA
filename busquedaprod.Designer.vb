@@ -50,6 +50,8 @@ Partial Class busquedaprod
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.txtInfoExtraProducto = New System.Windows.Forms.TextBox()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
@@ -85,13 +87,12 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.txtInfoExtraProducto = New System.Windows.Forms.TextBox()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel4.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.Panel1.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -102,7 +103,6 @@ Partial Class busquedaprod
         Me.Panel3.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'pntitulo
@@ -303,6 +303,8 @@ Partial Class busquedaprod
         'chkmantenerfiltro
         '
         Me.chkmantenerfiltro.AutoSize = True
+        Me.chkmantenerfiltro.Checked = True
+        Me.chkmantenerfiltro.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkmantenerfiltro.ForeColor = System.Drawing.Color.White
         Me.chkmantenerfiltro.Location = New System.Drawing.Point(325, 66)
         Me.chkmantenerfiltro.Name = "chkmantenerfiltro"
@@ -402,6 +404,28 @@ Partial Class busquedaprod
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(352, 492)
         Me.Panel1.TabIndex = 76
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.txtInfoExtraProducto)
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.GroupBox4.Location = New System.Drawing.Point(6, 317)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(329, 144)
+        Me.GroupBox4.TabIndex = 235
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Información extra del producto"
+        '
+        'txtInfoExtraProducto
+        '
+        Me.txtInfoExtraProducto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtInfoExtraProducto.Location = New System.Drawing.Point(3, 18)
+        Me.txtInfoExtraProducto.Multiline = True
+        Me.txtInfoExtraProducto.Name = "txtInfoExtraProducto"
+        Me.txtInfoExtraProducto.Size = New System.Drawing.Size(323, 123)
+        Me.txtInfoExtraProducto.TabIndex = 0
+        Me.txtInfoExtraProducto.Text = "Detalles:"
         '
         'GroupBox3
         '
@@ -768,28 +792,6 @@ Partial Class busquedaprod
         Me.DataGridViewTextBoxColumn7.Visible = False
         Me.DataGridViewTextBoxColumn7.Width = 317
         '
-        'GroupBox4
-        '
-        Me.GroupBox4.Controls.Add(Me.txtInfoExtraProducto)
-        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupBox4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.GroupBox4.Location = New System.Drawing.Point(6, 317)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(329, 144)
-        Me.GroupBox4.TabIndex = 235
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Información extra del producto"
-        '
-        'txtInfoExtraProducto
-        '
-        Me.txtInfoExtraProducto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txtInfoExtraProducto.Location = New System.Drawing.Point(3, 18)
-        Me.txtInfoExtraProducto.Multiline = True
-        Me.txtInfoExtraProducto.Name = "txtInfoExtraProducto"
-        Me.txtInfoExtraProducto.Size = New System.Drawing.Size(323, 123)
-        Me.txtInfoExtraProducto.TabIndex = 0
-        Me.txtInfoExtraProducto.Text = "Detalles:"
-        '
         'busquedaprod
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -811,6 +813,8 @@ Partial Class busquedaprod
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox4.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -822,8 +826,6 @@ Partial Class busquedaprod
         Me.Panel3.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub

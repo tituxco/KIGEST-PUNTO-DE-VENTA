@@ -990,8 +990,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>0.6cm</Top>
-            <Height>0.6cm</Height>
+            <Top>0.5365cm</Top>
+            <Height>0.56825cm</Height>
             <Width>10.30377cm</Width>
             <ZIndex>1</ZIndex>
             <Style>
@@ -1022,8 +1022,8 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>1.23528cm</Top>
-            <Height>0.6cm</Height>
+            <Top>1.74328cm</Top>
+            <Height>0.5365cm</Height>
             <Width>10.30377cm</Width>
             <ZIndex>2</ZIndex>
             <Style>
@@ -1086,9 +1086,9 @@
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox4</rd:DefaultName>
-            <Top>2.26632cm</Top>
+            <Top>2.29807cm</Top>
             <Left>0.05096cm</Left>
-            <Height>0.6cm</Height>
+            <Height>0.56621cm</Height>
             <Width>10.25281cm</Width>
             <ZIndex>4</ZIndex>
             <Style>
@@ -1153,6 +1153,39 @@
             <Height>0.6cm</Height>
             <Width>8.9782cm</Width>
             <ZIndex>6</ZIndex>
+            <Style>
+              <Border>
+                <Style>None</Style>
+              </Border>
+              <PaddingLeft>2pt</PaddingLeft>
+              <PaddingRight>2pt</PaddingRight>
+              <PaddingTop>2pt</PaddingTop>
+              <PaddingBottom>2pt</PaddingBottom>
+            </Style>
+          </Textbox>
+          <Textbox Name="Textbox33">
+            <CanGrow>true</CanGrow>
+            <KeepTogether>true</KeepTogether>
+            <Paragraphs>
+              <Paragraph>
+                <TextRuns>
+                  <TextRun>
+                    <Value>="Celular: " &amp; First(Fields!celular.Value, "encabezado")</Value>
+                    <Style>
+                      <FontStyle>Italic</FontStyle>
+                      <FontWeight>Bold</FontWeight>
+                    </Style>
+                  </TextRun>
+                </TextRuns>
+                <Style />
+              </Paragraph>
+            </Paragraphs>
+            <rd:DefaultName>Textbox4</rd:DefaultName>
+            <Top>1.18153cm</Top>
+            <Left>0.01588cm</Left>
+            <Height>0.5365cm</Height>
+            <Width>10.30377cm</Width>
+            <ZIndex>7</ZIndex>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1337,10 +1370,22 @@
           <DataField>codbarra</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="codigo_qr">
+          <DataField>codigo_qr</DataField>
+          <rd:TypeName>System.Byte[]</rd:TypeName>
+        </Field>
+        <Field Name="facobserva2">
+          <DataField>facobserva2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="celular">
+          <DataField>celular</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datosfacturas</rd:DataSetName>
-        <rd:SchemaPath>D:\OneDrive\Importante\desarrollos\KIGEST - FACT PUNTO VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\rquat\OneDrive\Desarrollos\KIGEST-PUNTO DE VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
         <rd:TableName>factura_enca</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

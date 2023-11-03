@@ -1612,9 +1612,12 @@ Module funciones_Globales
             concat(fis.abrev,' ', fac.numero) as facnum, fac.id, fac.fecha as facfech, concat(prov.id,'-',prov.razon) as facrazon, 
             prov.direccion As facdire, '0' as facloca, iva.tipo As factipocontr, prov.cuit As faccuit, '0' as  facvend, 
             '0' as faccondvta, '0' as iva105, '0' as iva21,fac.monto,  
-            fac.observaciones as facobserva 
-            FROM fact_conffiscal as fis, fact_empresa as emp, fact_proveedores_fact as fac, fact_proveedores as prov, fact_ivatipo as iva
+            facIE.descripcion as facobserva 
+            FROM fact_conffiscal as fis, fact_empresa as emp, fact_proveedores_fact as fac, fact_proveedores as prov, fact_ivatipo as iva,
+            fact_ingreso_egreso as facIE
             where emp.id=1 and 
+            facIE.comprobante=fac.id and
+            facIE.tipo=fac.tipoingeg and
             fis.donfdesc=fac.tipo and
             prov.id=fac.idproveedor and
             iva.id=prov.tipo_iva and 
