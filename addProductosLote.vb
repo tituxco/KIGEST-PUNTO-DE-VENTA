@@ -4,6 +4,8 @@
     Dim AuxCol As Integer
     Dim UtilGral As Double
     Dim cargaManual As Boolean = False
+    Dim i As Integer
+
 
 
     Private Sub cargarCategoriasProd()

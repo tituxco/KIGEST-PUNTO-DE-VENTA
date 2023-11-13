@@ -1,5 +1,6 @@
 ﻿Public Class ingreso_valores_propios
     Dim selFech As New CalendarCell
+    Dim i As Integer
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try 'guardamos el cheque
             Dim sqlQuery As String

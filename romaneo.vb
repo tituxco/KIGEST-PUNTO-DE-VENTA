@@ -1,6 +1,8 @@
 ﻿Public Class romaneo
     Public Shared idcomprobante As Integer = 0
     Dim cerrada As Boolean = False
+    Dim i As Integer
+
     Private Sub romaneo_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
         Try
             If e.Control And e.Alt And e.KeyCode = Keys.R Then

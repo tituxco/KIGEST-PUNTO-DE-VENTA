@@ -15,6 +15,7 @@ Public Class puntoventa
 	Public IdFactura As Integer
 	Dim TipoIVAContr As Integer
 	Dim IDALMACEN As Integer = My.Settings.idAlmacen
+	Dim i As Integer
 	Private Sub puntoventa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 		lblfactfecha.Text = "Fecha: " & fechagral

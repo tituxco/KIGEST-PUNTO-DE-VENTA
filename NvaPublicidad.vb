@@ -227,7 +227,7 @@
         End With
     End Sub
     Private Sub txtBuscaPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtBuscaPrestamo.TextChanged
-        Consultas("select 
+        Consultas("select DTP.ID,
         IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
@@ -392,23 +392,35 @@
         Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
     End Sub
 
-    Private Sub chkAdelantado_CheckedChanged(sender As Object, e As EventArgs) Handles chkAdelantado.CheckedChanged
+    Private Sub dgvPublicidad_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellDoubleClick
+        If dgvPublicidad.Columns(e.ColumnIndex).HeaderText = "MONTO" Then 'columna monto Then
+            If MsgBox("Desea modificar el importe de este mes en particular?", vbYesNo + vbQuestion, "Modificar publicidad") = MsgBoxResult.Yes Then
+                Dim nuevoPrecio As String  '=FormatNumber(txtmonto.Text, 2)
+                Dim sumaTotal As Double = 0
+                Dim idPeriodo As Integer = dgvPublicidad.CurrentRow.Cells("ID").Value
+                Dim idPrestamo As Integer = txtPrestamo.Text
 
+                nuevoPrecio = InputBox("Ingrese el nuevo precio", "Modificar publicidad", dgvPublicidad.Item(e.ColumnIndex, e.RowIndex).Value)
+                If IsNumeric(nuevoPrecio) Then
+                    nuevoPrecio = FormatNumber(nuevoPrecio, 2)
+                    dgvPublicidad.Item(e.ColumnIndex, e.RowIndex).Value = nuevoPrecio
+
+                    For Each cuota As DataGridViewRow In dgvPublicidad.Rows
+                        Dim montoCuota As Double = cuota.Cells("MONTO").Value
+                        sumaTotal += montoCuota
+                    Next
+                    txtmonto.Text = sumaTotal
+                    If MsgBox("Desea guardar la informacion?", vbYesNo + vbQuestion, "Modificar publicidad") = MsgBoxResult.Yes Then
+                        Operaciones.Guardar("update rym_detalle_prestamo set cuota='" & nuevoPrecio & "' where ID= " & idPeriodo, Format(Now(), "yyyy-MM-dd"))
+                        Operaciones.Guardar("update rym_prestamo set MONTO_PRESTAMO='" & sumaTotal & "' where ID_PRESTAMO= " & idPrestamo, Format(Now(), "yyyy-MM-dd"))
+                    End If
+                End If
+            End If
+
+        End If
     End Sub
 
     Private Sub dgvPublicidad_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellContentClick
-
-    End Sub
-
-    Private Sub txtPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtPrestamo.TextChanged
-
-    End Sub
-
-    Private Sub txtclientenombre_TextChanged(sender As Object, e As EventArgs) Handles txtclientenombre.TextChanged
-
-    End Sub
-
-    Private Sub txtclientenombre_QueryContinueDrag(sender As Object, e As QueryContinueDragEventArgs) Handles txtclientenombre.QueryContinueDrag
 
     End Sub
 End Class

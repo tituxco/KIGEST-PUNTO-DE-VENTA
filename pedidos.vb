@@ -81,6 +81,8 @@
             from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
             " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", conexionPrinc)
             Dim tablaped As New DataTable
+            'MsgBox(consulta.SelectCommand.CommandText)
+
             consulta.Fill(tablaped)
 
             'dtpedidos.DataSource = tablaped

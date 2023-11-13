@@ -1,4 +1,5 @@
 ﻿'CREO LA INSTANCIA DE MYSQL
+Imports System.Security.Cryptography
 Imports MySql.Data.MySqlClient
 Module Conexiones
     'CREO LAS VARIABLES GLOBALES DE CONEXION
@@ -26,6 +27,7 @@ Module Conexiones
     Public Function conectar(ByRef Servidor As String, ByRef Puerto As String, ByRef usuario As String, ByRef contraseña As String, ByRef bd As String) As Boolean
         'REALIZO LA CONEXION CON LOS DATOS OBTENIDOS DEL FORMULARIO INICIALIZAR
         Try
+
             conexionPrinc = New MySqlConnection
             conexionSEC = New MySqlConnection
             'conexionEmp = New MySqlConnection
@@ -137,5 +139,8 @@ Module Conexiones
             'MsgBox(ex.Message)
             Return False
         End Try
+    End Function
+    Private Function encriptar() As String
+        'usar la encriptacion sha256
     End Function
 End Module

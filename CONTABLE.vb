@@ -5708,7 +5708,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub dgvUsuarios_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellEndEdit
         If e.ColumnIndex = 4 Then
 
-            Dim sqlQuery As String = "update AuthServ.CliAuth set clave=md5('" & dgvUsuarios.CurrentRow.Cells("clave").Value & "') where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
+            Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dgvUsuarios.CurrentRow.Cells("clave").Value & "') where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
             comandoadd.ExecuteNonQuery()
             'CargaServiciosCloud()

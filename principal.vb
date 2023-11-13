@@ -5,6 +5,7 @@ Imports System.Security.Cryptography.X509Certificates
 Public Class frmprincipal
     Public loged As Boolean
     Public IPPublica As String = GetExternalIp()
+    Dim i As Integer
     Private Sub frmprincipal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Cierre de sistema", IPPublica)
         End

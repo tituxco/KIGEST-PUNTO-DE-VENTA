@@ -9,6 +9,8 @@ Public Class imprimirEtiquetas
     Dim ProCant As String
     Dim ProCantEtiq As String
     Dim ProPrecio As String
+    Dim i As Integer
+
 
 
     Private Sub cargarCategoriasProd()
@@ -688,7 +690,7 @@ Public Class imprimirEtiquetas
                 pgSize.Height = 173.23 '100
             ElseIf My.Settings.TipoEtiqueta = 1 Then
                 pgSize.Width = 196.8 '  135 '180 '196.8 '
-                pgSize.Height = 98.4  '78 '173.23 '100
+                pgSize.Height = 118 '98.4  '78 '173.23 '100
             End If
 
             PrintTxt.DefaultPageSettings.PaperSize = pgSize

@@ -517,6 +517,7 @@ Public Class productos
             If tipoproducto = 2 Then
                 costoFinal = (precioCosto * iva) + idc + icl
                 txtcostofinal.Text = Math.Round(costoFinal, 3)
+                Dim i As Integer
                 For i = 0 To dtlistas.RowCount - 1
                     Dim utilidad As Double = dtlistas.Rows(i).Cells(1).Value
                     Dim utilListSum As Double = (utilidad * 100) - 100

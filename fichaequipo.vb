@@ -2,6 +2,8 @@
     Public ORden As Integer
     Private ModProd As Boolean = False
     Dim FECHAGRAL As Date = CDate(Now)
+    Dim i As Integer
+
 
     Private Sub fichaequipo_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
         If e.KeyChar = "."c Then

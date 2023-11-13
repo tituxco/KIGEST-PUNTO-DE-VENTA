@@ -9,7 +9,7 @@ Public Class nuevaventa
     Dim utilidadlista As Double
     Public fxINIC As Boolean
     Public fcINIC As Boolean
-
+    Dim i As Integer
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
         Try
             SendKeys.Send("{UP}")

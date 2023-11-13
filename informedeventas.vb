@@ -4,6 +4,7 @@ Public Class informedeventas
 
     Dim ComisionVendedor As Double = 0
     Dim IdVendedorSel As Integer = 0
+    Dim i As Integer
     Private Sub informedeventas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
         Dim readprov As New DataSet
@@ -1040,6 +1041,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             grafvtascob.Columns.Add("ventas")
             grafvtascob.Columns(1).DataType = GetType(Decimal)
+
             For i = 0 To readvtas.Rows.Count - 1
                 'If readvtas.Rows(i).Item(0).ToString = readcobr.Rows(i).Item(0).ToString Then
                 grafvtascob.Rows.Add(readvtas.Rows(i).Item(0), readvtas.Rows(i).Item(1))

@@ -8,6 +8,7 @@
     Public ptovta As Integer = DatosAcceso.IdPtoVtaDef
     Public ImportaAPP As Boolean = False
     Public IDApp As String
+    Dim i As Integer
 
     Private Sub dtproductos_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEndEdit
         Try
@@ -603,8 +604,8 @@
                 Reconectar()
                 sqlQuery = "update fact_facturas set ptovta= '" & Val(txtptovta.Text) & "', num_fact='" & Val(txtnufac.Text) &
                 "', razon='" & txtrazon.Text.ToUpper & "', direccion= '" & txtdomicilio.Text & "', localidad='" & txtciudad.Text &
-                "', tipocontr= '" & cmbtipocontr.Text & "', cuit= '" & txtcuit.Text & "', subtotal='" & txtsubtotal.Text &
-                "', total='" & txttotal.Text & "', observaciones= 'PENDIENTE', observaciones2='" & txtobservaciones.Text & "' where id=" & idFactura
+                "', tipocontr= '" & cmbtipocontr.Text & "', cuit= '" & txtcuit.Text & "', subtotal='" & txtsubtotal.Text.ToString.Replace(".", "") &
+                "', total='" & txttotal.Text.ToString.Replace(".", "") & "', observaciones= 'PENDIENTE', observaciones2='" & txtobservaciones.Text & "' where id=" & idFactura
 
                 Dim comandoUpdped As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 comandoUpdped.ExecuteNonQuery()
