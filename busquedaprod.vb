@@ -119,10 +119,15 @@ Public Class busquedaprod
             cadenaComp2 = busqNomb & busqCat & busqProv & busqCod & busqStock
             'MsgBox(cadenaComp)
 
+            Dim idAlmacen As Integer = My.Settings.idAlmacen
+
+
             If imprimirlist = False And imprimiretiq = False Then
                 'MsgBox(cadenaComp)
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU, 
-                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, 
+                pro.codigo as PLU,
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & idAlmacen & ") as Stock 
+                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'MsgBox(consulta.SelectCommand.CommandText)
                 'Dim filasProd() As DataRow

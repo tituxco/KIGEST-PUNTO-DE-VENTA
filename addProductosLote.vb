@@ -878,4 +878,8 @@
         My.Settings.busquedaProd = chkBusquedaProd.CheckState
         My.Settings.Save()
     End Sub
+
+    Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
+
+    End Sub
 End Class

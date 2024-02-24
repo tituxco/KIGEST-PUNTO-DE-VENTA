@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.ComponentModel
+Imports System.IO
 Imports System.Net
 Imports System.Security.Cryptography.X509Certificates
 
@@ -950,7 +951,7 @@ Public Class frmprincipal
         tec.Show()
     End Sub
 
-    Private Sub Button1_Click_1(sender As Object, e As EventArgs) 
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs)
         modBingo.Main()
 
     End Sub
@@ -967,5 +968,18 @@ Public Class frmprincipal
 
     Private Sub frmprincipal_MaximumSizeChanged(sender As Object, e As EventArgs) Handles Me.MaximumSizeChanged
 
+    End Sub
+
+    Private Sub frmprincipal_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+        Try
+            conexionAuth.Close()
+            conexionPrinc.Close()
+            conexionSEC.Close()
+
+
+        Catch ex As Exception
+            Debug.WriteLine("error " + ex.Message)
+
+        End Try
     End Sub
 End Class

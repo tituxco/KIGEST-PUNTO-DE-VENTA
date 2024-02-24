@@ -104,7 +104,7 @@ Partial Class CONTABLE
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.BackgroundWorker2 = New System.ComponentModel.BackgroundWorker()
         Me.carpetadestino = New System.Windows.Forms.FolderBrowserDialog()
-        Me.balance = New System.Windows.Forms.TabPage()
+
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tabBalDiario = New System.Windows.Forms.TabPage()
         Me.lstbalancecomprobantes = New System.Windows.Forms.DataGridView()
@@ -706,7 +706,7 @@ Partial Class CONTABLE
         Me.txtBusquedaRazonOP = New System.Windows.Forms.TextBox()
         Me.Label105 = New System.Windows.Forms.Label()
         Me.pntitulo.SuspendLayout
-        Me.balance.SuspendLayout
+        '        Me.balance.SuspendLayout()
         Me.TabControl1.SuspendLayout
         Me.tabBalDiario.SuspendLayout
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).BeginInit
@@ -874,15 +874,15 @@ Partial Class CONTABLE
         '
         'balance
         '
-        Me.balance.Controls.Add(Me.TabControl1)
-        Me.balance.Controls.Add(Me.Panel27)
-        Me.balance.Location = New System.Drawing.Point(4, 22)
-        Me.balance.Name = "balance"
-        Me.balance.Padding = New System.Windows.Forms.Padding(3)
-        Me.balance.Size = New System.Drawing.Size(1209, 521)
-        Me.balance.TabIndex = 20
-        Me.balance.Text = "BALANCES E INFORMES"
-        Me.balance.UseVisualStyleBackColor = True
+        'Me.balance.Controls.Add(Me.TabControl1)
+        'Me.balance.Controls.Add(Me.Panel27)
+        'Me.balance.Location = New System.Drawing.Point(4, 22)
+        'Me.balance.Name = "balance"
+        'Me.balance.Padding = New System.Windows.Forms.Padding(3)
+        'Me.balance.Size = New System.Drawing.Size(1209, 521)
+        'Me.balance.TabIndex = 20
+        'Me.balance.Text = "BALANCES E INFORMES"
+        'Me.balance.UseVisualStyleBackColor = True
         '
         'TabControl1
         '
@@ -6071,7 +6071,7 @@ Partial Class CONTABLE
         Me.tabcontable.Controls.Add(Me.tabstockvalorizado)
         Me.tabcontable.Controls.Add(Me.tabgraficas)
         Me.tabcontable.Controls.Add(Me.tabconfiguracion)
-        Me.tabcontable.Controls.Add(Me.balance)
+        '        Me.tabcontable.Controls.Add(Me.balance)
         Me.tabcontable.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tabcontable.Location = New System.Drawing.Point(0, 40)
         Me.tabcontable.Name = "tabcontable"
@@ -7724,7 +7724,7 @@ Partial Class CONTABLE
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout
-        Me.balance.ResumeLayout(False)
+        '        Me.balance.ResumeLayout(False)
         Me.TabControl1.ResumeLayout(False)
         Me.tabBalDiario.ResumeLayout(False)
         CType(Me.lstbalancecomprobantes, System.ComponentModel.ISupportInitialize).EndInit

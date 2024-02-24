@@ -8,9 +8,10 @@
 
     Public Sub Cargar_Datos(dt As DataTable)
         Try
+
+
             If Not IsNothing(dt) Then
-
-
+                pagina = 0 'resetamos la pagina en la que nos encontramos
                 todos_los_datos = dt
                 total = dt.Rows.Count
                 lblregistros.Text = total

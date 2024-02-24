@@ -112,16 +112,16 @@ Partial Class manejoStock
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        'Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.transfer_64px
+        Me.Button2.ImageAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button2.Location = New System.Drawing.Point(1011, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(70, 118)
         Me.Button2.TabIndex = 180
-        Me.Button2.Text = "Cargar solo stock"
+        Me.Button2.Text = "Transf. Sotck"
         Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
         Me.Button2.UseVisualStyleBackColor = True
-        Me.Button2.Visible = False
         '
         'Label3
         '
@@ -130,7 +130,7 @@ Partial Class manejoStock
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(664, 11)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(68, 16)
+        Me.Label3.Size = New System.Drawing.Size(67, 16)
         Me.Label3.TabIndex = 179
         Me.Label3.Text = "Almacen"
         '
@@ -230,7 +230,7 @@ Partial Class manejoStock
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(6, 59)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(108, 16)
+        Me.Label2.Size = New System.Drawing.Size(107, 16)
         Me.Label2.TabIndex = 176
         Me.Label2.Text = "Por proveedor"
         '
@@ -241,7 +241,7 @@ Partial Class manejoStock
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(6, 16)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(102, 16)
+        Me.Label7.Size = New System.Drawing.Size(101, 16)
         Me.Label7.TabIndex = 166
         Me.Label7.Text = "Por categoria"
         '

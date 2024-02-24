@@ -8,6 +8,7 @@ Public Class CONTABLE
     Public DtPlanCuentas As New DataTable
     Dim saldoAnteriorCuenta As Double = 0
     Dim tabCuentasConSaldos As New DataTable
+
     Dim idPLanCuenta As String
 
     Private Sub SumarTotalesCompras()
@@ -65,7 +66,7 @@ Public Class CONTABLE
         dtpdesdedetallecta.Value = obtenerPrimerDiaMes()
         dtdesdecuentaprov.Value = obtenerPrimerDiaMes()
         dtpgastosdesde.Value = obtenerPrimerDiaMes()
-        balance.Parent = Nothing
+        'balance.Parent = Nothing
         cmbMovimientosHistoricos.SelectedIndex = 1
         If InStr(DatosAcceso.Moduloacc, "CONFVAR") = False Then tabconfiguracion.Parent = Nothing
         If InStr(DatosAcceso.Moduloacc, "CONFUSER") = False Then tabUsuarios.Parent = Nothing
@@ -225,14 +226,14 @@ Public Class CONTABLE
 
             'cmbvendedor.SelectedIndex = -1
 
-            tabCuentasConSaldos.Columns.Add("id")
-            tabCuentasConSaldos.Columns.Add("numCuenta")
-            tabCuentasConSaldos.Columns.Add("nombreCuenta")
-            tabCuentasConSaldos.Columns.Add("saldoAnterior")
-            tabCuentasConSaldos.Columns.Add("debitosMes")
-            tabCuentasConSaldos.Columns.Add("creditosMes")
-            tabCuentasConSaldos.Columns.Add("saldoMes")
-            tabCuentasConSaldos.Columns.Add("saldoFinal")
+            'tabCuentasConSaldos.Columns.Add("id")
+            'tabCuentasConSaldos.Columns.Add("numCuenta")
+            'tabCuentasConSaldos.Columns.Add("nombreCuenta")
+            'tabCuentasConSaldos.Columns.Add("saldoAnterior")
+            'tabCuentasConSaldos.Columns.Add("debitosMes")
+            'tabCuentasConSaldos.Columns.Add("creditosMes")
+            'tabCuentasConSaldos.Columns.Add("saldoMes")
+            'tabCuentasConSaldos.Columns.Add("saldoFinal")
         Catch ex As Exception
 
         End Try

@@ -694,12 +694,13 @@ Public Class reimpresionComprobantes
                 Dim idCaja As Integer = My.Settings.CajaDef
                 SqlQuery = "insert into fact_items " _
                 & "(cod,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact,plu) values" _
-                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?ptovta,?num_fact,?id_fact,?plu)"
+                & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?plu)"
 
                 Reconectar()
                 Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
                 With comandoadditm.Parameters
                     .AddWithValue("?cod", cod)
+                    .AddWithValue("?plu", codbar)
                     .AddWithValue("?cant", cantidad)
                     .AddWithValue("?desc", descripcion)
                     .AddWithValue("?iva", iva)
@@ -709,10 +710,12 @@ Public Class reimpresionComprobantes
                     .AddWithValue("?idAlmacen", idAlmacen)
                     .AddWithValue("?idCaja", idCaja)
                     .AddWithValue("?id_fact", idRemito)
-                    .AddWithValue("?plu", codbar)
+
                 End With
+                'MsgBox(comandoadditm.CommandText)
                 comandoadditm.ExecuteNonQuery()
             Next
+            MsgBox("Remito generado correctamente, vaya a la pestaña <remitos> para imprimirlo")
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -955,9 +958,9 @@ Public Class reimpresionComprobantes
                     "Atentamente: " & vbNewLine & DatosAcceso.sistema
 
                 Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
-                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), "d:\", nombreArchivo, NMReporte)
+                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), Application.StartupPath, nombreArchivo, NMReporte)
 
-                EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+                EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment(Application.StartupPath & "\" & nombreArchivo))
             Else
                 MsgBox("La direccion de correo ingresada no es valida o no tiene el formato correcto")
             End If

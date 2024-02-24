@@ -24,13 +24,13 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -105,6 +105,7 @@ Partial Class productos
         Me.tabstock = New System.Windows.Forms.TabPage()
         Me.dtlotesprov = New System.Windows.Forms.DataGridView()
         Me.tabcostos = New System.Windows.Forms.TabPage()
+        Me.chkpreciobase = New System.Windows.Forms.CheckBox()
         Me.grpImpuestosCombustibles = New System.Windows.Forms.GroupBox()
         Me.txtICL = New System.Windows.Forms.TextBox()
         Me.Label38 = New System.Windows.Forms.Label()
@@ -207,7 +208,6 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.chkpreciobase = New System.Windows.Forms.CheckBox()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -307,7 +307,7 @@ Partial Class productos
         Me.Label36.ForeColor = System.Drawing.Color.White
         Me.Label36.Location = New System.Drawing.Point(243, 46)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(95, 16)
+        Me.Label36.Size = New System.Drawing.Size(94, 16)
         Me.Label36.TabIndex = 171
         Me.Label36.Text = "Ordenar por:"
         '
@@ -335,7 +335,7 @@ Partial Class productos
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.icons8_Versions_64px_1
+        'Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.icons8_Versions_64px_1
         Me.Button1.Location = New System.Drawing.Point(882, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
@@ -352,7 +352,7 @@ Partial Class productos
         Me.chkstock.ForeColor = System.Drawing.Color.White
         Me.chkstock.Location = New System.Drawing.Point(395, 65)
         Me.chkstock.Name = "chkstock"
-        Me.chkstock.Size = New System.Drawing.Size(121, 20)
+        Me.chkstock.Size = New System.Drawing.Size(120, 20)
         Me.chkstock.TabIndex = 167
         Me.chkstock.Text = "Solo en stock"
         Me.chkstock.UseVisualStyleBackColor = True
@@ -374,7 +374,7 @@ Partial Class productos
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(243, 3)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(80, 16)
+        Me.Label7.Size = New System.Drawing.Size(79, 16)
         Me.Label7.TabIndex = 166
         Me.Label7.Text = "Categoria:"
         '
@@ -403,7 +403,7 @@ Partial Class productos
         Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdaceptar.ForeColor = System.Drawing.Color.White
-        Me.cmdaceptar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_64px
+        'Me.cmdaceptar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_64px
         Me.cmdaceptar.Location = New System.Drawing.Point(984, 0)
         Me.cmdaceptar.Name = "cmdaceptar"
         Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
@@ -580,7 +580,7 @@ Partial Class productos
         Me.Label25.ForeColor = System.Drawing.Color.Black
         Me.Label25.Location = New System.Drawing.Point(291, 96)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(71, 16)
+        Me.Label25.Size = New System.Drawing.Size(70, 16)
         Me.Label25.TabIndex = 250
         Me.Label25.Text = "unid/Stock"
         '
@@ -600,7 +600,7 @@ Partial Class productos
         Me.Label22.ForeColor = System.Drawing.Color.Black
         Me.Label22.Location = New System.Drawing.Point(214, 74)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(112, 16)
+        Me.Label22.Size = New System.Drawing.Size(111, 16)
         Me.Label22.TabIndex = 248
         Me.Label22.Text = "Multip de stock"
         '
@@ -640,7 +640,7 @@ Partial Class productos
         Me.Label37.ForeColor = System.Drawing.Color.Black
         Me.Label37.Location = New System.Drawing.Point(385, 168)
         Me.Label37.Name = "Label37"
-        Me.Label37.Size = New System.Drawing.Size(142, 16)
+        Me.Label37.Size = New System.Drawing.Size(141, 16)
         Me.Label37.TabIndex = 244
         Me.Label37.Text = "Bonificacion max %"
         '
@@ -651,7 +651,7 @@ Partial Class productos
         Me.Label33.ForeColor = System.Drawing.Color.Black
         Me.Label33.Location = New System.Drawing.Point(466, 96)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(69, 16)
+        Me.Label33.Size = New System.Drawing.Size(68, 16)
         Me.Label33.TabIndex = 243
         Me.Label33.Text = "Kg/unidad"
         '
@@ -671,7 +671,7 @@ Partial Class productos
         Me.Label28.ForeColor = System.Drawing.Color.Black
         Me.Label28.Location = New System.Drawing.Point(385, 74)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(120, 16)
+        Me.Label28.Size = New System.Drawing.Size(119, 16)
         Me.Label28.TabIndex = 241
         Me.Label28.Text = "Peso especifico"
         '
@@ -682,7 +682,7 @@ Partial Class productos
         Me.lblultimaMod.ForeColor = System.Drawing.Color.Blue
         Me.lblultimaMod.Location = New System.Drawing.Point(214, 191)
         Me.lblultimaMod.Name = "lblultimaMod"
-        Me.lblultimaMod.Size = New System.Drawing.Size(33, 16)
+        Me.lblultimaMod.Size = New System.Drawing.Size(32, 16)
         Me.lblultimaMod.TabIndex = 239
         Me.lblultimaMod.Text = "-/-/-"
         '
@@ -693,7 +693,7 @@ Partial Class productos
         Me.Label26.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label26.Location = New System.Drawing.Point(214, 168)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(144, 16)
+        Me.Label26.Size = New System.Drawing.Size(143, 16)
         Me.Label26.TabIndex = 238
         Me.Label26.Text = "Ultima modificacion"
         '
@@ -704,7 +704,7 @@ Partial Class productos
         Me.Label32.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label32.Location = New System.Drawing.Point(3, 214)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(81, 16)
+        Me.Label32.Size = New System.Drawing.Size(80, 16)
         Me.Label32.TabIndex = 237
         Me.Label32.Text = "Proveedor"
         '
@@ -725,7 +725,7 @@ Partial Class productos
         Me.Label30.ForeColor = System.Drawing.Color.Black
         Me.Label30.Location = New System.Drawing.Point(390, 118)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(99, 16)
+        Me.Label30.Size = New System.Drawing.Size(98, 16)
         Me.Label30.TabIndex = 234
         Me.Label30.Text = "Presentación"
         '
@@ -747,7 +747,7 @@ Partial Class productos
         Me.Label27.ForeColor = System.Drawing.Color.Black
         Me.Label27.Location = New System.Drawing.Point(214, 118)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(58, 16)
+        Me.Label27.Size = New System.Drawing.Size(57, 16)
         Me.Label27.TabIndex = 232
         Me.Label27.Text = "Unidad"
         '
@@ -769,7 +769,7 @@ Partial Class productos
         Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label13.Location = New System.Drawing.Point(3, 168)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(80, 16)
+        Me.Label13.Size = New System.Drawing.Size(79, 16)
         Me.Label13.TabIndex = 164
         Me.Label13.Text = "Categoria:"
         '
@@ -798,7 +798,7 @@ Partial Class productos
         Me.Label9.ForeColor = System.Drawing.Color.Black
         Me.Label9.Location = New System.Drawing.Point(217, 214)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(55, 16)
+        Me.Label9.Size = New System.Drawing.Size(54, 16)
         Me.Label9.TabIndex = 208
         Me.Label9.Text = "Marca:"
         '
@@ -809,7 +809,7 @@ Partial Class productos
         Me.Label35.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label35.Location = New System.Drawing.Point(350, 5)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(91, 16)
+        Me.Label35.Size = New System.Drawing.Size(90, 16)
         Me.Label35.TabIndex = 228
         Me.Label35.Text = "Codigo Barr"
         '
@@ -830,7 +830,7 @@ Partial Class productos
         Me.Label11.ForeColor = System.Drawing.Color.Black
         Me.Label11.Location = New System.Drawing.Point(362, 214)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(60, 16)
+        Me.Label11.Size = New System.Drawing.Size(59, 16)
         Me.Label11.TabIndex = 210
         Me.Label11.Text = "Modelo"
         '
@@ -841,7 +841,7 @@ Partial Class productos
         Me.Label31.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label31.Location = New System.Drawing.Point(3, 118)
         Me.Label31.Name = "Label31"
-        Me.Label31.Size = New System.Drawing.Size(127, 16)
+        Me.Label31.Size = New System.Drawing.Size(126, 16)
         Me.Label31.TabIndex = 224
         Me.Label31.Text = "Tipo de producto"
         '
@@ -872,7 +872,7 @@ Partial Class productos
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(3, 46)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(66, 16)
+        Me.Label10.Size = New System.Drawing.Size(65, 16)
         Me.Label10.TabIndex = 198
         Me.Label10.Text = "Detalles"
         '
@@ -904,7 +904,7 @@ Partial Class productos
         Me.Label5.ForeColor = System.Drawing.Color.Black
         Me.Label5.Location = New System.Drawing.Point(13, 300)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(58, 16)
+        Me.Label5.Size = New System.Drawing.Size(57, 16)
         Me.Label5.TabIndex = 204
         Me.Label5.Text = "LISTA1"
         '
@@ -926,7 +926,7 @@ Partial Class productos
         Me.lbll.ForeColor = System.Drawing.Color.Black
         Me.lbll.Location = New System.Drawing.Point(144, 300)
         Me.lbll.Name = "lbll"
-        Me.lbll.Size = New System.Drawing.Size(58, 16)
+        Me.lbll.Size = New System.Drawing.Size(57, 16)
         Me.lbll.TabIndex = 218
         Me.lbll.Text = "LISTA2"
         '
@@ -959,7 +959,7 @@ Partial Class productos
         Me.Label29.ForeColor = System.Drawing.Color.Black
         Me.Label29.Location = New System.Drawing.Point(276, 300)
         Me.Label29.Name = "Label29"
-        Me.Label29.Size = New System.Drawing.Size(58, 16)
+        Me.Label29.Size = New System.Drawing.Size(57, 16)
         Me.Label29.TabIndex = 220
         Me.Label29.Text = "LISTA3"
         '
@@ -970,7 +970,7 @@ Partial Class productos
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(3, 125)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(37, 16)
+        Me.Label3.Size = New System.Drawing.Size(36, 16)
         Me.Label3.TabIndex = 200
         Me.Label3.Text = "PLU"
         '
@@ -989,7 +989,7 @@ Partial Class productos
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(3, 174)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(68, 16)
+        Me.Label2.Size = New System.Drawing.Size(67, 16)
         Me.Label2.TabIndex = 202
         Me.Label2.Text = "CodProv"
         '
@@ -1016,7 +1016,7 @@ Partial Class productos
         Me.Label12.ForeColor = System.Drawing.Color.Black
         Me.Label12.Location = New System.Drawing.Point(293, 174)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(67, 16)
+        Me.Label12.Size = New System.Drawing.Size(66, 16)
         Me.Label12.TabIndex = 211
         Me.Label12.Text = "Garantia"
         '
@@ -1049,7 +1049,7 @@ Partial Class productos
         Me.Label24.ForeColor = System.Drawing.Color.Black
         Me.Label24.Location = New System.Drawing.Point(563, 55)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(47, 16)
+        Me.Label24.Size = New System.Drawing.Size(46, 16)
         Me.Label24.TabIndex = 212
         Me.Label24.Text = "Stock"
         '
@@ -1079,7 +1079,7 @@ Partial Class productos
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(0, 5)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(153, 16)
+        Me.Label4.Size = New System.Drawing.Size(152, 16)
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Nombre/descripcion:"
         '
@@ -1150,6 +1150,20 @@ Partial Class productos
         Me.tabcostos.Text = "Calculo de precio"
         Me.tabcostos.UseVisualStyleBackColor = True
         '
+        'chkpreciobase
+        '
+        Me.chkpreciobase.AutoSize = True
+        Me.chkpreciobase.Checked = True
+        Me.chkpreciobase.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkpreciobase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.chkpreciobase.Location = New System.Drawing.Point(663, 103)
+        Me.chkpreciobase.Name = "chkpreciobase"
+        Me.chkpreciobase.Size = New System.Drawing.Size(131, 20)
+        Me.chkpreciobase.TabIndex = 245
+        Me.chkpreciobase.Text = "Calcular precio"
+        Me.chkpreciobase.UseVisualStyleBackColor = True
+        Me.chkpreciobase.Visible = False
+        '
         'grpImpuestosCombustibles
         '
         Me.grpImpuestosCombustibles.Controls.Add(Me.txtICL)
@@ -1180,7 +1194,7 @@ Partial Class productos
         Me.Label38.ForeColor = System.Drawing.Color.Black
         Me.Label38.Location = New System.Drawing.Point(112, 19)
         Me.Label38.Name = "Label38"
-        Me.Label38.Size = New System.Drawing.Size(50, 16)
+        Me.Label38.Size = New System.Drawing.Size(49, 16)
         Me.Label38.TabIndex = 247
         Me.Label38.Text = "I.C.L $"
         '
@@ -1200,7 +1214,7 @@ Partial Class productos
         Me.Label39.ForeColor = System.Drawing.Color.Black
         Me.Label39.Location = New System.Drawing.Point(6, 19)
         Me.Label39.Name = "Label39"
-        Me.Label39.Size = New System.Drawing.Size(57, 16)
+        Me.Label39.Size = New System.Drawing.Size(56, 16)
         Me.Label39.TabIndex = 245
         Me.Label39.Text = "I.D.C. $"
         '
@@ -1221,7 +1235,7 @@ Partial Class productos
         Me.lblutilidad5.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad5.Location = New System.Drawing.Point(217, 217)
         Me.lblutilidad5.Name = "lblutilidad5"
-        Me.lblutilidad5.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad5.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad5.TabIndex = 243
         Me.lblutilidad5.Text = "Utilidad 5: %"
         Me.lblutilidad5.Visible = False
@@ -1243,7 +1257,7 @@ Partial Class productos
         Me.lblutilidad4.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad4.Location = New System.Drawing.Point(217, 173)
         Me.lblutilidad4.Name = "lblutilidad4"
-        Me.lblutilidad4.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad4.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad4.TabIndex = 241
         Me.lblutilidad4.Text = "Utilidad 4: %"
         Me.lblutilidad4.Visible = False
@@ -1265,7 +1279,7 @@ Partial Class productos
         Me.lblutilidad3.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad3.Location = New System.Drawing.Point(109, 217)
         Me.lblutilidad3.Name = "lblutilidad3"
-        Me.lblutilidad3.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad3.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad3.TabIndex = 239
         Me.lblutilidad3.Text = "Utilidad 3: %"
         Me.lblutilidad3.Visible = False
@@ -1275,7 +1289,7 @@ Partial Class productos
         Me.chkcalcularcosto.AutoSize = True
         Me.chkcalcularcosto.Location = New System.Drawing.Point(112, 27)
         Me.chkcalcularcosto.Name = "chkcalcularcosto"
-        Me.chkcalcularcosto.Size = New System.Drawing.Size(153, 20)
+        Me.chkcalcularcosto.Size = New System.Drawing.Size(152, 20)
         Me.chkcalcularcosto.TabIndex = 237
         Me.chkcalcularcosto.Text = "Calcular costo sin iva"
         Me.chkcalcularcosto.UseVisualStyleBackColor = True
@@ -1304,7 +1318,7 @@ Partial Class productos
         Me.Label18.ForeColor = System.Drawing.Color.Black
         Me.Label18.Location = New System.Drawing.Point(3, 79)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(129, 16)
+        Me.Label18.Size = New System.Drawing.Size(128, 16)
         Me.Label18.TabIndex = 214
         Me.Label18.Text = "Precio de LISTA1"
         Me.Label18.Visible = False
@@ -1316,7 +1330,7 @@ Partial Class productos
         Me.lblintereslista.ForeColor = System.Drawing.Color.Black
         Me.lblintereslista.Location = New System.Drawing.Point(-2, 22)
         Me.lblintereslista.Name = "lblintereslista"
-        Me.lblintereslista.Size = New System.Drawing.Size(16, 16)
+        Me.lblintereslista.Size = New System.Drawing.Size(15, 16)
         Me.lblintereslista.TabIndex = 225
         Me.lblintereslista.Text = "0"
         Me.lblintereslista.Visible = False
@@ -1328,7 +1342,7 @@ Partial Class productos
         Me.Intereslista.ForeColor = System.Drawing.Color.Black
         Me.Intereslista.Location = New System.Drawing.Point(-3, -3)
         Me.Intereslista.Name = "Intereslista"
-        Me.Intereslista.Size = New System.Drawing.Size(92, 16)
+        Me.Intereslista.Size = New System.Drawing.Size(91, 16)
         Me.Intereslista.TabIndex = 224
         Me.Intereslista.Text = "Interes Lista"
         Me.Intereslista.Visible = False
@@ -1340,7 +1354,7 @@ Partial Class productos
         Me.lblventas.ForeColor = System.Drawing.Color.Black
         Me.lblventas.Location = New System.Drawing.Point(-1, 63)
         Me.lblventas.Name = "lblventas"
-        Me.lblventas.Size = New System.Drawing.Size(16, 16)
+        Me.lblventas.Size = New System.Drawing.Size(15, 16)
         Me.lblventas.TabIndex = 217
         Me.lblventas.Text = "0"
         Me.lblventas.Visible = False
@@ -1365,7 +1379,7 @@ Partial Class productos
         Me.Label19.ForeColor = System.Drawing.Color.Black
         Me.Label19.Location = New System.Drawing.Point(-2, 38)
         Me.Label19.Name = "Label19"
-        Me.Label19.Size = New System.Drawing.Size(56, 16)
+        Me.Label19.Size = New System.Drawing.Size(55, 16)
         Me.Label19.TabIndex = 216
         Me.Label19.Text = "Ventas"
         Me.Label19.Visible = False
@@ -1377,7 +1391,7 @@ Partial Class productos
         Me.Label20.ForeColor = System.Drawing.Color.Black
         Me.Label20.Location = New System.Drawing.Point(3, 148)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(129, 16)
+        Me.Label20.Size = New System.Drawing.Size(128, 16)
         Me.Label20.TabIndex = 227
         Me.Label20.Text = "Precio de LISTA2"
         Me.Label20.Visible = False
@@ -1415,7 +1429,7 @@ Partial Class productos
         Me.Label21.ForeColor = System.Drawing.Color.Black
         Me.Label21.Location = New System.Drawing.Point(3, 217)
         Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(129, 16)
+        Me.Label21.Size = New System.Drawing.Size(128, 16)
         Me.Label21.TabIndex = 229
         Me.Label21.Text = "Precio de LISTA3"
         Me.Label21.Visible = False
@@ -1449,7 +1463,7 @@ Partial Class productos
         Me.lblformula.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.lblformula.Location = New System.Drawing.Point(3, 289)
         Me.lblformula.Name = "lblformula"
-        Me.lblformula.Size = New System.Drawing.Size(52, 16)
+        Me.lblformula.Size = New System.Drawing.Size(51, 16)
         Me.lblformula.TabIndex = 223
         Me.lblformula.Text = "formula"
         Me.lblformula.Visible = False
@@ -1471,7 +1485,7 @@ Partial Class productos
         Me.lblutilidad2.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad2.Location = New System.Drawing.Point(109, 173)
         Me.lblutilidad2.Name = "lblutilidad2"
-        Me.lblutilidad2.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad2.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad2.TabIndex = 233
         Me.lblutilidad2.Text = "Utilidad 2: %"
         Me.lblutilidad2.Visible = False
@@ -1483,7 +1497,7 @@ Partial Class productos
         Me.Label23.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label23.Location = New System.Drawing.Point(186, 56)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(68, 16)
+        Me.Label23.Size = New System.Drawing.Size(67, 16)
         Me.Label23.TabIndex = 222
         Me.Label23.Text = "Moneda:"
         '
@@ -1504,7 +1518,7 @@ Partial Class productos
         Me.lblutilidad0.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad0.Location = New System.Drawing.Point(6, 173)
         Me.lblutilidad0.Name = "lblutilidad0"
-        Me.lblutilidad0.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad0.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad0.TabIndex = 210
         Me.lblutilidad0.Text = "Utilidad 0: %"
         Me.lblutilidad0.Visible = False
@@ -1516,7 +1530,7 @@ Partial Class productos
         Me.lblcotizacion.ForeColor = System.Drawing.Color.Black
         Me.lblcotizacion.Location = New System.Drawing.Point(319, 81)
         Me.lblcotizacion.Name = "lblcotizacion"
-        Me.lblcotizacion.Size = New System.Drawing.Size(16, 16)
+        Me.lblcotizacion.Size = New System.Drawing.Size(15, 16)
         Me.lblcotizacion.TabIndex = 218
         Me.lblcotizacion.Text = "0"
         '
@@ -1549,7 +1563,7 @@ Partial Class productos
         Me.lblutilidad1.ForeColor = System.Drawing.Color.Black
         Me.lblutilidad1.Location = New System.Drawing.Point(6, 217)
         Me.lblutilidad1.Name = "lblutilidad1"
-        Me.lblutilidad1.Size = New System.Drawing.Size(95, 16)
+        Me.lblutilidad1.Size = New System.Drawing.Size(94, 16)
         Me.lblutilidad1.TabIndex = 231
         Me.lblutilidad1.Text = "Utilidad 1: %"
         Me.lblutilidad1.Visible = False
@@ -1561,7 +1575,7 @@ Partial Class productos
         Me.Label17.ForeColor = System.Drawing.Color.Black
         Me.Label17.Location = New System.Drawing.Point(6, 104)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(98, 16)
+        Me.Label17.Size = New System.Drawing.Size(97, 16)
         Me.Label17.TabIndex = 212
         Me.Label17.Text = "COSTO Final"
         '
@@ -1572,7 +1586,7 @@ Partial Class productos
         Me.Label15.ForeColor = System.Drawing.Color.Black
         Me.Label15.Location = New System.Drawing.Point(318, 56)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(80, 16)
+        Me.Label15.Size = New System.Drawing.Size(79, 16)
         Me.Label15.TabIndex = 208
         Me.Label15.Text = "Cotizacion"
         '
@@ -1592,7 +1606,7 @@ Partial Class productos
         Me.Label14.ForeColor = System.Drawing.Color.Black
         Me.Label14.Location = New System.Drawing.Point(6, 56)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(53, 16)
+        Me.Label14.Size = New System.Drawing.Size(52, 16)
         Me.Label14.TabIndex = 206
         Me.Label14.Text = "IVA: %"
         '
@@ -1612,7 +1626,7 @@ Partial Class productos
         Me.Label8.ForeColor = System.Drawing.Color.Black
         Me.Label8.Location = New System.Drawing.Point(6, 6)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(233, 16)
+        Me.Label8.Size = New System.Drawing.Size(232, 16)
         Me.Label8.TabIndex = 204
         Me.Label8.Text = "COSTO COMPRA/PRODUCCION"
         '
@@ -1694,7 +1708,7 @@ Partial Class productos
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button8.ForeColor = System.Drawing.Color.White
-        Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.Eye_32px
+        'Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.Eye_32px
         Me.Button8.Location = New System.Drawing.Point(794, 0)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(52, 56)
@@ -1759,7 +1773,7 @@ Partial Class productos
         Me.chkutilidad.ForeColor = System.Drawing.Color.White
         Me.chkutilidad.Location = New System.Drawing.Point(411, 3)
         Me.chkutilidad.Name = "chkutilidad"
-        Me.chkutilidad.Size = New System.Drawing.Size(95, 20)
+        Me.chkutilidad.Size = New System.Drawing.Size(94, 20)
         Me.chkutilidad.TabIndex = 249
         Me.chkutilidad.Text = "Utilidad0 %"
         Me.chkutilidad.UseVisualStyleBackColor = True
@@ -1773,7 +1787,7 @@ Partial Class productos
         Me.chkimportiva.ForeColor = System.Drawing.Color.White
         Me.chkimportiva.Location = New System.Drawing.Point(385, 58)
         Me.chkimportiva.Name = "chkimportiva"
-        Me.chkimportiva.Size = New System.Drawing.Size(48, 20)
+        Me.chkimportiva.Size = New System.Drawing.Size(47, 20)
         Me.chkimportiva.TabIndex = 248
         Me.chkimportiva.Text = "IVA"
         Me.chkimportiva.UseVisualStyleBackColor = True
@@ -1787,7 +1801,7 @@ Partial Class productos
         Me.chkimportprecio.ForeColor = System.Drawing.Color.White
         Me.chkimportprecio.Location = New System.Drawing.Point(289, 58)
         Me.chkimportprecio.Name = "chkimportprecio"
-        Me.chkimportprecio.Size = New System.Drawing.Size(93, 20)
+        Me.chkimportprecio.Size = New System.Drawing.Size(92, 20)
         Me.chkimportprecio.TabIndex = 247
         Me.chkimportprecio.Text = "Pcio. costo"
         Me.chkimportprecio.UseVisualStyleBackColor = True
@@ -1798,7 +1812,7 @@ Partial Class productos
         Me.chkimportpresentacion.ForeColor = System.Drawing.Color.White
         Me.chkimportpresentacion.Location = New System.Drawing.Point(187, 58)
         Me.chkimportpresentacion.Name = "chkimportpresentacion"
-        Me.chkimportpresentacion.Size = New System.Drawing.Size(106, 20)
+        Me.chkimportpresentacion.Size = New System.Drawing.Size(105, 20)
         Me.chkimportpresentacion.TabIndex = 246
         Me.chkimportpresentacion.Text = "Presentación"
         Me.chkimportpresentacion.UseVisualStyleBackColor = True
@@ -1811,7 +1825,7 @@ Partial Class productos
         Me.chkimportcodbar.ForeColor = System.Drawing.Color.White
         Me.chkimportcodbar.Location = New System.Drawing.Point(98, 58)
         Me.chkimportcodbar.Name = "chkimportcodbar"
-        Me.chkimportcodbar.Size = New System.Drawing.Size(83, 20)
+        Me.chkimportcodbar.Size = New System.Drawing.Size(82, 20)
         Me.chkimportcodbar.TabIndex = 245
         Me.chkimportcodbar.Text = "Cod_barr"
         Me.chkimportcodbar.UseVisualStyleBackColor = True
@@ -1825,7 +1839,7 @@ Partial Class productos
         Me.chkimportdescripcion.ForeColor = System.Drawing.Color.White
         Me.chkimportdescripcion.Location = New System.Drawing.Point(2, 58)
         Me.chkimportdescripcion.Name = "chkimportdescripcion"
-        Me.chkimportdescripcion.Size = New System.Drawing.Size(99, 20)
+        Me.chkimportdescripcion.Size = New System.Drawing.Size(98, 20)
         Me.chkimportdescripcion.TabIndex = 244
         Me.chkimportdescripcion.Text = "Descripción"
         Me.chkimportdescripcion.UseVisualStyleBackColor = True
@@ -1836,7 +1850,7 @@ Partial Class productos
         Me.chkimportcateg.ForeColor = System.Drawing.Color.White
         Me.chkimportcateg.Location = New System.Drawing.Point(231, 3)
         Me.chkimportcateg.Name = "chkimportcateg"
-        Me.chkimportcateg.Size = New System.Drawing.Size(86, 20)
+        Me.chkimportcateg.Size = New System.Drawing.Size(85, 20)
         Me.chkimportcateg.TabIndex = 243
         Me.chkimportcateg.Text = "Categoria"
         Me.chkimportcateg.UseVisualStyleBackColor = True
@@ -1847,7 +1861,7 @@ Partial Class productos
         Me.chkimportproveedor.ForeColor = System.Drawing.Color.White
         Me.chkimportproveedor.Location = New System.Drawing.Point(49, 3)
         Me.chkimportproveedor.Name = "chkimportproveedor"
-        Me.chkimportproveedor.Size = New System.Drawing.Size(91, 20)
+        Me.chkimportproveedor.Size = New System.Drawing.Size(90, 20)
         Me.chkimportproveedor.TabIndex = 242
         Me.chkimportproveedor.Text = "Proveedor"
         Me.chkimportproveedor.UseVisualStyleBackColor = True
@@ -1889,7 +1903,7 @@ Partial Class productos
         Me.chkcalcularprecio.ForeColor = System.Drawing.Color.White
         Me.chkcalcularprecio.Location = New System.Drawing.Point(66, 26)
         Me.chkcalcularprecio.Name = "chkcalcularprecio"
-        Me.chkcalcularprecio.Size = New System.Drawing.Size(146, 20)
+        Me.chkcalcularprecio.Size = New System.Drawing.Size(145, 20)
         Me.chkcalcularprecio.TabIndex = 7
         Me.chkcalcularprecio.Text = "Calcular Precio Gral"
         Me.chkcalcularprecio.UseVisualStyleBackColor = True
@@ -2063,7 +2077,7 @@ Partial Class productos
         Me.Label6.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label6.Location = New System.Drawing.Point(307, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(196, 16)
+        Me.Label6.Size = New System.Drawing.Size(195, 16)
         Me.Label6.TabIndex = 228
         Me.Label6.Text = "Promociones y Comisiones"
         '
@@ -2114,7 +2128,7 @@ Partial Class productos
         Me.Label34.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label34.Location = New System.Drawing.Point(3, 0)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(61, 16)
+        Me.Label34.Size = New System.Drawing.Size(60, 16)
         Me.Label34.TabIndex = 226
         Me.Label34.Text = "Precios"
         '
@@ -2143,18 +2157,18 @@ Partial Class productos
         '
         'Column4
         '
-        DataGridViewCellStyle15.Format = "N2"
-        DataGridViewCellStyle15.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column4.HeaderText = "Utilidad"
         Me.Column4.Name = "Column4"
         Me.Column4.Visible = False
         '
         'Column5
         '
-        DataGridViewCellStyle16.Format = "C3"
-        DataGridViewCellStyle16.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle2.Format = "C3"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column5.FillWeight = 40.0!
         Me.Column5.HeaderText = "Precio"
         Me.Column5.Name = "Column5"
@@ -2183,9 +2197,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle17.Format = "N2"
-        DataGridViewCellStyle17.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
         Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
         Me.DataGridViewTextBoxColumn2.ReadOnly = True
@@ -2194,9 +2208,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle18.Format = "C2"
-        DataGridViewCellStyle18.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn3.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -2206,9 +2220,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle19.Format = "C2"
-        DataGridViewCellStyle19.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn4.HeaderText = "%"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
@@ -2227,9 +2241,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle6
         Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn6.HeaderText = "idpromo"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
@@ -2237,9 +2251,9 @@ Partial Class productos
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle21.Format = "C2"
-        DataGridViewCellStyle21.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle7.Format = "C2"
+        DataGridViewCellStyle7.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle7
         Me.DataGridViewTextBoxColumn7.FillWeight = 40.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "DESCRIPCION"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -2263,20 +2277,6 @@ Partial Class productos
         'MySettingsBindingSource
         '
         Me.MySettingsBindingSource.DataSource = GetType(System.Configuration.ApplicationSettingsBase)
-        '
-        'chkpreciobase
-        '
-        Me.chkpreciobase.AutoSize = True
-        Me.chkpreciobase.Checked = True
-        Me.chkpreciobase.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkpreciobase.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.chkpreciobase.Location = New System.Drawing.Point(663, 103)
-        Me.chkpreciobase.Name = "chkpreciobase"
-        Me.chkpreciobase.Size = New System.Drawing.Size(132, 20)
-        Me.chkpreciobase.TabIndex = 245
-        Me.chkpreciobase.Text = "Calcular precio"
-        Me.chkpreciobase.UseVisualStyleBackColor = True
-        Me.chkpreciobase.Visible = False
         '
         'productos
         '

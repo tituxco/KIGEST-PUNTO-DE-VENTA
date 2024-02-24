@@ -154,6 +154,11 @@
                         addProductosLote.dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
                         addProductosLote.cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
                         addProductosLote.calcularPrecios2(fila)
+                    Case "romaneo"
+                        romaneo.dtproductos.Rows(fila).Cells(1).Value = dtproductos.CurrentRow.Cells.Item(3).Value
+                        romaneo.cargarProdPLU(dtproductos.CurrentRow.Cells.Item(3).Value, fila)
+                        'addProductosLote.calcularPrecios2(fila)
+
                 End Select
                 Me.Close()
             End If

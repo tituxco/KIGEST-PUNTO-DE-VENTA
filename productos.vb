@@ -1853,4 +1853,8 @@ Public Class productos
         calcularPrecios()
 
     End Sub
+
+    Private Sub tabstock_Click(sender As Object, e As EventArgs) Handles tabstock.Click
+
+    End Sub
 End Class

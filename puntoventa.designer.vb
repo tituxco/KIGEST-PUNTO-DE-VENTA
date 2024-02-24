@@ -1072,7 +1072,6 @@ Partial Class puntoventa
         'Button6
         '
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Image = Global.SIGT__KIGEST.My.Resources.Resources.transaction_26px
         Me.Button6.Location = New System.Drawing.Point(633, 0)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(44, 35)
