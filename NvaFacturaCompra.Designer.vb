@@ -571,7 +571,7 @@ Partial Class NvaFacturaCompra
         Me.cmbtipocomComp.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbtipocomComp.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
         Me.cmbtipocomComp.FormattingEnabled = True
-        Me.cmbtipocomComp.Items.AddRange(New Object() {"FA", "FM", "FB", "FC", "NC", "ND", "FX"})
+        Me.cmbtipocomComp.Items.AddRange(New Object() {"FA", "FM", "FB", "FC", "NCA", "NDA", "FX"})
         Me.cmbtipocomComp.Location = New System.Drawing.Point(6, 132)
         Me.cmbtipocomComp.Name = "cmbtipocomComp"
         Me.cmbtipocomComp.Size = New System.Drawing.Size(129, 21)

@@ -481,7 +481,7 @@ Public Class proveedores
 
                         fe.ArchivoXMLEnviado = Application.StartupPath & "\p1envio.xml"
                         fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
-                        fe.p1Version = 5
+                        fe.p1Version = 55
 
                         If fe.p1ObtenerTicketAcceso() Then
                             bresultado = fe.p1GetPersona(txtcuit.Text)
@@ -647,5 +647,9 @@ Public Class proveedores
         mov.movraptip = 993
         mov.movrapclie = dtpersonal.CurrentRow.Cells("Cuenta").Value
         mov.Show()
+    End Sub
+
+    Private Sub TabPage2_Click(sender As Object, e As EventArgs) Handles TabPage2.Click
+
     End Sub
 End Class

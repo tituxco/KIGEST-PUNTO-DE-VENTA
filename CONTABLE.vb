@@ -501,7 +501,7 @@ Public Class CONTABLE
             consulta.Fill(tabla)
             Dim tablacta() As DataRow
             tablacta = tabla.Select("")
-            MsgBox(consulta.SelectCommand.CommandText)
+            'MsgBox(consulta.SelectCommand.CommandText)
             Dim i As Integer
             dtcuentaprov.Rows.Clear()
 
@@ -512,9 +512,9 @@ Public Class CONTABLE
                 Select Case tablacta(i)(6)
                     Case 1, 2, 6, 7, 11, 12, 999, 992
                         If dias <= 0 Then
-                            debegral = debegral + tablacta(i)(4)
+                            debegral = debegral + tablacta(i)("monto")
                             saldo = FormatNumber(debegral - habergral, 2)
-                            dtcuentaprov.Rows.Add(tablacta(i)(0), tablacta(i)(1).ToString, tablacta(i)(3), tablacta(i)(4), "0", tablacta(i)(5), saldo)
+                            dtcuentaprov.Rows.Add(tablacta(i)("id"), tablacta(i)(3), tablacta(i)("fecha").ToString, tablacta(i)("monto"), "0", tablacta(i)("vencimiento"), saldo)
                             If tablacta(i)(8) = 1 Then
                                 dtcuentaprov.Rows(dtcuentaprov.RowCount - 1).DefaultCellStyle.BackColor = Color.GreenYellow
                             End If
@@ -525,13 +525,13 @@ Public Class CONTABLE
                     Case 3, 8, 13, 991, 993
                         If dias <= 0 Then
                             If tablacta(i)(7) = 2 Then
-                                habergral = habergral + tablacta(i)(4)
+                                habergral = habergral + tablacta(i)("monto")
                                 saldo = FormatNumber(debegral - habergral, 2)
-                                dtcuentaprov.Rows.Add(tablacta(i)(0), tablacta(i)(1).ToString, tablacta(i)(3), "0", tablacta(i)(4), " ", saldo)
+                                dtcuentaprov.Rows.Add(tablacta(i)("id"), tablacta(i)(3).ToString, tablacta(i)("fecha"), "0", tablacta(i)("monto"), " ", saldo)
                                 dtcuentaprov.Rows(dtcuentaprov.RowCount - 1).DefaultCellStyle.BackColor = Color.Yellow
                             End If
                         Else
-                            debegral = debegral - tablacta(i)(4)
+                            debegral = debegral - tablacta(i)("monto")
                             saldoant = FormatNumber(debegral - habergral, 2)
                         End If
 
@@ -4204,7 +4204,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             where
             LD.codigoAsiento=stos.codigoAsiento and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
-            LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%'
+            LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by LD.fecha asc, stos.id ASC
             ", conexionPrinc)
 
             tabContable.Fill(datosContables.Tables("libroDiario"))

@@ -51,18 +51,31 @@ Public Class NvaFacturaCompra
                 Exit Sub
             End If
             Dim tipoComprobante As Integer
+            Dim tipoIngEg As Integer
+
             Select Case tipocomp
                 Case "FA"
                     tipoComprobante = 1
+                    tipoIngEg = 1
+
                 Case "FB"
                     tipoComprobante = 6
+                    tipoIngEg = 1
                 Case "FC"
                     tipoComprobante = 11
+                    tipoIngEg = 1
                 Case "FX"
                     tipoComprobante = 999
+                    tipoIngEg = 1
                 Case "FM"
                     tipoComprobante = 51
-
+                    tipoIngEg = 1
+                Case "NCA"
+                    tipoComprobante = 3
+                    tipoIngEg = 2
+                Case "NDA"
+                    tipoIngEg = 1
+                    tipoComprobante = 2
             End Select
 
             If tipocomp = "NC" Then
@@ -88,7 +101,7 @@ Public Class NvaFacturaCompra
                 .AddWithValue("?monto", total)
                 .AddWithValue("?vencimiento", fecha)
                 .AddWithValue("?idproveedor", idProveedor)
-                .AddWithValue("?tipoingeg", 1)
+                .AddWithValue("?tipoingeg", tipoIngEg)
                 .AddWithValue("?cerrado", 0)
             End With
             addFactProvStock.ExecuteNonQuery()

@@ -136,9 +136,9 @@
             Else
                 dtproductos.Rows(fila).Cells(1).Value = filasProd(i)(1)
             End If
-            If IsDBNull(dtproductos.Rows(fila).Cells(2)) Then
-                dtproductos.Rows(fila).Cells(2).Value = 1
-            End If
+            'If  IsDBNull(dtproductos.Rows(fila).Cells(2)) Then
+            dtproductos.Rows(fila).Cells(2).Value = 1
+            'End If
 
             dtproductos.Rows(fila).Cells(3).Value = filasProd(i)(3)
             dtproductos.Rows(fila).Cells(4).Value = filasProd(i)(2)
@@ -514,10 +514,10 @@
                 Dim tipocontr As String = cmbtipocontr.Text
                 Dim cuit As String = txtcuit.Text
                 Dim condvta As Integer = cmbcondvta.SelectedValue
-                Dim subtotal As String = txtsubtotal.Text
+                Dim subtotal As String = txtsubtotal.Text.ToString.Replace(".", "")
                 Dim iva105 As String = txtiva105.Text
                 Dim iva21 As String = txtiva21.Text
-                Dim total As String = txttotal.Text
+                Dim total As String = txttotal.Text.ToString.Replace(".", "")
                 Dim vendedor As Integer = cmbvendedor.SelectedValue
                 Dim observaciones As String = txtobservaciones.Text.ToUpper
 
@@ -605,7 +605,8 @@
                 sqlQuery = "update fact_facturas set ptovta= '" & Val(txtptovta.Text) & "', num_fact='" & Val(txtnufac.Text) &
                 "', razon='" & txtrazon.Text.ToUpper & "', direccion= '" & txtdomicilio.Text & "', localidad='" & txtciudad.Text &
                 "', tipocontr= '" & cmbtipocontr.Text & "', cuit= '" & txtcuit.Text & "', subtotal='" & txtsubtotal.Text.ToString.Replace(".", "") &
-                "', total='" & txttotal.Text.ToString.Replace(".", "") & "', observaciones= 'PENDIENTE', observaciones2='" & txtobservaciones.Text & "' where id=" & idFactura
+                "', total='" & txttotal.Text.ToString.Replace(".", "") & "', observaciones= 'PENDIENTE', 
+                observaciones2='" & txtobservaciones.Text & "', condvta='" & cmbcondvta.SelectedValue & "' where id=" & idFactura
 
                 Dim comandoUpdped As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 comandoUpdped.ExecuteNonQuery()

@@ -370,7 +370,7 @@
         Dim tipocontr As String = cmbtipocontr.Text
         Dim cuit As String = txtcuit.Text
 
-        Dim totalRecibo As String = remplazarPunto(txttotalrecibo.Text)
+        Dim totalRecibo As String = remplazarPunto(txttotalrecibo.Text).Replace(".", ",")
         Dim totalRetenciones As String = remplazarPunto(txtretenciones.Text)
         Dim totalTarjetas As String = remplazarPunto(txttotaltarjeta.Text)
         Dim totalCheques As String = remplazarPunto(txttotalvalores.Text)
@@ -680,7 +680,7 @@
             Dim numerofact_conf As String = CType(txtnufac.Text, Integer)
             Dim fecha As String = Format(CDate(fechagral), "yyyy-MM-dd")
             Dim idprov As String = cmbproveedores.SelectedValue
-            Dim total As String = remplazarPunto(txttotalop.Text)
+            Dim total As String = remplazarcoma(txttotalop.Text)
             Dim tipoFact As Integer = cmbtipofac.SelectedValue
 
 

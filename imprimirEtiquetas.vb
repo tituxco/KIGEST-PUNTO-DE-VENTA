@@ -834,4 +834,8 @@ Public Class imprimirEtiquetas
     Private Sub cmbCategoria_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCategoria.SelectedIndexChanged
 
     End Sub
+
+    Private Sub pnCantidades_Paint(sender As Object, e As PaintEventArgs) Handles pnCantidades.Paint
+
+    End Sub
 End Class

@@ -143,12 +143,12 @@ Public Class puntoventa
 			infocl = tablacl.Select("")
 
 			'MsgBox(consulta.SelectCommand.CommandText)
-			If tipofact = 1 And infocl(0)("iva_tipo") <> 1 Then
-				MsgBox("El tipo de contribuyente no corresponde para el tipo de factura, por favor verifique")
-				txtcliecta.Text = ""
-				Exit Sub
-			Else
-				txtcliecta.Text = infocl(0)("idclientes")
+			'If tipofact = 1 And infocl(0)("iva_tipo") <> 1 Then
+			'	MsgBox("El tipo de contribuyente no corresponde para el tipo de factura, por favor verifique")
+			'	txtcliecta.Text = ""
+			'	Exit Sub
+			'Else
+			txtcliecta.Text = infocl(0)("idclientes")
 				txtclierazon.Text = infocl(0)("clie")
 				lblcliedomicilio.Text = infocl(0)("dir_domicilio")
 				lblclieciudad.Text = infocl(0)("localidad")
@@ -167,9 +167,9 @@ Public Class puntoventa
 				lblfactlistaprecios.Text = infocl(0)("lista_preciosNM")
 				listaPrecios = infocl(0)("lista_precios")
 				TipoIVAContr = infocl(0)("iva_tipo")
-				'txtcodPLU.Focus()
+			'txtcodPLU.Focus()
 
-			End If
+			'End If
 			'MsgBox(infocl(0)("clie"))
 
 		Catch ex As Exception
@@ -251,10 +251,6 @@ Public Class puntoventa
 				'Dim cant As Double = 
 				dtproductos.Rows(e.RowIndex).Cells(6).Value = Math.Round(pUnit * cant, 2)
 				dtproductos.Rows(e.RowIndex).DefaultCellStyle.BackColor = Color.GreenYellow
-
-
-
-
 				CalcularTotales()
 			End If
 		Catch ex As Exception
@@ -298,6 +294,17 @@ Public Class puntoventa
 			End If
 
 			For Each producto As DataGridViewRow In dtproductos.Rows
+
+				Dim alicuota As String = producto.Cells(4).Value
+				If producto.IsNewRow Then
+					Exit For
+				End If
+
+				If alicuota <> "10,5" And alicuota <> "21" And alicuota <> "21,00" Then
+					MsgBox("LA ALICUOTA DEL PRODUCTO NO ES CORRECTA: <" + alicuota + ">, POR FAVOR VERIFIQUE")
+					producto.DefaultCellStyle.BackColor = Color.Fuchsia
+					Exit For
+				End If
 
 
 				Select Case tipofact
@@ -2138,17 +2145,17 @@ Public Class puntoventa
 					idiva = 3
 				Case 4
 					If txtcliecuitcuil.Text = "" Then
-						MsgBox("Debe ingresar el DNI o CUIL del cliente")
-						EnProgreso.Close()
-						Exit Sub
+						If MsgBox("Esta seguro que desea realizar una factura sin identificacion?", vbYesNo + vbQuestion, "Factura sin identificacion") = vbYes Then
+							contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
+							doctipo = WSAFIPFE.Factura.TipoDocumento.SinIdentificacionGlobalDiario
+							idiva = 3
+						End If
 					ElseIf txtcliecuitcuil.Text <> "" And IsNumeric(txtcliecuitcuil.Text) And txtcliecuitcuil.Text <> "0" Then
-
-						contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
-						doctipo = WSAFIPFE.Factura.TipoDocumento.DNI
-						'txtcuit.Text = 0
-						idiva = 3
-					Else
-						MsgBox("debe ingresar un DNI o CUIL correcto")
+							contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
+							doctipo = WSAFIPFE.Factura.TipoDocumento.DNI
+							idiva = 3
+						Else
+							MsgBox("debe ingresar un DNI o CUIL correcto")
 						EnProgreso.Close()
 						Exit Sub
 					End If
@@ -2812,7 +2819,7 @@ Public Class puntoventa
 
 			fe.ArchivoXMLEnviado = Application.StartupPath & "\p1envio.xml"
 			fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
-			fe.p1Version = 5
+			fe.p1Version = 55
 
 
 			If fe.p1ObtenerTicketAcceso() Then

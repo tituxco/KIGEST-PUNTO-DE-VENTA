@@ -748,7 +748,6 @@
                           <PaddingBottom>2pt</PaddingBottom>
                         </Style>
                       </Textbox>
-                      <rd:Selected>true</rd:Selected>
                     </CellContents>
                   </TablixHeader>
                   <TablixMembers>
@@ -1047,6 +1046,10 @@
             <SortExpressions>
               <SortExpression>
                 <Value>=Fields!fecha.Value</Value>
+              </SortExpression>
+              <SortExpression>
+                <Value>=Fields!importeDebe.Value</Value>
+                <Direction>Descending</Direction>
               </SortExpression>
             </SortExpressions>
             <Top>0.07056cm</Top>

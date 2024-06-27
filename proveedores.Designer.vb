@@ -23,12 +23,12 @@ Partial Class proveedores
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(proveedores))
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
@@ -70,6 +70,7 @@ Partial Class proveedores
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -78,7 +79,6 @@ Partial Class proveedores
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -340,7 +340,7 @@ Partial Class proveedores
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label5.Location = New System.Drawing.Point(8, 22)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(129, 16)
+        Me.Label5.Size = New System.Drawing.Size(128, 16)
         Me.Label5.TabIndex = 202
         Me.Label5.Text = "Cuenta de gastos"
         '
@@ -359,7 +359,7 @@ Partial Class proveedores
         Me.Label3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label3.Location = New System.Drawing.Point(337, 49)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(43, 16)
+        Me.Label3.Size = New System.Drawing.Size(42, 16)
         Me.Label3.TabIndex = 200
         Me.Label3.Text = "CUIT"
         '
@@ -379,7 +379,7 @@ Partial Class proveedores
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(-3, 136)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(156, 16)
+        Me.Label10.Size = New System.Drawing.Size(155, 16)
         Me.Label10.TabIndex = 198
         Me.Label10.Text = "Información adicional"
         '
@@ -398,7 +398,7 @@ Partial Class proveedores
         Me.Label15.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label15.Location = New System.Drawing.Point(-3, 92)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(77, 16)
+        Me.Label15.Size = New System.Drawing.Size(76, 16)
         Me.Label15.TabIndex = 185
         Me.Label15.Text = "Domicilio:"
         '
@@ -419,7 +419,7 @@ Partial Class proveedores
         Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label13.Location = New System.Drawing.Point(-3, 49)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(76, 16)
+        Me.Label13.Size = New System.Drawing.Size(75, 16)
         Me.Label13.TabIndex = 164
         Me.Label13.Text = "Cond. IVA"
         '
@@ -438,7 +438,7 @@ Partial Class proveedores
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(-3, 3)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(102, 16)
+        Me.Label4.Size = New System.Drawing.Size(101, 16)
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Razon social:"
         '
@@ -482,9 +482,9 @@ Partial Class proveedores
         '
         'Column8
         '
-        DataGridViewCellStyle19.Format = "d"
-        DataGridViewCellStyle19.NullValue = Nothing
-        Me.Column8.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column8.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column8.FillWeight = 20.0!
         Me.Column8.HeaderText = "Fecha"
         Me.Column8.Name = "Column8"
@@ -503,18 +503,18 @@ Partial Class proveedores
         '
         'Column10
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = Nothing
-        Me.Column10.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column10.DefaultCellStyle = DataGridViewCellStyle2
         Me.Column10.FillWeight = 20.0!
         Me.Column10.HeaderText = "Monto"
         Me.Column10.Name = "Column10"
         '
         'Column12
         '
-        DataGridViewCellStyle21.Format = "d"
-        DataGridViewCellStyle21.NullValue = Nothing
-        Me.Column12.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle3.Format = "d"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.Column12.DefaultCellStyle = DataGridViewCellStyle3
         Me.Column12.FillWeight = 20.0!
         Me.Column12.HeaderText = "Vencimiento"
         Me.Column12.Name = "Column12"
@@ -564,6 +564,16 @@ Partial Class proveedores
         Me.Button1.Text = "Cargar Stock"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'Button2
+        '
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.Location = New System.Drawing.Point(878, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(70, 60)
+        Me.Button2.TabIndex = 90
+        Me.Button2.Text = "Cargar Pago"
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'Button6
         '
         Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
@@ -582,9 +592,9 @@ Partial Class proveedores
         '
         'DataGridViewTextBoxColumn2
         '
-        DataGridViewCellStyle22.Format = "d"
-        DataGridViewCellStyle22.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle22
+        DataGridViewCellStyle4.Format = "d"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle4
         Me.DataGridViewTextBoxColumn2.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn2.HeaderText = "Fecha"
         Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
@@ -606,9 +616,9 @@ Partial Class proveedores
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle23.Format = "N2"
-        DataGridViewCellStyle23.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle23
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle5
         Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "Monto"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -616,9 +626,9 @@ Partial Class proveedores
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle24.Format = "d"
-        DataGridViewCellStyle24.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle24
+        DataGridViewCellStyle6.Format = "d"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle6
         Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn6.HeaderText = "Vencimiento"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
@@ -629,16 +639,6 @@ Partial Class proveedores
         Me.DataGridViewTextBoxColumn7.HeaderText = "Observaciones"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.Width = 348
-        '
-        'Button2
-        '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.Location = New System.Drawing.Point(878, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(70, 60)
-        Me.Button2.TabIndex = 90
-        Me.Button2.Text = "Cargar Pago"
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'proveedores
         '
