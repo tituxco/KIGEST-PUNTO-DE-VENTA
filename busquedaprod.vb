@@ -661,4 +661,8 @@ Public Class busquedaprod
     Private Sub dgvProductos_Load(sender As Object, e As EventArgs) Handles dgvProductos.Load
 
     End Sub
+
+    Private Sub pntitulo_Paint(sender As Object, e As PaintEventArgs) Handles pntitulo.Paint
+
+    End Sub
 End Class

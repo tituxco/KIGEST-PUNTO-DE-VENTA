@@ -4215,7 +4215,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             'End If
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
-            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", DatosAcceso.sistema & " LIBRO DIARIO " & cmbperiodoLibroDiario.Text))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("periodo", cmbperiodoLibroDiario.Text))
             With imprimirx
                 .MdiParent = Me.MdiParent
                 .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
@@ -6312,5 +6312,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub cmbperiodoLibroDiario_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedValueChanged
         CargarLibroDiario()
+    End Sub
+
+    Private Sub dtchequespropios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtchequespropios.CellContentClick
+
     End Sub
 End Class

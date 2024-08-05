@@ -23,18 +23,18 @@ Partial Class romaneo
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(romaneo))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pnDatosFact = New System.Windows.Forms.Panel()
@@ -60,6 +60,9 @@ Partial Class romaneo
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.plu = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.cant = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -68,9 +71,6 @@ Partial Class romaneo
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn10 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn11 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.pnDatosFact.SuspendLayout()
         Me.pnadd.SuspendLayout()
@@ -165,6 +165,8 @@ Partial Class romaneo
         'chkBusquedaProd
         '
         Me.chkBusquedaProd.AutoSize = True
+        Me.chkBusquedaProd.Checked = True
+        Me.chkBusquedaProd.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkBusquedaProd.Location = New System.Drawing.Point(399, 5)
         Me.chkBusquedaProd.Name = "chkBusquedaProd"
         Me.chkBusquedaProd.Size = New System.Drawing.Size(96, 17)
@@ -276,9 +278,9 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn1
         '
-        DataGridViewCellStyle7.Format = "N0"
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle13.Format = "N0"
+        DataGridViewCellStyle13.NullValue = "0"
+        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle13
         Me.DataGridViewTextBoxColumn1.FillWeight = 10.0!
         Me.DataGridViewTextBoxColumn1.HeaderText = "id"
         Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
@@ -295,9 +297,9 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle8.Format = "N2"
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle14.Format = "N2"
+        DataGridViewCellStyle14.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle14
         Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "Cant"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -313,9 +315,9 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle9.Format = "N2"
-        DataGridViewCellStyle9.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle15.Format = "N2"
+        DataGridViewCellStyle15.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle15
         Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "IVA"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -325,9 +327,9 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle10.Format = "N2"
-        DataGridViewCellStyle10.NullValue = "0"
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle16.Format = "N2"
+        DataGridViewCellStyle16.NullValue = "0"
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn6.HeaderText = "P. Unit"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
@@ -336,9 +338,9 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle11.Format = "N2"
-        DataGridViewCellStyle11.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle17.Format = "N2"
+        DataGridViewCellStyle17.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle17
         Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn7.HeaderText = "P. Total"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
@@ -348,87 +350,15 @@ Partial Class romaneo
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle12.Format = "N2"
-        DataGridViewCellStyle12.NullValue = "0"
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle18.Format = "N2"
+        DataGridViewCellStyle18.NullValue = "0"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle18
         Me.DataGridViewTextBoxColumn8.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn8.HeaderText = "PLU"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         Me.DataGridViewTextBoxColumn8.ReadOnly = True
         Me.DataGridViewTextBoxColumn8.Visible = False
         Me.DataGridViewTextBoxColumn8.Width = 241
-        '
-        'id
-        '
-        DataGridViewCellStyle1.Format = "N0"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.id.DefaultCellStyle = DataGridViewCellStyle1
-        Me.id.FillWeight = 10.0!
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'plu
-        '
-        Me.plu.FillWeight = 25.0!
-        Me.plu.HeaderText = "Codigo/#PLU"
-        Me.plu.Name = "plu"
-        '
-        'cant
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.cant.DefaultCellStyle = DataGridViewCellStyle2
-        Me.cant.FillWeight = 20.0!
-        Me.cant.HeaderText = "Cant"
-        Me.cant.Name = "cant"
-        '
-        'producto
-        '
-        Me.producto.FillWeight = 120.0!
-        Me.producto.HeaderText = "Producto"
-        Me.producto.Name = "producto"
-        '
-        'Column6
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.Column6.DefaultCellStyle = DataGridViewCellStyle3
-        Me.Column6.FillWeight = 20.0!
-        Me.Column6.HeaderText = "IVA"
-        Me.Column6.Name = "Column6"
-        Me.Column6.Visible = False
-        '
-        'Column4
-        '
-        DataGridViewCellStyle4.Format = "N2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle4
-        Me.Column4.FillWeight = 20.0!
-        Me.Column4.HeaderText = "P. Unit"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = "0"
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Column5.FillWeight = 20.0!
-        Me.Column5.HeaderText = "Utilidad"
-        Me.Column5.Name = "Column5"
-        Me.Column5.Visible = False
-        '
-        'Column8
-        '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = "0"
-        Me.Column8.DefaultCellStyle = DataGridViewCellStyle6
-        Me.Column8.FillWeight = 20.0!
-        Me.Column8.HeaderText = "P. Final"
-        Me.Column8.Name = "Column8"
-        Me.Column8.ReadOnly = True
-        Me.Column8.Visible = False
         '
         'DataGridViewTextBoxColumn9
         '
@@ -447,6 +377,78 @@ Partial Class romaneo
         Me.DataGridViewTextBoxColumn11.HeaderText = "Meses gtia."
         Me.DataGridViewTextBoxColumn11.Name = "DataGridViewTextBoxColumn11"
         Me.DataGridViewTextBoxColumn11.Width = 181
+        '
+        'id
+        '
+        DataGridViewCellStyle19.Format = "N0"
+        DataGridViewCellStyle19.NullValue = "0"
+        Me.id.DefaultCellStyle = DataGridViewCellStyle19
+        Me.id.FillWeight = 10.0!
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'plu
+        '
+        Me.plu.FillWeight = 25.0!
+        Me.plu.HeaderText = "Codigo/#PLU"
+        Me.plu.Name = "plu"
+        '
+        'cant
+        '
+        DataGridViewCellStyle20.Format = "N2"
+        DataGridViewCellStyle20.NullValue = "0"
+        Me.cant.DefaultCellStyle = DataGridViewCellStyle20
+        Me.cant.FillWeight = 20.0!
+        Me.cant.HeaderText = "Cant"
+        Me.cant.Name = "cant"
+        '
+        'producto
+        '
+        Me.producto.FillWeight = 120.0!
+        Me.producto.HeaderText = "Producto"
+        Me.producto.Name = "producto"
+        '
+        'Column6
+        '
+        DataGridViewCellStyle21.Format = "N2"
+        DataGridViewCellStyle21.NullValue = "0"
+        Me.Column6.DefaultCellStyle = DataGridViewCellStyle21
+        Me.Column6.FillWeight = 20.0!
+        Me.Column6.HeaderText = "IVA"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Visible = False
+        '
+        'Column4
+        '
+        DataGridViewCellStyle22.Format = "N2"
+        DataGridViewCellStyle22.NullValue = "0"
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle22
+        Me.Column4.FillWeight = 20.0!
+        Me.Column4.HeaderText = "P. Unit"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle23.Format = "N2"
+        DataGridViewCellStyle23.NullValue = "0"
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle23
+        Me.Column5.FillWeight = 20.0!
+        Me.Column5.HeaderText = "Utilidad"
+        Me.Column5.Name = "Column5"
+        Me.Column5.Visible = False
+        '
+        'Column8
+        '
+        DataGridViewCellStyle24.Format = "N2"
+        DataGridViewCellStyle24.NullValue = "0"
+        Me.Column8.DefaultCellStyle = DataGridViewCellStyle24
+        Me.Column8.FillWeight = 20.0!
+        Me.Column8.HeaderText = "P. Final"
+        Me.Column8.Name = "Column8"
+        Me.Column8.ReadOnly = True
+        Me.Column8.Visible = False
         '
         'romaneo
         '

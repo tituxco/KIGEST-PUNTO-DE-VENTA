@@ -728,7 +728,6 @@
                                 <Value>=Fields!fecha.Value</Value>
                                 <Style>
                                   <FontSize>8pt</FontSize>
-                                  <Format>d</Format>
                                 </Style>
                               </TextRun>
                             </TextRuns>
@@ -1069,7 +1068,7 @@
       <Width>19.45515cm</Width>
       <Page>
         <PageHeader>
-          <Height>1.56076cm</Height>
+          <Height>3.46576cm</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>
           <PrintOnLastPage>true</PrintOnLastPage>
           <ReportItems>
@@ -1087,15 +1086,15 @@
                     </TextRun>
                   </TextRuns>
                   <Style>
-                    <TextAlign>Right</TextAlign>
+                    <TextAlign>Center</TextAlign>
                   </Style>
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox19</rd:DefaultName>
-              <Top>0.85493cm</Top>
-              <Left>0.22757cm</Left>
+              <Top>0.79143cm</Top>
+              <Left>1.81268cm</Left>
               <Height>0.6cm</Height>
-              <Width>19.00001cm</Width>
+              <Width>17.4149cm</Width>
               <Style>
                 <Border>
                   <Style>None</Style>
@@ -1126,7 +1125,9 @@
                   <TextRuns>
                     <TextRun>
                       <Value>="Pagina " &amp; Globals!PageNumber &amp; " de " &amp; Globals!TotalPages</Value>
-                      <Style />
+                      <Style>
+                        <Color>White</Color>
+                      </Style>
                     </TextRun>
                   </TextRuns>
                   <Style>

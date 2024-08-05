@@ -42,7 +42,7 @@
             Reconectar()
             conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as IDProd, " & visProd &
-            "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id) as stock, codigo as COD, round((replace(precio,',','.') * 1.21),2) as precioLista from fact_insumos as ins " _
+            "(select if (isnull(stock),0,sum(replace(stock,',','.'))) from fact_insumos_lotes  where idproducto= ins.id and idalmacen=" & My.Settings.idAlmacen & ") as stock, codigo as COD, round((replace(precio,',','.') * 1.21),2) as precioLista from fact_insumos as ins " _
             & " where " & busqtxt & " and eliminado=0 order by descripcion asc limit 30", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet

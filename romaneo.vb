@@ -165,10 +165,9 @@
     Private Sub cmdaceptar_Click(sender As Object, e As EventArgs) Handles cmdaceptar.Click
         Try
             For Each producto As DataGridViewRow In dtproductos.Rows
-                If producto.IsNewRow Then
-                    Exit For
-                End If
-                QuitarStock(producto.Cells("plu").Value, producto.Cells("cant").Value, 0)
+
+                QuitarStock(producto.Cells("id").Value, producto.Cells("cant").Value, cmbalmacen.SelectedValue)
+
             Next
             Reconectar()
             Dim sqlQuery As String
@@ -180,7 +179,7 @@
 
             idcomprobante = comandoadd.LastInsertedId
             Reconectar()
-
+          
             GuardarLoteCompra()
 
 
@@ -209,9 +208,9 @@
                     Exit For
                 End If
                 Reconectar()
-                lotstock = loteprod.Cells(2).Value
-
-                lotidprod = loteprod.Cells(0).Value
+                lotstock = loteprod.Cells("cant").Value
+                'MsgBox("cant a guardar:" & lotstock)
+                lotidprod = loteprod.Cells("id").Value
                 lotfact = idcomprobante
                 lotcompracant = lotstock
                 lottipoprod = 1
@@ -226,7 +225,7 @@
                     .AddWithValue("?idfactura", lotfact)
                     .AddWithValue("?compracant", lotcompracant)
                     .AddWithValue("?tipoprod", lottipoprod)
-                    .AddWithValue("?idalmacen", cmbalmacen.SelectedValue)
+                    .AddWithValue("?idalmacen", cmbAlmacenHacia.SelectedValue)
                 End With
                 comandoadd.ExecuteNonQuery()
             Next
@@ -243,7 +242,7 @@
 
             pnadd.Enabled = False
             MsgBox("Transferencia de stock realizada")
-
+            Me.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

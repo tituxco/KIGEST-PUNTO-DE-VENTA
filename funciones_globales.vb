@@ -2321,36 +2321,58 @@ Module funciones_Globales
     Public Function QuitarStock(ByRef codigo As String, ByRef cant As String, ByRef idgtia As String) As Boolean
         Dim i As Integer
         Dim lotes As Integer = 0
+        Dim almacenDescuento As Integer
+        Dim cantidad As Double = CDbl(cant)
+        Dim stockLote As Double = 0
+        Dim saldoLote As Double = 0
+        Dim desc_cant As Double = 1
+
+        If idgtia <> 0 Then
+            almacenDescuento = idgtia
+        Else
+            almacenDescuento = My.Settings.idAlmacen
+        End If
+
         Try
             Reconectar()
-            If idgtia = 0 Then
-                Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("                
+            Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("                
                 SELECT lt.id, lt.stock as stock, prod.desc_cantidad 
                 FROM fact_insumos_lotes as lt, fact_insumos as prod
-                where lt.idproducto=prod.id and lt.idproducto=" & codigo & " and lt.idalmacen= " & My.Settings.idAlmacen & "                
-                and lt.stock >0  order by lt.id asc", conexionPrinc)
-                Dim tablastock As New DataTable
+                where lt.idproducto=prod.id and lt.idproducto=" & codigo & " and lt.idalmacen= " & almacenDescuento & "                
+                and lt.stock >0  order by lt.id desc", conexionPrinc)
+            'MsgBox(consultastock.SelectCommand.CommandText)
+
+            Dim tablastock As New DataTable
                 Dim infostock() As DataRow
                 consultastock.Fill(tablastock)
                 infostock = tablastock.Select("")
-                Dim desc_cant As Double = infostock(0)("desc_cantidad")
-                cant = cant * desc_cant
-                'lotes = tablastock.Rows.Count
-                Do Until cant = 0
-                    If infostock(lotes)(1) <= cant Then
-                        cant = cant - infostock(lotes)(1)
-                        Reconectar()
-                        Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
-                        updstock.ExecuteNonQuery()
-                        lotes += 1
-                    ElseIf infostock(lotes)(1) > cant Then
-                        Reconectar()
-                        Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=stock-" & cant & " where id=" & infostock(lotes)(0), conexionPrinc)
-                        updstock.ExecuteNonQuery()
-                        cant = 0
-                    End If
-                Loop
-            End If
+            lotes = tablastock.Rows.Count - 1
+            desc_cant = CDbl(infostock(lotes)("desc_cantidad"))
+            cantidad = cantidad * desc_cant
+
+            stockLote = CDbl(infostock(lotes)("stock"))
+
+            'MsgBox("lotes:" & lotes & " stockLote:" & stockLote & " cant:" & cantidad)
+
+            Do Until cantidad = 0
+                'MsgBox(cant & "desc")
+                If stockLote <= cantidad Then
+                    saldoLote = 0
+                    cantidad = cantidad - stockLote
+                    Reconectar()
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=0 where id=" & infostock(lotes)("id"), conexionPrinc)
+                    'updstock.ExecuteNonQuery()
+                    lotes += 1
+                    stockLote = CDbl(infostock(lotes)("stock"))
+                ElseIf stockLote > cantidad Then
+                    saldoLote = stockLote - cantidad
+                    Reconectar()
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock='" & saldoLote & "' where id=" & infostock(lotes)("id"), conexionPrinc)
+                    'MsgBox(updstock.CommandText)
+                    updstock.ExecuteNonQuery()
+                    cantidad = 0
+                End If
+            Loop
 
         Catch ex As Exception
             Return False

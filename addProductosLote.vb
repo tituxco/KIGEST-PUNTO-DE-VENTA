@@ -861,8 +861,14 @@
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
-        idcomprobante = 1
-        CargarFactCompra()
+        'idcomprobante = 1
+        'CargarFactCompra()
+        cmbproveedor.SelectedValue = 1
+        txtcomprobanteNum.Text = "NINGUNO"
+        txtcomprobanteImporte.Text = "0"
+        txtcomprobanteFcompra.Text = Format(CDate(Now()), "yyyy-MM-dd")
+        txtcomprobanteFvencimiento.Text = Format(CDate(Now()), "yyyy-MM-dd")
+
     End Sub
 
     Private Sub dtproductos_CellContextMenuStripChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContextMenuStripChanged
