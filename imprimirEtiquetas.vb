@@ -316,6 +316,7 @@ Public Class imprimirEtiquetas
         Try
             My.Settings.idCatDef = cmbCategoria.SelectedValue
             My.Settings.Save()
+            funciones_Globales.GuardarConfiguracionTerminal()
             cargarProductos("")
         Catch ex As Exception
         End Try

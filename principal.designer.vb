@@ -82,7 +82,7 @@ Partial Class frmprincipal
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.lblEstadoCertificado, Me.pbprincipal, Me.lblstatusServer, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.lblstatusServer, Me.lblEstadoCertificado, Me.pbprincipal, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1270, 24)
@@ -115,10 +115,8 @@ Partial Class frmprincipal
         Me.lblstatusServer.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblstatusServer.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.lblstatusServer.Name = "lblstatusServer"
-        Me.lblstatusServer.Size = New System.Drawing.Size(114, 19)
-        Me.lblstatusServer.Text = "Estado del Servidor"
-        Me.lblstatusServer.ToolTipText = "Estado de la conexion principal con el servidor"
-        Me.lblstatusServer.Visible = False
+        Me.lblstatusServer.Size = New System.Drawing.Size(65, 19)
+        Me.lblstatusServer.Text = "ConfTerm:"
         '
         'lblstatusBDprinc
         '
@@ -183,8 +181,8 @@ Partial Class frmprincipal
         Me.cmdclientes.Image = CType(resources.GetObject("cmdclientes.Image"), System.Drawing.Image)
         Me.cmdclientes.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None
         Me.cmdclientes.Name = "cmdclientes"
-        Me.cmdclientes.Size = New System.Drawing.Size(98, 36)
-        Me.cmdclientes.Text = "Cientes"
+        Me.cmdclientes.Size = New System.Drawing.Size(101, 36)
+        Me.cmdclientes.Text = "Clientes"
         '
         'cmdproductos
         '

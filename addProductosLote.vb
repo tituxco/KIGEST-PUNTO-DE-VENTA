@@ -649,6 +649,7 @@
     Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
         My.Settings.calcCosto = chkcalcularcosto.CheckState
         My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
     End Sub
 
     Private Sub cmblista_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmblista.SelectedValueChanged
@@ -883,6 +884,7 @@
 
         My.Settings.busquedaProd = chkBusquedaProd.CheckState
         My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
     End Sub
 
     Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged

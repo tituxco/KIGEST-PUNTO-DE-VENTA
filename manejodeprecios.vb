@@ -96,8 +96,7 @@
             'MsgBox(cadenaComp)
             If imprimirlist = False And imprimiretiq = False Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU, 
-            pro.precio as costosiniva, pro.ganancia,pro.utilidad1,pro.utilidad2, (select sum(stock) from fact_insumos_lotes  
-            where idproducto=pro.id) as Stock,pro.iva  from fact_insumos as pro " & cadenaComp & " order by pro.descripcion asc", conexionPrinc)
+            pro.precio as costosiniva, pro.ganancia,pro.utilidad1, pro.utilidad2, pro.iva  from fact_insumos as pro " & cadenaComp & " order by pro.descripcion asc", conexionPrinc)
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
@@ -566,6 +565,7 @@
     Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
         My.Settings.calcCosto = chkcalcularcosto.CheckState
         My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
     End Sub
 
 End Class

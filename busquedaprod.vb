@@ -135,7 +135,7 @@ Public Class busquedaprod
 
                 dgvProductos.Cargar_Datos(tablaprod)
                 dgvProductos.dgvVista.Columns("PLU").Width = 100
-                dgvProductos.dgvVista.Columns("Stock").Width = 100
+                dgvProductos.dgvVista.Columns("Stock").Visible = False
 
                 'dtproductos.DataSource = tablaprod
 
@@ -298,6 +298,22 @@ Public Class busquedaprod
 
         End Try
     End Sub
+
+    Public Sub cargarStockAlmacen(idProd As Integer)
+        Try
+            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(lt.stock) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
+            where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", conexionPrinc)
+            Dim tablaprod As New DataTable
+
+            consultaPRod.Fill(tablaprod)
+            dgvStock.DataSource = tablaprod
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
     Public Sub calcularPrecios(idProd As Integer)
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select prod.precio, (select mon.cotizacion from fact_moneda as mon where mon.id=prod.moneda) as cotizacion,  " &
@@ -639,6 +655,7 @@ Public Class busquedaprod
 
     Private Sub ItemSeleccionado(IdItem As Integer) Handles dgvProductos.SeleccionarItem
         calcularPrecios(IdItem)
+        cargarStockAlmacen(IdItem)
     End Sub
 
 

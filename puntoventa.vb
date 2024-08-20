@@ -2522,6 +2522,7 @@ Public Class puntoventa
 			End If
 			'MsgBox("La configuracion tendra efecto la proxima vez que ingrese a facturación")
 			My.Settings.Save()
+			funciones_Globales.GuardarConfiguracionTerminal()
 		Catch ex As Exception
 
 		End Try

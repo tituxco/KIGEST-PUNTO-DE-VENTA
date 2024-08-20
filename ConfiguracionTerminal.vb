@@ -1,14 +1,18 @@
 ﻿Public Class ConfiguracionTerminal
     Private Sub ConfiguracionTerminal_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        cargarConfiguracionTerminal()
+
+    End Sub
+
+    Private Sub cargarConfiguracionTerminal()
         txtidfacrapdef.Text = My.Settings.idfacRap
         txtptovtadef.Text = My.Settings.idPtoVta
         txtidalmacen.Text = My.Settings.idAlmacen
         txtunidadDef.Text = My.Settings.UnidDef
         cmbtipoTiketEtiqueta.SelectedIndex = My.Settings.TipoEtiqueta
         txttipoetiqueta.Text = My.Settings.TipoEtiqueta
-
         txtcajaDef.Text = My.Settings.CajaDef
-
         'txtEtiquetaNombre.Text = My.Settings.EtiquetadoraNmb
         cmbImpresoraEtiquetas.SelectedText = My.Settings.EtiquetadoraNmb
 
@@ -32,9 +36,7 @@
             cmbimpresoraTiket.Items.Add(impresora.ToString)
             cmbImpresoraEtiquetas.Items.Add(impresora.ToString)
         Next
-
-
-
+        txtPtoVtaElect.Text = FacturaElectro.puntovtaelect
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
@@ -47,6 +49,7 @@
         DatosAcceso.idFacRap = txtidfacrapdef.Text
         DatosAcceso.IdPtoVtaDef = txtptovtadef.Text
         DatosAcceso.IdAlmacen = txtidalmacen.Text
+
         My.Settings.UnidDef = txtunidadDef.Text
         My.Settings.TipoEtiqueta = cmbtipoTiketEtiqueta.SelectedIndex
         My.Settings.EtiquetadoraNmb = cmbImpresoraEtiquetas.Text ' txtEtiquetaNombre.Text
@@ -61,9 +64,44 @@
         If rdcalculo2.Checked = True Then My.Settings.metodoCalculo = 0 Else My.Settings.metodoCalculo = 1
         My.Settings.tipoTaller = txttipotaller.Text
         My.Settings.visualizacionProducto = cmbVisualizacionProd.SelectedIndex
+        FacturaElectro.puntovtaelect = txtPtoVtaElect.Text
+
         My.Settings.Save()
 
+        funciones_Globales.GuardarConfiguracionTerminal()
         MsgBox("Configuración Guardada")
 
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
+
+            Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", conexionPrinc)
+            Dim tablaConfigTerm As New DataTable
+            consultaConfigTerm.Fill(tablaConfigTerm)
+
+            Dim ConfiguracionesDisponibles As String
+            For Each configuracion As DataRow In tablaConfigTerm.Rows
+
+                ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & vbNewLine
+
+            Next
+
+            Dim respuesta As String = ""
+            Do While IsNothing(respuesta) Or Not IsNumeric(respuesta)
+                respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
+            Loop
+
+            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta, conexionPrinc)
+            comandoupd.ExecuteNonQuery()
+
+            funciones_Globales.aplicarConfiguracionTerminal()
+            cargarConfiguracionTerminal()
+            MsgBox("Configuracion aplicada correctamente")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
     End Sub
 End Class

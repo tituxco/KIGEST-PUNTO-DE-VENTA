@@ -10,6 +10,109 @@ Imports Microsoft.Reporting.WinForms
 Module funciones_Globales
 
     Public idFactura As Integer
+    Public NombreEquipo As String = My.Computer.Name
+
+    Public Sub aplicarConfiguracionTerminal()
+        Try
+            Reconectar()
+            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select term.nombreTerminal,cfTerm.* 
+            from cm_terminales as term, cm_terminales_configuracion as cfTerm where term.nombreTerminal like '" & NombreEquipo & "'
+            and term.idConfiguracion=cfTerm.id", conexionPrinc)
+            Dim tablaTerm As New DataTable
+            'Dim infoTerm() As DataRow
+            consultaTerm.Fill(tablaTerm)
+
+            With My.Settings
+                .busquedaProd = tablaTerm.Rows(0).Item("busquedaProd")
+                .CajaDef = tablaTerm.Rows(0).Item("cajaDef")
+                .calcCosto = tablaTerm.Rows(0).Item("calcCosto")
+                .EtiquetadoraNmb = tablaTerm.Rows(0).Item("etiquetadoraNmb")
+                .idAlmacen = tablaTerm.Rows(0).Item("idAlmacen")
+                .idCatDef = tablaTerm.Rows(0).Item("idCatDef")
+                .idDevolucion = tablaTerm.Rows(0).Item("idDevolucion")
+                .idfacRap = tablaTerm.Rows(0).Item("idFacRap")
+                .idListaDef = tablaTerm.Rows(0).Item("idListaDef")
+                .idPtoVta = tablaTerm.Rows(0).Item("idPtoVta")
+                .ImprTikets = tablaTerm.Rows(0).Item("impTiket")
+                .ImprTiketsNombre = tablaTerm.Rows(0).Item("impTiketNombre")
+                .ivaDef = tablaTerm.Rows(0).Item("ivaDef")
+                .metodoBusquedaProd = tablaTerm.Rows(0).Item("metodoBusquedaProd")
+                .metodoCalculo = tablaTerm.Rows(0).Item("metodoCalculo")
+                .monedaDef = tablaTerm.Rows(0).Item("monedaDef")
+                .mostrarSoloStock = tablaTerm.Rows(0).Item("mostrarSoloStock")
+                .numDecimales = tablaTerm.Rows(0).Item("numDecimales")
+                .obtCodProd = tablaTerm.Rows(0).Item("obtCodProd")
+                .paginacion = tablaTerm.Rows(0).Item("paginacion")
+                .TextoPieTiket = tablaTerm.Rows(0).Item("textoPieTiket")
+                .TipoEtiqueta = tablaTerm.Rows(0).Item("tipoEtiqueta")
+                .EtiquetadoraNmb = tablaTerm.Rows(0).Item("etiquetadoraNmb")
+                .tipoTaller = tablaTerm.Rows(0).Item("tipoTaller")
+                .UnidDef = tablaTerm.Rows(0).Item("unidDef")
+                .visualizacionProducto = tablaTerm.Rows(0).Item("visualizacionProducto")
+            End With
+            FacturaElectro.puntovtaelect = tablaTerm.Rows(0).Item("FactElectro_puntoVenta")
+            frmprincipal.lblstatusServer.Text = "Terminal: " & tablaTerm.Rows(0).Item("descripcion")
+            frmprincipal.lblstatusServer.Visible = True
+            My.Settings.Save()
+            'MsgBox("configuracion aplicada")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Public Sub GuardarConfiguracionTerminal()
+        Try
+            Reconectar()
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
+            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select term.nombreTerminal,cfTerm.* 
+            from cm_terminales as term, cm_terminales_configuracion as cfTerm where term.nombreTerminal like '" & NombreEquipo & "'
+            and term.idConfiguracion=cfTerm.id", conexionPrinc)
+            Dim tablaTerm As New DataTable
+            'Dim infoTerm() As DataRow
+            consultaTerm.Fill(tablaTerm)
+            Dim idConfiguracion As Integer = tablaTerm.Rows(0).Item("id")
+
+            Reconectar()
+
+            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales_configuracion set 
+                busquedaProd = " & My.Settings.busquedaProd & " ,
+                cajaDef= " & My.Settings.CajaDef & " ,
+                calcCosto= " & My.Settings.calcCosto & " ,
+                etiquetadoraNmb= '" & My.Settings.EtiquetadoraNmb & "' ,
+                idAlmacen= " & My.Settings.idAlmacen & " ,
+                idCatDef= " & My.Settings.idCatDef & " ,
+                idDevolucion= " & My.Settings.idDevolucion & " ,
+                idFacRap= " & My.Settings.idfacRap & " ,
+                idListaDef= " & My.Settings.idListaDef & " ,
+                idPtoVta= " & My.Settings.idPtoVta & " ,
+                impTiket= " & My.Settings.ImprTikets & " ,
+                impTiketNombre= '" & My.Settings.ImprTiketsNombre & "' ,
+                ivaDef= '" & My.Settings.ivaDef & "' ,
+                metodoBusquedaProd= " & My.Settings.metodoBusquedaProd & " ,
+                metodoCalculo= " & My.Settings.metodoCalculo & " ,
+                monedaDef= " & My.Settings.monedaDef & " ,
+                mostrarSoloStock= " & My.Settings.mostrarSoloStock & " ,
+                numDecimales= " & My.Settings.numDecimales & " ,
+                obtCodProd= " & My.Settings.obtCodProd & " ,
+                paginacion= " & My.Settings.paginacion & " ,
+                textoPieTiket= '" & My.Settings.TextoPieTiket & "' ,
+                tipoEtiqueta= " & My.Settings.TipoEtiqueta & " ,
+                tipoTaller= " & My.Settings.tipoTaller & " ,
+                unidDef= '" & My.Settings.UnidDef & "' ,
+                visualizacionProducto= " & My.Settings.visualizacionProducto & " ,
+                FactElectro_puntoVenta= " & FacturaElectro.puntovtaelect & "
+
+                where id=" & idConfiguracion, conexionPrinc)
+            comandoupd.ExecuteNonQuery()
+
+
+            MsgBox("configuracion guardada")
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
     Public Function cargarInfoFactCobro(idFactura As Integer) As String()
         ReDim cargarInfoFactCobro(3)
         Dim infoFact As String()

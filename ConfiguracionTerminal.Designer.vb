@@ -64,6 +64,9 @@ Partial Class ConfiguracionTerminal
         Me.PrintDialog1 = New System.Windows.Forms.PrintDialog()
         Me.cmbimpresoraTiket = New System.Windows.Forms.ComboBox()
         Me.cmbImpresoraEtiquetas = New System.Windows.Forms.ComboBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.txtPtoVtaElect = New System.Windows.Forms.TextBox()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -460,12 +463,41 @@ Partial Class ConfiguracionTerminal
         Me.cmbImpresoraEtiquetas.Size = New System.Drawing.Size(160, 21)
         Me.cmbImpresoraEtiquetas.TabIndex = 152
         '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.Location = New System.Drawing.Point(207, 72)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(103, 16)
+        Me.Label11.TabIndex = 154
+        Me.Label11.Text = "puntoVtaElect"
+        '
+        'txtPtoVtaElect
+        '
+        Me.txtPtoVtaElect.Location = New System.Drawing.Point(312, 68)
+        Me.txtPtoVtaElect.Name = "txtPtoVtaElect"
+        Me.txtPtoVtaElect.Size = New System.Drawing.Size(100, 20)
+        Me.txtPtoVtaElect.TabIndex = 153
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(149, 420)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(136, 23)
+        Me.Button1.TabIndex = 155
+        Me.Button1.Text = "cambiar Terminal"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(497, 455)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.txtPtoVtaElect)
         Me.Controls.Add(Me.cmbImpresoraEtiquetas)
         Me.Controls.Add(Me.cmbimpresoraTiket)
         Me.Controls.Add(Me.cmbVisualizacionProd)
@@ -558,4 +590,7 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents PrintDialog1 As PrintDialog
     Friend WithEvents cmbimpresoraTiket As ComboBox
     Friend WithEvents cmbImpresoraEtiquetas As ComboBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents txtPtoVtaElect As TextBox
+    Friend WithEvents Button1 As Button
 End Class

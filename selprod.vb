@@ -182,6 +182,7 @@
     Private Sub chkstock_CheckedChanged(sender As Object, e As EventArgs) Handles chkstock.CheckedChanged
         My.Settings.mostrarSoloStock = chkstock.CheckState
         My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
         CargarProductos()
 
     End Sub

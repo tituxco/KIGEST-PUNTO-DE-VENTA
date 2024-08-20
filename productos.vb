@@ -356,8 +356,7 @@ Public Class productos
             'MsgBox(cadenaComp)
 
             If imprimirlist = False Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as CodInterno, descripcion as Producto, codigo as Codigo, 
-                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & My.Settings.idAlmacen & ") as stock 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as CodInterno, descripcion as Producto, codigo as Codigo 
                 FROM fact_insumos as pro " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'MsgBox(consulta.SelectCommand.CommandText)
@@ -1173,6 +1172,7 @@ Public Class productos
             My.Settings.ivaDef = txtiva.Text
             My.Settings.monedaDef = cmbmoneda.SelectedValue
             My.Settings.Save()
+            funciones_Globales.GuardarConfiguracionTerminal()
         Catch ex As Exception
             MsgBox("error al guardar producto" & vbNewLine & ex.Message)
 
@@ -1614,6 +1614,7 @@ Public Class productos
     Private Sub chkcalcularcosto_CheckedChanged(sender As Object, e As EventArgs) Handles chkcalcularcosto.CheckedChanged
         My.Settings.calcCosto = chkcalcularcosto.CheckState
         My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
 
     End Sub
 

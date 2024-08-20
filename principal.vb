@@ -1,12 +1,73 @@
 ﻿Imports System.ComponentModel
 Imports System.IO
 Imports System.Net
+Imports System.Runtime.Serialization
 Imports System.Security.Cryptography.X509Certificates
+Imports iTextSharp.text.pdf.qrcode
+Imports Microsoft.ReportingServices.DataProcessing
 
 Public Class frmprincipal
     Public loged As Boolean
     Public IPPublica As String = GetExternalIp()
+
     Dim i As Integer
+
+    Private Sub cargarConfiguracionDeTerminal()
+        Try
+            Reconectar()
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
+            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales where nombreTerminal like '" & NombreEquipo & "'", conexionPrinc)
+            Dim tablaTerm As New DataTable
+            consultaTerm.Fill(tablaTerm)
+            If tablaTerm.Rows.Count = 0 Then
+                MsgBox("su terminal no esta registrada en el servidor, se procedera a agregarla para proceder a su configuracion")
+                Dim sqlQuery As String = "insert into cm_terminales (nombreTerminal) values ('" & NombreEquipo & "')"
+                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                comandoadd.ExecuteNonQuery()
+                Dim idTerminal As Integer = comandoadd.LastInsertedId
+
+                Reconectar()
+                Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", conexionPrinc)
+                Dim tablaConfigTerm As New DataTable
+                Dim infoConfigTerm() As DataRow
+
+                consultaConfigTerm.Fill(tablaConfigTerm)
+                If tablaConfigTerm.Rows.Count <= 1 Then
+                    MsgBox("solo existe una configuracion posible para la terminal, se procedera a setearla para su equipo")
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & tablaConfigTerm.Rows(0).Item("id"), conexionPrinc)
+                    comandoupd.ExecuteNonQuery()
+                    MsgBox("Configuracion guardada correctamente")
+                Else
+                    Dim ConfiguracionesDisponibles As String
+                    For Each configuracion As DataRow In tablaConfigTerm.Rows
+                        ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & vbNewLine
+                    Next
+
+                    Dim respuesta As String = ""
+                    Do While IsNothing(respuesta) Or Not IsNumeric(respuesta)
+                        respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
+                    Loop
+
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta, conexionPrinc)
+                    comandoupd.ExecuteNonQuery()
+                    MsgBox("Configuracion guardada correctamente")
+                End If
+                funciones_Globales.aplicarConfiguracionTerminal()
+            Else
+                'MsgBox("se aplicara configuracion")
+                funciones_Globales.aplicarConfiguracionTerminal()
+            End If
+
+        Catch exception As Exception
+            MsgBox(exception.Message)
+        End Try
+
+        'infocl = tablacl.Select("")
+    End Sub
+
+
+
     Private Sub frmprincipal_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
         GuardarLog(DatosAcceso.Cliente, DatosAcceso.usuario, DatosAcceso.bd, "Cierre de sistema", IPPublica)
         End
@@ -79,6 +140,8 @@ Public Class frmprincipal
 
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica
         End If
+        cargarConfiguracionDeTerminal()
+
     End Sub
     Private Sub cargar_valores_generales()
         Try
@@ -134,6 +197,24 @@ Public Class frmprincipal
             End If
 
             If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
+
+            ''obtenemos los puntos de venta electronicos si es que hay mas de uno
+            'Dim PuntosDeVentaElectronicos As String = infocl(0)(2)
+            'Dim cantPtosVtasElect As String() = PuntosDeVentaElectronicos.Split(",")
+            'If cantPtosVtasElect.Length > 0 Then ' si hay mas de uno obtenemos el indicado dependiendo de la sucursal en la que se encuentre (otros datos)
+
+            '    Reconectar()
+
+            '    Dim consPtoVta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_insumos_almacenes where id=" &, conexionPrinc)
+            '    Dim tablacl As New DataTable
+            '    Dim infocl() As DataRow
+            '    consulta.Fill(tablacl)
+
+
+            '    infocl = tablacl.Select("")
+
+            'End If
+
 
             FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
@@ -274,7 +355,7 @@ Public Class frmprincipal
             '    lbltitulo.Text = Application.ProductName
             'End If
             'compruebo las empresas
-            lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString
+            'lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString'
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica '& Environment.MachineName
 
             'lblstatcodus.Text = "Codigo de usuario: " & codus
@@ -302,7 +383,7 @@ Public Class frmprincipal
 
     Private Sub ToolStripSplitButton1_ButtonClick(sender As Object, e As EventArgs)
         Reconectar()
-        lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.State.ToString
+        'lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.State.ToString
         lblstatusBDprinc.Text = "Base de datos principal: " & conexionPrinc.Database
         ' lblStatusEmp.Text = "Empresa Seleccionada: " & conexionEmp.State.ToString & ">>>" & conexionEmp.Database
         'Label2.Text = ""

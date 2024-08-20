@@ -203,6 +203,11 @@ Public Class CONTABLE
             cmbInforPtoVta2.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbInforPtoVta2.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
 
+            cmbInforPtoVta.SelectedValue = My.Settings.idPtoVta
+            cmbInforPtoVta2.SelectedValue = My.Settings.idPtoVta
+
+
+
             Dim tablaAlmacen As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
             Dim readAlmacen As New DataSet
             tablaAlmacen.Fill(readAlmacen)
@@ -210,12 +215,16 @@ Public Class CONTABLE
             cmbinforalmacen.DisplayMember = readAlmacen.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbinforalmacen.ValueMember = readAlmacen.Tables(0).Columns(0).Caption.ToString
 
+            cmbinforalmacen.SelectedValue = My.Settings.idAlmacen
+
             Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
             Dim readCajas As New DataSet
             tablaCajas.Fill(readCajas)
             cmbGtosCaja.DataSource = readCajas.Tables(0)
             cmbGtosCaja.DisplayMember = readCajas.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbGtosCaja.ValueMember = readCajas.Tables(0).Columns(0).Caption.ToString
+
+            cmbGtosCaja.SelectedValue = My.Settings.CajaDef
 
             Dim tablaConceptos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", conexionPrinc)
             Dim readConceptos As New DataSet

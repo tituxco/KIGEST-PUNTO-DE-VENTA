@@ -335,7 +335,6 @@ Partial Class productos
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        'Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.icons8_Versions_64px_1
         Me.Button1.Location = New System.Drawing.Point(882, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
@@ -403,7 +402,6 @@ Partial Class productos
         Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdaceptar.ForeColor = System.Drawing.Color.White
-        'Me.cmdaceptar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_64px
         Me.cmdaceptar.Location = New System.Drawing.Point(984, 0)
         Me.cmdaceptar.Name = "cmdaceptar"
         Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
@@ -609,7 +607,7 @@ Partial Class productos
         Me.lblstock.AutoSize = True
         Me.lblstock.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblstock.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.lblstock.Location = New System.Drawing.Point(573, 74)
+        Me.lblstock.Location = New System.Drawing.Point(584, 74)
         Me.lblstock.Name = "lblstock"
         Me.lblstock.Size = New System.Drawing.Size(37, 39)
         Me.lblstock.TabIndex = 247
@@ -1049,9 +1047,9 @@ Partial Class productos
         Me.Label24.ForeColor = System.Drawing.Color.Black
         Me.Label24.Location = New System.Drawing.Point(563, 55)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(46, 16)
+        Me.Label24.Size = New System.Drawing.Size(83, 16)
         Me.Label24.TabIndex = 212
-        Me.Label24.Text = "Stock"
+        Me.Label24.Text = "Stock Gral."
         '
         'txtinfoextra
         '
@@ -1708,7 +1706,6 @@ Partial Class productos
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button8.ForeColor = System.Drawing.Color.White
-        'Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.Eye_32px
         Me.Button8.Location = New System.Drawing.Point(794, 0)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(52, 56)
