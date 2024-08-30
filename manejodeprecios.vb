@@ -113,7 +113,7 @@
 
                 dtproductos.Columns(7).Width = 100
                 dtproductos.Columns(7).ReadOnly = True
-                dtproductos.Columns(8).Visible = False
+                'dtproductos.Columns(8).Visible = False
             ElseIf imprimirlist = True Or imprimiretiq = True Then
 
                 'Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
@@ -402,9 +402,9 @@
         'cerrar_Conexiones()
         Reconectar()
         If e.ColumnIndex = 3 Then
-            If IsNumeric(dtproductos.CurrentRow.Cells(3).Value) Then
-                Dim costo As String = dtproductos.CurrentRow.Cells(3).Value
-                Dim iva As String = dtproductos.CurrentRow.Cells(8).Value
+            If IsNumeric(dtproductos.CurrentRow.Cells("costosiniva").Value) Then
+                Dim costo As String = dtproductos.CurrentRow.Cells("costosiniva").Value
+                Dim iva As String = dtproductos.CurrentRow.Cells("iva").Value
                 If chkcalcularcosto.CheckState = CheckState.Checked Then
                     costo = Math.Round(FormatNumber(costo, 2) / ((FormatNumber(iva, 2) + 100) / 100), 2)
                     dtproductos.CurrentCell.Value = costo
@@ -413,20 +413,20 @@
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 4 Then
-            If IsNumeric(dtproductos.CurrentRow.Cells(4).Value) Then
-                Dim ganancia As String = dtproductos.CurrentRow.Cells(4).Value
+            If IsNumeric(dtproductos.CurrentRow.Cells("ganancia").Value) Then
+                Dim ganancia As String = dtproductos.CurrentRow.Cells("ganancia").Value
                 Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set ganancia='" & ganancia & "' where id=" & idprod, conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 5 Then
-            If IsNumeric(dtproductos.CurrentRow.Cells(4).Value) Then
-                Dim ganancia As String = dtproductos.CurrentRow.Cells(5).Value
+            If IsNumeric(dtproductos.CurrentRow.Cells("utilidad1").Value) Then
+                Dim ganancia As String = dtproductos.CurrentRow.Cells("utilidad1").Value
                 Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad1='" & ganancia & "' where id=" & idprod, conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 6 Then
-            If IsNumeric(dtproductos.CurrentRow.Cells(4).Value) Then
-                Dim ganancia As String = dtproductos.CurrentRow.Cells(6).Value
+            If IsNumeric(dtproductos.CurrentRow.Cells("utilidad2").Value) Then
+                Dim ganancia As String = dtproductos.CurrentRow.Cells("utilidad2").Value
                 Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad2='" & ganancia & "' where id=" & idprod, conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If

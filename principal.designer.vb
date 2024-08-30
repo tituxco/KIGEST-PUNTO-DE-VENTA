@@ -26,9 +26,9 @@ Partial Class frmprincipal
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmprincipal))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblEstadoCertificado = New System.Windows.Forms.ToolStripStatusLabel()
         Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
-        Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusBDprinc = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblStatusEmp = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
@@ -96,6 +96,14 @@ Partial Class frmprincipal
         Me.lblPrincipalDolar.Size = New System.Drawing.Size(60, 19)
         Me.lblPrincipalDolar.Text = "DOLAR:"
         '
+        'lblstatusServer
+        '
+        Me.lblstatusServer.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblstatusServer.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.lblstatusServer.Name = "lblstatusServer"
+        Me.lblstatusServer.Size = New System.Drawing.Size(65, 19)
+        Me.lblstatusServer.Text = "ConfTerm:"
+        '
         'lblEstadoCertificado
         '
         Me.lblEstadoCertificado.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -109,14 +117,6 @@ Partial Class frmprincipal
         Me.pbprincipal.Name = "pbprincipal"
         Me.pbprincipal.Size = New System.Drawing.Size(100, 18)
         Me.pbprincipal.Visible = False
-        '
-        'lblstatusServer
-        '
-        Me.lblstatusServer.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblstatusServer.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.lblstatusServer.Name = "lblstatusServer"
-        Me.lblstatusServer.Size = New System.Drawing.Size(65, 19)
-        Me.lblstatusServer.Text = "ConfTerm:"
         '
         'lblstatusBDprinc
         '

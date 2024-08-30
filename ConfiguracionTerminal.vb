@@ -94,12 +94,13 @@
                 respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
             Loop
 
-            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta, conexionPrinc)
+            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where nombreTerminal like '" & NombreEquipo & "'", conexionPrinc)
             comandoupd.ExecuteNonQuery()
 
             funciones_Globales.aplicarConfiguracionTerminal()
             cargarConfiguracionTerminal()
-            MsgBox("Configuracion aplicada correctamente")
+            MsgBox("Configuracion aplicada correctamente, por favor cierre el sistema y vuelva a abrirlo para que los cambios tengan efecto")
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

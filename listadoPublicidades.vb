@@ -138,10 +138,10 @@ Public Class listadoPublicidades
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
 
-        'MsgBox(cmd.CommandText)
+        MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
-        'MsgBox(Cadena)
+        MsgBox(Cadena)
         If pestana = 1 Then
             If ds.Tables(0).Rows.Count > 0 Then
                 dgvPrestamos.Cargar_Datos(ds.Tables(0))

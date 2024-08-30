@@ -94,7 +94,7 @@ Module funciones_Globales
                 monedaDef= " & My.Settings.monedaDef & " ,
                 mostrarSoloStock= " & My.Settings.mostrarSoloStock & " ,
                 numDecimales= " & My.Settings.numDecimales & " ,
-                obtCodProd= " & My.Settings.obtCodProd & " ,
+                obtCodProd= '" & My.Settings.obtCodProd & "' ,
                 paginacion= " & My.Settings.paginacion & " ,
                 textoPieTiket= '" & My.Settings.TextoPieTiket & "' ,
                 tipoEtiqueta= " & My.Settings.TipoEtiqueta & " ,
@@ -107,7 +107,7 @@ Module funciones_Globales
             comandoupd.ExecuteNonQuery()
 
 
-            MsgBox("configuracion guardada")
+            'MsgBox("configuracion guardada")
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

@@ -9,7 +9,9 @@ Imports Microsoft.ReportingServices.DataProcessing
 Public Class frmprincipal
     Public loged As Boolean
     Public IPPublica As String = GetExternalIp()
-
+    Private idFacRapX As Integer = 0 'recibo X
+    Private idFacRapCB As Integer = 0 'factura B o C
+    Private idFacRapA As Integer = 0 'factura A
     Dim i As Integer
 
     Private Sub cargarConfiguracionDeTerminal()
@@ -130,17 +132,17 @@ Public Class frmprincipal
         If System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed = True Then
             Me.Text = Application.ProductName & " - V" & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
-
+            cargarConfiguracionDeTerminal()
             cargar_valores_generales()
         Else
             Me.Text = "V- " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.MajorRevision & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.MinorRevision & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
-
+            cargarConfiguracionDeTerminal()
             cargar_valores_generales()
 
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica
         End If
-        cargarConfiguracionDeTerminal()
+
 
     End Sub
     Private Sub cargar_valores_generales()
@@ -216,7 +218,7 @@ Public Class frmprincipal
             'End If
 
 
-            FacturaElectro.puntovtaelect = infocl(0)(2)
+            'FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
             FacturaElectro.certificado = infocl(2)(2)
             FacturaElectro.passcertificado = infocl(3)(2)
@@ -332,6 +334,23 @@ Public Class frmprincipal
                     lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
                 Else
                     lblPrincipalDolar.Text = ""
+                End If
+
+                Reconectar()
+                Dim consTiposFact As New MySql.Data.MySqlClient.MySqlDataAdapter("select 1, 
+                (select id from fact_facturasrapidas where tipofact in (999) and punto_venta =" & My.Settings.idPtoVta & ") as FX,
+                (select id from fact_facturasrapidas where tipofact in (6,11) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FCB,
+                (select id from fact_facturasrapidas where tipofact in (1) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FA
+                ", conexionPrinc)
+
+                MsgBox(consTiposFact.SelectCommand.CommandText)
+                Dim tablaTiposFact As New DataTable
+                consTiposFact.Fill(tablaTiposFact)
+                idFacRapX = tablaTiposFact.Rows(0).Item("FX")
+                idFacRapCB = tablaTiposFact.Rows(0).Item("FCB")
+
+                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FA")) Then
+                    idFacRapA = tablaTiposFact.Rows(0).Item("FA")
                 End If
 
             Catch ex As Exception
@@ -631,7 +650,7 @@ Public Class frmprincipal
 
         Dim vta As New puntoventa
         vta.MdiParent = Me
-        vta.idfacrap = My.Settings.idfacRap
+        vta.idfacrap = idFacRapX
         vta.Idcliente = 9999
         vta.cargarCliente(False)
         vta.txtcodPLU.Focus()
@@ -649,7 +668,7 @@ Public Class frmprincipal
 
         Dim vta As New puntoventa
         vta.MdiParent = Me
-        vta.idfacrap = 2
+        vta.idfacrap = idFacRapCB
         vta.Idcliente = 9999
         vta.cargarCliente(False)
         vta.cmdguardar.Enabled = False
@@ -669,7 +688,7 @@ Public Class frmprincipal
 
         Dim vta As New puntoventa
         vta.MdiParent = Me
-        vta.idfacrap = 3
+        vta.idfacrap = idFacRapA
         vta.cmdguardar.Enabled = False
         vta.cmdsolicitarcae.Enabled = True
         vta.txtclierazon.Focus()
