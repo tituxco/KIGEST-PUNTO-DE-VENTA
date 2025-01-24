@@ -12,6 +12,9 @@ Module funciones_Globales
     Public idFactura As Integer
     Public NombreEquipo As String = My.Computer.Name
 
+    Public Function ConvertirCMaPX(cm As Double) As Integer
+        Return (cm / 2.54) * 100
+    End Function
     Public Sub aplicarConfiguracionTerminal()
         Try
             Reconectar()
@@ -2464,8 +2467,8 @@ Module funciones_Globales
                     cantidad = cantidad - stockLote
                     Reconectar()
                     Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=0 where id=" & infostock(lotes)("id"), conexionPrinc)
-                    'updstock.ExecuteNonQuery()
-                    lotes += 1
+                    updstock.ExecuteNonQuery()
+                    lotes -= 1
                     stockLote = CDbl(infostock(lotes)("stock"))
                 ElseIf stockLote > cantidad Then
                     saldoLote = stockLote - cantidad

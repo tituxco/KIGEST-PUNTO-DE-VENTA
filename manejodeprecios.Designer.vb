@@ -23,10 +23,10 @@ Partial Class manejodeprecios
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(manejodeprecios))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.chkcalcularcosto = New System.Windows.Forms.CheckBox()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -58,18 +58,22 @@ Partial Class manejodeprecios
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
+        Me.GroupBox5 = New System.Windows.Forms.GroupBox()
+        Me.dgvStock = New System.Windows.Forms.DataGridView()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pnnavegacion.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -78,6 +82,10 @@ Partial Class manejodeprecios
         Me.Panel1.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel2.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
+        Me.GroupBox5.SuspendLayout()
+        CType(Me.dgvStock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pnnavegacion
@@ -154,7 +162,7 @@ Partial Class manejodeprecios
         Me.Label6.ForeColor = System.Drawing.Color.White
         Me.Label6.Location = New System.Drawing.Point(6, 18)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(21, 16)
+        Me.Label6.Size = New System.Drawing.Size(20, 16)
         Me.Label6.TabIndex = 177
         Me.Label6.Text = "%"
         '
@@ -197,7 +205,7 @@ Partial Class manejodeprecios
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(6, 18)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(21, 16)
+        Me.Label5.Size = New System.Drawing.Size(20, 16)
         Me.Label5.TabIndex = 177
         Me.Label5.Text = "%"
         '
@@ -264,7 +272,7 @@ Partial Class manejodeprecios
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(259, 59)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(21, 16)
+        Me.Label4.Size = New System.Drawing.Size(20, 16)
         Me.Label4.TabIndex = 172
         Me.Label4.Text = "%"
         '
@@ -282,7 +290,7 @@ Partial Class manejodeprecios
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(259, 17)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(21, 16)
+        Me.Label3.Size = New System.Drawing.Size(20, 16)
         Me.Label3.TabIndex = 170
         Me.Label3.Text = "%"
         '
@@ -310,7 +318,7 @@ Partial Class manejodeprecios
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(6, 16)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(108, 16)
+        Me.Label2.Size = New System.Drawing.Size(107, 16)
         Me.Label2.TabIndex = 168
         Me.Label2.Text = "Por proveedor"
         '
@@ -321,7 +329,7 @@ Partial Class manejodeprecios
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(6, 59)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(102, 16)
+        Me.Label7.Size = New System.Drawing.Size(101, 16)
         Me.Label7.TabIndex = 166
         Me.Label7.Text = "Por categoria"
         '
@@ -416,11 +424,11 @@ Partial Class manejodeprecios
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.dtproductos)
-        Me.Panel1.Controls.Add(Me.dtlistas)
+        Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 188)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1083, 262)
+        Me.Panel1.Size = New System.Drawing.Size(1083, 325)
         Me.Panel1.TabIndex = 78
         '
         'dtproductos
@@ -436,7 +444,7 @@ Partial Class manejodeprecios
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.dtproductos.Size = New System.Drawing.Size(748, 262)
+        Me.dtproductos.Size = New System.Drawing.Size(725, 325)
         Me.dtproductos.TabIndex = 229
         '
         'dtlistas
@@ -447,15 +455,119 @@ Partial Class manejodeprecios
         Me.dtlistas.BackgroundColor = System.Drawing.Color.White
         Me.dtlistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtlistas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.Column3, Me.Column4, Me.Column5, Me.id, Me.Column1, Me.Column2})
-        Me.dtlistas.Dock = System.Windows.Forms.DockStyle.Right
+        Me.dtlistas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtlistas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtlistas.Location = New System.Drawing.Point(748, 0)
+        Me.dtlistas.Location = New System.Drawing.Point(3, 19)
         Me.dtlistas.MultiSelect = False
         Me.dtlistas.Name = "dtlistas"
         Me.dtlistas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtlistas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistas.Size = New System.Drawing.Size(335, 262)
+        Me.dtlistas.Size = New System.Drawing.Size(352, 129)
         Me.dtlistas.TabIndex = 228
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.GroupBox5)
+        Me.Panel2.Controls.Add(Me.GroupBox4)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Panel2.Location = New System.Drawing.Point(725, 0)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(358, 325)
+        Me.Panel2.TabIndex = 230
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.dtlistas)
+        Me.GroupBox4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.GroupBox4.Location = New System.Drawing.Point(0, 0)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(358, 151)
+        Me.GroupBox4.TabIndex = 229
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Precios"
+        '
+        'GroupBox5
+        '
+        Me.GroupBox5.Controls.Add(Me.dgvStock)
+        Me.GroupBox5.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.GroupBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.GroupBox5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.GroupBox5.Location = New System.Drawing.Point(0, 189)
+        Me.GroupBox5.Name = "GroupBox5"
+        Me.GroupBox5.Size = New System.Drawing.Size(358, 136)
+        Me.GroupBox5.TabIndex = 237
+        Me.GroupBox5.TabStop = False
+        Me.GroupBox5.Text = "Stock"
+        '
+        'dgvStock
+        '
+        Me.dgvStock.AllowUserToAddRows = False
+        Me.dgvStock.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvStock.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvStock.BackgroundColor = System.Drawing.Color.White
+        Me.dgvStock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvStock.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvStock.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dgvStock.Location = New System.Drawing.Point(3, 19)
+        Me.dgvStock.MultiSelect = False
+        Me.dgvStock.Name = "dgvStock"
+        Me.dgvStock.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
+        Me.dgvStock.RowTemplate.DefaultCellStyle.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.dgvStock.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvStock.Size = New System.Drawing.Size(352, 114)
+        Me.dgvStock.TabIndex = 227
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "Lista"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Width = 142
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Visible = False
+        Me.DataGridViewTextBoxColumn2.Width = 67
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn3.FillWeight = 60.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 85
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Visible = False
+        Me.DataGridViewTextBoxColumn4.Width = 40
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "%"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.ReadOnly = True
+        Me.DataGridViewTextBoxColumn5.Visible = False
+        Me.DataGridViewTextBoxColumn5.Width = 42
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "auxUtil"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Visible = False
+        Me.DataGridViewTextBoxColumn6.Width = 43
         '
         'Column3
         '
@@ -501,58 +613,12 @@ Partial Class manejodeprecios
         Me.Column2.Name = "Column2"
         Me.Column2.Visible = False
         '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Lista"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Width = 142
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn2.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Utilidad"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Visible = False
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
-        Me.DataGridViewTextBoxColumn3.FillWeight = 60.0!
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Precio"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.Width = 85
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.HeaderText = "id"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.Visible = False
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "%"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        Me.DataGridViewTextBoxColumn5.Width = 42
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.FillWeight = 30.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "auxUtil"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.Width = 43
-        '
         'manejodeprecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1083, 450)
+        Me.ClientSize = New System.Drawing.Size(1083, 513)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
@@ -573,6 +639,10 @@ Partial Class manejodeprecios
         Me.Panel1.ResumeLayout(False)
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel2.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
+        Me.GroupBox5.ResumeLayout(False)
+        CType(Me.dgvStock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -620,4 +690,8 @@ Partial Class manejodeprecios
     Friend WithEvents id As DataGridViewTextBoxColumn
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents GroupBox4 As GroupBox
+    Friend WithEvents GroupBox5 As GroupBox
+    Friend WithEvents dgvStock As DataGridView
 End Class

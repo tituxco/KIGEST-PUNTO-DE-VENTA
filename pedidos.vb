@@ -173,10 +173,14 @@
 
     Private Sub cmdeliminar_Click(sender As Object, e As EventArgs) Handles cmdeliminar.Click
         Try
+            If InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+                MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+                Exit Sub
+            End If
             If MsgBox("Esta seguro que desa eliminar este pedido?", vbQuestion + vbYesNo) = vbNo Then
                 Exit Sub
             End If
-            Dim idped As Integer = IDPedidoSeleccionado 'dtpedidos.CurrentRow.Cells(0).Value
+            Dim idped As Integer = IDPedidoSeleccionado
             Dim condicionITM As String = ""
             Dim condicionPED As String = ""
 
@@ -510,6 +514,10 @@
     End Sub
 
     Private Sub dgvPedidos_Load(sender As Object, e As EventArgs) Handles dgvPedidos.Load
+
+    End Sub
+
+    Private Sub dgvPedidos_KeyUp(sender As Object, e As KeyEventArgs) Handles dgvPedidos.KeyUp
 
     End Sub
 End Class

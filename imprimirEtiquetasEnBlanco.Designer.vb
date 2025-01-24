@@ -29,6 +29,21 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.txtEspL4 = New System.Windows.Forms.TextBox()
+        Me.txtEspL3 = New System.Windows.Forms.TextBox()
+        Me.txtEspL2 = New System.Windows.Forms.TextBox()
+        Me.txtEspL1 = New System.Windows.Forms.TextBox()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.txtalto = New System.Windows.Forms.TextBox()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.txtancho = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.txttam4 = New System.Windows.Forms.TextBox()
+        Me.txttam3 = New System.Windows.Forms.TextBox()
+        Me.txttam2 = New System.Windows.Forms.TextBox()
+        Me.txttam1 = New System.Windows.Forms.TextBox()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
@@ -55,7 +70,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnnavegacion.Location = New System.Drawing.Point(0, 40)
         Me.pnnavegacion.Name = "pnnavegacion"
-        Me.pnnavegacion.Size = New System.Drawing.Size(761, 89)
+        Me.pnnavegacion.Size = New System.Drawing.Size(790, 89)
         Me.pnnavegacion.TabIndex = 77
         '
         'Button1
@@ -66,7 +81,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(563, 0)
+        Me.Button1.Location = New System.Drawing.Point(592, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
         Me.Button1.TabIndex = 168
@@ -83,7 +98,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(665, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(694, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(96, 89)
         Me.cmdsalir.TabIndex = 17
@@ -99,7 +114,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(761, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(790, 40)
         Me.pntitulo.TabIndex = 76
         '
         'Label1
@@ -115,6 +130,21 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.txtEspL4)
+        Me.Panel2.Controls.Add(Me.txtEspL3)
+        Me.Panel2.Controls.Add(Me.txtEspL2)
+        Me.Panel2.Controls.Add(Me.txtEspL1)
+        Me.Panel2.Controls.Add(Me.Label10)
+        Me.Panel2.Controls.Add(Me.Button3)
+        Me.Panel2.Controls.Add(Me.txtalto)
+        Me.Panel2.Controls.Add(Me.Label9)
+        Me.Panel2.Controls.Add(Me.txtancho)
+        Me.Panel2.Controls.Add(Me.Label8)
+        Me.Panel2.Controls.Add(Me.Label7)
+        Me.Panel2.Controls.Add(Me.txttam4)
+        Me.Panel2.Controls.Add(Me.txttam3)
+        Me.Panel2.Controls.Add(Me.txttam2)
+        Me.Panel2.Controls.Add(Me.txttam1)
         Me.Panel2.Controls.Add(Me.TextBox5)
         Me.Panel2.Controls.Add(Me.Label6)
         Me.Panel2.Controls.Add(Me.TextBox4)
@@ -130,12 +160,141 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 129)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(761, 378)
+        Me.Panel2.Size = New System.Drawing.Size(790, 378)
         Me.Panel2.TabIndex = 79
+        '
+        'txtEspL4
+        '
+        Me.txtEspL4.Location = New System.Drawing.Point(315, 155)
+        Me.txtEspL4.Name = "txtEspL4"
+        Me.txtEspL4.Size = New System.Drawing.Size(33, 20)
+        Me.txtEspL4.TabIndex = 25
+        Me.txtEspL4.Text = "3,5"
+        '
+        'txtEspL3
+        '
+        Me.txtEspL3.Location = New System.Drawing.Point(315, 129)
+        Me.txtEspL3.Name = "txtEspL3"
+        Me.txtEspL3.Size = New System.Drawing.Size(33, 20)
+        Me.txtEspL3.TabIndex = 24
+        Me.txtEspL3.Text = "3"
+        '
+        'txtEspL2
+        '
+        Me.txtEspL2.Location = New System.Drawing.Point(315, 102)
+        Me.txtEspL2.Name = "txtEspL2"
+        Me.txtEspL2.Size = New System.Drawing.Size(33, 20)
+        Me.txtEspL2.TabIndex = 23
+        Me.txtEspL2.Text = "2,5"
+        '
+        'txtEspL1
+        '
+        Me.txtEspL1.Location = New System.Drawing.Point(315, 76)
+        Me.txtEspL1.Name = "txtEspL1"
+        Me.txtEspL1.Size = New System.Drawing.Size(33, 20)
+        Me.txtEspL1.TabIndex = 22
+        Me.txtEspL1.Text = "2"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(312, 60)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(90, 13)
+        Me.Label10.TabIndex = 21
+        Me.Label10.Text = "Esp. Sup. (cm)"
+        '
+        'Button3
+        '
+        Me.Button3.Location = New System.Drawing.Point(287, 28)
+        Me.Button3.Name = "Button3"
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
+        Me.Button3.TabIndex = 20
+        Me.Button3.Text = "Establecer"
+        Me.Button3.UseVisualStyleBackColor = True
+        '
+        'txtalto
+        '
+        Me.txtalto.Location = New System.Drawing.Point(227, 31)
+        Me.txtalto.Name = "txtalto"
+        Me.txtalto.Size = New System.Drawing.Size(54, 20)
+        Me.txtalto.TabIndex = 19
+        Me.txtalto.Text = "4"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(146, 34)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(61, 13)
+        Me.Label9.TabIndex = 18
+        Me.Label9.Text = "Alto: (cm)"
+        '
+        'txtancho
+        '
+        Me.txtancho.Location = New System.Drawing.Point(86, 31)
+        Me.txtancho.Name = "txtancho"
+        Me.txtancho.Size = New System.Drawing.Size(54, 20)
+        Me.txtancho.TabIndex = 17
+        Me.txtancho.Text = "5"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(5, 34)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(75, 13)
+        Me.Label8.TabIndex = 16
+        Me.Label8.Text = "Ancho: (cm)"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(229, 60)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(77, 13)
+        Me.Label7.TabIndex = 15
+        Me.Label7.Text = "Tamaño (px)"
+        '
+        'txttam4
+        '
+        Me.txttam4.Location = New System.Drawing.Point(232, 155)
+        Me.txttam4.Name = "txttam4"
+        Me.txttam4.Size = New System.Drawing.Size(33, 20)
+        Me.txttam4.TabIndex = 14
+        Me.txttam4.Text = "6"
+        '
+        'txttam3
+        '
+        Me.txttam3.Location = New System.Drawing.Point(232, 129)
+        Me.txttam3.Name = "txttam3"
+        Me.txttam3.Size = New System.Drawing.Size(33, 20)
+        Me.txttam3.TabIndex = 13
+        Me.txttam3.Text = "8"
+        '
+        'txttam2
+        '
+        Me.txttam2.Location = New System.Drawing.Point(232, 102)
+        Me.txttam2.Name = "txttam2"
+        Me.txttam2.Size = New System.Drawing.Size(33, 20)
+        Me.txttam2.TabIndex = 12
+        Me.txttam2.Text = "8"
+        '
+        'txttam1
+        '
+        Me.txttam1.Location = New System.Drawing.Point(232, 76)
+        Me.txttam1.Name = "txttam1"
+        Me.txttam1.Size = New System.Drawing.Size(33, 20)
+        Me.txttam1.TabIndex = 11
+        Me.txttam1.Text = "10"
         '
         'TextBox5
         '
-        Me.TextBox5.Location = New System.Drawing.Point(62, 123)
+        Me.TextBox5.Location = New System.Drawing.Point(501, 53)
         Me.TextBox5.Name = "TextBox5"
         Me.TextBox5.Size = New System.Drawing.Size(54, 20)
         Me.TextBox5.TabIndex = 10
@@ -145,7 +304,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(3, 130)
+        Me.Label6.Location = New System.Drawing.Point(442, 60)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(61, 13)
         Me.Label6.TabIndex = 9
@@ -153,7 +312,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'TextBox4
         '
-        Me.TextBox4.Location = New System.Drawing.Point(62, 97)
+        Me.TextBox4.Location = New System.Drawing.Point(62, 155)
         Me.TextBox4.Name = "TextBox4"
         Me.TextBox4.Size = New System.Drawing.Size(164, 20)
         Me.TextBox4.TabIndex = 8
@@ -163,7 +322,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(3, 104)
+        Me.Label5.Location = New System.Drawing.Point(3, 162)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(53, 13)
         Me.Label5.TabIndex = 7
@@ -171,9 +330,10 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(345, 18)
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.PictureBox1.Location = New System.Drawing.Point(563, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(320, 203)
+        Me.PictureBox1.Size = New System.Drawing.Size(197, 118)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -181,7 +341,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(3, 78)
+        Me.Label4.Location = New System.Drawing.Point(3, 136)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(53, 13)
         Me.Label4.TabIndex = 6
@@ -191,7 +351,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         Me.Label3.AutoSize = True
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(3, 52)
+        Me.Label3.Location = New System.Drawing.Point(3, 110)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(53, 13)
         Me.Label3.TabIndex = 5
@@ -201,7 +361,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label2.Location = New System.Drawing.Point(3, 25)
+        Me.Label2.Location = New System.Drawing.Point(3, 83)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(53, 13)
         Me.Label2.TabIndex = 4
@@ -209,7 +369,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'TextBox3
         '
-        Me.TextBox3.Location = New System.Drawing.Point(62, 71)
+        Me.TextBox3.Location = New System.Drawing.Point(62, 129)
         Me.TextBox3.Name = "TextBox3"
         Me.TextBox3.Size = New System.Drawing.Size(164, 20)
         Me.TextBox3.TabIndex = 3
@@ -217,16 +377,16 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(232, 18)
+        Me.Button2.Location = New System.Drawing.Point(461, 4)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(94, 99)
+        Me.Button2.Size = New System.Drawing.Size(94, 47)
         Me.Button2.TabIndex = 2
         Me.Button2.Text = "Previsualizar"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'TextBox2
         '
-        Me.TextBox2.Location = New System.Drawing.Point(62, 44)
+        Me.TextBox2.Location = New System.Drawing.Point(62, 102)
         Me.TextBox2.Name = "TextBox2"
         Me.TextBox2.Size = New System.Drawing.Size(164, 20)
         Me.TextBox2.TabIndex = 1
@@ -234,7 +394,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'TextBox1
         '
-        Me.TextBox1.Location = New System.Drawing.Point(62, 18)
+        Me.TextBox1.Location = New System.Drawing.Point(62, 76)
         Me.TextBox1.Name = "TextBox1"
         Me.TextBox1.Size = New System.Drawing.Size(164, 20)
         Me.TextBox1.TabIndex = 0
@@ -245,7 +405,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(761, 507)
+        Me.ClientSize = New System.Drawing.Size(790, 507)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
@@ -280,4 +440,19 @@ Partial Class imprimirEtiquetasEnBlanco
     Friend WithEvents Label5 As Label
     Friend WithEvents TextBox5 As TextBox
     Friend WithEvents Label6 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents txttam4 As TextBox
+    Friend WithEvents txttam3 As TextBox
+    Friend WithEvents txttam2 As TextBox
+    Friend WithEvents txttam1 As TextBox
+    Friend WithEvents txtancho As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents txtalto As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents Button3 As Button
+    Friend WithEvents txtEspL4 As TextBox
+    Friend WithEvents txtEspL3 As TextBox
+    Friend WithEvents txtEspL2 As TextBox
+    Friend WithEvents txtEspL1 As TextBox
+    Friend WithEvents Label10 As Label
 End Class

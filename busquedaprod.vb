@@ -148,7 +148,7 @@ Public Class busquedaprod
                 Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
                 Dim fac As New datosfacturas
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.id as CodInterno, pro.descripcion, pro.codigo as PLU,
-                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as Stock,   
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & idAlmacen & ") as Stock,   
                 case (select valor from fact_configuraciones where id=7)
                 when 0 then
                 format(
@@ -680,6 +680,10 @@ Public Class busquedaprod
     End Sub
 
     Private Sub pntitulo_Paint(sender As Object, e As PaintEventArgs) Handles pntitulo.Paint
+
+    End Sub
+
+    Private Sub dgvStock_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvStock.CellContentClick
 
     End Sub
 End Class

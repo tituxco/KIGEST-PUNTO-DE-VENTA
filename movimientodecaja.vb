@@ -73,7 +73,8 @@
             cmbctade.DataSource = readcajas.Tables(0)
             cmbctade.DisplayMember = readcajas.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbctade.ValueMember = readcajas.Tables(0).Columns(0).Caption.ToString
-            cmbctade.SelectedIndex = -1
+            cmbctade.SelectedValue = My.Settings.CajaDef
+
 
             cmbctahacia.DataSource = readcajas2.Tables(0)
             cmbctahacia.DisplayMember = readcajas2.Tables(0).Columns(1).Caption.ToString.ToUpper
@@ -822,6 +823,7 @@
             Dim total As String = remplazarPunto(txttotalmovimiento.Text)
             Dim tipoFact As Integer = cmbtipofac.SelectedValue
 
+
             If cmbctade.SelectedValue = cmbctahacia.SelectedValue Then
                 MsgBox("las cuentas de origen y destino deben ser distintas")
                 Exit Sub
@@ -909,6 +911,7 @@
                 .AddWithValue("?monto", remplazarPunto(txttotalmovimiento.Text))
                 .AddWithValue("?comp", idfacturahacia)
                 .AddWithValue("?caja", cmbctahacia.SelectedValue)
+
                 .AddWithValue("?conc", cmbconceptoing.SelectedValue)
             End With
             comandoadding.ExecuteNonQuery()

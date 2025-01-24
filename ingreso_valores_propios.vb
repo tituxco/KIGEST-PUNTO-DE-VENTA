@@ -47,7 +47,7 @@
         SendKeys.Send("{TAB}")
         Try
             If e.ColumnIndex = 2 Then
-                Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from fact_cheques where serie like '" & dtcheques.CurrentCell.Value & "'", conexionPrinc)
+                Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from fact_cheques where lcase(banco) like '" & dtcheques.CurrentRow.Cells("banco").Value.ToString.ToLower & "' and  serie like '" & dtcheques.CurrentCell.Value & "'", conexionPrinc)
                 Dim readftipo As New DataTable
                 tablaftipo.Fill(readftipo)
                 If readftipo.Rows.Count <> 0 Then

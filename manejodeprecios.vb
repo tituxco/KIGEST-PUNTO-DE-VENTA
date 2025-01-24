@@ -28,6 +28,22 @@
             Return ""
         End Try
     End Function
+
+    Public Sub cargarStockAlmacen(idProd As Integer)
+        Try
+            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(lt.stock) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
+            where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", conexionPrinc)
+            Dim tablaprod As New DataTable
+
+            consultaPRod.Fill(tablaprod)
+            dgvStock.DataSource = tablaprod
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
     Private Sub cargarProductos(ByRef codigo As String, ByRef nombre As String, ByRef categoria As String, ByRef proveedor As String)
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
@@ -349,6 +365,8 @@
 
     Private Sub dtproductos_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellEnter
         calcularPrecios()
+        Dim IdItem As Integer = dtproductos.CurrentRow.Cells("CodInterno").Value
+        cargarStockAlmacen(IdItem)
     End Sub
 
     Private Sub busquedaprod_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -568,4 +586,8 @@
         funciones_Globales.GuardarConfiguracionTerminal()
     End Sub
 
+    Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+
+    End Sub
 End Class

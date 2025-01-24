@@ -343,7 +343,7 @@ Public Class frmprincipal
                 (select id from fact_facturasrapidas where tipofact in (1) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FA
                 ", conexionPrinc)
 
-                MsgBox(consTiposFact.SelectCommand.CommandText)
+                'MsgBox(consTiposFact.SelectCommand.CommandText)
                 Dim tablaTiposFact As New DataTable
                 consTiposFact.Fill(tablaTiposFact)
                 idFacRapX = tablaTiposFact.Rows(0).Item("FX")

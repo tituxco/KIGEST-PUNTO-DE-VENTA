@@ -290,9 +290,9 @@ Public Class CONTABLE
                 parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where tip =1)"
             End If
             If cmbinforalmacen.SelectedValue = 0 Then
-                consAlmacen = " and itm.idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
+                consAlmacen = " having idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
             Else
-                consAlmacen = " and itm.idAlmacen = " & cmbinforalmacen.SelectedValue & " "
+                consAlmacen = " having idAlmacen = " & cmbinforalmacen.SelectedValue & " "
             End If
 
 
@@ -324,20 +324,20 @@ Public Class CONTABLE
             Dim tablaprod As New DataTable
             'Dim filasProd() As DataRow
             If rdninguno.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-                fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
                 fact.fecha,fact.razon,fact.direccion, 
-                fact.localidad, con.condicion, 
+                fact.localidad, con.condicion,
                 case when fis.debcred='C' then 
                 concat('-',FORMAT(fact.total,2,'es_AR')) 
-
-                else FORMAT(fact.total,2,'es_AR') end as total, 
+                else FORMAT(fact.total,2,'es_AR') end as total,
                 (select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
-                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta
-                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
-                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
-                and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
-                "group by fact.id", conexionPrinc)
+                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta, 
+                itm.idAlmacen as idAlmacen from fact_items as itm, fact_facturas as fact, fact_conffiscal as fis,fact_condventas as con
+                where fact.id= itm.id_fact and 
+                fis.donfdesc=fact.tipofact and
+                con.id=fact.condvta and
+                fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq &
+                "group by fact.id " & consAlmacen, conexionPrinc)
                 columna = 7
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.Fill(tablaprod)
@@ -1826,7 +1826,7 @@ Public Class CONTABLE
             & "che.fecha_cobro,format(che.importe,2,'es_AR') as importe, che.observaciones " _
             & "from fact_cheques as che " _
             & "where che.tipo_cheque=2 " & consul, conexionPrinc)
-            MsgBox(consulta.SelectCommand.CommandText)
+            'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablacheques As New DataTable
 
             consulta.Fill(tablacheques)
@@ -5232,7 +5232,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub TabPage6_Enter(sender As Object, e As EventArgs) Handles tabUsuarios.Enter
         Try
             Reconectar()
-            Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave 
+            Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave,(select  
             FROM AuthServ.CliAuth  where bd like '" & DatosAcceso.bd & "'  ", conexionAuth)
             Dim tabUsuarios As New DataTable
             consUsuarios.Fill(tabUsuarios)
@@ -6203,6 +6203,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             and caja.id=ie.caja and tip.ptovta=caja.id            
             " & consGtos & consRazonDetalles & "
             order by Pfact.fecha asc", conexionPrinc)
+            MsgBox(consulta.SelectCommand.CommandText)
             columna = 6
             consulta.Fill(tablagtos)
             dgvgastos.DataSource = tablagtos

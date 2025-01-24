@@ -401,6 +401,7 @@ Public Class informedeventas
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
 
+
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		cat.nombre,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
                 (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
@@ -453,7 +454,7 @@ Public Class informedeventas
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & prodBusq & consIdAlmacen & consIdVendedor & " 
                 group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
-
+                'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
                 (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
@@ -658,15 +659,26 @@ Public Class informedeventas
                 lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
                 lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
             ElseIf rdInforCategoria.Checked = True Then
-                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
-                lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
-                lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 2), 2)
-                TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2) - SumarTotal(dtdevoluciones, 2), 2)
-                TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 2), 2)
-                lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
-                lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+                If chkproductos.CheckState = CheckState.Checked Then
+                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
+                    lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 4), 2)
+                    lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 4), 2)
+                    TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 4) - SumarTotal(dtdevoluciones, 4), 2)
+                    TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 4), 2)
+                    lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 5) - SumarTotal(dtdevoluciones, 4), 2)
+                    lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+                Else
+                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 1), 2)
+                    lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                    lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 2), 2)
+                    TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 2) - SumarTotal(dtdevoluciones, 2), 2)
+                    TotalDevoluciones = Math.Round(SumarTotal(dtdevoluciones, 2), 2)
+                    lblbalanceganancia.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
+                    lblBalanProdNodCod.Text = "$" & TotalVentasNoCodif
+                End If
+
             ElseIf rdInforClientes.Checked = True Then
-                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
                 lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 3), 2)
                 TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
@@ -1314,7 +1326,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             consultaPedidos.Fill(tablaPedidos)
 
             Dim consultaFacturas As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
-            where fact.tipofact in(1,2,999,11,12) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            where fact.tipofact in(1,2,6,999,11,12) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
             group by fact.id_cliente
             order by fact.razon asc", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
@@ -1322,7 +1334,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             consultaFacturas.Fill(tablaFacturas)
 
             Dim consultaDevoluciones As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
-            where fact.tipofact in(3,991,13) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
+            where fact.tipofact in(3,8,991,13) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
             group by fact.id_cliente
             order by fact.razon asc", conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)

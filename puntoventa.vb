@@ -1050,17 +1050,20 @@ Public Class puntoventa
 
 				'para quitar de stock
 				If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
+					If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then ' si son notas de credito salteamos el descuento de stock
+
+					End If
 					Dim cant As Double = FormatNumber(itemsFact.Cells(2).Value, 4)
-					Dim codigo As String = cod
-					Dim lotes As Integer = 0
-					'MsgBox(cant)
-					Reconectar()
-					Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
+						Dim codigo As String = cod
+						Dim lotes As Integer = 0
+						'MsgBox(cant)
+						Reconectar()
+						Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
 					& "where stock >0 and idproducto=" & codigo & " and idalmacen= " & IDALMACEN & " order by id asc", conexionPrinc)
-					Dim tablastock As New DataTable
-					Dim infostock() As DataRow
-					consultastock.Fill(tablastock)
-					infostock = tablastock.Select("")
+						Dim tablastock As New DataTable
+						Dim infostock() As DataRow
+						consultastock.Fill(tablastock)
+						infostock = tablastock.Select("")
 					'MsgBox(cant)
 					Do Until cant = 0
 						If infostock(lotes)(1) <= cant Then
@@ -1087,9 +1090,9 @@ Public Class puntoventa
 					Loop
 				End If
 
-				'poner sacar los items de produccion
+					'poner sacar los items de produccion
 
-				If InStr(codbar, "00") = 1 Then
+					If InStr(codbar, "00") = 1 Then
 					Reconectar()
 					sqlQuery = "update fact_insumos_produccion Set facturado=1, fecha_venta ='" & fecha & "' where codigobarras= " & codbar
 					comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
