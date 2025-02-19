@@ -561,6 +561,7 @@ Public Class imprimirEtiquetas
                 e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
                 e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 140)
                 LlenarEtiqueta()
+                'MsgBox("guardado")
             Else
                 MsgBox("No se pudo guardar el producto en la base de datos, la etiqueta no se puede imprimir")
             End If

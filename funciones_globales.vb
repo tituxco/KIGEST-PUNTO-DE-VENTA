@@ -2235,6 +2235,50 @@ Module funciones_Globales
         End Try
     End Sub
 
+    Public Sub GenerarExcelDT(ByRef ElGrid As DataTable)
+        'Creamos las variables
+        Dim exApp As New Microsoft.Office.Interop.Excel.Application
+        Dim exLibro As Microsoft.Office.Interop.Excel.Workbook
+        Dim exHoja As Microsoft.Office.Interop.Excel.Worksheet
+        Try
+            'Añadimos el Libro al programa, y la hoja al libro
+            exLibro = exApp.Workbooks.Add
+            exHoja = exLibro.Worksheets.Add()
+            ' ¿Cuantas columnas y cuantas filas?
+            Dim NCol As Integer = ElGrid.Columns.Count '.ColumnCount
+            Dim NRow As Integer = ElGrid.Rows.Count
+            'Aqui recorremos todas las filas, y por cada fila todas las columnas y vamos escribiendo.
+            For i As Integer = 1 To NCol
+                exHoja.Cells.Item(1, i) = ElGrid.Columns(i - 1).ColumnName.ToString ' .HeaderText.ToString
+                'exHoja.Cells.Item(1, i).HorizontalAlignment = 3
+            Next
+            For Fila As Integer = 0 To NRow - 1
+                For Col As Integer = 0 To NCol - 1
+                    If Not IsNothing(ElGrid.Rows(Fila).Item(Col)) Then
+                        'If IsDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString) Then
+                        '    exHoja.Cells.Item(Fila + 2, Col + 1) = Format(CDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString), "dd-MM-yyyy")
+                        '    exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
+                        'Else
+                        exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Item(Col).ToString
+                        exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
+                        ' End If
+                    End If
+                Next
+            Next
+            'Titulo en negrita, Alineado al centro y que el tamaño de la columna se ajuste al texto
+            exHoja.Rows.Item(1).Font.Bold = 1
+            exHoja.Rows.Item(1).HorizontalAlignment = 3
+            exHoja.Columns.AutoFit()
+            'Aplicación visible
+            exApp.Application.Visible = True
+            exHoja = Nothing
+            exLibro = Nothing
+            exApp = Nothing
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error al exportar a Excel")
+        End Try
+    End Sub
+
     Public Function comprobarComprobanteCompra(ByRef comprobante As String, ByRef contribuyente As String, conexion As MySql.Data.MySqlClient.MySqlConnection) As Boolean
         Try
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from iv_items_compras where nufac like '" & comprobante & "' and " _

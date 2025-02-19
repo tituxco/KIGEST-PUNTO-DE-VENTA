@@ -120,7 +120,7 @@ Partial Class busquedaprod
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1384, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1370, 40)
         Me.pntitulo.TabIndex = 72
         '
         'Label1
@@ -153,7 +153,7 @@ Partial Class busquedaprod
         Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnnavegacion.Location = New System.Drawing.Point(0, 40)
         Me.pnnavegacion.Name = "pnnavegacion"
-        Me.pnnavegacion.Size = New System.Drawing.Size(1384, 89)
+        Me.pnnavegacion.Size = New System.Drawing.Size(1370, 89)
         Me.pnnavegacion.TabIndex = 75
         '
         'chkstock
@@ -195,7 +195,7 @@ Partial Class busquedaprod
         Me.Panel4.Controls.Add(Me.Button8)
         Me.Panel4.Controls.Add(Me.chkimprimirprecio)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel4.Location = New System.Drawing.Point(888, 0)
+        Me.Panel4.Location = New System.Drawing.Point(874, 0)
         Me.Panel4.Name = "Panel4"
         Me.Panel4.Size = New System.Drawing.Size(104, 89)
         Me.Panel4.TabIndex = 180
@@ -329,7 +329,7 @@ Partial Class busquedaprod
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(992, 0)
+        Me.Button3.Location = New System.Drawing.Point(978, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(102, 89)
         Me.Button3.TabIndex = 172
@@ -346,7 +346,7 @@ Partial Class busquedaprod
         Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.ForeColor = System.Drawing.Color.White
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1094, 0)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1080, 0)
         Me.cmdbuscar.Name = "cmdbuscar"
         Me.cmdbuscar.Size = New System.Drawing.Size(92, 89)
         Me.cmdbuscar.TabIndex = 170
@@ -374,7 +374,7 @@ Partial Class busquedaprod
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(1186, 0)
+        Me.Button1.Location = New System.Drawing.Point(1172, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(102, 89)
         Me.Button1.TabIndex = 168
@@ -391,7 +391,7 @@ Partial Class busquedaprod
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(1288, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(1274, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(96, 89)
         Me.cmdsalir.TabIndex = 17
@@ -409,7 +409,7 @@ Partial Class busquedaprod
         Me.Panel1.Controls.Add(Me.GroupBox2)
         Me.Panel1.Controls.Add(Me.grplistasImprimir)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Panel1.Location = New System.Drawing.Point(1032, 0)
+        Me.Panel1.Location = New System.Drawing.Point(1018, 0)
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(352, 492)
         Me.Panel1.TabIndex = 76
@@ -751,7 +751,7 @@ Partial Class busquedaprod
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel2.Location = New System.Drawing.Point(0, 129)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1384, 492)
+        Me.Panel2.Size = New System.Drawing.Size(1370, 492)
         Me.Panel2.TabIndex = 77
         '
         'dgvProductos
@@ -759,7 +759,7 @@ Partial Class busquedaprod
         Me.dgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvProductos.Location = New System.Drawing.Point(0, 0)
         Me.dgvProductos.Name = "dgvProductos"
-        Me.dgvProductos.Size = New System.Drawing.Size(1032, 492)
+        Me.dgvProductos.Size = New System.Drawing.Size(1018, 492)
         Me.dgvProductos.TabIndex = 77
         '
         'dtproductos
@@ -776,7 +776,7 @@ Partial Class busquedaprod
         Me.dtproductos.Name = "dtproductos"
         Me.dtproductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtproductos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtproductos.Size = New System.Drawing.Size(1032, 492)
+        Me.dtproductos.Size = New System.Drawing.Size(1018, 492)
         Me.dtproductos.TabIndex = 64
         '
         'ShapeContainer1
@@ -861,7 +861,7 @@ Partial Class busquedaprod
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1384, 621)
+        Me.ClientSize = New System.Drawing.Size(1370, 621)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)

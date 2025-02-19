@@ -199,6 +199,7 @@ Public Class CONTABLE
             cmbInforPtoVta.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbInforPtoVta.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
 
+
             cmbInforPtoVta2.DataSource = readptovta.Tables(0)
             cmbInforPtoVta2.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbInforPtoVta2.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
@@ -295,9 +296,10 @@ Public Class CONTABLE
                 consAlmacen = " having idAlmacen = " & cmbinforalmacen.SelectedValue & " "
             End If
 
+            consPtovta = " having ptovta=" & cmbInforPtoVta.SelectedValue
+            'If cmbInforPtoVta.SelectedValue Then
 
-
-
+            'End If
             If grpagrupar.Enabled = True Then
                 If chktodosvendedores.Checked = False And cmbvendedor.SelectedValue = 0 Then
                     MsgBox("debe seleccionar un vendedor")
@@ -324,20 +326,23 @@ Public Class CONTABLE
             Dim tablaprod As New DataTable
             'Dim filasProd() As DataRow
             If rdninguno.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+                fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
                 fact.fecha,fact.razon,fact.direccion, 
                 fact.localidad, con.condicion,
-                case when fis.debcred='C' then 
-                concat('-',FORMAT(fact.total,2,'es_AR')) 
-                else FORMAT(fact.total,2,'es_AR') end as total,
+                case when 
+                    fis.debcred='C' then 
+                        concat('-',FORMAT(fact.total,2,'es_AR')) 
+                    else 
+                    FORMAT(fact.total,2,'es_AR') end as total,
                 (select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
-                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta, 
-                itm.idAlmacen as idAlmacen from fact_items as itm, fact_facturas as fact, fact_conffiscal as fis,fact_condventas as con
-                where fact.id= itm.id_fact and 
+                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta 
+                from  fact_facturas as fact, fact_conffiscal as fis,fact_condventas as con
+                where 
                 fis.donfdesc=fact.tipofact and
                 con.id=fact.condvta and
                 fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq &
-                "group by fact.id " & consAlmacen, conexionPrinc)
+                " group by fact.id " & consPtovta, conexionPrinc)
                 columna = 7
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.Fill(tablaprod)
@@ -6325,6 +6330,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub dtchequespropios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtchequespropios.CellContentClick
+
+    End Sub
+
+    Private Sub tabcomprobantes_Click(sender As Object, e As EventArgs) Handles tabcomprobantes.Click
 
     End Sub
 End Class

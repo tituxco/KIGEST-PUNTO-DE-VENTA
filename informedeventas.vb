@@ -1,4 +1,6 @@
-﻿Imports System.Windows.Forms.DataVisualization.Charting
+﻿Imports System.Security.Cryptography
+Imports System.Windows.Forms.DataVisualization.Charting
+Imports WSAFIPFE.lcbAFIPTest
 
 Public Class informedeventas
 
@@ -27,6 +29,11 @@ Public Class informedeventas
         cmbinfocategObjetivos.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
         cmbinfocategObjetivos.SelectedIndex = -1
 
+        cmbCategoriaMarginal.DataSource = readCat.Tables(0)
+        cmbCategoriaMarginal.DisplayMember = readCat.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbCategoriaMarginal.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
+        cmbCategoriaMarginal.SelectedIndex = -1
+
         Dim tablaAlmac As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
         Dim readAlmac As New DataSet
         tablaAlmac.Fill(readAlmac)
@@ -40,6 +47,10 @@ Public Class informedeventas
         cmbhistorialProductosAlmacen.ValueMember = readAlmac.Tables(0).Columns(0).Caption.ToString
         cmbhistorialProductosAlmacen.SelectedValue = My.Settings.idAlmacen
 
+        cmbAlmacenMarginal.DataSource = readAlmac.Tables(0)
+        cmbAlmacenMarginal.DisplayMember = readAlmac.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbAlmacenMarginal.ValueMember = readAlmac.Tables(0).Columns(0).Caption.ToString
+        cmbAlmacenMarginal.SelectedValue = My.Settings.idAlmacen
 
 
         Dim tablaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ',nombre) from fact_vendedor", conexionPrinc)
@@ -218,7 +229,7 @@ Public Class informedeventas
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", conexionPrinc)
 
-                'MsgBox(consulta.SelectCommand.CommandText)
+                'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
 
@@ -270,6 +281,7 @@ Public Class informedeventas
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
                 group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
 
+                'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
 
@@ -678,7 +690,7 @@ Public Class informedeventas
                 End If
 
             ElseIf rdInforClientes.Checked = True Then
-                    lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
+                lblbalancecosto.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 2), 2)
                 lblbalanceventas.Text = "$" & Math.Round(SumarTotal(dtventashistoricas, 3), 2)
                 lblvalDevoluciones.Text = "$" & Math.Round(SumarTotal(dtdevoluciones, 3), 2)
                 TotalVentas = Math.Round(SumarTotal(dtventashistoricas, 3) - SumarTotal(dtdevoluciones, 3), 2)
@@ -1399,7 +1411,175 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End If
     End Sub
 
-    Private Sub rdInforClientes_CheckedChanged(sender As Object, e As EventArgs) Handles rdInforClientes.CheckedChanged
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        Try
+
+            '     Dim consultaProductos As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT ins.id,	ins.codigo,	ins.descripcion,
+            'round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) *
+            '         (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto, 
+            '         IF(ganancia IS NULL OR ganancia = '', 0, ganancia) as utilidad0, 
+            '         IF(utilidad1 IS NULL or utilidad1='','0',utilidad1) as utilidad1, 
+            '         IF(utilidad2 IS NULL or utilidad2='','0',utilidad2) as utilidad2, 
+            '         IF(utilidad3 IS NULL or utilidad3='','0',utilidad3) as utilidad3, 
+            '         IF(utilidad4 IS NULL or utilidad4='','0',utilidad4) as utilidad4, 
+            '         IF(utilidad5 IS NULL or utilidad5='','0',utilidad5) as utilidad5
+
+            '         FROM fact_insumos as ins			
+            '         group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+            '     'MsgBox(consulta.SelectCommand.CommandText)
+            '     Dim tablaProductos As New DataTable
+            '     consultaProductos.Fill(tablaProductos)
+
+            '     Dim consultaListas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR') as utilidad,auxcol FROM fact_listas_precio", conexionPrinc)
+            '     'MsgBox(consulta.SelectCommand.CommandText)
+            '     Dim tablaListas As New DataTable
+            '     consultaListas.Fill(tablaListas)
+
+            '     Dim tablaMargenesProductos As New DataTable
+            '     tablaMargenesProductos.Columns.Add("id", GetType(String))
+            '     tablaMargenesProductos.Columns.Add("codigo", GetType(String))
+            '     tablaMargenesProductos.Columns.Add("descripcion", GetType(String))
+            '     tablaMargenesProductos.Columns.Add("pcosto", GetType(String))
+            '     Dim i As Integer
+            '     For i = 0 To tablaListas.Rows.Count - 1
+            '         tablaMargenesProductos.Columns.Add(tablaListas.Rows(i).Item("nombre"))
+            '     Next
+
+            '     For Each producto As DataRow In tablaProductos.Rows
+            '         'MsgBox(producto.Item("descripcion"))
+            '         Dim precioProd As Double = FormatNumber(producto.Item("pcosto"))
+
+            '         Dim FilaProd As DataRow = tablaMargenesProductos.NewRow()
+            '         FilaProd("id") = producto.Item("id")
+            '         FilaProd("codigo") = producto.Item("codigo")
+            '         FilaProd("descripcion") = producto.Item("descripcion")
+            '         FilaProd("pcosto") = producto.Item("pcosto")
+            '         For i = 0 To tablaListas.Rows.Count - 1
+            '             Dim utilGral As Double = (FormatNumber(tablaListas.Rows(i).Item("utilidad")) + 100) / 100
+            '             Dim auxcol As Integer = tablaListas.Rows(i).Item("auxcol")
+            '             Dim utilaux As Double
+            '             Select Case auxcol
+            '                 Case 0
+            '                     utilaux = (FormatNumber(producto.Item("utilidad0")) + 100) / 100
+            '                 Case 1
+            '                     utilaux = (FormatNumber(producto.Item("utilidad1")) + 100) / 100
+            '                 Case 2
+            '                     utilaux = (FormatNumber(producto.Item("utilidad2")) + 100) / 100
+            '                 Case 3
+            '                     utilaux = (FormatNumber(producto.Item("utilidad3")) + 100) / 100
+            '                 Case 4
+            '                     utilaux = (FormatNumber(producto.Item("utilidad4")) + 100) / 100
+            '                 Case 5
+            '                     utilaux = (FormatNumber(producto.Item("utilidad5")) + 100) / 100
+            '             End Select
+
+
+            '             FilaProd(tablaListas.Rows(i).Item("nombre")) = Math.Round(precioProd * ((utilGral + utilaux) - 1), 2)
+
+            '         Next
+            '         tablaMargenesProductos.Rows.Add(FilaProd)
+            '     Next
+            '     'MsgBox(tablaMargenesProductos.Rows.Count)
+            '     dgvMargenesProductos.Cargar_Datos(tablaMargenesProductos)
+
+
+            Reconectar()
+            'Dim columna As Integer
+            Dim desde As String = Format(CDate(dtdesdeMarginal.Value), "yyyy-MM-dd")
+            Dim hasta As String = Format(CDate(dthastaMarginal.Value), "yyyy-MM-dd")
+            Dim tablaVta As New DataTable
+            Dim tablaDev As New DataTable
+            Dim consIdAlmacen As String = ""
+            Dim consIdCategoria As String = ""
+
+            tablaVta.Clear()
+            'tablaDev.Clear()
+            tablaVta.Columns.Clear()
+            'tablaDev.Columns.Clear()
+            If cmbAlmacenMarginal.SelectedValue <> 0 And cmbAlmacenMarginal.SelectedIndex <> -1 Then
+                If cmbAlmacenMarginal.SelectedValue = 0 Then
+                    consIdAlmacen = " and itm.idAlmacen like '%'"
+                Else
+                    consIdAlmacen = " and itm.idAlmacen=" & cmbAlmacenMarginal.SelectedValue
+                End If
+            End If
+
+            If cmbCategoriaMarginal.SelectedValue <> 0 And cmbCategoriaMarginal.SelectedIndex <> -1 Then
+                If cmbCategoriaMarginal.SelectedValue = 0 Then
+                    consIdCategoria = " and ins.categoria like '%'"
+                Else
+                    consIdCategoria = " and ins.categoria=" & cmbCategoriaMarginal.SelectedValue
+                End If
+            End If
+
+
+            Dim prodBusq As String = ""
+            If txtInforProd.Text <> "" Then
+                prodBusq = "and ins.descripcion like '%" & txtInforProd.Text & "%'"
+            End If
+
+            Dim consultaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT ins.id,	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
+			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
+			    round(sum(if(itm.tipofact in(1,2,3),itm.ptotal*((itm.iva+100)/100),itm.ptotal)),2) as pventa,					
+                
+                round((1-(round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
+                (select cotizacion from fact_moneda where id=ins.moneda)),2) / 
+                round(sum(if(itm.tipofact in(1,2,3), itm.ptotal*((itm.iva+100)/100), itm.ptotal)),2)))*100,2) as ContribucionMarginalPORC,
+                
+                round(sum(
+                if(itm.tipofact in(1,2,3),
+                itm.ptotal*((itm.iva+100)/100),
+                itm.ptotal)) - 
+                sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * (select cotizacion from fact_moneda where id=ins.moneda)),2)  as MargenEnPesos                      
+                
+                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
+                ins.id=itm.cod and fact.id=itm.id_fact  and
+                itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdCategoria & " 
+                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+
+            'MsgBox(consultaVTAS.SelectCommand.CommandText)
+            consultaVTAS.Fill(tablaVta)
+            'consultaDEV.Fill(tablaDev)
+            Dim promedioPorc As Double = 0
+            Dim sumaCosto As Double = 0
+            Dim sumaMargen As Double = 0
+            For Each fila As DataRow In tablaVta.Rows
+                If Not String.IsNullOrEmpty(fila.Item("ContribucionMarginalPORC").ToString()) Then
+                    promedioPorc += FormatNumber(fila.Item("ContribucionMarginalPORC"), 2)
+                End If
+
+                If Not String.IsNullOrEmpty(fila.Item("pcosto").ToString()) Then
+                    sumaCosto += FormatNumber(fila.Item("pcosto"), 2)
+                End If
+
+                If Not String.IsNullOrEmpty(fila.Item("MargenEnPesos").ToString()) Then
+                    sumaMargen += FormatNumber(fila.Item("MargenEnPesos"), 2)
+                End If
+            Next
+
+            lblmargenPromedio.Text = Math.Round(promedioPorc / tablaVta.Rows.Count, 2) & "%"
+            lbltotCostoMarginal.Text = "$" & Math.Round(sumaCosto, 2)
+            lbltotMargenMarginal.Text = "$" & Math.Round(sumaMargen, 2)
+            dgvMargenesProductos.Cargar_Datos(tablaVta)
+
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+
+        End Try
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        GenerarExcelDT(dgvMargenesProductos.todos_los_datos)
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
 
     End Sub
 End Class

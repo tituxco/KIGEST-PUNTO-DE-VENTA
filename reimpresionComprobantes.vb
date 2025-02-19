@@ -51,6 +51,7 @@ Public Class reimpresionComprobantes
             " and fact.ptovta=" & cmbInforPtoVta.SelectedValue &
             " order by fact.id desc limit " & limite, conexionPrinc)
             columna = 7
+            'MsgBox(consulta.SelectCommand.CommandText)
             consulta.Fill(tablaprod)
             Dim i As Integer
 

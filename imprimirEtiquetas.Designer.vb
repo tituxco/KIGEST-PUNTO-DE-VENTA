@@ -67,6 +67,7 @@ Partial Class imprimirEtiquetas
         '
         'PictureBox1
         '
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Right
         Me.PictureBox1.Location = New System.Drawing.Point(1051, 0)
         Me.PictureBox1.Name = "PictureBox1"

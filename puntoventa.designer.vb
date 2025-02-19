@@ -110,6 +110,7 @@ Partial Class puntoventa
         Me.impuestoFijo01 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.impuestoFijo02 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.paneltareas = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Label21 = New System.Windows.Forms.Label()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
         Me.Column13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -870,6 +871,7 @@ Partial Class puntoventa
         'paneltareas
         '
         Me.paneltareas.BackColor = System.Drawing.Color.White
+        Me.paneltareas.Controls.Add(Me.Button4)
         Me.paneltareas.Controls.Add(Me.Label21)
         Me.paneltareas.Controls.Add(Me.dtdescuentos)
         Me.paneltareas.Controls.Add(Me.Label20)
@@ -881,6 +883,15 @@ Partial Class puntoventa
         Me.paneltareas.Name = "paneltareas"
         Me.paneltareas.Size = New System.Drawing.Size(956, 84)
         Me.paneltareas.TabIndex = 90
+        '
+        'Button4
+        '
+        Me.Button4.Location = New System.Drawing.Point(578, 19)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(50, 23)
+        Me.Button4.TabIndex = 77
+        Me.Button4.Text = "Button4"
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'Label21
         '
@@ -2053,4 +2064,5 @@ Partial Class puntoventa
     Friend WithEvents impuestoFijo02 As DataGridViewTextBoxColumn
     Friend WithEvents txttotalICL As Label
     Friend WithEvents txttotalIDC As Label
+    Friend WithEvents Button4 As Button
 End Class

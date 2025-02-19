@@ -1,5 +1,5 @@
 ﻿Public Class DGVPaginado
-    Private todos_los_datos = New DataTable
+    Public todos_los_datos = New DataTable
     Private total As Integer = 0
     Private pagina As Integer = 0
     Private maximo_paginas As Integer = 0
