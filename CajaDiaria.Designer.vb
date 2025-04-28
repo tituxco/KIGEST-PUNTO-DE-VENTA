@@ -24,7 +24,6 @@ Partial Class CajaDiaria
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(CajaDiaria))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -32,10 +31,6 @@ Partial Class CajaDiaria
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dtcaja = New System.Windows.Forms.DataGridView()
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.grpdetalleCaja = New System.Windows.Forms.GroupBox()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -46,8 +41,6 @@ Partial Class CajaDiaria
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.cmdnuevomov = New System.Windows.Forms.Button()
         Me.cmdcerrarcaja = New System.Windows.Forms.Button()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dttotales = New System.Windows.Forms.DataGridView()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -110,7 +103,7 @@ Partial Class CajaDiaria
         Me.dtcaja.MultiSelect = False
         Me.dtcaja.Name = "dtcaja"
         Me.dtcaja.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtcaja.Size = New System.Drawing.Size(986, 300)
+        Me.dtcaja.Size = New System.Drawing.Size(971, 164)
         Me.dtcaja.TabIndex = 87
         '
         'Column4
@@ -118,33 +111,6 @@ Partial Class CajaDiaria
         Me.Column4.FillWeight = 40.0!
         Me.Column4.HeaderText = "Egreso"
         Me.Column4.Name = "Column4"
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Egreso"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Ingreso"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Detalle"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
         '
         'Panel2
         '
@@ -154,9 +120,9 @@ Partial Class CajaDiaria
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
         Me.Panel2.Controls.Add(Me.cmdcerrarcaja)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 23)
+        Me.Panel2.Location = New System.Drawing.Point(0, 159)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(986, 103)
+        Me.Panel2.Size = New System.Drawing.Size(971, 103)
         Me.Panel2.TabIndex = 85
         '
         'grpdetalleCaja
@@ -166,7 +132,7 @@ Partial Class CajaDiaria
         Me.grpdetalleCaja.Controls.Add(Me.lblcheques)
         Me.grpdetalleCaja.Controls.Add(Me.lbltarjeta)
         Me.grpdetalleCaja.Dock = System.Windows.Forms.DockStyle.Right
-        Me.grpdetalleCaja.Location = New System.Drawing.Point(673, 0)
+        Me.grpdetalleCaja.Location = New System.Drawing.Point(658, 0)
         Me.grpdetalleCaja.Name = "grpdetalleCaja"
         Me.grpdetalleCaja.Size = New System.Drawing.Size(219, 103)
         Me.grpdetalleCaja.TabIndex = 93
@@ -239,7 +205,7 @@ Partial Class CajaDiaria
         Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdsalir.ForeColor = System.Drawing.Color.White
         Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(892, 0)
+        Me.cmdsalir.Location = New System.Drawing.Point(877, 0)
         Me.cmdsalir.Name = "cmdsalir"
         Me.cmdsalir.Size = New System.Drawing.Size(94, 103)
         Me.cmdsalir.TabIndex = 18
@@ -278,22 +244,6 @@ Partial Class CajaDiaria
         Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdcerrarcaja.UseVisualStyleBackColor = False
         '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Concepto"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        DataGridViewCellStyle2.Format = "d"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle2
-        Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        '
         'dttotales
         '
         Me.dttotales.AllowUserToDeleteRows = False
@@ -302,7 +252,6 @@ Partial Class CajaDiaria
         Me.dttotales.BackgroundColor = System.Drawing.Color.White
         Me.dttotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dttotales.ColumnHeadersVisible = False
-        Me.dttotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
         Me.dttotales.Dock = System.Windows.Forms.DockStyle.Top
         Me.dttotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dttotales.Enabled = False
@@ -312,7 +261,7 @@ Partial Class CajaDiaria
         Me.dttotales.ReadOnly = True
         Me.dttotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dttotales.Size = New System.Drawing.Size(986, 23)
+        Me.dttotales.Size = New System.Drawing.Size(971, 159)
         Me.dttotales.TabIndex = 84
         '
         'Panel1
@@ -321,9 +270,9 @@ Partial Class CajaDiaria
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.dttotales)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 340)
+        Me.Panel1.Location = New System.Drawing.Point(0, 204)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(986, 126)
+        Me.Panel1.Size = New System.Drawing.Size(971, 262)
         Me.Panel1.TabIndex = 86
         '
         'Label1
@@ -350,7 +299,7 @@ Partial Class CajaDiaria
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(986, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(971, 40)
         Me.pntitulo.TabIndex = 84
         '
         'chkfiltrofecha
@@ -360,7 +309,7 @@ Partial Class CajaDiaria
         Me.chkfiltrofecha.Dock = System.Windows.Forms.DockStyle.Right
         Me.chkfiltrofecha.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.chkfiltrofecha.ForeColor = System.Drawing.Color.White
-        Me.chkfiltrofecha.Location = New System.Drawing.Point(456, 0)
+        Me.chkfiltrofecha.Location = New System.Drawing.Point(441, 0)
         Me.chkfiltrofecha.Name = "chkfiltrofecha"
         Me.chkfiltrofecha.Size = New System.Drawing.Size(179, 40)
         Me.chkfiltrofecha.TabIndex = 50
@@ -373,7 +322,7 @@ Partial Class CajaDiaria
         Me.cmbcierresCajas.Enabled = False
         Me.cmbcierresCajas.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbcierresCajas.FormattingEnabled = True
-        Me.cmbcierresCajas.Location = New System.Drawing.Point(635, 0)
+        Me.cmbcierresCajas.Location = New System.Drawing.Point(620, 0)
         Me.cmbcierresCajas.Name = "cmbcierresCajas"
         Me.cmbcierresCajas.Size = New System.Drawing.Size(276, 39)
         Me.cmbcierresCajas.TabIndex = 51
@@ -396,7 +345,7 @@ Partial Class CajaDiaria
         Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
         Me.Button1.ForeColor = System.Drawing.SystemColors.ControlText
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(911, 0)
+        Me.Button1.Location = New System.Drawing.Point(896, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(75, 40)
         Me.Button1.TabIndex = 47
@@ -407,7 +356,7 @@ Partial Class CajaDiaria
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(986, 466)
+        Me.ClientSize = New System.Drawing.Size(971, 466)
         Me.Controls.Add(Me.dtcaja)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pntitulo)
@@ -434,15 +383,9 @@ Partial Class CajaDiaria
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents dtcaja As DataGridView
     Friend WithEvents Column4 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
     Friend WithEvents Panel2 As Panel
     Friend WithEvents cmdnuevomov As Button
     Friend WithEvents cmdcerrarcaja As Button
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents dttotales As DataGridView
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label

@@ -5,15 +5,20 @@ Imports System.Drawing.Drawing2D
 Imports iTextSharp.text.pdf
 
 Public Class Codigos
-    Public Shared Function codigo128(ByVal _code As String, Optional ByVal vertexto As Boolean = False, Optional ByVal Height As Single = 0)
+    Public Shared Function codigo128(ByVal _code As String, Optional ByVal vertexto As Boolean = False, Optional ByVal Height As Single = 0, Optional ByVal Width As Single = 0)
         Dim CodigoBarras As New Barcode128
         CodigoBarras.StartStopText = True
         If Height <> 0 Then
             CodigoBarras.BarHeight = Height
         End If
 
+        If Width <> 0 Then
+
+        End If
+
         CodigoBarras.Code = _code
         CodigoBarras.CodeType = Barcode.EAN8
+        'Dim tamaño As New bitmapsize
 
         Try
             Dim bm As New System.Drawing.Bitmap(CodigoBarras.CreateDrawingImage(Color.Black, Color.White))
@@ -39,7 +44,7 @@ Public Class Codigos
                 drawformat.FormatFlags = StringFormatFlags.NoWrap
                 g.DrawImage(bm, 0, 0)
 
-                Dim ncode As String = _code.Substring(1, _code.Length - 2)
+                Dim ncode As String = _code.Substring(0, _code.Length)
                 g.DrawString(ncode, pintarTexto, brocha, x, y, drawformat)
                 Return bmT
 

@@ -38,10 +38,10 @@ Partial Class frmpagoscompra
         Me.cmdFinalizarTarjeta = New System.Windows.Forms.Button()
         Me.txtTarjetaAutoriza = New System.Windows.Forms.TextBox()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.txtTarjetaNombre = New System.Windows.Forms.ComboBox()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.lbltotalTarjetas = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
         Me.panelformaspago.SuspendLayout()
         Me.panelefectivo.SuspendLayout()
         Me.panelTarjetas.SuspendLayout()
@@ -55,7 +55,7 @@ Partial Class frmpagoscompra
         Me.panelformaspago.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelformaspago.Location = New System.Drawing.Point(0, 0)
         Me.panelformaspago.Name = "panelformaspago"
-        Me.panelformaspago.Size = New System.Drawing.Size(258, 231)
+        Me.panelformaspago.Size = New System.Drawing.Size(321, 231)
         Me.panelformaspago.TabIndex = 2
         '
         'btntarjeta
@@ -64,7 +64,7 @@ Partial Class frmpagoscompra
         Me.btntarjeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btntarjeta.Location = New System.Drawing.Point(0, 155)
         Me.btntarjeta.Name = "btntarjeta"
-        Me.btntarjeta.Size = New System.Drawing.Size(258, 75)
+        Me.btntarjeta.Size = New System.Drawing.Size(321, 75)
         Me.btntarjeta.TabIndex = 4
         Me.btntarjeta.Text = "OTROS"
         Me.btntarjeta.UseVisualStyleBackColor = True
@@ -75,7 +75,7 @@ Partial Class frmpagoscompra
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.Location = New System.Drawing.Point(0, 79)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(258, 76)
+        Me.Button1.Size = New System.Drawing.Size(321, 76)
         Me.Button1.TabIndex = 3
         Me.Button1.Text = "TARJETA"
         Me.Button1.UseVisualStyleBackColor = True
@@ -86,7 +86,7 @@ Partial Class frmpagoscompra
         Me.btnefectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnefectivo.Location = New System.Drawing.Point(0, 0)
         Me.btnefectivo.Name = "btnefectivo"
-        Me.btnefectivo.Size = New System.Drawing.Size(258, 79)
+        Me.btnefectivo.Size = New System.Drawing.Size(321, 79)
         Me.btnefectivo.TabIndex = 2
         Me.btnefectivo.Text = "EFECTIVO"
         Me.btnefectivo.UseVisualStyleBackColor = True
@@ -103,7 +103,7 @@ Partial Class frmpagoscompra
         Me.panelefectivo.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelefectivo.Location = New System.Drawing.Point(0, 231)
         Me.panelefectivo.Name = "panelefectivo"
-        Me.panelefectivo.Size = New System.Drawing.Size(258, 223)
+        Me.panelefectivo.Size = New System.Drawing.Size(321, 223)
         Me.panelefectivo.TabIndex = 3
         Me.panelefectivo.Visible = False
         '
@@ -113,7 +113,7 @@ Partial Class frmpagoscompra
         Me.cmdfinalizarEfectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdfinalizarEfectivo.Location = New System.Drawing.Point(0, 178)
         Me.cmdfinalizarEfectivo.Name = "cmdfinalizarEfectivo"
-        Me.cmdfinalizarEfectivo.Size = New System.Drawing.Size(258, 45)
+        Me.cmdfinalizarEfectivo.Size = New System.Drawing.Size(321, 45)
         Me.cmdfinalizarEfectivo.TabIndex = 18
         Me.cmdfinalizarEfectivo.Text = "FINALIZAR"
         Me.cmdfinalizarEfectivo.UseVisualStyleBackColor = True
@@ -127,7 +127,7 @@ Partial Class frmpagoscompra
         Me.txtvuelto.Location = New System.Drawing.Point(0, 132)
         Me.txtvuelto.Name = "txtvuelto"
         Me.txtvuelto.ReadOnly = True
-        Me.txtvuelto.Size = New System.Drawing.Size(258, 46)
+        Me.txtvuelto.Size = New System.Drawing.Size(321, 46)
         Me.txtvuelto.TabIndex = 17
         Me.txtvuelto.Text = "0"
         Me.txtvuelto.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -139,7 +139,7 @@ Partial Class frmpagoscompra
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label2.Location = New System.Drawing.Point(0, 112)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(258, 20)
+        Me.Label2.Size = New System.Drawing.Size(321, 20)
         Me.Label2.TabIndex = 16
         Me.Label2.Text = "VUELTO"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -152,7 +152,7 @@ Partial Class frmpagoscompra
         Me.txtefectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtefectivo.Location = New System.Drawing.Point(0, 81)
         Me.txtefectivo.Name = "txtefectivo"
-        Me.txtefectivo.Size = New System.Drawing.Size(258, 31)
+        Me.txtefectivo.Size = New System.Drawing.Size(321, 31)
         Me.txtefectivo.TabIndex = 15
         Me.txtefectivo.Text = "0"
         Me.txtefectivo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -164,7 +164,7 @@ Partial Class frmpagoscompra
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.Location = New System.Drawing.Point(0, 62)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(258, 19)
+        Me.Label1.Size = New System.Drawing.Size(321, 19)
         Me.Label1.TabIndex = 14
         Me.Label1.Text = "EFECTIVO"
         Me.Label1.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -176,7 +176,7 @@ Partial Class frmpagoscompra
         Me.lbltotalefectivo.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbltotalefectivo.Location = New System.Drawing.Point(0, 19)
         Me.lbltotalefectivo.Name = "lbltotalefectivo"
-        Me.lbltotalefectivo.Size = New System.Drawing.Size(258, 43)
+        Me.lbltotalefectivo.Size = New System.Drawing.Size(321, 43)
         Me.lbltotalefectivo.TabIndex = 13
         Me.lbltotalefectivo.Text = "TOTAL"
         Me.lbltotalefectivo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -188,7 +188,7 @@ Partial Class frmpagoscompra
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label3.Location = New System.Drawing.Point(0, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(258, 19)
+        Me.Label3.Size = New System.Drawing.Size(321, 19)
         Me.Label3.TabIndex = 12
         Me.Label3.Text = "TOTAL COMPRA $"
         Me.Label3.TextAlign = System.Drawing.ContentAlignment.TopCenter
@@ -200,12 +200,12 @@ Partial Class frmpagoscompra
         Me.panelTarjetas.Controls.Add(Me.Label4)
         Me.panelTarjetas.Controls.Add(Me.txtTarjetaNombre)
         Me.panelTarjetas.Controls.Add(Me.Label5)
-        Me.panelTarjetas.Controls.Add(Me.Label6)
+        Me.panelTarjetas.Controls.Add(Me.lbltotalTarjetas)
         Me.panelTarjetas.Controls.Add(Me.Label7)
         Me.panelTarjetas.Dock = System.Windows.Forms.DockStyle.Top
         Me.panelTarjetas.Location = New System.Drawing.Point(0, 454)
         Me.panelTarjetas.Name = "panelTarjetas"
-        Me.panelTarjetas.Size = New System.Drawing.Size(258, 223)
+        Me.panelTarjetas.Size = New System.Drawing.Size(321, 223)
         Me.panelTarjetas.TabIndex = 4
         Me.panelTarjetas.Visible = False
         '
@@ -215,7 +215,7 @@ Partial Class frmpagoscompra
         Me.cmdFinalizarTarjeta.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdFinalizarTarjeta.Location = New System.Drawing.Point(0, 164)
         Me.cmdFinalizarTarjeta.Name = "cmdFinalizarTarjeta"
-        Me.cmdFinalizarTarjeta.Size = New System.Drawing.Size(258, 60)
+        Me.cmdFinalizarTarjeta.Size = New System.Drawing.Size(321, 60)
         Me.cmdFinalizarTarjeta.TabIndex = 18
         Me.cmdFinalizarTarjeta.Text = "FINALIZAR"
         Me.cmdFinalizarTarjeta.UseVisualStyleBackColor = True
@@ -228,7 +228,7 @@ Partial Class frmpagoscompra
         Me.txtTarjetaAutoriza.Font = New System.Drawing.Font("Microsoft Sans Serif", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtTarjetaAutoriza.Location = New System.Drawing.Point(0, 133)
         Me.txtTarjetaAutoriza.Name = "txtTarjetaAutoriza"
-        Me.txtTarjetaAutoriza.Size = New System.Drawing.Size(258, 31)
+        Me.txtTarjetaAutoriza.Size = New System.Drawing.Size(321, 31)
         Me.txtTarjetaAutoriza.TabIndex = 17
         Me.txtTarjetaAutoriza.Text = "0"
         Me.txtTarjetaAutoriza.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -240,46 +240,10 @@ Partial Class frmpagoscompra
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.Location = New System.Drawing.Point(0, 113)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(258, 20)
+        Me.Label4.Size = New System.Drawing.Size(321, 20)
         Me.Label4.TabIndex = 16
         Me.Label4.Text = "AUTORIZACION NUM"
         Me.Label4.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'Label5
-        '
-        Me.Label5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Label5.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(0, 62)
-        Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(258, 19)
-        Me.Label5.TabIndex = 14
-        Me.Label5.Text = "NOMBRE TARJETA"
-        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopCenter
-        '
-        'Label6
-        '
-        Me.Label6.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Label6.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(0, 19)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(258, 43)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "TOTAL"
-        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-        '
-        'Label7
-        '
-        Me.Label7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.Label7.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(0, 0)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(258, 19)
-        Me.Label7.TabIndex = 12
-        Me.Label7.Text = "TOTAL COMPRA $"
-        Me.Label7.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'txtTarjetaNombre
         '
@@ -291,14 +255,50 @@ Partial Class frmpagoscompra
         Me.txtTarjetaNombre.FormattingEnabled = True
         Me.txtTarjetaNombre.Location = New System.Drawing.Point(0, 81)
         Me.txtTarjetaNombre.Name = "txtTarjetaNombre"
-        Me.txtTarjetaNombre.Size = New System.Drawing.Size(258, 32)
+        Me.txtTarjetaNombre.Size = New System.Drawing.Size(321, 32)
         Me.txtTarjetaNombre.TabIndex = 19
+        '
+        'Label5
+        '
+        Me.Label5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Label5.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(0, 62)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(321, 19)
+        Me.Label5.TabIndex = 14
+        Me.Label5.Text = "NOMBRE TARJETA"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.TopCenter
+        '
+        'lbltotalTarjetas
+        '
+        Me.lbltotalTarjetas.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.lbltotalTarjetas.Dock = System.Windows.Forms.DockStyle.Top
+        Me.lbltotalTarjetas.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lbltotalTarjetas.Location = New System.Drawing.Point(0, 19)
+        Me.lbltotalTarjetas.Name = "lbltotalTarjetas"
+        Me.lbltotalTarjetas.Size = New System.Drawing.Size(321, 43)
+        Me.lbltotalTarjetas.TabIndex = 13
+        Me.lbltotalTarjetas.Text = "TOTAL"
+        Me.lbltotalTarjetas.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label7
+        '
+        Me.Label7.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.Label7.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(0, 0)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(321, 19)
+        Me.Label7.TabIndex = 12
+        Me.Label7.Text = "TOTAL COMPRA $"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.TopCenter
         '
         'frmpagoscompra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(258, 232)
+        Me.ClientSize = New System.Drawing.Size(321, 234)
         Me.ControlBox = False
         Me.Controls.Add(Me.panelTarjetas)
         Me.Controls.Add(Me.panelefectivo)
@@ -337,7 +337,7 @@ Partial Class frmpagoscompra
     Friend WithEvents txtTarjetaAutoriza As TextBox
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
-    Friend WithEvents Label6 As Label
+    Friend WithEvents lbltotalTarjetas As Label
     Friend WithEvents Label7 As Label
     Friend WithEvents txtTarjetaNombre As ComboBox
 End Class

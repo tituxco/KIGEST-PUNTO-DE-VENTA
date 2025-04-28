@@ -1347,6 +1347,7 @@ Public Class productos
             Dim descripcion As String
             Dim presentacion As String
             Dim costo As String
+            Dim desc_cantidad As String
             Dim i As Integer
 
             For Each producto As DataGridViewRow In dtimportados.Rows
@@ -1382,6 +1383,7 @@ Public Class productos
 
                     sqlQueryupd_UPDVal = sqlQueryupd_UPDVal & ",descripcion=?descripcion"
                 End If
+
                 If chkimportcodbar.CheckState = CheckState.Checked Then
 
                     cod_bar = producto.Cells(i).Value.ToString
@@ -1401,6 +1403,7 @@ Public Class productos
 
                     sqlQueryupd_UPDVal = sqlQueryupd_UPDVal & ",presentacion=?present"
                 End If
+
                 If chkimportprecio.CheckState = CheckState.Checked Then
 
                     costo = producto.Cells(i).Value.ToString
@@ -1416,6 +1419,16 @@ Public Class productos
                     sqlQueryadd_INS = sqlQueryadd_INS & ",iva"
                     sqlQueryadd_INSVal = sqlQueryadd_INSVal & ",?iva"
 
+                End If
+
+                If chkimportDescCantidad.CheckState = CheckState.Checked Then
+                    desc_cantidad = producto.Cells(i).Value.ToString
+                    i += 1
+
+                    sqlQueryadd_INS = sqlQueryadd_INS & ",desc_cantidad"
+                    sqlQueryadd_INSVal = sqlQueryadd_INSVal & ",?desc_cantidad"
+
+                    sqlQueryupd_UPDVal = sqlQueryupd_UPDVal & ",desc_cantidad=?desc_cantidad"
                 End If
 
                 If chkutilidad.CheckState = CheckState.Checked Then
@@ -1445,6 +1458,7 @@ Public Class productos
                     .AddWithValue("?iva", iva)
                     .AddWithValue("?ganan", gananciagral)
                     .AddWithValue("?calcpre", calcularprecio)
+                    .AddWithValue("?desc_cantidad", desc_cantidad)
                 End With
                 'MsgBox(sqlQuery)
                 comandoadd.ExecuteNonQuery()

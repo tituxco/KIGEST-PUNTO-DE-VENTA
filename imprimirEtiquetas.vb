@@ -210,6 +210,60 @@ Public Class imprimirEtiquetas
         Next
 
     End Sub
+
+    Private Sub CargarControlCantidadesGR2()
+        Dim unid As String = My.Settings.UnidDef
+
+        pnCantidades.Controls.Clear()
+        Dim botonCant(8) As Button
+        botonCant(0) = New Button
+        botonCant(0).Text = "5 " & unid
+        botonCant(0).Width = 110
+        botonCant(0).Dock = DockStyle.Left
+        botonCant(0).Tag = "5"
+        botonCant(0).FlatStyle = FlatStyle.Flat
+        botonCant(0).Font = New Font(botonCant(0).Font.Name, 12)
+        botonCant(0).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(0))
+
+        botonCant(1) = New Button
+        botonCant(1).Text = "10 " & unid
+        botonCant(1).Width = 110
+        botonCant(1).Dock = DockStyle.Left
+        botonCant(1).Tag = "10"
+        botonCant(1).FlatStyle = FlatStyle.Flat
+        botonCant(1).Font = New Font(botonCant(1).Font.Name, 12)
+        botonCant(1).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(1))
+
+        botonCant(2) = New Button
+        botonCant(2).Text = "20 " & unid
+        botonCant(2).Width = 110
+        botonCant(2).Dock = DockStyle.Left
+        botonCant(2).Tag = "20"
+        botonCant(2).FlatStyle = FlatStyle.Flat
+        botonCant(2).Font = New Font(botonCant(2).Font.Name, 12)
+        botonCant(2).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(2))
+
+        botonCant(3) = New Button
+        botonCant(3).Text = "50 " & unid
+        botonCant(3).Width = 110
+        botonCant(3).Dock = DockStyle.Left
+        botonCant(3).Tag = "50"
+        botonCant(3).FlatStyle = FlatStyle.Flat
+        botonCant(3).Font = New Font(botonCant(3).Font.Name, 12)
+        botonCant(3).ForeColor = Color.White
+        pnCantidades.Controls.Add(botonCant(3))
+
+
+        For i = 0 To 3
+            AddHandler botonCant(i).Click, AddressOf ControlCantidades
+        Next
+
+    End Sub
+
+
     Private Sub CargarControlCantidadesLT1()
         Dim unid As String = My.Settings.UnidDef
 
@@ -324,9 +378,12 @@ Public Class imprimirEtiquetas
     Private Sub imprimirEtiquetas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If My.Settings.UnidDef = "gr" Then
             CargarControlCantidadesGR1()
+        ElseIf My.Settings.UnidDef = "grm" Then
+            CargarControlCantidadesGR2()
         Else
             CargarControlCantidadesLT1()
         End If
+        cmbTamEtiqueta.SelectedIndex = My.Settings.TipoEtiqueta
 
         cargarCategoriasProd()
         CargarListas()
@@ -603,6 +660,78 @@ Public Class imprimirEtiquetas
                 MsgBox("No se pudo guardar el producto en la base de datos, la etiqueta no se puede imprimir")
             End If
 
+        ElseIf My.Settings.TipoEtiqueta = 1 Then
+
+            ' letra
+            'Dim font1 As New Font("EAN-13", 40)
+            Dim font2 As New Font("Arial", 7)
+            Dim font3 As New Font("Arial", 7)
+            Dim font4 As New Font("Arial", 14)
+            Dim font5 As New Font("Arial", 10)
+
+            Dim alto As Single = 0
+            'If TextBox1.Text <> "" Then
+            '    alto = Convert.ToSingle(TextBox1.Text)
+            'End If
+            Dim bm As Bitmap = Nothing
+            bm = Codigos.codigo128("A" & ProEtiquetaCod & "B", True, 25)
+            If Not IsNothing(bm) Then
+                PictureBox1.Image = bm
+            End If
+
+            If GuardarProducto() = True Then
+                ' impresion
+                'e.Graphics.DrawImage(PictureBox1.Image, 10, 0)
+
+                e.Graphics.DrawString("VITA SANA", font5, Brushes.Black, 50, 0) 'titulo
+                e.Graphics.DrawString(ProNomb, font2, Brushes.Black, 15, 18) 'PRODUCTO
+
+                e.Graphics.DrawImage(PictureBox1.Image, 20, 30)
+
+                e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 10, 75) 'CANTIDAD
+                e.Graphics.DrawString(ProPrecio, font4, Brushes.Black, 90, 75) 'PRECIO
+                'e.Graphics.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), 25, 100)
+                'e.Graphics.DrawString("Fecha: " & Format(Now, "dd-MM-yyy HH:mm:ss"), font5, Brushes.Black, 0, 67)
+                LlenarEtiqueta()
+            Else
+                MsgBox("No se pudo guardar el producto en la base de datos, la etiqueta no se puede imprimir")
+            End If
+        ElseIf My.Settings.TipoEtiqueta = 2 Then
+
+            ' letra
+            'Dim font1 As New Font("EAN-13", 40)
+            Dim font2 As New Font("Arial", 5)
+            Dim font3 As New Font("Arial", 7)
+            Dim font4 As New Font("Arial", 14)
+            Dim font5 As New Font("Arial", 10)
+
+            Dim alto As Single = 0
+            'If TextBox1.Text <> "" Then
+            '    alto = Convert.ToSingle(TextBox1.Text)
+            'End If
+            Dim bm As Bitmap = Nothing
+            bm = Codigos.codigo128(ProEtiquetaCod, True, 25) 'sin el inicio de A y ni el final de B
+            If Not IsNothing(bm) Then
+                PictureBox1.Image = bm
+            End If
+
+            If GuardarProducto() = True Then
+                ' impresion
+                'e.Graphics.DrawImage(PictureBox1.Image, 10, 0)
+
+                ' e.Graphics.DrawString("....", font5, Brushes.Black, 50, 0) 'titulo
+                e.Graphics.DrawString(ProNomb, font2, Brushes.Black, 0, 2) 'PRODUCTO
+
+                e.Graphics.DrawImage(PictureBox1.Image, 0, 12) 'codigo de barras
+
+                e.Graphics.DrawString("x " & ProCantEtiq, font3, Brushes.Black, 0, 60) 'CANTIDAD
+                e.Graphics.DrawString(ProPrecio, font3, Brushes.Black, 50, 60) 'PRECIO                
+                LlenarEtiqueta()
+            Else
+                MsgBox("No se pudo guardar el producto en la base de datos, la etiqueta no se puede imprimir")
+            End If
+
+
         End If
     End Sub
 
@@ -693,7 +822,14 @@ Public Class imprimirEtiquetas
             ElseIf My.Settings.TipoEtiqueta = 1 Then
                 pgSize.Width = 196.8 '  135 '180 '196.8 '
                 pgSize.Height = 118 '98.4  '78 '173.23 '100
+            ElseIf My.Settings.TipoEtiqueta = 2 Then
+                pgSize.Width = 150 '3.5cm
+                pgSize.Height = 78.7 '2cm
             End If
+            'formula de tamaño de etiquetas centesimas de pulgadas
+            'en cm: multiplicar por 0.00254
+
+
 
             PrintTxt.DefaultPageSettings.PaperSize = pgSize
 
@@ -793,6 +929,8 @@ Public Class imprimirEtiquetas
                 ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
             ElseIf My.Settings.UnidDef = "gr" Then
                 ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
+            ElseIf My.Settings.UnidDef = "grm" Then
+                ProCantEtiq = DirectCast(sender, TextBox).Text
             End If
             LlenarEtiqueta()
         End If
@@ -815,6 +953,8 @@ Public Class imprimirEtiquetas
                     ProCantEtiq = DirectCast(sender, TextBox).Text & My.Settings.UnidDef
                 ElseIf My.Settings.UnidDef = "gr" Then
                     ProCantEtiq = Math.Round(DirectCast(sender, TextBox).Text * 1000, 2) & My.Settings.UnidDef
+                ElseIf My.Settings.UnidDef = "gr" Then
+                    ProCantEtiq = DirectCast(sender, TextBox).Text
                 End If
                 LlenarEtiqueta()
             End If
@@ -839,5 +979,15 @@ Public Class imprimirEtiquetas
 
     Private Sub pnCantidades_Paint(sender As Object, e As PaintEventArgs) Handles pnCantidades.Paint
 
+    End Sub
+
+    Private Sub cmbTamEtiqueta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbTamEtiqueta.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub cmbTamEtiqueta_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbTamEtiqueta.SelectionChangeCommitted
+        My.Settings.TipoEtiqueta = cmbTamEtiqueta.SelectedIndex
+        My.Settings.Save()
+        funciones_Globales.GuardarConfiguracionTerminal()
     End Sub
 End Class

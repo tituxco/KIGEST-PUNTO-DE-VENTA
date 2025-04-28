@@ -890,7 +890,7 @@ Partial Class puntoventa
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(50, 23)
         Me.Button4.TabIndex = 77
-        Me.Button4.Text = "Button4"
+        Me.Button4.Text = "PDF"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'Label21
@@ -945,9 +945,9 @@ Partial Class puntoventa
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label20.Location = New System.Drawing.Point(288, 5)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(137, 13)
+        Me.Label20.Size = New System.Drawing.Size(96, 13)
         Me.Label20.TabIndex = 59
-        Me.Label20.Text = "DATOS TRANSPORTE"
+        Me.Label20.Text = "OTROS DATOS"
         '
         'txttransporte
         '

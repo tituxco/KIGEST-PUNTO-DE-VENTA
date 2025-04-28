@@ -291,9 +291,9 @@ Public Class CONTABLE
                 parambusq = " and fact.tipofact in( select donfdesc from tipos_comprobantes where tip =1)"
             End If
             If cmbinforalmacen.SelectedValue = 0 Then
-                consAlmacen = " having idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
+                consAlmacen = " and itm.idAlmacen like '%' " 'es el almacen no el punto de venta, esta mal el nombre
             Else
-                consAlmacen = " having idAlmacen = " & cmbinforalmacen.SelectedValue & " "
+                consAlmacen = " and itm.idAlmacen = " & cmbinforalmacen.SelectedValue & " "
             End If
 
             consPtovta = " having ptovta=" & cmbInforPtoVta.SelectedValue
@@ -326,27 +326,50 @@ Public Class CONTABLE
             Dim tablaprod As New DataTable
             'Dim filasProd() As DataRow
             If rdninguno.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
                 fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
                 fact.fecha,fact.razon,fact.direccion, 
-                fact.localidad, con.condicion,
-                case when 
-                    fis.debcred='C' then 
-                        concat('-',FORMAT(fact.total,2,'es_AR')) 
-                    else 
-                    FORMAT(fact.total,2,'es_AR') end as total,
+                fact.localidad, con.condicion, 
+                case when fis.debcred='C' then 
+                concat('-',FORMAT(fact.total,2,'es_AR')) 
+
+                else FORMAT(fact.total,2,'es_AR') end as total, 
                 (select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
-                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta 
-                from  fact_facturas as fact, fact_conffiscal as fis,fact_condventas as con
-                where 
-                fis.donfdesc=fact.tipofact and
-                con.id=fact.condvta and
-                fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq &
-                " group by fact.id " & consPtovta, conexionPrinc)
+                fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta
+                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
+                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
+                and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
+                " group by fact.id", conexionPrinc)
                 columna = 7
+                consulta.SelectCommand.CommandTimeout = 60 '60segundos de tiempo de espera para la consulta incrementar en el caso de que tire timeout
+
+
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.Fill(tablaprod)
                 'MsgBox(consulta.SelectCommand.CommandText)
+                'Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+                'fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
+                'fact.fecha,fact.razon,fact.direccion, 
+                'fact.localidad, con.condicion,
+                'case when 
+                '    fis.debcred='C' then 
+                '        concat('-',FORMAT(fact.total,2,'es_AR')) 
+                '    else 
+                '    FORMAT(fact.total,2,'es_AR') end as total,
+                '(select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
+                'fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta 
+                'from  fact_facturas as fact, fact_conffiscal as fis,fact_condventas as con
+                'where 
+                'fis.donfdesc=fact.tipofact and
+                'con.id=fact.condvta and
+                'fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq &
+                '" group by fact.id " & consPtovta, conexionPrinc)
+                'columna = 7
+                ''MsgBox(consulta.SelectCommand.CommandText)
+                'consulta.Fill(tablaprod)
+                ''MsgBox(consulta.SelectCommand.CommandText)
+
+
             End If
             If rdventadiaria.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT '' as factid, 'TOTAL DIARIO' as factnum ,fact.fecha as fecha,'-' as razon,'-' as direccion, 
@@ -1659,7 +1682,20 @@ Public Class CONTABLE
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
-            If rdtarjeta.Checked = True Then
+            If rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex = -1 Then
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("
+                select ft.nombre, format(sum(replace(ft.importe,',','.')),2,'es_AR') as importe from fact_tarjetas ft, fact_facturas fact 
+                where ft.fecha between '" & desde & "' and '" & hasta & "' and 
+                fact.id = ft.comprobante " &
+                consPtovta & "
+                GROUP by ft.nombre ", conexionPrinc)
+                columna = 1
+                consulta.Fill(tablacob)
+                'Dim bindintarjetas As New DataView(tablacob)
+                'bindintarjetas.RowFilter = " totalTarjeta<>'' "
+                dtlistacob.DataSource = tablacob 'bindintarjetas
+                'dtlistacob.Columns(0).Visible = False
+            ElseIf rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex <> -1 Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
                 format((select replace(importe,',','.') as totalTarjeta from fact_tarjetas where comprobante=fact.id and nombre like '%" & cmbTarjetasMarcas.Text.Replace(" ", "%") & "%'),2,'es_AR') as totalTarjeta			
                 FROM fact_facturas as fact 

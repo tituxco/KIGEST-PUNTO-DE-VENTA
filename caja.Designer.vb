@@ -24,7 +24,6 @@ Partial Class caja
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(caja))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.cmbcierresCajas = New System.Windows.Forms.ComboBox()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -45,12 +44,6 @@ Partial Class caja
         Me.cmdnuevomov = New System.Windows.Forms.Button()
         Me.cmdcerrarcaja = New System.Windows.Forms.Button()
         Me.dttotales = New System.Windows.Forms.DataGridView()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.dtcaja = New System.Windows.Forms.DataGridView()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -188,9 +181,9 @@ Partial Class caja
         Me.Panel1.Controls.Add(Me.Panel2)
         Me.Panel1.Controls.Add(Me.dttotales)
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Panel1.Location = New System.Drawing.Point(0, 319)
+        Me.Panel1.Location = New System.Drawing.Point(0, 224)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1015, 126)
+        Me.Panel1.Size = New System.Drawing.Size(1015, 221)
         Me.Panel1.TabIndex = 82
         '
         'Panel2
@@ -200,9 +193,9 @@ Partial Class caja
         Me.Panel2.Controls.Add(Me.cmdnuevomov)
         Me.Panel2.Controls.Add(Me.cmdcerrarcaja)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 23)
+        Me.Panel2.Location = New System.Drawing.Point(0, 121)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1015, 103)
+        Me.Panel2.Size = New System.Drawing.Size(1015, 100)
         Me.Panel2.TabIndex = 85
         '
         'Button1
@@ -214,7 +207,7 @@ Partial Class caja
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.Location = New System.Drawing.Point(185, 0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(90, 103)
+        Me.Button1.Size = New System.Drawing.Size(90, 100)
         Me.Button1.TabIndex = 95
         Me.Button1.Text = "Exportar"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -229,7 +222,7 @@ Partial Class caja
         Me.grpdetalleCaja.Dock = System.Windows.Forms.DockStyle.Right
         Me.grpdetalleCaja.Location = New System.Drawing.Point(796, 0)
         Me.grpdetalleCaja.Name = "grpdetalleCaja"
-        Me.grpdetalleCaja.Size = New System.Drawing.Size(219, 103)
+        Me.grpdetalleCaja.Size = New System.Drawing.Size(219, 100)
         Me.grpdetalleCaja.TabIndex = 94
         Me.grpdetalleCaja.TabStop = False
         '
@@ -286,7 +279,7 @@ Partial Class caja
         Me.cmdnuevomov.Image = CType(resources.GetObject("cmdnuevomov.Image"), System.Drawing.Image)
         Me.cmdnuevomov.Location = New System.Drawing.Point(95, 0)
         Me.cmdnuevomov.Name = "cmdnuevomov"
-        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 103)
+        Me.cmdnuevomov.Size = New System.Drawing.Size(90, 100)
         Me.cmdnuevomov.TabIndex = 1
         Me.cmdnuevomov.Text = "Nuevo mov"
         Me.cmdnuevomov.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -301,7 +294,7 @@ Partial Class caja
         Me.cmdcerrarcaja.Image = CType(resources.GetObject("cmdcerrarcaja.Image"), System.Drawing.Image)
         Me.cmdcerrarcaja.Location = New System.Drawing.Point(0, 0)
         Me.cmdcerrarcaja.Name = "cmdcerrarcaja"
-        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 103)
+        Me.cmdcerrarcaja.Size = New System.Drawing.Size(95, 100)
         Me.cmdcerrarcaja.TabIndex = 0
         Me.cmdcerrarcaja.Text = "Cerrar caja"
         Me.cmdcerrarcaja.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -315,7 +308,6 @@ Partial Class caja
         Me.dttotales.BackgroundColor = System.Drawing.Color.White
         Me.dttotales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dttotales.ColumnHeadersVisible = False
-        Me.dttotales.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.DataGridViewTextBoxColumn1, Me.DataGridViewTextBoxColumn2, Me.DataGridViewTextBoxColumn3, Me.DataGridViewTextBoxColumn4, Me.DataGridViewTextBoxColumn5, Me.DataGridViewTextBoxColumn6})
         Me.dttotales.Dock = System.Windows.Forms.DockStyle.Top
         Me.dttotales.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
         Me.dttotales.Enabled = False
@@ -325,51 +317,8 @@ Partial Class caja
         Me.dttotales.ReadOnly = True
         Me.dttotales.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dttotales.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dttotales.Size = New System.Drawing.Size(1015, 23)
+        Me.dttotales.Size = New System.Drawing.Size(1015, 121)
         Me.dttotales.TabIndex = 84
-        '
-        'DataGridViewTextBoxColumn1
-        '
-        DataGridViewCellStyle1.Format = "d"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn1.DefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridViewTextBoxColumn1.FillWeight = 50.0!
-        Me.DataGridViewTextBoxColumn1.HeaderText = "Fecha"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Concepto"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Detalle"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Ingreso"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "Egreso"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.ReadOnly = True
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        Me.DataGridViewTextBoxColumn6.FillWeight = 40.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "Saldo"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.ReadOnly = True
         '
         'dtcaja
         '
@@ -386,14 +335,14 @@ Partial Class caja
         Me.dtcaja.MultiSelect = False
         Me.dtcaja.Name = "dtcaja"
         Me.dtcaja.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
-        Me.dtcaja.Size = New System.Drawing.Size(1015, 191)
+        Me.dtcaja.Size = New System.Drawing.Size(1015, 96)
         Me.dtcaja.TabIndex = 83
         '
         'Column1
         '
-        DataGridViewCellStyle2.Format = "d"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column1.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Format = "d"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column1.DefaultCellStyle = DataGridViewCellStyle1
         Me.Column1.FillWeight = 50.0!
         Me.Column1.HeaderText = "Fecha"
         Me.Column1.Name = "Column1"
@@ -472,12 +421,6 @@ Partial Class caja
     Friend WithEvents chkfiltrofecha As System.Windows.Forms.CheckBox
     Friend WithEvents Panel2 As Panel
     Friend WithEvents dttotales As DataGridView
-    Friend WithEvents DataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn3 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn4 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn5 As DataGridViewTextBoxColumn
-    Friend WithEvents DataGridViewTextBoxColumn6 As DataGridViewTextBoxColumn
     Friend WithEvents Button2 As Button
     Friend WithEvents Label2 As Label
     Friend WithEvents cmbcierresCajas As ComboBox

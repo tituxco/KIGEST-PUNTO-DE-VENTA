@@ -191,11 +191,11 @@
             'dtproductos.Rows(fila).DefaultCellStyle.BackColor = Color.Red
             Exit Sub
         End If
-        If IsNumeric(codPLU) Then
-            Busq = "where  id= '" & codPLU & "' or codigo Like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
-        ElseIf Not IsNumeric(codPLU) Then
-            Busq = "where codigo Like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
-        End If
+        'If IsNumeric(codPLU) Then
+        'Busq = "where  id= '" & codPLU & "' or codigo Like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
+        'ElseIf Not IsNumeric(codPLU) Then
+        Busq = "where codigo Like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
+        'End If
         'MsgBox(idfila)
         Reconectar()
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,precio, ganancia, utilidad1, utilidad2 FROM fact_insumos " & Busq, conexionPrinc)

@@ -367,7 +367,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("id")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
         Public Property obtCodProd() As String
             Get
                 Return CType(Me("obtCodProd"),String)
@@ -458,6 +458,18 @@ Namespace My
             End Get
             Set
                 Me("visualizacionProducto") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property tipoTiket() As Integer
+            Get
+                Return CType(Me("tipoTiket"),Integer)
+            End Get
+            Set
+                Me("tipoTiket") = value
             End Set
         End Property
     End Class

@@ -17,6 +17,7 @@
         Try
             CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
             CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
+            CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
             CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
             Me.Close()
         Catch ex As Exception
@@ -28,8 +29,18 @@
         If e.KeyCode = Keys.Enter Then
             CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
             CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
+            CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
             CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
+
             Me.Close()
         End If
+    End Sub
+
+    Private Sub dtlistas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtlistas.KeyUp
+
+    End Sub
+
+    Private Sub dtlistas_KeyPress(sender As Object, e As KeyPressEventArgs) Handles dtlistas.KeyPress
+
     End Sub
 End Class

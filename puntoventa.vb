@@ -16,6 +16,7 @@ Public Class puntoventa
 	Dim TipoIVAContr As Integer
 	Dim IDALMACEN As Integer = My.Settings.idAlmacen
 	Dim i As Integer
+	Dim InfoProdTemporal As New DataTable
 	Private Sub puntoventa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 		lblfactfecha.Text = "Fecha: " & fechagral
@@ -70,19 +71,20 @@ Public Class puntoventa
 			tipofact = infofr(0)(4)
 			'MsgBox(tipofact)
 
-			If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Or tipofact = 12 Or tipofact = 13 Or tipofact = 991 Or tipofact = 992 Then
-				'   MsgBox("no quitar")
-				chkquitarstock.CheckState = CheckState.Unchecked
-				chkquitarstock.Enabled = False
-			ElseIf tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Then
-				'  MsgBox("quitar")
-				If DatosAcceso.StockPpref = 1 Then
-					chkquitarstock.CheckState = CheckState.Checked
+			'If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Or tipofact = 12 Or tipofact = 13 Or tipofact = 991 Or tipofact = 992 Then
+			'	'   MsgBox("no quitar")
+			'	chkquitarstock.CheckState = CheckState.Unchecked
+			'	chkquitarstock.Enabled = False
+			'Else
+			If tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Then
+					'  MsgBox("quitar")
+					If DatosAcceso.StockPpref = 1 Then
+						chkquitarstock.CheckState = CheckState.Checked
+					End If
+
 				End If
 
-			End If
-
-			If lblfacvendedor.Text = "-" Then lblfacvendedor.Text = DatosAcceso.Vendedor
+				If lblfacvendedor.Text = "-" Then lblfacvendedor.Text = DatosAcceso.Vendedor
 			lblfacIdAlmacen.Text = IDALMACEN
 
 
@@ -608,7 +610,7 @@ Public Class puntoventa
 
 
 	End Sub
-	Public Sub cargarProdPLU(ByRef codigo As String, ByRef fila As Integer)
+	Public Sub cargarProdPLU(ByRef codigo As String, ByRef fila As Integer, Optional ByRef CantDef As Double = 1)
 		Dim codPLU As String = codigo
 		Dim Busq As String
 		If InStr(codigo, "&") <> 0 Then
@@ -617,6 +619,8 @@ Public Class puntoventa
 		ElseIf InStr(codigo, "A00") = 1 Then
 			cargarProdProduccion(codigo.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", ""), fila)
 			Exit Sub
+		ElseIf InStr(codigo, "00") = 1 Then
+			cargarProdProduccion(codigo.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", ""), fila)
 		End If
 
 		If codPLU = "" Then
@@ -657,16 +661,16 @@ Public Class puntoventa
 			'MsgBox(precio)
 			If fila = -1 Then
 				dtproductos.Rows.Add(filasProd(i)("id"), filasProd(i)("codigo"), txtcantPLU.Text, filasProd(i)("descripcion"), filasProd(i)("iva"),
-				precio, FormatNumber(txtcantPLU.Text) * precio)
+				precio, FormatNumber(CantDef) * precio)
 				' GuardarHistorialProducto(dtproductos.Rows.Count - 1)
 			Else
 				dtproductos.Rows(fila).Cells(0).Value = filasProd(i)("id")
 				dtproductos.Rows(fila).Cells(1).Value = filasProd(i)("codigo")
-				dtproductos.Rows(fila).Cells(2).Value = txtcantPLU.Text
+				dtproductos.Rows(fila).Cells(2).Value = CantDef
 				dtproductos.Rows(fila).Cells(3).Value = filasProd(i)("descripcion")
 				dtproductos.Rows(fila).Cells(4).Value = filasProd(i)("iva")
 				dtproductos.Rows(fila).Cells(5).Value = precio
-				dtproductos.Rows(fila).Cells(6).Value = FormatNumber(txtcantPLU.Text) * precio
+				dtproductos.Rows(fila).Cells(6).Value = FormatNumber(CantDef) * precio
 				dtproductos.Rows(fila).Cells(8).Value = filasProd(i)("impuestoFijo01")
 				dtproductos.Rows(fila).Cells(9).Value = filasProd(i)("impuestoFijo02")
 				GuardarHistorialProducto(fila)
@@ -921,6 +925,8 @@ Public Class puntoventa
 		Dim impuestoFijo02 As String
 		Dim i As Integer
 		Dim codigo_qr As Byte()
+
+		Dim idcomprobanteDev As Integer
 		If ptovta = FacturaElectro.puntovtaelect Then
 			codigo_qr = Imagen_Bytes(Image.FromFile(Application.StartupPath & "\" & tipofact & "-" & ptovta & "-" & numfact & ".png"))
 		End If
@@ -1018,6 +1024,25 @@ Public Class puntoventa
 			Dim ventaCta As Integer
 			'cargo los items de la factura
 			'Dim i As Integer
+
+			If chkquitarstock.CheckState = CheckState.Checked Then
+				'MsgBox(tipofact)
+				If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then
+
+					MsgBox("Se reingresaran productos a stock por devolucion")
+					' agregamos los productos al stock nuevamente4
+					Reconectar()
+					Dim sqlDevolucion As String
+					sqlDevolucion = "insert into fact_proveedores_fact " _
+										& "(fecha, tipo,numero,idproveedor) values " _
+										& "('" & Format(Now(), "yyyy-MM-dd") & "', " & "'DEV'" & ", 'DEV-MERCADERIA','1')"
+					Dim comandoAddNCDevolucion As New MySql.Data.MySqlClient.MySqlCommand(sqlDevolucion, conexionPrinc)
+					comandoAddNCDevolucion.ExecuteNonQuery()
+
+					idcomprobanteDev = comandoAddNCDevolucion.LastInsertedId
+				End If
+			End If
+
 			For Each itemsFact As DataGridViewRow In dtproductos.Rows
 				If Not IsNumeric(itemsFact.Cells(0).Value) Then
 					cod = 0
@@ -1041,53 +1066,61 @@ Public Class puntoventa
 				Dim icl As Double = Math.Round(CDbl(itemsFact.Cells("impuestoFijo02").Value) * cnt, 2)
 				Dim punitFinal As Double = punit + idc + icl
 
-				'Dim punitIMP
-				'If tipofact = 6 Or tipofact = 7 Or tipofact = 8 Then
-				'    punitIMP = Math.Round(CDbl(itemsFact.Cells("punit").Value) + CDbl(itemsFact.Cells("impuestoFijo01").Value) + CDbl(itemsFact.Cells("impuestoFijo02").Value), 2)
-				'    punit = punitIMP.ToString
-				'End If
-				'otrosImpuestosProd = (CDbl(itemsFact.Cells("impuestoFijo01").Value) + CDbl(itemsFact.Cells("impuestoFijo02").Value)) * CDbl(itemsFact.Cells("cant").Value)
 
-				'para quitar de stock
-				If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
-					If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then ' si son notas de credito salteamos el descuento de stock
-
+				If chkquitarstock.CheckState = CheckState.Checked Then
+					If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then
+						'MsgBox("se ingresara producto: " & itemsFact.Cells(3).Value)
+						funciones_Globales.GuardarStockProducto(idcomprobanteDev, itemsFact.Cells(0).Value, itemsFact.Cells(2).Value, IDALMACEN)
 					End If
-					Dim cant As Double = FormatNumber(itemsFact.Cells(2).Value, 4)
+				End If
+
+					If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
+					If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then ' si son notas de credito salteamos el descuento de stock
+						'MsgBox("es NC")
+					Else
+
+						Dim cant As Double = FormatNumber(itemsFact.Cells(2).Value, 4)
 						Dim codigo As String = cod
 						Dim lotes As Integer = 0
 						'MsgBox(cant)
 						Reconectar()
-						Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
-					& "where stock >0 and idproducto=" & codigo & " and idalmacen= " & IDALMACEN & " order by id asc", conexionPrinc)
+						Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT il.id, il.stock,pr.desc_cantidad FROM fact_insumos_lotes as il, fact_insumos as pr 
+						where il.stock >0 and il.idproducto=" & codigo & " and il.idproducto = pr.id and il.idalmacen= " & IDALMACEN & " order by il.id asc", conexionPrinc)
 						Dim tablastock As New DataTable
 						Dim infostock() As DataRow
 						consultastock.Fill(tablastock)
 						infostock = tablastock.Select("")
-					'MsgBox(cant)
-					Do Until cant = 0
-						If infostock(lotes)(1) <= cant Then
-							Dim StockLote As Double = infostock(lotes)(1)
-							cant = cant - StockLote
-							Reconectar()
-							Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
-							updstock.ExecuteNonQuery()
-							If tablastock.Rows.Count - lotes > 1 Then
-								lotes += 1
-							Else
+						'MsgBox(cant)
+
+
+						'asignamos la cantidad a descontar por cada unidad de producto vendida
+						Dim descCantidad As Double = infostock(lotes)(2)
+						cant = cant * descCantidad
+
+						Do Until cant = 0
+							If infostock(lotes)(1) <= cant Then
+								Dim StockLote As Double = infostock(lotes)(1)
+								cant = cant - StockLote
+								Reconectar()
+								Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
+								updstock.ExecuteNonQuery()
+								If tablastock.Rows.Count - lotes > 1 Then
+									lotes += 1
+								Else
+									cant = 0
+									'Continue For
+								End If
+							ElseIf infostock(lotes)(1) > cant Then
+								Dim stockLote As Double = infostock(lotes)(1)
+								Dim CantUpd As Double = infostock(lotes)(1) - cant
+								Reconectar()
+								Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), conexionPrinc)
+								updstock.ExecuteNonQuery()
 								cant = 0
-								'Continue For
+								'ElseIf infostock(lotes)(1) > cant
 							End If
-						ElseIf infostock(lotes)(1) > cant Then
-							Dim stockLote As Double = infostock(lotes)(1)
-							Dim CantUpd As Double = infostock(lotes)(1) - cant
-							Reconectar()
-							Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), conexionPrinc)
-							updstock.ExecuteNonQuery()
-							cant = 0
-							'ElseIf infostock(lotes)(1) > cant
-						End If
-					Loop
+						Loop
+					End If
 				End If
 
 					'poner sacar los items de produccion
@@ -1174,7 +1207,7 @@ Public Class puntoventa
 				Next
 			End If
 
-			If condVta = 1 And tipofact <> 998 Then
+			If condVta = 1 And (tipofact <> 3 And tipofact <> 8 And tipofact <> 13 And tipofact <> 991) Then
 				Dim mov As New frmpagoscompra
 				mov.NumeroFactura = ptovta & " - " & numfact
 				mov.CtaClie = txtcliecta.Text
@@ -1865,7 +1898,7 @@ Public Class puntoventa
 		Me.Close()
 	End Sub
 
-	Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+	Public Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
 		dtproductos.Rows.Clear()
 		Select Case tipofact
 			Case 1, 2, 3
@@ -2147,18 +2180,18 @@ Public Class puntoventa
 					doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
 					idiva = 3
 				Case 4
-					If txtcliecuitcuil.Text = "" Then
+					If txtcliecuitcuil.Text = "" Then 'y el 99?
 						If MsgBox("Esta seguro que desea realizar una factura sin identificacion?", vbYesNo + vbQuestion, "Factura sin identificacion") = vbYes Then
 							contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
 							doctipo = WSAFIPFE.Factura.TipoDocumento.SinIdentificacionGlobalDiario
 							idiva = 3
 						End If
 					ElseIf txtcliecuitcuil.Text <> "" And IsNumeric(txtcliecuitcuil.Text) And txtcliecuitcuil.Text <> "0" Then
-							contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
-							doctipo = WSAFIPFE.Factura.TipoDocumento.DNI
-							idiva = 3
-						Else
-							MsgBox("debe ingresar un DNI o CUIL correcto")
+						contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
+						doctipo = WSAFIPFE.Factura.TipoDocumento.DNI
+						idiva = 3
+					Else
+						MsgBox("debe ingresar un DNI o CUIL correcto")
 						EnProgreso.Close()
 						Exit Sub
 					End If
@@ -2789,17 +2822,50 @@ Public Class puntoventa
 		GuardarHistorialProducto(e.RowIndex)
 	End Sub
 
-	Private Sub txtclierazon_TextChanged(sender As Object, e As EventArgs) Handles txtclierazon.TextChanged
+	Public Sub RecalcularPreciosLista()
+		GuardarInfoProductos()
+		'MsgBox(InfoProdTemporal.Rows.Count)
+
+
+		dtproductos.Rows.Clear()
+		'MsgBox(InfoProdTemporal.Rows.Count)
+
+		For Each prodTemporal As DataRow In InfoProdTemporal.Rows
+			cargarProdPLU(prodTemporal.Item("pluProducto"), -1, prodTemporal.Item("cantProducto"))
+
+		Next
+
+		CalcularTotales()
 
 	End Sub
 
-	Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+	Private Sub GuardarInfoProductos()
 
+
+		InfoProdTemporal.Columns.Clear()
+		InfoProdTemporal.Rows.Clear()
+
+		Dim idProducto As DataColumn = New DataColumn("idProducto")
+		Dim PLUProducto As DataColumn = New DataColumn("pluProducto")
+		Dim cantProducto As DataColumn = New DataColumn("cantProducto")
+
+		InfoProdTemporal.Columns.Add(idProducto)
+		InfoProdTemporal.Columns.Add(PLUProducto)
+		InfoProdTemporal.Columns.Add(cantProducto)
+
+		Dim infoProd As DataRow
+
+		Dim i As Integer
+		For i = 0 To dtproductos.Rows.Count - 2
+			infoProd = InfoProdTemporal.NewRow()
+			'MsgBox(dtproductos.Rows(i).Cells(1).Value)
+			infoProd.Item("idProducto") = dtproductos.Rows(i).Cells(0).Value
+			infoProd.Item("pluProducto") = dtproductos.Rows(i).Cells(1).Value
+			infoProd.Item("cantProducto") = dtproductos.Rows(i).Cells(2).Value
+			InfoProdTemporal.Rows.Add(infoProd)
+		Next
 	End Sub
 
-	Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
-
-	End Sub
 
 	Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
@@ -3067,5 +3133,29 @@ Public Class puntoventa
 		Catch ex As Exception
 			MsgBox(ex.Message)
 		End Try
+	End Sub
+
+	Private Sub txtcantPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcantPLU.TextChanged
+
+	End Sub
+
+	Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
+
+	End Sub
+
+	Private Sub txtcodPLU_Resize(sender As Object, e As EventArgs) Handles txtcodPLU.Resize
+
+	End Sub
+
+	Private Sub paneltareas_Paint(sender As Object, e As PaintEventArgs) Handles paneltareas.Paint
+
+	End Sub
+
+	Private Sub puntoventa_MaximizedBoundsChanged(sender As Object, e As EventArgs) Handles Me.MaximizedBoundsChanged
+
+	End Sub
+
+	Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
 	End Sub
 End Class

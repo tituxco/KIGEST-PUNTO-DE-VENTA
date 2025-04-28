@@ -25,8 +25,9 @@ Partial Class listadoPublicidades
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(listadoPublicidades))
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.tabListadoSerivicios = New System.Windows.Forms.TabPage()
-        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.cmbcobrador = New System.Windows.Forms.ComboBox()
+        Me.Label10 = New System.Windows.Forms.Label()
         Me.rdAFacturar = New System.Windows.Forms.RadioButton()
         Me.cmbvendedor = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -49,7 +50,6 @@ Partial Class listadoPublicidades
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.btnExportar = New System.Windows.Forms.Button()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
-        Me.dgvCtaCte = New SIGT__KIGEST.DGVPaginado()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label9 = New System.Windows.Forms.Label()
         Me.txtbusqctacte = New System.Windows.Forms.TextBox()
@@ -61,6 +61,8 @@ Partial Class listadoPublicidades
         Me.Button5 = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
+        Me.dgvPrestamos = New SIGT__KIGEST.DGVPaginado()
+        Me.dgvCtaCte = New SIGT__KIGEST.DGVPaginado()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -92,17 +94,11 @@ Partial Class listadoPublicidades
         Me.tabListadoSerivicios.Text = "Listado"
         Me.tabListadoSerivicios.UseVisualStyleBackColor = True
         '
-        'dgvPrestamos
-        '
-        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
-        Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvPrestamos.TabIndex = 78
-        '
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.cmbcobrador)
+        Me.pnnavegacion.Controls.Add(Me.Label10)
         Me.pnnavegacion.Controls.Add(Me.rdAFacturar)
         Me.pnnavegacion.Controls.Add(Me.cmbvendedor)
         Me.pnnavegacion.Controls.Add(Me.Label5)
@@ -130,6 +126,28 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Size = New System.Drawing.Size(1208, 89)
         Me.pnnavegacion.TabIndex = 76
         '
+        'cmbcobrador
+        '
+        Me.cmbcobrador.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmbcobrador.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbcobrador.ForeColor = System.Drawing.Color.White
+        Me.cmbcobrador.FormattingEnabled = True
+        Me.cmbcobrador.Location = New System.Drawing.Point(459, 60)
+        Me.cmbcobrador.Name = "cmbcobrador"
+        Me.cmbcobrador.Size = New System.Drawing.Size(185, 23)
+        Me.cmbcobrador.TabIndex = 207
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.ForeColor = System.Drawing.Color.White
+        Me.Label10.Location = New System.Drawing.Point(456, 43)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(72, 16)
+        Me.Label10.TabIndex = 206
+        Me.Label10.Text = "Cobrador"
+        '
         'rdAFacturar
         '
         Me.rdAFacturar.AutoSize = True
@@ -147,7 +165,7 @@ Partial Class listadoPublicidades
         Me.cmbvendedor.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbvendedor.ForeColor = System.Drawing.Color.White
         Me.cmbvendedor.FormattingEnabled = True
-        Me.cmbvendedor.Location = New System.Drawing.Point(550, 32)
+        Me.cmbvendedor.Location = New System.Drawing.Point(459, 19)
         Me.cmbvendedor.Name = "cmbvendedor"
         Me.cmbvendedor.Size = New System.Drawing.Size(185, 23)
         Me.cmbvendedor.TabIndex = 204
@@ -157,7 +175,7 @@ Partial Class listadoPublicidades
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label5.ForeColor = System.Drawing.Color.White
-        Me.Label5.Location = New System.Drawing.Point(547, 15)
+        Me.Label5.Location = New System.Drawing.Point(456, 2)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(75, 16)
         Me.Label5.TabIndex = 203
@@ -242,7 +260,7 @@ Partial Class listadoPublicidades
         Me.dtdesdefact.CalendarFont = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.dtdesdefact.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtdesdefact.Location = New System.Drawing.Point(408, 32)
+        Me.dtdesdefact.Location = New System.Drawing.Point(335, 32)
         Me.dtdesdefact.Name = "dtdesdefact"
         Me.dtdesdefact.Size = New System.Drawing.Size(117, 23)
         Me.dtdesdefact.TabIndex = 192
@@ -253,7 +271,7 @@ Partial Class listadoPublicidades
         Me.Label8.BackColor = System.Drawing.Color.Transparent
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.ForeColor = System.Drawing.Color.White
-        Me.Label8.Location = New System.Drawing.Point(405, 15)
+        Me.Label8.Location = New System.Drawing.Point(332, 15)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(77, 17)
         Me.Label8.TabIndex = 194
@@ -264,7 +282,7 @@ Partial Class listadoPublicidades
         Me.Label4.AutoSize = True
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label4.ForeColor = System.Drawing.Color.White
-        Me.Label4.Location = New System.Drawing.Point(405, 0)
+        Me.Label4.Location = New System.Drawing.Point(332, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(73, 16)
         Me.Label4.TabIndex = 191
@@ -403,14 +421,6 @@ Partial Class listadoPublicidades
         Me.TabPage1.TabIndex = 1
         Me.TabPage1.Text = "Cuenta corriente"
         Me.TabPage1.UseVisualStyleBackColor = True
-        '
-        'dgvCtaCte
-        '
-        Me.dgvCtaCte.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvCtaCte.Location = New System.Drawing.Point(3, 92)
-        Me.dgvCtaCte.Name = "dgvCtaCte"
-        Me.dgvCtaCte.Size = New System.Drawing.Size(1208, 332)
-        Me.dgvCtaCte.TabIndex = 79
         '
         'Panel1
         '
@@ -555,6 +565,22 @@ Partial Class listadoPublicidades
         Me.Label1.TabIndex = 2
         Me.Label1.Text = "PUBLICIDADES"
         '
+        'dgvPrestamos
+        '
+        Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
+        Me.dgvPrestamos.Name = "dgvPrestamos"
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvPrestamos.TabIndex = 78
+        '
+        'dgvCtaCte
+        '
+        Me.dgvCtaCte.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvCtaCte.Location = New System.Drawing.Point(3, 92)
+        Me.dgvCtaCte.Name = "dgvCtaCte"
+        Me.dgvCtaCte.Size = New System.Drawing.Size(1208, 332)
+        Me.dgvCtaCte.TabIndex = 79
+        '
         'listadoPublicidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -616,4 +642,6 @@ Partial Class listadoPublicidades
     Friend WithEvents Label7 As Label
     Friend WithEvents Label9 As Label
     Friend WithEvents txtbusqctacte As TextBox
+    Friend WithEvents cmbcobrador As ComboBox
+    Friend WithEvents Label10 As Label
 End Class

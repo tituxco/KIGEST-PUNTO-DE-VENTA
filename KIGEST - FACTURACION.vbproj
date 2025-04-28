@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>470</ApplicationRevision>
+    <ApplicationRevision>488</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -380,6 +380,12 @@
     <Compile Include="frmpagoscompra.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmPagosCompra2.Designer.vb">
+      <DependentUpon>frmPagosCompra2.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPagosCompra2.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmServiciosCloud.Designer.vb">
       <DependentUpon>frmServiciosCloud.vb</DependentUpon>
     </Compile>
@@ -405,6 +411,12 @@
       <DependentUpon>imprimirEtiquetas.vb</DependentUpon>
     </Compile>
     <Compile Include="imprimirEtiquetas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="imprimirEtiquetasDisenar.Designer.vb">
+      <DependentUpon>imprimirEtiquetasDisenar.vb</DependentUpon>
+    </Compile>
+    <Compile Include="imprimirEtiquetasDisenar.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="imprimirEtiquetasEnBlanco.Designer.vb">
@@ -874,6 +886,9 @@
     <EmbeddedResource Include="facturarCombustible.resx">
       <DependentUpon>facturarCombustible.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmPagosCompra2.resx">
+      <DependentUpon>frmPagosCompra2.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmServiciosCloud.resx">
       <DependentUpon>frmServiciosCloud.vb</DependentUpon>
     </EmbeddedResource>
@@ -885,6 +900,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="imprimirEtiquetas.resx">
       <DependentUpon>imprimirEtiquetas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="imprimirEtiquetasDisenar.resx">
+      <DependentUpon>imprimirEtiquetasDisenar.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="imprimirEtiquetasEnBlanco.resx">
       <DependentUpon>imprimirEtiquetasEnBlanco.vb</DependentUpon>

@@ -149,6 +149,7 @@ Public Class frmpagoscompra
                 .AddWithValue("?conc", "1")
             End With
             comandocaj.ExecuteNonQuery()
+            CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
             Me.Close()
 
         Catch ex As Exception
@@ -169,6 +170,7 @@ Public Class frmpagoscompra
         mov.Button4.Enabled = False
         mov.txttotalefectivo.Focus()
         mov.AcceptButton = mov.Button1
+        lbltotalTarjetas.Text = TOTAL
         mov.CalcularTotalescobro()
         Me.Close()
     End Sub
@@ -312,6 +314,7 @@ Public Class frmpagoscompra
                 .AddWithValue("?conc", "1")
             End With
             comandocaj.ExecuteNonQuery()
+            CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
             Me.Close()
 
         Catch ex As Exception
@@ -330,5 +333,14 @@ Public Class frmpagoscompra
 
             cmdFinalizarTarjeta.Focus()
         End If
+    End Sub
+
+    Private Sub frmpagoscompra_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
+
+    Private Sub frmpagoscompra_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
+
+
     End Sub
 End Class

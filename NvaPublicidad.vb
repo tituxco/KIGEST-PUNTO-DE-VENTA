@@ -1,4 +1,6 @@
-﻿Public Class NvaPublicidad
+﻿Imports WSAFIPFE.anmat
+
+Public Class NvaPublicidad
     Private cmd As MySql.Data.MySqlClient.MySqlCommand
     Private da As MySql.Data.MySqlClient.MySqlDataAdapter
     Private ds As DataSet
@@ -8,6 +10,17 @@
     Public NvaPubli As Boolean
 
     Private Sub btnCalcular_Click(sender As Object, e As EventArgs) Handles btnCalcular.Click
+
+        Dim precioCuota As Double = 0
+        Dim cantMeses As Double = 0
+        Dim montoTotal As Double = 0
+        If rdPorMes.Checked = True Then
+            precioCuota = FormatNumber(txtCuota.Text)
+            cantMeses = txtPlazo.Text
+            montoTotal = precioCuota * cantMeses
+            txtmonto.Text = montoTotal
+        End If
+
         txtCuota.Text = Operaciones.Calculacuota(CDbl(txtmonto.Text), CDbl(txtTasaAnual.Text), CInt(txtPlazo.Text))
         PrevisualizarPrestamo()
 
@@ -19,6 +32,8 @@
     End Sub
 
     Private Sub PrevisualizarPrestamo()
+
+
 
         If txtCuota.Text = "" Or txtCuota.Text = "0" Then
             MsgBox("debe calcular primero la cuota")
@@ -138,9 +153,9 @@
 
         'Dim fecha As String = Format(CDate(DateTimePicker1.Value), "yyyy-MM-dd")
 
-        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto,observaciones) 
+        Operaciones.Guardar("insert into rym_prestamo(id_prestamo,fecha,id_cliente,plazo,cuota,monto_prestamo,interes_anual,descripcion,concepto,observaciones,cobrador) 
         values('" & NoPrestamo & "','" & FechaGuardar & "','" & idCliente & "','" & txtPlazo.Text & "','" &
-        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "','" & txtObservaciones.Text.ToUpper & "')", Today.Date)
+        txtCuota.Text & "','" & txtmonto.Text & "','" & txtTasaAnual.Text & "','" & detallePrestamo & "','" & txtconcepto.Text.ToUpper & "','" & txtObservaciones.Text.ToUpper & "','" & cmbcobrador.SelectedValue & "')", Today.Date)
 
 
         Dim Plazo As Integer = txtPlazo.Text
@@ -180,6 +195,7 @@
         NvaPubli = False
         btnPagar.Enabled = True
         txtBuscaPrestamo.Text = NoPrestamo
+        Button1.Enabled = False
     End Sub
 
 
@@ -374,7 +390,7 @@
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         GeneraPrestamo()
-        Button1.Enabled = False
+
     End Sub
 
     Private Sub txtclientenombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtclientenombre.KeyDown
@@ -390,6 +406,20 @@
     Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = "Nva " & DatosAcceso.ServMensual
         Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
+
+        Dim tablacob As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_cobrador where activo=1", conexionPrinc)
+        Dim readcob As New DataSet
+        tablacob.Fill(readcob)
+        cmbcobrador.DataSource = readcob.Tables(0)
+        cmbcobrador.DisplayMember = readcob.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbcobrador.ValueMember = readcob.Tables(0).Columns(0).Caption.ToString
+
+        Dim tablacons As New MySql.Data.MySqlClient.MySqlDataAdapter("select DISTINCT (concepto) from rym_prestamo  order by CONCEPTO desc", conexionPrinc)
+        Dim readcons As New DataSet
+        tablacons.Fill(readcons)
+        txtconcepto.DataSource = readcons.Tables(0)
+        txtconcepto.DisplayMember = readcons.Tables(0).Columns(0).Caption.ToString.ToUpper
+
     End Sub
 
     Private Sub dgvPublicidad_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellDoubleClick
@@ -420,7 +450,17 @@
         End If
     End Sub
 
-    Private Sub dgvPublicidad_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellContentClick
+    Private Sub cmdclientebuscar_Click(sender As Object, e As EventArgs) Handles cmdclientebuscar.Click
+        Dim i As Integer
+        For i = 0 To Me.MdiChildren.Length - 1
+            If MdiChildren(i).Name = "frmaspirantes" Then
+                Me.MdiChildren(i).BringToFront()
+                Exit Sub
+            End If
+        Next
 
+        Dim clientes As New frmaspirantes
+        clientes.MdiParent = frmprincipal
+        clientes.Show()
     End Sub
 End Class

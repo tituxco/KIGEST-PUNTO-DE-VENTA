@@ -15,6 +15,41 @@ Module funciones_Globales
     Public Function ConvertirCMaPX(cm As Double) As Integer
         Return (cm / 2.54) * 100
     End Function
+
+    Public Sub GuardarStockProducto(ByRef idComprobante As Integer, ByRef idProd As Integer, ByRef stock As String, ByRef idAlmacen As Integer)
+        'Dim gtiaserie As String
+        'Dim gtiaidprod As Integer
+        'Dim gtiacodigo As String
+        'Dim gtiameses As String
+        'Dim gtiacompcompra As Integer
+        'Dim lotstock As String
+        'Dim lotidprod As String
+        'Dim lotfact As Integer
+        'Dim lotcompracant As String
+        'Dim lottipoprod As Integer
+        Try
+
+
+            Dim sqlQuery As String
+            Reconectar()
+            sqlQuery = "insert into fact_insumos_lotes (nombre,stock,idproducto,idfactura,compracant,tipo_prod,idalmacen) values " _
+                        & "(?nombre,?stock,?idprod,?idfactura,?compracant,?tipoprod,?idalmacen)"
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            With comandoadd.Parameters
+                .AddWithValue("?nombre", "-")
+                .AddWithValue("?stock", stock)
+                .AddWithValue("?idprod", idProd)
+                .AddWithValue("?idfactura", idComprobante)
+                .AddWithValue("?compracant", stock)
+                .AddWithValue("?tipoprod", 1)
+                .AddWithValue("?idalmacen", idAlmacen)
+            End With
+            comandoadd.ExecuteNonQuery()
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
     Public Sub aplicarConfiguracionTerminal()
         Try
             Reconectar()
@@ -104,8 +139,9 @@ Module funciones_Globales
                 tipoTaller= " & My.Settings.tipoTaller & " ,
                 unidDef= '" & My.Settings.UnidDef & "' ,
                 visualizacionProducto= " & My.Settings.visualizacionProducto & " ,
-                FactElectro_puntoVenta= " & FacturaElectro.puntovtaelect & "
-
+                FactElectro_puntoVenta= " & FacturaElectro.puntovtaelect & ",
+                tipoEtiqueta= " & My.Settings.TipoEtiqueta & "
+                
                 where id=" & idConfiguracion, conexionPrinc)
             comandoupd.ExecuteNonQuery()
 
@@ -2489,7 +2525,7 @@ Module funciones_Globales
                 SELECT lt.id, lt.stock as stock, prod.desc_cantidad 
                 FROM fact_insumos_lotes as lt, fact_insumos as prod
                 where lt.idproducto=prod.id and lt.idproducto=" & codigo & " and lt.idalmacen= " & almacenDescuento & "                
-                and lt.stock >0  order by lt.id desc", conexionPrinc)
+                 and lt.stock <>'0'  order by lt.id desc", conexionPrinc)
             'MsgBox(consultastock.SelectCommand.CommandText)
 
             Dim tablastock As New DataTable
@@ -2593,8 +2629,14 @@ Module funciones_Globales
         SMTP.Credentials = New System.Net.NetworkCredential(infoDtosMail(0)(0).ToString, infoDtosMail(1)(0).ToString)
         SMTP.Host = infoDtosMail(2)(0).ToString
         SMTP.Port = infoDtosMail(3)(0).ToString
-        SMTP.UseDefaultCredentials = infoDtosMail(5)(0).ToString
+        SMTP.UseDefaultCredentials = False
         SMTP.EnableSsl = infoDtosMail(6)(0).ToString
+
+
+
+
+
+
         'SMTP.
         'System.Net.NetworkCredential NetworkCred = New System.Net.NetworkCredential();
         mje.[To].Add(para.ToLower)

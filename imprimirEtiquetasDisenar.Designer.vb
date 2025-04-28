@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class imprimirEtiquetasEnBlanco
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class imprimirEtiquetasDisenar
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()>
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,15 +20,9 @@ Partial Class imprimirEtiquetasEnBlanco
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(imprimirEtiquetasEnBlanco))
-        Me.pnnavegacion = New System.Windows.Forms.Panel()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdsalir = New System.Windows.Forms.Button()
-        Me.pntitulo = New System.Windows.Forms.Panel()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.Panel2 = New System.Windows.Forms.Panel()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(imprimirEtiquetasDisenar))
         Me.txtEspL4 = New System.Windows.Forms.TextBox()
         Me.txtEspL3 = New System.Windows.Forms.TextBox()
         Me.txtEspL2 = New System.Windows.Forms.TextBox()
@@ -40,6 +34,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.txtancho = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
         Me.Label7 = New System.Windows.Forms.Label()
+        Me.Panel2 = New System.Windows.Forms.Panel()
         Me.txttam4 = New System.Windows.Forms.TextBox()
         Me.txttam3 = New System.Windows.Forms.TextBox()
         Me.txttam2 = New System.Windows.Forms.TextBox()
@@ -56,114 +51,16 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.pnnavegacion.SuspendLayout()
-        Me.pntitulo.SuspendLayout()
+        Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdsalir = New System.Windows.Forms.Button()
+        Me.pntitulo = New System.Windows.Forms.Panel()
+        Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel2.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.pnnavegacion.SuspendLayout()
+        Me.pntitulo.SuspendLayout()
         Me.SuspendLayout()
-        '
-        'pnnavegacion
-        '
-        Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pnnavegacion.Controls.Add(Me.Button4)
-        Me.pnnavegacion.Controls.Add(Me.Button1)
-        Me.pnnavegacion.Controls.Add(Me.cmdsalir)
-        Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pnnavegacion.Location = New System.Drawing.Point(0, 40)
-        Me.pnnavegacion.Name = "pnnavegacion"
-        Me.pnnavegacion.Size = New System.Drawing.Size(790, 89)
-        Me.pnnavegacion.TabIndex = 77
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(592, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(102, 89)
-        Me.Button1.TabIndex = 168
-        Me.Button1.Text = "Imprimir"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
-        '
-        'cmdsalir
-        '
-        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdsalir.ForeColor = System.Drawing.Color.White
-        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(694, 0)
-        Me.cmdsalir.Name = "cmdsalir"
-        Me.cmdsalir.Size = New System.Drawing.Size(96, 89)
-        Me.cmdsalir.TabIndex = 17
-        Me.cmdsalir.Text = "Salir"
-        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdsalir.UseVisualStyleBackColor = True
-        '
-        'pntitulo
-        '
-        Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pntitulo.Controls.Add(Me.Label1)
-        Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
-        Me.pntitulo.Location = New System.Drawing.Point(0, 0)
-        Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(790, 40)
-        Me.pntitulo.TabIndex = 76
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(3, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(313, 39)
-        Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Imprimir etiquetas"
-        '
-        'Panel2
-        '
-        Me.Panel2.Controls.Add(Me.txtEspL4)
-        Me.Panel2.Controls.Add(Me.txtEspL3)
-        Me.Panel2.Controls.Add(Me.txtEspL2)
-        Me.Panel2.Controls.Add(Me.txtEspL1)
-        Me.Panel2.Controls.Add(Me.Label10)
-        Me.Panel2.Controls.Add(Me.Button3)
-        Me.Panel2.Controls.Add(Me.txtalto)
-        Me.Panel2.Controls.Add(Me.Label9)
-        Me.Panel2.Controls.Add(Me.txtancho)
-        Me.Panel2.Controls.Add(Me.Label8)
-        Me.Panel2.Controls.Add(Me.Label7)
-        Me.Panel2.Controls.Add(Me.txttam4)
-        Me.Panel2.Controls.Add(Me.txttam3)
-        Me.Panel2.Controls.Add(Me.txttam2)
-        Me.Panel2.Controls.Add(Me.txttam1)
-        Me.Panel2.Controls.Add(Me.TextBox5)
-        Me.Panel2.Controls.Add(Me.Label6)
-        Me.Panel2.Controls.Add(Me.TextBox4)
-        Me.Panel2.Controls.Add(Me.Label5)
-        Me.Panel2.Controls.Add(Me.PictureBox1)
-        Me.Panel2.Controls.Add(Me.Label4)
-        Me.Panel2.Controls.Add(Me.Label3)
-        Me.Panel2.Controls.Add(Me.Label2)
-        Me.Panel2.Controls.Add(Me.TextBox3)
-        Me.Panel2.Controls.Add(Me.Button2)
-        Me.Panel2.Controls.Add(Me.TextBox2)
-        Me.Panel2.Controls.Add(Me.TextBox1)
-        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(0, 129)
-        Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(790, 378)
-        Me.Panel2.TabIndex = 79
         '
         'txtEspL4
         '
@@ -261,6 +158,41 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Label7.Size = New System.Drawing.Size(77, 13)
         Me.Label7.TabIndex = 15
         Me.Label7.Text = "Tamaño (px)"
+        '
+        'Panel2
+        '
+        Me.Panel2.Controls.Add(Me.txtEspL4)
+        Me.Panel2.Controls.Add(Me.txtEspL3)
+        Me.Panel2.Controls.Add(Me.txtEspL2)
+        Me.Panel2.Controls.Add(Me.txtEspL1)
+        Me.Panel2.Controls.Add(Me.Label10)
+        Me.Panel2.Controls.Add(Me.Button3)
+        Me.Panel2.Controls.Add(Me.txtalto)
+        Me.Panel2.Controls.Add(Me.Label9)
+        Me.Panel2.Controls.Add(Me.txtancho)
+        Me.Panel2.Controls.Add(Me.Label8)
+        Me.Panel2.Controls.Add(Me.Label7)
+        Me.Panel2.Controls.Add(Me.txttam4)
+        Me.Panel2.Controls.Add(Me.txttam3)
+        Me.Panel2.Controls.Add(Me.txttam2)
+        Me.Panel2.Controls.Add(Me.txttam1)
+        Me.Panel2.Controls.Add(Me.TextBox5)
+        Me.Panel2.Controls.Add(Me.Label6)
+        Me.Panel2.Controls.Add(Me.TextBox4)
+        Me.Panel2.Controls.Add(Me.Label5)
+        Me.Panel2.Controls.Add(Me.PictureBox1)
+        Me.Panel2.Controls.Add(Me.Label4)
+        Me.Panel2.Controls.Add(Me.Label3)
+        Me.Panel2.Controls.Add(Me.Label2)
+        Me.Panel2.Controls.Add(Me.TextBox3)
+        Me.Panel2.Controls.Add(Me.Button2)
+        Me.Panel2.Controls.Add(Me.TextBox2)
+        Me.Panel2.Controls.Add(Me.TextBox1)
+        Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Panel2.Location = New System.Drawing.Point(0, 129)
+        Me.Panel2.Name = "Panel2"
+        Me.Panel2.Size = New System.Drawing.Size(800, 321)
+        Me.Panel2.TabIndex = 82
         '
         'txttam4
         '
@@ -402,77 +334,122 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.TextBox1.TabIndex = 0
         Me.TextBox1.Text = "producto"
         '
-        'Button4
+        'pnnavegacion
         '
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(490, 0)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(102, 89)
-        Me.Button4.TabIndex = 169
-        Me.Button4.Text = "Diseños"
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.Button1)
+        Me.pnnavegacion.Controls.Add(Me.cmdsalir)
+        Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pnnavegacion.Location = New System.Drawing.Point(0, 40)
+        Me.pnnavegacion.Name = "pnnavegacion"
+        Me.pnnavegacion.Size = New System.Drawing.Size(800, 89)
+        Me.pnnavegacion.TabIndex = 81
         '
-        'imprimirEtiquetasEnBlanco
+        'Button1
+        '
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(602, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(102, 89)
+        Me.Button1.TabIndex = 168
+        Me.Button1.Text = "Imprimir"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'cmdsalir
+        '
+        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdsalir.ForeColor = System.Drawing.Color.White
+        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
+        Me.cmdsalir.Location = New System.Drawing.Point(704, 0)
+        Me.cmdsalir.Name = "cmdsalir"
+        Me.cmdsalir.Size = New System.Drawing.Size(96, 89)
+        Me.cmdsalir.TabIndex = 17
+        Me.cmdsalir.Text = "Salir"
+        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdsalir.UseVisualStyleBackColor = True
+        '
+        'pntitulo
+        '
+        Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pntitulo.Controls.Add(Me.Label1)
+        Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
+        Me.pntitulo.Location = New System.Drawing.Point(0, 0)
+        Me.pntitulo.Name = "pntitulo"
+        Me.pntitulo.Size = New System.Drawing.Size(800, 40)
+        Me.pntitulo.TabIndex = 80
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.ForeColor = System.Drawing.Color.White
+        Me.Label1.Location = New System.Drawing.Point(3, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(313, 39)
+        Me.Label1.TabIndex = 2
+        Me.Label1.Text = "Imprimir etiquetas"
+        '
+        'imprimirEtiquetasDisenar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(790, 507)
+        Me.ClientSize = New System.Drawing.Size(800, 450)
         Me.Controls.Add(Me.Panel2)
         Me.Controls.Add(Me.pnnavegacion)
         Me.Controls.Add(Me.pntitulo)
-        Me.Name = "imprimirEtiquetasEnBlanco"
-        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "imprimirEtiquetasEnBlanco"
-        Me.pnnavegacion.ResumeLayout(False)
-        Me.pntitulo.ResumeLayout(False)
-        Me.pntitulo.PerformLayout()
+        Me.Name = "imprimirEtiquetasDisenar"
+        Me.Text = "imprimirEtiquetasDisenar"
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.pnnavegacion.ResumeLayout(False)
+        Me.pntitulo.ResumeLayout(False)
+        Me.pntitulo.PerformLayout()
         Me.ResumeLayout(False)
 
     End Sub
-
-    Friend WithEvents pnnavegacion As Panel
-    Friend WithEvents Button1 As Button
-    Friend WithEvents cmdsalir As Button
-    Friend WithEvents pntitulo As Panel
-    Friend WithEvents Label1 As Label
-    Friend WithEvents Panel2 As Panel
-    Friend WithEvents PictureBox1 As PictureBox
-    Friend WithEvents TextBox2 As TextBox
-    Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents Button2 As Button
-    Friend WithEvents TextBox3 As TextBox
-    Friend WithEvents Label4 As Label
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents TextBox4 As TextBox
-    Friend WithEvents Label5 As Label
-    Friend WithEvents TextBox5 As TextBox
-    Friend WithEvents Label6 As Label
-    Friend WithEvents Label7 As Label
-    Friend WithEvents txttam4 As TextBox
-    Friend WithEvents txttam3 As TextBox
-    Friend WithEvents txttam2 As TextBox
-    Friend WithEvents txttam1 As TextBox
-    Friend WithEvents txtancho As TextBox
-    Friend WithEvents Label8 As Label
-    Friend WithEvents txtalto As TextBox
-    Friend WithEvents Label9 As Label
-    Friend WithEvents Button3 As Button
     Friend WithEvents txtEspL4 As TextBox
     Friend WithEvents txtEspL3 As TextBox
     Friend WithEvents txtEspL2 As TextBox
     Friend WithEvents txtEspL1 As TextBox
     Friend WithEvents Label10 As Label
-    Friend WithEvents Button4 As Button
+    Friend WithEvents Button3 As Button
+    Friend WithEvents txtalto As TextBox
+    Friend WithEvents Label9 As Label
+    Friend WithEvents txtancho As TextBox
+    Friend WithEvents Label8 As Label
+    Friend WithEvents Label7 As Label
+    Friend WithEvents Panel2 As Panel
+    Friend WithEvents txttam4 As TextBox
+    Friend WithEvents txttam3 As TextBox
+    Friend WithEvents txttam2 As TextBox
+    Friend WithEvents txttam1 As TextBox
+    Friend WithEvents TextBox5 As TextBox
+    Friend WithEvents Label6 As Label
+    Friend WithEvents TextBox4 As TextBox
+    Friend WithEvents Label5 As Label
+    Friend WithEvents PictureBox1 As PictureBox
+    Friend WithEvents Label4 As Label
+    Friend WithEvents Label3 As Label
+    Friend WithEvents Label2 As Label
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Button2 As Button
+    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents pnnavegacion As Panel
+    Friend WithEvents Button1 As Button
+    Friend WithEvents cmdsalir As Button
+    Friend WithEvents pntitulo As Panel
+    Friend WithEvents Label1 As Label
 End Class

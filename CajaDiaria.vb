@@ -1,4 +1,6 @@
 ﻿
+Imports System.Security.Cryptography
+
 Public Class CajaDiaria
     Dim saldoCaja As Double = 0
     Dim CajaDef As Integer = My.Settings.CajaDef
@@ -55,8 +57,7 @@ Public Class CajaDiaria
             'ultimoCierr = "%%%%-%%-%%"
         Else
             infocierr = tablacierr.Select()
-            'ultimoCierr = Format(CDate(tablacierr(0)(0).ToString), "yyyy-MM-dd")
-            dtcaja.Rows.Add(tablacierr(0)(0), "", "ARQUEO DE CAJA", tablacierr(0)(1), "0")
+            dtcaja.Rows.Add(tablacierr(0)(0), "", "ARQUEO DE CAJA", tablacierr(0)(1), "0", tablacierr(0)(1))
             ingresos = ingresos + tablacierr(0)(1)
         End If
 
@@ -89,11 +90,16 @@ Public Class CajaDiaria
 				and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
                 and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
 
-            SQLtarjetas = "select tar.importe, ie.tipo           
-            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & CajaDef & " and          
-            tar.comprobante=ie.comprobante
-			and ie.fecha between (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")
-            and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
+
+            SQLtarjetas = "select ft.nombre as DetalleTarjeta, format(sum(replace(ft.importe,',','.')),2,'es_AR') as Total 
+                 from fact_tarjetas ft, fact_facturas fact 
+                where 
+                fact.id = ft.comprobante and 
+                ft.comprobante 
+                in(select ie.comprobante from fact_ingreso_egreso as ie where ie.tipo=1 and ie.caja= " & CajaDef & "
+	            and ie.fecha between(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja= " & CajaDef & " and cc.id<" & idCierreSel & ")
+		        and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & "))
+                GROUP by ft.nombre"
 
             SQLcheques = "select che.importe, ie.tipo                        
             from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & CajaDef & " and
@@ -130,10 +136,17 @@ Public Class CajaDiaria
 				from fact_ingreso_egreso as ie where ie.caja= " & CajaDef & "
 				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
 
-            SQLtarjetas = "select tar.importe, ie.tipo
-            from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & CajaDef & "
-            and tar.comprobante=ie.comprobante            
-				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+            '        SQLtarjetas = "select tar.importe, ie.tipo
+            '        from fact_ingreso_egreso as ie, fact_tarjetas as tar where ie.caja= " & CajaDef & "
+            '        and tar.comprobante=ie.comprobante            
+            'and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+
+            SQLtarjetas = "select ft.nombre as DetalleTarjeta, format(sum(replace(ft.importe,',','.')),2,'es_AR') as Total from fact_tarjetas ft, fact_facturas fact 
+                where 
+                fact.id = ft.comprobante and 
+                ft.comprobante in(select ie.comprobante from fact_ingreso_egreso as ie where ie.tipo=1 and ie.caja=  " & CajaDef & "
+				and ie.fecha >(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja= " & CajaDef & "))
+                GROUP by ft.nombre "
 
             SQLcheques = "select che.importe, ie.tipo
             from fact_ingreso_egreso as ie, fact_cheques as che where ie.caja= " & CajaDef & "
@@ -165,11 +178,9 @@ Public Class CajaDiaria
         Next
 
         For Each tarjetas As DataRow In tablatarjetas.Rows
-            If tarjetas.Item("tipo") = 1 Then
-                totalesTarjetas += FormatNumber(tarjetas.Item("importe"))
-            Else
-                totalesTarjetas -= FormatNumber(tarjetas.Item("importe"))
-            End If
+
+            totalesTarjetas += FormatNumber(tarjetas.Item("Total"))
+
         Next
 
 
@@ -189,10 +200,10 @@ Public Class CajaDiaria
         lbltarjeta.Text = "TARJETA= $" & totalesTarjetas
         lblcheques.Text = "CHEQUES= $" & totalesCheques
         lblefectivo.Text = "EFECTIVO= $" & saldoCaja - (totalesTarjetas + totalesCheques)
-        dttotales.Rows.Clear()
-        dttotales.Rows.Add("", "", "TOTALES", FormatNumber(ingresos, 2), FormatNumber(egresos, 2), FormatNumber(saldoCaja, 2))
-        dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen
-        dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
+        dttotales.DataSource = tablatarjetas
+        'dttotales.Rows.Add("", "", "TOTALES", FormatNumber(ingresos, 2), FormatNumber(egresos, 2), FormatNumber(saldoCaja, 2))
+        'dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen
+        'dttotales.Rows(dttotales.RowCount - 1).DefaultCellStyle.Font = New Font("Microsoft Sans Serif", 10, FontStyle.Bold)
     End Sub
     Private Sub cmdnuevomov_Click(sender As Object, e As EventArgs) Handles cmdnuevomov.Click
         Dim i As Integer
@@ -215,8 +226,16 @@ Public Class CajaDiaria
 
     Private Sub cmdcerrarcaja_Click(sender As Object, e As EventArgs) Handles cmdcerrarcaja.Click
         Try
+            Dim montoRemanente As Double = 0
+
+
             If chkfiltrofecha.Checked = True Then
                 MsgBox("no se puede cerrar caja si tiene el historial activado")
+                Exit Sub
+            End If
+            montoRemanente = InputBox("Ingrese el monto de cambio a dejar para iniciar la caja", "Arqueo de caja", "0")
+            If Not IsNumeric(montoRemanente) Then
+                MsgBox("el monto remantente de caja debe ser numerico")
                 Exit Sub
             End If
             If MsgBox("Realmente desa realizar el arqueo de caja?", vbYesNo + vbQuestion, "Cierre de caja") = vbYes Then
@@ -228,7 +247,7 @@ Public Class CajaDiaria
 
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 With comandoadd.Parameters
-                    .AddWithValue("?monto", FormatNumber(saldoCaja, 2))
+                    .AddWithValue("?monto", FormatNumber(montoRemanente, 2))
                     .AddWithValue("?caja", My.Settings.CajaDef)
                 End With
                 comandoadd.ExecuteNonQuery()

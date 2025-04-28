@@ -119,7 +119,13 @@ Public Class busquedaprod
             cadenaComp2 = busqNomb & busqCat & busqProv & busqCod & busqStock
             'MsgBox(cadenaComp)
 
+
             Dim idAlmacen As Integer = My.Settings.idAlmacen
+
+            If chkstock.CheckState = CheckState.Checked Then
+                'MsgBox("seleccionadas")
+                idAlmacen = cmbalmacen.SelectedValue
+            End If
 
 
             If imprimirlist = False And imprimiretiq = False Then
@@ -301,7 +307,7 @@ Public Class busquedaprod
 
     Public Sub cargarStockAlmacen(idProd As Integer)
         Try
-            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(lt.stock) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
+            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(replace(lt.stock,',','.')) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
             where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", conexionPrinc)
             Dim tablaprod As New DataTable
 
@@ -454,10 +460,19 @@ Public Class busquedaprod
         cargarListas()
         cargarProveedores()
         cargarCategoriasProd()
+        cargarAlmacenes()
         cmbOrdenarPor.SelectedIndex = 0
 
     End Sub
-
+    Private Sub cargarAlmacenes()
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+        Dim readprov As New DataSet
+        tablaprov.Fill(readprov)
+        cmbalmacen.DataSource = readprov.Tables(0)
+        cmbalmacen.DisplayMember = readprov.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbalmacen.ValueMember = readprov.Tables(0).Columns(0).Caption.ToString
+        cmbalmacen.SelectedIndex = 0
+    End Sub
 
     Private Sub cmbcatProd_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbcatProd.SelectionChangeCommitted
         Try
@@ -685,5 +700,17 @@ Public Class busquedaprod
 
     Private Sub dgvStock_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvStock.CellContentClick
 
+    End Sub
+
+    Private Sub chkstock_CheckedChanged(sender As Object, e As EventArgs) Handles chkstock.CheckedChanged
+
+    End Sub
+
+    Private Sub chkstock_CheckStateChanged(sender As Object, e As EventArgs) Handles chkstock.CheckStateChanged
+        If chkstock.CheckState = CheckState.Checked Then
+            cmbalmacen.Visible = True
+        Else
+            cmbalmacen.Visible = False
+        End If
     End Sub
 End Class

@@ -18,7 +18,6 @@
             CuotaPagar = Monto / Plazo
         Else
             CuotaPagar = Monto * (R - 1) / (1 - R ^ (-Plazo))
-
         End If
 
         Return CuotaPagar

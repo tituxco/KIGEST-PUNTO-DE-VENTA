@@ -959,7 +959,7 @@ Public Class reimpresionComprobantes
                     "Atentamente: " & vbNewLine & DatosAcceso.sistema
 
                 Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
-                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), Application.StartupPath, nombreArchivo, NMReporte)
+                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), Application.StartupPath & "\", nombreArchivo, NMReporte)
 
                 EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment(Application.StartupPath & "\" & nombreArchivo))
             Else

@@ -24,12 +24,13 @@ Partial Class imprimirEtiquetas
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Me.pntitulo = New System.Windows.Forms.Panel()
+        Me.lblprecios = New System.Windows.Forms.Label()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmbTamEtiqueta = New System.Windows.Forms.ComboBox()
         Me.txtCantEtiq = New System.Windows.Forms.TextBox()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.lblprecios = New System.Windows.Forms.Label()
         Me.pnCantidadPerson = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtcantperson = New System.Windows.Forms.TextBox()
@@ -41,8 +42,8 @@ Partial Class imprimirEtiquetas
         Me.Label3 = New System.Windows.Forms.Label()
         Me.pnCantidades = New System.Windows.Forms.Panel()
         Me.pnProductos = New System.Windows.Forms.Panel()
-        Me.Datosfacturas1 = New SIGT__KIGEST.datosfacturas()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.Datosfacturas1 = New SIGT__KIGEST.datosfacturas()
         Me.pntitulo.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
@@ -54,9 +55,9 @@ Partial Class imprimirEtiquetas
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pntitulo.Controls.Add(Me.lblprecios)
         Me.pntitulo.Controls.Add(Me.PictureBox1)
         Me.pntitulo.Controls.Add(Me.Panel3)
-        Me.pntitulo.Controls.Add(Me.lblprecios)
         Me.pntitulo.Controls.Add(Me.pnCantidadPerson)
         Me.pntitulo.Controls.Add(Me.Panel1)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
@@ -65,19 +66,32 @@ Partial Class imprimirEtiquetas
         Me.pntitulo.Size = New System.Drawing.Size(1282, 140)
         Me.pntitulo.TabIndex = 66
         '
+        'lblprecios
+        '
+        Me.lblprecios.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lblprecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 40.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblprecios.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
+        Me.lblprecios.Location = New System.Drawing.Point(746, 0)
+        Me.lblprecios.Name = "lblprecios"
+        Me.lblprecios.Size = New System.Drawing.Size(248, 140)
+        Me.lblprecios.TabIndex = 9
+        Me.lblprecios.Text = "$"
+        Me.lblprecios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
         'PictureBox1
         '
         Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.PictureBox1.Location = New System.Drawing.Point(1051, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(994, 0)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(100, 140)
+        Me.PictureBox1.Size = New System.Drawing.Size(157, 140)
         Me.PictureBox1.TabIndex = 20
         Me.PictureBox1.TabStop = False
         '
         'Panel3
         '
         Me.Panel3.Controls.Add(Me.Button1)
+        Me.Panel3.Controls.Add(Me.cmbTamEtiqueta)
         Me.Panel3.Controls.Add(Me.txtCantEtiq)
         Me.Panel3.Controls.Add(Me.Label2)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Right
@@ -93,12 +107,22 @@ Partial Class imprimirEtiquetas
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(0, 43)
+        Me.Button1.Location = New System.Drawing.Point(0, 64)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(131, 97)
+        Me.Button1.Size = New System.Drawing.Size(131, 75)
         Me.Button1.TabIndex = 10
         Me.Button1.Text = "Imprimir"
         Me.Button1.UseVisualStyleBackColor = False
+        '
+        'cmbTamEtiqueta
+        '
+        Me.cmbTamEtiqueta.Dock = System.Windows.Forms.DockStyle.Top
+        Me.cmbTamEtiqueta.FormattingEnabled = True
+        Me.cmbTamEtiqueta.Items.AddRange(New Object() {"45 x 45 mm", "50 x 30 mm", "35 x 20 mm"})
+        Me.cmbTamEtiqueta.Location = New System.Drawing.Point(0, 43)
+        Me.cmbTamEtiqueta.Name = "cmbTamEtiqueta"
+        Me.cmbTamEtiqueta.Size = New System.Drawing.Size(131, 21)
+        Me.cmbTamEtiqueta.TabIndex = 20
         '
         'txtCantEtiq
         '
@@ -122,25 +146,13 @@ Partial Class imprimirEtiquetas
         Me.Label2.TabIndex = 19
         Me.Label2.Text = "Numero de etiq."
         '
-        'lblprecios
-        '
-        Me.lblprecios.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblprecios.Font = New System.Drawing.Font("Microsoft Sans Serif", 58.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblprecios.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblprecios.Location = New System.Drawing.Point(814, 0)
-        Me.lblprecios.Name = "lblprecios"
-        Me.lblprecios.Size = New System.Drawing.Size(337, 140)
-        Me.lblprecios.TabIndex = 9
-        Me.lblprecios.Text = "$"
-        Me.lblprecios.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
         'pnCantidadPerson
         '
         Me.pnCantidadPerson.Controls.Add(Me.Label1)
         Me.pnCantidadPerson.Controls.Add(Me.txtcantperson)
         Me.pnCantidadPerson.Controls.Add(Me.cmblistas)
         Me.pnCantidadPerson.Dock = System.Windows.Forms.DockStyle.Left
-        Me.pnCantidadPerson.Location = New System.Drawing.Point(559, 0)
+        Me.pnCantidadPerson.Location = New System.Drawing.Point(491, 0)
         Me.pnCantidadPerson.Name = "pnCantidadPerson"
         Me.pnCantidadPerson.Size = New System.Drawing.Size(255, 140)
         Me.pnCantidadPerson.TabIndex = 17
@@ -183,7 +195,7 @@ Partial Class imprimirEtiquetas
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Left
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(559, 140)
+        Me.Panel1.Size = New System.Drawing.Size(491, 140)
         Me.Panel1.TabIndex = 7
         '
         'Button2
@@ -193,7 +205,7 @@ Partial Class imprimirEtiquetas
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = Global.SIGT__KIGEST.My.Resources.Resources.Search_32px
-        Me.Button2.Location = New System.Drawing.Point(498, 79)
+        Me.Button2.Location = New System.Drawing.Point(430, 79)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(55, 53)
         Me.Button2.TabIndex = 11
@@ -204,7 +216,7 @@ Partial Class imprimirEtiquetas
         Me.txtbuscarprod.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.txtbuscarprod.Location = New System.Drawing.Point(9, 79)
         Me.txtbuscarprod.Name = "txtbuscarprod"
-        Me.txtbuscarprod.Size = New System.Drawing.Size(486, 53)
+        Me.txtbuscarprod.Size = New System.Drawing.Size(415, 53)
         Me.txtbuscarprod.TabIndex = 6
         '
         'cmbCategoria
@@ -215,7 +227,7 @@ Partial Class imprimirEtiquetas
         Me.cmbCategoria.FormattingEnabled = True
         Me.cmbCategoria.Location = New System.Drawing.Point(9, 5)
         Me.cmbCategoria.Name = "cmbCategoria"
-        Me.cmbCategoria.Size = New System.Drawing.Size(544, 54)
+        Me.cmbCategoria.Size = New System.Drawing.Size(476, 54)
         Me.cmbCategoria.TabIndex = 0
         '
         'Label3
@@ -249,14 +261,14 @@ Partial Class imprimirEtiquetas
         Me.pnProductos.Size = New System.Drawing.Size(1282, 278)
         Me.pnProductos.TabIndex = 69
         '
+        'Timer1
+        '
+        Me.Timer1.Interval = 150
+        '
         'Datosfacturas1
         '
         Me.Datosfacturas1.DataSetName = "datosfacturas"
         Me.Datosfacturas1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'Timer1
-        '
-        Me.Timer1.Interval = 150
         '
         'imprimirEtiquetas
         '
@@ -305,4 +317,5 @@ Partial Class imprimirEtiquetas
     Friend WithEvents Label2 As Label
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Button2 As Button
+    Friend WithEvents cmbTamEtiqueta As ComboBox
 End Class

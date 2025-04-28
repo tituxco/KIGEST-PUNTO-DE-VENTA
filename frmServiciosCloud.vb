@@ -194,7 +194,7 @@
     End Sub
 
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-        'Try
+        Dim logDeEjecucion As String
         If rdseleccionadas.Checked = True Then
                 Reconectar()
                 Dim sqlquery As String
@@ -218,7 +218,7 @@
                 On Error Resume Next
                 comandoadd.ExecuteNonQuery()
 
-
+                logDeEjecucion += ListBox1.Items(i) & " se ha modificado"
                 Console.WriteLine(ListBox1.Items(i) & " se ha modificado")
                 Next
                 MsgBox("todas las bases de datos se han modificado")
@@ -226,14 +226,6 @@
         'Catch ex As Exception
         '    MsgBox(ex.Message)
         'End Try
-    End Sub
-
-    Private Sub rdprefijo_CheckedChanged(sender As Object, e As EventArgs) Handles rdprefijo.CheckedChanged
-
-    End Sub
-
-    Private Sub txtprefijobd_TextChanged(sender As Object, e As EventArgs) Handles txtprefijobd.TextChanged
-
     End Sub
 
     Private Sub txtprefijobd_KeyDown(sender As Object, e As KeyEventArgs) Handles txtprefijobd.KeyDown

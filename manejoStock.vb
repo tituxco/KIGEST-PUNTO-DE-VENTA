@@ -85,7 +85,8 @@ Public Class manejoStock
             End If
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod as CodInterno, pro.descripcion, round(sum(itm.cantidad),2) as ventasTotalesPeriodo,
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod as CodInterno, pro.descripcion, 
+            concat(round(sum(itm.cantidad),2),'(', round(sum(itm.cantidad)* pro.desc_cantidad,2),')') as ventasTotalesPeriodo,
             (select round(sum(replace(stock,',','.')),2) from fact_insumos_lotes where idproducto=pro.id and " & buscAlm2 & " ) as StockActualEnAlmacen
             FROM fact_items as itm, fact_facturas as fa , fact_insumos as pro
             where fa.id=itm.id_fact and itm.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
@@ -148,6 +149,8 @@ Public Class manejoStock
         cmbalmacen.SelectedIndex = 0
     End Sub
     Private Sub manejoStock_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        dtdesdefact.Value = obtenerPrimerDiaMes()
+
         cargarCategoriasProd()
         cargarProveedores()
         cargarAlmacenes()

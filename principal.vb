@@ -51,7 +51,7 @@ Public Class frmprincipal
                         respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
                     Loop
 
-                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta, conexionPrinc)
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where id= " & idTerminal, conexionPrinc)
                     comandoupd.ExecuteNonQuery()
                     MsgBox("Configuracion guardada correctamente")
                 End If
@@ -347,8 +347,10 @@ Public Class frmprincipal
                 Dim tablaTiposFact As New DataTable
                 consTiposFact.Fill(tablaTiposFact)
                 idFacRapX = tablaTiposFact.Rows(0).Item("FX")
-                idFacRapCB = tablaTiposFact.Rows(0).Item("FCB")
 
+                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FCB")) Then
+                    idFacRapCB = tablaTiposFact.Rows(0).Item("FCB")
+                End If
                 If Not IsDBNull(tablaTiposFact.Rows(0).Item("FA")) Then
                     idFacRapA = tablaTiposFact.Rows(0).Item("FA")
                 End If

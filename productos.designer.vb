@@ -24,13 +24,13 @@ Partial Class productos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -49,7 +49,6 @@ Partial Class productos
         Me.cmdnuevapers = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -187,17 +186,9 @@ Partial Class productos
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.chkimportDescCantidad = New System.Windows.Forms.CheckBox()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -207,6 +198,16 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -490,14 +491,6 @@ Partial Class productos
         Me.Panel1.Size = New System.Drawing.Size(389, 515)
         Me.Panel1.TabIndex = 75
         '
-        'DgvProductos
-        '
-        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
-        Me.DgvProductos.Name = "DgvProductos"
-        Me.DgvProductos.Size = New System.Drawing.Size(389, 493)
-        Me.DgvProductos.TabIndex = 64
-        '
         'txtbuscar
         '
         Me.txtbuscar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
@@ -775,6 +768,7 @@ Partial Class productos
         '
         Me.cmbcatprod.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbcatprod.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbcatprod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbcatprod.FormattingEnabled = True
         Me.cmbcatprod.Location = New System.Drawing.Point(3, 187)
         Me.cmbcatprod.Name = "cmbcatprod"
@@ -1741,6 +1735,7 @@ Partial Class productos
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.chkimportDescCantidad)
         Me.Panel2.Controls.Add(Me.chkutilidad)
         Me.Panel2.Controls.Add(Me.chkimportiva)
         Me.Panel2.Controls.Add(Me.chkimportprecio)
@@ -1782,7 +1777,7 @@ Partial Class productos
         Me.chkimportiva.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkimportiva.Enabled = False
         Me.chkimportiva.ForeColor = System.Drawing.Color.White
-        Me.chkimportiva.Location = New System.Drawing.Point(385, 58)
+        Me.chkimportiva.Location = New System.Drawing.Point(458, 56)
         Me.chkimportiva.Name = "chkimportiva"
         Me.chkimportiva.Size = New System.Drawing.Size(47, 20)
         Me.chkimportiva.TabIndex = 248
@@ -1796,7 +1791,7 @@ Partial Class productos
         Me.chkimportprecio.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkimportprecio.Enabled = False
         Me.chkimportprecio.ForeColor = System.Drawing.Color.White
-        Me.chkimportprecio.Location = New System.Drawing.Point(289, 58)
+        Me.chkimportprecio.Location = New System.Drawing.Point(288, 57)
         Me.chkimportprecio.Name = "chkimportprecio"
         Me.chkimportprecio.Size = New System.Drawing.Size(92, 20)
         Me.chkimportprecio.TabIndex = 247
@@ -1885,7 +1880,7 @@ Partial Class productos
         '
         'txtlistaimportaiva
         '
-        Me.txtlistaimportaiva.Location = New System.Drawing.Point(439, 56)
+        Me.txtlistaimportaiva.Location = New System.Drawing.Point(507, 54)
         Me.txtlistaimportaiva.Name = "txtlistaimportaiva"
         Me.txtlistaimportaiva.Size = New System.Drawing.Size(49, 22)
         Me.txtlistaimportaiva.TabIndex = 9
@@ -1931,9 +1926,9 @@ Partial Class productos
         Me.lblcantprod.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblcantprod.Font = New System.Drawing.Font("Microsoft Sans Serif", 30.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblcantprod.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblcantprod.Location = New System.Drawing.Point(561, 0)
+        Me.lblcantprod.Location = New System.Drawing.Point(556, 0)
         Me.lblcantprod.Name = "lblcantprod"
-        Me.lblcantprod.Size = New System.Drawing.Size(122, 79)
+        Me.lblcantprod.Size = New System.Drawing.Size(127, 79)
         Me.lblcantprod.TabIndex = 2
         Me.lblcantprod.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         '
@@ -2094,30 +2089,6 @@ Partial Class productos
         Me.dtdescuentos.Size = New System.Drawing.Size(380, 156)
         Me.dtdescuentos.TabIndex = 227
         '
-        'Column6
-        '
-        Me.Column6.HeaderText = "idProm"
-        Me.Column6.Name = "Column6"
-        Me.Column6.Visible = False
-        '
-        'Column7
-        '
-        Me.Column7.HeaderText = "TIPO"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.FillWeight = 30.0!
-        Me.Column8.HeaderText = "MINIMO"
-        Me.Column8.Name = "Column8"
-        '
-        'Column9
-        '
-        Me.Column9.FillWeight = 30.0!
-        Me.Column9.HeaderText = "PORCENTAJE"
-        Me.Column9.Name = "Column9"
-        '
         'Label34
         '
         Me.Label34.AutoSize = True
@@ -2146,43 +2117,16 @@ Partial Class productos
         Me.dtlistas.Size = New System.Drawing.Size(301, 156)
         Me.dtlistas.TabIndex = 225
         '
-        'Column3
+        'chkimportDescCantidad
         '
-        Me.Column3.HeaderText = "Nombre"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
-        '
-        'Column4
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
-        '
-        'Column5
-        '
-        DataGridViewCellStyle2.Format = "C3"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 30.0!
-        Me.Column2.HeaderText = "utilAux"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Visible = False
+        Me.chkimportDescCantidad.AutoSize = True
+        Me.chkimportDescCantidad.ForeColor = System.Drawing.Color.White
+        Me.chkimportDescCantidad.Location = New System.Drawing.Point(377, 57)
+        Me.chkimportDescCantidad.Name = "chkimportDescCantidad"
+        Me.chkimportDescCantidad.Size = New System.Drawing.Size(83, 20)
+        Me.chkimportDescCantidad.TabIndex = 250
+        Me.chkimportDescCantidad.Text = "Des_cant"
+        Me.chkimportDescCantidad.UseVisualStyleBackColor = True
         '
         'DataGridViewTextBoxColumn1
         '
@@ -2270,6 +2214,76 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn9.HeaderText = "DESCUENTO %"
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
         Me.DataGridViewTextBoxColumn9.Visible = False
+        '
+        'Column6
+        '
+        Me.Column6.HeaderText = "idProm"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Visible = False
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "TIPO"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 30.0!
+        Me.Column8.HeaderText = "MINIMO"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 30.0!
+        Me.Column9.HeaderText = "PORCENTAJE"
+        Me.Column9.Name = "Column9"
+        '
+        'Column3
+        '
+        Me.Column3.HeaderText = "Nombre"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle2.Format = "C3"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        Me.Column2.HeaderText = "utilAux"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Visible = False
+        '
+        'DgvProductos
+        '
+        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
+        Me.DgvProductos.Name = "DgvProductos"
+        Me.DgvProductos.Size = New System.Drawing.Size(389, 493)
+        Me.DgvProductos.TabIndex = 64
         '
         'MySettingsBindingSource
         '
@@ -2511,4 +2525,5 @@ Partial Class productos
     Friend WithEvents Column1 As DataGridViewTextBoxColumn
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents chkpreciobase As CheckBox
+    Friend WithEvents chkimportDescCantidad As CheckBox
 End Class

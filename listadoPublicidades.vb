@@ -146,6 +146,13 @@ Public Class listadoPublicidades
             If ds.Tables(0).Rows.Count > 0 Then
                 dgvPrestamos.Cargar_Datos(ds.Tables(0))
                 dgvPrestamos.dgvVista.Columns(0).Visible = True
+                dgvPrestamos.dgvVista.Columns("VencActual").Visible = False
+                dgvPrestamos.dgvVista.Columns("idclientes").Visible = False
+                dgvPrestamos.dgvVista.Columns("DESCRIPCION").Visible = True
+                dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = False
+                dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = False
+                dgvPrestamos.dgvVista.Columns("SALDO").Visible = False
+                dgvPrestamos.dgvVista.Columns("vendedor").Visible = False
                 'DataGridView1.DataSource = ds.Tables(0)
             Else
 
@@ -155,7 +162,6 @@ Public Class listadoPublicidades
             dgvCtaCte.Cargar_Datos(ds.Tables(0))
             dgvCtaCte.dgvVista.Columns(0).Visible = True
         End If
-
 
 
     End Sub
@@ -210,7 +216,15 @@ Public Class listadoPublicidades
         cmbvendedor.DataSource = readvend.Tables(0)
         cmbvendedor.DisplayMember = readvend.Tables(0).Columns(1).Caption.ToString.ToUpper
         cmbvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
+        cmbvendedor.SelectedIndex = -1
 
+        Dim tablacob As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_cobrador where activo=1", conexionPrinc)
+        Dim readcob As New DataSet
+        tablacob.Fill(readcob)
+        cmbcobrador.DataSource = readcob.Tables(0)
+        cmbcobrador.DisplayMember = readcob.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbcobrador.ValueMember = readcob.Tables(0).Columns(0).Caption.ToString
+        cmbcobrador.SelectedIndex = -1
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
         If InStr(DatosAcceso.Moduloacc, "OPERADORRAD") <> 0 Then
             rdOper.Checked = True
@@ -227,7 +241,7 @@ Public Class listadoPublicidades
         dtdesdefact.Value = obtenerPrimerDiaMes()
         Label1.Text = DatosAcceso.ServMensual
         tabListadoSerivicios.Text = DatosAcceso.ServMensual
-        cmdbuscar.PerformClick()
+        'cmdbuscar.PerformClick()
 
     End Sub
 
@@ -537,5 +551,13 @@ Public Class listadoPublicidades
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub cmbvendedor_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbvendedor.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub rdOper_CheckedChanged(sender As Object, e As EventArgs) Handles rdOper.CheckedChanged
+
     End Sub
 End Class

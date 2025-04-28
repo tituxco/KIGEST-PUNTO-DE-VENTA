@@ -120,7 +120,7 @@
                 dtproductos.Columns(0).Width = 100
                 dtproductos.Columns(0).ReadOnly = True
                 dtproductos.Columns(1).ReadOnly = True
-                dtproductos.Columns(2).ReadOnly = True
+                'dtproductos.Columns(2).ReadOnly = True
 
                 dtproductos.Columns(3).Width = 100
                 dtproductos.Columns(4).Width = 100
@@ -419,7 +419,17 @@
         Dim idprod As Integer = dtproductos.CurrentRow.Cells(0).Value
         'cerrar_Conexiones()
         Reconectar()
-        If e.ColumnIndex = 3 Then
+        If e.ColumnIndex = 1 Then
+            MsgBox("todavia no se puede actualizar descripcion")
+        ElseIf e.ColumnIndex = 2 Then
+            If Not String.IsNullOrEmpty(dtproductos.CurrentRow.Cells("PLU").Value.ToString()) Then
+                Dim codigoNvo As String = dtproductos.CurrentRow.Cells("PLU").Value.ToString().ToUpper
+                'MsgBox("actualizando plu " & codigoNvo & " en id:" & idprod)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set cod_bar='" & codigoNvo & "', codigo='" & codigoNvo & "' where id=" & idprod, conexionPrinc)
+                comandoupd.ExecuteNonQuery()
+            End If
+
+        ElseIf e.ColumnIndex = 3 Then
             If IsNumeric(dtproductos.CurrentRow.Cells("costosiniva").Value) Then
                 Dim costo As String = dtproductos.CurrentRow.Cells("costosiniva").Value
                 Dim iva As String = dtproductos.CurrentRow.Cells("iva").Value

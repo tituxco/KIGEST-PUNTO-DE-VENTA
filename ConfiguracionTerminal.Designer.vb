@@ -115,7 +115,7 @@ Partial Class ConfiguracionTerminal
         '
         Me.Label63.AutoSize = True
         Me.Label63.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label63.Location = New System.Drawing.Point(168, 204)
+        Me.Label63.Location = New System.Drawing.Point(4, 204)
         Me.Label63.Name = "Label63"
         Me.Label63.Size = New System.Drawing.Size(155, 16)
         Me.Label63.TabIndex = 130
@@ -458,7 +458,7 @@ Partial Class ConfiguracionTerminal
         'cmbImpresoraEtiquetas
         '
         Me.cmbImpresoraEtiquetas.FormattingEnabled = True
-        Me.cmbImpresoraEtiquetas.Location = New System.Drawing.Point(325, 203)
+        Me.cmbImpresoraEtiquetas.Location = New System.Drawing.Point(161, 203)
         Me.cmbImpresoraEtiquetas.Name = "cmbImpresoraEtiquetas"
         Me.cmbImpresoraEtiquetas.Size = New System.Drawing.Size(160, 21)
         Me.cmbImpresoraEtiquetas.TabIndex = 152
