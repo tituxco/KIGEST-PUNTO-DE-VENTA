@@ -276,6 +276,7 @@ Public Class listadoPublicidades
                  dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value)
                 .condVta = 2
                 .lblfacvendedor.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("vendedor").Value
+                .txtobservaciones.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("DESCRIPCION").Value
                 .Show()
             End With
             'End If

@@ -522,7 +522,7 @@ Partial Class puntoventa
         'lblfacttotal
         '
         Me.lblfacttotal.Dock = System.Windows.Forms.DockStyle.Left
-        Me.lblfacttotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblfacttotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 16.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblfacttotal.ForeColor = System.Drawing.Color.Black
         Me.lblfacttotal.Location = New System.Drawing.Point(120, 0)
         Me.lblfacttotal.Name = "lblfacttotal"

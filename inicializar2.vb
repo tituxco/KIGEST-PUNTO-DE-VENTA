@@ -19,6 +19,9 @@ Public Class frmInicializar2
 
 
     Private Sub cmdAceptar_Click(sender As Object, e As EventArgs) Handles cmdAceptar.Click
+
+        ' MsgBox(GetMd5Hash(txtContraseña.Text))
+
         'guardo los datos de conexion en el caso de que hayan tildado la opcion
         pbprogresocons.Visible = True
         Try

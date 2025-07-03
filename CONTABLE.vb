@@ -66,6 +66,7 @@ Public Class CONTABLE
         dtpdesdedetallecta.Value = obtenerPrimerDiaMes()
         dtdesdecuentaprov.Value = obtenerPrimerDiaMes()
         dtpgastosdesde.Value = obtenerPrimerDiaMes()
+
         'balance.Parent = Nothing
         cmbMovimientosHistoricos.SelectedIndex = 1
         If InStr(DatosAcceso.Moduloacc, "CONFVAR") = False Then tabconfiguracion.Parent = Nothing
@@ -336,8 +337,10 @@ Public Class CONTABLE
                 else FORMAT(fact.total,2,'es_AR') end as total, 
                 (select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
                 fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta
-                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm 
-                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.id=itm.id_fact                
+                from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con, fact_items as itm
+                where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta 
+                  
+                and fact.id=itm.id_fact                
                 and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
                 " group by fact.id", conexionPrinc)
                 columna = 7
@@ -2850,8 +2853,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Dim existecomp As Boolean
         Dim lresultado As Boolean
 
-        lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
-        fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+        lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, EmpresaActual.cuit, EmpresaActual.direccionCertificado, EmpresaActual.direccionLicencia)
+        fe.ArchivoCertificadoPassword = EmpresaActual.passCertificado
         If lresultado Then
             lresultado = fe.f1ObtenerTicketAcceso()
             MsgBox("Informacion de Tiket AFIP " & vbNewLine &
@@ -4350,7 +4353,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
                 consSaldoCuenta.SelectCommand.CommandTimeout = 300
 
-                'MsgBox(consSaldoCuenta.SelectCommand.CommandText)
+                ' MsgBox(consSaldoCuenta.SelectCommand.CommandText)
                 Dim tabSaldoCuenta As New DataTable
 
                 consSaldoCuenta.Fill(tabSaldoCuenta)

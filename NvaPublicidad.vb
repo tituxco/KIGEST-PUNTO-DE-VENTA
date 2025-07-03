@@ -99,7 +99,7 @@ Public Class NvaPublicidad
             'FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
             SaldoInicial = SaldoInicial - CapitalPagado
         Next
-
+        Button1.Enabled = True
         'dgvPublicidad.DataSource = tablaPrestamo
         'txtBuscaPrestamo.Text = NoPrestamo
     End Sub
@@ -214,6 +214,9 @@ Public Class NvaPublicidad
             dgvPublicidad.Columns.Clear()
             dgvPublicidad.Rows.Clear()
             dgvPublicidad.DataSource = ds.Tables(0)
+            dgvPublicidad.Columns("ID").Visible = False
+            dgvPublicidad.Columns("PERIODO").Visible = False
+
         Else
             dgvPublicidad.DataSource = Nothing
         End If
@@ -237,6 +240,7 @@ Public Class NvaPublicidad
              Format(CDate(dgvPublicidad.CurrentRow.Cells("VENCIMIENTO").Value.ToString), "MMMM yyyy"), "21",
              dgvPublicidad.CurrentRow.Cells("MONTO").Value,
              dgvPublicidad.CurrentRow.Cells("MONTO").Value)
+            .txtobservaciones.Text = txtdetallePublicidad.Text
             .condVta = 2
             .lblfacvendedor.Text = idVendedor
             .Show()

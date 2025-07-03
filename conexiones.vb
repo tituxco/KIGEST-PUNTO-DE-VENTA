@@ -65,7 +65,7 @@ Module Conexiones
             Return False
         End Try
     End Function
-    Public Function ComprobarAuth() As Boolean
+    Public Function ComprobarAuth(Optional ByRef md5 As Boolean = False) As Boolean
         Try
             Dim leerAuth As IDataReader
             Dim i As Integer
@@ -114,8 +114,8 @@ Module Conexiones
                 'Return True
                 'End If
                 Return True
-                Else
-                    MsgBox("El servidor de acceso indica que no tiene autorización para acceder al sistema, por favor comuniquese con el administrador")
+            Else
+                MsgBox("El servidor de acceso indica que no tiene autorización para acceder al sistema, por favor comuniquese con el administrador")
                 Return False
             End If
         Catch ex As Exception

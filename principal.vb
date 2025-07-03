@@ -9,22 +9,42 @@ Imports Microsoft.ReportingServices.DataProcessing
 Public Class frmprincipal
     Public loged As Boolean
     Public IPPublica As String = GetExternalIp()
-    Private idFacRapX As Integer = 0 'recibo X
-    Private idFacRapCB As Integer = 0 'factura B o C
-    Private idFacRapA As Integer = 0 'factura A
+    Public idFacRapX As Integer = 0 'recibo X
+    Public idFacRapCB As Integer = 0 'factura B o C
+    Public idFacRapA As Integer = 0 'factura A
     Dim i As Integer
+
+    Private Sub cargarEmpresas()
+        Dim tablaEmp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa2", conexionPrinc)
+        Dim readEmp As New DataSet
+        tablaEmp.Fill(readEmp)
+        cmbempresas.ComboBox.DataSource = readEmp.Tables(0)
+        cmbempresas.ComboBox.DisplayMember = readEmp.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbempresas.ComboBox.ValueMember = readEmp.Tables(0).Columns(0).Caption.ToString
+
+
+        If cmbempresas.ComboBox.Items.Count > 1 Then
+            cmbempresas.Visible = True
+            cmbempresas.ComboBox.SelectedIndex = 0
+        Else
+            cmbempresas.Visible = False
+            cmbempresas.ComboBox.SelectedIndex = 0
+        End If
+        Variables_Globales.IdEmpresa = cmbempresas.ComboBox.SelectedValue
+    End Sub
 
     Private Sub cargarConfiguracionDeTerminal()
         Try
             Reconectar()
+            Dim idEmpresa = cmbempresas.ComboBox.SelectedValue
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
-            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales where nombreTerminal like '" & NombreEquipo & "'", conexionPrinc)
+            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales where nombreTerminal like '" & NombreEquipo & "' and idEmpresa=" & Variables_Globales.IdEmpresa, conexionPrinc)
             Dim tablaTerm As New DataTable
             consultaTerm.Fill(tablaTerm)
-            If tablaTerm.Rows.Count = 0 Then
+            If tablaTerm.Rows.Count = 0 Then ''si la terminal no esta registrada....
                 MsgBox("su terminal no esta registrada en el servidor, se procedera a agregarla para proceder a su configuracion")
-                Dim sqlQuery As String = "insert into cm_terminales (nombreTerminal) values ('" & NombreEquipo & "')"
+                Dim sqlQuery As String = "insert into cm_terminales (nombreTerminal,idEmpresa) values ('" & NombreEquipo & "','" & Variables_Globales.IdEmpresa & "')"
                 comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
                 comandoadd.ExecuteNonQuery()
                 Dim idTerminal As Integer = comandoadd.LastInsertedId
@@ -35,15 +55,16 @@ Public Class frmprincipal
                 Dim infoConfigTerm() As DataRow
 
                 consultaConfigTerm.Fill(tablaConfigTerm)
-                If tablaConfigTerm.Rows.Count <= 1 Then
+                If tablaConfigTerm.Rows.Count <= 1 Then ''si solo hay una configuracion disponible....
                     MsgBox("solo existe una configuracion posible para la terminal, se procedera a setearla para su equipo")
-                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & tablaConfigTerm.Rows(0).Item("id"), conexionPrinc)
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & tablaConfigTerm.Rows(0).Item("id") &
+                                                                         " where nombreTerminal like '" & NombreEquipo & "' and idTerminal= " & Variables_Globales.IdEmpresa, conexionPrinc)
                     comandoupd.ExecuteNonQuery()
                     MsgBox("Configuracion guardada correctamente")
                 Else
                     Dim ConfiguracionesDisponibles As String
                     For Each configuracion As DataRow In tablaConfigTerm.Rows
-                        ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & vbNewLine
+                        ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & " --EMP: " & configuracion.Item("idEmpresa") & vbNewLine
                     Next
 
                     Dim respuesta As String = ""
@@ -128,21 +149,20 @@ Public Class frmprincipal
         End Try
     End Function
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        cargarEmpresas()
+        cargarConfiguracionDeTerminal()
+        cargar_valores_generales()
+
 
         If System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed = True Then
             Me.Text = Application.ProductName & " - V" & System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
-            cargarConfiguracionDeTerminal()
-            cargar_valores_generales()
+
         Else
             Me.Text = "V- " & My.Application.Info.Version.Major & "." & My.Application.Info.Version.MajorRevision & "." & My.Application.Info.Version.Minor & "." & My.Application.Info.Version.MinorRevision & " - Usuario: " & DatosAcceso.Cliente & "-" & DatosAcceso.sistema
             Me.TopMost = False
-            cargarConfiguracionDeTerminal()
-            cargar_valores_generales()
-
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica
         End If
-
 
     End Sub
     Private Sub cargar_valores_generales()
@@ -200,24 +220,6 @@ Public Class frmprincipal
 
             If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
 
-            ''obtenemos los puntos de venta electronicos si es que hay mas de uno
-            'Dim PuntosDeVentaElectronicos As String = infocl(0)(2)
-            'Dim cantPtosVtasElect As String() = PuntosDeVentaElectronicos.Split(",")
-            'If cantPtosVtasElect.Length > 0 Then ' si hay mas de uno obtenemos el indicado dependiendo de la sucursal en la que se encuentre (otros datos)
-
-            '    Reconectar()
-
-            '    Dim consPtoVta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_insumos_almacenes where id=" &, conexionPrinc)
-            '    Dim tablacl As New DataTable
-            '    Dim infocl() As DataRow
-            '    consulta.Fill(tablacl)
-
-
-            '    infocl = tablacl.Select("")
-
-            'End If
-
-
             'FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
             FacturaElectro.certificado = infocl(2)(2)
@@ -240,124 +242,7 @@ Public Class frmprincipal
             DatosAcceso.idFacRap = My.Settings.idfacRap
             DatosAcceso.IdPtoVtaDef = My.Settings.idPtoVta
 
-            Dim certificadoFacturacion As String
-            Dim consAFIP As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_archivos order by id asc", conexionPrinc)
-            Dim tablaAFIP As New DataTable
-            Dim infoAFIP() As DataRow
-            consAFIP.Fill(tablaAFIP)
-            infoAFIP = tablaAFIP.Select("")
-
-            Try
-                If File.Exists(Application.StartupPath & "\" & infoAFIP(0)(1) & ".pfx") Then
-                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\" & infoAFIP(0)(1) & ".pfx")
-                End If
-                If File.Exists(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic") Then
-                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic")
-                End If
-                If File.Exists(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg") Then
-                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg")
-                End If
-
-                If tablaAFIP.Rows.Count <> 0 Then
-                    If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(0)(1) & ".pfx") Then
-                        If Not IsDBNull(infoAFIP(0)(2)) Then
-                            Dim certificado As Byte() = infoAFIP(0)(2)
-                            Dim s As IO.FileStream
-                            s = IO.File.Open(Application.StartupPath & "\" & infoAFIP(0)(1) & ".pfx", IO.FileMode.Append)
-                            s.Write(certificado, 0, certificado.Length)
-                            s.Close()
-
-                        End If
-                    End If
-                    If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic") Then
-                        If Not IsDBNull(infoAFIP(1)(2)) Then
-                            Dim licencia As Byte() = infoAFIP(1)(2)
-                            Dim sL As IO.FileStream
-                            sL = IO.File.Open(Application.StartupPath & "\" & infoAFIP(1)(1) & ".lic", IO.FileMode.Append)
-                            sL.Write(licencia, 0, licencia.Length)
-                            sL.Close()
-                        End If
-                    End If
-                    If Not IO.File.Exists(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg") Then
-                        If Not IsDBNull(infoAFIP(2)(2)) Then
-                            Dim logo As Byte() = infoAFIP(2)(2)
-                            Dim sL As IO.FileStream
-                            sL = IO.File.Open(Application.StartupPath & "\" & infoAFIP(2)(1) & ".jpg", IO.FileMode.Append)
-                            sL.Write(logo, 0, logo.Length)
-                            sL.Close()
-                        End If
-                    End If
-                End If
-
-
-                Dim fe As New WSAFIPFE.Factura
-                Dim lresultado As Boolean
-
-                lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
-                fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
-
-                lresultado = fe.f1ObtenerTicketAcceso()
-                ' Dim fechaActual As String = Now().ToString()
-                If lresultado Then
-                    Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
-
-                    Dim diasrestantes As Long
-                    diasrestantes = DateDiff(DateInterval.Day, Now(), Convert.ToDateTime(ExpiracionCertificado))
-                    ' MsgBox(diasrestantes)
-                    lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
-                    If diasrestantes < 30 Then
-                        lblEstadoCertificado.ForeColor = Color.Red
-                    End If
-                    If diasrestantes < 7 And diasrestantes > 0 Then
-                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP VENCE EN " & diasrestantes & " DIAS" & vbNewLine &
-                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
-                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
-                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
-                    ElseIf diasrestantes < 0 Then
-                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP ESTA VENCIDO HACE " & diasrestantes & " DIAS" & vbNewLine &
-                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
-                                "NO PODRA REALIZAR FACTURAS ELECTRONICAS HASTA QUE SE GENERE UN CERTIFICADO NUEVO" & vbNewLine &
-                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
-                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
-                    End If
-                    If DatosAcceso.debe = 0 Then
-                        btnNotificaciones.Visible = False
-                    Else
-                        btnNotificaciones.Visible = True
-                    End If
-                End If
-                Reconectar()
-                Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
-                Dim tablaMONEDA As New DataTable
-                consMONEDA.Fill(tablaMONEDA)
-                If tablaMONEDA.Rows.Count > 0 Then
-                    lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
-                Else
-                    lblPrincipalDolar.Text = ""
-                End If
-
-                Reconectar()
-                Dim consTiposFact As New MySql.Data.MySqlClient.MySqlDataAdapter("select 1, 
-                (select id from fact_facturasrapidas where tipofact in (999) and punto_venta =" & My.Settings.idPtoVta & ") as FX,
-                (select id from fact_facturasrapidas where tipofact in (6,11) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FCB,
-                (select id from fact_facturasrapidas where tipofact in (1) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FA
-                ", conexionPrinc)
-
-                'MsgBox(consTiposFact.SelectCommand.CommandText)
-                Dim tablaTiposFact As New DataTable
-                consTiposFact.Fill(tablaTiposFact)
-                idFacRapX = tablaTiposFact.Rows(0).Item("FX")
-
-                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FCB")) Then
-                    idFacRapCB = tablaTiposFact.Rows(0).Item("FCB")
-                End If
-                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FA")) Then
-                    idFacRapA = tablaTiposFact.Rows(0).Item("FA")
-                End If
-
-            Catch ex As Exception
-                MsgBox(ex.Message)
-            End Try
+            CargarInformacionEmpresa()
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -1083,5 +968,19 @@ Public Class frmprincipal
             Debug.WriteLine("error " + ex.Message)
 
         End Try
+    End Sub
+
+    Private Sub cmbempresas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbempresas.SelectedIndexChanged
+
+        Try
+            If cmbempresas.SelectedIndex <> -1 Then
+
+                CargarInformacionEmpresa(cmbempresas.ComboBox.SelectedValue)
+
+            End If
+        Catch ex As Exception
+
+        End Try
+
     End Sub
 End Class

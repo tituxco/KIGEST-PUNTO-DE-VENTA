@@ -74,6 +74,7 @@ Partial Class frmprincipal
         Me.LISTADOToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SALIRToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnNotificaciones = New System.Windows.Forms.ToolStripMenuItem()
+        Me.cmbempresas = New System.Windows.Forms.ToolStripComboBox()
         Me.dtconexiones = New System.Windows.Forms.DataGridView()
         Me.StatusStrip1.SuspendLayout()
         Me.menugral.SuspendLayout()
@@ -167,7 +168,7 @@ Partial Class frmprincipal
         '
         Me.menugral.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.menugral.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdServicios, Me.EmpleadosToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.btnNotificaciones})
+        Me.menugral.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.cmdclientes, Me.cmdproductos, Me.cmdfacturacion, Me.cmdadministracion, Me.cmdServicios, Me.EmpleadosToolStripMenuItem, Me.ProduccionToolStripMenuItem, Me.cmdPrestamos, Me.SALIRToolStripMenuItem, Me.btnNotificaciones, Me.cmbempresas})
         Me.menugral.Location = New System.Drawing.Point(0, 0)
         Me.menugral.Name = "menugral"
         Me.menugral.Size = New System.Drawing.Size(1270, 40)
@@ -577,6 +578,15 @@ Partial Class frmprincipal
         Me.btnNotificaciones.Size = New System.Drawing.Size(44, 36)
         Me.btnNotificaciones.Visible = False
         '
+        'cmbempresas
+        '
+        Me.cmbempresas.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+        Me.cmbempresas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbempresas.FlatStyle = System.Windows.Forms.FlatStyle.Standard
+        Me.cmbempresas.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Bold)
+        Me.cmbempresas.Name = "cmbempresas"
+        Me.cmbempresas.Size = New System.Drawing.Size(250, 36)
+        '
         'dtconexiones
         '
         Me.dtconexiones.AllowUserToAddRows = False
@@ -673,4 +683,5 @@ Partial Class frmprincipal
     Friend WithEvents PublicidadToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents lblEstadoCertificado As ToolStripStatusLabel
     Friend WithEvents btnNotificaciones As ToolStripMenuItem
+    Friend WithEvents cmbempresas As ToolStripComboBox
 End Class

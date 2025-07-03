@@ -51,12 +51,7 @@ Public Class puntoventa
 			Dim tablafr As New DataTable
 			Dim infofr() As DataRow
 			consfactrap.Fill(tablafr)
-			'MsgBox(consfactrap.SelectCommand.CommandText)
-			'If tablafr.Rows.Count = 0 Then
-			'    MsgBox("No se encuentra la referencia a la factura o punto de venta")
-			'    'Me.Close()
-			'    Exit Sub
-			'End If
+
 			infofr = tablafr.Select("")
 			nombrefact = infofr(0)(0)
 			lblfactnombre.Text = nombrefact
@@ -69,13 +64,7 @@ Public Class puntoventa
 			numfact = Val(infofr(0)(3))
 			lblfactnumero.Text = infofr(0)(3)
 			tipofact = infofr(0)(4)
-			'MsgBox(tipofact)
 
-			'If tipofact = 2 Or tipofact = 3 Or tipofact = 7 Or tipofact = 8 Or tipofact = 12 Or tipofact = 13 Or tipofact = 991 Or tipofact = 992 Then
-			'	'   MsgBox("no quitar")
-			'	chkquitarstock.CheckState = CheckState.Unchecked
-			'	chkquitarstock.Enabled = False
-			'Else
 			If tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Then
 					'  MsgBox("quitar")
 					If DatosAcceso.StockPpref = 1 Then
@@ -2205,8 +2194,8 @@ Public Class puntoventa
 					Exit Sub
 			End Select
 			'MsgBox(FacturaElectro.cuit & "-" & FacturaElectro.certificado & "-" & FacturaElectro.licencia & "-" & FacturaElectro.passcertificado)
-			lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit.Replace("-", ""), Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
-			fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+			lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, EmpresaActual.cuit, EmpresaActual.direccionCertificado, EmpresaActual.direccionLicencia)
+			fe.ArchivoCertificadoPassword = EmpresaActual.passCertificado
 
 			If lresultado = True Then
 				lresultado = fe.f1ObtenerTicketAcceso()
@@ -3089,10 +3078,10 @@ Public Class puntoventa
 			tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,            
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,fac.observaciones as facobserva2,cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
@@ -3156,6 +3145,10 @@ Public Class puntoventa
 	End Sub
 
 	Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
+
+	End Sub
+
+	Private Sub txttransporte_TextChanged(sender As Object, e As EventArgs) Handles txttransporte.TextChanged
 
 	End Sub
 End Class

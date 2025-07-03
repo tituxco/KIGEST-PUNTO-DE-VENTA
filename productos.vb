@@ -1058,17 +1058,17 @@ Public Class productos
             Else
                 'Dim stock As String = txtstoked.Text
                 Reconectar()
-                If categoria = 0 And cmbcatprod.Text <> "" Then
-                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
-                        "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
-                    '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
-                    '   insert into  fact_categoria_insum (id,nombre) values 
-                    '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
-                    '   ON DUPLICATE KEY UPDATE 
-                    'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
-                    comandoad.ExecuteNonQuery()
-                    categoria = comandoad.LastInsertedId
-                End If
+                'If categoria = 0 And cmbcatprod.Text = "" Then
+                '    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
+                '        "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
+                '    '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
+                '    '   insert into  fact_categoria_insum (id,nombre) values 
+                '    '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
+                '    '   ON DUPLICATE KEY UPDATE 
+                '    'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
+                '    comandoad.ExecuteNonQuery()
+                '    categoria = comandoad.LastInsertedId
+                'End If
 
                 Reconectar()
                 If marca = 0 And cmbmarcas.Text <> "" Then

@@ -4,17 +4,202 @@ Imports System.Data.OleDb
 Imports System.Drawing.Printing
 Imports Microsoft.Office.Interop
 Imports Microsoft.Reporting.WinForms
+Imports System.Text
+Imports System.Security.Cryptography
 
 'Imports Excel = Microsoft.Office.Interop.Excel
 'Imports System.Runtime.InteropServices
 Module funciones_Globales
 
+
+
     Public idFactura As Integer
     Public NombreEquipo As String = My.Computer.Name
 
+
+
+    Public Function GetMd5Hash(ByVal input As String) As String
+
+        '    //using SHA256 md5 = SHA256.Create(); ///debemos usar este hay que implementarlo gradualmente y con cambio de contraseña
+
+        Dim md5Hash As MD5 = MD5.Create()
+
+        Dim data As Byte() = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input))
+
+        Dim builder As StringBuilder = New StringBuilder()
+        Dim i As Integer
+        For i = 0 To data.Length - 1
+
+            builder.Append(data(i).ToString("x2"))
+
+        Next
+        Return builder.ToString()
+
+    End Function
     Public Function ConvertirCMaPX(cm As Double) As Integer
         Return (cm / 2.54) * 100
     End Function
+
+    Public Sub CargarInformacionEmpresa(Optional idEmp As Integer = 1)
+        Try
+            Variables_Globales.IdEmpresa = idEmp
+            aplicarConfiguracionTerminal()
+            Dim certificadoFacturacion As String
+            Dim consAFIP As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa2 where idempresa=" & idEmp, conexionPrinc)
+            Dim tablaAFIP As New DataTable
+            Dim infoAFIP() As DataRow
+            consAFIP.Fill(tablaAFIP)
+            infoAFIP = tablaAFIP.Select("")
+
+            Try
+                If File.Exists(Application.StartupPath & "\certificado" & ".pfx") Then
+                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\certificado" & ".pfx")
+                End If
+                If File.Exists(Application.StartupPath & "\licenciawsafipfe" & ".lic") Then
+                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\licenciawsafipfe" & ".lic")
+                End If
+                If File.Exists(Application.StartupPath & "\logo2" & ".jpg") Then
+                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\logo2" & ".jpg")
+                End If
+                If File.Exists(Application.StartupPath & "\logo" & ".jpg") Then
+                    My.Computer.FileSystem.DeleteFile(Application.StartupPath & "\logo" & ".jpg")
+                End If
+
+                If tablaAFIP.Rows.Count <> 0 Then
+                    If Not IO.File.Exists(Application.StartupPath & "\certificado" & ".pfx") Then
+                        If Not IsDBNull(infoAFIP(0)(2)) Then
+                            Dim certificado As Byte() = infoAFIP(0)("certificado")
+                            Dim s As IO.FileStream
+                            s = IO.File.Open(Application.StartupPath & "\certificado" & ".pfx", IO.FileMode.Append)
+                            s.Write(certificado, 0, certificado.Length)
+                            s.Close()
+
+                        End If
+                    End If
+                    If Not IO.File.Exists(Application.StartupPath & "\licenciawsafipfe" & ".lic") Then
+                        If Not IsDBNull(infoAFIP(0)("licencia")) Then
+                            Dim licencia As Byte() = infoAFIP(0)("licencia")
+                            Dim sL As IO.FileStream
+                            sL = IO.File.Open(Application.StartupPath & "\licenciawsafipfe" & ".lic", IO.FileMode.Append)
+                            sL.Write(licencia, 0, licencia.Length)
+                            sL.Close()
+                        End If
+                    End If
+                    If Not IO.File.Exists(Application.StartupPath & "\logo2" & ".jpg") Then
+                        If Not IsDBNull(infoAFIP(0)("logo2")) Then
+                            Dim logo As Byte() = infoAFIP(0)("logo2")
+                            Dim sL As IO.FileStream
+                            sL = IO.File.Open(Application.StartupPath & "\logo2" & ".jpg", IO.FileMode.Append)
+                            sL.Write(logo, 0, logo.Length)
+                            sL.Close()
+                        End If
+                    End If
+
+                    If Not IO.File.Exists(Application.StartupPath & "\logo" & ".jpg") Then
+                        If Not IsDBNull(infoAFIP(0)("logo")) Then
+                            Dim logo As Byte() = infoAFIP(0)("logo")
+                            Dim sL As IO.FileStream
+                            sL = IO.File.Open(Application.StartupPath & "\logo" & ".jpg", IO.FileMode.Append)
+                            sL.Write(logo, 0, logo.Length)
+                            sL.Close()
+                        End If
+                    End If
+                End If
+
+                EmpresaActual.idEmpresa = infoAFIP(0)("idempresa")
+                EmpresaActual.nombreFantasia = infoAFIP(0)("nombrefantasia")
+                EmpresaActual.razonSocial = infoAFIP(0)("razonsocial")
+                EmpresaActual.direccion = infoAFIP(0)("direccion")
+                EmpresaActual.localidad = infoAFIP(0)("localidad")
+                EmpresaActual.otrosDatos = infoAFIP(0)("otrosdatos")
+                EmpresaActual.cuit = infoAFIP(0)("cuit")
+                EmpresaActual.ingBrutos = infoAFIP(0)("ingBrutos")
+                EmpresaActual.ivaTipo = infoAFIP(0)("ivatipo")
+                EmpresaActual.inicioAct = infoAFIP(0)("inicioact")
+                EmpresaActual.drei = infoAFIP(0)("drei")
+                EmpresaActual.direccionLogo = Application.StartupPath & "\logo" & ".jpg"
+                EmpresaActual.direccionLogo2 = Application.StartupPath & "\logo2" & ".jpg"
+                EmpresaActual.direccionLicencia = Application.StartupPath & "\licenciawsafipfe" & ".lic"
+                EmpresaActual.direccionCertificado = Application.StartupPath & "\certificado" & ".pfx"
+                EmpresaActual.passCertificado = infoAFIP(0)("passcertificado")
+
+
+
+                Dim fe As New WSAFIPFE.Factura
+                Dim lresultado As Boolean
+
+                lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, EmpresaActual.cuit, EmpresaActual.direccionCertificado, EmpresaActual.direccionLicencia)
+                fe.ArchivoCertificadoPassword = EmpresaActual.passCertificado
+
+                lresultado = fe.f1ObtenerTicketAcceso()
+                ' Dim fechaActual As String = Now().ToString()
+                If lresultado Then
+                    Dim ExpiracionCertificado As String = fe.ArchivoCertificadoVto
+
+                    Dim diasrestantes As Long
+                    diasrestantes = DateDiff(DateInterval.Day, Now(), Convert.ToDateTime(ExpiracionCertificado))
+                    ' MsgBox(diasrestantes)
+                    frmprincipal.lblEstadoCertificado.Text = "ValidezCertificado: " & fe.ArchivoCertificadoVto
+                    If diasrestantes < 30 Then
+                        frmprincipal.lblEstadoCertificado.ForeColor = Color.Red
+                    End If
+                    If diasrestantes < 7 And diasrestantes > 0 Then
+                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP VENCE EN " & diasrestantes & " DIAS" & vbNewLine &
+                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                    ElseIf diasrestantes < 0 Then
+                        MsgBox("ATENCION: SU CERTIFICADO DE FACTURACION DE AFIP ESTA VENCIDO HACE " & diasrestantes & " DIAS" & vbNewLine &
+                                "POR FAVOR CONTACTESE CON EL ADMINISTRADOR PARA GESTIONAR UNO NUEVO." & vbNewLine &
+                                "NO PODRA REALIZAR FACTURAS ELECTRONICAS HASTA QUE SE GENERE UN CERTIFICADO NUEVO" & vbNewLine &
+                                "DEBERA PROPORCIONAR SU CUIT Y CLAVE FISCAL PARA REALIZAR EL TRAMITE" & vbNewLine &
+                                "ENVIE LA INFORMACION AL WP: 3482-621473 O AL MAIL:INFO@KIBIT.COM.AR")
+                    End If
+                    If DatosAcceso.debe = 0 Then
+                        frmprincipal.btnNotificaciones.Visible = False
+                    Else
+                        frmprincipal.btnNotificaciones.Visible = True
+                    End If
+                End If
+                Reconectar()
+                Dim consMONEDA As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, cotizacion from fact_moneda where id=2", conexionPrinc)
+                Dim tablaMONEDA As New DataTable
+                consMONEDA.Fill(tablaMONEDA)
+                If tablaMONEDA.Rows.Count > 0 Then
+                    frmprincipal.lblPrincipalDolar.Text = tablaMONEDA.Rows(0).Item(0) & ": " & tablaMONEDA.Rows(0).Item(1)
+                Else
+                    frmprincipal.lblPrincipalDolar.Text = ""
+                End If
+
+                Reconectar()
+                Dim consTiposFact As New MySql.Data.MySqlClient.MySqlDataAdapter("select 1, 
+                (select id from fact_facturasrapidas where tipofact in (999) and punto_venta =" & My.Settings.idPtoVta & ") as FX,
+                (select id from fact_facturasrapidas where tipofact in (6,11) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FCB,
+                (select id from fact_facturasrapidas where tipofact in (1) and punto_venta =" & FacturaElectro.puntovtaelect & ") as FA
+                ", conexionPrinc)
+
+                'MsgBox(consTiposFact.SelectCommand.CommandText)
+
+                Dim tablaTiposFact As New DataTable
+                consTiposFact.Fill(tablaTiposFact)
+                frmprincipal.idFacRapX = tablaTiposFact.Rows(0).Item("FX")
+                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FCB")) Then
+                    frmprincipal.idFacRapCB = tablaTiposFact.Rows(0).Item("FCB")
+                End If
+                If Not IsDBNull(tablaTiposFact.Rows(0).Item("FA")) Then
+                    frmprincipal.idFacRapA = tablaTiposFact.Rows(0).Item("FA")
+                End If
+
+            Catch ex As Exception
+                MsgBox(ex.Message)
+            End Try
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
 
     Public Sub GuardarStockProducto(ByRef idComprobante As Integer, ByRef idProd As Integer, ByRef stock As String, ByRef idAlmacen As Integer)
         'Dim gtiaserie As String
@@ -52,10 +237,13 @@ Module funciones_Globales
 
     Public Sub aplicarConfiguracionTerminal()
         Try
+            If Variables_Globales.IdEmpresa = 0 Then
+                Variables_Globales.IdEmpresa = 1
+            End If
             Reconectar()
             Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select term.nombreTerminal,cfTerm.* 
             from cm_terminales as term, cm_terminales_configuracion as cfTerm where term.nombreTerminal like '" & NombreEquipo & "'
-            and term.idConfiguracion=cfTerm.id", conexionPrinc)
+            and term.idConfiguracion=cfTerm.id and term.idEmpresa=" & Variables_Globales.IdEmpresa, conexionPrinc)
             Dim tablaTerm As New DataTable
             'Dim infoTerm() As DataRow
             consultaTerm.Fill(tablaTerm)
@@ -89,6 +277,7 @@ Module funciones_Globales
                 .visualizacionProducto = tablaTerm.Rows(0).Item("visualizacionProducto")
             End With
             FacturaElectro.puntovtaelect = tablaTerm.Rows(0).Item("FactElectro_puntoVenta")
+
             frmprincipal.lblstatusServer.Text = "Terminal: " & tablaTerm.Rows(0).Item("descripcion")
             frmprincipal.lblstatusServer.Visible = True
             My.Settings.Save()
@@ -1521,12 +1710,15 @@ Module funciones_Globales
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
-            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,            
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,fac.observaciones as facobserva2,cl.email  
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & idfact, conexionPrinc)
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & idfact, conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
@@ -1635,14 +1827,18 @@ Module funciones_Globales
 
             Reconectar()
 
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
-            & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, " _
-            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, " _
-            & "concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, " _
-            & "concat(vend.apellido,', ',vend.nombre) as facvend, fac.condvta as faccondvta, fac.observaciones2 as facobserva,fac.iva105, fac.iva21, fac.total,'',fis.donfdesc as descfact " _
-            & "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac  " _
-            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idFactura, conexionPrinc)
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & idFactura, conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
@@ -1678,14 +1874,18 @@ Module funciones_Globales
             Dim fac As New datosfacturas
 
             Reconectar()
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia As empnombre, emp.razonsocial As emprazon, emp.direccion As empdire, emp.localidad As emploca, " _
-            & "emp.cuit As empcuit, emp.ingbrutos As empib, emp.ivatipo As empcontr, emp.inicioact As empinicioact, emp.drei As empdrei, emp.logo As emplogo, " _
-            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon, " _
-            & "fac.direccion As facdire, fac.localidad As facloca, fac.tipocontr As factipocontr, fac.cuit As faccuit, fac.vendedor As facvend, " _
-            & "fac.condvta as faccondvta, fac.iva105, fac.iva21,fac.total,  " _
-            & "fac.observaciones as facobserva " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idRecibo, conexionPrinc)
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta  
+            where cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idRecibo, conexionPrinc)
             tabEmp.Fill(fac.Tables("factura_enca"))
 
             Reconectar()
@@ -1763,7 +1963,8 @@ Module funciones_Globales
             fis.donfdesc=fac.tipo and
             prov.id=fac.idproveedor and
             iva.id=prov.tipo_iva and 
-            fis.ptovta=mid(fac.numero,4,1) and 
+            fis.ptovta=mid(fac.numero,4,1) and
+
             fac.id=" & idOP, conexionPrinc)
             tabEmp.Fill(fac.Tables("factura_enca"))
 
@@ -2529,8 +2730,8 @@ Module funciones_Globales
             'MsgBox(consultastock.SelectCommand.CommandText)
 
             Dim tablastock As New DataTable
-                Dim infostock() As DataRow
-                consultastock.Fill(tablastock)
+Dim infostock() As DataRow
+consultastock.Fill(tablastock)
                 infostock = tablastock.Select("")
             lotes = tablastock.Rows.Count - 1
             desc_cant = CDbl(infostock(lotes)("desc_cantidad"))

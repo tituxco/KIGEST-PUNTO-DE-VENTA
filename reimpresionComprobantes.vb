@@ -45,7 +45,7 @@ Public Class reimpresionComprobantes
             fact.localidad, con.condicion, 
             case when fis.debcred='C' then 
             concat('-',FORMAT(fact.total,2,'es_AR')) 
-            else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
+            else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones as notas, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998)" & numComprobante & Razonsoc &
             " and fact.ptovta=" & cmbInforPtoVta.SelectedValue &
@@ -58,7 +58,7 @@ Public Class reimpresionComprobantes
 
             dtfacturas.DataSource = tablaprod
             dtfacturas.Columns(0).Visible = False
-            dtfacturas.Columns(9).Visible = False
+            dtfacturas.Columns(10).Visible = False
 
 
 
@@ -861,7 +861,7 @@ Public Class reimpresionComprobantes
             fact.localidad, con.condicion, 
             case when fis.debcred='C' then 
             concat('-',FORMAT(fact.total,2,'es_AR')) 
-            else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones2, fact.tipofact,fact.ptovta 
+            else FORMAT(fact.total,2,'es_AR') end as total,fact.observaciones as notas, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact in(999,11)
             and fact.ptovta like '%' and 
@@ -873,7 +873,7 @@ Public Class reimpresionComprobantes
 
             dgvlistadoCobranza.DataSource = tablaprod
             dgvlistadoCobranza.Columns(0).Visible = False
-            dgvlistadoCobranza.Columns(9).Visible = False
+            dgvlistadoCobranza.Columns(10).Visible = False
 
             lblTotal.Text = "Total: $" & SumartTotalesColumnaTabla("total", dgvlistadoCobranza)
 
@@ -976,7 +976,7 @@ Public Class reimpresionComprobantes
 
             FolderDialog.ShowDialog()
 
-            Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
+            Dim ptovta As Integer = dtfacturas.CurrentRow.Cells("ptovta").Value
             IdFactura = dtfacturas.CurrentRow.Cells(0).Value
             'Dim para As String = ""
 
@@ -987,17 +987,20 @@ Public Class reimpresionComprobantes
 
                 Reconectar()
 
-                tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
             concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
-                tabEmp.Fill(fac.Tables("factura_enca"))
+            tabEmp.Fill(fac.Tables("factura_enca"))
                 Reconectar()
 
                 tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
@@ -1017,7 +1020,7 @@ Public Class reimpresionComprobantes
             If FolderDialog.SelectedPath <> "" Then
                 Dim NMReporte As String = ""
 
-                Select Case dtfacturas.CurrentRow.Cells(9).Value
+                Select Case dtfacturas.CurrentRow.Cells("tipofact").Value
                     Case 1 To 3, 6 To 8, 11 To 13
                         NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
                     Case Else

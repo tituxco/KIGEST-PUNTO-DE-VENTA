@@ -85,7 +85,7 @@
             Dim ConfiguracionesDisponibles As String
             For Each configuracion As DataRow In tablaConfigTerm.Rows
 
-                ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & vbNewLine
+                ConfiguracionesDisponibles &= configuracion.Item("id") & " - " & configuracion.Item("descripcion") & "(" & configuracion.Item("idEmpresa") & ")" & vbNewLine
 
             Next
 
