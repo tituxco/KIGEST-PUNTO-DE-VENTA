@@ -1,4 +1,6 @@
-﻿Imports WSAFIPFE.anmat
+﻿Imports System.Runtime.CompilerServices
+Imports WSAFIPFE.anmat
+Imports WSAFIPFE.ocAFIPTest
 
 Public Class NvaPublicidad
     Private cmd As MySql.Data.MySqlClient.MySqlCommand
@@ -228,18 +230,23 @@ Public Class NvaPublicidad
         vta.MdiParent = Me.MdiParent
         vta.idfacrap = My.Settings.idfacRap
 
-        Dim ptovtapedido As String = My.Settings.idPtoVta
         With vta
             .Idcliente = txtclientecuenta.Text 'dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
             .condVta = 2
             .cargarCliente(False)
             .txtcodPLU.Focus()
-            .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
-             txtconcepto.Text & " #" &
-             txtPrestamo.Text & " - " &
-             Format(CDate(dgvPublicidad.CurrentRow.Cells("VENCIMIENTO").Value.ToString), "MMMM yyyy"), "21",
-             dgvPublicidad.CurrentRow.Cells("MONTO").Value,
-             dgvPublicidad.CurrentRow.Cells("MONTO").Value)
+            For Each publi As DataGridViewRow In dgvPublicidad.Rows
+                If publi.Selected = True Then
+                    .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
+                 txtconcepto.Text & " #" &
+                 txtPrestamo.Text & " - " &
+                 Format(CDate(publi.Cells("VENCIMIENTO").Value.ToString), "MMMM yyyy"), "21",
+                 publi.Cells("MONTO").Value,
+                 publi.Cells("MONTO").Value)
+                End If
+
+            Next
+
             .txtobservaciones.Text = txtdetallePublicidad.Text
             .condVta = 2
             .lblfacvendedor.Text = idVendedor
@@ -254,7 +261,7 @@ Public Class NvaPublicidad
 		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO,
         (select group_concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
         fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
-        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and fact.ptovta=comp.ptovta and 
         itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
         date_format(date_add(DTP.FECHA, interval -1 month),'%Y-%m')=
         date_format(str_to_date(
@@ -433,8 +440,10 @@ Public Class NvaPublicidad
                 Dim sumaTotal As Double = 0
                 Dim idPeriodo As Integer = dgvPublicidad.CurrentRow.Cells("ID").Value
                 Dim idPrestamo As Integer = txtPrestamo.Text
+                Dim nuevoPrecioTXT As String
 
                 nuevoPrecio = InputBox("Ingrese el nuevo precio", "Modificar publicidad", dgvPublicidad.Item(e.ColumnIndex, e.RowIndex).Value)
+                nuevoPrecioTXT = nuevoPrecio
                 If IsNumeric(nuevoPrecio) Then
                     nuevoPrecio = FormatNumber(nuevoPrecio, 2)
                     dgvPublicidad.Item(e.ColumnIndex, e.RowIndex).Value = nuevoPrecio
@@ -443,11 +452,23 @@ Public Class NvaPublicidad
                         Dim montoCuota As Double = cuota.Cells("MONTO").Value
                         sumaTotal += montoCuota
                     Next
+
+                    Dim indexInicio As Integer = e.RowIndex
+                    Dim indexFinal As Integer = dgvPublicidad.RowCount - 1
+
                     txtmonto.Text = sumaTotal
-                    If MsgBox("Desea guardar la informacion?", vbYesNo + vbQuestion, "Modificar publicidad") = MsgBoxResult.Yes Then
-                        Operaciones.Guardar("update rym_detalle_prestamo set cuota='" & nuevoPrecio & "' where ID= " & idPeriodo, Format(Now(), "yyyy-MM-dd"))
-                        Operaciones.Guardar("update rym_prestamo set MONTO_PRESTAMO='" & sumaTotal & "' where ID_PRESTAMO= " & idPrestamo, Format(Now(), "yyyy-MM-dd"))
-                    End If
+                    Dim i As Integer = 0
+                    For i = indexInicio To indexFinal
+                        'MsgBox(i & "-" & indexFinal)
+                        Operaciones.Guardar("update rym_detalle_prestamo set cuota='" & nuevoPrecio & "' where ID= " & dgvPublicidad.Rows(i).Cells("ID").Value, Format(Now(), "yyyy-MM-dd"))
+                        dgvPublicidad.Rows(i).Cells("MONTO").Value = nuevoPrecio
+                    Next
+                    Operaciones.Guardar("update rym_prestamo set CUOTA='" & nuevoPrecioTXT & "', MONTO_PRESTAMO='" & sumaTotal & "' where ID_PRESTAMO= " & idPrestamo, Format(Now(), "yyyy-MM-dd"))
+
+
+                    'If MsgBox("Desea guardar la informacion?", vbYesNo + vbQuestion, "Modificar publicidad") = MsgBoxResult.Yes Then
+
+                    'End If
                 End If
             End If
 
@@ -466,5 +487,13 @@ Public Class NvaPublicidad
         Dim clientes As New frmaspirantes
         clientes.MdiParent = frmprincipal
         clientes.Show()
+    End Sub
+
+    Private Sub dgvPublicidad_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellContentClick
+
+    End Sub
+
+    Private Sub txtPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtPrestamo.TextChanged
+
     End Sub
 End Class

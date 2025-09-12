@@ -712,7 +712,7 @@ Public Class productos
                 dtlotesprov.DataSource = Nothing
                 If cmbtipoprod.SelectedIndex = 0 Then
                     Dim consProv As New MySql.Data.MySqlClient.MySqlDataAdapter("select concat(lt.nombre,' - ' , pfac.fecha) as LoteFcompra,
-                    pfac.numero, pro.razon as Proveedor, concat(lt.stock, ' de ',lt.compracant)  as Stock,
+                    pfac.numero, pro.razon as Proveedor, lt.compracant as CantidadComprada,
                     (select nombre from fact_insumos_almacenes where id=lt.idalmacen) as Almacen
                     from fact_insumos_lotes as lt, fact_proveedores as pro, fact_proveedores_fact as pfac 
                     where  pro.id = pfac.idproveedor and lt.idfactura=pfac.id and idproducto='" & codigo & "'			

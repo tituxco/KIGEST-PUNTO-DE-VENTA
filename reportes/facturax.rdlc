@@ -669,7 +669,6 @@
                         <PaddingBottom>2pt</PaddingBottom>
                       </Style>
                     </Textbox>
-                    <rd:Selected>true</rd:Selected>
                   </CellContents>
                 </TablixCell>
               </TablixCells>
@@ -844,6 +843,7 @@
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -876,6 +876,7 @@
                     <Value>=First(Fields!empdire.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -908,6 +909,7 @@
                     <Value>=First(Fields!empcontr.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -1102,6 +1104,7 @@
                     <Value>=First(Fields!emploca.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
+                      <Color>White</Color>
                     </Style>
                   </TextRun>
                 </TextRuns>

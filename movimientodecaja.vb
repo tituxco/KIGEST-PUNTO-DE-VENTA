@@ -1,4 +1,6 @@
-﻿Public Class movimientodecaja
+﻿Imports Org.BouncyCastle.X509.Extension
+
+Public Class movimientodecaja
     Dim fechagral As String = Format(Now, "dd-MM-yyyy")
     Dim idfactura As Integer
     Public movrap As Boolean
@@ -407,6 +409,11 @@
             Exit Sub
         End If
 
+        If String.IsNullOrEmpty(idcliente) Then
+            MsgBox("debe seleccionar correctamente el cliente para guardar el recibo")
+            Exit Sub
+        End If
+
         Try
 
             Reconectar()
@@ -481,17 +488,20 @@
 
             If txttransferencias.Text <> "" Or txttransferencias.Text <> "0" Then
                 Reconectar()
-                sqlQuery = "insert into fact_transferencias (fecha, cliente, importe, comprobante) values " _
-                & "(?fecha,?cliente,?importe,?comprobante)"
-                Dim comandotrans As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                With comandotrans.Parameters
-                    .AddWithValue("?fecha", fecha)
+                'If Not IsNothing(tarjeta.Cells(0).Value) Then
+                sqlQuery = "insert into fact_tarjetas " _
+                & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
+                & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
+                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                With comandoch.Parameters
                     .AddWithValue("?cliente", idcliente)
-                    .AddWithValue("?importe", remplazarPunto(txttransferencias.Text))
                     .AddWithValue("?comprobante", idfactura)
-                    '.AddWithValue("?cuenta", )
+                    .AddWithValue("?nombre", "TRANSFERENCIAS")
+                    .AddWithValue("?autorizacion", "-")
+                    .AddWithValue("?fecha", fecha)
+                    .AddWithValue("?importe", remplazarPunto(txttransferencias.Text))
                 End With
-                comandotrans.ExecuteNonQuery()
+                comandoch.ExecuteNonQuery()
             End If
 
             If txtretenciones.Text <> "" Or txtretenciones.Text <> "0" Then
@@ -519,6 +529,42 @@
                     End If
                 End If
 
+
+            '/***BUSCAMOS EL PERIODO ADEUDADO
+
+            If InStr(txtconceptos.Text, "#") <> 0 Then
+
+
+                Dim idPublicidad As String = txtconceptos.Text.Replace("#", "")
+                Dim idPeriodoPubli As Integer = 0
+                Reconectar()
+                Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM rym_detalle_prestamo as pr 
+            where  
+            pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) and
+            pr.ID_PRESTAMO=" & idPublicidad & "
+            order by pr.periodo asc
+            limit 1", conexionPrinc)
+
+                Dim tablaPublicidad As New DataTable
+                consultaPeriodo.Fill(tablaPublicidad)
+
+                If tablaPublicidad.Rows.Count <> 0 Then
+                    idPeriodoPubli = tablaPublicidad.Rows(0).Item("PERIODO")
+
+                    '***AGREGAR PAGO A PUBLICIDAD***
+
+                    sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
+                    Reconectar()
+                    Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    With addPagoPubli.Parameters
+                        .AddWithValue("?fecha", fecha)
+                        .AddWithValue("?idprestamo", idPublicidad)
+                        .AddWithValue("?periodo", idPeriodoPubli)
+                        .AddWithValue("?monto", totalRecibo)
+                    End With
+                    addPagoPubli.ExecuteNonQuery()
+                End If
+            End If
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand

@@ -236,16 +236,19 @@ Module funciones_Globales
     End Sub
 
     Public Sub aplicarConfiguracionTerminal()
+
+
         Try
             If Variables_Globales.IdEmpresa = 0 Then
                 Variables_Globales.IdEmpresa = 1
             End If
+            'MsgBox(Variables_Globales.IdEmpresa)
             Reconectar()
             Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select term.nombreTerminal,cfTerm.* 
             from cm_terminales as term, cm_terminales_configuracion as cfTerm where term.nombreTerminal like '" & NombreEquipo & "'
             and term.idConfiguracion=cfTerm.id and term.idEmpresa=" & Variables_Globales.IdEmpresa, conexionPrinc)
             Dim tablaTerm As New DataTable
-            'Dim infoTerm() As DataRow
+            'MsgBox(consultaTerm.SelectCommand.CommandText)
             consultaTerm.Fill(tablaTerm)
 
             With My.Settings
@@ -276,6 +279,8 @@ Module funciones_Globales
                 .UnidDef = tablaTerm.Rows(0).Item("unidDef")
                 .visualizacionProducto = tablaTerm.Rows(0).Item("visualizacionProducto")
             End With
+            DatosAcceso.idFacRap = My.Settings.idfacRap
+            DatosAcceso.IdPtoVtaDef = My.Settings.idPtoVta
             FacturaElectro.puntovtaelect = tablaTerm.Rows(0).Item("FactElectro_puntoVenta")
 
             frmprincipal.lblstatusServer.Text = "Terminal: " & tablaTerm.Rows(0).Item("descripcion")
@@ -1757,7 +1762,7 @@ Module funciones_Globales
                 PrintTxt.DefaultPageSettings.PaperSize = pgSize
                 ' evento print
 
-                If ptovta <> FacturaElectro.puntovtaelect Then
+                If ptovta <> FacturaElectro.puntovtaelect Then 'no es tiket fiscal
                     AddHandler PrintTxt.PrintPage, AddressOf ImprimirTiketVenta
                     PrintTxt.PrinterSettings.PrinterName = My.Settings.ImprTiketsNombre
                     PrintTxt.Print()
@@ -1879,13 +1884,14 @@ Module funciones_Globales
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
             concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            fac.observaciones as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
             FROM fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
             fact_puntosventa as ptovta  
             where cl.idclientes=fac.id_cliente  and 
             fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
             fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idRecibo, conexionPrinc)
+            'MsgBox(tabEmp.SelectCommand.CommandText)
             tabEmp.Fill(fac.Tables("factura_enca"))
 
             Reconectar()

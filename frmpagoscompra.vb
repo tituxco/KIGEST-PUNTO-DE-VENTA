@@ -149,6 +149,7 @@ Public Class frmpagoscompra
                 .AddWithValue("?conc", "1")
             End With
             comandocaj.ExecuteNonQuery()
+
             CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
             Me.Close()
 

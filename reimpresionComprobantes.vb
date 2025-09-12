@@ -38,7 +38,14 @@ Public Class reimpresionComprobantes
 
             Reconectar()
             Dim tablaprod As New DataTable
+            Dim ptovtaBusq As String = ""
             'Dim filasProd() As DataRow
+
+            If cmbInforPtoVta.Text = "" Then
+                ptovtaBusq = "%"
+            Else
+                ptovtaBusq = cmbInforPtoVta.SelectedValue
+            End If
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
             fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, 
@@ -48,8 +55,8 @@ Public Class reimpresionComprobantes
             else FORMAT(fact.total,2,'es_AR') end as total, fact.observaciones as notas, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998)" & numComprobante & Razonsoc &
-            " and fact.ptovta=" & cmbInforPtoVta.SelectedValue &
-            " order by fact.id desc limit " & limite, conexionPrinc)
+            " and fact.ptovta like '" & ptovtaBusq & "'" &
+            " order by fact.fecha desc, fact.razon asc limit " & limite, conexionPrinc)
             columna = 7
             'MsgBox(consulta.SelectCommand.CommandText)
             consulta.Fill(tablaprod)
@@ -863,9 +870,9 @@ Public Class reimpresionComprobantes
             concat('-',FORMAT(fact.total,2,'es_AR')) 
             else FORMAT(fact.total,2,'es_AR') end as total,fact.observaciones as notas, fact.observaciones2, fact.tipofact,fact.ptovta 
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
-            where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact in(999,11)
+            where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998,997,996,995,994,993,991,3,8,13)
             and fact.ptovta like '%' and 
-            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "' " & sinPagar, conexionPrinc)
+            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "' " & sinPagar & " order by fact.razon asc ", conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer

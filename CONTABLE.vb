@@ -342,7 +342,7 @@ Public Class CONTABLE
                   
                 and fact.id=itm.id_fact                
                 and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
-                " group by fact.id", conexionPrinc)
+                " group by fact.id order by fact.razon asc", conexionPrinc)
                 columna = 7
                 consulta.SelectCommand.CommandTimeout = 60 '60segundos de tiempo de espera para la consulta incrementar en el caso de que tire timeout
 
@@ -1202,8 +1202,8 @@ Public Class CONTABLE
             & " concat('-',format(fac.total,2,'es_AR')) " _
             & " else format(fac.total,2,'es_AR') end as total, " _
             & " fac.observaciones from fact_conffiscal as fis, fact_facturas as fac, fact_condventas as con " _
-            & " where fis.donfdesc=fac.tipofact and con.id=fac.condvta " _
-            & " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+            & " where fis.donfdesc=fac.tipofact and con.id=fac.condvta and fis.ptovta=fac.ptovta " _
+            & " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " order by fac.razon asc", conexionPrinc)
             'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
@@ -1664,7 +1664,8 @@ Public Class CONTABLE
                 dtlistacob.DataSource = tablacob
             End If
             If rdcobranzaintervalo.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, fact.fecha,fact.razon, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',
+                lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, fact.fecha,fact.razon, 
                 format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
                 if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
                 format(replace(total,',','.') -
@@ -1677,7 +1678,7 @@ Public Class CONTABLE
                 FROM fact_facturas as fact, fact_conffiscal as fis
 
                 where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and  fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
-                "order by id desc", conexionPrinc)
+                "order by fact.razon asc", conexionPrinc)
                 columna = 6
                 'MsgBox(consulta.SelectCommand.CommandText)
 
@@ -1704,7 +1705,7 @@ Public Class CONTABLE
                 FROM fact_facturas as fact 
                 where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' 
                 and fact.id in (select comprobante from fact_tarjetas) " & consPtovta &
-                "order by id desc", conexionPrinc)
+                "order by fact.razon asc", conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 Dim bindintarjetas As New DataView(tablacob)
@@ -1720,7 +1721,7 @@ Public Class CONTABLE
                 FROM fact_facturas as fact 
                 where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
                 " having totalEfectivo<>0
-                order by id desc", conexionPrinc)
+                order by fact.razon  asc", conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob

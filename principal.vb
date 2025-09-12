@@ -19,7 +19,7 @@ Public Class frmprincipal
         Dim readEmp As New DataSet
         tablaEmp.Fill(readEmp)
         cmbempresas.ComboBox.DataSource = readEmp.Tables(0)
-        cmbempresas.ComboBox.DisplayMember = readEmp.Tables(0).Columns(1).Caption.ToString.ToUpper
+        cmbempresas.ComboBox.DisplayMember = readEmp.Tables(0).Columns(2).Caption.ToString.ToUpper
         cmbempresas.ComboBox.ValueMember = readEmp.Tables(0).Columns(0).Caption.ToString
 
 
@@ -239,8 +239,7 @@ Public Class frmprincipal
             DatosAcceso.Tecnico = info2(0)(1)
             'DatosAcceso.IdAlmacen = My.Settings.idAlmacen
             DatosAcceso.StockPpref = infocl(4)(2)
-            DatosAcceso.idFacRap = My.Settings.idfacRap
-            DatosAcceso.IdPtoVtaDef = My.Settings.idPtoVta
+
 
             CargarInformacionEmpresa()
 

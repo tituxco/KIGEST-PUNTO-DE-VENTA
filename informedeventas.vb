@@ -1124,6 +1124,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Dim vendedorHistorial As String = ""
         Dim productoDescripcion As String = ""
         Dim periodoBusquedaProductoHistorial As String = ""
+        Dim productoPLU As String = ""
+
         Dim desde As String = Format(CDate(dtdesdehistorialprod.Value), "yyyy-MM-dd")
         Dim hasta As String = Format(CDate(dthastahistorialprod.Value), "yyyy-MM-dd")
 
@@ -1134,8 +1136,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         If cmbVendedorHistorial.SelectedIndex <> -1 And cmbVendedorHistorial.SelectedValue <> 0 Then
             vendedorHistorial = " and fact.vendedor= " & cmbVendedorHistorial.SelectedValue
         End If
-        productoDescripcion = " and itm.descripcion like '%" & txthistorialProductosBusqueda.Text & "%'"
-
+        productoDescripcion = " and (itm.descripcion like '%" & txthistorialProductosBusqueda.Text & "%' or itm.plu like '" & txthistorialProductosBusqueda.Text & "')"
+        'productoPLU = " and itm.plu"
         periodoBusquedaProductoHistorial = " and fact.fecha between '" & desde & "' and '" & hasta & "'"
 
         dgvSeguimientoProductos.dgvVista.DataSource = Nothing
@@ -1158,7 +1160,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             " & vendedorHistorial & "
             " & almacenHistorial & "
             order by fact.f_mod desc", conexionPrinc)
-            MsgBox(consulta.SelectCommand.CommandText)
+            ' MsgBox(consulta.SelectCommand.CommandText)
 
             Dim tablaDatosHistorial As New DataTable
             consulta.Fill(tablaDatosHistorial)

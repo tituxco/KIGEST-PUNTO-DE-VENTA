@@ -17,6 +17,7 @@ Public Class puntoventa
 	Dim IDALMACEN As Integer = My.Settings.idAlmacen
 	Dim i As Integer
 	Dim InfoProdTemporal As New DataTable
+	Dim SeImprimio As Boolean = False
 	Private Sub puntoventa_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
 		lblfactfecha.Text = "Fecha: " & fechagral
@@ -1062,8 +1063,7 @@ Public Class puntoventa
 						funciones_Globales.GuardarStockProducto(idcomprobanteDev, itemsFact.Cells(0).Value, itemsFact.Cells(2).Value, IDALMACEN)
 					End If
 				End If
-
-					If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
+				If chkquitarstock.CheckState = CheckState.Checked And itemsFact.DefaultCellStyle.BackColor <> Color.Red Then
 					If tipofact = 3 Or tipofact = 8 Or tipofact = 13 Or tipofact = 991 Then ' si son notas de credito salteamos el descuento de stock
 						'MsgBox("es NC")
 					Else
@@ -1212,6 +1212,8 @@ Public Class puntoventa
 				mov.Show()
 
 			End If
+
+			'###bakja de pedido
 			For Each PedidoFact As DataGridViewRow In dtpedidosfact.Rows
 				Dim pedidosFact As String
 
@@ -1253,7 +1255,7 @@ Public Class puntoventa
 			pnaddProd.Enabled = False
 			' MsgBox("Factura guardada satisfactoriamente")
 
-			If My.Settings.ImprTikets = 1 And tipofact <> 998 Then
+			If My.Settings.ImprTikets = 1 And tipofact <> 998 Then '''si esta activado imprimir tikets se hace automatico
 				' MsgBox("imprimirtiket")
 				cmdimprimir.PerformClick()
 			End If
@@ -1284,9 +1286,10 @@ Public Class puntoventa
 
 		If lblfactcondvta.Text = "CONTADO" Then
 			ImprimirFactura(IdFactura, ptovta, False)
-
+			SeImprimio = True
 		Else
 			ImprimirFactura(IdFactura, ptovta, True)
+			SeImprimio = True
 		End If
 
 		EnProgreso.Close()
@@ -1888,29 +1891,36 @@ Public Class puntoventa
 	End Sub
 
 	Public Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+		'If SeImprimio = True Then
 		dtproductos.Rows.Clear()
-		Select Case tipofact
-			Case 1, 2, 3
-				Idcliente = 0
-				lblclieciudad.Text = ""
-				lblcliedomicilio.Text = ""
-				lblclietipocontr.Text = ""
-				txtcliecta.Text = ""
-				txtcliecuitcuil.Text = ""
-				txtclierazon.Text = ""
+			Select Case tipofact
+				Case 1, 2, 3
+					Idcliente = 0
+					lblclieciudad.Text = ""
+					lblcliedomicilio.Text = ""
+					lblclietipocontr.Text = ""
+					txtcliecta.Text = ""
+					txtcliecuitcuil.Text = ""
+					txtclierazon.Text = ""
 
-				'cargarCliente(False)
-			Case Else
-				Idcliente = 9999
-				cargarCliente(False)
-		End Select
-		cargar_datos_factura()
-		CalcularTotales()
-		pncaerechazado.Visible = False
-		pncaeaprobado.Visible = False
-		lblfactfecha.Visible = False
-		fechagral = Format(Now, "dd-MM-yyyy")
-		lblfactfecha.Text = fechagral
+					'cargarCliente(False)
+				Case Else
+					Idcliente = 9999
+					cargarCliente(False)
+			End Select
+			cargar_datos_factura()
+			CalcularTotales()
+			pncaerechazado.Visible = False
+			pncaeaprobado.Visible = False
+			lblfactfecha.Visible = False
+			fechagral = Format(Now, "dd-MM-yyyy")
+			lblfactfecha.Text = fechagral
+		'SeImprimio = False
+		'Else
+		'	If MsgBox("Desea imprimir la factura/tiket?", vbQuestion + vbYesNo) = vbYes Then
+		'		cmdimprimir.PerformClick()
+		'	End If
+		'End If
 	End Sub
 	Public Sub CargarPedidoRemoto(NumPedido As Integer, ptovtapedido As Integer)
 		Try

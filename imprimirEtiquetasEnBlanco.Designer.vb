@@ -24,6 +24,7 @@ Partial Class imprimirEtiquetasEnBlanco
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(imprimirEtiquetasEnBlanco))
         Me.pnnavegacion = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.cmdsalir = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
@@ -56,7 +57,7 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Button2 = New System.Windows.Forms.Button()
         Me.TextBox2 = New System.Windows.Forms.TextBox()
         Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
         Me.Panel2.SuspendLayout()
@@ -74,6 +75,23 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.pnnavegacion.Name = "pnnavegacion"
         Me.pnnavegacion.Size = New System.Drawing.Size(790, 89)
         Me.pnnavegacion.TabIndex = 77
+        '
+        'Button4
+        '
+        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Location = New System.Drawing.Point(490, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(102, 89)
+        Me.Button4.TabIndex = 169
+        Me.Button4.Text = "Diseños"
+        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button4.UseVisualStyleBackColor = True
         '
         'Button1
         '
@@ -132,6 +150,7 @@ Partial Class imprimirEtiquetasEnBlanco
         '
         'Panel2
         '
+        Me.Panel2.Controls.Add(Me.Button5)
         Me.Panel2.Controls.Add(Me.txtEspL4)
         Me.Panel2.Controls.Add(Me.txtEspL3)
         Me.Panel2.Controls.Add(Me.txtEspL2)
@@ -203,9 +222,9 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(312, 60)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(90, 13)
+        Me.Label10.Size = New System.Drawing.Size(93, 13)
         Me.Label10.TabIndex = 21
-        Me.Label10.Text = "Esp. Sup. (cm)"
+        Me.Label10.Text = "Marg Sup. (cm)"
         '
         'Button3
         '
@@ -402,22 +421,14 @@ Partial Class imprimirEtiquetasEnBlanco
         Me.TextBox1.TabIndex = 0
         Me.TextBox1.Text = "producto"
         '
-        'Button4
+        'Button5
         '
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button4.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(490, 0)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(102, 89)
-        Me.Button4.TabIndex = 169
-        Me.Button4.Text = "Diseños"
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button4.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button4.UseVisualStyleBackColor = True
+        Me.Button5.Location = New System.Drawing.Point(62, 217)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(75, 23)
+        Me.Button5.TabIndex = 26
+        Me.Button5.Text = "Button5"
+        Me.Button5.UseVisualStyleBackColor = True
         '
         'imprimirEtiquetasEnBlanco
         '
@@ -475,4 +486,5 @@ Partial Class imprimirEtiquetasEnBlanco
     Friend WithEvents txtEspL1 As TextBox
     Friend WithEvents Label10 As Label
     Friend WithEvents Button4 As Button
+    Friend WithEvents Button5 As Button
 End Class

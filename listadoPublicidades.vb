@@ -11,6 +11,9 @@ Public Class listadoPublicidades
         Dim clienteBusq As String = ""
         Dim facturadosBusq As String = ""
         Dim vendedorBusq As String = ""
+        Dim cobradorBusq As String = ""
+        Dim orderBy As String = " order by CLIENTE asc"
+        Dim conceptoBusq As String = ""
         fechaBusq = " having FIN >= date_add('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "', interval -1 day)" ' and FIN >="
 
         If chkSoloMorosos.Checked = True Then
@@ -27,6 +30,18 @@ Public Class listadoPublicidades
 
         If cmbvendedor.SelectedIndex <> -1 Then
             vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
+        End If
+
+        If cmbcobrador.SelectedIndex <> -1 Then
+            cobradorBusq = " and COBRADOR like " & cmbcobrador.SelectedValue
+        End If
+
+        If cmbOrdenarPor.Text <> "" Then
+            orderBy = " order by " & cmbOrdenarPor.Text
+        End If
+
+        If cmbconcepto.Text <> "" Then
+            conceptoBusq = " and CONCEPTO = '" & cmbconcepto.Text.ToUpper() & "'"
         End If
 
         Reconectar()
@@ -53,10 +68,10 @@ Public Class listadoPublicidades
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
-        fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq, 1)
+        fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & cobradorBusq & conceptoBusq & orderBy, 1)
 
         ElseIf rdAFacturar.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,
@@ -82,10 +97,10 @@ Public Class listadoPublicidades
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " & " having VencActual is not null " &
-             morosoBusq & clienteBusq & facturadosBusq & vendedorBusq, 1)
+             morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & cobradorBusq & conceptoBusq & orderBy, 1)
         ElseIf rdAVencer.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
         (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
@@ -109,10 +124,10 @@ Public Class listadoPublicidades
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
-        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq, 1)
+        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & cobradorBusq & orderBy, 1)
         ElseIf rdOper.Checked = True Then
             Consultas("SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
         (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
@@ -120,10 +135,10 @@ Public Class listadoPublicidades
         cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
 		pr.CONCEPTO,
         pr.OBSERVACIONES,        		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 " &
-        fechaBusq & morosoBusq & clienteBusq & facturadosBusq, 1)
+        fechaBusq & morosoBusq & clienteBusq & facturadosBusq & orderBy, 1)
         End If
 
     End Sub
@@ -138,7 +153,7 @@ Public Class listadoPublicidades
 
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
 
-        'MsgBox(cmd.CommandText)
+        ' MsgBox(cmd.CommandText)
         ds = New DataSet
         da.Fill(ds)
         'MsgBox(Cadena)
@@ -226,6 +241,13 @@ Public Class listadoPublicidades
         cmbcobrador.ValueMember = readcob.Tables(0).Columns(0).Caption.ToString
         cmbcobrador.SelectedIndex = -1
         dgvPrestamos.dgvVista.SelectionMode = DataGridViewSelectionMode.FullRowSelect
+
+        Dim tablacons As New MySql.Data.MySqlClient.MySqlDataAdapter("select DISTINCT (concepto) from rym_prestamo  order by CONCEPTO desc", conexionPrinc)
+        Dim readcons As New DataSet
+        tablacons.Fill(readcons)
+        cmbconcepto.DataSource = readcons.Tables(0)
+        cmbconcepto.DisplayMember = readcons.Tables(0).Columns(0).Caption.ToString.ToUpper
+        cmbconcepto.SelectedIndex = -1
         If InStr(DatosAcceso.Moduloacc, "OPERADORRAD") <> 0 Then
             rdOper.Checked = True
             rdAVencer.Visible = False
@@ -345,6 +367,9 @@ Public Class listadoPublicidades
             Dim clienteBusq As String = ""
             Dim facturadosBusq As String = ""
             Dim vendedorBusq As String = ""
+            Dim cobradorBusq As String = ""
+            Dim orderBy As String = " order by CLIENTE asc"
+
             fechaBusq = " having FIN >= date_add('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "', interval -1 day)" ' and FIN >="
 
             If chkSoloMorosos.Checked = True Then
@@ -362,6 +387,13 @@ Public Class listadoPublicidades
             If cmbvendedor.SelectedIndex <> -1 Then
                 vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
             End If
+
+            If cmbcobrador.SelectedIndex <> -1 Then
+                cobradorBusq = " and COBRADOR like " & cmbcobrador.SelectedValue
+            End If
+
+
+
             Reconectar()
 
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
@@ -396,10 +428,10 @@ Public Class listadoPublicidades
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1" &
-                fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & " order by ID_PUBLICIDAD asc"
+                fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & cobradorBusq & orderBy
             ElseIf rdAVencer.Checked = True Then
                 consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
         (SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
@@ -423,17 +455,17 @@ Public Class listadoPublicidades
         itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
         itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
         date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor
+        cl.vendedor, pr.COBRADOR
         FROM rym_prestamo as pr, fact_clientes as cl
         where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
-        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & " order by ID_PUBLICIDAD asc"
+        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & cobradorBusq & orderBy
 
             End If
 
 
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand(consultatxt, conexionPrinc)
-            'MsgBox(tabFac.SelectCommand.CommandText)
+            ' MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.SelectCommand.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
             '.Add("@DIASMORA", txtdiasmora.Text)
             tabFac.Fill(fac.Tables("datosOrdenPublicidad"))
@@ -441,6 +473,7 @@ Public Class listadoPublicidades
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)
             parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", cmbvendedor.Text))
+            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("cobrador", cmbcobrador.Text))
 
             With imprimirx
                 .MdiParent = Me.MdiParent
@@ -520,7 +553,7 @@ Public Class listadoPublicidades
             from fact_clientes as cl, rym_prestamo as pr
             where pr.ID_CLIENTE=cl.idclientes" &
             clienteBusq & fechaBusq & "
-            order by cl.nomapell_razon desc", 2)
+            order by cl.nomapell_razon asc", 2)
             EnProgreso.Close()
         Catch ex As Exception
             EnProgreso.Close()
@@ -559,6 +592,10 @@ Public Class listadoPublicidades
     End Sub
 
     Private Sub rdOper_CheckedChanged(sender As Object, e As EventArgs) Handles rdOper.CheckedChanged
+
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
     End Sub
 End Class

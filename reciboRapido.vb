@@ -1,4 +1,6 @@
-﻿Public Class reciboRapido
+﻿Imports WSAFIPFE.utipos
+
+Public Class reciboRapido
     Public idFactura As Integer
     Dim ptoVta As Integer = My.Settings.idPtoVta
     Dim numRecibo As Integer
@@ -17,6 +19,7 @@
 
     Private Sub reciboRapido_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+            'MsgBox(idFactura)
             Reconectar()
             Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", conexionPrinc)
             Dim readcajas As New DataSet
@@ -34,12 +37,12 @@
 			(SELECT confnume from fact_conffiscal where donfdesc=996 and ptovta=" & DatosAcceso.IdPtoVtaDef & ") + 1 as recibo, 
             fact.id as idFact, concat(fis.abrev ,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum,
             fact.razon,fact.direccion, fact.localidad, fact.tipocontr, fact.cuit, 
-            fact.id_cliente,format( fact.total,2,'es_AR') as total,(select plu from fact_items where id_fact=fact.id) as concepto            
+            fact.id_cliente,format( fact.total,2,'es_AR') as total,(select plu from fact_items where id_fact=fact.id limit 1) as concepto            
             from fact_conffiscal as fis,fact_facturas as fact 
             where 
             fis.donfdesc=fact.tipofact and
             fact.id=" & idFactura, conexionPrinc)
-
+            ' MsgBox(consultaFactura.SelectCommand.CommandText)
             Dim tablaFactura As New DataTable
             consultaFactura.Fill(tablaFactura)
             'Dim dtoprov() As DataRow
@@ -230,13 +233,21 @@
             End If
         Next
 
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from facturasclientes_impagas where idfact= " & idFactura, conexionPrinc)
+        Dim tablaConsFact As New DataTable
+        Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
+        consulta.Fill(tablaConsFact)
+
+        'tablaConsFact.Rows(0).Item("id")
         Dim tec As New movimientodecaja
         tec.MdiParent = frmprincipal
         tec.movrap = True
         tec.movraptip = 996
         tec.movrapclie = Clie_idCliente
         tec.movrapConc = txtConcepto.Text
-        tec.movrapFact = idFactura
+        'tec.movrapFact = idFactura
+        tec.dtconceptos.Rows.Add(tablaConsFact.Rows(0).Item("id"), tablaConsFact.Rows(0).Item("comprobante"), tablaConsFact.Rows(0).Item("importe"), tablaConsFact.Rows(0).Item("idfact"))
+        tec.CalcularTotalescobro()
         Me.Close()
         tec.Show()
     End Sub

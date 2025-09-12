@@ -81,33 +81,29 @@ Public Class busquedaprod
             Dim BusquedaComp As String
             If My.Settings.metodoBusquedaProd = 1 Then
                 BusquedaComp = Replace(nombre, " ", "%")
-                busqtxt = " pro.descripcion like '%" & BusquedaComp & "%' or cat.id= pro.categoria and pro.codigo like '" & nombre & "'"
+                busqtxt = " pro.descripcion like '%" & BusquedaComp & "%'"
             ElseIf My.Settings.metodoBusquedaProd = 0 Then
-                busqtxt = " pro.descripcion like '" & nombre & "%'  or cat.id= pro.categoria and pro.codigo like '" & nombre & "'"
+                busqtxt = " pro.descripcion like '" & nombre & "%'"
             Else
                 busqtxt = " pro.descripcion like '%'"
             End If
 
-            If nombre = "" Then
-                busqNomb = " where cat.id=pro.categoria  and  pro.descripcion like '%' "
-            Else
-                busqNomb = " where cat.id=pro.categoria  and  " & busqtxt
-            End If
-
             If categoria = "" Then
-                busqCat = " and pro.categoria like '%'"
+                busqCat = " pro.categoria like '%'"
             Else
-                busqCat = " and pro.categoria in (" & categoria & ")"
+                busqCat = " pro.categoria in (" & categoria & ")"
             End If
 
-            If codigo <> "" And Val(codigo) <> 0 Then
-                busqCod = " and  pro.id=" & codigo
-            End If
+
+            busqCod = " pro.codigo like '%" & BusquedaComp & "%'"
+
+
+
 
             If cmbproveedor.SelectedIndex = -1 Then
-                busqProv = " and pro.codprov like '%' "
+                busqProv = " pro.codprov like '%' "
             Else
-                busqProv = " and pro.codprov = " & cmbproveedor.SelectedValue
+                busqProv = " pro.codprov = " & cmbproveedor.SelectedValue
             End If
 
             If chkstock.Checked = True Then
@@ -115,8 +111,8 @@ Public Class busquedaprod
             Else
                 busqStock = " "
             End If
-            cadenaComp = busqNomb & busqCat & busqProv & busqCod & busqStock & orderBy
-            cadenaComp2 = busqNomb & busqCat & busqProv & busqCod & busqStock
+            cadenaComp = "((" & busqtxt & " and " & busqCat & ")" & " or (" & busqCod & " and " & busqCat & ")) and " & busqProv & busqStock & orderBy
+            'cadenaComp2 = busqNomb & busqCat & busqProv & busqCod & busqStock
             'MsgBox(cadenaComp)
 
 
@@ -130,10 +126,12 @@ Public Class busquedaprod
 
             If imprimirlist = False And imprimiretiq = False Then
                 'MsgBox(cadenaComp)
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, 
-                pro.codigo as PLU,
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+                pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU,
                 (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & idAlmacen & ") as Stock 
-                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                from fact_insumos as pro, fact_categoria_insum as cat 
+                where cat.id=pro.categoria and
+                " & cadenaComp, conexionPrinc)
                 Dim tablaprod As New DataTable
                 'MsgBox(consulta.SelectCommand.CommandText)
                 'Dim filasProd() As DataRow
@@ -202,7 +200,7 @@ Public Class busquedaprod
                 end as precio, 
                 
                 cat.nombre as categoria
-                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                from fact_insumos as pro, fact_categoria_insum as cat where cat.id=pro.categoria and " & cadenaComp, conexionPrinc)
                 'MsgBox(consulta.SelectCommand.CommandText)
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value

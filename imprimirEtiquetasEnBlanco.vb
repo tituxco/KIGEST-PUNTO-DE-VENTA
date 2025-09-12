@@ -28,16 +28,24 @@ Public Class imprimirEtiquetasEnBlanco
         Dim posInicImg As Integer = (tamEtiq.Width - anchoImg) / 3
 
         'g.FillRectangle(Brushes.Aqua, bmp.GetBounds(GraphicsUnit.Pixel ))
-        g.FillRectangle(Brushes.White, rect1)
-        Dim formato As New StringFormat
+        g.FillRectangle(Brushes.Aqua, rect1)
 
+        Dim formato As New StringFormat
+        Dim formatoCentro As New StringFormat
+        Dim formatoMultilinea As New StringFormat
         formato.Alignment = StringAlignment.Near
         formato.LineAlignment = StringAlignment.Near
+
+        'formatoCentro.Alignment = StringAlignment.Center
+        'formatoCentro.LineAlignment = StringAlignment.Center
+
+
 
 
 
         g.DrawImage(Image.FromFile(Application.StartupPath & "\logo2.jpg"), posInicImg, 0)
-        g.DrawString(TextBox1.Text, font1, Brushes.Black, 0, ConvertirCMaPX(txtEspL1.Text), formato) 'PRODUCTO
+
+        g.DrawString(TextBox1.Text, font1, Brushes.Black, 0, ConvertirCMaPX(txtEspL1.Text), formatoCentro) 'PRODUCTO
         g.DrawString(TextBox2.Text, font2, Brushes.Black, 0, ConvertirCMaPX(txtEspL2.Text), formato) 'AROMA
         g.DrawString(TextBox3.Text, font3, Brushes.Black, 0, ConvertirCMaPX(txtEspL3.Text), formato) 'PRESENTACION
         g.DrawString(TextBox4.Text, font4, Brushes.Black, 100, ConvertirCMaPX(txtEspL4.Text), formato) 'PIE

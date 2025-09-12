@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>492</ApplicationRevision>
+    <ApplicationRevision>509</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -852,6 +852,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="buscarequipos.resx">
       <DependentUpon>buscarequipos.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="busquedaprod.resx">
       <DependentUpon>busquedaprod.vb</DependentUpon>
