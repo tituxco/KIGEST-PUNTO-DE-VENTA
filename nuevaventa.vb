@@ -1816,15 +1816,17 @@ Public Class nuevaventa
             '        Exit Sub
             'End Select
 
-            lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, FacturaElectro.cuit, Application.StartupPath & FacturaElectro.certificado, Application.StartupPath & FacturaElectro.licencia)
-            fe.ArchivoCertificadoPassword = FacturaElectro.passcertificado
+            lresultado = fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal, EmpresaActual.cuit, EmpresaActual.direccionCertificado, EmpresaActual.direccionLicencia)
+            fe.ArchivoCertificadoPassword = EmpresaActual.passCertificado
             ' MsgBox(lresultado.ToString)
             If lresultado Then
                 lresultado = fe.f1ObtenerTicketAcceso()
 
             End If
 
+            'MsgBox(Val(txtptovta.Text) & "---" & cbtetipo & "____" & Val(txtnufac.Text))
             existecomp = fe.F1CompConsultar(Val(txtptovta.Text), cbtetipo, Val(txtnufac.Text))
+
             If existecomp Then
                 lblestadoCAE.Text = fe.F1RespuestaDetalleCae
                 lblvtoCAE.Text = fe.F1RespuestaDetalleCAEFchVto

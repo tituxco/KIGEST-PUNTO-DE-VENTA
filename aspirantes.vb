@@ -888,7 +888,7 @@ Public Class frmaspirantes
             tec.MdiParent = Me.MdiParent
             tec.Show()
             tec.txtBuscaPrestamo.Text = dgvPublicidades.CurrentRow.Cells(0).Value
-            tec.Button1.Enabled = False
+            tec.cmdGuardarEditar.Enabled = False
             tec.btnCalcular.Enabled = False
             tec.diasMora = 0
         Catch ex As Exception

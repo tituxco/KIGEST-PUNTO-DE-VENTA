@@ -196,6 +196,10 @@ Public Class CONTABLE
             Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
             Dim readptovta As New DataSet
             tablaptovta.Fill(readptovta)
+
+            Dim tablaptovtaLeg As New MySql.Data.MySqlClient.MySqlDataAdapter("select ptovta as id, ptovta from fact_conffiscal where leg=1 group by ptovta", conexionPrinc)
+            Dim readptovtaLeg As New DataSet
+            tablaptovtaLeg.Fill(readptovtaLeg)
             cmbInforPtoVta.DataSource = readptovta.Tables(0)
             cmbInforPtoVta.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbInforPtoVta.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
@@ -204,6 +208,15 @@ Public Class CONTABLE
             cmbInforPtoVta2.DataSource = readptovta.Tables(0)
             cmbInforPtoVta2.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
             cmbInforPtoVta2.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
+
+            cmbInforPtoVta2.DataSource = readptovta.Tables(0)
+            cmbInforPtoVta2.DisplayMember = readptovta.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbInforPtoVta2.ValueMember = readptovta.Tables(0).Columns(0).Caption.ToString
+
+            cmbptovtaivaventas.DataSource = readptovtaLeg.Tables(0)
+            cmbptovtaivaventas.DisplayMember = readptovtaLeg.Tables(0).Columns(1).Caption.ToString.ToUpper
+            cmbptovtaivaventas.ValueMember = readptovtaLeg.Tables(0).Columns(0).Caption.ToString
+            cmbptovtaivaventas.SelectedIndex = -1
 
             cmbInforPtoVta.SelectedValue = My.Settings.idPtoVta
             cmbInforPtoVta2.SelectedValue = My.Settings.idPtoVta
@@ -2872,6 +2885,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         "licencia valida cae: " & fe.f1LicenciaValidaCae & vbNewLine)
         End If
 
+
+        'MsgBox(Val(txtptovtaconsul.Text) & "---" & txttipocbte.Text & "____" & Val(txtfacturaconsul.Text))
         existecomp = fe.F1CompConsultar(txtptovtaconsul.Text, txttipocbte.Text, txtfacturaconsul.Text)
         If existecomp Then
             txtresultadoconsulta.Text = ""
@@ -3297,10 +3312,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             FROM fact_facturas as fact, tipos_comprobantes as tip
             where fact.tipofact in (select donfdesc from tipos_comprobantes where leg=1) and
             tip.donfdesc=fact.tipofact and tip.ptovta=fact.ptovta and 
-            fecha like '" & cmbperiodocarg.Text & "-%%'
+            fecha like '" & cmbperiodocarg.Text & "-%%' and 
+            fact.ptovta like '" & cmbptovtaivaventas.SelectedValue & "' 
             order by fact.ptovta,fact.num_fact", conexionPrinc)
             Dim tablaIVAVENTAS As New DataTable
+            'MsgBox(consulta.SelectCommand.CommandText)
             consulta.Fill(tablaIVAVENTAS)
+
             dtivaventas.DataSource = tablaIVAVENTAS
             For Each fila As DataGridViewRow In dtivaventas.Rows
                 If InStr(fila.Cells(1).Value, "NC") = 1 Then
@@ -6374,6 +6392,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tabcomprobantes_Click(sender As Object, e As EventArgs) Handles tabcomprobantes.Click
+
+    End Sub
+
+    Private Sub Panel11_Paint(sender As Object, e As PaintEventArgs) Handles Panel11.Paint
+
+    End Sub
+
+    Private Sub dtlistacob_ControlRemoved(sender As Object, e As ControlEventArgs) Handles dtlistacob.ControlRemoved
+
+    End Sub
+
+    Private Sub dtestadocuentas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtestadocuentas.CellContentClick
 
     End Sub
 End Class

@@ -66,6 +66,7 @@ Partial Class reimpresionComprobantes
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdesdeCobranza = New System.Windows.Forms.DateTimePicker()
         Me.dthastaCobranza = New System.Windows.Forms.DateTimePicker()
+        Me.Button9 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.TabControl1.SuspendLayout()
         Me.tabcomprobantes.SuspendLayout()
@@ -477,6 +478,7 @@ Partial Class reimpresionComprobantes
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.Panel1.Controls.Add(Me.lblTotal)
+        Me.Panel1.Controls.Add(Me.Button9)
         Me.Panel1.Controls.Add(Me.Button2)
         Me.Panel1.Controls.Add(Me.chksinPagar)
         Me.Panel1.Controls.Add(Me.Button3)
@@ -498,7 +500,7 @@ Partial Class reimpresionComprobantes
         Me.lblTotal.Dock = System.Windows.Forms.DockStyle.Right
         Me.lblTotal.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblTotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblTotal.Location = New System.Drawing.Point(1050, 0)
+        Me.lblTotal.Location = New System.Drawing.Point(972, 0)
         Me.lblTotal.Name = "lblTotal"
         Me.lblTotal.Size = New System.Drawing.Size(62, 25)
         Me.lblTotal.TabIndex = 82
@@ -615,6 +617,22 @@ Partial Class reimpresionComprobantes
         Me.dthastaCobranza.Size = New System.Drawing.Size(117, 23)
         Me.dthastaCobranza.TabIndex = 43
         '
+        'Button9
+        '
+        Me.Button9.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button9.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button9.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button9.ForeColor = System.Drawing.Color.White
+        Me.Button9.Image = Global.SIGT__KIGEST.My.Resources.Resources.microsoft_excel_32px
+        Me.Button9.Location = New System.Drawing.Point(1034, 0)
+        Me.Button9.Name = "Button9"
+        Me.Button9.Size = New System.Drawing.Size(78, 70)
+        Me.Button9.TabIndex = 83
+        Me.Button9.Text = "Exportar"
+        Me.Button9.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button9.UseVisualStyleBackColor = False
+        '
         'reimpresionComprobantes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -690,4 +708,5 @@ Partial Class reimpresionComprobantes
     Friend WithEvents Button7 As Button
     Friend WithEvents Button8 As Button
     Friend WithEvents lblTotal As Label
+    Friend WithEvents Button9 As Button
 End Class

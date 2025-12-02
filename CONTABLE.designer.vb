@@ -459,6 +459,8 @@ Partial Class CONTABLE
         Me.ivaVentas = New System.Windows.Forms.TabPage()
         Me.dtivaventas = New System.Windows.Forms.DataGridView()
         Me.Panel11 = New System.Windows.Forms.Panel()
+        Me.cmbptovtaivaventas = New System.Windows.Forms.ComboBox()
+        Me.Label108 = New System.Windows.Forms.Label()
         Me.Panel37 = New System.Windows.Forms.Panel()
         Me.Label68 = New System.Windows.Forms.Label()
         Me.Button24 = New System.Windows.Forms.Button()
@@ -4891,15 +4893,17 @@ Partial Class CONTABLE
         Me.dtivaventas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtivaventas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtivaventas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtivaventas.Location = New System.Drawing.Point(3, 151)
+        Me.dtivaventas.Location = New System.Drawing.Point(3, 162)
         Me.dtivaventas.Name = "dtivaventas"
         Me.dtivaventas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtivaventas.Size = New System.Drawing.Size(1203, 367)
+        Me.dtivaventas.Size = New System.Drawing.Size(1203, 356)
         Me.dtivaventas.TabIndex = 124
         '
         'Panel11
         '
         Me.Panel11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel11.Controls.Add(Me.cmbptovtaivaventas)
+        Me.Panel11.Controls.Add(Me.Label108)
         Me.Panel11.Controls.Add(Me.Panel37)
         Me.Panel11.Controls.Add(Me.Button3)
         Me.Panel11.Controls.Add(Me.cmbperiodocarg)
@@ -4913,8 +4917,28 @@ Partial Class CONTABLE
         Me.Panel11.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel11.Location = New System.Drawing.Point(3, 3)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(1203, 148)
+        Me.Panel11.Size = New System.Drawing.Size(1203, 159)
         Me.Panel11.TabIndex = 10
+        '
+        'cmbptovtaivaventas
+        '
+        Me.cmbptovtaivaventas.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbptovtaivaventas.FormattingEnabled = True
+        Me.cmbptovtaivaventas.Location = New System.Drawing.Point(348, 127)
+        Me.cmbptovtaivaventas.Name = "cmbptovtaivaventas"
+        Me.cmbptovtaivaventas.Size = New System.Drawing.Size(227, 28)
+        Me.cmbptovtaivaventas.TabIndex = 81
+        '
+        'Label108
+        '
+        Me.Label108.AutoSize = True
+        Me.Label108.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label108.ForeColor = System.Drawing.Color.White
+        Me.Label108.Location = New System.Drawing.Point(346, 105)
+        Me.Label108.Name = "Label108"
+        Me.Label108.Size = New System.Drawing.Size(197, 20)
+        Me.Label108.TabIndex = 80
+        Me.Label108.Text = "PUNTO VENTA ELECT."
         '
         'Panel37
         '
@@ -4923,7 +4947,7 @@ Partial Class CONTABLE
         Me.Panel37.Controls.Add(Me.txtbdSincronizar)
         Me.Panel37.Controls.Add(Me.cmbperiodosincronizar)
         Me.Panel37.Controls.Add(Me.Label69)
-        Me.Panel37.Location = New System.Drawing.Point(353, 118)
+        Me.Panel37.Location = New System.Drawing.Point(672, 99)
         Me.Panel37.Name = "Panel37"
         Me.Panel37.Size = New System.Drawing.Size(221, 20)
         Me.Panel37.TabIndex = 79
@@ -4938,6 +4962,7 @@ Partial Class CONTABLE
         Me.Label68.Size = New System.Drawing.Size(291, 20)
         Me.Label68.TabIndex = 73
         Me.Label68.Text = "BD Contador (KIGEST ESTUDIOS)"
+        Me.Label68.Visible = False
         '
         'Button24
         '
@@ -4989,7 +5014,7 @@ Partial Class CONTABLE
         Me.Button3.Image = Global.SIGT__KIGEST.My.Resources.Resources.Synchronize_64px
         Me.Button3.Location = New System.Drawing.Point(959, 0)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(84, 148)
+        Me.Button3.Size = New System.Drawing.Size(84, 159)
         Me.Button3.TabIndex = 77
         Me.Button3.Text = "Sincro"
         Me.Button3.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -5024,7 +5049,7 @@ Partial Class CONTABLE
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
         Me.Button1.Location = New System.Drawing.Point(1043, 0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(80, 148)
+        Me.Button1.Size = New System.Drawing.Size(80, 159)
         Me.Button1.TabIndex = 70
         Me.Button1.Text = "Exportar"
         Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -5065,7 +5090,7 @@ Partial Class CONTABLE
         Me.GroupBox4.ForeColor = System.Drawing.Color.White
         Me.GroupBox4.Location = New System.Drawing.Point(171, 0)
         Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(169, 148)
+        Me.GroupBox4.Size = New System.Drawing.Size(169, 159)
         Me.GroupBox4.TabIndex = 67
         Me.GroupBox4.TabStop = False
         Me.GroupBox4.Text = "Total IVA"
@@ -5153,7 +5178,7 @@ Partial Class CONTABLE
         Me.GroupBox3.ForeColor = System.Drawing.Color.White
         Me.GroupBox3.Location = New System.Drawing.Point(0, 0)
         Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(171, 148)
+        Me.GroupBox3.Size = New System.Drawing.Size(171, 159)
         Me.GroupBox3.TabIndex = 66
         Me.GroupBox3.TabStop = False
         Me.GroupBox3.Text = "Totales Netos"
@@ -5277,7 +5302,7 @@ Partial Class CONTABLE
         Me.Button25.Image = CType(resources.GetObject("Button25.Image"), System.Drawing.Image)
         Me.Button25.Location = New System.Drawing.Point(1123, 0)
         Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(80, 148)
+        Me.Button25.Size = New System.Drawing.Size(80, 159)
         Me.Button25.TabIndex = 48
         Me.Button25.Text = "Buscar"
         Me.Button25.TextAlign = System.Drawing.ContentAlignment.BottomCenter
@@ -8496,4 +8521,6 @@ Partial Class CONTABLE
     Friend WithEvents Column11 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn12 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn9 As DataGridViewTextBoxColumn
+    Friend WithEvents cmbptovtaivaventas As ComboBox
+    Friend WithEvents Label108 As Label
 End Class

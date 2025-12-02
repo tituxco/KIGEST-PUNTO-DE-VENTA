@@ -28,7 +28,7 @@ Public Class imprimirEtiquetasEnBlanco
         Dim posInicImg As Integer = (tamEtiq.Width - anchoImg) / 3
 
         'g.FillRectangle(Brushes.Aqua, bmp.GetBounds(GraphicsUnit.Pixel ))
-        g.FillRectangle(Brushes.Aqua, rect1)
+        g.FillRectangle(Brushes.White, rect1)
 
         Dim formato As New StringFormat
         Dim formatoCentro As New StringFormat

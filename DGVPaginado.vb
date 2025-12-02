@@ -10,17 +10,59 @@
         Try
 
 
+            'If Not IsNothing(dt) Then
+            '    pagina = 0 'resetamos la pagina en la que nos encontramos
+            '    todos_los_datos = dt
+            '    total = dt.Rows.Count
+            '    If lblregistros.InvokeRequired Then
+            '        MsgBox("necesita invocacion")
+            '    End If
+            '    lblregistros.Text = total
+            '        maximo_paginas = Math.Ceiling(total / items_por_pagina)
+
+            '        lblPaginasTotales.Text = maximo_paginas
+            '        dgvVista.DataSource = Split(todos_los_datos)
+            '        dgvVista.Columns(0).Visible = False
+            '        HabilitarBotones()
+            '    End If
+
             If Not IsNothing(dt) Then
                 pagina = 0 'resetamos la pagina en la que nos encontramos
                 todos_los_datos = dt
                 total = dt.Rows.Count
-                lblregistros.Text = total
+
+                ' Actualizar lblregistros desde otro hilo
+                If lblregistros.InvokeRequired Then
+                    lblregistros.Invoke(Sub()
+                                            lblregistros.Text = total.ToString()
+                                        End Sub)
+                Else
+                    lblregistros.Text = total.ToString()
+                End If
+
                 maximo_paginas = Math.Ceiling(total / items_por_pagina)
 
-                lblPaginasTotales.Text = maximo_paginas
-                dgvVista.DataSource = Split(todos_los_datos)
-                dgvVista.Columns(0).Visible = False
-                HabilitarBotones()
+                ' Actualizar lblPaginasTotales
+                If lblPaginasTotales.InvokeRequired Then
+                    lblPaginasTotales.Invoke(Sub()
+                                                 lblPaginasTotales.Text = maximo_paginas.ToString()
+                                             End Sub)
+                Else
+                    lblPaginasTotales.Text = maximo_paginas.ToString()
+                End If
+
+                ' Actualizar DataGridView
+                If dgvVista.InvokeRequired Then
+                    dgvVista.Invoke(Sub()
+                                        dgvVista.DataSource = Split(todos_los_datos)
+                                        dgvVista.Columns(0).Visible = True
+                                        HabilitarBotones()
+                                    End Sub)
+                Else
+                    dgvVista.DataSource = Split(todos_los_datos)
+                    dgvVista.Columns(0).Visible = True
+                    HabilitarBotones()
+                End If
             End If
         Catch ex As Exception
         End Try

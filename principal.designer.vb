@@ -25,10 +25,11 @@ Partial Class frmprincipal
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmprincipal))
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
+        Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
+        Me.lblprocesando = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblPrincipalDolar = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblstatusServer = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblEstadoCertificado = New System.Windows.Forms.ToolStripStatusLabel()
-        Me.pbprincipal = New System.Windows.Forms.ToolStripProgressBar()
         Me.lblstatusBDprinc = New System.Windows.Forms.ToolStripStatusLabel()
         Me.lblStatusEmp = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
@@ -83,12 +84,27 @@ Partial Class frmprincipal
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.lblPrincipalDolar, Me.lblstatusServer, Me.lblEstadoCertificado, Me.pbprincipal, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.pbprincipal, Me.lblprocesando, Me.lblPrincipalDolar, Me.lblstatusServer, Me.lblEstadoCertificado, Me.lblstatusBDprinc, Me.lblStatusEmp, Me.ToolStripStatusLabel1, Me.lblstatusgral, Me.listaConexiones})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 388)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(1270, 24)
         Me.StatusStrip1.TabIndex = 0
         Me.StatusStrip1.Text = "StatusStrip1"
+        '
+        'pbprincipal
+        '
+        Me.pbprincipal.Name = "pbprincipal"
+        Me.pbprincipal.Size = New System.Drawing.Size(100, 18)
+        Me.pbprincipal.Visible = False
+        '
+        'lblprocesando
+        '
+        Me.lblprocesando.Font = New System.Drawing.Font("Segoe UI", 10.0!, System.Drawing.FontStyle.Bold)
+        Me.lblprocesando.ForeColor = System.Drawing.Color.Olive
+        Me.lblprocesando.Name = "lblprocesando"
+        Me.lblprocesando.Size = New System.Drawing.Size(153, 19)
+        Me.lblprocesando.Text = "Procesando, espere..."
+        Me.lblprocesando.Visible = False
         '
         'lblPrincipalDolar
         '
@@ -112,12 +128,6 @@ Partial Class frmprincipal
         Me.lblEstadoCertificado.Name = "lblEstadoCertificado"
         Me.lblEstadoCertificado.Size = New System.Drawing.Size(156, 19)
         Me.lblEstadoCertificado.Text = "VencimientoCertificado:"
-        '
-        'pbprincipal
-        '
-        Me.pbprincipal.Name = "pbprincipal"
-        Me.pbprincipal.Size = New System.Drawing.Size(100, 18)
-        Me.pbprincipal.Visible = False
         '
         'lblstatusBDprinc
         '
@@ -684,4 +694,5 @@ Partial Class frmprincipal
     Friend WithEvents lblEstadoCertificado As ToolStripStatusLabel
     Friend WithEvents btnNotificaciones As ToolStripMenuItem
     Friend WithEvents cmbempresas As ToolStripComboBox
+    Friend WithEvents lblprocesando As ToolStripStatusLabel
 End Class

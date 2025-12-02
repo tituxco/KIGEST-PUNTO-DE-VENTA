@@ -101,7 +101,7 @@ Public Class NvaPublicidad
             'FechaGuardar = Format(CDate(FechaPago), "yyyy-MM-dd")
             SaldoInicial = SaldoInicial - CapitalPagado
         Next
-        Button1.Enabled = True
+        cmdGuardarEditar.Enabled = True
         'dgvPublicidad.DataSource = tablaPrestamo
         'txtBuscaPrestamo.Text = NoPrestamo
     End Sub
@@ -197,7 +197,7 @@ Public Class NvaPublicidad
         NvaPubli = False
         btnPagar.Enabled = True
         txtBuscaPrestamo.Text = NoPrestamo
-        Button1.Enabled = False
+        cmdGuardarEditar.Enabled = False
     End Sub
 
 
@@ -240,7 +240,7 @@ Public Class NvaPublicidad
                     .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
                  txtconcepto.Text & " #" &
                  txtPrestamo.Text & " - " &
-                 Format(CDate(publi.Cells("VENCIMIENTO").Value.ToString), "MMMM yyyy"), "21",
+                 Format(DateAdd(DateInterval.Month, -1, CDate(publi.Cells("VENCIMIENTO").Value.ToString)), "MMMM yyyy"), "21",
                  publi.Cells("MONTO").Value,
                  publi.Cells("MONTO").Value)
                 End If
@@ -254,7 +254,12 @@ Public Class NvaPublicidad
         End With
     End Sub
     Private Sub txtBuscaPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtBuscaPrestamo.TextChanged
-        Consultas("select DTP.ID,
+        CargarDetalle()
+    End Sub
+
+    Private Sub CargarDetalle()
+        Try
+            Consultas("select DTP.ID,
         IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
@@ -292,42 +297,52 @@ Public Class NvaPublicidad
          ELSE '1' END,'%M %Y'),'%Y-%m')
         ) AS FACTURA
         from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
-        Reconectar()
-        Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, pre.ID_PRESTAMO,cli.nomapell_razon,pre.DESCRIPCION,pre.CONCEPTO,
-        pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA
+            Reconectar()
+            Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, pre.ID_PRESTAMO,cli.nomapell_razon,pre.DESCRIPCION,pre.CONCEPTO,
+        pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA, pre.COBRADOR AS COBRADOR,pre.OBSERVACIONES
         FROM rym_prestamo as pre, fact_clientes as cli
         where cli.idclientes=pre.ID_CLIENTE
         and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
-        Dim DatosPrestamo As New DataTable
-        ConsultaPrestamo.Fill(DatosPrestamo)
-        ' MsgBox(ConsultaPrestamo.SelectCommand.CommandText)
-        If DatosPrestamo.Rows.Count <> 0 Then
-            txtclientecuenta.Text = DatosPrestamo(0).Item("idclientes")
-            txtclientenombre.Text = DatosPrestamo(0).Item("nomapell_razon")
-            txtCuota.Text = DatosPrestamo(0).Item("CUOTA")
-            txtmonto.Text = DatosPrestamo(0).Item("MONTO_PRESTAMO")
-            txtPlazo.Text = DatosPrestamo(0).Item("PLAZO")
-            txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
-            txtconcepto.Text = DatosPrestamo(0).Item("CONCEPTO")
-            txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
-            dtpFechaInicio.Value = CDate(DatosPrestamo(0).Item("FECHA").ToString())
-            txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
-            txtPrestamo.Text = DatosPrestamo(0).Item("ID_PRESTAMO")
-            For Each cont As Control In Me.Controls
-                If TypeOf cont Is TextBox Then
-                    Dim tex As TextBox
-                    tex = cont
-                    tex.ReadOnly = True
-                ElseIf TypeOf cont Is DateTimePicker Then
-                    Dim dt As DateTimePicker
-                    dt = cont
-                    dt.Enabled = False
-                End If
-                cmdclientebuscar.Enabled = False
-            Next
-        End If
-    End Sub
+            Dim DatosPrestamo As New DataTable
+            ConsultaPrestamo.Fill(DatosPrestamo)
+            ' MsgBox(ConsultaPrestamo.SelectCommand.CommandText)
+            If DatosPrestamo.Rows.Count <> 0 Then
+                txtclientecuenta.Text = DatosPrestamo(0).Item("idclientes")
+                txtclientenombre.Text = DatosPrestamo(0).Item("nomapell_razon")
+                txtCuota.Text = DatosPrestamo(0).Item("CUOTA")
+                txtmonto.Text = DatosPrestamo(0).Item("MONTO_PRESTAMO")
+                txtPlazo.Text = DatosPrestamo(0).Item("PLAZO")
+                txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
+                txtconcepto.Text = DatosPrestamo(0).Item("CONCEPTO")
+                txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
+                dtpFechaInicio.Value = CDate(DatosPrestamo(0).Item("FECHA").ToString())
+                txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
+                txtPrestamo.Text = DatosPrestamo(0).Item("ID_PRESTAMO")
+                cmbcobrador.SelectedValue = DatosPrestamo(0).Item("COBRADOR")
+                txtObservaciones.Text = DatosPrestamo(0).Item("OBSERVACIONES")
+                For Each cont As Control In Me.Controls
+                    If TypeOf cont Is TextBox Then
+                        Dim tex As TextBox
+                        tex = cont
+                        tex.ReadOnly = True
+                    ElseIf TypeOf cont Is DateTimePicker Then
+                        Dim dt As DateTimePicker
+                        dt = cont
+                        dt.Enabled = False
+                    End If
+                    cmdclientebuscar.Enabled = False
+                    cmbcobrador.Enabled = False
+                    txtconcepto.Enabled = False
+                    cmdGuardarEditar.Enabled = True
+                    cmdGuardarEditar.Text = "Editar"
 
+
+                Next
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
     Private Sub txtTasaAnual_Leave(sender As Object, e As EventArgs) Handles txtTasaAnual.Leave
         txtInteresMensual.Text = CDbl(txtTasaAnual.Text) / 12
     End Sub
@@ -399,8 +414,25 @@ Public Class NvaPublicidad
 
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        GeneraPrestamo()
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles cmdGuardarEditar.Click
+        If NvaPubli = True Then
+            GeneraPrestamo()
+        Else
+            If cmdGuardarEditar.Text = "Editar" Then
+                txtdetallePublicidad.Enabled = True
+                txtObservaciones.Enabled = True
+                txtdetallePublicidad.ReadOnly = False
+                txtObservaciones.ReadOnly = False
+                cmbcobrador.Enabled = True
+                txtconcepto.Enabled = True
+                cmdGuardarEditar.Text = "Guardar"
+            ElseIf cmdGuardarEditar.Text = "Guardar" Then
+                Operaciones.Editar("update rym_prestamo set DESCRIPCION ='" & txtdetallePublicidad.Text.ToUpper & "', 
+                CONCEPTO= '" & txtconcepto.Text.ToUpper & "', OBSERVACIONES= '" & txtObservaciones.Text.ToUpper & "', 
+                COBRADOR='" & cmbcobrador.SelectedValue & "' where ID_PRESTAMO=" & txtPrestamo.Text)
+                cmdGuardarEditar.Text = "Editar"
+            End If
+        End If
 
     End Sub
 
@@ -495,5 +527,32 @@ Public Class NvaPublicidad
 
     Private Sub txtPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtPrestamo.TextChanged
 
+    End Sub
+
+    Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
+        Try
+            If dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA" Then
+                MsgBox("El periodo ya esta pagado")
+                Exit Sub
+            End If
+            Dim periodo As Integer = dgvPublicidad.CurrentRow.Cells("PERIODO").Value
+            Dim monto As String = dgvPublicidad.CurrentRow.Cells("MONTO").Value
+            Dim fecha As String = Format(CDate(Now), "yyyy-MM-dd")
+            Dim sqlQuery As String
+            sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
+            Reconectar()
+            Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            With addPagoPubli.Parameters
+                .AddWithValue("?fecha", fecha)
+                .AddWithValue("?idprestamo", txtPrestamo.Text)
+                .AddWithValue("?periodo", periodo)
+                .AddWithValue("?monto", monto)
+            End With
+            addPagoPubli.ExecuteNonQuery()
+            MsgBox("Pago imputado correctamente")
+            dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA"
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

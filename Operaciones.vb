@@ -36,4 +36,10 @@
         Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
         cmd.ExecuteNonQuery()
     End Sub
+
+    Public Sub Editar(ByVal Cadena As String)
+        Reconectar()
+        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        cmd.ExecuteNonQuery()
+    End Sub
 End Module

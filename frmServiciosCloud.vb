@@ -104,7 +104,7 @@
 
         cadena = ""
         ObtenerCadenaTreeView(trvmodulos.Nodes)
-        '        MsgBox(cadena)
+        MsgBox(cadena)
 
         If MsgBox("esta seguro que desea actualizar los privilegios de este cliente?", vbYesNo + vbQuestion) = vbNo Then
             Exit Sub
@@ -303,5 +303,11 @@
         Else
             dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Yellow
         End If
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        cadena = ""
+        ObtenerCadenaTreeView(trvmodulos.Nodes)
+        MsgBox(cadena)
     End Sub
 End Class

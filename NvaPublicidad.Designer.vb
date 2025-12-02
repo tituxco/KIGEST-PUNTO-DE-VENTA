@@ -22,8 +22,8 @@ Partial Class NvaPublicidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Me.Button1 = New System.Windows.Forms.Button()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Me.cmdGuardarEditar = New System.Windows.Forms.Button()
         Me.btnPagar = New System.Windows.Forms.Button()
         Me.txtclientenombre = New System.Windows.Forms.TextBox()
         Me.txtmonto = New System.Windows.Forms.TextBox()
@@ -61,28 +61,29 @@ Partial Class NvaPublicidad
         Me.txtconcepto = New System.Windows.Forms.ComboBox()
         Me.cmbcobrador = New System.Windows.Forms.ComboBox()
         Me.Label15 = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         CType(Me.dgvPublicidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Button1
+        'cmdGuardarEditar
         '
-        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button1.Enabled = False
-        Me.Button1.Location = New System.Drawing.Point(476, 222)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(114, 27)
-        Me.Button1.TabIndex = 9
-        Me.Button1.Text = "Guardar"
-        Me.Button1.UseVisualStyleBackColor = True
+        Me.cmdGuardarEditar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmdGuardarEditar.Enabled = False
+        Me.cmdGuardarEditar.Location = New System.Drawing.Point(607, 223)
+        Me.cmdGuardarEditar.Name = "cmdGuardarEditar"
+        Me.cmdGuardarEditar.Size = New System.Drawing.Size(72, 27)
+        Me.cmdGuardarEditar.TabIndex = 9
+        Me.cmdGuardarEditar.Text = "Guardar"
+        Me.cmdGuardarEditar.UseVisualStyleBackColor = True
         '
         'btnPagar
         '
         Me.btnPagar.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btnPagar.Enabled = False
-        Me.btnPagar.Location = New System.Drawing.Point(332, 222)
+        Me.btnPagar.Location = New System.Drawing.Point(510, 222)
         Me.btnPagar.Name = "btnPagar"
-        Me.btnPagar.Size = New System.Drawing.Size(133, 27)
+        Me.btnPagar.Size = New System.Drawing.Size(91, 27)
         Me.btnPagar.TabIndex = 99
         Me.btnPagar.Text = "Facturar"
         Me.btnPagar.UseVisualStyleBackColor = True
@@ -118,7 +119,7 @@ Partial Class NvaPublicidad
         Me.txtBuscaPrestamo.AcceptsReturn = True
         Me.txtBuscaPrestamo.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtBuscaPrestamo.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBuscaPrestamo.Location = New System.Drawing.Point(205, 221)
+        Me.txtBuscaPrestamo.Location = New System.Drawing.Point(139, 222)
         Me.txtBuscaPrestamo.Name = "txtBuscaPrestamo"
         Me.txtBuscaPrestamo.ReadOnly = True
         Me.txtBuscaPrestamo.Size = New System.Drawing.Size(121, 22)
@@ -140,7 +141,7 @@ Partial Class NvaPublicidad
         Me.Label10.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(71, 227)
+        Me.Label10.Location = New System.Drawing.Point(5, 228)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(127, 16)
         Me.Label10.TabIndex = 94
@@ -150,9 +151,9 @@ Partial Class NvaPublicidad
         'btnImprimir
         '
         Me.btnImprimir.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnImprimir.Location = New System.Drawing.Point(754, 222)
+        Me.btnImprimir.Location = New System.Drawing.Point(796, 222)
         Me.btnImprimir.Name = "btnImprimir"
-        Me.btnImprimir.Size = New System.Drawing.Size(114, 27)
+        Me.btnImprimir.Size = New System.Drawing.Size(72, 27)
         Me.btnImprimir.TabIndex = 96
         Me.btnImprimir.Text = "Imprimir"
         Me.btnImprimir.UseVisualStyleBackColor = True
@@ -189,14 +190,14 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPublicidad.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPublicidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.Desktop
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvPublicidad.Location = New System.Drawing.Point(1, 255)
         Me.dgvPublicidad.Name = "dgvPublicidad"
         Me.dgvPublicidad.ReadOnly = True
@@ -308,9 +309,9 @@ Partial Class NvaPublicidad
         'btnCalcular
         '
         Me.btnCalcular.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btnCalcular.Location = New System.Drawing.Point(596, 222)
+        Me.btnCalcular.Location = New System.Drawing.Point(685, 222)
         Me.btnCalcular.Name = "btnCalcular"
-        Me.btnCalcular.Size = New System.Drawing.Size(152, 27)
+        Me.btnCalcular.Size = New System.Drawing.Size(110, 27)
         Me.btnCalcular.TabIndex = 8
         Me.btnCalcular.Text = "Previsiualizar"
         Me.btnCalcular.UseVisualStyleBackColor = True
@@ -462,11 +463,22 @@ Partial Class NvaPublicidad
         Me.Label15.TabIndex = 130
         Me.Label15.Text = "Cobrador"
         '
+        'Button1
+        '
+        Me.Button1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button1.Location = New System.Drawing.Point(413, 222)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(91, 27)
+        Me.Button1.TabIndex = 131
+        Me.Button1.Text = "Imputar Pago"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
         'NvaPublicidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(875, 415)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.cmbcobrador)
         Me.Controls.Add(Me.Label15)
         Me.Controls.Add(Me.txtconcepto)
@@ -478,7 +490,7 @@ Partial Class NvaPublicidad
         Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.txtdetallePublicidad)
         Me.Controls.Add(Me.Label11)
-        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.cmdGuardarEditar)
         Me.Controls.Add(Me.btnPagar)
         Me.Controls.Add(Me.txtclientenombre)
         Me.Controls.Add(Me.txtmonto)
@@ -517,7 +529,7 @@ Partial Class NvaPublicidad
 
     End Sub
 
-    Friend WithEvents Button1 As Button
+    Friend WithEvents cmdGuardarEditar As Button
     Friend WithEvents btnPagar As Button
     Friend WithEvents txtclientenombre As TextBox
     Friend WithEvents txtmonto As TextBox
@@ -555,4 +567,5 @@ Partial Class NvaPublicidad
     Friend WithEvents txtconcepto As ComboBox
     Friend WithEvents cmbcobrador As ComboBox
     Friend WithEvents Label15 As Label
+    Friend WithEvents Button1 As Button
 End Class
