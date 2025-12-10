@@ -2410,7 +2410,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         '    txtcliebus.Enabled = False
         '    Exit Sub
         'End If
-
+        cmbMovimientosHistoricos.SelectedIndex = 0
     End Sub
 
     Private Sub tabcuentasproveedores_Enter(sender As Object, e As EventArgs) Handles tabcuentasproveedores.Enter
@@ -2594,7 +2594,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, " _
             & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, " _
-            & "concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, " _
+            & "concat(fac.id_cliente,'-',fac.razon,' - tel- ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, " _
             & "concat(vend.apellido,', ',vend.nombre) as facvend, fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21, fac.total,'',fis.donfdesc as descfact " _
             & "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac  " _
             & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
@@ -6404,6 +6404,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub dtestadocuentas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtestadocuentas.CellContentClick
+
+    End Sub
+
+    Private Sub Panel13_Paint(sender As Object, e As PaintEventArgs) Handles Panel13.Paint
+
+    End Sub
+
+    Private Sub tabcuentasclientes_Click(sender As Object, e As EventArgs) Handles tabcuentasclientes.Click
 
     End Sub
 End Class

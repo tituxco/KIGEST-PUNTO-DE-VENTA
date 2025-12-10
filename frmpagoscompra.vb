@@ -89,7 +89,7 @@ Public Class frmpagoscompra
                 .AddWithValue("?tipocont", tipoContr)
                 .AddWithValue("?cuit", CUIT)
                 .AddWithValue("?tot", TOTAL)
-                .AddWithValue("?observa", "VENTA MOSTRADOR")
+                .AddWithValue("?observa", "VENTA CONTADO")
             End With
             comandoadd.ExecuteNonQuery()
             IdRecibo = comandoadd.LastInsertedId
@@ -340,8 +340,9 @@ Public Class frmpagoscompra
 
     End Sub
 
-    Private Sub frmpagoscompra_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-
-
+    Private Sub frmpagoscompra_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+        If e.KeyCode = Keys.Escape Then
+            Me.Close()
+        End If
     End Sub
 End Class

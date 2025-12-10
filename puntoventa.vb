@@ -1259,6 +1259,8 @@ Public Class puntoventa
 				' MsgBox("imprimirtiket")
 				cmdimprimir.PerformClick()
 			End If
+
+			Button4.PerformClick()
 		Catch ex As Exception
 			tmrcontrolarnumfact.Enabled = True
 			Transaccion.Rollback()
@@ -3072,12 +3074,17 @@ Public Class puntoventa
 		Try
 			Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
 
-			FolderDialog.ShowDialog()
+			Dim carpetaAlmacenamiento As String = ""
 
-			'Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
-			'IdFactura = IdFactura
-			'Dim para As String = ""
+			If My.Settings.capetaAlmacenamDocum = "" Then
+				FolderDialog.ShowDialog()
+				If FolderDialog.SelectedPath <> "" Then
+					My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+					My.Settings.Save()
+				End If
+			End If
 
+			carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
 
 			Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
 			Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
@@ -3088,12 +3095,15 @@ Public Class puntoventa
 			tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
-            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,            
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, fac.codigo_qr,fac.observaciones as facobserva2,cl.email  
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
 			tabEmp.Fill(fac.Tables("factura_enca"))
 			Reconectar()
@@ -3112,53 +3122,28 @@ Public Class puntoventa
 			'MsgBox(FolderDialog.SelectedPath)
 			'...
 
-			If FolderDialog.SelectedPath <> "" Then
-				Dim NMReporte As String = ""
+			'If FolderDialog.SelectedPath <> "" Then
+			Dim NMReporte As String = ""
 
-				Select Case tipofact 'dtfacturas.CurrentRow.Cells(9).Value
-					Case 1 To 3, 6 To 8, 11 To 13
-						NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
-					Case Else
-						NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
-				End Select
-				MsgBox(FolderDialog.SelectedPath)
+			Select Case tipofact
+				Case 1 To 3, 6 To 8, 11 To 13
+					NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+				Case Else
+					NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+			End Select
+			'MsgBox(FolderDialog.SelectedPath)
 
-				Dim nombreArchivo As String = lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text & ".pdf"  'dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
-				GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), FolderDialog.SelectedPath & "\", nombreArchivo, NMReporte)
-				MsgBox("Comprobante guardado")
-				'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
-			End If
+			Dim ApellidoRazon As String = fac.Tables("factura_enca").Rows(0).Item("facrazon")
+
+
+			Dim nombreArchivo As String = lblfactabrev.Text & " " & lblfactptovta.Text & "-" & lblfactnumero.Text & "(" & ApellidoRazon & ")" & ".pdf"  'dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
+			GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+			'MsgBox("Comprobante guardado")
+			'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+			'End If
 
 		Catch ex As Exception
 			MsgBox(ex.Message)
 		End Try
-	End Sub
-
-	Private Sub txtcantPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcantPLU.TextChanged
-
-	End Sub
-
-	Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
-
-	End Sub
-
-	Private Sub txtcodPLU_Resize(sender As Object, e As EventArgs) Handles txtcodPLU.Resize
-
-	End Sub
-
-	Private Sub paneltareas_Paint(sender As Object, e As PaintEventArgs) Handles paneltareas.Paint
-
-	End Sub
-
-	Private Sub puntoventa_MaximizedBoundsChanged(sender As Object, e As EventArgs) Handles Me.MaximizedBoundsChanged
-
-	End Sub
-
-	Private Sub dtproductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtproductos.CellContentClick
-
-	End Sub
-
-	Private Sub txttransporte_TextChanged(sender As Object, e As EventArgs) Handles txttransporte.TextChanged
-
 	End Sub
 End Class

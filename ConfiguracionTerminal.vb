@@ -37,6 +37,7 @@
             cmbImpresoraEtiquetas.Items.Add(impresora.ToString)
         Next
         txtPtoVtaElect.Text = FacturaElectro.puntovtaelect
+        txtcarpetaPDF.Text = My.Settings.capetaAlmacenamDocum
     End Sub
 
     Private Sub Button18_Click(sender As Object, e As EventArgs) Handles Button18.Click
@@ -65,7 +66,7 @@
         My.Settings.tipoTaller = txttipotaller.Text
         My.Settings.visualizacionProducto = cmbVisualizacionProd.SelectedIndex
         FacturaElectro.puntovtaelect = txtPtoVtaElect.Text
-
+        My.Settings.capetaAlmacenamDocum = txtcarpetaPDF.Text
         My.Settings.Save()
 
         funciones_Globales.GuardarConfiguracionTerminal()
@@ -104,5 +105,13 @@
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
+        FolderDialog.ShowDialog()
+        If FolderDialog.SelectedPath <> "" Then
+            txtcarpetaPDF.Text = FolderDialog.SelectedPath & "\"
+        End If
     End Sub
 End Class

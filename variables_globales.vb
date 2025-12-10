@@ -9,6 +9,7 @@
         Public Property Respuesta As String
     End Structure
 
+
     Public Structure DatosUsuario
         Public Property Moduloacc As String
         Public Property Cliente As String

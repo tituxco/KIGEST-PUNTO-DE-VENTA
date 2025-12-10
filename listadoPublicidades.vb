@@ -169,7 +169,6 @@ Public Class listadoPublicidades
                 dgvPrestamos.dgvVista.Columns("vendedor").Visible = False
                 'DataGridView1.DataSource = ds.Tables(0)
             Else
-
                 dgvPrestamos.Cargar_Datos(Nothing)
             End If
         ElseIf pestana = 2 Then
@@ -183,24 +182,34 @@ Public Class listadoPublicidades
     Private Sub cmdver_Click(sender As Object, e As EventArgs) Handles cmdver.Click
         Try
             Dim i As Integer
-            For i = 0 To Me.MdiChildren.Length - 1
-                If MdiChildren(i).Name = "NvaPublicidad" Then
-                    Me.MdiChildren(i).BringToFront()
+            For i = 0 To frmprincipal.MdiChildren.Count - 1
+                If frmprincipal.MdiChildren(i).Name = "NvaPublicidad" Then
+                    frmprincipal.MdiChildren(i).BringToFront()
+                    With CType(frmprincipal.MdiChildren(i), NvaPublicidad)
+                        .txtBuscaPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
+                        .txtPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
+                        .diasMora = txtdiasmora.Text
+                        .NvaPubli = False
+                        .cmdGuardarEditar.Enabled = False
+                        .btnCalcular.Enabled = False
+                        .btnPagar.Enabled = True
+                        .CargarDetalle()
+                    End With
                     Exit Sub
                 End If
             Next
 
-            Dim tec As New NvaPublicidad
-            tec.MdiParent = Me.MdiParent
-            tec.Show()
-            tec.txtBuscaPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
-            tec.txtPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
-            tec.NvaPubli = False
-            'tec.cmdGuardarEditar.Enabled = False
-            tec.btnCalcular.Enabled = False
-            tec.btnPagar.Enabled = True
-            tec.diasMora = txtdiasmora.Text
-            tec.idVendedor = dgvPrestamos.dgvVista.CurrentRow.Cells("VENDEDOR").Value
+            Dim form As New NvaPublicidad
+            form.MdiParent = Me.MdiParent
+            form.Show()
+            form.txtBuscaPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
+            form.txtPrestamo.Text = dgvPrestamos.dgvVista.CurrentRow.Cells(0).Value
+            form.NvaPubli = False
+            form.cmdGuardarEditar.Enabled = False
+            form.btnCalcular.Enabled = False
+            form.btnPagar.Enabled = True
+            form.diasMora = txtdiasmora.Text
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -331,173 +340,187 @@ Public Class listadoPublicidades
     'End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnExportar.Click
-        'GenerarExcel(dgvPrestamos.dgvVista)
-        Dim EnProgreso As New Form
-        Try
-            EnProgreso.ControlBox = False
-            EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
-            EnProgreso.Size = New Point(430, 30)
-            EnProgreso.StartPosition = FormStartPosition.CenterScreen
-            EnProgreso.TopMost = True
-            Dim timer As New Timer
+        frmprincipal.pbprincipal.Visible = True
+        frmprincipal.pbprincipal.Style = ProgressBarStyle.Marquee
+        frmprincipal.pbprincipal.MarqueeAnimationSpeed = 30
 
-            Dim Etiqueta As New Label
-
-
-            Etiqueta.AutoSize = True
-            Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
-            Etiqueta.Location = New Point(5, 5)
-
-
-            EnProgreso.Controls.Add(Etiqueta)
-            'Dim Barra As New ProgressBar
-            'Barra.Style = ProgressBarStyle.Marquee
-            'Barra.Size = New Point(270, 40)
-            'Barra.Location = New Point(10, 30)
-            'Barra.Value = 100
-            'EnProgreso.Controls.Add(Barra)
-            EnProgreso.Show()
-            Application.DoEvents()
-
-            'Dim idFactura As Integer = dtfacturas.CurrentRow.Cells(0).Value
-            'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim fac As New datosfacturas
-
-            Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
-            'Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
-            Dim fechaBusq As String = ""
-            Dim morosoBusq As String = ""
-            Dim clienteBusq As String = ""
-            Dim facturadosBusq As String = ""
-            Dim vendedorBusq As String = ""
-            Dim cobradorBusq As String = ""
-            Dim orderBy As String = " order by CLIENTE asc"
-
-            fechaBusq = " having FIN >= date_add('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "', interval -1 day)" ' and FIN >="
-
-            If chkSoloMorosos.Checked = True Then
-                morosoBusq = " and MOROSO_MESES>0 "
-            End If
-
-            If txtbuscar.Text <> "" Then
-                clienteBusq = " and CLIENTE LIKE '%" & txtbuscar.Text.Replace(" ", "%") & "%' or ID_PRESTAMO LIKE '" & txtbuscar.Text.Trim & "'"
-            End If
-
-            If chksinFact.Checked = True Then
-                facturadosBusq = " and FACTURA_ACTUAL IS NULL "
-            End If
-
-            If cmbvendedor.SelectedIndex <> -1 Then
-                vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
-            End If
-
-            If cmbcobrador.SelectedIndex <> -1 Then
-                cobradorBusq = " and COBRADOR like " & cmbcobrador.SelectedValue
-            End If
+        CargarExcelAsyncListadoOR.RunWorkerAsync()
 
 
 
-            Reconectar()
+        '      'GenerarExcel(dgvPrestamos.dgvVista)
+        '      Dim EnProgreso As New Form
+        '      Try
+        '          EnProgreso.ControlBox = False
+        '          EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+        '          EnProgreso.Size = New Point(430, 30)
+        '          EnProgreso.StartPosition = FormStartPosition.CenterScreen
+        '          EnProgreso.TopMost = True
+        '          Dim timer As New Timer
 
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
-            & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
-            & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+        '          Dim Etiqueta As New Label
 
-            tabEmp.Fill(fac.Tables("membreteenca"))
-            Reconectar()
-            Dim consultatxt = ""
 
-            If rdvigentes.Checked = True Then
-                consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,
-        (SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "',interval 1 month))) as VencActual, 
-		(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
-        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
-        (select count(*) from rym_detalle_prestamo as DTP 
-	    	where DTP.ID_PRESTAMO 
-		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
-            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
-            )AS MESES_DEBE,
-        (select count(*) from rym_detalle_prestamo as DTP 
-		    where DTP.ID_PRESTAMO 
-		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
-            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
-            )AS MOROSO_MESES,        
-        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
-        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
-        pr.OBSERVACIONES,
-        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
-        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
-        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
-        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
-        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor, pr.COBRADOR
-        FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1" &
-                fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & cobradorBusq & orderBy
-            ElseIf rdAVencer.Checked = True Then
-                consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
-        (SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
-        (select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
-        cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
-        (select count(*) from rym_detalle_prestamo as DTP 
-	    	where DTP.ID_PRESTAMO 
-		    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
-            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
-            )AS MESES_DEBE,
-        (select count(*) from rym_detalle_prestamo as DTP 
-		    where DTP.ID_PRESTAMO 
-		    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
-            and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
-            )AS MOROSO_MESES,        
-        round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
-        ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,
-        pr.OBSERVACIONES,
-        (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
-        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
-        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
-        itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
-        date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
-        cl.vendedor, pr.COBRADOR
-        FROM rym_prestamo as pr, fact_clientes as cl
-        where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
-        having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & cobradorBusq & orderBy
+        '          Etiqueta.AutoSize = True
+        '          Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+        '          Etiqueta.Location = New Point(5, 5)
 
-            End If
+
+        '          EnProgreso.Controls.Add(Etiqueta)
+        '          'Dim Barra As New ProgressBar
+        '          'Barra.Style = ProgressBarStyle.Marquee
+        '          'Barra.Size = New Point(270, 40)
+        '          'Barra.Location = New Point(10, 30)
+        '          'Barra.Value = 100
+        '          'EnProgreso.Controls.Add(Barra)
+        '          EnProgreso.Show()
+        '          Application.DoEvents()
+
+        '          'Dim idFactura As Integer = dtfacturas.CurrentRow.Cells(0).Value
+        '          'Dim tabIVComp As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '          Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '          Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+        '          Dim fac As New datosfacturas
+
+        '          Dim desde As String = Format(CDate(dtdesdefact.Value), "yyyy-MM-dd")
+        '          'Dim hasta As String = Format(CDate(dthastafact.Value), "yyyy-MM-dd")
+        '          Dim fechaBusq As String = ""
+        '          Dim morosoBusq As String = ""
+        '          Dim clienteBusq As String = ""
+        '          Dim facturadosBusq As String = ""
+        '          Dim vendedorBusq As String = ""
+        '          Dim cobradorBusq As String = ""
+        '          Dim orderBy As String = " order by CLIENTE asc"
+
+        '          fechaBusq = " having FIN >= date_add('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "', interval -1 day)" ' and FIN >="
+
+        '          If chkSoloMorosos.Checked = True Then
+        '              morosoBusq = " and MOROSO_MESES>0 "
+        '          End If
+
+        '          If txtbuscar.Text <> "" Then
+        '              clienteBusq = " and CLIENTE LIKE '%" & txtbuscar.Text.Replace(" ", "%") & "%' or ID_PRESTAMO LIKE '" & txtbuscar.Text.Trim & "'"
+        '          End If
+
+        '          If chksinFact.Checked = True Then
+        '              facturadosBusq = " and FACTURA_ACTUAL IS NULL "
+        '          End If
+
+        '          If cmbvendedor.SelectedIndex <> -1 Then
+        '              vendedorBusq = " and vendedor like " & cmbvendedor.SelectedValue
+        '          End If
+
+        '          If cmbcobrador.SelectedIndex <> -1 Then
+        '              cobradorBusq = " and COBRADOR like " & cmbcobrador.SelectedValue
+        '          End If
 
 
 
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand(consultatxt, conexionPrinc)
-            tabFac.SelectCommand.CommandTimeout = 300
-            ' MsgBox(tabFac.SelectCommand.CommandText)
-            tabFac.SelectCommand.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
-            '.Add("@DIASMORA", txtdiasmora.Text)
-            tabFac.Fill(fac.Tables("datosOrdenPublicidad"))
+        '          Reconectar()
 
-            Dim imprimirx As New imprimirFX
-            Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)
-            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", cmbvendedor.Text))
-            parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("cobrador", cmbcobrador.Text))
+        '          tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
+        '          & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
+        '          & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
+        '          & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
 
-            With imprimirx
-                .MdiParent = Me.MdiParent
-                .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoOrdenes.rdlc"
-                .rptfx.LocalReport.DataSources.Clear()
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
-                .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("datosOrdenPublicidad")))
-                .rptfx.LocalReport.SetParameters(parameters)
-                .rptfx.DocumentMapCollapsed = True
-                .rptfx.RefreshReport()
-                .Show()
-            End With
-            EnProgreso.Close()
-        Catch ex As Exception
-            EnProgreso.Close()
-            MsgBox(ex.Message)
-        End Try
+        '          tabEmp.Fill(fac.Tables("membreteenca"))
+        '          Reconectar()
+        '          Dim consultatxt = ""
+
+        '          If rdvigentes.Checked = True Then
+        '              consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO,
+        '      (SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "',interval 1 month))) as VencActual, 
+        '(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
+        '      cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+        '      (select count(*) from rym_detalle_prestamo as DTP 
+        '   	where DTP.ID_PRESTAMO 
+        '    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+        '          and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+        '          )AS MESES_DEBE,
+        '      (select count(*) from rym_detalle_prestamo as DTP 
+        '    where DTP.ID_PRESTAMO 
+        '    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+        '          and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+        '          )AS MOROSO_MESES,        
+        '      round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        '      ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,        
+        '      pr.OBSERVACIONES,
+        '      (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        '      fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        '      itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        '      itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        '      date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+        '      cl.vendedor, pr.COBRADOR
+        '      FROM rym_prestamo as pr, fact_clientes as cl
+        '      where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1" &
+        '              fechaBusq & morosoBusq & clienteBusq & facturadosBusq & vendedorBusq & cobradorBusq & orderBy
+        '          ElseIf rdAVencer.Checked = True Then
+        '              consultatxt = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, 
+        '      (SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, 
+        '      (select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN,
+        '      cl.idclientes,cl.nomapell_razon as CLIENTE,pr.DESCRIPCION as DESCRIPCION,        
+        '      (select count(*) from rym_detalle_prestamo as DTP 
+        '   	where DTP.ID_PRESTAMO 
+        '    not in (select id FROM rym_pagos as pg where pg.PERIODO=DTP.PERIODO and DTP.ID_PRESTAMO=pr.ID_PRESTAMO)
+        '          and DTP.ID_PRESTAMO=pr.ID_PRESTAMO
+        '          )AS MESES_DEBE,
+        '      (select count(*) from rym_detalle_prestamo as DTP 
+        '    where DTP.ID_PRESTAMO 
+        '    not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO)
+        '          and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA
+        '          )AS MOROSO_MESES,        
+        '      round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, 
+        '      ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2)AS SALDO, pr.CONCEPTO,
+        '      pr.OBSERVACIONES,
+        '      (select concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
+        '      fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
+        '      itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and
+        '      itm.plu like concat('%#',pr.ID_PRESTAMO,'%') and
+        '      date_format(fact.fecha,'%Y-%m') = date_format(now(),'%Y-%m') limit 1) AS FACTURA_ACTUAL,		
+        '      cl.vendedor, pr.COBRADOR
+        '      FROM rym_prestamo as pr, fact_clientes as cl
+        '      where pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1
+        '      having date_format(FIN,'%Y-%m') = date_format('" & Format(dtdesdefact.Value, "yyyy-MM-dd") & "','%Y-%m')" & vendedorBusq & cobradorBusq & orderBy
+
+        '          End If
+
+
+
+        '          tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand(consultatxt, conexionPrinc)
+        '          tabFac.SelectCommand.CommandTimeout = 300
+        '          ' MsgBox(tabFac.SelectCommand.CommandText)
+        '          tabFac.SelectCommand.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
+        '          '.Add("@DIASMORA", txtdiasmora.Text)
+        '          tabFac.Fill(fac.Tables("datosOrdenPublicidad"))
+
+        '          Dim imprimirx As New imprimirFX
+        '          Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)
+        '          parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("vendedor", cmbvendedor.Text))
+        '          parameters.Add(New Microsoft.Reporting.WinForms.ReportParameter("cobrador", cmbcobrador.Text))
+
+        '          With imprimirx
+        '              .MdiParent = Me.MdiParent
+        '              .rptfx.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+        '              .rptfx.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\listadoOrdenes.rdlc"
+        '              .rptfx.LocalReport.DataSources.Clear()
+        '              .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("membreteenca", fac.Tables("membreteenca")))
+        '              .rptfx.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("items", fac.Tables("datosOrdenPublicidad")))
+        '              .rptfx.LocalReport.SetParameters(parameters)
+        '              .rptfx.DocumentMapCollapsed = True
+        '              .rptfx.RefreshReport()
+        '              .Show()
+        '          End With
+        '          EnProgreso.Close()
+        '      Catch ex As Exception
+        '          EnProgreso.Close()
+        '          MsgBox(ex.Message)
+        '      End Try
+
+        frmprincipal.pbprincipal.Visible = True
+        frmprincipal.pbprincipal.Style = ProgressBarStyle.Marquee
+        frmprincipal.pbprincipal.MarqueeAnimationSpeed = 30
+
+        CargarExcelAsync.RunWorkerAsync()
 
     End Sub
 
@@ -643,7 +666,7 @@ Public Class listadoPublicidades
             publi.id_prestamo=dp.id_prestamo and
             year(publi.fecha)=@anio
             group by id
-            order by cli.nomapell_razon asc", conexionPrinc)
+            order by cli.nomapell_razon asc,publi.ID_PRESTAMO asc", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
             consulta.SelectCommand.CommandTimeout = 300
@@ -696,7 +719,7 @@ Public Class listadoPublicidades
                 publi.ID_PRESTAMO = publiDet.ID_PRESTAMO and 
                 year(publi.fecha)=@anio
                 having ESTADO LIKE '" & estadoInforme & "'" & periodosCancelados & "
-                order by cli.nomapell_razon ASC, VENCIMIENTO  asc", conexionPrinc)
+                order by cli.nomapell_razon ASC, publiDet.ID_PRESTAMO asc, VENCIMIENTO  asc", conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
             consulta.SelectCommand.CommandTimeout = 300
@@ -760,24 +783,35 @@ Public Class listadoPublicidades
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
         Try
             Dim i As Integer
-            For i = 0 To Me.MdiChildren.Length - 1
-                If MdiChildren(i).Name = "NvaPublicidad" Then
-                    Me.MdiChildren(i).BringToFront()
+            For i = 0 To frmprincipal.MdiChildren.Count - 1
+                If frmprincipal.MdiChildren(i).Name = "NvaPublicidad" Then
+                    frmprincipal.MdiChildren(i).BringToFront()
+                    With CType(frmprincipal.MdiChildren(i), NvaPublicidad)
+                        .txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+                        .txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+                        .diasMora = txtdiasmora.Text
+                        .NvaPubli = False
+                        .cmdGuardarEditar.Enabled = False
+                        .btnCalcular.Enabled = False
+                        .btnPagar.Enabled = True
+                        .CargarDetalle()
+                    End With
                     Exit Sub
                 End If
             Next
 
-            Dim tec As New NvaPublicidad
-            tec.MdiParent = Me.MdiParent
-            tec.Show()
-            tec.txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-            tec.txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-            tec.NvaPubli = False
-            tec.cmdGuardarEditar.Enabled = False
-            tec.btnCalcular.Enabled = False
-            tec.btnPagar.Enabled = True
-            tec.diasMora = txtdiasmora.Text
-            'tec.idVendedor = dgvInformes.dgvVista.CurrentRow.Cells("VENDEDOR").Value
+            Dim form As New NvaPublicidad
+            form.MdiParent = Me.MdiParent
+            form.Show()
+            form.txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+            form.txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+            form.NvaPubli = False
+            form.cmdGuardarEditar.Enabled = False
+            form.btnCalcular.Enabled = False
+            form.btnPagar.Enabled = True
+            form.diasMora = txtdiasmora.Text
+
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -786,12 +820,18 @@ Public Class listadoPublicidades
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Try
             Dim i As Integer
-            For i = 0 To Me.MdiChildren.Length - 1
-                If MdiChildren(i).Name = "CONTABLE" Then
-                    Me.MdiChildren(i).Close()
+            For i = 0 To frmprincipal.MdiChildren.Count - 1
+                If frmprincipal.MdiChildren(i).Name = "CONTABLE" Then
+                    frmprincipal.MdiChildren(i).BringToFront()
+                    With CType(frmprincipal.MdiChildren(i), CONTABLE)
+                        .txtcuentabus.Text = dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value
+                        .txtcliebus.Text = dgvInformes.dgvVista.CurrentRow.Cells("nomapell_razon").Value.ToString.ToUpper
+                        .cargarCuentaClie(Val(dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value))
+                        .tabcontable.SelectedTab = .tabcuentasclientes
+                    End With
+                    Exit Sub
                 End If
             Next
-
             Dim ventana As New CONTABLE
             ventana.MdiParent = Me.MdiParent
             With ventana
@@ -801,6 +841,8 @@ Public Class listadoPublicidades
                 .cargarCuentaClie(Val(dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value))
                 .tabcontable.SelectedTab = .tabcuentasclientes
             End With
+
+
         Catch ex As Exception
 
         End Try
@@ -812,6 +854,46 @@ Public Class listadoPublicidades
 
     Private Sub CargarListadoOrdenesAsync_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarListadoOrdenesAsync.RunWorkerCompleted
         frmprincipal.pbprincipal.Visible = False
+        frmprincipal.lblprocesando.Visible = False
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        Try
+            Dim i As Integer
+            For i = 0 To frmprincipal.MdiChildren.Count - 1
+                If frmprincipal.MdiChildren(i).Name = "CONTABLE" Then
+                    frmprincipal.MdiChildren(i).BringToFront()
+                    With CType(frmprincipal.MdiChildren(i), CONTABLE)
+                        .txtcuentabus.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("idClientes").Value
+                        .txtcliebus.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("CLIENTE").Value.ToString.ToUpper
+                        .cargarCuentaClie(Val(dgvPrestamos.dgvVista.CurrentRow.Cells("idClientes").Value))
+                        .tabcontable.SelectedTab = .tabcuentasclientes
+                    End With
+                    Exit Sub
+                End If
+            Next
+            Dim ventana As New CONTABLE
+            ventana.MdiParent = Me.MdiParent
+            With ventana
+                .Show()
+                .txtcuentabus.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("idClientes").Value
+                .txtcliebus.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("CLIENTE").Value.ToString.ToUpper
+                .cargarCuentaClie(Val(dgvPrestamos.dgvVista.CurrentRow.Cells("idClientes").Value))
+                .tabcontable.SelectedTab = .tabcuentasclientes
+            End With
+
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub CargarExcelAsyncListadoOR_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarExcelAsyncListadoOR.DoWork
+        GenerarExcelDT(dgvPrestamos.todos_los_datos)
+    End Sub
+
+    Private Sub CargarExcelAsyncListadoOR_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarExcelAsyncListadoOR.RunWorkerCompleted
+        frmprincipal.pbprincipal.Visible = False
+
         frmprincipal.lblprocesando.Visible = False
     End Sub
 End Class

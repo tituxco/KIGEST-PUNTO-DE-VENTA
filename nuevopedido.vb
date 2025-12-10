@@ -261,7 +261,7 @@
     Public Sub cargarCliente()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(cl.nomapell_razon,' (tel:', cl.telefono, '-', cl.celular,')') as clie, cl.dir_domicilio, lc.nombre," _
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(cl.nomapell_razon,' (tel-', cl.telefono, '-', cl.celular,')') as clie, cl.dir_domicilio, lc.nombre," _
             & " cl.iva_tipo, cl.cuit, cl.lista_precios from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow

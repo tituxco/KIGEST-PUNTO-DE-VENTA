@@ -911,33 +911,48 @@ Public Class reimpresionComprobantes
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Try
 
+            Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
+
+                Dim carpetaAlmacenamiento As String = ""
+
+                If My.Settings.capetaAlmacenamDocum = "" Then
+                    FolderDialog.ShowDialog()
+                    If FolderDialog.SelectedPath <> "" Then
+                        My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+                        My.Settings.Save()
+                    End If
+                End If
+
+                carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
+
+                Dim ptovta As Integer = dtfacturas.CurrentRow.Cells("ptovta").Value
+                IdFactura = dtfacturas.CurrentRow.Cells(0).Value
+                'Dim para As String = ""
 
 
-            Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
-            IdFactura = dtfacturas.CurrentRow.Cells(0).Value
-            Dim para As String = ""
+                Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+                Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+                Dim fac As New datosfacturas
 
+                Reconectar()
 
-            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim fac As New datosfacturas
-
-            Reconectar()
-
-            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+                tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
-            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
-            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email,cl.celular as celular  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
 
-            tabEmp.Fill(fac.Tables("factura_enca"))
-            Reconectar()
+                tabEmp.Fill(fac.Tables("factura_enca"))
+                Reconectar()
 
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+                tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
             plu,
             format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
             format(replace(iva,',','.'),2,'es_AR') as iva ,
@@ -946,32 +961,36 @@ Public Class reimpresionComprobantes
             plu as codigo
             from fact_items where id_fact=" & IdFactura, conexionPrinc)
 
-            tabFac.Fill(fac.Tables("facturax"))
-            para = fac.Tables("factura_enca").Rows(0).Item("email")
-            para = InputBox("Direccion de correo de destino", "Enviar factura por correo electronico", fac.Tables("factura_enca").Rows(0).Item("email"))
-            If ValidarDireccionEmail(para) = True Then
-                Dim NMReporte As String = ""
+                tabFac.Fill(fac.Tables("facturax"))
 
-                Select Case dtfacturas.CurrentRow.Cells(9).Value
+            'MsgBox(FolderDialog.SelectedPath)
+            '...
+
+            'If FolderDialog.SelectedPath <> "" Then
+            Dim NMReporte As String = ""
+
+            Dim telClieTemp As String = obtenerDatosClienteDesdeFactura(IdFactura)
+
+            Dim telefono As String = InputBox("ingrese el telefono al que enviar el whatsapp:", "enviar archivo por whatsapp", telClieTemp)
+            If Not String.IsNullOrEmpty(telefono) Then
+                Select Case dtfacturas.CurrentRow.Cells("tipofact").Value
                     Case 1 To 3, 6 To 8, 11 To 13
                         NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
                     Case Else
                         NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
                 End Select
+                ' MsgBox(FolderDialog.SelectedPath)
+                Dim ApellidoRazon As String = fac.Tables("factura_enca").Rows(0).Item("facrazon")
+                Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & "(" & ApellidoRazon & ")" & ".pdf"
+                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+                MsgBox("Comprobante guardado en carpeta por defecto: " & carpetaAlmacenamiento & nombreArchivo)
+                'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+                'End If
 
-                Dim TextoEmail As String = "Cordial saludo:" & vbNewLine & "En este correo se adjunta la factura " &
-                    dtfacturas.CurrentRow.Cells("factnum").Value & " con fecha de emisión " & dtfacturas.CurrentRow.Cells("fecha").Value.ToString &
-                    ", gracias por confiar en nosotros. " & vbNewLine &
-                    "De considerarlo necesario responda este mail directamente y seguiremos en contacto." & vbNewLine &
-                    "Atentamente: " & vbNewLine & DatosAcceso.sistema
-
-                Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
-                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), Application.StartupPath & "\", nombreArchivo, NMReporte)
-
-                EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment(Application.StartupPath & "\" & nombreArchivo))
-            Else
-                MsgBox("La direccion de correo ingresada no es valida o no tiene el formato correcto")
+                System.Diagnostics.Process.Start("https://api.whatsapp.com/send?phone=" & telefono & "&text=Hola%2C%20te%20envio%20la%20factura%20")
+                Process.Start("explorer.exe", My.Settings.capetaAlmacenamDocum)
             End If
+
         Catch ex As Exception
 
         End Try
@@ -981,7 +1000,17 @@ Public Class reimpresionComprobantes
         Try
             Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
 
-            FolderDialog.ShowDialog()
+            Dim carpetaAlmacenamiento As String = ""
+
+            If My.Settings.capetaAlmacenamDocum = "" Then
+                FolderDialog.ShowDialog()
+                If FolderDialog.SelectedPath <> "" Then
+                    My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+                    My.Settings.Save()
+                End If
+            End If
+
+            carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
 
             Dim ptovta As Integer = dtfacturas.CurrentRow.Cells("ptovta").Value
             IdFactura = dtfacturas.CurrentRow.Cells(0).Value
@@ -998,7 +1027,7 @@ Public Class reimpresionComprobantes
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
@@ -1024,8 +1053,8 @@ Public Class reimpresionComprobantes
             'MsgBox(FolderDialog.SelectedPath)
             '...
 
-            If FolderDialog.SelectedPath <> "" Then
-                Dim NMReporte As String = ""
+            'If FolderDialog.SelectedPath <> "" Then
+            Dim NMReporte As String = ""
 
                 Select Case dtfacturas.CurrentRow.Cells("tipofact").Value
                     Case 1 To 3, 6 To 8, 11 To 13
@@ -1033,13 +1062,13 @@ Public Class reimpresionComprobantes
                     Case Else
                         NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
                 End Select
-                MsgBox(FolderDialog.SelectedPath)
-
-                Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & ".pdf"
-                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), FolderDialog.SelectedPath & "\", nombreArchivo, NMReporte)
-                MsgBox("Comprobante guardado")
-                'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
-            End If
+            ' MsgBox(FolderDialog.SelectedPath)
+            Dim ApellidoRazon As String = fac.Tables("factura_enca").Rows(0).Item("facrazon")
+            Dim nombreArchivo As String = dtfacturas.CurrentRow.Cells("factnum").Value & "(" & ApellidoRazon & ")" & ".pdf"
+            GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+            MsgBox("Comprobante guardado en carpeta por defecto: " & carpetaAlmacenamiento & nombreArchivo)
+            'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+            'End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -1079,5 +1108,175 @@ Public Class reimpresionComprobantes
 
     Private Sub Button9_Click(sender As Object, e As EventArgs) Handles Button9.Click
         GenerarExcel(dgvlistadoCobranza)
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+
+    End Sub
+
+    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+        Try
+            Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
+
+            Dim carpetaAlmacenamiento As String = ""
+
+            If My.Settings.capetaAlmacenamDocum = "" Then
+                FolderDialog.ShowDialog()
+                If FolderDialog.SelectedPath <> "" Then
+                    My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+                    My.Settings.Save()
+                End If
+            End If
+
+            carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
+
+            Dim ptovta As Integer = dgvlistadoCobranza.CurrentRow.Cells("ptovta").Value
+            IdFactura = dgvlistadoCobranza.CurrentRow.Cells(0).Value
+            'Dim para As String = ""
+
+
+            Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+            Dim fac As New datosfacturas
+
+            Reconectar()
+
+            tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+
+            tabEmp.Fill(fac.Tables("factura_enca"))
+            Reconectar()
+
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+            plu,
+            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
+            format(replace(iva,',','.'),2,'es_AR') as iva ,
+            format(replace(punit,',','.'),2,'es_AR') as punit ,
+            format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
+            plu as codigo
+            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+
+            tabFac.Fill(fac.Tables("facturax"))
+
+            'MsgBox(FolderDialog.SelectedPath)
+            '...
+
+            'If FolderDialog.SelectedPath <> "" Then
+            Dim NMReporte As String = ""
+
+            Select Case dgvlistadoCobranza.CurrentRow.Cells("tipofact").Value
+                Case 1 To 3, 6 To 8, 11 To 13
+                    NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+                Case Else
+                    NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+            End Select
+            ' MsgBox(FolderDialog.SelectedPath)
+            Dim ApellidoRazon As String = fac.Tables("factura_enca").Rows(0).Item("facrazon")
+            Dim nombreArchivo As String = dgvlistadoCobranza.CurrentRow.Cells("factnum").Value & "(" & ApellidoRazon & ")" & ".pdf"
+            GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+            MsgBox("Comprobante guardado en carpeta por defecto: " & carpetaAlmacenamiento & nombreArchivo)
+            'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+            'End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+        Try
+            ' Dim telefono As String = InputBox("ingrese el telefono al que enviar el whatsapp:", "enviar archivo por whatsapp")
+
+            Dim FolderDialog As FolderBrowserDialog = New FolderBrowserDialog
+
+                Dim carpetaAlmacenamiento As String = ""
+
+                If My.Settings.capetaAlmacenamDocum = "" Then
+                    FolderDialog.ShowDialog()
+                    If FolderDialog.SelectedPath <> "" Then
+                        My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+                        My.Settings.Save()
+                    End If
+                End If
+
+                carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
+
+                Dim ptovta As Integer = dgvlistadoCobranza.CurrentRow.Cells("ptovta").Value
+                IdFactura = dgvlistadoCobranza.CurrentRow.Cells(0).Value
+                'Dim para As String = ""
+
+
+                Dim tabFac As New MySql.Data.MySqlClient.MySqlDataAdapter
+                Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
+                Dim fac As New datosfacturas
+
+                Reconectar()
+
+                tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
+            emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
+            emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
+            '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
+            FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
+            fact_puntosventa as ptovta, fact_condventas as condvent  
+            where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
+            fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+
+                tabEmp.Fill(fac.Tables("factura_enca"))
+                Reconectar()
+
+                tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
+            plu,
+            format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, 
+            format(replace(iva,',','.'),2,'es_AR') as iva ,
+            format(replace(punit,',','.'),2,'es_AR') as punit ,
+            format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
+            plu as codigo
+            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+
+                tabFac.Fill(fac.Tables("facturax"))
+
+            Dim telClieTemp As String = obtenerDatosClienteDesdeFactura(IdFactura)
+
+            Dim telefono As String = InputBox("ingrese el telefono al que enviar el whatsapp:", "enviar archivo por whatsapp", telClieTemp)
+
+
+            If Not String.IsNullOrEmpty(telefono) Then
+                Dim NMReporte As String = ""
+
+                Select Case dgvlistadoCobranza.CurrentRow.Cells("tipofact").Value
+                    Case 1 To 3, 6 To 8, 11 To 13
+                        NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+                    Case Else
+                        NMReporte = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+                End Select
+                ' MsgBox(FolderDialog.SelectedPath)
+                Dim ApellidoRazon As String = fac.Tables("factura_enca").Rows(0).Item("facrazon")
+                Dim nombreArchivo As String = dgvlistadoCobranza.CurrentRow.Cells("factnum").Value & "(" & ApellidoRazon & ")" & ".pdf"
+                GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+                MsgBox("Comprobante guardado en carpeta por defecto: " & carpetaAlmacenamiento & nombreArchivo)
+                'EnviarMail(TextoEmail, para, "Envio de factura " & dtfacturas.CurrentRow.Cells("factnum").Value, New System.Net.Mail.Attachment("d:\" & nombreArchivo))
+                'End If
+
+                System.Diagnostics.Process.Start("https://api.whatsapp.com/send?phone=" & telefono & "&text=Hola%2C%20te%20envio%20la%20factura%20")
+                Process.Start("explorer.exe", My.Settings.capetaAlmacenamDocum)
+            End If
+
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

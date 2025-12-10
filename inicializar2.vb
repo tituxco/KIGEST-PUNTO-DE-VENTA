@@ -56,10 +56,10 @@ Public Class frmInicializar2
                             If comprobar_tablas_princ() = True Then
                                 If DatosAcceso.debe = 1 Then 'MENSAJE DE DEUDA
                                     MsgBox("ATENCION: SU CUENTA DE CLOUDING REGISTRA DEUDA" & vbNewLine &
-                                           "POR FAVOR REGULARICE SU SITUACION, COMUNIQUESE AL TEL: 3482-621473" & vbNewLine & DatosAcceso.mensaje)
+                                           "POR FAVOR REGULARICE SU SITUACION, COMUNIQUESE AL tel- 3482-621473" & vbNewLine & DatosAcceso.mensaje)
                                 ElseIf DatosAcceso.debe = 2 Then 'solo un mensaje
                                     MsgBox("ATENCION MENSAJE DEL ADMINISTRADOR;" & vbNewLine & DatosAcceso.mensaje & vbNewLine &
-                                           "POR CUALQUIER DUDA, COMUNIQUESE AL TEL: 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR" & vbNewLine)
+                                           "POR CUALQUIER DUDA, COMUNIQUESE AL tel- 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR" & vbNewLine)
                                 End If
                                 frmprincipal.Show()
                                 Me.Close()

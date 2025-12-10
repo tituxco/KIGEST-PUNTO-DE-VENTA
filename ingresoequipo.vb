@@ -341,7 +341,7 @@
             & "concat('MARCA/MODELO: ', ma.nombre,'/', mo.nombre) as equipomarcamodelo, " _
             & "concat('ACCESORIOS: ',tall.accesorios) as accesorios, " _
             & "concat('MOTIVO: ', tall.motivo_ing) as motivo, " _
-            & "concat('DIRECCION: ', cl.dir_domicilio,'TEL: ',cl.telefono,'| CEL: ',cl.celular) as clientedire, " _
+            & "concat('DIRECCION: ', cl.dir_domicilio,'tel- ',cl.telefono,'| CEL: ',cl.celular) as clientedire, " _
             & "concat('SERIE: ', tall.serie) as equiposerie " _
             & "from tecni_taller as tall, fact_clientes as cl, cm_usuarios as us, fact_marcas as ma, fact_modelos as mo, tecni_equipos_tipo as et, " _
             & "tecni_equipos as eq " _

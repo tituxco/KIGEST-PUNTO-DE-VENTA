@@ -213,8 +213,8 @@ Public Class NvaPublicidad
         da.Fill(ds)
 
         If ds.Tables(0).Rows.Count > 0 And NvaPubli = False Then
-            dgvPublicidad.Columns.Clear()
-            dgvPublicidad.Rows.Clear()
+            'dgvPublicidad.Columns.Clear()
+            'dgvPublicidad.Rows.Clear()
             dgvPublicidad.DataSource = ds.Tables(0)
             dgvPublicidad.Columns("ID").Visible = False
             dgvPublicidad.Columns("PERIODO").Visible = False
@@ -257,7 +257,7 @@ Public Class NvaPublicidad
         CargarDetalle()
     End Sub
 
-    Private Sub CargarDetalle()
+    Public Sub CargarDetalle()
         Try
             Consultas("select DTP.ID,
         IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,

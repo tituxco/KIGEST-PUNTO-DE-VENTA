@@ -15,9 +15,6 @@ Module funciones_Globales
 
     Public idFactura As Integer
     Public NombreEquipo As String = My.Computer.Name
-
-
-
     Public Function GetMd5Hash(ByVal input As String) As String
 
         '    //using SHA256 md5 = SHA256.Create(); ///debemos usar este hay que implementarlo gradualmente y con cambio de contraseña
@@ -34,6 +31,27 @@ Module funciones_Globales
 
         Next
         Return builder.ToString()
+
+    End Function
+
+
+    Public Function obtenerDatosClienteDesdeFactura(idFactura As Integer) As String
+        'SE OBTIENE SOLO TELEFONO POR AHORA
+        Dim consulta As String = ""
+        Reconectar()
+
+        Dim consText As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+            fac.razon as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr, 
+            fac.cuit as faccuit, fac.vendedor as facvend, fac.condvta as faccondvta, fac.total, fac.ptovta, fac.id_cliente,fac.tipofact, fac.remito,fac.fecha, 
+            fac.observaciones,cl.idclientes,cl.celular
+            FROM fact_facturas as fac,fact_clientes as cl  
+            where fac.id_cliente  = cl.idclientes and  fac.id=" & idFactura, conexionPrinc)
+        Dim tabla As New DataTable
+        consText.Fill(tabla)
+
+        Return tabla.Rows(0).Item("celular")
+
+
 
     End Function
     Public Function ConvertirCMaPX(cm As Double) As Integer
@@ -1716,7 +1734,7 @@ Module funciones_Globales
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
@@ -1836,7 +1854,7 @@ Module funciones_Globales
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel- ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
             FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,
@@ -1883,7 +1901,7 @@ Module funciones_Globales
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
             concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
-            concat(fac.id_cliente,'-',fac.razon,' - tel: ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
+            concat(fac.id_cliente,'-',fac.razon,' - tel- ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             fac.observaciones as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
             FROM fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac,

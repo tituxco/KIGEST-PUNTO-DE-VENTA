@@ -67,6 +67,9 @@ Partial Class ConfiguracionTerminal
         Me.Label11 = New System.Windows.Forms.Label()
         Me.txtPtoVtaElect = New System.Windows.Forms.TextBox()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.txtcarpetaPDF = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -224,7 +227,7 @@ Partial Class ConfiguracionTerminal
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(7, 420)
+        Me.Button18.Location = New System.Drawing.Point(7, 481)
         Me.Button18.Name = "Button18"
         Me.Button18.Size = New System.Drawing.Size(136, 23)
         Me.Button18.TabIndex = 117
@@ -482,19 +485,49 @@ Partial Class ConfiguracionTerminal
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(149, 420)
+        Me.Button1.Location = New System.Drawing.Point(149, 481)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(136, 23)
         Me.Button1.TabIndex = 155
         Me.Button1.Text = "cambiar Terminal"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'txtcarpetaPDF
+        '
+        Me.txtcarpetaPDF.Location = New System.Drawing.Point(173, 407)
+        Me.txtcarpetaPDF.Name = "txtcarpetaPDF"
+        Me.txtcarpetaPDF.Size = New System.Drawing.Size(192, 20)
+        Me.txtcarpetaPDF.TabIndex = 157
+        Me.txtcarpetaPDF.Text = "0"
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.Location = New System.Drawing.Point(8, 407)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(159, 16)
+        Me.Label12.TabIndex = 156
+        Me.Label12.Text = "Carpeta archivos PDF"
+        '
+        'Button2
+        '
+        Me.Button2.Location = New System.Drawing.Point(371, 407)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(29, 23)
+        Me.Button2.TabIndex = 158
+        Me.Button2.Text = "..."
+        Me.Button2.UseVisualStyleBackColor = True
+        '
         'ConfiguracionTerminal
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(497, 455)
+        Me.ClientSize = New System.Drawing.Size(497, 516)
+        Me.Controls.Add(Me.Button2)
+        Me.Controls.Add(Me.txtcarpetaPDF)
+        Me.Controls.Add(Me.Label12)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label11)
         Me.Controls.Add(Me.txtPtoVtaElect)
@@ -593,4 +626,7 @@ Partial Class ConfiguracionTerminal
     Friend WithEvents Label11 As Label
     Friend WithEvents txtPtoVtaElect As TextBox
     Friend WithEvents Button1 As Button
+    Friend WithEvents txtcarpetaPDF As TextBox
+    Friend WithEvents Label12 As Label
+    Friend WithEvents Button2 As Button
 End Class
