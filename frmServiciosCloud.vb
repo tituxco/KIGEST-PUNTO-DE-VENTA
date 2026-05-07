@@ -36,14 +36,26 @@
         trvmodulos.ExpandAll()
         CargaServiciosCloud()
     End Sub
-    Private Sub ObtenerCadenaTreeView(ByRef Nodos As TreeNodeCollection)
+    Private Sub ObtenerCadenaTreeView(ByRef n As TreeNode)
 
-        For Each Nodo As TreeNode In Nodos
-            If Nodo.Nodes.Count = 0 Then
-                If Nodo.Checked = True Then cadena &= "-" & Nodo.Tag
-            Else
-                ObtenerCadenaTreeView(Nodo.Nodes)
-            End If
+        '*** Es aquí donde añado lo que necesito guardar de cada nodo ***  
+        Dim aNode As TreeNode
+        'Por cada nodo de la raíz
+        If n.Checked = True Then
+            cadena &= "-" & n.Tag
+        End If
+        'cadena &= "-" & aNode.Tag
+        For Each aNode In n.Nodes
+            ObtenerCadenaTreeView(aNode)
+
+        Next
+    End Sub
+
+    Private Sub llamarPrint(ByRef raiz As TreeView)
+        Dim n As TreeNode
+        'Por cada raíz
+        For Each n In raiz.Nodes
+            ObtenerCadenaTreeView(n)
         Next
     End Sub
     Private Sub EstablecerModulosTreeView(ByRef Nodos As TreeNodeCollection)
@@ -103,7 +115,7 @@
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
 
         cadena = ""
-        ObtenerCadenaTreeView(trvmodulos.Nodes)
+        llamarPrint(trvmodulos)
         MsgBox(cadena)
 
         If MsgBox("esta seguro que desea actualizar los privilegios de este cliente?", vbYesNo + vbQuestion) = vbNo Then
@@ -307,7 +319,7 @@
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         cadena = ""
-        ObtenerCadenaTreeView(trvmodulos.Nodes)
+        llamarPrint(trvmodulos)
         MsgBox(cadena)
     End Sub
 End Class

@@ -53,6 +53,7 @@ Partial Class frmprincipal
         Me.FacturaA = New System.Windows.Forms.ToolStripMenuItem()
         Me.RemitosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ReimpresiónDeComprobantesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DemonvoptovtaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.cmdadministracion = New System.Windows.Forms.ToolStripMenuItem()
         Me.InformesDeVentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContableToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
@@ -65,6 +66,7 @@ Partial Class frmprincipal
         Me.CLOUDSERVERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TALLERToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.PublicidadToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ACADEMIAToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.EmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ListaDeEmpleadosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LiquidaciónDeSueldosToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -275,7 +277,7 @@ Partial Class frmprincipal
         '
         'cmdfacturacion
         '
-        Me.cmdfacturacion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaEfacturaToolStripMenuItem, Me.NuevoPedidoToolStripMenuItem, Me.reciboconsfinal, Me.facturabconsfinal, Me.FacturaA, Me.RemitosToolStripMenuItem, Me.ReimpresiónDeComprobantesToolStripMenuItem})
+        Me.cmdfacturacion.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaEfacturaToolStripMenuItem, Me.NuevoPedidoToolStripMenuItem, Me.reciboconsfinal, Me.facturabconsfinal, Me.FacturaA, Me.RemitosToolStripMenuItem, Me.ReimpresiónDeComprobantesToolStripMenuItem, Me.DemonvoptovtaToolStripMenuItem})
         Me.cmdfacturacion.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdfacturacion.ForeColor = System.Drawing.Color.White
         Me.cmdfacturacion.Image = CType(resources.GetObject("cmdfacturacion.Image"), System.Drawing.Image)
@@ -358,6 +360,12 @@ Partial Class frmprincipal
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Name = "ReimpresiónDeComprobantesToolStripMenuItem"
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
         Me.ReimpresiónDeComprobantesToolStripMenuItem.Text = "Comprobantes emitidos"
+        '
+        'DemonvoptovtaToolStripMenuItem
+        '
+        Me.DemonvoptovtaToolStripMenuItem.Name = "DemonvoptovtaToolStripMenuItem"
+        Me.DemonvoptovtaToolStripMenuItem.Size = New System.Drawing.Size(242, 38)
+        Me.DemonvoptovtaToolStripMenuItem.Text = "PRB (DEMO) NO USAR"
         '
         'cmdadministracion
         '
@@ -450,7 +458,7 @@ Partial Class frmprincipal
         '
         'cmdServicios
         '
-        Me.cmdServicios.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CLOUDSERVERToolStripMenuItem, Me.TALLERToolStripMenuItem, Me.PublicidadToolStripMenuItem})
+        Me.cmdServicios.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CLOUDSERVERToolStripMenuItem, Me.TALLERToolStripMenuItem, Me.PublicidadToolStripMenuItem, Me.ACADEMIAToolStripMenuItem})
         Me.cmdServicios.Font = New System.Drawing.Font("Segoe UI", 10.0!)
         Me.cmdServicios.ForeColor = System.Drawing.Color.White
         Me.cmdServicios.Image = Global.SIGT__KIGEST.My.Resources.Resources.services_32px
@@ -490,6 +498,14 @@ Partial Class frmprincipal
         Me.PublicidadToolStripMenuItem.Name = "PublicidadToolStripMenuItem"
         Me.PublicidadToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
         Me.PublicidadToolStripMenuItem.Text = "PUBLICIDAD"
+        '
+        'ACADEMIAToolStripMenuItem
+        '
+        Me.ACADEMIAToolStripMenuItem.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.ACADEMIAToolStripMenuItem.ForeColor = System.Drawing.Color.White
+        Me.ACADEMIAToolStripMenuItem.Name = "ACADEMIAToolStripMenuItem"
+        Me.ACADEMIAToolStripMenuItem.Size = New System.Drawing.Size(191, 38)
+        Me.ACADEMIAToolStripMenuItem.Text = "ACADEMIA"
         '
         'EmpleadosToolStripMenuItem
         '
@@ -695,4 +711,6 @@ Partial Class frmprincipal
     Friend WithEvents btnNotificaciones As ToolStripMenuItem
     Friend WithEvents cmbempresas As ToolStripComboBox
     Friend WithEvents lblprocesando As ToolStripStatusLabel
+    Friend WithEvents DemonvoptovtaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ACADEMIAToolStripMenuItem As ToolStripMenuItem
 End Class

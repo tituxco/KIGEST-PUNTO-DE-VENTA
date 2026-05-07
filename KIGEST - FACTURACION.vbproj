@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>527</ApplicationRevision>
+    <ApplicationRevision>533</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -257,6 +257,7 @@
     <Compile Include="cheques_en_cartera.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ClasesDatos\GestorPublicidad.vb" />
     <Compile Include="Class1.vb" />
     <Compile Include="Codigos.vb" />
     <Compile Include="comprobar_tablas.vb" />
@@ -291,6 +292,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>datosInformes.xsd</DependentUpon>
     </Compile>
+    <Compile Include="datosEstructura.vb" />
     <Compile Include="datosMysql.vb" />
     <Compile Include="Dialog1.Designer.vb">
       <DependentUpon>Dialog1.vb</DependentUpon>
@@ -374,6 +376,18 @@
     <Compile Include="fichaequipo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmInfoAlumno.Designer.vb">
+      <DependentUpon>frmInfoAlumno.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInfoAlumno.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmInfoServicio.Designer.vb">
+      <DependentUpon>frmInfoServicio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmInfoServicio.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmpagoscompra.Designer.vb">
       <DependentUpon>frmpagoscompra.vb</DependentUpon>
     </Compile>
@@ -384,6 +398,12 @@
       <DependentUpon>frmPagosCompra2.vb</DependentUpon>
     </Compile>
     <Compile Include="frmPagosCompra2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmPtoVtaNvo.Designer.vb">
+      <DependentUpon>frmPtoVtaNvo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmPtoVtaNvo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmServiciosCloud.Designer.vb">
@@ -491,10 +511,22 @@
     <Compile Include="listadoPrestamos.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="listadoProductosVenta.Designer.vb">
+      <DependentUpon>listadoProductosVenta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="listadoProductosVenta.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="listadoPublicidades.Designer.vb">
       <DependentUpon>listadoPublicidades.vb</DependentUpon>
     </Compile>
     <Compile Include="listadoPublicidades.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="listadoServicios.Designer.vb">
+      <DependentUpon>listadoServicios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="listadoServicios.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="manejodeprecios.Designer.vb">
@@ -547,6 +579,12 @@
       <DependentUpon>nuevoremito.vb</DependentUpon>
     </Compile>
     <Compile Include="nuevoremito.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="nuevoServicio.Designer.vb">
+      <DependentUpon>nuevoServicio.vb</DependentUpon>
+    </Compile>
+    <Compile Include="nuevoServicio.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="NvaFacturaCompra.Designer.vb">
@@ -629,10 +667,34 @@
     <Compile Include="reciboRapido.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="selAlmacen.Designer.vb">
+      <DependentUpon>selAlmacen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="selAlmacen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selCondVta.Designer.vb">
+      <DependentUpon>selCondVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="selCondVta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="selprod.designer.vb">
       <DependentUpon>selprod.vb</DependentUpon>
     </Compile>
     <Compile Include="selprod.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selProdNvo.Designer.vb">
+      <DependentUpon>selProdNvo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="selProdNvo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selPtoVta.Designer.vb">
+      <DependentUpon>selPtoVta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="selPtoVta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="selVendedor.Designer.vb">
@@ -826,6 +888,24 @@
     <None Include="Resources\iconos\business_chat_64px.png" />
     <None Include="Resources\iconos\forward_message_64px.png" />
     <None Include="Resources\iconos\transfer 64px.png" />
+    <None Include="Resources\Document.png" />
+    <None Include="Resources\Checkout.png" />
+    <None Include="Resources\Print.png" />
+    <None Include="Resources\Users Settings.png" />
+    <None Include="Resources\Edit Pencil.png" />
+    <None Include="Resources\Store Setting.png" />
+    <None Include="Resources\Parcel Cost.png" />
+    <None Include="Resources\Discount.png" />
+    <None Include="Resources\Discount_32.png" />
+    <None Include="Resources\Parcel Cost_32.png" />
+    <None Include="Resources\Store Setting_32.png" />
+    <None Include="Resources\Correct Document.png" />
+    <None Include="Resources\Search_32.png" />
+    <None Include="Resources\vendedor_32.png" />
+    <None Include="Resources\Client_64.png" />
+    <None Include="Resources\tipoFactura_64.png" />
+    <None Include="Resources\Deposit_32.png" />
+    <None Include="Resources\iconos\University.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -887,8 +967,17 @@
     <EmbeddedResource Include="facturarCombustible.resx">
       <DependentUpon>facturarCombustible.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frmInfoAlumno.resx">
+      <DependentUpon>frmInfoAlumno.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmInfoServicio.resx">
+      <DependentUpon>frmInfoServicio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmPagosCompra2.resx">
       <DependentUpon>frmPagosCompra2.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmPtoVtaNvo.resx">
+      <DependentUpon>frmPtoVtaNvo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmServiciosCloud.resx">
       <DependentUpon>frmServiciosCloud.vb</DependentUpon>
@@ -929,8 +1018,14 @@
     <EmbeddedResource Include="listadoPrestamos.resx">
       <DependentUpon>listadoPrestamos.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="listadoProductosVenta.resx">
+      <DependentUpon>listadoProductosVenta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="listadoPublicidades.resx">
       <DependentUpon>listadoPublicidades.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="listadoServicios.resx">
+      <DependentUpon>listadoServicios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="manejodeprecios.resx">
       <DependentUpon>manejodeprecios.vb</DependentUpon>
@@ -1019,6 +1114,9 @@
     <Content Include="reportes\listacarga.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="nuevoServicio.resx">
+      <DependentUpon>nuevoServicio.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="NvaFacturaCompra.resx">
       <DependentUpon>NvaFacturaCompra.vb</DependentUpon>
     </EmbeddedResource>
@@ -1130,8 +1228,23 @@
     <Content Include="reportes\ordenPago.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="reportes\ReciboInterno.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <EmbeddedResource Include="selAlmacen.resx">
+      <DependentUpon>selAlmacen.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selCondVta.resx">
+      <DependentUpon>selCondVta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="selprod.resx">
       <DependentUpon>selprod.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selProdNvo.resx">
+      <DependentUpon>selProdNvo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selPtoVta.resx">
+      <DependentUpon>selPtoVta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="selVendedor.resx">
       <DependentUpon>selVendedor.vb</DependentUpon>

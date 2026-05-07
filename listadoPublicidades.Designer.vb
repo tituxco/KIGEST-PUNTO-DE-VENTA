@@ -86,6 +86,8 @@ Partial Class listadoPublicidades
         Me.CargarExcelAsync = New System.ComponentModel.BackgroundWorker()
         Me.CargarListadoOrdenesAsync = New System.ComponentModel.BackgroundWorker()
         Me.CargarExcelAsyncListadoOR = New System.ComponentModel.BackgroundWorker()
+        Me.rdporfechadevencimiento = New System.Windows.Forms.RadioButton()
+        Me.rdporfechadeinicio = New System.Windows.Forms.RadioButton()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -519,7 +521,7 @@ Partial Class listadoPublicidades
         Me.tabCtaCte.Location = New System.Drawing.Point(4, 22)
         Me.tabCtaCte.Name = "tabCtaCte"
         Me.tabCtaCte.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabCtaCte.Size = New System.Drawing.Size(1037, 427)
+        Me.tabCtaCte.Size = New System.Drawing.Size(1140, 427)
         Me.tabCtaCte.TabIndex = 1
         Me.tabCtaCte.Text = "Cuenta corriente"
         Me.tabCtaCte.UseVisualStyleBackColor = True
@@ -529,7 +531,7 @@ Partial Class listadoPublicidades
         Me.dgvCtaCte.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvCtaCte.Location = New System.Drawing.Point(3, 92)
         Me.dgvCtaCte.Name = "dgvCtaCte"
-        Me.dgvCtaCte.Size = New System.Drawing.Size(1031, 332)
+        Me.dgvCtaCte.Size = New System.Drawing.Size(1134, 332)
         Me.dgvCtaCte.TabIndex = 79
         '
         'Panel1
@@ -546,7 +548,7 @@ Partial Class listadoPublicidades
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1031, 89)
+        Me.Panel1.Size = New System.Drawing.Size(1134, 89)
         Me.Panel1.TabIndex = 77
         '
         'Label9
@@ -611,7 +613,7 @@ Partial Class listadoPublicidades
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(805, 0)
+        Me.Button3.Location = New System.Drawing.Point(908, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(72, 89)
         Me.Button3.TabIndex = 184
@@ -628,7 +630,7 @@ Partial Class listadoPublicidades
         Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(877, 0)
+        Me.Button4.Location = New System.Drawing.Point(980, 0)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(72, 89)
         Me.Button4.TabIndex = 170
@@ -645,7 +647,7 @@ Partial Class listadoPublicidades
         Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
-        Me.Button5.Location = New System.Drawing.Point(949, 0)
+        Me.Button5.Location = New System.Drawing.Point(1052, 0)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(82, 89)
         Me.Button5.TabIndex = 0
@@ -677,6 +679,8 @@ Partial Class listadoPublicidades
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.rdporfechadeinicio)
+        Me.Panel2.Controls.Add(Me.rdporfechadevencimiento)
         Me.Panel2.Controls.Add(Me.chkPeriodosCancelados)
         Me.Panel2.Controls.Add(Me.Button7)
         Me.Panel2.Controls.Add(Me.Button2)
@@ -885,6 +889,30 @@ Partial Class listadoPublicidades
         Me.CargarExcelAsyncListadoOR.WorkerReportsProgress = True
         Me.CargarExcelAsyncListadoOR.WorkerSupportsCancellation = True
         '
+        'rdporfechadevencimiento
+        '
+        Me.rdporfechadevencimiento.AutoSize = True
+        Me.rdporfechadevencimiento.Checked = True
+        Me.rdporfechadevencimiento.ForeColor = System.Drawing.Color.White
+        Me.rdporfechadevencimiento.Location = New System.Drawing.Point(487, 19)
+        Me.rdporfechadevencimiento.Name = "rdporfechadevencimiento"
+        Me.rdporfechadevencimiento.Size = New System.Drawing.Size(149, 17)
+        Me.rdporfechadevencimiento.TabIndex = 216
+        Me.rdporfechadevencimiento.TabStop = True
+        Me.rdporfechadevencimiento.Text = "Por Fecha de vencimiento"
+        Me.rdporfechadevencimiento.UseVisualStyleBackColor = True
+        '
+        'rdporfechadeinicio
+        '
+        Me.rdporfechadeinicio.AutoSize = True
+        Me.rdporfechadeinicio.ForeColor = System.Drawing.Color.White
+        Me.rdporfechadeinicio.Location = New System.Drawing.Point(487, 42)
+        Me.rdporfechadeinicio.Name = "rdporfechadeinicio"
+        Me.rdporfechadeinicio.Size = New System.Drawing.Size(113, 17)
+        Me.rdporfechadeinicio.TabIndex = 217
+        Me.rdporfechadeinicio.Text = "Por fecha de inicio"
+        Me.rdporfechadeinicio.UseVisualStyleBackColor = True
+        '
         'listadoPublicidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -974,4 +1002,6 @@ Partial Class listadoPublicidades
     Friend WithEvents CargarListadoOrdenesAsync As System.ComponentModel.BackgroundWorker
     Friend WithEvents Button8 As Button
     Friend WithEvents CargarExcelAsyncListadoOR As System.ComponentModel.BackgroundWorker
+    Friend WithEvents rdporfechadeinicio As RadioButton
+    Friend WithEvents rdporfechadevencimiento As RadioButton
 End Class

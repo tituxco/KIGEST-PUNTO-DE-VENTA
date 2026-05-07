@@ -23,32 +23,59 @@ Partial Class selclie
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.pntitulo = New System.Windows.Forms.Panel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.txtBusquedaCliente = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.dtpersonal = New System.Windows.Forms.DataGridView()
+        Me.CargarDatosAsync = New System.ComponentModel.BackgroundWorker()
         Me.pntitulo.SuspendLayout()
+        Me.Panel1.SuspendLayout()
         CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pntitulo.Controls.Add(Me.Panel1)
         Me.pntitulo.Controls.Add(Me.Label1)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(623, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(584, 54)
         Me.pntitulo.TabIndex = 31
+        '
+        'Panel1
+        '
+        Me.Panel1.Controls.Add(Me.txtBusquedaCliente)
+        Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel1.Location = New System.Drawing.Point(0, 29)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(584, 24)
+        Me.Panel1.TabIndex = 3
+        '
+        'txtBusquedaCliente
+        '
+        Me.txtBusquedaCliente.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.txtBusquedaCliente.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtBusquedaCliente.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtBusquedaCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtBusquedaCliente.ForeColor = System.Drawing.Color.Black
+        Me.txtBusquedaCliente.Location = New System.Drawing.Point(0, 0)
+        Me.txtBusquedaCliente.Name = "txtBusquedaCliente"
+        Me.txtBusquedaCliente.Size = New System.Drawing.Size(584, 22)
+        Me.txtBusquedaCliente.TabIndex = 4
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
-        Me.Label1.Location = New System.Drawing.Point(3, 0)
+        Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(411, 39)
+        Me.Label1.Size = New System.Drawing.Size(270, 29)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "SELECCIONE CLIENTE"
+        Me.Label1.Text = "BUSQUEDA CLIENTE"
         '
         'dtpersonal
         '
@@ -59,21 +86,27 @@ Partial Class selclie
         Me.dtpersonal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtpersonal.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtpersonal.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtpersonal.Location = New System.Drawing.Point(0, 40)
+        Me.dtpersonal.Location = New System.Drawing.Point(0, 54)
         Me.dtpersonal.MultiSelect = False
         Me.dtpersonal.Name = "dtpersonal"
         Me.dtpersonal.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtpersonal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtpersonal.Size = New System.Drawing.Size(623, 330)
+        Me.dtpersonal.Size = New System.Drawing.Size(584, 307)
         Me.dtpersonal.TabIndex = 64
+        '
+        'CargarDatosAsync
+        '
+        Me.CargarDatosAsync.WorkerReportsProgress = True
+        Me.CargarDatosAsync.WorkerSupportsCancellation = True
         '
         'selclie
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(623, 370)
+        Me.ClientSize = New System.Drawing.Size(584, 361)
         Me.Controls.Add(Me.dtpersonal)
         Me.Controls.Add(Me.pntitulo)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -82,6 +115,8 @@ Partial Class selclie
         Me.Text = "Seleccionar Cliente"
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
+        Me.Panel1.ResumeLayout(False)
+        Me.Panel1.PerformLayout()
         CType(Me.dtpersonal, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -89,4 +124,7 @@ Partial Class selclie
     Friend WithEvents pntitulo As System.Windows.Forms.Panel
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents dtpersonal As System.Windows.Forms.DataGridView
+    Friend WithEvents Panel1 As Panel
+    Friend WithEvents txtBusquedaCliente As TextBox
+    Friend WithEvents CargarDatosAsync As System.ComponentModel.BackgroundWorker
 End Class

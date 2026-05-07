@@ -1,6 +1,7 @@
 ﻿Imports System.Security.Cryptography
 Imports System.Windows.Forms.DataVisualization.Charting
 Imports WSAFIPFE.lcbAFIPTest
+Imports WSAFIPFE.utipos
 
 Public Class informedeventas
 
@@ -235,7 +236,7 @@ Public Class informedeventas
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", conexionPrinc)
 
-                'MsgBox(consultaVTAS.SelectCommand.CommandText)
+                ' MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
 
@@ -539,6 +540,7 @@ Public Class informedeventas
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & "
                 group by fact.id_cliente order by fact.razon asc", conexionPrinc)
 
+                MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
             ElseIf rdPocaRotacion.Checked = True Then
@@ -636,19 +638,26 @@ Public Class informedeventas
 
             Reconectar()
             Dim consultaNoCodif As New MySql.Data.MySqlClient.MySqlDataAdapter("
-                SELECT  ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,			    
-			    round(sum(itm.ptotal),2) as pventa                
-                FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
-                ins.id=itm.cod and fact.id=itm.id_fact  and
+                SELECT  itm.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,			    
+			    round(sum(replace(itm.ptotal,',','.')),2) as pventa                
+                FROM fact_items as itm, fact_facturas as fact where
+                fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod=0 and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by itm.descripcion order by itm.descripcion asc", conexionPrinc)
             Dim tablaNoCodif As New DataTable
+            'MsgBox(consultaNoCodif.SelectCommand.CommandText)
             consultaNoCodif.Fill(tablaNoCodif)
 
-            If tablaNoCodif.Rows.Count <> 0 Then
-                TotalVentasNoCodif = tablaNoCodif(0)(2)
-            End If
+            For i = 0 To tablaNoCodif.Rows.Count - 1
+                TotalVentasNoCodif += FormatNumber(tablaNoCodif.Rows(i).Item(2), 2)
+
+            Next
+
+            'If tablaNoCodif.Rows.Count <> 0 Then
+            '    TotalVentasNoCodif = tablaNoCodif(0)(2)
+            'End If
+
 
             If rdInforgeneral.Checked = True Then
                 If chkproductos.CheckState = CheckState.Checked Then

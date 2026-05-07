@@ -1,4 +1,6 @@
-﻿Imports Org.BouncyCastle.X509.Extension
+﻿Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
+Imports Org.BouncyCastle.X509.Extension
+Imports SIGT__KIGEST.datosEstructura
 
 Public Class movimientodecaja
     Dim fechagral As String = Format(Now, "dd-MM-yyyy")
@@ -516,18 +518,19 @@ Public Class movimientodecaja
                     .AddWithValue("?comprobante", idfactura)
                     '.AddWithValue("?cuenta", )
                 End With
-                    comandoreten.ExecuteNonQuery()
-                    If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
-                        'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
-                        Dim numAsiento As Integer = ObtenerNumeroAsiento()
-                        GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
+                comandoreten.ExecuteNonQuery()
+                If InStr(DatosAcceso.Moduloacc, "4al") <> False Then
+                    'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
+                    Dim numAsiento As Integer = ObtenerNumeroAsiento()
+                    GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
                                                "RETENCIONES " & txtrazon.Text, CDbl(totalRetenciones.Replace(".", ",")), 97,
                                                CDbl(totalRetenciones.Replace(".", ",")), cmbCuentaDebe.SelectedValue, 2, fecha)
 
-                    Else
-                        ' MsgBox("no se permite asiento contable")
-                    End If
+                Else
+                    ' MsgBox("no se permite asiento contable")
                 End If
+            End If
+
 
 
             '/***BUSCAMOS EL PERIODO ADEUDADO
@@ -579,7 +582,7 @@ Public Class movimientodecaja
                 'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
                 Dim numAsiento As Integer = ObtenerNumeroAsiento()
                 GuardarAsientoContable(numAsiento, cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text,
-                                       "PAGO FACTURA " & txtrazon.Text, CDbl(totalRecibo.Replace(".", ",")), cmbCuentaDebe.SelectedValue,
+                                       "COBRO FACTURA " & txtrazon.Text, CDbl(totalRecibo.Replace(".", ",")), cmbCuentaDebe.SelectedValue,
                                        CDbl(totalRecibo.Replace(".", ",")), cmbCuentaHaber.SelectedValue, 2, fecha)
             Else
                 ' MsgBox("no se permite asiento contable")
@@ -605,10 +608,6 @@ Public Class movimientodecaja
                 Dim numcomp As String = cmbtipofac.Text & " " & txtptovta.Text & "-" & txtnufac.Text
 
                 'poner factura como pagada
-
-                'Dim lector As System.Data.IDataReader
-                'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-
                 Reconectar()
                 sql.Connection = conexionPrinc
                 sql.CommandText = "update fact_cuentaclie set pago=1 where id= " & factconcepto.Cells(0).Value
@@ -639,6 +638,15 @@ Public Class movimientodecaja
                     .AddWithValue("?id_fact", idfactura)
                 End With
                 addItemRec.ExecuteNonQuery()
+
+                ' =======================================================
+                ' LLAMAMOS AL MÉTODO DE CURSOS POR CADA FACTURA PAGADA
+                ' La celda 3 tiene el ID de la factura original
+                ' =======================================================
+                If Not IsNothing(factconcepto.Cells(3).Value) Then
+                    MarcarCuotasComoPagadas(Convert.ToInt32(factconcepto.Cells(3).Value))
+                End If
+                ' =======================================================
 
             Next
 
@@ -1263,5 +1271,39 @@ Public Class movimientodecaja
         '        MsgBox("debe completar todos los campos requeridos de tarjeta  " & e.RowIndex & " de " & dttarjetas.RowCount)
         '    End If
         'Next
+    End Sub
+
+    ' =========================================================================
+    ' NUEVA FUNCIÓN: VINCULACIÓN CON EL SISTEMA DE CURSOS
+    ' =========================================================================
+    Private Sub MarcarCuotasComoPagadas(idFacturaOrigen As Integer)
+        Try
+            ' 1. Buscamos en la factura específica si hay cuotas del curso
+            Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE 'CTA-%'"
+
+            Reconectar()
+            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
+            Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
+
+            Dim idsCuotas As New List(Of Integer)
+
+            ' 2. Guardamos los IDs encontrados
+            While lectorItems.Read()
+                Dim codbar As String = lectorItems("plu").ToString()
+                Dim idCuota As Integer
+                If Integer.TryParse(codbar.Replace("CTA-", ""), idCuota) Then
+                    idsCuotas.Add(idCuota)
+                End If
+            End While
+            ' Cerramos el lector para liberar la conexión de la BD
+            lectorItems.Close()
+
+            ' 3. Actualizamos cada cuota al estado PAGADO
+            For Each idC As Integer In idsCuotas
+                serv_detalle.ActualizarEstado(idC, "PAGADO")
+            Next
+        Catch ex As Exception
+            Console.WriteLine("Error al vincular el pago múltiple con el curso: " & ex.Message)
+        End Try
     End Sub
 End Class

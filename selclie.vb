@@ -1,201 +1,180 @@
-﻿Public Class selclie
-    Public Shared busqueda As String
-    Public Shared fila As String
-    Public Shared llama As String
+﻿Imports System.ComponentModel
+
+Public Class selclie
+    ' Quitamos el "Shared" para evitar cruces de datos si abrís dos buscadores a la vez
+    Public busqueda As String = ""
+    Public llama As String = ""
+    Public clienteSeleccionado As datosEstructura.fact_clientes
+
+    Private Sub SELPAC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        If Not String.IsNullOrEmpty(busqueda) Then
+            txtBusquedaCliente.Text = busqueda
+            IniciarBusqueda()
+        End If
+    End Sub
+
+    Private Sub selclie_Shown(sender As Object, e As EventArgs) Handles MyBase.Shown
+        ' Ponemos el foco en el cuadro de búsqueda apenas aparece el form
+        txtBusquedaCliente.Focus()
+    End Sub
 
     Private Sub selclie_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        If e.KeyCode = Keys.Escape Then
+        If e.KeyCode = Keys.Escape Then Me.Close()
+    End Sub
+
+    ' =====================================================================
+    ' 1. MOTOR DE BÚSQUEDA UNIFICADO (Orientado a Objetos y Asíncrono)
+    ' =====================================================================
+    Private Sub txtBusquedaCliente_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBusquedaCliente.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If String.IsNullOrEmpty(txtBusquedaCliente.Text) Then
+                MsgBox("Debe ingresar un texto a buscar", MsgBoxStyle.Exclamation)
+                Exit Sub
+            End If
+            IniciarBusqueda()
+        ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub SELPAC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        CargarPersonal()
-    End Sub
-    Public Sub CargarPersonal()
-        Dim separador() As String = {"-", " "}
-        Dim buscStr = busqueda.Split(separador, StringSplitOptions.None)
-        Dim i As Integer
-        Dim busqtxt As String
-        For i = 0 To buscStr.Length - 1
-            If i = 0 Then
-                busqtxt &= " nomapell_razon like '%" & buscStr(i) & "%'"
-            Else
-                busqtxt &= " and nomapell_razon like '%" & buscStr(i) & "%'"
-            End If
+    Private Sub IniciarBusqueda()
+        ' Centralizamos la animación de carga
+        frmprincipal.pbprincipal.Visible = True
+        frmprincipal.pbprincipal.Style = ProgressBarStyle.Marquee
+        frmprincipal.pbprincipal.MarqueeAnimationSpeed = 30
+        frmprincipal.lblprocesando.Visible = True
 
-        Next
-        Try
-            Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, dir_domicilio as Domicilio, vendedor from fact_clientes where " & busqtxt, conexionPrinc)
-            Dim tablaPers As New DataTable
-
-            Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
-            consulta.Fill(tablaPers)
-            dtpersonal.DataSource = tablaPers
-        Catch ex As Exception
-
-        End Try
+        ' Pasamos el texto como argumento al Worker
+        If Not CargarDatosAsync.IsBusy Then
+            CargarDatosAsync.RunWorkerAsync(txtBusquedaCliente.Text)
+        End If
     End Sub
 
+    Private Sub CargarDatosAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarDatosAsync.DoWork
+        Dim textoBusqueda As String = e.Argument.ToString()
+        e.Result = datosEstructura.fact_clientes.BuscarPorNombre(textoBusqueda)
+    End Sub
+
+    Private Sub CargarDatosAsync_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarDatosAsync.RunWorkerCompleted
+        frmprincipal.pbprincipal.Visible = False
+        frmprincipal.lblprocesando.Visible = False
+
+        If e.Error IsNot Nothing Then
+            MsgBox("Error en la búsqueda: " & e.Error.Message, MsgBoxStyle.Critical)
+            Exit Sub
+        End If
+
+        Dim listaClientes As List(Of datosEstructura.fact_clientes) = CType(e.Result, List(Of datosEstructura.fact_clientes))
+        dtpersonal.DataSource = listaClientes
+    End Sub
+
+    ' =====================================================================
+    ' 2. LÓGICA DE SELECCIÓN (Sin código duplicado)
+    ' =====================================================================
     Private Sub dtpersonal_DoubleClick(sender As Object, e As EventArgs) Handles dtpersonal.DoubleClick
-        Try
-            Select Case llama
-                Case "nuevaventa"
-                    With CType(frmprincipal.ActiveMdiChild, nuevaventa)
-                        .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCliente()
-                        .cmbcondvta.Focus()
-                        Me.Close()
-                    End With
-                    Me.Close()
-                
-                Case "ctacte"
-                    With CType(frmprincipal.ActiveMdiChild, CONTABLE)
-                        .txtcuentabus.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCuentaClie(dtpersonal.CurrentRow.Cells.Item(0).Value)
-                        .dtcuentaclie.Focus()
-                        Me.Close()
-                    End With
-                    Me.Close()
-                Case "ingresoequipo"
-                    With CType(frmprincipal.ActiveMdiChild, ingresoequipo)
-                        .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCliente()
-                        '.cmbcondvta.Focus()
-                        Me.Close()
-                    End With
-                Case "movimientodecaja"
-                    With CType(frmprincipal.ActiveMdiChild, movimientodecaja)
-                        .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCliente()
-                        '.cmbrecibeusuario.Focus()
-
-                    End With
-                    Me.Close()
-                Case "ptovta"
-                    With CType(frmprincipal.ActiveMdiChild, puntoventa)
-                        .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtcliecta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .cargarCliente(False)
-                        '.cmbrecibeusuario.Focus()
-                        .txtcodPLU.Focus()
-                    End With
-                    Me.Close()
-                Case "prestamosform"
-                    With CType(frmprincipal.ActiveMdiChild, PrestamosForm)
-                        .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                    End With
-                    Me.Close()
-                Case "nvaPublicidad"
-                    With CType(frmprincipal.ActiveMdiChild, NvaPublicidad)
-                        .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                        .idVendedor = dtpersonal.CurrentRow.Cells.Item(3).Value
-
-                    End With
-                    Me.Close()
-                Case "fichaequipo"
-                    With CType(frmprincipal.ActiveMdiChild, fichaequipo)
-                        ' .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                        .txtrazon.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                    End With
-                    Me.Close()
-            End Select
-        Catch ex As Exception
-
-        End Try
-        
+        ConfirmarSeleccion()
     End Sub
 
     Private Sub dtpersonal_KeyDown(sender As Object, e As KeyEventArgs) Handles dtpersonal.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.Handled = True ' Evita que el Enter seleccione y baje una fila al mismo tiempo
+            ConfirmarSeleccion()
+        End If
+    End Sub
+
+    Private Sub ConfirmarSeleccion()
         Try
-            If e.KeyCode = Keys.Enter Then
-                Select Case llama
-                    Case "nuevaventa"
-                        With CType(frmprincipal.ActiveMdiChild, nuevaventa)
-                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente()
-                            .cmbcondvta.Focus()
-                            Me.Close()
-                        End With
+            If dtpersonal.CurrentRow Is Nothing Then Exit Sub
 
-                    Case "nuevopedido"
-                        With CType(frmprincipal.ActiveMdiChild, nuevopedido)
-                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente()
-                            .cmbcondvta.Focus()
-                            Me.Close()
-                        End With
+            ' Capturamos el objeto completo (POO puro)
+            Me.clienteSeleccionado = CType(dtpersonal.CurrentRow.DataBoundItem, datosEstructura.fact_clientes)
 
-                    Case "ctacte"
-                        With CType(frmprincipal.ActiveMdiChild, CONTABLE)
-                            .txtcuentabus.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCuentaClie(dtpersonal.CurrentRow.Cells.Item(0).Value)
-                            .dtcuentaclie.Focus()
-                            Me.Close()
-                        End With
-
-                    Case "ingresoequipo"
-                        With CType(frmprincipal.ActiveMdiChild, ingresoequipo)
-                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente()
-                            .cmbrecibeusuario.Focus()
-                            Me.Close()
-                        End With
-
-                    Case "movimientodecaja"
-                        With CType(frmprincipal.ActiveMdiChild, movimientodecaja)
-                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente()
-                            '.cmbrecibeusuario.Focus()
-                            Me.Close()
-                        End With
-                    Case "ptovta"
-                        With CType(frmprincipal.ActiveMdiChild, puntoventa)
-                            .Idcliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtcliecta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .cargarCliente(False)
-                            '.cmbrecibeusuario.Focus()
-                            .txtcodPLU.Focus()
-                        End With
-                        Me.Close()
-                    Case "prestamosform"
-                        With CType(frmprincipal.ActiveMdiChild, PrestamosForm)
-                            .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                            .txtmonto.Focus()
-                        End With
-                        Me.Close()
-                    Case "nvaPublicidad"
-                        With CType(frmprincipal.ActiveMdiChild, NvaPublicidad)
-                            .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtclientecuenta.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtclientenombre.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                            .idVendedor = dtpersonal.CurrentRow.Cells.Item(3).Value
-                        End With
-                        Me.Close()
-                    Case "fichaequipo"
-                        With CType(frmprincipal.ActiveMdiChild, fichaequipo)
-                            ' .idCliente = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtctaclie.Text = dtpersonal.CurrentRow.Cells.Item(0).Value
-                            .txtrazon.Text = dtpersonal.CurrentRow.Cells.Item(1).Value
-                        End With
-                        Me.Close()
-                End Select
-
+            ' SI ES UN MÓDULO NUEVO O REFACTORIZADO (El padre captura el DialogResult.OK)
+            If llama = "nuevoServicio" Or llama = "infoAlumno" Then
+                Me.DialogResult = DialogResult.OK
+                Me.Close()
+                Exit Sub
             End If
-        Catch ex As Exception
 
+            ' SI ES UN MÓDULO VIEJO (Redirigimos al método Legacy)
+            ProcesarLlamadaLegacy()
+
+        Catch ex As Exception
+            MsgBox("Error al seleccionar cliente: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
 
-    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
+    ' =====================================================================
+    ' 3. DEUDA TÉCNICA (Eliminar esto a medida que se refactorice el sistema)
+    ' =====================================================================
+    Private Sub ProcesarLlamadaLegacy()
+        ' Nota: Al usar DataBoundItem ahora siempre tenemos el objeto, ya no leemos la grilla celda por celda.
+        Select Case llama
+            Case "ptovtaNvo"
+                With CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo)
+                    .facturaCliente = Me.clienteSeleccionado
+                    .CargarDatosCliente()
+                    .CargarDatosVendedor()
+                    .CargarDatosListaPrecios()
+                End With
 
+            Case "nuevaventa"
+                With CType(frmprincipal.ActiveMdiChild, nuevaventa)
+                    .txtctaclie.Text = Me.clienteSeleccionado.idCliente
+                    .cargarCliente()
+                    .cmbcondvta.Focus()
+                End With
+
+            Case "ctacte"
+                With CType(frmprincipal.ActiveMdiChild, CONTABLE)
+                    .txtcuentabus.Text = Me.clienteSeleccionado.idCliente
+                    .cargarCuentaClie(Me.clienteSeleccionado.idCliente)
+                    .dtcuentaclie.Focus()
+                End With
+
+            Case "ingresoequipo"
+                With CType(frmprincipal.ActiveMdiChild, ingresoequipo)
+                    .txtctaclie.Text = Me.clienteSeleccionado.idCliente
+                    .cargarCliente()
+                End With
+
+            Case "movimientodecaja"
+                With CType(frmprincipal.ActiveMdiChild, movimientodecaja)
+                    .txtctaclie.Text = Me.clienteSeleccionado.idCliente
+                    .cargarCliente()
+                End With
+
+            Case "ptovta"
+                With CType(frmprincipal.ActiveMdiChild, puntoventa)
+                    .Idcliente = Me.clienteSeleccionado.idCliente
+                    .txtcliecta.Text = Me.clienteSeleccionado.idCliente
+                    .cargarCliente(False)
+                    .txtcodPLU.Focus()
+                End With
+
+            Case "prestamosform"
+                With CType(frmprincipal.ActiveMdiChild, PrestamosForm)
+                    .idCliente = Me.clienteSeleccionado.idCliente
+                    .txtclientecuenta.Text = Me.clienteSeleccionado.idCliente
+                    .txtclientenombre.Text = Me.clienteSeleccionado.nomapellRazon
+                End With
+
+            Case "nvaPublicidad"
+                With CType(frmprincipal.ActiveMdiChild, NvaPublicidad)
+                    .idCliente = Me.clienteSeleccionado.idCliente
+                    .txtclientecuenta.Text = Me.clienteSeleccionado.idCliente
+                    .txtclientenombre.Text = Me.clienteSeleccionado.nomapellRazon
+                    ' Asegurate de que vendedor esté mapeado en tu clase fact_clientes
+                    .idVendedor = Me.clienteSeleccionado.idVendedor
+                End With
+
+            Case "fichaequipo"
+                With CType(frmprincipal.ActiveMdiChild, fichaequipo)
+                    .txtctaclie.Text = Me.clienteSeleccionado.idCliente
+                    .txtrazon.Text = Me.clienteSeleccionado.nomapellRazon
+                End With
+        End Select
+
+        Me.Close()
     End Sub
 End Class

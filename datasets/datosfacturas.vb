@@ -1,4 +1,6 @@
 ﻿Partial Class datosfacturas
+
+
     Partial Public Class cotejoPedidosFacturasDataTable
         Private Sub cotejoPedidosFacturasDataTable_cotejoPedidosFacturasRowChanging(sender As Object, e As cotejoPedidosFacturasRowChangeEvent) Handles Me.cotejoPedidosFacturasRowChanging
 

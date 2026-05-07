@@ -1,13 +1,11 @@
 ﻿Public Class selListaPrecios
+    Dim listaPrecios As List(Of
+    datosEstructura.fact_listaPrecios)
+    Public llama As String
     Private Sub selListaPrecios_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", conexionPrinc)
-            Dim tablalistas As New DataTable
-            consulta.Fill(tablalistas)
-            dtlistas.DataSource = tablalistas
-            dtlistas.Columns(2).Visible = False
-            dtlistas.Columns(3).Visible = False
+            listaPrecios = datosEstructura.fact_listaPrecios.ObtenerTodos
+            dtlistas.DataSource = listaPrecios
         Catch ex As Exception
 
         End Try
@@ -15,11 +13,19 @@
 
     Private Sub dtlistas_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistas.CellDoubleClick
         Try
-            CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
-            CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
-            CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
-            CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
-            Me.Close()
+            Select Case llama
+                Case "ptovta"
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
+                    Me.Close()
+                Case "ptovtaNvo"
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, datosEstructura.fact_listaPrecios)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosListaPrecios()
+                    Me.Close()
+            End Select
+
         Catch ex As Exception
 
         End Try
@@ -27,20 +33,25 @@
 
     Private Sub dtlistas_KeyDown(sender As Object, e As KeyEventArgs) Handles dtlistas.KeyDown
         If e.KeyCode = Keys.Enter Then
-            CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
-            CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
-            CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
-            CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
+            Select Case llama
+                Case "ptovta"
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).listaPrecios = dtlistas.CurrentRow.Cells(0).Value
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).lblfactlistaprecios.Text = dtlistas.CurrentRow.Cells(1).Value
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).RecalcularPreciosLista()
+                    CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
+                    Me.Close()
+                Case "ptovtaNvo"
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, datosEstructura.fact_listaPrecios)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosListaPrecios()
+                    Me.Close()
+            End Select
 
+        ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub dtlistas_KeyUp(sender As Object, e As KeyEventArgs) Handles dtlistas.KeyUp
-
-    End Sub
-
-    Private Sub dtlistas_KeyPress(sender As Object, e As KeyPressEventArgs) Handles dtlistas.KeyPress
+    Private Sub dtlistas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistas.CellContentClick
 
     End Sub
 End Class

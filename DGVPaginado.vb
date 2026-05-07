@@ -109,7 +109,10 @@
 
     Public Sub dgvVista_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dgvVista.CellEnter
         RaiseEvent SeleccionarItem(dgvVista.CurrentRow.Cells(0).Value)
-        ItemSeleccionado = dgvVista.CurrentRow.Cells(0).Value
+        If dgvVista.CurrentRow IsNot Nothing AndAlso Not IsDBNull(dgvVista.CurrentRow.Cells(0).Value) Then
+            ItemSeleccionado = dgvVista.CurrentRow.Cells(0).Value
+        End If
+
     End Sub
 
     Private Sub dgvVista_SelectionChanged(sender As Object, e As EventArgs) Handles dgvVista.SelectionChanged

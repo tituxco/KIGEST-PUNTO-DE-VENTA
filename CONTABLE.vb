@@ -370,7 +370,7 @@ Public Class CONTABLE
                 'case when 
                 '    fis.debcred='C' then 
                 '        concat('-',FORMAT(fact.total,2,'es_AR')) 
-                '    else 
+                '    else k
                 '    FORMAT(fact.total,2,'es_AR') end as total,
                 '(select codigoAsiento from cm_libroDiario where comprobanteInterno like FacturaNum limit 1) as NumeroAsiento,
                 'fact.observaciones2 as ReciboAplicado, fact.tipofact, fact.ptovta,fact.f_alta 
@@ -743,6 +743,7 @@ Public Class CONTABLE
             where cat.id=prod.categoria and mon.id=prod.moneda and st.stock>0 and st.idproducto=prod.id group by cat.nombre order by cat.nombre asc", conexionPrinc)
 
             Dim tablastock As New DataTable
+            consulta.SelectCommand.CommandTimeout = 300
             consulta.Fill(tablastock)
             'infoestado = tablaestado.Select()
             dtstockvalorizado.DataSource = tablastock
@@ -3978,6 +3979,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 idCuenta=" & idCuentaSel, conexionPrinc)
                 Dim tabSaldoCuenta As New DataTable
                 consSaldoCuenta.Fill(tabSaldoCuenta)
+                'MsgBox(consSaldoCuenta.SelectCommand.CommandText)
                 If tabSaldoCuenta.Rows.Count = 0 Then
                     saldoAnteriorCuenta = 0
                 Else
@@ -6289,8 +6291,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         For Each fila As DataGridViewRow In dgvLibroMayor.Rows
             If fila.Cells("Concepto").Value.ToString().Contains("PUBLICIDAD ") Then
                 fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("PUBLICIDAD ", "")
-            ElseIf fila.Cells("Concepto").Value.ToString().Contains("PAGO FACTURA ") Then
-                fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("PAGO FACTURA ", "")
+            ElseIf fila.Cells("Concepto").Value.ToString().Contains("COBRO FACTURA ") Then
+                fila.Cells("Concepto").Value = fila.Cells("Concepto").Value.ToString().Replace("COBRO FACTURA ", "")
             End If
         Next
     End Sub
@@ -6412,6 +6414,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tabcuentasclientes_Click(sender As Object, e As EventArgs) Handles tabcuentasclientes.Click
+
+    End Sub
+
+    Private Sub tabstockvalorizado_Click(sender As Object, e As EventArgs) Handles tabstockvalorizado.Click
 
     End Sub
 End Class

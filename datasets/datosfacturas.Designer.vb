@@ -4440,9 +4440,11 @@ Partial Public Class datosfacturas
         
         Private columnStock As Global.System.Data.DataColumn
         
-        Private columnprecio As Global.System.Data.DataColumn
+        Private columnprecioLista As Global.System.Data.DataColumn
         
         Private columncategoria As Global.System.Data.DataColumn
+        
+        Private columnprecioCosto As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
@@ -4513,9 +4515,9 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public ReadOnly Property precioColumn() As Global.System.Data.DataColumn
+        Public ReadOnly Property precioListaColumn() As Global.System.Data.DataColumn
             Get
-                Return Me.columnprecio
+                Return Me.columnprecioLista
             End Get
         End Property
         
@@ -4524,6 +4526,14 @@ Partial Public Class datosfacturas
         Public ReadOnly Property categoriaColumn() As Global.System.Data.DataColumn
             Get
                 Return Me.columncategoria
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property precioCostoColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnprecioCosto
             End Get
         End Property
         
@@ -4564,9 +4574,9 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public Overloads Function AddlistadoproductosRow(ByVal CodInterno As String, ByVal descripcion As String, ByVal PLU As String, ByVal Stock As String, ByVal precio As Double, ByVal categoria As String) As listadoproductosRow
+        Public Overloads Function AddlistadoproductosRow(ByVal CodInterno As String, ByVal descripcion As String, ByVal PLU As String, ByVal Stock As String, ByVal precioLista As Double, ByVal categoria As String, ByVal precioCosto As String) As listadoproductosRow
             Dim rowlistadoproductosRow As listadoproductosRow = CType(Me.NewRow,listadoproductosRow)
-            Dim columnValuesArray() As Object = New Object() {CodInterno, descripcion, PLU, Stock, precio, categoria}
+            Dim columnValuesArray() As Object = New Object() {CodInterno, descripcion, PLU, Stock, precioLista, categoria, precioCosto}
             rowlistadoproductosRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowlistadoproductosRow)
             Return rowlistadoproductosRow
@@ -4593,8 +4603,9 @@ Partial Public Class datosfacturas
             Me.columndescripcion = MyBase.Columns("descripcion")
             Me.columnPLU = MyBase.Columns("PLU")
             Me.columnStock = MyBase.Columns("Stock")
-            Me.columnprecio = MyBase.Columns("precio")
+            Me.columnprecioLista = MyBase.Columns("precioLista")
             Me.columncategoria = MyBase.Columns("categoria")
+            Me.columnprecioCosto = MyBase.Columns("precioCosto")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4608,10 +4619,12 @@ Partial Public Class datosfacturas
             MyBase.Columns.Add(Me.columnPLU)
             Me.columnStock = New Global.System.Data.DataColumn("Stock", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnStock)
-            Me.columnprecio = New Global.System.Data.DataColumn("precio", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
-            MyBase.Columns.Add(Me.columnprecio)
+            Me.columnprecioLista = New Global.System.Data.DataColumn("precioLista", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnprecioLista)
             Me.columncategoria = New Global.System.Data.DataColumn("categoria", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columncategoria)
+            Me.columnprecioCosto = New Global.System.Data.DataColumn("precioCosto", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnprecioCosto)
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9640,16 +9653,16 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public Property precio() As Double
+        Public Property precioLista() As Double
             Get
                 Try 
-                    Return CType(Me(Me.tablelistadoproductos.precioColumn),Double)
+                    Return CType(Me(Me.tablelistadoproductos.precioListaColumn),Double)
                 Catch e As Global.System.InvalidCastException
-                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'precio' de la tabla 'listadoproductos' es DBNull.", e)
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'precioLista' de la tabla 'listadoproductos' es DBNull.", e)
                 End Try
             End Get
             Set
-                Me(Me.tablelistadoproductos.precioColumn) = value
+                Me(Me.tablelistadoproductos.precioListaColumn) = value
             End Set
         End Property
         
@@ -9665,6 +9678,21 @@ Partial Public Class datosfacturas
             End Get
             Set
                 Me(Me.tablelistadoproductos.categoriaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property precioCosto() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tablelistadoproductos.precioCostoColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'precioCosto' de la tabla 'listadoproductos' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tablelistadoproductos.precioCostoColumn) = value
             End Set
         End Property
         
@@ -9718,14 +9746,14 @@ Partial Public Class datosfacturas
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public Function IsprecioNull() As Boolean
-            Return Me.IsNull(Me.tablelistadoproductos.precioColumn)
+        Public Function IsprecioListaNull() As Boolean
+            Return Me.IsNull(Me.tablelistadoproductos.precioListaColumn)
         End Function
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
-        Public Sub SetprecioNull()
-            Me(Me.tablelistadoproductos.precioColumn) = Global.System.Convert.DBNull
+        Public Sub SetprecioListaNull()
+            Me(Me.tablelistadoproductos.precioListaColumn) = Global.System.Convert.DBNull
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -9738,6 +9766,18 @@ Partial Public Class datosfacturas
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetcategoriaNull()
             Me(Me.tablelistadoproductos.categoriaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsprecioCostoNull() As Boolean
+            Return Me.IsNull(Me.tablelistadoproductos.precioCostoColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetprecioCostoNull()
+            Me(Me.tablelistadoproductos.precioCostoColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

@@ -81,9 +81,9 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>="$" &amp; Fields!precio.Value</Value>
+                                  <Value>="$" &amp; Fields!precioLista.Value</Value>
                                   <Style>
-                                    <FontSize>15pt</FontSize>
+                                    <FontSize>20pt</FontSize>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
                                 </TextRun>
@@ -270,14 +270,22 @@
           <DataField>Stock</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="precio">
-          <DataField>precio</DataField>
+        <Field Name="precioLista">
+          <DataField>precioLista</DataField>
           <rd:TypeName>System.Double</rd:TypeName>
+        </Field>
+        <Field Name="categoria">
+          <DataField>categoria</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="precioCosto">
+          <DataField>precioCosto</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>datosfacturas</rd:DataSetName>
-        <rd:SchemaPath>D:\OneDrive\Importante\desarrollos\KIGEST - FACT PUNTO VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
+        <rd:SchemaPath>C:\Users\rquat\OneDrive\Desarrollos\KIGEST-PUNTO DE VENTA\datasets\datosfacturas.xsd</rd:SchemaPath>
         <rd:TableName>listadoproductos</rd:TableName>
         <rd:TableAdapterFillMethod />
         <rd:TableAdapterGetDataMethod />

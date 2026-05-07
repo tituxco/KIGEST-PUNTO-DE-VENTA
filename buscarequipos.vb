@@ -40,7 +40,8 @@
             fecha_ing as FechaIngreso,
             if(fecha_eg='0000-00-00','',fecha_eg) as FechEgreso, tall.serie,  
             cli.nomapell_razon as Cliente, tall.infoextra as extra,  tall.equipo as codint, 
-            te.nombre as estado,  case tall.trab_estado 
+            te.nombre as estado,  
+            case(tall.trab_estado) 
             when 0 then (select 'Sin terminar') 
             when 1 then (select concat (fis.abrev, ' ', fa.ptovta,'-', fa.num_fact) from fact_facturas as fa, tipos_comprobantes as fis where fis.donfdesc=fa.tipofact and fis.ptovta=fa.ptovta and tall.factura=fa.id) 
             when 2 then (select 'CtaCte') 

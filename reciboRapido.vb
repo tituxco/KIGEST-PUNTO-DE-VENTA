@@ -1,4 +1,6 @@
-﻿Imports WSAFIPFE.utipos
+﻿Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
+Imports SIGT__KIGEST.datosEstructura
+Imports WSAFIPFE.utipos
 
 Public Class reciboRapido
     Public idFactura As Integer
@@ -139,39 +141,46 @@ Public Class reciboRapido
                 'MsgBox(total & "             " & CDbl(total) & "               " & CDbl(total.Replace(".", ",")))
                 Dim numAsiento As Integer = ObtenerNumeroAsiento()
                 GuardarAsientoContable(numAsiento, "RBO " & txtRecNumero.Text,
-                                           "PAGO FACTURA " & Clie_razonSocial, fac_total, 5, fac_total, 11, 2, fecha)
+                                           "COBRO FACTURA " & Clie_razonSocial, fac_total, 5, fac_total, 11, 2, fecha)
             End If
 
             '/***BUSCAMOS EL PERIODO ADEUDADO
-
-            Dim idPublicidad As String = txtConcepto.Text.Replace("#", "")
+            Dim conceptoLimpio As String = txtConcepto.Text.Replace("#", "").Trim()
             Dim idPeriodoPubli As Integer = 0
-            Reconectar()
-            Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM rym_detalle_prestamo as pr 
-            where  
-            pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) and
-            pr.ID_PRESTAMO=" & idPublicidad & "
-            order by pr.periodo asc
-            limit 1", conexionPrinc)
 
-            Dim tablaPublicidad As New DataTable
-            consultaPeriodo.Fill(tablaPublicidad)
+            ' AISLAMIENTO: Solo disparamos el subsistema si el concepto es estrictamente numérico
+            If IsNumeric(conceptoLimpio) Then
+                Dim idPublicidad As Integer = Convert.ToInt32(conceptoLimpio)
 
-            If tablaPublicidad.Rows.Count <> 0 Then
-                idPeriodoPubli = tablaPublicidad.Rows(0).Item("PERIODO")
-
-                '***AGREGAR PAGO A PUBLICIDAD***
-
-                sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
                 Reconectar()
-                Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                With addPagoPubli.Parameters
-                    .AddWithValue("?fecha", fecha)
-                    .AddWithValue("?idprestamo", idPublicidad)
-                    .AddWithValue("?periodo", idPeriodoPubli)
-                    .AddWithValue("?monto", fac_total)
-                End With
-                addPagoPubli.ExecuteNonQuery()
+                ' Usamos parámetros en el Select para evitar errores de sintaxis o inyección
+                Dim queryConsulta As String = "SELECT * FROM rym_detalle_prestamo as pr " &
+                                            "WHERE pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) " &
+                                            "AND pr.ID_PRESTAMO = ?idPrestamo " &
+                                            "ORDER BY pr.periodo asc LIMIT 1"
+
+                Dim cmdConsulta As New MySql.Data.MySqlClient.MySqlCommand(queryConsulta, conexionPrinc)
+                cmdConsulta.Parameters.AddWithValue("?idPrestamo", idPublicidad)
+
+                Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter(cmdConsulta)
+                Dim tablaPublicidad As New DataTable
+                consultaPeriodo.Fill(tablaPublicidad)
+
+                If tablaPublicidad.Rows.Count <> 0 Then
+                    idPeriodoPubli = Convert.ToInt32(tablaPublicidad.Rows(0).Item("PERIODO"))
+
+                    '***AGREGAR PAGO A PUBLICIDAD***
+                    sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
+                    Reconectar()
+                    Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    With addPagoPubli.Parameters
+                        .AddWithValue("?fecha", fecha)
+                        .AddWithValue("?idprestamo", idPublicidad)
+                        .AddWithValue("?periodo", idPeriodoPubli)
+                        .AddWithValue("?monto", fac_total)
+                    End With
+                    addPagoPubli.ExecuteNonQuery()
+                End If
             End If
             '***AGREGAR DINERO A CAJA***
 
@@ -214,6 +223,12 @@ Public Class reciboRapido
             lector = sql.ExecuteReader
             lector.Read()
 
+            ' =======================================================
+            ' LLAMADA AL MÉTODO PARA MARCAR LAS CUOTAS COMO PAGADAS
+            ' =======================================================
+            MarcarCuotasComoPagadas(idFactura)
+            ' =======================================================
+
             Me.Close()
         Catch ex As Exception
 
@@ -250,5 +265,39 @@ Public Class reciboRapido
         tec.CalcularTotalescobro()
         Me.Close()
         tec.Show()
+    End Sub
+
+    ' =========================================================================
+    ' NUEVA FUNCIÓN: VINCULACIÓN CON EL SISTEMA DE CURSOS
+    ' =========================================================================
+    Private Sub MarcarCuotasComoPagadas(idFacturaOrigen As Integer)
+        Try
+            ' Buscamos en la factura que se está pagando si hay cuotas de cursos
+            Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE 'CTA-%'"
+
+            Reconectar()
+            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
+            Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
+
+            Dim idsCuotas As New List(Of Integer)
+
+            ' Extraemos los IDs
+            While lectorItems.Read()
+                Dim codbar As String = lectorItems("plu").ToString()
+                Dim idCuota As Integer
+                If Integer.TryParse(codbar.Replace("CTA-", ""), idCuota) Then
+                    idsCuotas.Add(idCuota)
+                End If
+            End While
+            lectorItems.Close()
+
+            ' Actualizamos el estado a PAGADO
+            For Each idC As Integer In idsCuotas
+                serv_detalle.ActualizarEstado(idC, "PAGADO")
+            Next
+
+        Catch ex As Exception
+            Console.WriteLine("Error al vincular el recibo rápido con el curso: " & ex.Message)
+        End Try
     End Sub
 End Class

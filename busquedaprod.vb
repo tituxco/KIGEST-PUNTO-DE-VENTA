@@ -118,10 +118,10 @@ Public Class busquedaprod
 
             Dim idAlmacen As Integer = My.Settings.idAlmacen
 
-            If chkstock.CheckState = CheckState.Checked Then
-                'MsgBox("seleccionadas")
-                idAlmacen = cmbalmacen.SelectedValue
-            End If
+
+
+            'idAlmacen = dgvStock.SelectedRows.Item("idAlmacen").ToString
+
 
 
             If imprimirlist = False And imprimiretiq = False Then
@@ -152,7 +152,10 @@ Public Class busquedaprod
                 Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
                 Dim fac As New datosfacturas
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.id as CodInterno, pro.descripcion, pro.codigo as PLU,
-                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & idAlmacen & ") as Stock,   
+                (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id and idalmacen=" & idAlmacen & ") as Stock,  
+                 FORMAT(
+                (REPLACE(REPLACE(pro.precio, '.', ''), ',', '.') * (SELECT mon.cotizacion FROM fact_moneda AS mon WHERE mon.id = pro.moneda) * (pro.iva + 100) / 100), 
+                2,'es_AR') AS precioCosto,
                 case (select valor from fact_configuraciones where id=7)
                 when 0 then
                 format(
@@ -197,7 +200,7 @@ Public Class busquedaprod
                                 end +
                         (((select listas.utilidad from fact_listas_precio as listas where listas.id=@idlst)+100)/100))-1)
 				,2,'es_AR')
-                end as precio, 
+                end as precioLista, 
                 
                 cat.nombre as categoria
                 from fact_insumos as pro, fact_categoria_insum as cat where cat.id=pro.categoria and " & cadenaComp, conexionPrinc)
@@ -205,7 +208,7 @@ Public Class busquedaprod
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
                 Dim tablaprod As New DataTable
-                'MsgBox(consulta.SelectCommand.CommandText & "______" & dtlistas.CurrentRow.Cells(3).Value)
+                ' MsgBox(consulta.SelectCommand.CommandText & "______" & dtlistas.CurrentRow.Cells(3).Value)
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
                 & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
                 & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
@@ -305,7 +308,7 @@ Public Class busquedaprod
 
     Public Sub cargarStockAlmacen(idProd As Integer)
         Try
-            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(replace(lt.stock,',','.')) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
+            Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select al.id as idAlmacen, lt.idproducto as ID, al.nombre as Almacen, sum(replace(lt.stock,',','.')) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
             where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", conexionPrinc)
             Dim tablaprod As New DataTable
 

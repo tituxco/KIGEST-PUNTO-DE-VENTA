@@ -6,6 +6,7 @@ Imports Microsoft.Office.Interop
 Imports Microsoft.Reporting.WinForms
 Imports System.Text
 Imports System.Security.Cryptography
+Imports System.Runtime.InteropServices
 
 'Imports Excel = Microsoft.Office.Interop.Excel
 'Imports System.Runtime.InteropServices
@@ -432,6 +433,13 @@ Module funciones_Globales
 
         End Try
     End Function
+    Public Function EnviarArchivoWhatsapp(telefono As String, carpetaArchivo As String, mensaje As String) As Boolean
+
+        System.Diagnostics.Process.Start("https://api.whatsapp.com/send?phone=" & telefono & "&text=" & mensaje)
+        Process.Start("explorer.exe", carpetaArchivo)
+
+    End Function
+
     Public Function ElementoFacturado(descripcion As String) As Boolean
         Try
             Reconectar()
@@ -2496,49 +2504,125 @@ Module funciones_Globales
         End Try
     End Sub
 
+    'Public Sub GenerarExcelDT(ByRef ElGrid As DataTable)
+    '    'Creamos las variables
+    '    Dim exApp As New Microsoft.Office.Interop.Excel.Application
+    '    Dim exLibro As Microsoft.Office.Interop.Excel.Workbook
+    '    Dim exHoja As Microsoft.Office.Interop.Excel.Worksheet
+    '    Try
+    '        'Añadimos el Libro al programa, y la hoja al libro
+    '        exLibro = exApp.Workbooks.Add
+    '        exHoja = exLibro.Worksheets.Add()
+    '        ' ¿Cuantas columnas y cuantas filas?
+    '        Dim NCol As Integer = ElGrid.Columns.Count '.ColumnCount
+    '        Dim NRow As Integer = ElGrid.Rows.Count
+    '        'Aqui recorremos todas las filas, y por cada fila todas las columnas y vamos escribiendo.
+    '        For i As Integer = 1 To NCol
+    '            exHoja.Cells.Item(1, i) = ElGrid.Columns(i - 1).ColumnName.ToString ' .HeaderText.ToString
+    '            'exHoja.Cells.Item(1, i).HorizontalAlignment = 3
+    '        Next
+    '        For Fila As Integer = 0 To NRow - 1
+    '            For Col As Integer = 0 To NCol - 1
+    '                If Not IsNothing(ElGrid.Rows(Fila).Item(Col)) Then
+    '                    'If IsDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString) Then
+    '                    '    exHoja.Cells.Item(Fila + 2, Col + 1) = Format(CDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString), "dd-MM-yyyy")
+    '                    '    exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
+    '                    'Else
+    '                    exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Item(Col).ToString
+    '                    exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
+    '                    ' End If
+    '                End If
+    '            Next
+    '        Next
+    '        'Titulo en negrita, Alineado al centro y que el tamaño de la columna se ajuste al texto
+    '        exHoja.Rows.Item(1).Font.Bold = 1
+    '        exHoja.Rows.Item(1).HorizontalAlignment = 3
+    '        exHoja.Columns.AutoFit()
+    '        'Aplicación visible
+    '        exApp.Application.Visible = True
+    '        exHoja = Nothing
+    '        exLibro = Nothing
+    '        exApp = Nothing
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, "Error al exportar a Excel")
+    '    End Try
+    'End Sub
+
     Public Sub GenerarExcelDT(ByRef ElGrid As DataTable)
-        'Creamos las variables
-        Dim exApp As New Microsoft.Office.Interop.Excel.Application
-        Dim exLibro As Microsoft.Office.Interop.Excel.Workbook
-        Dim exHoja As Microsoft.Office.Interop.Excel.Worksheet
+        If ElGrid Is Nothing OrElse ElGrid.Rows.Count = 0 Then Exit Sub
+
+        ' Declaramos todas las variables arriba para que Option Strict sea feliz
+        Dim exApp As Microsoft.Office.Interop.Excel.Application = Nothing
+        Dim exLibros As Microsoft.Office.Interop.Excel.Workbooks = Nothing
+        Dim exLibro As Microsoft.Office.Interop.Excel.Workbook = Nothing
+        Dim exHoja As Microsoft.Office.Interop.Excel.Worksheet = Nothing
+        Dim exRango As Microsoft.Office.Interop.Excel.Range = Nothing
+
         Try
-            'Añadimos el Libro al programa, y la hoja al libro
-            exLibro = exApp.Workbooks.Add
-            exHoja = exLibro.Worksheets.Add()
-            ' ¿Cuantas columnas y cuantas filas?
-            Dim NCol As Integer = ElGrid.Columns.Count '.ColumnCount
+            exApp = New Microsoft.Office.Interop.Excel.Application()
+            exLibros = exApp.Workbooks
+            exLibro = exLibros.Add()
+            exHoja = DirectCast(exLibro.Worksheets(1), Microsoft.Office.Interop.Excel.Worksheet)
+
+            Dim NCol As Integer = ElGrid.Columns.Count
             Dim NRow As Integer = ElGrid.Rows.Count
-            'Aqui recorremos todas las filas, y por cada fila todas las columnas y vamos escribiendo.
-            For i As Integer = 1 To NCol
-                exHoja.Cells.Item(1, i) = ElGrid.Columns(i - 1).ColumnName.ToString ' .HeaderText.ToString
-                'exHoja.Cells.Item(1, i).HorizontalAlignment = 3
+
+            ' Arreglo bidimensional (Filas, Columnas)
+            Dim data(NRow, NCol - 1) As Object
+
+            ' Encabezados
+            For i As Integer = 0 To NCol - 1
+                data(0, i) = ElGrid.Columns(i).ColumnName
             Next
-            For Fila As Integer = 0 To NRow - 1
-                For Col As Integer = 0 To NCol - 1
-                    If Not IsNothing(ElGrid.Rows(Fila).Item(Col)) Then
-                        'If IsDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString) Then
-                        '    exHoja.Cells.Item(Fila + 2, Col + 1) = Format(CDate(ElGrid.Rows(Fila).Cells(Col).Value.ToString), "dd-MM-yyyy")
-                        '    exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
-                        'Else
-                        exHoja.Cells.Item(Fila + 2, Col + 1) = ElGrid.Rows(Fila).Item(Col).ToString
-                        exHoja.Cells.Item(Fila + 2, Col + 1).HorizontalAlignment = 1
-                        ' End If
+
+            ' Llenado de datos
+            For fila As Integer = 0 To NRow - 1
+                For col As Integer = 0 To NCol - 1
+                    Dim valor As Object = ElGrid.Rows(fila).Item(col)
+                    If IsDBNull(valor) Then
+                        data(fila + 1, col) = ""
+                    Else
+                        data(fila + 1, col) = valor
                     End If
                 Next
             Next
-            'Titulo en negrita, Alineado al centro y que el tamaño de la columna se ajuste al texto
-            exHoja.Rows.Item(1).Font.Bold = 1
-            exHoja.Rows.Item(1).HorizontalAlignment = 3
+
+            ' Pegado masivo
+            ' USAMOS GetExcelColumnName que debe estar declarada abajo
+            Dim nombreColFinal As String = GetExcelColumnName(NCol)
+            exRango = exHoja.Range("A1", nombreColFinal & (NRow + 1).ToString())
+            exRango.Value = data
+
+            ' Formatos
+            exHoja.Rows.Item(1).Font.Bold = True
             exHoja.Columns.AutoFit()
-            'Aplicación visible
-            exApp.Application.Visible = True
-            exHoja = Nothing
-            exLibro = Nothing
-            exApp = Nothing
+
+            exApp.Visible = True
+
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error al exportar a Excel")
+            MsgBox("Error al exportar: " & ex.Message, MsgBoxStyle.Critical)
+        Finally
+            ' Liberación de objetos COM
+            If exRango IsNot Nothing Then Marshal.ReleaseComObject(exRango)
+            If exHoja IsNot Nothing Then Marshal.ReleaseComObject(exHoja)
+            If exLibro IsNot Nothing Then Marshal.ReleaseComObject(exLibro)
+            If exLibros IsNot Nothing Then Marshal.ReleaseComObject(exLibros)
+            If exApp IsNot Nothing Then Marshal.ReleaseComObject(exApp)
+            GC.Collect()
         End Try
     End Sub
+
+    ' ESTA FUNCIÓN DEBE ESTAR DENTRO DE LA MISMA CLASE QUE LA ANTERIOR
+    Private Function GetExcelColumnName(columnNumber As Integer) As String
+        Dim columnName As String = String.Empty
+        Dim numero As Integer = columnNumber
+        While numero > 0
+            Dim modulo As Integer = (numero - 1) Mod 26
+            columnName = Convert.ToChar(65 + modulo).ToString() & columnName
+            numero = CInt((numero - modulo) / 26)
+        End While
+        Return columnName
+    End Function
 
     Public Function comprobarComprobanteCompra(ByRef comprobante As String, ByRef contribuyente As String, conexion As MySql.Data.MySqlClient.MySqlConnection) As Boolean
         Try
@@ -2754,9 +2838,9 @@ Module funciones_Globales
             'MsgBox(consultastock.SelectCommand.CommandText)
 
             Dim tablastock As New DataTable
-Dim infostock() As DataRow
-consultastock.Fill(tablastock)
-                infostock = tablastock.Select("")
+            Dim infostock() As DataRow
+            consultastock.Fill(tablastock)
+            infostock = tablastock.Select("")
             lotes = tablastock.Rows.Count - 1
             desc_cant = CDbl(infostock(lotes)("desc_cantidad"))
             cantidad = cantidad * desc_cant

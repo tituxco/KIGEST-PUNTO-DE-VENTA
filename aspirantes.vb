@@ -850,7 +850,7 @@ Public Class frmaspirantes
         pr.plazo as DURACION,	
         round(pr.MONTO_PRESTAMO,2) AS TOTAL, round(pr.CUOTA,2) AS MENSUAL        
         FROM rym_prestamo as pr
-        where pr.ID_CLIENTE=" & Idcliente)
+        where pr.ID_CLIENTE=" & Idcliente & " order by pr.ID_PRESTAMO asc")
         Catch ex As Exception
 
         End Try

@@ -58,7 +58,7 @@ Public Class frmprincipal
                 If tablaConfigTerm.Rows.Count <= 1 Then ''si solo hay una configuracion disponible....
                     MsgBox("solo existe una configuracion posible para la terminal, se procedera a setearla para su equipo")
                     comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & tablaConfigTerm.Rows(0).Item("id") &
-                                                                         " where nombreTerminal like '" & NombreEquipo & "' and idTerminal= " & Variables_Globales.IdEmpresa, conexionPrinc)
+                                                                         " where nombreTerminal like '" & NombreEquipo & "' and idEmpresa= " & Variables_Globales.IdEmpresa, conexionPrinc)
                     comandoupd.ExecuteNonQuery()
                     MsgBox("Configuracion guardada correctamente")
                 Else
@@ -127,10 +127,6 @@ Public Class frmprincipal
         Catch ex As Exception
 
         End Try
-
-    End Sub
-
-    Private Sub frmprincipal_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
 
     End Sub
 
@@ -219,6 +215,7 @@ Public Class frmprincipal
             End If
 
             If InStr(DatosAcceso.Moduloacc, "5TALLE") = False Then TALLERToolStripMenuItem.Visible = False
+            If InStr(DatosAcceso.Moduloacc, "5ACADEMIA") = False Then ACADEMIAToolStripMenuItem.Visible = False
 
             'FacturaElectro.puntovtaelect = infocl(0)(2)
             FacturaElectro.cuit = infocl(1)(2)
@@ -981,5 +978,21 @@ Public Class frmprincipal
 
         End Try
 
+    End Sub
+
+    Private Sub DemonvoptovtaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DemonvoptovtaToolStripMenuItem.Click
+
+        Dim vta As New frmPtoVtaNvo
+        vta.MdiParent = Me
+
+        vta.Show()
+
+    End Sub
+
+    Private Sub PrbToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ACADEMIAToolStripMenuItem.Click
+        Dim vta As New listadoServicios
+        vta.MdiParent = Me
+
+        vta.Show()
     End Sub
 End Class

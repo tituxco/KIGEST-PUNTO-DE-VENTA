@@ -38,24 +38,24 @@ Partial Class selListaPrecios
         Me.dtlistas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dtlistas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dtlistas.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dtlistas.Location = New System.Drawing.Point(0, 40)
+        Me.dtlistas.Location = New System.Drawing.Point(0, 30)
         Me.dtlistas.MultiSelect = False
         Me.dtlistas.Name = "dtlistas"
         Me.dtlistas.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders
         Me.dtlistas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dtlistas.Size = New System.Drawing.Size(464, 226)
+        Me.dtlistas.Size = New System.Drawing.Size(584, 331)
         Me.dtlistas.TabIndex = 66
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 26.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(468, 39)
+        Me.Label1.Size = New System.Drawing.Size(435, 29)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Seleccionar lista de precios"
+        Me.Label1.Text = "SELECCIONAR LISTA DE PRECIOS"
         '
         'pntitulo
         '
@@ -64,16 +64,17 @@ Partial Class selListaPrecios
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(464, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(584, 30)
         Me.pntitulo.TabIndex = 65
         '
         'selListaPrecios
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(464, 266)
+        Me.ClientSize = New System.Drawing.Size(584, 361)
         Me.Controls.Add(Me.dtlistas)
         Me.Controls.Add(Me.pntitulo)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False

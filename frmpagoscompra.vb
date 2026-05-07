@@ -1,4 +1,6 @@
 ﻿Imports System.ComponentModel
+Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
+Imports SIGT__KIGEST.datosEstructura
 
 Public Class frmpagoscompra
 
@@ -13,7 +15,7 @@ Public Class frmpagoscompra
     Public Fecha As String
     Public TOTAL As String
     Public IdFacturaCTA As Integer
-    Public IdFacturaComp As Integer
+    Public IdFacturaComp As Integer ' <- Usaremos este ID para buscar los ítems de la factura
     Dim IdRecibo As Integer
     Dim PtoVta As String = DatosAcceso.IdPtoVtaDef
     Dim PagoCaja As Integer = 1
@@ -36,7 +38,6 @@ Public Class frmpagoscompra
         panelefectivo.Visible = True
         panelTarjetas.Visible = False
         txtefectivo.Focus()
-
     End Sub
 
     Private Sub frmpagoscompra_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -65,8 +66,8 @@ Public Class frmpagoscompra
             Dim idAlmacen As Integer = My.Settings.idAlmacen
             Dim idCaja As Integer = My.Settings.CajaDef
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
-                por favor contacte con el administrador o repare la numeración manualmente")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, " &
+                       "por favor contacte con el administrador o repare la numeración manualmente")
                 panelformaspago.Visible = False
                 Exit Sub
             End If
@@ -134,6 +135,7 @@ Public Class frmpagoscompra
             End With
             comandoaddITM.ExecuteNonQuery()
             puntoventa.Button1.Focus()
+
             'Try 'actualizamos la caja
             Dim ConsultaCaj As String
             ConsultaCaj = "insert into fact_ingreso_egreso " _
@@ -150,7 +152,12 @@ Public Class frmpagoscompra
             End With
             comandocaj.ExecuteNonQuery()
 
-            CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
+            ' =======================================================
+            ' LLAMADA AL NUEVO MÉTODO PARA CURSOS
+            ' =======================================================
+            MarcarCuotasComoPagadas()
+
+            'CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
             Me.Close()
 
         Catch ex As Exception
@@ -176,7 +183,6 @@ Public Class frmpagoscompra
         Me.Close()
     End Sub
 
-
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
             Reconectar()
@@ -198,7 +204,6 @@ Public Class frmpagoscompra
             txtTarjetaNombre.DataSource = readTarjetasNombre.Tables(0)
             txtTarjetaNombre.DisplayMember = readTarjetasNombre.Tables(0).Columns("nombre").Caption.ToString.ToUpper
             txtTarjetaNombre.ValueMember = readTarjetasNombre.Tables(0).Columns("id").Caption.ToString
-            'cmbTarjetasMarcas.SelectedIndex = -1
 
             panelformaspago.Visible = False
             panelefectivo.Visible = False
@@ -206,8 +211,6 @@ Public Class frmpagoscompra
         Catch ex As Exception
 
         End Try
-
-
     End Sub
 
     Private Sub cmdFinalizarTarjeta_Click(sender As Object, e As EventArgs) Handles cmdFinalizarTarjeta.Click
@@ -215,8 +218,8 @@ Public Class frmpagoscompra
             Dim idAlmacen As Integer = My.Settings.idAlmacen
             Dim idCaja As Integer = My.Settings.CajaDef
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, 
-                por favor contacte con el administrador o repare la numeración manualmente")
+                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, " &
+                       "por favor contacte con el administrador o repare la numeración manualmente")
                 panelformaspago.Visible = False
                 Exit Sub
             End If
@@ -244,7 +247,6 @@ Public Class frmpagoscompra
             comandoadd.ExecuteNonQuery()
             IdRecibo = comandoadd.LastInsertedId
 
-            'If Not IsNothing(tarjeta.Cells(0).Value) Then
             SqlQuery = "insert into fact_tarjetas " _
                 & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
                 & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
@@ -258,7 +260,6 @@ Public Class frmpagoscompra
                 .AddWithValue("?importe", TOTAL)
             End With
             comandoch.ExecuteNonQuery()
-            'End If
 
             Reconectar()
             Dim lector As System.Data.IDataReader
@@ -300,7 +301,7 @@ Public Class frmpagoscompra
             End With
             comandoaddITM.ExecuteNonQuery()
             puntoventa.Button1.Focus()
-            'Try 'actualizamos la caja
+
             Dim ConsultaCaj As String
             ConsultaCaj = "insert into fact_ingreso_egreso " _
                 & "(concepto,monto,comprobante,caja,tipo) values" _
@@ -315,6 +316,12 @@ Public Class frmpagoscompra
                 .AddWithValue("?conc", "1")
             End With
             comandocaj.ExecuteNonQuery()
+
+            ' =======================================================
+            ' LLAMADA AL NUEVO MÉTODO PARA CURSOS
+            ' =======================================================
+            MarcarCuotasComoPagadas()
+
             CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
             Me.Close()
 
@@ -323,15 +330,14 @@ Public Class frmpagoscompra
         End Try
     End Sub
 
-    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs)
+    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaNombre.KeyDown
         If e.KeyCode = Keys.Enter Then
-
             txtTarjetaAutoriza.Focus()
         End If
     End Sub
+
     Private Sub txtTarjetaAutoriza_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaAutoriza.KeyDown
         If e.KeyCode = Keys.Enter Then
-
             cmdFinalizarTarjeta.Focus()
         End If
     End Sub
@@ -345,4 +351,44 @@ Public Class frmpagoscompra
             Me.Close()
         End If
     End Sub
+
+    ' =========================================================================
+    ' NUEVA FUNCIÓN: VINCULACIÓN CON EL SISTEMA DE CURSOS
+    ' =========================================================================
+    Private Sub MarcarCuotasComoPagadas()
+        Try
+            ' 1. Buscamos en los ítems de la factura si hay alguna cuota (PLU que empiece con "CTA-")
+            '    Usamos IdFacturaComp que es la factura origen que se está saldando en este recibo
+            Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & IdFacturaComp & " AND plu LIKE 'CTA-%'"
+
+            Reconectar()
+            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
+            Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
+
+            Dim idsCuotas As New List(Of Integer)
+
+            ' 2. Guardamos todos los IDs que encontramos en una lista temporal
+            While lectorItems.Read()
+                Dim codbar As String = lectorItems("plu").ToString()
+                Dim idCuota As Integer
+                If Integer.TryParse(codbar.Replace("CTA-", ""), idCuota) Then
+                    idsCuotas.Add(idCuota)
+                End If
+            End While
+            ' IMPORTANTE: Cerrar el lector ANTES de llamar a actualizarEstado 
+            ' para no chocar la conexión a la base de datos
+            lectorItems.Close()
+
+            ' 3. Actualizamos cada cuota al estado PAGADO
+            For Each idC As Integer In idsCuotas
+                serv_detalle.ActualizarEstado(idC, "PAGADO")
+            Next
+
+        Catch ex As Exception
+            ' Usamos Console.WriteLine en vez de MsgBox para que si hay algún 
+            ' fallo menor no frene la emisión del recibo al cliente
+            Console.WriteLine("Error al vincular el pago con el curso: " & ex.Message)
+        End Try
+    End Sub
+
 End Class
