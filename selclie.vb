@@ -56,18 +56,38 @@ Public Class selclie
     End Sub
 
     Private Sub CargarDatosAsync_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarDatosAsync.RunWorkerCompleted
-        frmprincipal.pbprincipal.Visible = False
-        frmprincipal.lblprocesando.Visible = False
+        Try
+            frmprincipal.pbprincipal.Visible = False
+            frmprincipal.lblprocesando.Visible = False
 
-        If e.Error IsNot Nothing Then
-            MsgBox("Error en la búsqueda: " & e.Error.Message, MsgBoxStyle.Critical)
-            Exit Sub
-        End If
+            ' 1. Verificamos si hubo un error en el hilo secundario
+            If e.Error IsNot Nothing Then
+                MsgBox("Error en la búsqueda: " & e.Error.Message, MsgBoxStyle.Critical)
+                Exit Sub
+            End If
 
-        Dim listaClientes As List(Of datosEstructura.fact_clientes) = CType(e.Result, List(Of datosEstructura.fact_clientes))
-        dtpersonal.DataSource = listaClientes
+            ' 2. Verificamos si se canceló
+            If e.Cancelled Then Exit Sub
+
+            ' 3. Intento de conversión segura (TryCast)
+            Dim listaClientes = TryCast(e.Result, List(Of datosEstructura.fact_clientes))
+
+            If listaClientes IsNot Nothing Then
+                ' Si la lista es correcta, la asignamos
+                dtpersonal.DataSource = Nothing ' Limpiamos por las dudas
+                dtpersonal.DataSource = listaClientes
+            Else
+                ' Si llega acá, es porque e.Result es de OTRO TIPO (ej. una lista de otra clase)
+                MsgBox("Error de tipado: El resultado no es una lista de Clientes. Verifique el DoWork.", MsgBoxStyle.Exclamation)
+
+                ' TIP: Para debuguear, podés ver qué tipo está llegando realmente:
+                ' MsgBox("Tipo recibido: " & e.Result.GetType().ToString())
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error en RunWorkerCompleted: " & ex.Message)
+        End Try
     End Sub
-
     ' =====================================================================
     ' 2. LÓGICA DE SELECCIÓN (Sin código duplicado)
     ' =====================================================================
@@ -173,8 +193,19 @@ Public Class selclie
                     .txtctaclie.Text = Me.clienteSeleccionado.idCliente
                     .txtrazon.Text = Me.clienteSeleccionado.nomapellRazon
                 End With
+            Case "nuevopedido"
+                With CType(frmprincipal.ActiveMdiChild, nuevopedido)
+                    .txtctaclie.Text = Me.clienteSeleccionado.idCliente
+                    .txtrazon.Text = Me.clienteSeleccionado.nomapellRazon
+                    .cargarCliente()
+                End With
+
         End Select
 
         Me.Close()
+    End Sub
+
+    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
+
     End Sub
 End Class

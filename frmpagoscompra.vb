@@ -1,7 +1,7 @@
 ﻿Imports System.ComponentModel
 Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
 Imports SIGT__KIGEST.datosEstructura
-
+Imports SIGT__KIGEST.GestorAcademia
 Public Class frmpagoscompra
 
     Public NumeroFactura As String

@@ -88,6 +88,7 @@ Partial Class listadoPublicidades
         Me.CargarExcelAsyncListadoOR = New System.ComponentModel.BackgroundWorker()
         Me.rdporfechadevencimiento = New System.Windows.Forms.RadioButton()
         Me.rdporfechadeinicio = New System.Windows.Forms.RadioButton()
+        Me.CargarCtaCteAsync = New System.ComponentModel.BackgroundWorker()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -1004,4 +1005,5 @@ Partial Class listadoPublicidades
     Friend WithEvents CargarExcelAsyncListadoOR As System.ComponentModel.BackgroundWorker
     Friend WithEvents rdporfechadeinicio As RadioButton
     Friend WithEvents rdporfechadevencimiento As RadioButton
+    Friend WithEvents CargarCtaCteAsync As System.ComponentModel.BackgroundWorker
 End Class

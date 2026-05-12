@@ -1,4 +1,5 @@
 ﻿Imports SIGT__KIGEST.datosEstructura
+Imports SIGT__KIGEST.GestorAcademia
 
 Public Class frmInfoAlumno
     ' Propiedad privada para mantener la referencia del alumno que estamos editando

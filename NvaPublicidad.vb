@@ -447,6 +447,10 @@ Public Class NvaPublicidad
     End Sub
 
     Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        If InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+            btnBajaPublicidad.Visible = False
+        End If
         Me.Text = "Nva " & DatosAcceso.ServMensual
         Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
 
@@ -555,4 +559,43 @@ Public Class NvaPublicidad
 
         End Try
     End Sub
+
+    Private Sub btnBajaPublicidad_Click(sender As Object, e As EventArgs) Handles btnBajaPublicidad.Click
+
+        Try
+            ' 1. Validar selección y que no sea la fila de totales
+            If dgvPublicidad.CurrentRow Is Nothing Then Exit Sub
+
+            Dim cellId = txtPrestamo.Text
+            If IsDBNull(cellId) OrElse cellId Is Nothing Then
+                MsgBox("Seleccione una publicidad válida (la fila de totales no puede desactivarse).", MsgBoxStyle.Exclamation)
+                Exit Sub
+            End If
+
+            Dim idPub As Integer = Convert.ToInt32(cellId)
+            Dim cliente As String = txtclientenombre.Text
+
+            ' 2. Preguntar motivo con Prompt
+            Dim motivo As String = InputBox("Ingrese el motivo de la baja para " & cliente & ":", "Baja de Publicidad")
+
+            ' 3. Si cancela o deja vacío, no hacemos nada
+            If String.IsNullOrWhiteSpace(motivo) Then
+                MsgBox("Debe indicar un motivo para poder desactivar la publicidad.", MsgBoxStyle.Information)
+                Exit Sub
+            End If
+
+            ' 4. Confirmación final
+            If MsgBox("¿Está seguro de desactivar esta publicidad?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+                If GestorPublicidad.DesactivarPublicidad(idPub, motivo) Then
+                    MsgBox("Publicidad desactivada correctamente.", MsgBoxStyle.Information)
+                    ' Refrescar el listado (llamar a tu método de búsqueda)
+                    Me.Close()
+                End If
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
+
 End Class

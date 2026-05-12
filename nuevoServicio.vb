@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports Microsoft.Reporting.WinForms
+Imports SIGT__KIGEST.GestorAcademia
 Imports SIGT__KIGEST.datosEstructura
 Imports WSAFIPFE.f1AFIP
 Imports WSAFIPFE.lpgAFIP
@@ -110,7 +111,7 @@ Public Class nuevoServicio
 
     Private Sub CargarServicios()
         Try
-            serviciosDisponibles = datosEstructura.serv_servicios.ObtenerTodos()
+            serviciosDisponibles = serv_servicios.ObtenerTodos()
             cmbConcepto.DataSource = serviciosDisponibles
             ' ESTO ES LO IMPORTANTE:
             cmbConcepto.ValueMember = "id"      ' La propiedad que identifica al objeto

@@ -1,7 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.Security
 Imports SIGT__KIGEST.datosEstructura
-
+Imports SIGT__KIGEST.GestorAcademia
 Public Class puntoventa
     Dim fechagral As String = Format(Now, "dd-MM-yyyy")
     Public idfacrap As Integer

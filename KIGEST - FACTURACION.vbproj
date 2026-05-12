@@ -32,7 +32,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>533</ApplicationRevision>
+    <ApplicationRevision>538</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -257,6 +257,7 @@
     <Compile Include="cheques_en_cartera.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ClasesDatos\GestorAcademia.vb" />
     <Compile Include="ClasesDatos\GestorPublicidad.vb" />
     <Compile Include="Class1.vb" />
     <Compile Include="Codigos.vb" />

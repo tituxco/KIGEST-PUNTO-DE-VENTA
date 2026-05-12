@@ -801,4 +801,8 @@
             End If
         End If
     End Sub
+
+    Private Sub txtrazon_TextChanged(sender As Object, e As EventArgs) Handles txtrazon.TextChanged
+
+    End Sub
 End Class

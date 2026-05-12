@@ -23,6 +23,8 @@ Public Class listadoPublicidades
     Private estadoInf As String
     Private incluirCanceladosInf As Boolean
     Private proyPorInicioInf As Boolean ' Nueva variable de clase
+    Private fechaCtaCteInf As Date
+    Private busqCtaCteInf As String
     Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click
         Try
             ' 1. Efectos visuales de carga
@@ -680,6 +682,34 @@ Public Class listadoPublicidades
     '    End Try
     'End Sub
 
+    Private Sub Button3_Click_1(sender As Object, e As EventArgs) Handles Button3.Click
+        Try
+            ' Capturamos valores de la UI
+            fechaCtaCteInf = dtpFechaCtaCte.Value
+            busqCtaCteInf = txtbusqctacte.Text.Trim()
+
+            ' Visuales de carga (reutilizando lo que ya tenemos)
+            frmprincipal.pbprincipal.Visible = True
+            frmprincipal.pbprincipal.Style = ProgressBarStyle.Marquee
+            frmprincipal.lblprocesando.Visible = True
+            frmprincipal.lblprocesando.Text = "Consultando Cta. Cte., por favor espere..."
+
+            ' Usamos un flag o un modo para que el DoWork sepa qué consulta ejecutar
+            ' Por ahora, si solo este botón llama a este proceso:
+            CargarCtaCteAsync.RunWorkerAsync()
+
+        Catch ex As Exception
+            MsgBox("Error al iniciar consulta: " & ex.Message)
+        End Try
+    End Sub
+    Private Sub CargarCtaCteAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarCtaCteAsync.DoWork
+        Try
+            ' Llamada al Gestor
+            dtResultadosListado = GestorPublicidad.ObtenerListadoCtaCte(fechaCtaCteInf, busqCtaCteInf)
+        Catch ex As Exception
+            e.Result = ex
+        End Try
+    End Sub
     Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
         If dgvCtaCte.dgvVista.CurrentRow IsNot Nothing Then
             Dim idPubli As String = dgvCtaCte.dgvVista.CurrentRow.Cells(0).Value.ToString()
@@ -1226,7 +1256,5 @@ Public Class listadoPublicidades
         form.tabcontable.SelectedTab = form.tabcuentasclientes
     End Sub
 
-    Private Sub dgvInformes_Load(sender As Object, e As EventArgs) Handles dgvInformes.Load
 
-    End Sub
 End Class

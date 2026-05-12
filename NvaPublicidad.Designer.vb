@@ -22,7 +22,7 @@ Partial Class NvaPublicidad
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.cmdGuardarEditar = New System.Windows.Forms.Button()
         Me.btnPagar = New System.Windows.Forms.Button()
         Me.txtclientenombre = New System.Windows.Forms.TextBox()
@@ -62,6 +62,7 @@ Partial Class NvaPublicidad
         Me.cmbcobrador = New System.Windows.Forms.ComboBox()
         Me.Label15 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.btnBajaPublicidad = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         CType(Me.dgvPublicidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -189,14 +190,14 @@ Partial Class NvaPublicidad
         Me.dgvPublicidad.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
         Me.dgvPublicidad.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight
         Me.dgvPublicidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.Desktop
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.749999!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.GradientInactiveCaption
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.Desktop
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvPublicidad.DefaultCellStyle = DataGridViewCellStyle2
         Me.dgvPublicidad.Location = New System.Drawing.Point(1, 255)
         Me.dgvPublicidad.Name = "dgvPublicidad"
         Me.dgvPublicidad.ReadOnly = True
@@ -472,11 +473,23 @@ Partial Class NvaPublicidad
         Me.Button1.Text = "Imputar Pago"
         Me.Button1.UseVisualStyleBackColor = True
         '
+        'btnBajaPublicidad
+        '
+        Me.btnBajaPublicidad.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnBajaPublicidad.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
+        Me.btnBajaPublicidad.Location = New System.Drawing.Point(316, 222)
+        Me.btnBajaPublicidad.Name = "btnBajaPublicidad"
+        Me.btnBajaPublicidad.Size = New System.Drawing.Size(91, 27)
+        Me.btnBajaPublicidad.TabIndex = 132
+        Me.btnBajaPublicidad.Text = "BAJA"
+        Me.btnBajaPublicidad.UseVisualStyleBackColor = False
+        '
         'NvaPublicidad
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(875, 415)
+        Me.Controls.Add(Me.btnBajaPublicidad)
         Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.cmbcobrador)
         Me.Controls.Add(Me.Label15)
@@ -567,4 +580,5 @@ Partial Class NvaPublicidad
     Friend WithEvents cmbcobrador As ComboBox
     Friend WithEvents Label15 As Label
     Friend WithEvents Button1 As Button
+    Friend WithEvents btnBajaPublicidad As Button
 End Class

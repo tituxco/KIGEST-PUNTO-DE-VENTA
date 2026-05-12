@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
 Imports Org.BouncyCastle.X509.Extension
 Imports SIGT__KIGEST.datosEstructura
+Imports SIGT__KIGEST.GestorAcademia
 
 Public Class movimientodecaja
     Dim fechagral As String = Format(Now, "dd-MM-yyyy")

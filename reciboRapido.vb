@@ -1,6 +1,7 @@
 ﻿Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
 Imports SIGT__KIGEST.datosEstructura
 Imports WSAFIPFE.utipos
+Imports SIGT__KIGEST.GestorAcademia
 
 Public Class reciboRapido
     Public idFactura As Integer

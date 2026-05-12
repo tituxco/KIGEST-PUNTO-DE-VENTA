@@ -1,5 +1,5 @@
 ﻿Imports SIGT__KIGEST.datosEstructura
-
+Imports SIGT__KIGEST.GestorAcademia
 Public Class frmInfoServicio
     Private _servicio As serv_servicios
 

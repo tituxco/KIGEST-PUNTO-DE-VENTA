@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
 Imports SIGT__KIGEST.datosEstructura
+Imports SIGT__KIGEST.GestorAcademia
 
 Public Class listadoServicios
     Private Sub btnNuevaPublicidad_Click(sender As Object, e As EventArgs) Handles btnNuevaPublicidad.Click

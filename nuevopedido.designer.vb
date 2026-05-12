@@ -177,7 +177,7 @@ Partial Class nuevopedido
         Me.Label4.ForeColor = System.Drawing.Color.White
         Me.Label4.Location = New System.Drawing.Point(3, 11)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(43, 16)
+        Me.Label4.Size = New System.Drawing.Size(42, 16)
         Me.Label4.TabIndex = 39
         Me.Label4.Text = "PED:"
         '
@@ -197,7 +197,7 @@ Partial Class nuevopedido
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(44, 11)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(43, 16)
+        Me.Label5.Size = New System.Drawing.Size(42, 16)
         Me.Label5.TabIndex = 35
         Me.Label5.Text = "Num:"
         '
@@ -208,7 +208,7 @@ Partial Class nuevopedido
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(3, 11)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(103, 16)
+        Me.Label2.Size = New System.Drawing.Size(102, 16)
         Me.Label2.TabIndex = 39
         Me.Label2.Text = "Factura TIPO:"
         '
@@ -242,7 +242,7 @@ Partial Class nuevopedido
         Me.Label3.ForeColor = System.Drawing.Color.White
         Me.Label3.Location = New System.Drawing.Point(205, 10)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(99, 16)
+        Me.Label3.Size = New System.Drawing.Size(98, 16)
         Me.Label3.TabIndex = 35
         Me.Label3.Text = "Factura Num:"
         '
@@ -315,7 +315,7 @@ Partial Class nuevopedido
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label6.Location = New System.Drawing.Point(329, 49)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(145, 16)
+        Me.Label6.Size = New System.Drawing.Size(144, 16)
         Me.Label6.TabIndex = 54
         Me.Label6.Text = "LISTA DE PRECIOS"
         '
@@ -340,7 +340,7 @@ Partial Class nuevopedido
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label12.Location = New System.Drawing.Point(3, 46)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(93, 16)
+        Me.Label12.Size = New System.Drawing.Size(92, 16)
         Me.Label12.TabIndex = 47
         Me.Label12.Text = "COND. VTA:"
         '
@@ -357,7 +357,7 @@ Partial Class nuevopedido
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label11.Location = New System.Drawing.Point(764, 26)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(47, 16)
+        Me.Label11.Size = New System.Drawing.Size(46, 16)
         Me.Label11.TabIndex = 45
         Me.Label11.Text = "CUIT:"
         '
@@ -375,7 +375,7 @@ Partial Class nuevopedido
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(425, 26)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(104, 16)
+        Me.Label10.Size = New System.Drawing.Size(103, 16)
         Me.Label10.TabIndex = 43
         Me.Label10.Text = "TIPO CONTR."
         '
@@ -392,7 +392,7 @@ Partial Class nuevopedido
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label9.Location = New System.Drawing.Point(3, 25)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(69, 16)
+        Me.Label9.Size = New System.Drawing.Size(68, 16)
         Me.Label9.TabIndex = 41
         Me.Label9.Text = "CUIDAD:"
         '
@@ -409,7 +409,7 @@ Partial Class nuevopedido
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label8.Location = New System.Drawing.Point(565, 4)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(87, 16)
+        Me.Label8.Size = New System.Drawing.Size(86, 16)
         Me.Label8.TabIndex = 39
         Me.Label8.Text = "DOMICILIO:"
         '
@@ -426,7 +426,7 @@ Partial Class nuevopedido
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label7.Location = New System.Drawing.Point(3, 4)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(75, 16)
+        Me.Label7.Size = New System.Drawing.Size(74, 16)
         Me.Label7.TabIndex = 0
         Me.Label7.Text = "CLIENTE:"
         '
@@ -482,7 +482,7 @@ Partial Class nuevopedido
         Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label18.Location = New System.Drawing.Point(3, 35)
         Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(117, 16)
+        Me.Label18.Size = New System.Drawing.Size(116, 16)
         Me.Label18.TabIndex = 54
         Me.Label18.Text = "Observaciones:"
         '
@@ -500,7 +500,7 @@ Partial Class nuevopedido
         Me.Label17.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label17.Location = New System.Drawing.Point(3, 8)
         Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(80, 16)
+        Me.Label17.Size = New System.Drawing.Size(79, 16)
         Me.Label17.TabIndex = 52
         Me.Label17.Text = "Vendedor:"
         '
@@ -594,7 +594,7 @@ Partial Class nuevopedido
         Me.Label15.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label15.Location = New System.Drawing.Point(18, 30)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(81, 16)
+        Me.Label15.Size = New System.Drawing.Size(80, 16)
         Me.Label15.TabIndex = 47
         Me.Label15.Text = "IVA 10,5 %"
         '
@@ -613,7 +613,7 @@ Partial Class nuevopedido
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label14.Location = New System.Drawing.Point(18, 4)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(65, 16)
+        Me.Label14.Size = New System.Drawing.Size(64, 16)
         Me.Label14.TabIndex = 45
         Me.Label14.Text = "IVA 21%"
         '
@@ -642,7 +642,7 @@ Partial Class nuevopedido
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label13.Location = New System.Drawing.Point(18, 4)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(92, 16)
+        Me.Label13.Size = New System.Drawing.Size(91, 16)
         Me.Label13.TabIndex = 45
         Me.Label13.Text = "SUBTOTAL:"
         '
