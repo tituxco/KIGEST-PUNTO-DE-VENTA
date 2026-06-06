@@ -225,26 +225,61 @@ Public Class NvaPublicidad
 
     End Sub
 
+    'Private Sub btnPagar_Click(sender As Object, e As EventArgs) Handles btnPagar.Click
+    '    Dim vta As New puntoventa
+    '    vta.MdiParent = Me.MdiParent
+    '    vta.idfacrap = My.Settings.idfacRap
+
+    '    With vta
+    '        .Idcliente = txtclientecuenta.Text 'dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
+    '        .condVta = 2
+    '        .cargarCliente(False)
+    '        .txtcodPLU.Focus()
+    '        For Each publi As DataGridViewRow In dgvPublicidad.Rows
+    '            If publi.Selected = True Then
+    '                .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
+    '             txtconcepto.Text & " #" &
+    '             txtPrestamo.Text & " - " &
+    '             Format(DateAdd(DateInterval.Month, -1, CDate(publi.Cells("VENCIMIENTO").Value.ToString)), "MMMM yyyy"), "21",
+    '             publi.Cells("MONTO").Value,
+    '             publi.Cells("MONTO").Value)
+    '            End If
+
+    '        Next
+
+    '        .txtobservaciones.Text = txtdetallePublicidad.Text
+    '        .condVta = 2
+    '        .lblfacvendedor.Text = idVendedor
+    '        .Show()
+    '    End With
+    'End Sub
+
+
     Private Sub btnPagar_Click(sender As Object, e As EventArgs) Handles btnPagar.Click
         Dim vta As New puntoventa
         vta.MdiParent = Me.MdiParent
         vta.idfacrap = My.Settings.idfacRap
 
         With vta
-            .Idcliente = txtclientecuenta.Text 'dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
+            .Idcliente = txtclientecuenta.Text
             .condVta = 2
             .cargarCliente(False)
             .txtcodPLU.Focus()
+
             For Each publi As DataGridViewRow In dgvPublicidad.Rows
                 If publi.Selected = True Then
-                    .dtproductos.Rows.Add("0", "#" & txtPrestamo.Text, "1",
-                 txtconcepto.Text & " #" &
-                 txtPrestamo.Text & " - " &
-                 Format(DateAdd(DateInterval.Month, -1, CDate(publi.Cells("VENCIMIENTO").Value.ToString)), "MMMM yyyy"), "21",
-                 publi.Cells("MONTO").Value,
-                 publi.Cells("MONTO").Value)
-                End If
+                    ' AQUÍ ESTÁ EL CAMBIO CLAVE:
+                    ' Pasamos el ID del préstamo y el ID único de la cuota (publi.Cells("ID").Value)
+                    Dim idCuota As String = publi.Cells("ID").Value.ToString()
+                    Dim codigoPlu As String = "#" & txtPrestamo.Text & "-" & idCuota
 
+                    Dim descripcion As String = txtconcepto.Text & " #" & txtPrestamo.Text & " - " &
+                      Format(DateAdd(DateInterval.Month, -1, CDate(publi.Cells("VENCIMIENTO").Value.ToString)), "MMMM yyyy")
+
+                    .dtproductos.Rows.Add("0", codigoPlu, "1", descripcion, "21",
+                                     publi.Cells("MONTO").Value,
+                                     publi.Cells("MONTO").Value)
+                End If
             Next
 
             .txtobservaciones.Text = txtdetallePublicidad.Text
@@ -257,90 +292,95 @@ Public Class NvaPublicidad
         CargarDetalle()
     End Sub
 
+
     Public Sub CargarDetalle()
         Try
-            Consultas("select DTP.ID,
-        IF((SELECT count(*) from rym_pagos where ID_PRESTAMO=DTP.ID_PRESTAMO and periodo=DTP.PERIODO)=1,
-        'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
-        ) AS ESTADO,
-		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO,
-        (select group_concat(comp.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) from 
-        fact_facturas as fact, fact_items as itm, tipos_comprobantes as comp where
-        itm.id_fact= fact.id and fact.tipofact=comp.donfdesc and fact.ptovta=comp.ptovta and 
-        itm.plu like concat('%#',DTP.ID_PRESTAMO,'%') and
-        date_format(date_add(DTP.FECHA, interval -1 month),'%Y-%m')=
-        date_format(str_to_date(
-         CASE WHEN INSTR(trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion))),'ENERO')<>0 THEN
-         REPLACE (trim(substring(descripcion,locate('ENERO',descripcion), length(descripcion)-locate('ENERO',descripcion)+1)),'ENERO','JANUARY')
-         WHEN INSTR(trim(substring(descripcion,locate('FEBRERO',descripcion), length(descripcion)-locate('FEBRERO',descripcion))),'FEBRERO')<>0 THEN
-         REPLACE (trim(substring(descripcion,locate('FEBRERO',descripcion), length(descripcion)-locate('FEBRERO',descripcion)+1)),'FEBRERO','FEBRUARY')
-         WHEN INSTR(trim(substring(descripcion,locate('MARZO',descripcion), length(descripcion)-locate('MARZO',descripcion))),'MARZO')<>0 THEN
-         REPLACE (trim(substring(descripcion,locate('MARZO',descripcion), length(descripcion)-locate('MARZO',descripcion)+1)),'MARZO','MARCH')
-         WHEN INSTR(trim(substring(descripcion,locate('ABRIL',descripcion), length(descripcion)-locate('ABRIL',descripcion))),'ABRIL')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('ABRIL',descripcion), length(descripcion)-locate('ABRIL',descripcion)+1)),'ABRIL','APRIL')
-         WHEN INSTR(trim(substring(descripcion,locate('MAYO',descripcion), length(descripcion)-locate('MAYO',descripcion))),'MAYO')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('MAYO',descripcion), length(descripcion)-locate('MAYO',descripcion)+1)),'MAYO','MAY')
-         WHEN INSTR(trim(substring(descripcion,locate('JUNIO',descripcion), length(descripcion)-locate('JUNIO',descripcion))),'JUNIO')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('JUNIO',descripcion), length(descripcion)-locate('JUNIO',descripcion)+1)),'JUNIO','JUNE')
-         WHEN INSTR(trim(substring(descripcion,locate('JULIO',descripcion), length(descripcion)-locate('JULIO',descripcion))),'JULIO')<>0 THEN
-         REPLACE (trim(substring(descripcion,locate('JULIO',descripcion), length(descripcion)-locate('JULIO',descripcion)+1)),'JULIO','JULY')
-         WHEN INSTR(trim(substring(descripcion,locate('AGOSTO',descripcion), length(descripcion)-locate('AGOSTO',descripcion))),'AGOSTO')<>0 THEN
-         REPLACE (trim(substring(descripcion,locate('AGOSTO',descripcion), length(descripcion)-locate('AGOSTO',descripcion)+1)),'AGOSTO','AUGUST')
-         WHEN INSTR(trim(substring(descripcion,locate('SEPTIEMBRE',descripcion), length(descripcion)-locate('SEPTIEMBRE',descripcion))),'SEPTIEMBRE')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('SEPTIEMBRE',descripcion), length(descripcion)-locate('SEPTIEMBRE',descripcion)+1)),'SEPTIEMBRE','SEPTEMBER')
-         WHEN INSTR(trim(substring(descripcion,locate('OCTUBRE',descripcion), length(descripcion)-locate('OCTUBRE',descripcion))),'OCTUBRE')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('OCTUBRE',descripcion), length(descripcion)-locate('OCTUBRE',descripcion)+1)),'OCTUBRE','OCTOBER')
-         WHEN INSTR(trim(substring(descripcion,locate('NOVIEMBRE',descripcion), length(descripcion)-locate('NOVIEMBRE',descripcion))),'NOVIEMBRE')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('NOVIEMBRE',descripcion), length(descripcion)-locate('NOVIEMBRE',descripcion)+1)),'NOVIEMBRE','NOVEMBER')
-         WHEN INSTR(trim(substring(descripcion,locate('DICIEMBRE',descripcion), length(descripcion)-locate('DICIEMBRE',descripcion))),'DICIEMBRE')<>0 THEN 
-         REPLACE (trim(substring(descripcion,locate('DICIEMBRE',descripcion), length(descripcion)-locate('DICIEMBRE',descripcion)+1)),'DICIEMBRE','DECEMBER')
-         ELSE '1' END,'%M %Y'),'%Y-%m')
-        ) AS FACTURA
-        from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc")
+            ' 1. Llamamos al Gestor para obtener el detalle de cuotas
+            Dim dtDetalle As DataTable = GestorPublicidad.ObtenerDetallePublicidad(txtPrestamo.Text, Convert.ToInt32(diasMora))
+
+            ' 2. Asignamos el resultado a la grilla
+            If dtDetalle IsNot Nothing AndAlso dtDetalle.Rows.Count > 0 Then
+                dgvPublicidad.DataSource = dtDetalle
+                dgvPublicidad.Columns("ID").Visible = False
+                dgvPublicidad.Columns("PERIODO").Visible = False
+
+                If dgvPublicidad.Columns.Contains("MONTO") Then
+                    dgvPublicidad.Columns("MONTO").DefaultCellStyle.Format = "C2"
+                    dgvPublicidad.Columns("MONTO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                End If
+            Else
+                dgvPublicidad.DataSource = Nothing
+            End If
+
+            ' 3. Cargamos los datos de cabecera del cliente y préstamo
             Reconectar()
-            Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, pre.ID_PRESTAMO,cli.nomapell_razon,pre.DESCRIPCION,pre.CONCEPTO,
-        pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA, pre.COBRADOR AS COBRADOR,pre.OBSERVACIONES
-        FROM rym_prestamo as pre, fact_clientes as cli
-        where cli.idclientes=pre.ID_CLIENTE
-        and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
-            Dim DatosPrestamo As New DataTable
-            ConsultaPrestamo.Fill(DatosPrestamo)
-            ' MsgBox(ConsultaPrestamo.SelectCommand.CommandText)
-            If DatosPrestamo.Rows.Count <> 0 Then
-                txtclientecuenta.Text = DatosPrestamo(0).Item("idclientes")
-                txtclientenombre.Text = DatosPrestamo(0).Item("nomapell_razon")
-                txtCuota.Text = DatosPrestamo(0).Item("CUOTA")
-                txtmonto.Text = DatosPrestamo(0).Item("MONTO_PRESTAMO")
-                txtPlazo.Text = DatosPrestamo(0).Item("PLAZO")
-                txtTasaAnual.Text = DatosPrestamo(0).Item("INTERES_ANUAL")
-                txtconcepto.Text = DatosPrestamo(0).Item("CONCEPTO")
-                txtdetallePublicidad.Text = DatosPrestamo(0).Item("DESCRIPCION")
-                dtpFechaInicio.Value = CDate(DatosPrestamo(0).Item("FECHA").ToString())
-                txtInteresMensual.Text = Math.Round(CDbl(txtTasaAnual.Text) / 12, 2)
-                txtPrestamo.Text = DatosPrestamo(0).Item("ID_PRESTAMO")
-                cmbcobrador.SelectedValue = DatosPrestamo(0).Item("COBRADOR")
-                txtObservaciones.Text = DatosPrestamo(0).Item("OBSERVACIONES")
+            Dim sqlCabecera As String = "SELECT cli.idclientes, pre.ID_PRESTAMO, cli.nomapell_razon, pre.DESCRIPCION, pre.CONCEPTO, " &
+                                    "pre.MONTO_PRESTAMO, pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA, pre.CUOTA, " &
+                                    "pre.COBRADOR, pre.OBSERVACIONES " &
+                                    "FROM rym_prestamo as pre " &
+                                    "INNER JOIN fact_clientes as cli ON cli.idclientes = pre.ID_CLIENTE " &
+                                    "WHERE pre.id = '" & txtPrestamo.Text & "'"
+
+            Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlCabecera, conexionPrinc)
+            Dim dtCabecera As New DataTable
+            da.Fill(dtCabecera)
+
+            If dtCabecera.Rows.Count > 0 Then
+                Dim dr As DataRow = dtCabecera.Rows(0)
+
+                ' Completamos los campos con la información del cliente y el préstamo
+                txtclientecuenta.Text = dr("idclientes").ToString()
+                txtclientenombre.Text = dr("nomapell_razon").ToString()
+                txtCuota.Text = dr("CUOTA").ToString()
+                txtmonto.Text = dr("MONTO_PRESTAMO").ToString()
+                txtPlazo.Text = dr("PLAZO").ToString()
+                txtTasaAnual.Text = dr("INTERES_ANUAL").ToString()
+                txtconcepto.Text = dr("CONCEPTO").ToString()
+                txtdetallePublicidad.Text = dr("DESCRIPCION").ToString()
+                txtPrestamo.Text = dr("ID_PRESTAMO").ToString()
+                txtObservaciones.Text = dr("OBSERVACIONES").ToString()
+
+                ' Formateo de fecha y cálculos
+                If IsDate(dr("FECHA")) Then dtpFechaInicio.Value = CDate(dr("FECHA"))
+                Dim tasa As Double = 0
+                Double.TryParse(dr("INTERES_ANUAL").ToString(), tasa)
+                txtInteresMensual.Text = Math.Round(tasa / 12, 2).ToString()
+
+                ' Configuración de cobradores y estado de controles
+                cmbcobrador.SelectedValue = dr("COBRADOR")
+
+                ' Bloqueo de controles para modo visualización
                 For Each cont As Control In Me.Controls
                     If TypeOf cont Is TextBox Then
-                        Dim tex As TextBox
-                        tex = cont
-                        tex.ReadOnly = True
+                        CType(cont, TextBox).ReadOnly = True
                     ElseIf TypeOf cont Is DateTimePicker Then
-                        Dim dt As DateTimePicker
-                        dt = cont
-                        dt.Enabled = False
+                        CType(cont, DateTimePicker).Enabled = False
                     End If
-                    cmdclientebuscar.Enabled = False
-                    cmbcobrador.Enabled = False
-                    txtconcepto.Enabled = False
-                    cmdGuardarEditar.Enabled = True
-                    cmdGuardarEditar.Text = "Editar"
-
-
                 Next
-            End If
-        Catch ex As Exception
 
+                cmdclientebuscar.Enabled = False
+                cmbcobrador.Enabled = False
+                txtconcepto.Enabled = False
+                cmdGuardarEditar.Enabled = True
+                cmdGuardarEditar.Text = "Editar"
+
+                ' Usamos esta lógica más robusta:
+                Dim fechaRaw As String = dr("FECHA").ToString()
+                Dim fechaValida As Date
+
+                If DateTime.TryParse(fechaRaw, fechaValida) Then
+                    ' Si la fecha es válida, la asignamos
+                    dtpFechaInicio.Value = fechaValida
+                    dtpFechaInicio.Enabled = False ' Bloqueamos para edición si es necesario
+                Else
+                    ' Si la fecha viene vacía o mal, ponemos la fecha actual o la fecha mínima
+                    dtpFechaInicio.Value = DateTime.Now
+                    dtpFechaInicio.Enabled = False
+                End If
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error al cargar el detalle: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
     Private Sub txtTasaAnual_Leave(sender As Object, e As EventArgs) Handles txtTasaAnual.Leave
@@ -398,13 +438,6 @@ Public Class NvaPublicidad
         End With
 
     End Sub
-
-
-    'Private Sub btnImprimirPagos_Click(sender As Object, e As EventArgs) Handles btnImprimirPagos.Click
-    '    ReporteForm.IDPrestamo = txtBuscaPrestamo.Text
-    '    ReporteForm.Show()
-    '    ReporteForm.ReportePagos()
-    'End Sub
 
     Private Sub PrestamosForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         If txtPrestamo.Text <> "" And txtclientecuenta.Text = "" And txtclientecuenta.Text = "9999" Then
@@ -523,14 +556,6 @@ Public Class NvaPublicidad
         Dim clientes As New frmaspirantes
         clientes.MdiParent = frmprincipal
         clientes.Show()
-    End Sub
-
-    Private Sub dgvPublicidad_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPublicidad.CellContentClick
-
-    End Sub
-
-    Private Sub txtPrestamo_TextChanged(sender As Object, e As EventArgs) Handles txtPrestamo.TextChanged
-
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click

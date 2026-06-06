@@ -536,39 +536,40 @@ Public Class movimientodecaja
 
             '/***BUSCAMOS EL PERIODO ADEUDADO
 
-            If InStr(txtconceptos.Text, "#") <> 0 Then
+            'If InStr(txtconceptos.Text, "#") <> 0 Then
 
 
-                Dim idPublicidad As String = txtconceptos.Text.Replace("#", "")
-                Dim idPeriodoPubli As Integer = 0
-                Reconectar()
-                Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM rym_detalle_prestamo as pr 
-            where  
-            pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) and
-            pr.ID_PRESTAMO=" & idPublicidad & "
-            order by pr.periodo asc
-            limit 1", conexionPrinc)
+            '    Dim idPublicidad As String = txtconceptos.Text.Replace("#", "")
+            '    Dim idPeriodoPubli As Integer = 0
+            '    Reconectar()
+            '    Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM rym_detalle_prestamo as pr 
+            'where  
+            'pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) and
+            'pr.ID_PRESTAMO=" & idPublicidad & "
+            'order by pr.periodo asc
+            'limit 1", conexionPrinc)
 
-                Dim tablaPublicidad As New DataTable
-                consultaPeriodo.Fill(tablaPublicidad)
+            '    Dim tablaPublicidad As New DataTable
+            '    consultaPeriodo.Fill(tablaPublicidad)
 
-                If tablaPublicidad.Rows.Count <> 0 Then
-                    idPeriodoPubli = tablaPublicidad.Rows(0).Item("PERIODO")
+            '    If tablaPublicidad.Rows.Count <> 0 Then
+            '        idPeriodoPubli = tablaPublicidad.Rows(0).Item("PERIODO")
 
-                    '***AGREGAR PAGO A PUBLICIDAD***
+            '        '***AGREGAR PAGO A PUBLICIDAD***
 
-                    sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
-                    Reconectar()
-                    Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-                    With addPagoPubli.Parameters
-                        .AddWithValue("?fecha", fecha)
-                        .AddWithValue("?idprestamo", idPublicidad)
-                        .AddWithValue("?periodo", idPeriodoPubli)
-                        .AddWithValue("?monto", totalRecibo)
-                    End With
-                    addPagoPubli.ExecuteNonQuery()
-                End If
-            End If
+            '        sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
+            '        Reconectar()
+            '        Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            '        With addPagoPubli.Parameters
+            '            .AddWithValue("?fecha", fecha)
+            '            .AddWithValue("?idprestamo", idPublicidad)
+            '            .AddWithValue("?periodo", idPeriodoPubli)
+            '            .AddWithValue("?monto", totalRecibo)
+            '        End With
+            '        addPagoPubli.ExecuteNonQuery()
+            '    End If
+            'End If
+
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
@@ -646,9 +647,9 @@ Public Class movimientodecaja
                 ' =======================================================
                 If Not IsNothing(factconcepto.Cells(3).Value) Then
                     MarcarCuotasComoPagadas(Convert.ToInt32(factconcepto.Cells(3).Value))
+                    MarcarCuotaComoPagadasPublicidad(Convert.ToInt32(factconcepto.Cells(3).Value), idfactura)
                 End If
-                ' =======================================================
-
+                ' =======================================================                
             Next
 
             MsgBox("Recibo guardado satisfactoriamente")
@@ -693,6 +694,36 @@ Public Class movimientodecaja
 
         End Try
         'End If
+    End Sub
+
+    Private Sub MarcarCuotaComoPagadasPublicidad(idFacturaOrigen As Integer, idrecibo As Integer)
+
+        ' Consultamos los ítems de la factura origen para ver qué cuotas de publicidad se están pagando
+        Dim queryItems As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE '#%-%'"
+        Reconectar()
+        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, conexionPrinc)
+        Dim dr As System.Data.IDataReader = cmdItems.ExecuteReader()
+
+        Dim listaActualizar As New List(Of Integer)
+        While dr.Read()
+            Dim codbar As String = dr("plu").ToString()
+            ' Extraemos el ID de la cuota (la parte después del guion)
+            Dim partes() As String = codbar.Replace("#", "").Split("-"c)
+            If partes.Length = 2 Then
+                listaActualizar.Add(Convert.ToInt32(partes(1)))
+            End If
+        End While
+        dr.Close()
+
+        ' Realizamos los UPDATES en la tabla de detalle
+        For Each idCuota As Integer In listaActualizar
+            Dim sqlUpdRecibo As String = "UPDATE rym_detalle_prestamo SET id_recibo = ?idRecibo WHERE ID = ?idCuota"
+            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdRecibo, conexionPrinc)
+                cmdUpd.Parameters.AddWithValue("?idRecibo", idrecibo)
+                cmdUpd.Parameters.AddWithValue("?idCuota", idCuota)
+                cmdUpd.ExecuteNonQuery()
+            End Using
+        Next
     End Sub
     Public Sub cargarCuentaProv(ByRef idprov As Integer)
         Dim debegral As Double = 0

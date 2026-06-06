@@ -345,39 +345,99 @@ Public Class listadoPublicidades
         Me.Close()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
-        Try
+    'Private Sub Button3_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
+    '    Try
 
-            If ElementoFacturado("#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value) = True Then
-                If MsgBox("ESTA PUBLICIDAD A HA SIDO FACTURADA EN EL MES EN CURSO, ESTA SEGURO QUE DESA FACTURAR NUEVAMENTE?", vbYesNo + vbQuestion, "PUBLICIDAD YA FACTURADA") = vbNo Then
+    '        If ElementoFacturado("#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value) = True Then
+    '            If MsgBox("ESTA PUBLICIDAD A HA SIDO FACTURADA EN EL MES EN CURSO, ESTA SEGURO QUE DESA FACTURAR NUEVAMENTE?", vbYesNo + vbQuestion, "PUBLICIDAD YA FACTURADA") = vbNo Then
+    '                Exit Sub
+    '            End If
+    '        End If
+
+    '        Dim vta As New puntoventa
+    '        vta.MdiParent = Me.MdiParent
+    '        vta.idfacrap = My.Settings.idfacRap
+
+    '        Dim ptovtapedido As String = My.Settings.idPtoVta
+    '        With vta
+    '            .Idcliente = dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
+    '            .condVta = 2
+    '            .cargarCliente(False)
+    '            .txtcodPLU.Focus()
+    '            .dtproductos.Rows.Add("0", "#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value, "1",
+    '             dgvPrestamos.dgvVista.CurrentRow.Cells("CONCEPTO").Value & " #" &
+    '             dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value &
+    '             " (" & Format(Now().AddMonths(-1), "MMMM yyyy") & ")".ToUpper, "21",
+    '             dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value,
+    '             dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value)
+    '            .condVta = 2
+    '            .lblfacvendedor.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("vendedor").Value
+    '            .txtobservaciones.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("DESCRIPCION").Value
+    '            .Show()
+    '        End With
+    '        'End If
+    '    Catch ex As Exception
+
+    '    End Try
+    'End Sub
+
+    Private Sub btnFacturar_Click(sender As Object, e As EventArgs) Handles btnFacturar.Click
+        Try
+            ' 1. Validamos que haya una fila seleccionada para evitar errores
+            If dgvPrestamos.dgvVista.CurrentRow Is Nothing Then Exit Sub
+
+            ' 2. Capturamos los datos de la grilla de forma ESTRICTA
+            Dim idPublicidad As Integer = Convert.ToInt32(dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value)
+
+            ' IMPORTANTE: Asegurate de que tu grilla ahora traiga el ID de rym_detalle_prestamo (la cuota)
+            Dim idCuota As Integer = Convert.ToInt32(dgvPrestamos.dgvVista.CurrentRow.Cells("ID_CUOTA").Value)
+
+            Dim idCliente As Integer = Convert.ToInt32(dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value)
+            Dim concepto As String = Convert.ToString(dgvPrestamos.dgvVista.CurrentRow.Cells("CONCEPTO").Value)
+            Dim montoMensual As Decimal = Convert.ToDecimal(dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value)
+            Dim vendedor As String = Convert.ToString(dgvPrestamos.dgvVista.CurrentRow.Cells("vendedor").Value)
+            Dim observaciones As String = Convert.ToString(dgvPrestamos.dgvVista.CurrentRow.Cells("DESCRIPCION").Value)
+
+            ' 3. Armamos la NUEVA codificación exacta: #idpublicidad-idcuota
+            Dim codigoFacturacion As String = $"#{idPublicidad}-{idCuota}"
+
+            ' 4. Verificamos si EXACTAMENTE esta cuota ya fue facturada
+            If ElementoFacturado(codigoFacturacion) = True Then
+                If MsgBox("ESTA CUOTA DE PUBLICIDAD YA HA SIDO FACTURADA. ¿ESTÁ SEGURO QUE DESEA FACTURARLA NUEVAMENTE?",
+                      MsgBoxStyle.YesNo Or MsgBoxStyle.Question,
+                      "PUBLICIDAD YA FACTURADA") = MsgBoxResult.No Then
                     Exit Sub
                 End If
             End If
 
+            ' 5. Instanciamos el Punto de Venta
             Dim vta As New puntoventa
             vta.MdiParent = Me.MdiParent
             vta.idfacrap = My.Settings.idfacRap
 
-            Dim ptovtapedido As String = My.Settings.idPtoVta
             With vta
-                .Idcliente = dgvPrestamos.dgvVista.CurrentRow.Cells("idclientes").Value
+                .Idcliente = idCliente.ToString()
                 .condVta = 2
                 .cargarCliente(False)
                 .txtcodPLU.Focus()
-                .dtproductos.Rows.Add("0", "#" & dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value, "1",
-                 dgvPrestamos.dgvVista.CurrentRow.Cells("CONCEPTO").Value & " #" &
-                 dgvPrestamos.dgvVista.CurrentRow.Cells("ID_PUBLICIDAD").Value &
-                 " (" & Format(Now().AddMonths(-1), "MMMM yyyy") & ")".ToUpper, "21",
-                 dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value,
-                 dgvPrestamos.dgvVista.CurrentRow.Cells("MONTO_MENSUAL").Value)
+
+                ' Armamos la descripción elegante (Ej: "PUBLICIDAD RADIO #15-3 (MAYO 2024)")
+                Dim mesFacturado As String = Now().AddMonths(-1).ToString("MMMM yyyy").ToUpper()
+                Dim descripcionItem As String = $"{concepto} {codigoFacturacion} ({mesFacturado})"
+
+                ' Agregamos la fila al facturador (Pasamos los valores numéricos limpios)
+                .dtproductos.Rows.Add("0", codigoFacturacion, "1", descripcionItem, "21", montoMensual, montoMensual)
+
                 .condVta = 2
-                .lblfacvendedor.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("vendedor").Value
-                .txtobservaciones.Text = dgvPrestamos.dgvVista.CurrentRow.Cells("DESCRIPCION").Value
+                .lblfacvendedor.Text = vendedor
+                .txtobservaciones.Text = observaciones
+
+                ' Mostramos el facturador
                 .Show()
             End With
-            'End If
-        Catch ex As Exception
 
+        Catch ex As Exception
+            MsgBox("Error al enviar a facturar: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
 
@@ -992,40 +1052,87 @@ Public Class listadoPublicidades
     End Sub
 
     Private Sub Button2_Click_1(sender As Object, e As EventArgs) Handles Button2.Click
+
         Try
-            Dim i As Integer
-            For i = 0 To frmprincipal.MdiChildren.Count - 1
-                If frmprincipal.MdiChildren(i).Name = "NvaPublicidad" Then
-                    frmprincipal.MdiChildren(i).BringToFront()
-                    With CType(frmprincipal.MdiChildren(i), NvaPublicidad)
-                        .txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-                        .txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+            Dim idSeleccionado As String = dgvInformes.dgvVista.CurrentRow.Cells(0).Value.ToString()
+            Dim yaAbierto As Boolean = False
+
+            ' 1. Intentar encontrar el formulario abierto
+            For Each hijo As Form In Me.MdiParent.MdiChildren
+                If hijo.Name = "NvaPublicidad" Then
+                    yaAbierto = True
+                    hijo.BringToFront()
+
+                    With CType(hijo, NvaPublicidad)
+                        .txtBuscaPrestamo.Text = idSeleccionado
+                        .txtPrestamo.Text = idSeleccionado
                         .diasMora = txtdiasmora.Text
                         .NvaPubli = False
                         .cmdGuardarEditar.Enabled = False
                         .btnCalcular.Enabled = False
                         .btnPagar.Enabled = True
+                        ' Llamamos al método que ahora hace la carga completa (Grilla + Cliente)
                         .CargarDetalle()
                     End With
-                    Exit Sub
+                    Exit For
                 End If
             Next
 
-            Dim form As New NvaPublicidad
-            form.MdiParent = Me.MdiParent
-            form.Show()
-            form.txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-            form.txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-            form.NvaPubli = False
-            form.cmdGuardarEditar.Enabled = False
-            form.btnCalcular.Enabled = False
-            form.btnPagar.Enabled = True
-            form.diasMora = txtdiasmora.Text
+            ' 2. Si no estaba abierto, lo creamos
+            If Not yaAbierto Then
+                Dim form As New NvaPublicidad With {
+                    .MdiParent = Me.MdiParent
+                }
+                form.txtBuscaPrestamo.Text = idSeleccionado
+                form.txtPrestamo.Text = idSeleccionado
+                form.diasMora = txtdiasmora.Text
+                form.NvaPubli = False
+                form.cmdGuardarEditar.Enabled = False
+                form.btnCalcular.Enabled = False
+                form.btnPagar.Enabled = True
 
+                ' IMPORTANTE: Llamar a CargarDetalle aquí también
+                form.CargarDetalle()
+                form.Show()
+            End If
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Error al abrir el detalle de publicidad: " & ex.Message, MsgBoxStyle.Critical)
         End Try
+        'Try
+        '    Dim i As Integer
+        '    For i = 0 To frmprincipal.MdiChildren.Count - 1
+        '        If frmprincipal.MdiChildren(i).Name = "NvaPublicidad" Then
+        '            frmprincipal.MdiChildren(i).BringToFront()
+        '            With CType(frmprincipal.MdiChildren(i), NvaPublicidad)
+        '                .txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+        '                .txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+        '                .diasMora = txtdiasmora.Text
+        '                .NvaPubli = False
+        '                .cmdGuardarEditar.Enabled = False
+        '                .btnCalcular.Enabled = False
+        '                .btnPagar.Enabled = True
+        '                .CargarDetalle()
+        '            End With
+        '            Exit Sub
+        '        End If
+        '    Next
+
+        '    Dim form As New NvaPublicidad
+        '    form.MdiParent = Me.MdiParent
+        '    form.Show()
+        '    form.txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+        '    form.txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
+        '    form.NvaPubli = False
+        '    form.cmdGuardarEditar.Enabled = False
+        '    form.btnCalcular.Enabled = False
+        '    form.btnPagar.Enabled = True
+        '    form.diasMora = txtdiasmora.Text
+
+
+        'Catch ex As Exception
+        '    MsgBox(ex.Message)
+        'End Try
     End Sub
 
     'Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click

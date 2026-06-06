@@ -69,6 +69,8 @@ Partial Class listadoPublicidades
         Me.tabInformes = New System.Windows.Forms.TabPage()
         Me.dgvInformes = New SIGT__KIGEST.DGVPaginado()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.rdporfechadeinicio = New System.Windows.Forms.RadioButton()
+        Me.rdporfechadevencimiento = New System.Windows.Forms.RadioButton()
         Me.chkPeriodosCancelados = New System.Windows.Forms.CheckBox()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
@@ -86,8 +88,6 @@ Partial Class listadoPublicidades
         Me.CargarExcelAsync = New System.ComponentModel.BackgroundWorker()
         Me.CargarListadoOrdenesAsync = New System.ComponentModel.BackgroundWorker()
         Me.CargarExcelAsyncListadoOR = New System.ComponentModel.BackgroundWorker()
-        Me.rdporfechadevencimiento = New System.Windows.Forms.RadioButton()
-        Me.rdporfechadeinicio = New System.Windows.Forms.RadioButton()
         Me.CargarCtaCteAsync = New System.ComponentModel.BackgroundWorker()
         Me.TabControl1.SuspendLayout()
         Me.tabListadoSerivicios.SuspendLayout()
@@ -108,7 +108,7 @@ Partial Class listadoPublicidades
         Me.TabControl1.Location = New System.Drawing.Point(0, 40)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(1148, 453)
+        Me.TabControl1.Size = New System.Drawing.Size(1239, 453)
         Me.TabControl1.TabIndex = 76
         '
         'tabListadoSerivicios
@@ -118,7 +118,7 @@ Partial Class listadoPublicidades
         Me.tabListadoSerivicios.Location = New System.Drawing.Point(4, 22)
         Me.tabListadoSerivicios.Name = "tabListadoSerivicios"
         Me.tabListadoSerivicios.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabListadoSerivicios.Size = New System.Drawing.Size(1140, 427)
+        Me.tabListadoSerivicios.Size = New System.Drawing.Size(1231, 427)
         Me.tabListadoSerivicios.TabIndex = 0
         Me.tabListadoSerivicios.Text = "Listado"
         Me.tabListadoSerivicios.UseVisualStyleBackColor = True
@@ -128,7 +128,7 @@ Partial Class listadoPublicidades
         Me.dgvPrestamos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvPrestamos.Location = New System.Drawing.Point(3, 92)
         Me.dgvPrestamos.Name = "dgvPrestamos"
-        Me.dgvPrestamos.Size = New System.Drawing.Size(1134, 332)
+        Me.dgvPrestamos.Size = New System.Drawing.Size(1225, 332)
         Me.dgvPrestamos.TabIndex = 78
         '
         'pnnavegacion
@@ -165,7 +165,7 @@ Partial Class listadoPublicidades
         Me.pnnavegacion.Dock = System.Windows.Forms.DockStyle.Top
         Me.pnnavegacion.Location = New System.Drawing.Point(3, 3)
         Me.pnnavegacion.Name = "pnnavegacion"
-        Me.pnnavegacion.Size = New System.Drawing.Size(1134, 89)
+        Me.pnnavegacion.Size = New System.Drawing.Size(1225, 89)
         Me.pnnavegacion.TabIndex = 76
         '
         'Button8
@@ -176,7 +176,7 @@ Partial Class listadoPublicidades
         Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button8.ForeColor = System.Drawing.Color.White
         Me.Button8.Image = Global.SIGT__KIGEST.My.Resources.Resources.business_chat_64px
-        Me.Button8.Location = New System.Drawing.Point(650, 0)
+        Me.Button8.Location = New System.Drawing.Point(741, 0)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(79, 89)
         Me.Button8.TabIndex = 212
@@ -351,7 +351,7 @@ Partial Class listadoPublicidades
         Me.btnFacturar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnFacturar.ForeColor = System.Drawing.Color.White
         Me.btnFacturar.Image = CType(resources.GetObject("btnFacturar.Image"), System.Drawing.Image)
-        Me.btnFacturar.Location = New System.Drawing.Point(729, 0)
+        Me.btnFacturar.Location = New System.Drawing.Point(820, 0)
         Me.btnFacturar.Name = "btnFacturar"
         Me.btnFacturar.Size = New System.Drawing.Size(79, 89)
         Me.btnFacturar.TabIndex = 195
@@ -434,7 +434,7 @@ Partial Class listadoPublicidades
         Me.btnNuevaPublicidad.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnNuevaPublicidad.ForeColor = System.Drawing.Color.White
         Me.btnNuevaPublicidad.Image = CType(resources.GetObject("btnNuevaPublicidad.Image"), System.Drawing.Image)
-        Me.btnNuevaPublicidad.Location = New System.Drawing.Point(808, 0)
+        Me.btnNuevaPublicidad.Location = New System.Drawing.Point(899, 0)
         Me.btnNuevaPublicidad.Name = "btnNuevaPublicidad"
         Me.btnNuevaPublicidad.Size = New System.Drawing.Size(79, 89)
         Me.btnNuevaPublicidad.TabIndex = 185
@@ -451,7 +451,7 @@ Partial Class listadoPublicidades
         Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdbuscar.ForeColor = System.Drawing.Color.White
         Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(887, 0)
+        Me.cmdbuscar.Location = New System.Drawing.Point(978, 0)
         Me.cmdbuscar.Name = "cmdbuscar"
         Me.cmdbuscar.Size = New System.Drawing.Size(79, 89)
         Me.cmdbuscar.TabIndex = 184
@@ -479,7 +479,7 @@ Partial Class listadoPublicidades
         Me.cmdver.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdver.ForeColor = System.Drawing.Color.White
         Me.cmdver.Image = CType(resources.GetObject("cmdver.Image"), System.Drawing.Image)
-        Me.cmdver.Location = New System.Drawing.Point(966, 0)
+        Me.cmdver.Location = New System.Drawing.Point(1057, 0)
         Me.cmdver.Name = "cmdver"
         Me.cmdver.Size = New System.Drawing.Size(79, 89)
         Me.cmdver.TabIndex = 170
@@ -506,7 +506,7 @@ Partial Class listadoPublicidades
         Me.btnExportar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.btnExportar.ForeColor = System.Drawing.Color.White
         Me.btnExportar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Microsoft_Excel_64px
-        Me.btnExportar.Location = New System.Drawing.Point(1045, 0)
+        Me.btnExportar.Location = New System.Drawing.Point(1136, 0)
         Me.btnExportar.Name = "btnExportar"
         Me.btnExportar.Size = New System.Drawing.Size(89, 89)
         Me.btnExportar.TabIndex = 0
@@ -699,6 +699,30 @@ Partial Class listadoPublicidades
         Me.Panel2.Size = New System.Drawing.Size(1134, 89)
         Me.Panel2.TabIndex = 80
         '
+        'rdporfechadeinicio
+        '
+        Me.rdporfechadeinicio.AutoSize = True
+        Me.rdporfechadeinicio.ForeColor = System.Drawing.Color.White
+        Me.rdporfechadeinicio.Location = New System.Drawing.Point(487, 42)
+        Me.rdporfechadeinicio.Name = "rdporfechadeinicio"
+        Me.rdporfechadeinicio.Size = New System.Drawing.Size(113, 17)
+        Me.rdporfechadeinicio.TabIndex = 217
+        Me.rdporfechadeinicio.Text = "Por fecha de inicio"
+        Me.rdporfechadeinicio.UseVisualStyleBackColor = True
+        '
+        'rdporfechadevencimiento
+        '
+        Me.rdporfechadevencimiento.AutoSize = True
+        Me.rdporfechadevencimiento.Checked = True
+        Me.rdporfechadevencimiento.ForeColor = System.Drawing.Color.White
+        Me.rdporfechadevencimiento.Location = New System.Drawing.Point(487, 19)
+        Me.rdporfechadevencimiento.Name = "rdporfechadevencimiento"
+        Me.rdporfechadevencimiento.Size = New System.Drawing.Size(149, 17)
+        Me.rdporfechadevencimiento.TabIndex = 216
+        Me.rdporfechadevencimiento.TabStop = True
+        Me.rdporfechadevencimiento.Text = "Por Fecha de vencimiento"
+        Me.rdporfechadevencimiento.UseVisualStyleBackColor = True
+        '
         'chkPeriodosCancelados
         '
         Me.chkPeriodosCancelados.AutoSize = True
@@ -856,7 +880,7 @@ Partial Class listadoPublicidades
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1148, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(1239, 40)
         Me.pntitulo.TabIndex = 75
         '
         'Label1
@@ -890,35 +914,14 @@ Partial Class listadoPublicidades
         Me.CargarExcelAsyncListadoOR.WorkerReportsProgress = True
         Me.CargarExcelAsyncListadoOR.WorkerSupportsCancellation = True
         '
-        'rdporfechadevencimiento
+        'CargarCtaCteAsync
         '
-        Me.rdporfechadevencimiento.AutoSize = True
-        Me.rdporfechadevencimiento.Checked = True
-        Me.rdporfechadevencimiento.ForeColor = System.Drawing.Color.White
-        Me.rdporfechadevencimiento.Location = New System.Drawing.Point(487, 19)
-        Me.rdporfechadevencimiento.Name = "rdporfechadevencimiento"
-        Me.rdporfechadevencimiento.Size = New System.Drawing.Size(149, 17)
-        Me.rdporfechadevencimiento.TabIndex = 216
-        Me.rdporfechadevencimiento.TabStop = True
-        Me.rdporfechadevencimiento.Text = "Por Fecha de vencimiento"
-        Me.rdporfechadevencimiento.UseVisualStyleBackColor = True
-        '
-        'rdporfechadeinicio
-        '
-        Me.rdporfechadeinicio.AutoSize = True
-        Me.rdporfechadeinicio.ForeColor = System.Drawing.Color.White
-        Me.rdporfechadeinicio.Location = New System.Drawing.Point(487, 42)
-        Me.rdporfechadeinicio.Name = "rdporfechadeinicio"
-        Me.rdporfechadeinicio.Size = New System.Drawing.Size(113, 17)
-        Me.rdporfechadeinicio.TabIndex = 217
-        Me.rdporfechadeinicio.Text = "Por fecha de inicio"
-        Me.rdporfechadeinicio.UseVisualStyleBackColor = True
         '
         'listadoPublicidades
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1148, 493)
+        Me.ClientSize = New System.Drawing.Size(1239, 493)
         Me.Controls.Add(Me.TabControl1)
         Me.Controls.Add(Me.pntitulo)
         Me.Name = "listadoPublicidades"

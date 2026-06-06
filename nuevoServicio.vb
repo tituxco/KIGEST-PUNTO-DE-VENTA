@@ -5,6 +5,7 @@ Imports SIGT__KIGEST.datosEstructura
 Imports WSAFIPFE.f1AFIP
 Imports WSAFIPFE.lpgAFIP
 Imports WSAFIPFE.panmat
+Imports iTextSharp.text.pdf.codec.wmf
 
 Public Class nuevoServicio
     Dim montoInscripcion As Decimal = 0
@@ -386,10 +387,11 @@ Public Class nuevoServicio
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If dgvDetallePlan.CurrentRow IsNot Nothing Then
-            ' 1. Obtenemos los datos de la fila
+
+            ' 1. Obtenemos los datos de la fila con CONVERSIONES ESTRICTAS (Option Strict On)
             Dim idCuota As Integer = Convert.ToInt32(dgvDetallePlan.CurrentRow.Cells("id").Value)
-            Dim estado As String = dgvDetallePlan.CurrentRow.Cells("estado").Value.ToString()
-            Dim concepto As String = dgvDetallePlan.CurrentRow.Cells("detalle").Value.ToString()
+            Dim estado As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("estado").Value)
+            Dim concepto As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("detalle").Value)
             Dim monto As Decimal = Convert.ToDecimal(dgvDetallePlan.CurrentRow.Cells("monto").Value)
 
             If idContratoRecibido = 0 Then
@@ -397,56 +399,138 @@ Public Class nuevoServicio
                 Exit Sub
             End If
 
+            ' =========================================================================
             ' --- MODO 1: REENVIAR RECIBO (Sin tocar la BD) ---
+            ' =========================================================================
             If Button1.Text = "ENVIAR RECIBO" Then
-                ' Generamos el PDF interno usando el ID de la cuota como número de recibo de referencia
+                ' Generamos el PDF interno usando el ID de la cuota como número de recibo
                 GenerarReciboRDLC_PDF(txtApellidoNombre.Text, concepto, monto, "interno")
 
                 MsgBox("Recibo generado. Preparando envío por WhatsApp...", MsgBoxStyle.Information)
 
-                ' Enviamos el mensaje
-                If MsgBox("Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = vbYes Then
+                ' Enviamos el mensaje (USO ESTRICTO DE ENUMERADORES)
+                If MsgBox("Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
                     EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20reenvio%20el%20recibo%20del%20mes%3A%20" & concepto)
                     Me.Close()
                 End If
                 Exit Sub
             End If
-                If Button1.Text = "IMPUTAR PAGO" Then
 
-
-                ' 2. Validamos que no esté pagada ya
+            ' =========================================================================
+            ' --- MODO 2: IMPUTAR PAGO (Lógica de Pagos Parciales) ---
+            ' =========================================================================
+            If Button1.Text = "IMPUTAR PAGO" Then
+                ' Validamos que no esté pagada ni facturada
                 If estado = "PAGADO" Then
-                    MsgBox("Esta cuota ya se encuentra pagada.", MsgBoxStyle.Information)
+                    MsgBox("Esta cuota ya se encuentra cancelada.", MsgBoxStyle.Information)
                     Exit Sub
                 ElseIf estado = "FACTURADA" Then
                     MsgBox("El pago de la cuota se debe imputar desde el sistema contable.", MsgBoxStyle.Information)
                     Exit Sub
                 End If
 
-                If idContratoRecibido = 0 Then
-                    MsgBox("No hay contrato guardado.", MsgBoxStyle.Information)
+                ' 1. Calculamos cuánto debe realmente de esta cuota
+                ' 1. Calculamos cuánto debe realmente de esta cuota
+                Dim saldoPendiente As Decimal = serv_detalle.ObtenerSaldoPendiente(idCuota, monto)
+
+                ' 2. Llamamos a nuestro Formulario dinámico
+                Dim montoEntregado As Decimal = MostrarInputCobro(
+                    "Registrar Pago Parcial/Total",
+                    $"Valor de la cuota: ${monto.ToString("N2")}" & vbCrLf & $"Saldo pendiente: ${saldoPendiente.ToString("N2")}",
+                    saldoPendiente)
+
+                ' 3. Evaluamos qué decidió el usuario
+                If montoEntregado = 0 Then
+                    ' Presionó cancelar, la X, o dejó en 0. Salimos en silencio.
                     Exit Sub
                 End If
 
-                ' 3. Confirmamos y cobramos
-                If MsgBox("¿Confirmar el pago de esta cuota?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = MsgBoxResult.Yes Then
-                    If serv_detalle.RegistrarPago(idCuota) Then
-                        GenerarReciboRDLC_PDF(txtApellidoNombre.Text, dgvDetallePlan.CurrentRow.Cells("detalle").Value, dgvDetallePlan.CurrentRow.Cells("monto").Value, "interno")
+                ' Validamos que no cobre más de la cuenta
+                If montoEntregado > saldoPendiente Then
+                    MsgBox("El monto ingresado no puede ser mayor al saldo pendiente.", MsgBoxStyle.Exclamation)
+                    Exit Sub
+                End If
 
-                        MsgBox("Pago registrado exitosamente.")
+                ' 4. Confirmamos y cobramos (USO ESTRICTO)
+                If MsgBox($"¿Confirmar el registro de un pago por ${montoEntregado.ToString("N2")}?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
 
-                        ' Refrescamos la grilla para que se ponga en verde
+                    If serv_detalle.RegistrarPagoParcial(idCuota, montoEntregado, 0) Then
+                        ' IMPORTANTE: El recibo ahora se genera por lo que entregó hoy
+                        GenerarReciboRDLC_PDF(txtApellidoNombre.Text, concepto, montoEntregado, "interno")
+
+                        MsgBox("Pago registrado exitosamente.", MsgBoxStyle.Information)
                         CargarPlanRealExistente()
 
-                        If MsgBox("Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = vbYes Then
-                            EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20reenvio%20el%20recibo%20del%20mes%3A%20" & concepto)
-                            Me.Close()
+                        If MsgBox("¿Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+                            EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20envio%20el%20recibo%20de%20tu%20pago%3A%20" & concepto)
                         End If
                     End If
                 End If
             End If
         End If
     End Sub
+    'If dgvDetallePlan.CurrentRow IsNot Nothing Then
+    '    ' 1. Obtenemos los datos de la fila
+    '    Dim idCuota As Integer = Convert.ToInt32(dgvDetallePlan.CurrentRow.Cells("id").Value)
+    '    Dim estado As String = dgvDetallePlan.CurrentRow.Cells("estado").Value.ToString()
+    '    Dim concepto As String = dgvDetallePlan.CurrentRow.Cells("detalle").Value.ToString()
+    '    Dim monto As Decimal = Convert.ToDecimal(dgvDetallePlan.CurrentRow.Cells("monto").Value)
+
+    '    If idContratoRecibido = 0 Then
+    '        MsgBox("No hay contrato guardado.", MsgBoxStyle.Information)
+    '        Exit Sub
+    '    End If
+
+    '    ' --- MODO 1: REENVIAR RECIBO (Sin tocar la BD) ---
+    '    If Button1.Text = "ENVIAR RECIBO" Then
+    '        ' Generamos el PDF interno usando el ID de la cuota como número de recibo de referencia
+    '        GenerarReciboRDLC_PDF(txtApellidoNombre.Text, concepto, monto, "interno")
+
+    '        MsgBox("Recibo generado. Preparando envío por WhatsApp...", MsgBoxStyle.Information)
+
+    '        ' Enviamos el mensaje
+    '        If MsgBox("Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = vbYes Then
+    '            EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20reenvio%20el%20recibo%20del%20mes%3A%20" & concepto)
+    '            Me.Close()
+    '        End If
+    '        Exit Sub
+    '    End If
+    '        If Button1.Text = "IMPUTAR PAGO" Then
+
+
+    '        ' 2. Validamos que no esté pagada ya
+    '        If estado = "PAGADO" Then
+    '            MsgBox("Esta cuota ya se encuentra pagada.", MsgBoxStyle.Information)
+    '            Exit Sub
+    '        ElseIf estado = "FACTURADA" Then
+    '            MsgBox("El pago de la cuota se debe imputar desde el sistema contable.", MsgBoxStyle.Information)
+    '            Exit Sub
+    '        End If
+
+    '        If idContratoRecibido = 0 Then
+    '            MsgBox("No hay contrato guardado.", MsgBoxStyle.Information)
+    '            Exit Sub
+    '        End If
+
+    '        ' 3. Confirmamos y cobramos
+    '        If MsgBox("¿Confirmar el pago de esta cuota?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+    '            If serv_detalle.RegistrarPago(idCuota) Then
+    '                GenerarReciboRDLC_PDF(txtApellidoNombre.Text, dgvDetallePlan.CurrentRow.Cells("detalle").Value, dgvDetallePlan.CurrentRow.Cells("monto").Value, "interno")
+
+    '                MsgBox("Pago registrado exitosamente.")
+
+    '                ' Refrescamos la grilla para que se ponga en verde
+    '                CargarPlanRealExistente()
+
+    '                If MsgBox("Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = vbYes Then
+    '                    EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20reenvio%20el%20recibo%20del%20mes%3A%20" & concepto)
+    '                    Me.Close()
+    '                End If
+    '            End If
+    '        End If
+    '    End If
+    'End If
+    'End Sub
     Public Sub GenerarReciboRDLC_PDF(alumno As String, concepto As String, monto As Decimal, numRecibo As String)
         Try
             ' 1. CONFIGURAR LA RUTA DE GUARDADO (Ejemplo: Documentos\Kigest_Recibos)
@@ -674,4 +758,79 @@ Public Class nuevoServicio
             ' Evitamos errores si la grilla se está recargando
         End Try
     End Sub
+
+    Private Function MostrarInputCobro(titulo As String, mensaje As String, montoSugerido As Decimal) As Decimal
+        Dim montoFinal As Decimal = 0
+
+        ' El bloque Using asegura la destrucción total del objeto al terminar
+        Using frm As New Form()
+            ' 1. Configuración de la ventana principal
+            frm.Text = titulo
+            frm.Size = New Size(320, 200)
+            frm.FormBorderStyle = FormBorderStyle.FixedDialog
+            frm.StartPosition = FormStartPosition.CenterParent
+            frm.MaximizeBox = False
+            frm.MinimizeBox = False
+
+            ' 2. Etiqueta para el mensaje
+            Dim lbl As New Label()
+            lbl.Text = mensaje
+            lbl.AutoSize = False
+            lbl.SetBounds(15, 15, 270, 60)
+            lbl.Font = New Font(lbl.Font, FontStyle.Bold)
+            frm.Controls.Add(lbl)
+
+            ' 3. Caja de texto para el monto
+            Dim txt As New TextBox()
+            txt.Text = montoSugerido.ToString("N2")
+            txt.SetBounds(15, 80, 270, 25)
+            txt.TextAlign = HorizontalAlignment.Right
+            txt.Font = New Font(txt.Font.FontFamily, 12, FontStyle.Regular)
+            frm.Controls.Add(txt)
+
+            ' 4. Botones
+            Dim btnOk As New Button()
+            btnOk.Text = "COBRAR"
+            btnOk.SetBounds(105, 120, 90, 30)
+            btnOk.DialogResult = DialogResult.OK ' Cierra con OK si no lo frenamos
+            frm.Controls.Add(btnOk)
+
+            Dim btnCancel As New Button()
+            btnCancel.Text = "Cancelar"
+            btnCancel.SetBounds(200, 120, 85, 30)
+            btnCancel.DialogResult = DialogResult.Cancel
+            frm.Controls.Add(btnCancel)
+
+            ' Asignar la tecla Enter y Escape a los botones
+            frm.AcceptButton = btnOk
+            frm.CancelButton = btnCancel
+
+            ' 5. EVENTO DINÁMICO: Validar antes de cerrar (Option Strict On)
+            AddHandler btnOk.Click, Sub(sender As Object, e As EventArgs)
+                                        Dim validacion As Decimal = 0
+                                        ' Verificamos que sea número y mayor a cero
+                                        If Not Decimal.TryParse(txt.Text, validacion) OrElse validacion <= 0 Then
+                                            MsgBox("Por favor, ingrese un monto válido mayor a cero.", MsgBoxStyle.Exclamation)
+                                            frm.DialogResult = DialogResult.None ' Frenamos el cierre de la ventana
+                                            txt.Focus()
+                                        Else
+                                            montoFinal = validacion
+                                        End If
+                                    End Sub
+
+            ' 6. EVENTO DINÁMICO: Seleccionar el texto al abrir
+            AddHandler frm.Shown, Sub(sender As Object, e As EventArgs)
+                                      txt.Focus()
+                                      txt.SelectAll()
+                                  End Sub
+
+            ' 7. MOSTRAR COMO MODAL Y DEVOLVER RESULTADO
+            ' Al pasar "Me", garantizamos que quede por encima de nuevoServicio
+            If frm.ShowDialog(Me) = DialogResult.OK Then
+                Return montoFinal
+            Else
+                Return 0 ' Si presiona cancelar o cierra la ventana
+            End If
+        End Using ' <--- Acá la ventana se destruye por completo y libera memoria
+    End Function
 End Class

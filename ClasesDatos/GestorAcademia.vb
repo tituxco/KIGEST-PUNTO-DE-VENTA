@@ -371,36 +371,41 @@ Public Class GestorAcademia
             Try
                 Using conn As New MySqlConnection(CadenaConexion)
                     conn.Open()
-                    ' Ya no usamos CAST(d.monto) porque ahora es Decimal nativo
-                    Dim sql As String = "SELECT
-                                    c.id as idContrato,
-                                    p.id, 
-                                    p.nombre_apellido, 
-                                    p.dni, 
-                                    s.nombre as curso,
-                                    SUM(CASE WHEN d.estado = 'PENDIENTE' AND d.vencimiento <= CURDATE() 
-                                             THEN d.monto ELSE 0 END) as total_deuda,
-                                    COUNT(CASE WHEN d.estado = 'PENDIENTE' AND d.vencimiento <= CURDATE() 
-                                             THEN 1 END) as cant_vencidas
-                                 FROM serv_personas p
-                                 INNER JOIN serv_contratos c ON p.id = c.idPersona 
-                                 INNER JOIN serv_servicios s ON c.idServicio = s.id
-                                 LEFT JOIN serv_detalle d ON c.id = d.idContrato
-                                 WHERE c.activo = 1
-                                 GROUP BY p.id, s.id
-                                 ORDER BY p.nombre_apellido ASC"
+
+                    ' Se agrega la subconsulta "pg" para agrupar los pagos parciales sin duplicar cuotas.
+                    ' Se evalúa PENDIENTE y PAGO PARCIAL para la deuda y las cuotas vencidas.
+                    Dim sql As String = "SELECT " &
+                                "c.id as idContrato, " &
+                                "p.id, " &
+                                "p.nombre_apellido, " &
+                                "p.dni, " &
+                                "s.nombre as curso, " &
+                                "SUM(CASE WHEN (d.estado = 'PENDIENTE' OR d.estado = 'PAGO PARCIAL') AND d.vencimiento <= CURDATE() " &
+                                "         THEN ROUND(d.monto - IFNULL(pg.total_pagado, 0), 2) ELSE 0 END) as total_deuda, " &
+                                "COUNT(CASE WHEN (d.estado = 'PENDIENTE' OR d.estado = 'PAGO PARCIAL') AND d.vencimiento <= CURDATE() " &
+                                "           THEN 1 END) as cant_vencidas " &
+                                "FROM serv_personas p " &
+                                "INNER JOIN serv_contratos c ON p.id = c.idPersona " &
+                                "INNER JOIN serv_servicios s ON c.idServicio = s.id " &
+                                "LEFT JOIN serv_detalle d ON c.id = d.idContrato " &
+                                "LEFT JOIN (SELECT ID_DETALLE, SUM(MONTO_PAGADO) as total_pagado FROM rym_pagos GROUP BY ID_DETALLE) pg ON pg.ID_DETALLE = d.id " &
+                                "WHERE c.activo = 1 " &
+                                "GROUP BY p.id, c.id, p.nombre_apellido, p.dni, s.nombre " &
+                                "ORDER BY p.nombre_apellido ASC"
 
                     Using cmd As New MySqlCommand(sql, conn)
-                        Using lector As MySqlDataReader = cmd.ExecuteReader
-                            While lector.Read
-                                Dim r As New AlumnoEstadoReporte
+                        Using lector As MySqlDataReader = cmd.ExecuteReader()
+                            While lector.Read()
+                                Dim r As New AlumnoEstadoReporte()
+
+                                ' Conversiones estrictas requeridas por Option Strict On
                                 r.idContrato = Convert.ToInt32(lector("idContrato"))
                                 r.idPersona = Convert.ToInt32(lector("id"))
-                                r.nombre_apellido = lector("nombre_apellido").ToString
-                                r.dni = lector("dni").ToString
-                                r.nombreCurso = lector("curso").ToString
+                                r.nombre_apellido = Convert.ToString(lector("nombre_apellido"))
+                                r.dni = Convert.ToString(lector("dni"))
+                                r.nombreCurso = Convert.ToString(lector("curso"))
 
-                                ' Al ser decimal en la BD, la lectura es directa y segura
+                                ' Cálculos directos protegiendo de nulos
                                 r.totalPendiente = If(IsDBNull(lector("total_deuda")), 0D, Convert.ToDecimal(lector("total_deuda")))
                                 r.cuotasVencidas = If(IsDBNull(lector("cant_vencidas")), 0, Convert.ToInt32(lector("cant_vencidas")))
 
@@ -410,8 +415,9 @@ Public Class GestorAcademia
                     End Using
                 End Using
             Catch ex As Exception
-                MsgBox("Error en reporte: " & ex.Message)
+                MsgBox("Error en reporte: " & ex.Message, MsgBoxStyle.Critical)
             End Try
+
             Return lista
         End Function
 
@@ -613,6 +619,8 @@ Public Class GestorAcademia
         Public Property monto As String ' Mantenemos String según tu CREATE TABLE
         Public Property vencimiento As DateTime
         Public Property estado As String
+        Public Property pagado As Decimal
+        Public Property saldo As Decimal
 
         ' Método para insertar una cuota individual
         Public Shared Sub Agregar(nuevo As serv_detalle)
@@ -636,7 +644,6 @@ Public Class GestorAcademia
                 MsgBox("Error al insertar detalle: " & ex.Message)
             End Try
         End Sub
-
         Public Shared Function RegistrarPago(idDetalle As Integer, Optional idComprobanteFacturacion As Integer = 0) As Boolean
             Try
                 ' Si querés guardar la fecha de pago o el comprobante, podés agregar esas columnas a tu tabla
@@ -660,7 +667,95 @@ Public Class GestorAcademia
                 Return False
             End Try
         End Function
+        Public Shared Function ObtenerSaldoPendiente(idDetalle As Integer, valorCuotaOriginal As Decimal) As Decimal
+            Dim pagadoAcumulado As Decimal = 0
+            Dim sql As String = "SELECT IFNULL(SUM(MONTO_PAGADO), 0) FROM rym_pagos WHERE ID_DETALLE = @idDet"
 
+            Try
+                Using conn As New MySqlConnection(CadenaConexion)
+                    Using cmd As New MySqlCommand(sql, conn)
+                        cmd.Parameters.AddWithValue("@idDet", idDetalle)
+                        conn.Open()
+                        pagadoAcumulado = Convert.ToDecimal(cmd.ExecuteScalar())
+                    End Using
+                End Using
+            Catch ex As Exception
+                ' Si falla la consulta por algún motivo, asumimos que no pagó nada
+                pagadoAcumulado = 0
+            End Try
+
+            Return valorCuotaOriginal - pagadoAcumulado
+        End Function
+        Public Shared Function RegistrarPagoParcial(idDetalleCuota As Integer, montoAPagar As Decimal, Optional idComprobanteFacturacion As Integer = 0) As Boolean
+            Try
+                Using conn As New MySqlConnection(CadenaConexion)
+                    conn.Open()
+
+                    ' 1. OBTENER EL VALOR ORIGINAL DE LA CUOTA EN LA ACADEMIA
+                    Dim valorCuotaOriginal As Decimal = 0
+                    Dim idServicioGeneral As Integer = 0
+
+                    ' (Ajustá "monto_total" y "id_servicio" a los nombres reales en serv_detalle)
+                    Dim sqlGetInfo As String = "SELECT IFNULL(monto, 0) as VALOR, IFNULL(idContrato, 0) as ID_SERV FROM serv_detalle WHERE id = ?id"
+
+                    Using cmdInfo As New MySqlCommand(sqlGetInfo, conn)
+                        cmdInfo.Parameters.AddWithValue("?id", idDetalleCuota)
+                        Using reader As MySqlDataReader = cmdInfo.ExecuteReader()
+                            If reader.Read() Then
+                                valorCuotaOriginal = Convert.ToDecimal(reader("VALOR"))
+                                idServicioGeneral = Convert.ToInt32(reader("ID_SERV"))
+                            Else
+                                Throw New Exception("No se encontró la cuota.")
+                            End If
+                        End Using
+                    End Using
+
+                    ' 2. GUARDAR EL PAGO EN LA TABLA DE PAGOS (rym_pagos)
+                    Dim sqlInsertPago As String = "INSERT INTO rym_pagos (FECHA, ID_PRESTAMO, ID_DETALLE, MONTO_PAGADO, ID_RECIBO) " &
+                                          "VALUES (NOW(), ?idPres, ?idDet, ?monto, ?idRec)"
+
+                    Using cmdInsert As New MySqlCommand(sqlInsertPago, conn)
+                        cmdInsert.Parameters.AddWithValue("?idPres", idServicioGeneral) ' ID del contrato/alumno general
+                        cmdInsert.Parameters.AddWithValue("?idDet", idDetalleCuota)     ' ID de la cuota específica
+                        cmdInsert.Parameters.AddWithValue("?monto", montoAPagar)
+                        cmdInsert.Parameters.AddWithValue("?idRec", If(idComprobanteFacturacion > 0, idComprobanteFacturacion, 0))
+                        cmdInsert.ExecuteNonQuery()
+                    End Using
+
+                    ' 3. SUMAR TODOS LOS PAGOS EXCLUSIVOS DE ESTA CUOTA
+                    Dim totalPagadoAcumulado As Decimal = 0
+                    Dim sqlSumar As String = "SELECT IFNULL(SUM(MONTO_PAGADO), 0) FROM rym_pagos WHERE ID_DETALLE = ?idDet"
+
+                    Using cmdSumar As New MySqlCommand(sqlSumar, conn)
+                        cmdSumar.Parameters.AddWithValue("?idDet", idDetalleCuota)
+                        totalPagadoAcumulado = Convert.ToDecimal(cmdSumar.ExecuteScalar())
+                    End Using
+
+                    ' 4. EVALUAR EL ESTADO
+                    Dim nuevoEstado As String = "PENDIENTE"
+                    If totalPagadoAcumulado >= valorCuotaOriginal Then
+                        nuevoEstado = "PAGADO"
+                    ElseIf totalPagadoAcumulado > 0 Then
+                        nuevoEstado = "PAGO PARCIAL"
+                    End If
+
+                    ' 5. ACTUALIZAR EL ESTADO DE LA CUOTA EN LA ACADEMIA
+                    Dim sqlUpdateCuota As String = "UPDATE serv_detalle SET estado = ?estado WHERE id = ?idDet"
+
+                    Using cmdUpdate As New MySqlCommand(sqlUpdateCuota, conn)
+                        cmdUpdate.Parameters.AddWithValue("?estado", nuevoEstado)
+                        cmdUpdate.Parameters.AddWithValue("?idDet", idDetalleCuota)
+                        cmdUpdate.ExecuteNonQuery()
+                    End Using
+
+                    Return True
+                End Using
+
+            Catch ex As Exception
+                MsgBox("Error al registrar el pago: " & ex.Message, MsgBoxStyle.Critical)
+                Return False
+            End Try
+        End Function
         Public Shared Function ActualizarEstado(idDetalle As Integer, nuevoEstado As String) As Boolean
             Try
                 Using conn As New MySqlConnection(CadenaConexion)
@@ -685,18 +780,39 @@ Public Class GestorAcademia
             Try
                 Using conn As New MySqlConnection(CadenaConexion)
                     conn.Open()
-                    Using cmd As New MySqlCommand("SELECT * FROM serv_detalle WHERE idPersona = ?id ORDER BY id ASC", conn)
+
+                    ' Usamos LEFT JOIN para traer la cuota y sumar sus pagos.
+                    ' El GROUP BY d.id es clave para que los pagos se sumen por cada cuota.
+                    Dim sql As String = "SELECT d.*, " &
+                                "ROUND(IFNULL(SUM(p.MONTO_PAGADO), 0), 2) AS pagado, " &
+                                "ROUND(d.monto - IFNULL(SUM(p.MONTO_PAGADO), 0), 2) AS saldo " &
+                                "FROM serv_detalle d " &
+                                "LEFT JOIN rym_pagos p ON d.id = p.ID_DETALLE " &
+                                "WHERE d.idPersona = ?id " &
+                                "GROUP BY d.id " &
+                                "ORDER BY d.id ASC"
+
+                    Using cmd As New MySqlCommand(sql, conn)
                         cmd.Parameters.AddWithValue("?id", idPer)
-                        Using lector As MySqlDataReader = cmd.ExecuteReader
-                            While lector.Read
-                                lista.Add(MapearDetalle(lector))
+
+                        Using lector As MySqlDataReader = cmd.ExecuteReader()
+                            While lector.Read()
+                                ' 1. Mapeamos la base de la cuota
+                                Dim detalle As serv_detalle = MapearDetalle(lector)
+
+                                ' 2. Mapeamos estrictamente los campos calculados por el JOIN
+                                detalle.pagado = Convert.ToDecimal(lector("pagado"))
+                                detalle.saldo = Convert.ToDecimal(lector("saldo"))
+
+                                lista.Add(detalle)
                             End While
                         End Using
                     End Using
                 End Using
             Catch ex As Exception
-                MsgBox(ex.Message)
+                MsgBox(ex.Message, MsgBoxStyle.Critical)
             End Try
+
             Return lista
         End Function
         Public Shared Function CalcularPlanSimulado(ByRef servicio As serv_servicios, ByRef fechaInicio As DateTime) As List(Of serv_detalle)

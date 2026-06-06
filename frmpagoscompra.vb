@@ -391,4 +391,37 @@ Public Class frmpagoscompra
         End Try
     End Sub
 
+
+    ' =========================================================================
+    ' NUEVO: Vinculación con Publicidad (Guardar ID Recibo en detalle)
+    ' =========================================================================
+    Private Sub MarcarCuotaComoPagadasPublicidad()
+
+        ' Consultamos los ítems de la factura origen para ver qué cuotas de publicidad se están pagando
+        Dim queryItems As String = "SELECT plu FROM fact_items WHERE id_fact = " & IdFacturaComp & " AND plu LIKE '#%-%'"
+        Reconectar()
+        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, conexionPrinc)
+        Dim dr As System.Data.IDataReader = cmdItems.ExecuteReader()
+
+        Dim listaActualizar As New List(Of Integer)
+        While dr.Read()
+            Dim codbar As String = dr("plu").ToString()
+            ' Extraemos el ID de la cuota (la parte después del guion)
+            Dim partes() As String = codbar.Replace("#", "").Split("-"c)
+            If partes.Length = 2 Then
+                listaActualizar.Add(Convert.ToInt32(partes(1)))
+            End If
+        End While
+        dr.Close()
+
+        ' Realizamos los UPDATES en la tabla de detalle
+        For Each idCuota As Integer In listaActualizar
+            Dim sqlUpdRecibo As String = "UPDATE rym_detalle_prestamo SET id_recibo = ?idRecibo WHERE ID = ?idCuota"
+            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdRecibo, conexionPrinc)
+                cmdUpd.Parameters.AddWithValue("?idRecibo", IdRecibo)
+                cmdUpd.Parameters.AddWithValue("?idCuota", idCuota)
+                cmdUpd.ExecuteNonQuery()
+            End Using
+        Next
+    End Sub
 End Class

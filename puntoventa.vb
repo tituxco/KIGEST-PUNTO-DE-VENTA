@@ -1061,6 +1061,36 @@ Public Class puntoventa
                     End If
                 End If
 
+                ' =========================================================================
+                ' INTEGRACIÓN CON SISTEMA DE PUBLICIDAD
+                ' =========================================================================
+                ' Buscamos ítems que sigan el formato #idPublicidad-idCuota
+                If codbar IsNot Nothing AndAlso codbar.ToString().StartsWith("#") AndAlso codbar.ToString().Contains("-") Then
+                    Try
+                        ' Extraemos los IDs basándonos en tu formato #IDPRESTAMO-IDCUOTA
+                        Dim partes() As String = codbar.ToString().Replace("#", "").Split("-"c)
+
+                        If partes.Length = 2 Then
+                            Dim idPrestamo As Integer = Convert.ToInt32(partes(0))
+                            Dim idCuota As Integer = Convert.ToInt32(partes(1))
+
+                            ' Actualizamos la tabla rym_detalle_prestamo con el ID de la factura recién creada
+                            ' Filtramos por ID de cuota (clave primaria de rym_detalle_prestamo)
+                            Dim sqlUpdFact As String = "UPDATE rym_detalle_prestamo SET id_factura = ?idFact WHERE ID = ?idCuota"
+
+                            Using cmdUpdFact As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdFact, conexionPrinc)
+                                cmdUpdFact.Transaction = Transaccion ' Mantenemos la transacción original
+                                cmdUpdFact.Parameters.AddWithValue("?idFact", IdFactura)
+                                cmdUpdFact.Parameters.AddWithValue("?idCuota", idCuota)
+                                cmdUpdFact.ExecuteNonQuery()
+                            End Using
+                        End If
+                    Catch ex As Exception
+                        ' Log de error si el formato no es válido, pero no detenemos la facturación
+                        Debug.WriteLine("Error al procesar formato de publicidad en facturación: " & ex.Message)
+                    End Try
+                End If
+
                 'iva = itemsFact.Cells(4).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
                 'punit = itemsFact.Cells(5).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
                 'ptotal = itemsFact.Cells(6).Value.ToString.Replace(".", "").ToString.Replace(",", ".")
