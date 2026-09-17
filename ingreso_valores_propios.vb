@@ -16,7 +16,7 @@
                 sqlQuery = "insert into fact_cheques " _
             & "(fecha_emision,fecha_cobro,banco,serie,importe,tipo_cheque,observaciones) values " _
             & "(?femis,?fcobro,?banco,?serie,?importe,'2',?obs)"
-                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoch.Parameters
                     '.AddWithValue("?cliente", idcliente)
                     '.AddWithValue("?comprobante", idfactura)
@@ -47,7 +47,7 @@
         SendKeys.Send("{TAB}")
         Try
             If e.ColumnIndex = 2 Then
-                Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from fact_cheques where lcase(banco) like '" & dtcheques.CurrentRow.Cells("banco").Value.ToString.ToLower & "' and  serie like '" & dtcheques.CurrentCell.Value & "'", conexionPrinc)
+                Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from fact_cheques where lcase(banco) like '" & dtcheques.CurrentRow.Cells("banco").Value.ToString.ToLower & "' and  serie like '" & dtcheques.CurrentCell.Value & "'", GestorConexiones.conexionPrinc)
                 Dim readftipo As New DataTable
                 tablaftipo.Fill(readftipo)
                 If readftipo.Rows.Count <> 0 Then

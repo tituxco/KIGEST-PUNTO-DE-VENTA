@@ -6,7 +6,7 @@
             dtcloud.Rows.Clear()
             Reconectar()
             Dim consultacloud As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, cliente, sistema,bd, codus, clave, modulo,autorizado,debe 
-            from AuthServ.CliAuth order by autorizado, sistema, cliente asc", conexionPrinc)
+            from AuthServ.CliAuth order by autorizado, sistema, cliente asc", GestorConexiones.conexionPrinc)
             Dim tablacloud As New DataTable
             Dim infocloud() As DataRow
             consultacloud.Fill(tablacloud)
@@ -77,19 +77,19 @@
         EstablecerModulosTreeView(trvmodulos.Nodes)
         Reconectar()
         Dim consultacloud As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fecha_hora, Clie, usuario, tarea, ip 
-        FROM AuthServ.LogAcc where bd like '" & dtcloud.CurrentRow.Cells("DBClie").Value & "' order by id desc limit 0,20", conexionAuth)
+        FROM AuthServ.LogAcc where bd like '" & dtcloud.CurrentRow.Cells("DBClie").Value & "' order by id desc limit 0,20", GestorConexiones.conexionAuth)
         Dim tablacloud As New DataTable
         'Dim infocloud() As DataRow
         consultacloud.Fill(tablacloud)
         dgvLog.DataSource = tablacloud
-        'MsgBox(consultacloud.SelectCommand.CommandText)
+        ''MsgBox(consultacloud.SelectCommand.CommandText)
     End Sub
 
     Private Sub dtcloud_RowValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.RowValidated
         'Try
         '    Dim sqlQuery As String = "update AuthServ.CliAuth set cliente=?cliente, sistema=?sistema,bd=?clbd," _
         '    & "codus=?auusua,clave=?aupass, autorizado=?autorizado where id=" & dtcloud.Rows(e.RowIndex).Cells(0).Value
-        '    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+        '    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
         '    With comandoadd.Parameters
         '        .AddWithValue("?cliente", dtcloud.Rows(e.RowIndex).Cells(1).Value.ToString.ToUpper)
         '        .AddWithValue("?sistema", dtcloud.Rows(e.RowIndex).Cells(2).Value.ToString.ToUpper)
@@ -122,7 +122,7 @@
             Exit Sub
         End If
         Dim sqlQuery As String = "update AuthServ.CliAuth set modulo=?modulo where id=" & dtcloud.CurrentRow.Cells(0).Value
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
         With comandoadd.Parameters
             .AddWithValue("?modulo", cadena)
         End With
@@ -168,37 +168,37 @@
     Private Sub dtcloud_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellEndEdit
         If e.ColumnIndex = 5 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dtcloud.CurrentRow.Cells(5).Value & "') where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 7 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set autorizado ='" & dtcloud.CurrentRow.Cells(7).Value & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 4 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set codus ='" & dtcloud.CurrentRow.Cells(4).Value & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 3 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set bd ='" & dtcloud.CurrentRow.Cells(3).Value & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 2 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set sistema ='" & dtcloud.CurrentRow.Cells(2).Value & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 1 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set cliente ='" & dtcloud.CurrentRow.Cells(1).Value & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()
             dtcloud.Rows(e.RowIndex).Selected = True
@@ -213,8 +213,8 @@
                 Dim DATABASE As String
                 DATABASE = dtcloud.CurrentRow.Cells("DBClie").Value
                 sqlquery = txtsentencias.Text
-                conexionSEC.ChangeDatabase(DATABASE)
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionSEC)
+                GestorConexiones.conexionSEC.ChangeDatabase(DATABASE)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, GestorConexiones.conexionSEC)
                 comandoadd.ExecuteNonQuery()
                 MsgBox("modificaciones de estructura de BD ejecutadoas")
             ElseIf rdprefijo.Checked = True Then
@@ -225,8 +225,8 @@
                     Dim DATABASE As String
                     DATABASE = ListBox1.Items(i)
                     sqlquery = txtsentencias.Text
-                    conexionSEC.ChangeDatabase(DATABASE)
-                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionSEC)
+                    GestorConexiones.conexionSEC.ChangeDatabase(DATABASE)
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, GestorConexiones.conexionSEC)
                 On Error Resume Next
                 comandoadd.ExecuteNonQuery()
 
@@ -291,7 +291,7 @@
         End If
         Dim mensaje As String = InputBox("Ingrese mensaje", "pasar cliente a deudor", "IMPORTE DEUDA VENCIDA: $")
         Dim sqlQuery As String = "update AuthServ.CliAuth set debe=if(debe=1,0,1), mensaje='" & mensaje & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
 
         comandoadd.ExecuteNonQuery()
         If dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Green Then
@@ -307,7 +307,7 @@
         End If
         Dim mensaje As String = InputBox("Ingrese mensaje", "enviar mensaje", "MENSAJE: $")
         Dim sqlQuery As String = "update AuthServ.CliAuth set debe=if(debe=2,0,2), mensaje='" & mensaje & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
 
         comandoadd.ExecuteNonQuery()
         If dtcloud.CurrentRow.DefaultCellStyle.BackColor = Color.Yellow Then

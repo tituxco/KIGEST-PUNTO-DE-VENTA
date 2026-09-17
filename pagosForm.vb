@@ -23,7 +23,7 @@ Public Class pagosForm
             Dim VerificaUltimo As Integer = 0
 
             Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" &
-            lbPrestamo.Text & "' order by periodo desc limit 1", conexionPrinc)
+            lbPrestamo.Text & "' order by periodo desc limit 1", GestorConexiones.conexionPrinc)
             Dim ds As New DataSet
             da.Fill(ds)
             If ds.Tables(0).Rows.Count > 0 Then
@@ -67,7 +67,7 @@ Public Class pagosForm
         Dim capitalAmortizado As Double = 0
 
 
-        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select plazo, interes_anual from rym_prestamo where id_prestamo='" & NoPrestamo & "'", conexionPrinc)
+        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select plazo, interes_anual from rym_prestamo where id_prestamo='" & NoPrestamo & "'", GestorConexiones.conexionPrinc)
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -76,7 +76,7 @@ Public Class pagosForm
             InteresAnual = CDbl(ds.Tables(0).Rows(0).Item("interes_anual").ToString)
         End If
 
-        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select  * from rym_detalle_prestamo where id_prestamo='" & NoPrestamo & "' and periodo < " & CInt(lbPeriodo.Text) & " order by periodo desc limit 1", conexionPrinc)
+        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select  * from rym_detalle_prestamo where id_prestamo='" & NoPrestamo & "' and periodo < " & CInt(lbPeriodo.Text) & " order by periodo desc limit 1", GestorConexiones.conexionPrinc)
         ds = New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -124,7 +124,7 @@ Public Class pagosForm
         Dim CapitalAmortizado As Double = 0
         Dim Amortizacion As Double = 0
 
-        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' and periodo=" & lbPeriodo.Text, conexionPrinc)
+        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' and periodo=" & lbPeriodo.Text, GestorConexiones.conexionPrinc)
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -134,7 +134,7 @@ Public Class pagosForm
             CapitalAmortizado = CDbl(ds.Tables(0).Rows(0).Item("CAPITAL_AMORTIZADO").ToString)
         End If
 
-        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
+        da = New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", GestorConexiones.conexionPrinc)
         ds = New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -166,7 +166,7 @@ Public Class pagosForm
             Dim CapitalAmortizado As Double = 0
             Dim Amortizacion As Double = 0
 
-            Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' and periodo=" & lbPeriodo.Text, conexionPrinc)
+            Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' and periodo=" & lbPeriodo.Text, GestorConexiones.conexionPrinc)
             Dim ds As New DataSet
             da.Fill(ds)
             If ds.Tables(0).Rows.Count > 0 Then
@@ -176,7 +176,7 @@ Public Class pagosForm
                 CapitalAmortizado = CDbl(ds.Tables(0).Rows(0).Item("CAPITAL_AMORTIZADO").ToString)
             End If
 
-            da = New MySql.Data.MySqlClient.MySqlDataAdapter("select  * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", conexionPrinc)
+            da = New MySql.Data.MySqlClient.MySqlDataAdapter("select  * from rym_detalle_prestamo where id_prestamo='" & lbPrestamo.Text & "' order by periodo desc", GestorConexiones.conexionPrinc)
             ds = New DataSet
             da.Fill(ds)
             If ds.Tables(0).Rows.Count > 0 Then

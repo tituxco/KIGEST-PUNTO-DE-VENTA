@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class selProdNvo
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,14 +20,13 @@ Partial Class selProdNvo
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.pntitulo = New System.Windows.Forms.Panel()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.txtBusquedaProd = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.chkstock = New System.Windows.Forms.CheckBox()
-        Me.txtBusquedaCliente = New System.Windows.Forms.TextBox()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
@@ -37,26 +36,25 @@ Partial Class selProdNvo
         'pntitulo
         '
         Me.pntitulo.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.pntitulo.Controls.Add(Me.TextBox1)
+        Me.pntitulo.Controls.Add(Me.txtBusquedaProd)
         Me.pntitulo.Controls.Add(Me.Panel1)
-        Me.pntitulo.Controls.Add(Me.txtBusquedaCliente)
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
         Me.pntitulo.Size = New System.Drawing.Size(584, 52)
         Me.pntitulo.TabIndex = 65
         '
-        'TextBox1
+        'txtBusquedaProd
         '
-        Me.TextBox1.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.TextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.TextBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.TextBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox1.ForeColor = System.Drawing.Color.Black
-        Me.TextBox1.Location = New System.Drawing.Point(0, 28)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(584, 22)
-        Me.TextBox1.TabIndex = 187
+        Me.txtBusquedaProd.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.txtBusquedaProd.BorderStyle = System.Windows.Forms.BorderStyle.None
+        Me.txtBusquedaProd.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.txtBusquedaProd.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.txtBusquedaProd.ForeColor = System.Drawing.Color.Black
+        Me.txtBusquedaProd.Location = New System.Drawing.Point(0, 28)
+        Me.txtBusquedaProd.Name = "txtBusquedaProd"
+        Me.txtBusquedaProd.Size = New System.Drawing.Size(584, 22)
+        Me.txtBusquedaProd.TabIndex = 187
         '
         'Panel1
         '
@@ -93,18 +91,6 @@ Partial Class selProdNvo
         Me.chkstock.Text = "Solo en stock"
         Me.chkstock.UseVisualStyleBackColor = True
         '
-        'txtBusquedaCliente
-        '
-        Me.txtBusquedaCliente.BackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.txtBusquedaCliente.BorderStyle = System.Windows.Forms.BorderStyle.None
-        Me.txtBusquedaCliente.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.txtBusquedaCliente.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBusquedaCliente.ForeColor = System.Drawing.Color.Black
-        Me.txtBusquedaCliente.Location = New System.Drawing.Point(0, 0)
-        Me.txtBusquedaCliente.Name = "txtBusquedaCliente"
-        Me.txtBusquedaCliente.Size = New System.Drawing.Size(584, 22)
-        Me.txtBusquedaCliente.TabIndex = 185
-        '
         'dtproductos
         '
         Me.dtproductos.AllowUserToAddRows = False
@@ -129,7 +115,11 @@ Partial Class selProdNvo
         Me.ClientSize = New System.Drawing.Size(584, 361)
         Me.Controls.Add(Me.dtproductos)
         Me.Controls.Add(Me.pntitulo)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
+        Me.MaximizeBox = False
         Me.Name = "selProdNvo"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "selProdNvo"
         Me.pntitulo.ResumeLayout(False)
         Me.pntitulo.PerformLayout()
@@ -144,7 +134,6 @@ Partial Class selProdNvo
     Friend WithEvents chkstock As CheckBox
     Friend WithEvents Label1 As Label
     Friend WithEvents dtproductos As DataGridView
-    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents txtBusquedaProd As TextBox
     Friend WithEvents Panel1 As Panel
-    Friend WithEvents txtBusquedaCliente As TextBox
 End Class

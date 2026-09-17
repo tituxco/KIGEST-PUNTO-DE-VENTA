@@ -25,7 +25,7 @@ Public Class reciboRapido
         Try
             'MsgBox(idFactura)
             Reconectar()
-            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", conexionPrinc)
+            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", GestorConexiones.conexionPrinc)
             Dim readcajas As New DataSet
             Dim readcajas2 As New DataSet
             tablacajas.Fill(readcajas)
@@ -45,7 +45,7 @@ Public Class reciboRapido
             from fact_conffiscal as fis,fact_facturas as fact 
             where 
             fis.donfdesc=fact.tipofact and
-            fact.id=" & idFactura, conexionPrinc)
+            fact.id=" & idFactura, GestorConexiones.conexionPrinc)
             ' MsgBox(consultaFactura.SelectCommand.CommandText)
             Dim tablaFactura As New DataTable
             consultaFactura.Fill(tablaFactura)
@@ -95,7 +95,7 @@ Public Class reciboRapido
                 & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,total,observaciones) values " _
                 & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?tot,?observa)"
 
-            Dim addFact As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addFact As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addFact.Parameters
                 .AddWithValue("?ptov", Val(ptoVta))
                 .AddWithValue("?tipofact", 996)
@@ -117,13 +117,13 @@ Public Class reciboRapido
                 & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
                 & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
             Reconectar()
-            Dim addItm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addItm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addItm.Parameters
                 .AddWithValue("?cod", itm_cod)
                 .AddWithValue("?desc", itm_descripcion)
                 .AddWithValue("?ptot", itm_ptotal)
                 .AddWithValue("?tipofact", 996)
-                .AddWithValue("?idAlmacen", idAlmacen)
+                .AddWithValue("?idAlmacen", 0)
                 .AddWithValue("?idCaja", idcaja)
                 .AddWithValue("?id_fact", idReciboNvo)
             End With
@@ -132,7 +132,7 @@ Public Class reciboRapido
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & numRecibo & " where donfdesc= 996 and ptovta=" & ptoVta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -146,44 +146,6 @@ Public Class reciboRapido
                                            "COBRO FACTURA " & Clie_razonSocial, fac_total, 5, fac_total, 11, 2, fecha)
             End If
 
-            '/***BUSCAMOS EL PERIODO ADEUDADO
-            'Dim conceptoLimpio As String = txtConcepto.Text.Replace("#", "").Trim()
-            'Dim idPeriodoPubli As Integer = 0
-
-            '' AISLAMIENTO: Solo disparamos el subsistema si el concepto es estrictamente numérico
-            'If IsNumeric(conceptoLimpio) Then
-            '    Dim idPublicidad As Integer = Convert.ToInt32(conceptoLimpio)
-
-            '    Reconectar()
-            '    ' Usamos parámetros en el Select para evitar errores de sintaxis o inyección
-            '    Dim queryConsulta As String = "SELECT * FROM rym_detalle_prestamo as pr " &
-            '                                "WHERE pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) " &
-            '                                "AND pr.ID_PRESTAMO = ?idPrestamo " &
-            '                                "ORDER BY pr.periodo asc LIMIT 1"
-
-            '    Dim cmdConsulta As New MySql.Data.MySqlClient.MySqlCommand(queryConsulta, conexionPrinc)
-            '    cmdConsulta.Parameters.AddWithValue("?idPrestamo", idPublicidad)
-
-            '    Dim consultaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter(cmdConsulta)
-            '    Dim tablaPublicidad As New DataTable
-            '    consultaPeriodo.Fill(tablaPublicidad)
-
-            '    If tablaPublicidad.Rows.Count <> 0 Then
-            '        idPeriodoPubli = Convert.ToInt32(tablaPublicidad.Rows(0).Item("PERIODO"))
-
-            '        '***AGREGAR PAGO A PUBLICIDAD***
-            '        sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
-            '        Reconectar()
-            '        Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            '        With addPagoPubli.Parameters
-            '            .AddWithValue("?fecha", fecha)
-            '            .AddWithValue("?idprestamo", idPublicidad)
-            '            .AddWithValue("?periodo", idPeriodoPubli)
-            '            .AddWithValue("?monto", fac_total)
-            '        End With
-            '        addPagoPubli.ExecuteNonQuery()
-            '    End If
-            'End If
 
 
             '***AGREGAR DINERO A CAJA***
@@ -192,7 +154,7 @@ Public Class reciboRapido
                     (concepto,monto,comprobante,caja,tipo) values
                     (?conc,?monto,?comp,?caja,'1')"
             Reconectar()
-            Dim addIngresoCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addIngresoCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addIngresoCaja.Parameters
                 .AddWithValue("?monto", fac_total)
                 .AddWithValue("?comp", idReciboNvo)
@@ -204,7 +166,7 @@ Public Class reciboRapido
             '****ACTUALIZAMOS LA FACTURA 
 
             Reconectar()
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_facturas set observaciones2=concat(observaciones2,'\n','" & "RBO " & txtRecNumero.Text & "') where id= " & idFactura
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -214,14 +176,14 @@ Public Class reciboRapido
             '****ACTUALIZAMOS LA TABLA DE CUENTA CORRIENTE  
 
             Reconectar()
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "INSERT INTO fact_cuentaclie (idclie, idcomp, pago) values ('" & Clie_idCliente & "','" & idReciboNvo & "','1' )"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
 
             Reconectar()
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_cuentaclie set pago=1 where idcomp=" & idFactura
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -232,8 +194,8 @@ Public Class reciboRapido
             ' =======================================================
             MarcarCuotasComoPagadas(idFactura)
             ' =======================================================
-
             MarcarCuotaComoPagadasPublicidad(idFactura, idReciboNvo)
+            'GestorPublicidad.VincularComprobanteAutomatico(idFactura, idReciboNvo, True)
             Me.Close()
         Catch ex As Exception
 
@@ -253,7 +215,7 @@ Public Class reciboRapido
             End If
         Next
 
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from facturasclientes_impagas where idfact= " & idFactura, conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from facturasclientes_impagas where idfact= " & idFactura, GestorConexiones.conexionPrinc)
         Dim tablaConsFact As New DataTable
         Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
         consulta.Fill(tablaConsFact)
@@ -278,7 +240,7 @@ Public Class reciboRapido
         ' Consultamos los ítems de la factura origen para ver qué cuotas de publicidad se están pagando
         Dim queryItems As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE '#%-%'"
         Reconectar()
-        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, conexionPrinc)
+        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, GestorConexiones.conexionPrinc)
         Dim dr As System.Data.IDataReader = cmdItems.ExecuteReader()
 
         Dim listaActualizar As New List(Of Integer)
@@ -294,12 +256,7 @@ Public Class reciboRapido
 
         ' Realizamos los UPDATES en la tabla de detalle
         For Each idCuota As Integer In listaActualizar
-            Dim sqlUpdRecibo As String = "UPDATE rym_detalle_prestamo SET id_recibo = ?idRecibo WHERE ID = ?idCuota"
-            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdRecibo, conexionPrinc)
-                cmdUpd.Parameters.AddWithValue("?idRecibo", idrecibo)
-                cmdUpd.Parameters.AddWithValue("?idCuota", idCuota)
-                cmdUpd.ExecuteNonQuery()
-            End Using
+            GestorPublicidad.VincularComprobanteAutomatico(idCuota, idrecibo, True)
         Next
     End Sub
 
@@ -312,7 +269,7 @@ Public Class reciboRapido
             Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE 'CTA-%'"
 
             Reconectar()
-            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
+            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, GestorConexiones.conexionPrinc)
             Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
 
             Dim idsCuotas As New List(Of Integer)

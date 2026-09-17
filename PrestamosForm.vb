@@ -75,7 +75,7 @@ Public Class PrestamosForm
     Public Sub Consultas(ByVal Cadena As String)
         Reconectar()
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
-        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = "15"
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
@@ -94,7 +94,7 @@ Public Class PrestamosForm
     Private Sub btnPagar_Click(sender As Object, e As EventArgs) Handles btnPagar.Click
         Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  *  FROM  rym_detalle_prestamo where periodo not in 
         (select periodo from rym_pagos where id_prestamo='" & txtBuscaPrestamo.Text & "') and id_prestamo='" & txtBuscaPrestamo.Text &
-        "' and periodo <> 0 order by fecha asc limit 1", conexionPrinc)
+        "' and periodo <> 0 order by fecha asc limit 1", GestorConexiones.conexionPrinc)
         Dim ds As New DataSet
         da.Fill(ds)
         If ds.Tables(0).Rows.Count > 0 Then
@@ -118,7 +118,7 @@ Public Class PrestamosForm
         Dim ConsultaPrestamo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cli.idclientes, cli.nomapell_razon,pre.MONTO_PRESTAMO,pre.PLAZO, pre.INTERES_ANUAL, pre.FECHA,pre.CUOTA
         FROM rym_prestamo as pre, fact_clientes as cli
         where cli.idclientes=pre.ID_CLIENTE
-        and pre.id=" & txtBuscaPrestamo.Text, conexionPrinc)
+        and pre.id=" & txtBuscaPrestamo.Text, GestorConexiones.conexionPrinc)
         Dim DatosPrestamo As New DataTable
         ConsultaPrestamo.Fill(DatosPrestamo)
         If DatosPrestamo.Rows.Count <> 0 Then
@@ -168,13 +168,13 @@ Public Class PrestamosForm
         'PAGADA',IF(DATEDIFF(NOW(),DTP.FECHA)>@DIASMORA,'MOROSO','DEBE')
         ) AS ESTADO,
         DTP.* 
-        from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc", conexionPrinc)
+        from rym_detalle_prestamo AS DTP where id_prestamo='" & txtBuscaPrestamo.Text & "' and PERIODO <>0 order by ID asc", GestorConexiones.conexionPrinc)
         Dim tablaPrestamo As New DataTable
         'Dim filasProd() As DataRow
         tablaEmpresa.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
         tablaEmpresa.Fill(DatosGenerales.Tables("datosEmpresa"))
         Reconectar()
@@ -233,7 +233,7 @@ Public Class PrestamosForm
             MsgBox("Debe seleccionar un cliente para guardar el prestamo")
         Else
             Reconectar()
-            cmd = New MySql.Data.MySqlClient.MySqlCommand("update rym_prestamo set ID_CLIENTE='" & txtclientecuenta.Text & "' where ID_PRESTAMO=" & txtBuscaPrestamo.Text, conexionPrinc)
+            cmd = New MySql.Data.MySqlClient.MySqlCommand("update rym_prestamo set ID_CLIENTE='" & txtclientecuenta.Text & "' where ID_PRESTAMO=" & txtBuscaPrestamo.Text, GestorConexiones.conexionPrinc)
             cmd.ExecuteNonQuery()
             MsgBox("Se otorgo el prestamo al cliente indicado")
             Button1.Enabled = False

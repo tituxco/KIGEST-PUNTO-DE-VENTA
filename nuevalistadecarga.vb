@@ -123,7 +123,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select confnume from tipos_comprobantes where donfdesc=" & tipoFac & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -139,7 +139,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select unidades from fact_insumos where id=" & idProd
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -154,7 +154,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select presentacion from fact_insumos where id=" & idProd
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -176,7 +176,7 @@
         Next
         Reconectar()
         Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-        & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995 and OBSERVACIONES LIKE 'PENDIENTE'", conexionPrinc)
+        & "id, condvta, vendedor from fact_facturas where ptovta=" & ptovta & " and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=995 and OBSERVACIONES LIKE 'PENDIENTE'", GestorConexiones.conexionPrinc)
         Dim tablaped As New DataTable
         Dim infoped() As DataRow
         consultapedido.Fill(tablaped)
@@ -191,7 +191,7 @@
 
         Reconectar()
         Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT itm.cod, itm.plu, itm.cantidad, itm.descripcion,
-         ifnull((select peso from cm_pesoEspecifico where id=itm.cod),0) as PE from fact_items  as itm where itm.id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
+         ifnull((select peso from cm_pesoEspecifico where id=itm.cod),0) as PE from fact_items  as itm where itm.id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
         Dim tablaitm As New DataTable
         Dim infoitm() As DataRow
         Dim existe As Boolean = False
@@ -311,7 +311,7 @@
                     & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones) values " _
                     & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?observa)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFac)
@@ -337,7 +337,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where donfdesc= " & tipoFac & " and ptovta= " & ptovta
             sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -369,7 +369,7 @@
                 & "(?comprobante, ?presenv,?cantidad,?producto,?excedente)"
 
                 Reconectar()
-                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadditm.Parameters
                     .AddWithValue("?comprobante", idFactura)
                     .AddWithValue("?presenv", tipo_envase)
@@ -396,7 +396,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & tipoFac & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -421,12 +421,12 @@
             & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon," _
             & "concat(fac.direccion, ' - ', fac.localidad)  as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit,fac.vendedor as facvend, " _
             & "fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21 " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idFactura, conexionPrinc)
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and fac.id=" & idFactura, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
 
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idFactura, conexionPrinc)
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idFactura, GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("ariel_itmlistacarga"))
 
 

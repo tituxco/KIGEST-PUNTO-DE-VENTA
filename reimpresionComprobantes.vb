@@ -48,7 +48,7 @@ Public Class reimpresionComprobantes
             End If
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-            fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, 
+            fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fecha,fact.razon,fact.direccion, 
             fact.localidad, con.condicion, 
             case when fis.debcred='C' then 
             concat('-',FORMAT(fact.total,2,'es_AR')) 
@@ -56,9 +56,9 @@ Public Class reimpresionComprobantes
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998)" & numComprobante & Razonsoc &
             " and fact.ptovta like '" & ptovtaBusq & "'" &
-            " order by fact.fecha desc, fact.razon asc limit " & limite, conexionPrinc)
+            " order by fact.fecha desc, fact.razon asc limit " & limite, GestorConexiones.conexionPrinc)
             columna = 7
-            'MsgBox(consulta.SelectCommand.CommandText)
+            ' MsgBox(consulta.SelectCommand.CommandText)
             consulta.Fill(tablaprod)
             Dim i As Integer
 
@@ -77,13 +77,23 @@ Public Class reimpresionComprobantes
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Dim ptovta As Integer = dtfacturas.CurrentRow.Cells(10).Value
-        IdFactura = dtfacturas.CurrentRow.Cells(0).Value
-        If chkImprimirA4.CheckState = CheckState.Checked Then
-            ImprimirFactura(IdFactura, ptovta, True)
-        Else
-            ImprimirFactura(IdFactura, ptovta, False)
-        End If
+        Dim ptovta As Integer = dtfacturas.CurrentRow.Cells("ptovta").Value
+        IdFactura = dtfacturas.CurrentRow.Cells("id").Value
+        'If chkImpresionTermica.CheckState = CheckState.Checked Then
+        '    ImprimirFactura(IdFactura, ptovta, True)
+        'Else
+        '    ImprimirFactura(IdFactura, ptovta, False)
+        'End If
+
+
+        Dim imprimirTermico As Boolean = chkImpresionTermica.Checked
+
+        ' En modo manual, si es ticket térmico imprime directo; si es A4, por lo general se prefiere ver el visor (directo = False) 
+        ' a menos que quieras forzarlo. Acá lo enlazamos al RadioButton de A4.
+        Dim impresionDirecta As Boolean = False
+
+        ' Mandamos la orden al Gestor de Impresión
+        GestorImpresion.ImprimirComprobante(IdFactura, ptovta, imprimirTermico, impresionDirecta)
 
     End Sub
 
@@ -133,12 +143,12 @@ Public Class reimpresionComprobantes
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech,
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,  DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech,
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   , fac.codigo_qr
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -151,7 +161,7 @@ Public Class reimpresionComprobantes
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
@@ -383,12 +393,12 @@ Public Class reimpresionComprobantes
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech,
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,  DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech,
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.ptovta=fis.ptovta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -401,7 +411,7 @@ Public Class reimpresionComprobantes
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
@@ -541,7 +551,7 @@ Public Class reimpresionComprobantes
         Reconectar()
         dtdesdeCobranza.Value = obtenerPrimerDiaMes()
         dtderemitos.Value = obtenerPrimerDiaMes()
-        Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
+        Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", GestorConexiones.conexionPrinc)
         Dim readptovta As New DataSet
         tablaptovta.Fill(readptovta)
         cmbInforPtoVta.DataSource = readptovta.Tables(0)
@@ -563,10 +573,10 @@ Public Class reimpresionComprobantes
             Reconectar()
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
             fac.razon as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr, 
-            fac.cuit as faccuit, fac.vendedor as facvend, fac.condvta as faccondvta, fac.total, fac.ptovta, fac.id_cliente,fac.tipofact, fac.remito,fac.fecha, 
+            fac.cuit as faccuit, fac.vendedor as facvend, fac.condvta as faccondvta, fac.total, fac.ptovta, fac.id_cliente,fac.tipofact, fac.remito,DATE_FORMAT(fac.fecha, '%d-%m-%Y'), 
             fac.observaciones
             FROM fact_facturas as fac  
-            where fac.id=" & idFactura, conexionPrinc)
+            where fac.id=" & idFactura, GestorConexiones.conexionPrinc)
             Dim encabezado As New DataTable
             tabEmp.Fill(encabezado)
 
@@ -588,7 +598,7 @@ Public Class reimpresionComprobantes
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            cantidad as cant, descripcion, iva ,format(punit,2,'es_AR') ,format(ptotal,2,'es_AR') as ptotal, cod as codigo,plu from fact_items where id_fact=" & idFactura, conexionPrinc)
+            cantidad as cant, descripcion, iva ,format(punit,2,'es_AR') ,format(ptotal,2,'es_AR') as ptotal, cod as codigo,plu from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
             Dim items As New DataTable
             tabFac.Fill(items)
             'tabFac.Fill(fac.Tables("facturax"))
@@ -623,7 +633,7 @@ Public Class reimpresionComprobantes
             (tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2) values 
             (?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?transp)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -649,7 +659,7 @@ Public Class reimpresionComprobantes
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_remit) & " where donfdesc= " & tipoFact & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -660,7 +670,7 @@ Public Class reimpresionComprobantes
             'asignamos el remito a la factura
             SqlQuery = "update fact_facturas set remito=?idremito where id=?idfactura"
             Reconectar()
-            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
             With comandoupd.Parameters
                 .AddWithValue("?idremito", idRemito)
                 .AddWithValue("?idfactura", idFactura)
@@ -705,7 +715,7 @@ Public Class reimpresionComprobantes
                 & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?plu)"
 
                 Reconectar()
-                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadditm.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?plu", codbar)
@@ -763,11 +773,11 @@ Public Class reimpresionComprobantes
             'Dim filasProd() As DataRow
             'If rdninguno.Checked = True Then
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT " _
-                & " fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, " _
+                & " fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fecha,fact.razon,fact.direccion, " _
                 & " fact.localidad, con.condicion, " _
                 & " fact.observaciones2, fact.tipofact from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con " _
                 & " where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and con.id=fact.condvta " _
-                & " and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " order by fact.id desc", conexionPrinc)
+                & " and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " order by fact.id desc", GestorConexiones.conexionPrinc)
             consulta.Fill(tablaprod)
             'End If
             Dim i As Integer
@@ -864,7 +874,7 @@ Public Class reimpresionComprobantes
             End If
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-            fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, 
+            fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fecha,fact.razon,fact.direccion, 
             fact.localidad, con.condicion, 
             case when fis.debcred='C' then 
             concat('-',FORMAT(fact.total,2,'es_AR')) 
@@ -872,7 +882,7 @@ Public Class reimpresionComprobantes
             from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con 
             where fis.donfdesc=fact.tipofact and con.id=fact.condvta and fis.ptovta=fact.ptovta and fact.tipofact not in(998,997,996,995,994,993,991,3,8,13)
             and fact.ptovta like '%' and 
-            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "' " & sinPagar & " order by fact.razon asc ", conexionPrinc)
+            fact.fecha between '" & Format(dtdesdeCobranza.Value, "yyyy-MM-dd") & "' and '" & Format(dthastaCobranza.Value, "yyyy-MM-dd") & "' " & sinPagar & " order by fact.razon asc ", GestorConexiones.conexionPrinc)
             columna = 7
             consulta.Fill(tablaprod)
             Dim i As Integer
@@ -939,7 +949,7 @@ Public Class reimpresionComprobantes
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,  DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email,cl.celular as celular  
@@ -947,7 +957,7 @@ Public Class reimpresionComprobantes
             fact_puntosventa as ptovta, fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
             fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
-            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
                 tabEmp.Fill(fac.Tables("factura_enca"))
                 Reconectar()
@@ -959,7 +969,7 @@ Public Class reimpresionComprobantes
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
             plu as codigo
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
 
                 tabFac.Fill(fac.Tables("facturax"))
 
@@ -1026,7 +1036,7 @@ Public Class reimpresionComprobantes
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,  DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
@@ -1034,7 +1044,7 @@ Public Class reimpresionComprobantes
             fact_puntosventa as ptovta, fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
             fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
-            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
                 Reconectar()
@@ -1046,7 +1056,7 @@ Public Class reimpresionComprobantes
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
             plu as codigo
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
 
             tabFac.Fill(fac.Tables("facturax"))
 
@@ -1090,9 +1100,9 @@ Public Class reimpresionComprobantes
             If MsgBox("esta seguro que desea elminiar este comprobante? esto no se puede deshacer", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
                 Reconectar()
 
-                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_facturas where id=" & dtfacturas.CurrentRow.Cells(0).Value, conexionPrinc)
+                Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_facturas where id=" & dtfacturas.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
                 comandofact.ExecuteNonQuery()
-                Dim comandoItm As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_items where id_fact=" & dtfacturas.CurrentRow.Cells(0).Value, conexionPrinc)
+                Dim comandoItm As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_items where id_fact=" & dtfacturas.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
                 comandoItm.ExecuteNonQuery()
                 cmdbuscar.PerformClick()
 
@@ -1144,7 +1154,7 @@ Public Class reimpresionComprobantes
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,  DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
@@ -1152,7 +1162,7 @@ Public Class reimpresionComprobantes
             fact_puntosventa as ptovta, fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
             fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
-            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
@@ -1164,7 +1174,7 @@ Public Class reimpresionComprobantes
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
             plu as codigo
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
 
             tabFac.Fill(fac.Tables("facturax"))
 
@@ -1225,7 +1235,7 @@ Public Class reimpresionComprobantes
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
             emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
             emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.f_alta as facfech, 
+            concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, DATE_FORMAT(fac.f_alta, '%d-%m-%Y') as facfech, 
             concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
             concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
             '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra,fac.codigo_qr, cl.email  
@@ -1233,7 +1243,7 @@ Public Class reimpresionComprobantes
             fact_puntosventa as ptovta, fact_condventas as condvent  
             where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente  and 
             fac.ptovta = ptovta.numero and ptovta.idEmpresa=emp.idEmpresa and
-            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, conexionPrinc)
+            fis.donfdesc=fac.tipofact and fis.ptovta=fac.ptovta and condvent.id=fac.condvta and fac.id=" & IdFactura, GestorConexiones.conexionPrinc)
 
                 tabEmp.Fill(fac.Tables("factura_enca"))
                 Reconectar()
@@ -1245,7 +1255,7 @@ Public Class reimpresionComprobantes
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal, 
             plu as codigo
-            from fact_items where id_fact=" & IdFactura, conexionPrinc)
+            from fact_items where id_fact=" & IdFactura, GestorConexiones.conexionPrinc)
 
                 tabFac.Fill(fac.Tables("facturax"))
 

@@ -27,7 +27,7 @@
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select ecli.id as CODIGO, " _
             & " concat(et.nombre,'/',ma.nombre,'/',mo.nombre) as MODELO,ecli.serie as SERIE, ecli.propietario as CLIENTE" _
             & " from tecni_equipos_clientes as ecli, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo,tecni_equipos as eq " _
-            & " where eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and ecli.modelo=eq.id and " & busqtxt, conexionPrinc)
+            & " where eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and ecli.modelo=eq.id and " & busqtxt, GestorConexiones.conexionPrinc)
             Dim tablapequi As New DataTable
             consulta.Fill(tablapequi)
             dtequipos.DataSource = tablapequi

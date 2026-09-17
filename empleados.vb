@@ -22,8 +22,8 @@ Public Class empleados
     Public Sub CargarPersonal()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idpersonal as IDPers, concat(apellidos,', ', nombre) as Personal from sdo_personal", conexionPrinc)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idpersonal as IDPers, concat(apellidos,', ', nombre) as Personal from sdo_personal", gestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
@@ -57,9 +57,9 @@ Public Class empleados
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             Dim sql2 As New MySql.Data.MySqlClient.MySqlCommand
 
-            conexionPrinc.ChangeDatabase(database)
-            '   conexionprinc.ChangeDatabase(EmpDB)
-            sql.Connection = conexionPrinc
+            ' 'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            '   GestorConexiones.conexionPrinc.ChangeDatabase(EmpDB)
+            sql.Connection = gestorConexiones.conexionPrinc
 
             sql.CommandText = "select legajo, nombre, apellidos,doc_tipo, doc_num, fecha_nac, genero,nacionalidad, num_telefono, " _
             & "num_emergencia, num_celular, email, domicilio, localidad, provincia, estado_civil, categoria, calif_categoria, " _
@@ -243,29 +243,29 @@ Public Class empleados
 
             If nacionalidad = 0 Then
                 'MsgBox("no se selecciono nacionalidad, se agregara")
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_nacionalidad (nombre) values('" & cmbnacionalidad.Text.ToUpper & "')"
-                comando.ExecuteReader()
-                nacionalidad = comando.LastInsertedId
-            End If
-            Reconectar()
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_nacionalidad (nombre) values('" & cmbnacionalidad.Text.ToUpper & "')"
+                '    comando.ExecuteReader()
+                '    nacionalidad = comando.LastInsertedId
+                'End If
+                'Reconectar()
 
-            If localidad = 0 Then
-                'MsgBox("no se selecciono localidad, se agregara")
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_localidad (nombre) values('" & cmblocalidad.Text.ToUpper & "')"
-                comando.ExecuteReader()
-                localidad = comando.LastInsertedId
+                'If localidad = 0 Then
+                '    'MsgBox("no se selecciono localidad, se agregara")
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_localidad (nombre) values('" & cmblocalidad.Text.ToUpper & "')"
+                '    comando.ExecuteReader()
+                '    localidad = comando.LastInsertedId
             End If
             Reconectar()
 
             If estadocivil = 0 Then
-                'MsgBox("No se selecciono estado civil")
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_estado_civil(nombre) values ('" & cmbestadocivil.Text.ToUpper & "')"
-                comando.ExecuteReader(3)
-                estadocivil = comando.LastInsertedId
-            End If
+                    'MsgBox("No se selecciono estado civil")
+                    'comando.Connection = gestorConexiones.conexionPrinc
+                    'comando.CommandText = "insert into cm_estado_civil(nombre) values ('" & cmbestadocivil.Text.ToUpper & "')"
+                    'comando.ExecuteReader(3)
+                    'estadocivil = comando.LastInsertedId
+                End If
             Reconectar()
 
             If cmbcentro_costos.Text = "" And cmbcategoria.Text = "" Then
@@ -279,23 +279,23 @@ Public Class empleados
                 Exit Sub
             ElseIf convenio = 0 And categoria = 0 Then
                 'msgbox("No se selecciono categoria")
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_convenios(nombre) values ('" & cmbcentro_costos.Text.ToUpper & "')"
-                comando.ExecuteReader()
-                convenio = comando.LastInsertedId
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_convenios(nombre) values ('" & cmbcentro_costos.Text.ToUpper & "')"
+                '    comando.ExecuteReader()
+                '    convenio = comando.LastInsertedId
 
-                Reconectar()
+                '    Reconectar()
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
-                comando.ExecuteReader()
-                categoria = comando.LastInsertedId
-            ElseIf convenio <> 0 And categoria = 0 Then
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
+                '    comando.ExecuteReader()
+                '    categoria = comando.LastInsertedId
+                'ElseIf convenio <> 0 And categoria = 0 Then
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
-                comando.ExecuteReader()
-                categoria = comando.LastInsertedId
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
+                '    comando.ExecuteReader()
+                '    categoria = comando.LastInsertedId
             End If
             If categoria = 0 Or convenio = 0 Then
                 MsgBox("No hay categoria o convenio seleccionado o ingresado")
@@ -323,7 +323,7 @@ Public Class empleados
             End If
             Reconectar()
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
 
             With comandoadd.Parameters
                 .AddWithValue("?nomb", nombres)
@@ -399,20 +399,20 @@ Public Class empleados
         'pbprogresocons.Visible = True
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            'conexionprinc.ChangeDatabase(EmpDB)
-            Dim tablaestadoC As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_estado_civil order by nombre asc", conexionPrinc)
-            Dim tablatipoDoc As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_doc_tipo order by nombre asc", conexionPrinc)
-            Dim tablagenero As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_genero order by nombre asc", conexionPrinc)
-            Dim tablanacionalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_nacionalidad order by nombre asc", conexionPrinc)
-            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad order by nombre asc", conexionPrinc)
-            Dim tablaprovincia As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_provincias order by nombre asc", conexionPrinc)
-            Dim tablaCARNET As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_tipo_carnet order by nombre asc", conexionPrinc)
-            Dim tablaGrsang As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(gr_sang) from sdo_personal", conexionPrinc)
-            Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal", conexionPrinc)
-            Dim tablaModocontr As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_modo_contratacion", conexionPrinc)
-            Dim tablaJornada As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_jornada", conexionPrinc)
-            Dim tablacostos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from cm_sdo_convenios", conexionPrinc)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(EmpDB)
+            Dim tablaestadoC As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_estado_civil order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablatipoDoc As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_doc_tipo order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablagenero As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_genero order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablanacionalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_nacionalidad order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablaprovincia As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_provincias order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablaCARNET As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_tipo_carnet order by nombre asc", gestorConexiones.conexionPrinc)
+            Dim tablaGrsang As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(gr_sang) from sdo_personal", gestorConexiones.conexionPrinc)
+            Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal", gestorConexiones.conexionPrinc)
+            Dim tablaModocontr As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_modo_contratacion", gestorConexiones.conexionPrinc)
+            Dim tablaJornada As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_jornada", gestorConexiones.conexionPrinc)
+            Dim tablacostos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from cm_sdo_convenios", gestorConexiones.conexionPrinc)
             Dim readcostos As New DataSet
             Dim readjornada As New DataSet
             Dim readmodoContr As New DataSet
@@ -508,8 +508,8 @@ Public Class empleados
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             Dim i As Integer = 0
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select idpersonal from sdo_personal where doc_num like '" & doc_num & "'"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -612,7 +612,7 @@ Public Class empleados
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, ingreso_fech as FIngreso, ingreso_hor as HoraIng, egreso_fech as FEgreso, egreso_hor as HoraEgr, " _
             & "TIMEDIFF(concat(egreso_fech, ' ', egreso_hor),concat(ingreso_fech,' ', ingreso_hor)) as HorasTrab " _
-            & "from empl_registros where ingreso_fech between '" & Format(dtpde.Value, "yyyy-MM-dd") & "' and '" & Format(dtphasta.Value, "yyyy-MM-dd") & "' and  persona =" & Idpersonal, conexionPrinc)
+            & "from empl_registros where ingreso_fech between '" & Format(dtpde.Value, "yyyy-MM-dd") & "' and '" & Format(dtphasta.Value, "yyyy-MM-dd") & "' and  persona =" & Idpersonal, GestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
@@ -645,7 +645,7 @@ Public Class empleados
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(per.apellidos,', ', per.nombre) as Persona, reg.ingreso_fech as FIngreso, " _
             & "reg.ingreso_hor as HoraIng, reg.egreso_fech as FEgreso, reg.egreso_hor as HoraEgr, " _
             & "TIMEDIFF(concat(reg.egreso_fech, ' ', reg.egreso_hor),concat(reg.ingreso_fech,' ', reg.ingreso_hor)) as HorasTrab " _
-            & "from empl_registros as reg, sdo_personal as per where reg.persona=per.idpersonal and ingreso_fech between '" & Format(dtptotalde.Value, "yyyy-MM-dd") & "' and '" & Format(dtptotalhasta.Value, "yyyy-MM-dd") & "'", conexionPrinc)
+            & "from empl_registros as reg, sdo_personal as per where reg.persona=per.idpersonal and ingreso_fech between '" & Format(dtptotalde.Value, "yyyy-MM-dd") & "' and '" & Format(dtptotalhasta.Value, "yyyy-MM-dd") & "'", GestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
             dttotales.DataSource = tablaPers
@@ -705,7 +705,7 @@ Public Class empleados
             & "TIMEDIFF(concat(reg.egreso_fech, ' ', reg.egreso_hor),concat(reg.ingreso_fech,' ', reg.ingreso_hor)) as HorasTrab " _
             & "from empl_registros as reg, sdo_personal as per where reg.persona=per.id and ingreso_fech between '" & Format(dtptotalde.Value, "yyyy-MM-dd") & "' and '" & Format(dtptotalhasta.Value, "yyyy-MM-dd") & "'"
             End If
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlQuery, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlQuery, GestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
             dttotales.DataSource = tablaPers
@@ -758,11 +758,11 @@ Public Class empleados
         Try
             Dim tabEmp As New MySql.Data.MySqlClient.MySqlDataAdapter
             Dim fac As New datosimprimir
-            'conexionSEC.ChangeDatabase("kigest_igp")
+            'GestorConexiones.conexionSEC.ChangeDatabase("kigest_igp")
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
                 & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
                 & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-                & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+                & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
             tabEmp.Fill(fac.Tables("membreteenca"))
             Dim imprimirx As New imprimirFX
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
@@ -880,7 +880,7 @@ Public Class empleados
 
             End If
             'MsgBox(sqlQuery)
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteReader()
         Catch ex As Exception
 
@@ -896,7 +896,7 @@ Public Class empleados
         Try
             Dim sqlquery As String
             sqlquery = "insert into empl_registros(persona) values('" & Idpersonal & "')"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             dtvresumen.CurrentRow.Cells(0).Value = comandoadd.LastInsertedId
             'MsgBox("insertado " & comandoadd.LastInsertedId)
@@ -956,13 +956,13 @@ Public Class empleados
                         ''MsgBox(fech & " - " & Date.Parse(fech).ToString("yyyy-MM-dd"))
                         'MsgBox(hora & " - " & Date.Parse(hora).ToString("H:mm:ss"))
                         Reconectar()
-                        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id from empl_registros where egreso_fech is null and persona=" & idpers, conexionPrinc)
+                        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id from empl_registros where egreso_fech is null and persona=" & idpers, GestorConexiones.conexionPrinc)
                         Dim tablacl As New DataTable
                         Dim infocl() As DataRow
                         consulta.Fill(tablacl)
                         If tablacl.Rows.Count = 0 Then
                             Reconectar()
-                            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into empl_registros (persona, ingreso_fech, ingreso_hor) values (?idpers,?fech,?hora)", conexionPrinc)
+                            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into empl_registros (persona, ingreso_fech, ingreso_hor) values (?idpers,?fech,?hora)", GestorConexiones.conexionPrinc)
                             With comandoadd.Parameters
                                 .AddWithValue("?idpers", idpers)
                                 .AddWithValue("?fech", Date.Parse(fech).ToString("yyyy-MM-dd"))
@@ -971,7 +971,7 @@ Public Class empleados
                             comandoadd.ExecuteNonQuery()
                         ElseIf tablacl.Rows.Count <> 0 Then
                             Reconectar()
-                            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update empl_registros set egreso_fech=?fech, egreso_hor=?hora where persona=?idpers and egreso_fech is null", conexionPrinc)
+                            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update empl_registros set egreso_fech=?fech, egreso_hor=?hora where persona=?idpers and egreso_fech is null", GestorConexiones.conexionPrinc)
                             With comandoadd.Parameters
                                 .AddWithValue("?idpers", idpers)
                                 .AddWithValue("?fech", Date.Parse(fech).ToString("yyyy-MM-dd"))
@@ -979,9 +979,9 @@ Public Class empleados
                             End With
                             comandoadd.ExecuteNonQuery()
                         End If
-                        Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update empl_config set ultimport=now() where id=1 ", conexionPrinc)
+                        Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update empl_config set ultimport=now() where id=1 ", GestorConexiones.conexionPrinc)
                         comandoupd.ExecuteNonQuery()
-                        Dim comandoupd2 As New MySql.Data.MySqlClient.MySqlCommand("update empl_config set ultimport=" & datos(0) & " where id=2 ", conexionPrinc)
+                        Dim comandoupd2 As New MySql.Data.MySqlClient.MySqlCommand("update empl_config set ultimport=" & datos(0) & " where id=2 ", GestorConexiones.conexionPrinc)
                         comandoupd2.ExecuteNonQuery()
                         lblestadoimport.Text = "Importación finalizada"
                     End If
@@ -997,7 +997,7 @@ Public Class empleados
     Private Sub TabPage4_Enter(sender As Object, e As EventArgs) Handles TabPage4.Enter
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select ultimport from empl_config", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select ultimport from empl_config", GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -1032,7 +1032,7 @@ Public Class empleados
     Private Sub cmbcentro_costos_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbcentro_costos.SelectedValueChanged
         Reconectar()
         Try
-            Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal where idconvenio = " & cmbcentro_costos.SelectedValue, conexionPrinc)
+            Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal where idconvenio = " & cmbcentro_costos.SelectedValue, GestorConexiones.conexionPrinc)
             Dim readcatTR As New DataSet
             'cargamos categorias de trabajo
             tablaCatTra.Fill(readcatTR)

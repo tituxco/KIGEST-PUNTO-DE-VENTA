@@ -4,7 +4,7 @@
             Reconectar()
             'Dim lector As System.Data.IDataReader
             'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            'sql.Connection = conexionPrinc
+            'sql.Connection = GestorConexiones.conexionPrinc
             'sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & TipoFac & " and ptovta= " & PtoVta
             'sql.CommandType = CommandType.Text
             'lector = sql.ExecuteReader
@@ -13,7 +13,7 @@
             'NumRecibo = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
             'Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
             'Reconectar()
-            Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", conexionPrinc)
+            Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", GestorConexiones.conexionPrinc)
             Dim readTarjetasNombre As New DataSet
             tablatajetasNombre.Fill(readTarjetasNombre)
 

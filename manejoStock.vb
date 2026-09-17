@@ -92,7 +92,7 @@ Public Class manejoStock
             where fa.id=itm.id_fact and itm.cod=pro.id and fa.fecha between '" & desde & "' and '" & hasta & "'
             and itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D')
             and " & catprod & " and " & proveed & " and " & buscnomb & " and " & buscAlm & " 
-            group by itm.cod ", conexionPrinc)
+            group by itm.cod ", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaprod As New DataTable
 
@@ -116,10 +116,10 @@ Public Class manejoStock
     Private Sub cargarCategoriasProd()
 
         Reconectar()
-        conexionPrinc.ChangeDatabase(database)
+        ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
         'cargamos categorias
-        Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+        Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", GestorConexiones.conexionPrinc)
         Dim readcat As New DataSet
         Dim readcat2 As New DataSet
         tablacatprod.Fill(readcat)
@@ -130,7 +130,7 @@ Public Class manejoStock
         cmbcatProd.SelectedIndex = -1
     End Sub
     Private Sub cargarProveedores()
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         tablaprov.Fill(readprov)
         cmbproveedor.DataSource = readprov.Tables(0)
@@ -140,7 +140,7 @@ Public Class manejoStock
     End Sub
 
     Private Sub cargarAlmacenes()
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         tablaprov.Fill(readprov)
         cmbalmacen.DataSource = readprov.Tables(0)

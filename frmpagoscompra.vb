@@ -1,7 +1,8 @@
 ﻿Imports System.ComponentModel
-Imports Microsoft.ReportingServices.Rendering.WordRenderer.WordOpenXmlRenderer.Parser
+Imports System.Drawing.Printing
 Imports SIGT__KIGEST.datosEstructura
 Imports SIGT__KIGEST.GestorAcademia
+Imports SIGT__KIGEST.GestorFacturacion
 Public Class frmpagoscompra
 
     Public NumeroFactura As String
@@ -15,29 +16,20 @@ Public Class frmpagoscompra
     Public Fecha As String
     Public TOTAL As String
     Public IdFacturaCTA As Integer
-    Public IdFacturaComp As Integer ' <- Usaremos este ID para buscar los ítems de la factura
-    Dim IdRecibo As Integer
-    Dim PtoVta As String = DatosAcceso.IdPtoVtaDef
-    Dim PagoCaja As Integer = 1
-    Dim NumRecibo As String
-    Dim SqlQuery As String
+    Public IdFacturaComp As Integer
 
-    Private Sub btnefectivo_Click_1(sender As Object, e As EventArgs) Handles btnefectivo.Click
-        Reconectar()
-        Dim lector As System.Data.IDataReader
-        Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-        sql.Connection = conexionPrinc
-        sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & TipoFac & " and ptovta= " & PtoVta
-        sql.CommandType = CommandType.Text
-        lector = sql.ExecuteReader
-        lector.Read()
-        NumRecibo = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
-        Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
-        lbltotalefectivo.Text = TOTAL
-        panelformaspago.Visible = False
-        panelefectivo.Visible = True
-        panelTarjetas.Visible = False
-        txtefectivo.Focus()
+    Public caja As Integer
+    Public almacen As Integer
+
+    Dim IdRecibo As Integer
+    Dim PtoVta As Integer = DatosAcceso.IdPtoVtaDef
+    Dim NumRecibo As String
+
+    Private Sub frmpagoscompra_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    End Sub
+
+    Private Sub frmpagoscompra_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
+        If e.KeyCode = Keys.Escape Then Me.Close()
     End Sub
 
     Private Sub frmpagoscompra_KeyPress(sender As Object, e As KeyPressEventArgs) Handles Me.KeyPress
@@ -47,126 +39,43 @@ Public Class frmpagoscompra
         End If
     End Sub
 
-    Private Sub txtefectivo_KeyDown(sender As Object, e As KeyEventArgs) Handles txtefectivo.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            Dim total As Double = FormatNumber(lbltotalefectivo.Text)
-            Dim efectivo As Double = FormatNumber(txtefectivo.Text)
-            Dim vuelto As Double
+    ' =========================================================================
+    ' BOTONES DE SELECCIÓN DE PAGO
+    ' =========================================================================
 
-            vuelto = efectivo - total
-            txtvuelto.Text = vuelto
-            Me.AcceptButton = cmdfinalizarEfectivo
-            cmdfinalizarEfectivo.Focus()
-        End If
+    Private Sub btnefectivo_Click_1(sender As Object, e As EventArgs) Handles btnefectivo.Click
+        Dim proxNum As Integer = GestorFacturacion.ObtenerProximoNumeroComprobante(TipoFac, CInt(PtoVta))
+        NumRecibo = proxNum.ToString("0")
+
+        Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)
+        lbltotalefectivo.Text = TOTAL
+
+        panelformaspago.Visible = False
+        panelefectivo.Visible = True
+        panelTarjetas.Visible = False
+        txtefectivo.Focus()
     End Sub
 
-    Private Sub cmdfinalizar_Click(sender As Object, e As EventArgs) Handles cmdfinalizarEfectivo.Click
-        Try
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim proxNum As Integer = GestorFacturacion.ObtenerProximoNumeroComprobante(TipoFac, CInt(PtoVta))
+        NumRecibo = proxNum.ToString("0")
+        Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)
 
-            Dim idAlmacen As Integer = My.Settings.idAlmacen
-            Dim idCaja As Integer = My.Settings.CajaDef
-            If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, " &
-                       "por favor contacte con el administrador o repare la numeración manualmente")
-                panelformaspago.Visible = False
-                Exit Sub
-            End If
+        ' REEMPLAZAMOS EL SQL POR EL GESTOR
+        Dim dtTarjetas As DataTable = GestorFacturacion.ObtenerNombresTarjetas()
+        If dtTarjetas.Rows.Count > 0 Then
+            txtTarjetaNombre.DataSource = dtTarjetas
+            txtTarjetaNombre.DisplayMember = dtTarjetas.Columns("nombre").Caption.ToString().ToUpper()
+            txtTarjetaNombre.ValueMember = dtTarjetas.Columns("id").Caption.ToString()
+        End If
 
-
-            SqlQuery = "insert into fact_facturas  " _
-                & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,total,observaciones) values " _
-                & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?tot,?observa)"
-
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?ptov", Val(PtoVta))
-                .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?nfac", Val(NumRecibo))
-                .AddWithValue("?fech", Fecha)
-                .AddWithValue("?idclie", CtaClie)
-                .AddWithValue("?razon", RazonSocial)
-                .AddWithValue("?dire", Direccion)
-                .AddWithValue("?loca", Localidad)
-                .AddWithValue("?tipocont", tipoContr)
-                .AddWithValue("?cuit", CUIT)
-                .AddWithValue("?tot", TOTAL)
-                .AddWithValue("?observa", "VENTA CONTADO")
-            End With
-            comandoadd.ExecuteNonQuery()
-            IdRecibo = comandoadd.LastInsertedId
-
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_conffiscal set confnume=" & Val(NumRecibo) & " where donfdesc= " & TipoFac & " and ptovta=" & PtoVta
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            Reconectar()
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_cuentaclie set pago=1 where id= " & IdFacturaCTA
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            Reconectar()
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_facturas set observaciones2='RBO " & CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1) & "' where id= " & IdFacturaComp
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            SqlQuery = "insert into fact_items " _
-                & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
-                & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
-
-            Reconectar()
-            Dim comandoaddITM As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-            With comandoaddITM.Parameters
-                .AddWithValue("?cod", "0")
-                .AddWithValue("?desc", CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)) 'DESCRIPCION
-                .AddWithValue("?ptot", TOTAL)
-                .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?idAlmacen", idAlmacen)
-                .AddWithValue("?idCaja", idCaja)
-                .AddWithValue("?id_fact", IdRecibo)
-            End With
-            comandoaddITM.ExecuteNonQuery()
-            puntoventa.Button1.Focus()
-
-            'Try 'actualizamos la caja
-            Dim ConsultaCaj As String
-            ConsultaCaj = "insert into fact_ingreso_egreso " _
-                & "(concepto,monto,comprobante,caja,tipo) values" _
-                & "(?conc,?monto,?comp,?caja,'1')"
-
-            Reconectar()
-            Dim comandocaj As New MySql.Data.MySqlClient.MySqlCommand(ConsultaCaj, conexionPrinc)
-            With comandocaj.Parameters
-                .AddWithValue("?monto", TOTAL)
-                .AddWithValue("?comp", IdRecibo)
-                .AddWithValue("?caja", My.Settings.CajaDef)
-                .AddWithValue("?conc", "1")
-            End With
-            comandocaj.ExecuteNonQuery()
-
-            ' =======================================================
-            ' LLAMADA AL NUEVO MÉTODO PARA CURSOS
-            ' =======================================================
-            MarcarCuotasComoPagadas()
-
-            'CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
-            Me.Close()
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
+        panelformaspago.Visible = False
+        panelefectivo.Visible = False
+        panelTarjetas.Visible = True
     End Sub
 
     Private Sub btntarjeta_Click(sender As Object, e As EventArgs) Handles btntarjeta.Click
-        Dim mov As New movimientodecaja
+        Dim mov As New movimientodecaja()
         mov.MdiParent = frmprincipal
         mov.Show()
         mov.cmbtipofac.SelectedValue = 996
@@ -178,250 +87,143 @@ Public Class frmpagoscompra
         mov.Button4.Enabled = False
         mov.txttotalefectivo.Focus()
         mov.AcceptButton = mov.Button1
-        lbltotalTarjetas.Text = TOTAL
         mov.CalcularTotalescobro()
         Me.Close()
     End Sub
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Try
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & TipoFac & " and ptovta= " & PtoVta
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
+    ' =========================================================================
+    ' EVENTOS DE CAJAS DE TEXTO
+    ' =========================================================================
 
-            NumRecibo = CompletarCeros(FormatNumber(lector("confnume").ToString) + 1, 1)
-            Me.Text = "Recibo: " & CompletarCeros(Val(PtoVta), 2) & "-" & NumRecibo
-            Reconectar()
-            Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", conexionPrinc)
-            Dim readTarjetasNombre As New DataSet
-            tablatajetasNombre.Fill(readTarjetasNombre)
+    Private Sub txtefectivo_KeyDown(sender As Object, e As KeyEventArgs) Handles txtefectivo.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Dim totalDouble As Double = FormatNumber(lbltotalefectivo.Text)
+            Dim efectivo As Double = FormatNumber(txtefectivo.Text)
+            txtvuelto.Text = (efectivo - totalDouble).ToString("N2")
 
-            txtTarjetaNombre.DataSource = readTarjetasNombre.Tables(0)
-            txtTarjetaNombre.DisplayMember = readTarjetasNombre.Tables(0).Columns("nombre").Caption.ToString.ToUpper
-            txtTarjetaNombre.ValueMember = readTarjetasNombre.Tables(0).Columns("id").Caption.ToString
+            Me.AcceptButton = cmdfinalizarEfectivo
+            cmdfinalizarEfectivo.Focus()
+        End If
+    End Sub
 
-            panelformaspago.Visible = False
-            panelefectivo.Visible = False
-            panelTarjetas.Visible = True
-        Catch ex As Exception
+    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaNombre.KeyDown
+        If e.KeyCode = Keys.Enter Then txtTarjetaAutoriza.Focus()
+    End Sub
 
-        End Try
+    Private Sub txtTarjetaAutoriza_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaAutoriza.KeyDown
+        If e.KeyCode = Keys.Enter Then cmdFinalizarTarjeta.Focus()
+    End Sub
+
+    ' =========================================================================
+    ' FINALIZACIÓN UNIFICADA DE PAGOS
+    ' =========================================================================
+
+    Private Sub cmdfinalizar_Click(sender As Object, e As EventArgs) Handles cmdfinalizarEfectivo.Click
+        ProcesarPago(False)
     End Sub
 
     Private Sub cmdFinalizarTarjeta_Click(sender As Object, e As EventArgs) Handles cmdFinalizarTarjeta.Click
+        ProcesarPago(True)
+    End Sub
+
+    Private Sub ProcesarPago(esTarjeta As Boolean)
         Try
-            Dim idAlmacen As Integer = My.Settings.idAlmacen
-            Dim idCaja As Integer = My.Settings.CajaDef
+            ' 1. Revalidar correlativo
+            'MsgBox("iniciando proceso de pago.....")
+            Dim ptoVtaInt As Integer = CInt(PtoVta)
+            Dim numReal As Integer = GestorFacturacion.ObtenerProximoNumeroComprobante(TipoFac, ptoVtaInt)
+            'MsgBox("paso 1: numero de comprobante obtenido::::> " & numReal)
+            If numReal = 0 Then
+                MsgBox("No se pudo obtener un correlativo válido.", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+            NumRecibo = numReal.ToString()
+
+            'MsgBox("paso 2: comprobando que comprobante no exista ")
             If RestringirNumerosFact(TipoFac, NumRecibo, PtoVta) = True Then
-                MsgBox("El numero de comprobante ya existe para este tipo y el sistema no pudo reparar el error, " &
-                       "por favor contacte con el administrador o repare la numeración manualmente")
+                MsgBox("El numero de comprobante ya existe para este tipo.", MsgBoxStyle.Exclamation)
                 panelformaspago.Visible = False
                 Exit Sub
             End If
 
+            'MsgBox("paso 3: armando paquete de datos de recibo ")
+            ' 2. ARMAMOS EL PAQUETE DE DATOS
+            Dim datosPago As New DatosReciboCobro() With {
+                .TipoFac = TipoFac,
+                .PtoVta = ptoVtaInt,
+                .NumRecibo = numReal,
+                .Fecha = Fecha,
+                .CtaClie = CtaClie,
+                .RazonSocial = RazonSocial,
+                .Direccion = Direccion,
+                .Localidad = Localidad,
+                .TipoContr = tipoContr,
+                .CUIT = CUIT,
+                .Total = ParsearDecimal(TOTAL),
+                .EsTarjeta = esTarjeta,
+                .TarjetaNombre = If(esTarjeta, txtTarjetaNombre.Text.ToUpper(), ""),
+                .TarjetaAutorizacion = If(esTarjeta, txtTarjetaAutoriza.Text.ToUpper(), ""),
+                .IdFacturaCTA = IdFacturaCTA,
+                .IdFacturaComp = IdFacturaComp,
+                .IdAlmacen = My.Settings.idAlmacen,
+                .IdCaja = My.Settings.CajaDef
+            }
 
-            SqlQuery = "insert into fact_facturas  " _
-                & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,total,observaciones) values " _
-                & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?tot,?observa)"
+            'MsgBox("paso 4: Iniciando guardado de recibo de pago ")
+            ' 3. MANDAMOS AL GESTOR
+            If GestorFacturacion.GuardarReciboDePago(datosPago, IdRecibo) Then
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-            With comandoadd.Parameters
-                .AddWithValue("?ptov", Val(PtoVta))
-                .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?nfac", Val(NumRecibo))
-                .AddWithValue("?fech", Fecha)
-                .AddWithValue("?idclie", CtaClie)
-                .AddWithValue("?razon", RazonSocial)
-                .AddWithValue("?dire", Direccion)
-                .AddWithValue("?loca", Localidad)
-                .AddWithValue("?tipocont", tipoContr)
-                .AddWithValue("?cuit", CUIT)
-                .AddWithValue("?tot", TOTAL)
-                .AddWithValue("?observa", "VENTA MOSTRADOR")
-            End With
-            comandoadd.ExecuteNonQuery()
-            IdRecibo = comandoadd.LastInsertedId
-
-            SqlQuery = "insert into fact_tarjetas " _
-                & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
-                & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
-            Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-            With comandoch.Parameters
-                .AddWithValue("?cliente", CtaClie)
-                .AddWithValue("?comprobante", IdRecibo)
-                .AddWithValue("?nombre", txtTarjetaNombre.Text.ToUpper)
-                .AddWithValue("?autorizacion", txtTarjetaAutoriza.Text.ToUpper)
-                .AddWithValue("?fecha", Fecha)
-                .AddWithValue("?importe", TOTAL)
-            End With
-            comandoch.ExecuteNonQuery()
-
-            Reconectar()
-            Dim lector As System.Data.IDataReader
-            Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_conffiscal set confnume=" & Val(NumRecibo) & " where donfdesc= " & TipoFac & " and ptovta=" & PtoVta
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            Reconectar()
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_cuentaclie set pago=1 where id= " & IdFacturaCTA
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            Reconectar()
-            sql.Connection = conexionPrinc
-            sql.CommandText = "update fact_facturas set observaciones2='RBO " & CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1) & "' where id= " & IdFacturaComp
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-
-            SqlQuery = "insert into fact_items " _
-                & "(cod, descripcion, ptotal, tipofact,idAlmacen,idCaja, id_fact) values" _
-                & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
-
-            Reconectar()
-            Dim comandoaddITM As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
-            With comandoaddITM.Parameters
-                .AddWithValue("?cod", "0")
-                .AddWithValue("?desc", CompletarCeros(Val(PtoVta), 2) & "-" & CompletarCeros(NumRecibo, 1)) 'DESCRIPCION
-                .AddWithValue("?ptot", TOTAL)
-                .AddWithValue("?tipofact", TipoFac)
-                .AddWithValue("?idAlmacen", idAlmacen)
-                .AddWithValue("?idCaja", idCaja)
-                .AddWithValue("?id_fact", IdRecibo)
-            End With
-            comandoaddITM.ExecuteNonQuery()
-            puntoventa.Button1.Focus()
-
-            Dim ConsultaCaj As String
-            ConsultaCaj = "insert into fact_ingreso_egreso " _
-                & "(concepto,monto,comprobante,caja,tipo) values" _
-                & "(?conc,?monto,?comp,?caja,'1')"
-
-            Reconectar()
-            Dim comandocaj As New MySql.Data.MySqlClient.MySqlCommand(ConsultaCaj, conexionPrinc)
-            With comandocaj.Parameters
-                .AddWithValue("?monto", TOTAL)
-                .AddWithValue("?comp", IdRecibo)
-                .AddWithValue("?caja", idCaja)
-                .AddWithValue("?conc", "1")
-            End With
-            comandocaj.ExecuteNonQuery()
-
-            ' =======================================================
-            ' LLAMADA AL NUEVO MÉTODO PARA CURSOS
-            ' =======================================================
-            MarcarCuotasComoPagadas()
-
-            CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
-            Me.Close()
+                '   MsgBox("paso 5: pago guardado, iniciando proceso de validacion de cuotas de subsistemas")
+                ' 4. INTEGRACIONES (Limpitas usando el Gestor)
+                MarcarCuotasComoPagadas()
+                MarcarCuotaComoPagadasPublicidad()
+                '  MsgBox("paso 6: proceso de pago de cuotas terminado el imputado correctamente")
+                'If frmprincipal.ActiveMdiChild IsNot Nothing AndAlso TypeOf frmprincipal.ActiveMdiChild Is puntoventa Then
+                '    CType(frmprincipal.ActiveMdiChild, puntoventa).Button1.PerformClick()
+                'End If
+                Me.Close()
+            Else
+                MsgBox("No se pudo registrar el pago. Revise la conexión.", MsgBoxStyle.Critical)
+            End If
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Error general al procesar el pago: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
 
-    Private Sub txtTarjetaNombre_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaNombre.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            txtTarjetaAutoriza.Focus()
-        End If
-    End Sub
 
-    Private Sub txtTarjetaAutoriza_KeyDown(sender As Object, e As KeyEventArgs) Handles txtTarjetaAutoriza.KeyDown
-        If e.KeyCode = Keys.Enter Then
-            cmdFinalizarTarjeta.Focus()
-        End If
-    End Sub
-
-    Private Sub frmpagoscompra_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
-
-    Private Sub frmpagoscompra_KeyUp(sender As Object, e As KeyEventArgs) Handles Me.KeyUp
-        If e.KeyCode = Keys.Escape Then
-            Me.Close()
-        End If
-    End Sub
-
-    ' =========================================================================
-    ' NUEVA FUNCIÓN: VINCULACIÓN CON EL SISTEMA DE CURSOS
-    ' =========================================================================
+    ''sistema de cursos
     Private Sub MarcarCuotasComoPagadas()
         Try
-            ' 1. Buscamos en los ítems de la factura si hay alguna cuota (PLU que empiece con "CTA-")
-            '    Usamos IdFacturaComp que es la factura origen que se está saldando en este recibo
-            Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & IdFacturaComp & " AND plu LIKE 'CTA-%'"
+            ' Pedimos los PLUS al Gestor en vez de hacer SELECT acá
+            Dim codigosCursos As List(Of String) = GestorFacturacion.ObtenerPLUsPorComprobante(IdFacturaComp, "CTA-%")
 
-            Reconectar()
-            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
-            Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
-
-            Dim idsCuotas As New List(Of Integer)
-
-            ' 2. Guardamos todos los IDs que encontramos en una lista temporal
-            While lectorItems.Read()
-                Dim codbar As String = lectorItems("plu").ToString()
+            For Each codbar As String In codigosCursos
                 Dim idCuota As Integer
                 If Integer.TryParse(codbar.Replace("CTA-", ""), idCuota) Then
-                    idsCuotas.Add(idCuota)
+                    serv_detalle.ActualizarEstado(idCuota, "PAGADO")
                 End If
-            End While
-            ' IMPORTANTE: Cerrar el lector ANTES de llamar a actualizarEstado 
-            ' para no chocar la conexión a la base de datos
-            lectorItems.Close()
-
-            ' 3. Actualizamos cada cuota al estado PAGADO
-            For Each idC As Integer In idsCuotas
-                serv_detalle.ActualizarEstado(idC, "PAGADO")
             Next
-
         Catch ex As Exception
-            ' Usamos Console.WriteLine en vez de MsgBox para que si hay algún 
-            ' fallo menor no frene la emisión del recibo al cliente
-            Console.WriteLine("Error al vincular el pago con el curso: " & ex.Message)
+            Console.WriteLine("Error Cursos: " & ex.Message)
         End Try
     End Sub
 
-
-    ' =========================================================================
-    ' NUEVO: Vinculación con Publicidad (Guardar ID Recibo en detalle)
-    ' =========================================================================
+    'sistema publicidad
     Private Sub MarcarCuotaComoPagadasPublicidad()
+        Try
+            Dim codigosPubli As List(Of String) = GestorFacturacion.ObtenerPLUsPorComprobante(IdFacturaComp, "#%-%")
 
-        ' Consultamos los ítems de la factura origen para ver qué cuotas de publicidad se están pagando
-        Dim queryItems As String = "SELECT plu FROM fact_items WHERE id_fact = " & IdFacturaComp & " AND plu LIKE '#%-%'"
-        Reconectar()
-        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, conexionPrinc)
-        Dim dr As System.Data.IDataReader = cmdItems.ExecuteReader()
-
-        Dim listaActualizar As New List(Of Integer)
-        While dr.Read()
-            Dim codbar As String = dr("plu").ToString()
-            ' Extraemos el ID de la cuota (la parte después del guion)
-            Dim partes() As String = codbar.Replace("#", "").Split("-"c)
-            If partes.Length = 2 Then
-                listaActualizar.Add(Convert.ToInt32(partes(1)))
-            End If
-        End While
-        dr.Close()
-
-        ' Realizamos los UPDATES en la tabla de detalle
-        For Each idCuota As Integer In listaActualizar
-            Dim sqlUpdRecibo As String = "UPDATE rym_detalle_prestamo SET id_recibo = ?idRecibo WHERE ID = ?idCuota"
-            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdRecibo, conexionPrinc)
-                cmdUpd.Parameters.AddWithValue("?idRecibo", IdRecibo)
-                cmdUpd.Parameters.AddWithValue("?idCuota", idCuota)
-                cmdUpd.ExecuteNonQuery()
-            End Using
-        Next
+            For Each codbar As String In codigosPubli
+                Dim partes() As String = codbar.Replace("#", "").Split("-"c)
+                If partes.Length = 2 Then
+                    Dim idCuota As Integer = Convert.ToInt32(partes(1))
+                    GestorPublicidad.VincularComprobanteAutomatico(idCuota, IdRecibo, True)
+                End If
+            Next
+        Catch ex As Exception
+            Console.WriteLine("Error Publicidad: " & ex.Message)
+        End Try
     End Sub
+
 End Class

@@ -29,8 +29,8 @@ Public Class proveedores
             End If
 
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores " & busquedaTXT & " order by razon asc", conexionPrinc)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as Cuenta, razon as Proveedor from fact_proveedores " & busquedaTXT & " order by razon asc", GestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim ds As New DataSet
 
@@ -60,8 +60,8 @@ Public Class proveedores
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            sql.Connection = GestorConexiones.conexionPrinc
             If consCuit = True Then
                 sql.CommandText = "select * from fact_proveedores where replace(cuit,'-','')" = txtcuit.Text
             Else
@@ -94,7 +94,7 @@ Public Class proveedores
             Reconectar()
 
             'cargamos tipos de contribuyentes
-            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", conexionPrinc)
+            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", GestorConexiones.conexionPrinc)
             Dim readivat As New DataSet
             tablaivat.Fill(readivat)
             cmbcondiva.DataSource = readivat.Tables(0)
@@ -116,7 +116,7 @@ Public Class proveedores
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, fa.fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada 
             from fact_proveedores_fact as fa where idproveedor= " & idProv & " and fa.tipo in (select donfdesc from tipos_comprobantes where debcred like 'D')
-            order by fa.fecha desc", conexionPrinc)
+            order by fa.fecha desc", GestorConexiones.conexionPrinc)
             Dim tablacta As New DataTable
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
@@ -213,7 +213,7 @@ Public Class proveedores
 
             End If
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?razon", razon)
                 .AddWithValue("?dire", domicilio)
@@ -301,7 +301,7 @@ Public Class proveedores
         '    Reconectar()
         '    If MsgBox("Esta seguro que desea eliminar este Paciente?, se borraran todos los datos asociados a él?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question, "Eliminar Paciente") = MsgBoxResult.Ok Then
 
-        '        comando.Connection = conexionPrinc
+        '        comando.Connection = GestorConexiones.conexionPrinc
         '        comando.CommandText = "DELETE from pacientes where id=" & Idproveedor
         '        comando.ExecuteReader()
         '        CargarPersonal()
@@ -395,7 +395,7 @@ Public Class proveedores
         CargarPersonal("%", False)
 
         'cargamos tipos de factura en el combo
-        Dim tablafac As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc,  abrev from tipos_comprobantes where debcred like 'D'", conexionPrinc)
+        Dim tablafac As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc,  abrev from tipos_comprobantes where debcred like 'D'", GestorConexiones.conexionPrinc)
         Dim readfac As New DataSet
         tablafac.Fill(readfac)
         tipoFac.DataSource = readfac.Tables(0)
@@ -405,7 +405,7 @@ Public Class proveedores
             grpCuentaContable.Visible = True
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
             concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", GestorConexiones.conexionPrinc)
             Dim tabPlanCuentas As New DataSet
             consPlanCuentas.Fill(tabPlanCuentas)
 
@@ -562,7 +562,7 @@ Public Class proveedores
                     SQLQuery = "insert into fact_proveedores (razon,direccion,tipo_iva,cuit) values 
                         (?nomb,?domi,?iva,?cuit)"
 
-                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SQLQuery, conexionPrinc)
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SQLQuery, GestorConexiones.conexionPrinc)
                     With comandoadd.Parameters
                         .AddWithValue("?nomb", razon)
                         .AddWithValue("?domi", domicilio & " - " & localidad)

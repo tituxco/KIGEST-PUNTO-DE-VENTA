@@ -6,6 +6,7 @@ Imports WSAFIPFE.f1AFIP
 Imports WSAFIPFE.lpgAFIP
 Imports WSAFIPFE.panmat
 Imports iTextSharp.text.pdf.codec.wmf
+Imports SIGT__KIGEST.GestorClientes
 
 Public Class nuevoServicio
     Dim montoInscripcion As Decimal = 0

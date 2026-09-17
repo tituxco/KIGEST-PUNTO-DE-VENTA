@@ -23,7 +23,7 @@
     Private Sub cargarDatosGrales()
         Try
 
-            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo =1", conexionPrinc)
+            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo =1", GestorConexiones.conexionPrinc)
             Dim readvend As New DataSet
             tablavend.Fill(readvend)
             cmbvendedor.DataSource = readvend.Tables(0)
@@ -68,7 +68,7 @@
 
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, 
-            concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,fac.fecha,
+            concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,DATE_FORMAT(fac.fecha, '%d-%m-%Y'),
             (select if 
             (idclientes=9999,
 				concat(idclientes,'(',fac.razon,')'),
@@ -79,7 +79,7 @@
             (select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
             con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones, f_alta as FEnviado 
             from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
-            " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", conexionPrinc)
+            " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", GestorConexiones.conexionPrinc)
             Dim tablaped As New DataTable
             'MsgBox(consulta.SelectCommand.CommandText)
 
@@ -197,11 +197,11 @@
             Dim delPed As String = "delete from fact_facturas " & condicionPED
 
             Reconectar()
-            Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, conexionPrinc)
+            Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, GestorConexiones.conexionPrinc)
             comandoDelItm.ExecuteNonQuery()
 
             Reconectar()
-            Dim comandoDelPed As New MySql.Data.MySqlClient.MySqlCommand(delPed, conexionPrinc)
+            Dim comandoDelPed As New MySql.Data.MySqlClient.MySqlCommand(delPed, GestorConexiones.conexionPrinc)
             comandoDelPed.ExecuteNonQuery()
 
             cargarPedidos()
@@ -296,12 +296,12 @@
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT 
-            fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,fac.fecha,fac.razon,fac.direccion, 
+            fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,DATE_FORMAT(fac.fecha, '%d-%m-%Y'),fac.razon,fac.direccion, 
             fac.localidad, con.condicion,
             case when fis.debcred='C' then 
             concat('-',format(fac.total,2,'es_AR')) 
@@ -309,7 +309,7 @@
             fac.observaciones from fact_conffiscal As fis, fact_facturas As fac, fact_condventas as con 
             where fis.donfdesc = fac.tipofact And con.id = fac.condvta And fis.ptovta = fac.ptovta 
             And fac.tipofact=995 
-            And fac.fecha between '" & desde & "' and '" & hasta & "' " & parambusq & " order by fac.id asc", conexionPrinc)
+            And fac.fecha between '" & desde & "' and '" & hasta & "' " & parambusq & " order by fac.id asc", GestorConexiones.conexionPrinc)
             'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
@@ -387,7 +387,7 @@
                     pedidosList &= "," & pedido.Cells(0).Value
                 End If
             Next
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT distinct(vendedor) FROM fact_facturas where id in (" & pedidosList & ")", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT distinct(vendedor) FROM fact_facturas where id in (" & pedidosList & ")", GestorConexiones.conexionPrinc)
             Dim tablaped As New DataTable
             consulta.Fill(tablaped)
             'MsgBox(consulta.SelectCommand.CommandText)
@@ -402,6 +402,9 @@
     End Function
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+
+
+
         Try
             If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
                 MsgBox("El pedido ya fue facturado")

@@ -16,10 +16,10 @@ Public Class imprimirEtiquetas
     Private Sub cargarCategoriasProd()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ' 'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", gestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -35,7 +35,7 @@ Public Class imprimirEtiquetas
     End Sub
     'cargamos listas
     Private Sub CargarListas()
-        Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", conexionPrinc)
+        Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", gestorConexiones.conexionPrinc)
         Dim readlis As New DataSet
         tablalistas.Fill(readlis)
         cmblistas.DataSource = readlis.Tables(0)
@@ -66,7 +66,7 @@ Public Class imprimirEtiquetas
         Dim categoria As Integer = cmbCategoria.SelectedValue
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim paramBusq As String
             Dim catSel As Integer = cmbCategoria.SelectedValue
             If catSel = 0 Then
@@ -79,7 +79,7 @@ Public Class imprimirEtiquetas
             End If
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, pro.descripcion as Descripcion, pro.codigo as PLU                
-            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id " & paramBusq & " limit 100", conexionPrinc)
+            from fact_insumos as pro, fact_categoria_insum as cat where pro.categoria=cat.id " & paramBusq & " limit 100", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
@@ -452,7 +452,7 @@ Public Class imprimirEtiquetas
             Dim CantSTR As String = cant.ToString.Replace(",", ".")
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento producto ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and ins.codigo like '" & codprod & "' and prom.compra_min<= " & CantSTR, conexionPrinc)
+            "From fact_promociones as prom, fact_insumos as ins where ins.id=prom.idproducto and ins.codigo like '" & codprod & "' and prom.compra_min<= " & CantSTR, GestorConexiones.conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
             'MsgBox(consultaDescProd.SelectCommand.CommandText)
@@ -482,14 +482,14 @@ Public Class imprimirEtiquetas
         Try
             Dim ganancia As Double
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2 FROM fact_insumos where codigo like '" & ProId & "'", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda,utilidad1,utilidad2 FROM fact_insumos where codigo like '" & ProId & "'", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
             filasProd = tablaprod.Select("")
 
             'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad, auxcol FROM fact_listas_precio where id=" & cmblistas.SelectedValue, conexionPrinc)
+            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad, auxcol FROM fact_listas_precio where id=" & cmblistas.SelectedValue, GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             Dim filaslistas() As DataRow
             consultalis.Fill(tablalistas)
@@ -499,7 +499,7 @@ Public Class imprimirEtiquetas
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "Select (Select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") As cotiza, 
             (Select valor from fact_configuraciones where id =1) As lista"
             sql.CommandType = CommandType.Text
@@ -742,7 +742,7 @@ Public Class imprimirEtiquetas
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             Dim ultimo As String
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select max(id) as ultimo from fact_insumos_produccion"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -769,7 +769,7 @@ Public Class imprimirEtiquetas
             Dim fecha As String = Format(CDate(Now), "yyyy-MM-dd")
             Dim sqlQuery As String = "INSERT INTO fact_insumos_produccion(codigobarras,codigo_producto,producto,cantidad,precio,fecha_alta) values(
             ?codbarr,?codprod,?prod,?cant,?precio,?fecha)"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?codbarr", ProEtiquetaCod)
                 .AddWithValue("?codprod", ProId)

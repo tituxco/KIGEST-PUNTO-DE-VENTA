@@ -24,20 +24,20 @@ Public Class sueldos
     Private Sub recibos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
 
-            Reconectar()
-            'dtitemrecibos.DataSource = ItemsRecibo
-            TabPage1.Parent = Nothing
-            Me.Text = "RECIBOS: " & database
-            lbltitulo.Text = Me.Text
-            CargarPersonal()
-            'cargar periodos de pago
-            Dim tablaperiodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_periodos_pago order by id desc", conexionPrinc)
-            Dim readperiodo As New DataSet
-            tablaperiodo.Fill(readperiodo)
-            cmbperiodopago.DataSource = readperiodo.Tables(0)
-            cmbperiodopago.DisplayMember = readperiodo.Tables(0).Columns(1).Caption.ToString
-            cmbperiodopago.ValueMember = readperiodo.Tables(0).Columns(0).Caption.ToString
-            cmbperiodopago.SelectedIndex = -1
+            'Reconectar()
+            ''dtitemrecibos.DataSource = ItemsRecibo
+            'TabPage1.Parent = Nothing
+            'Me.Text = "RECIBOS: " & database
+            'lbltitulo.Text = Me.Text
+            'CargarPersonal()
+            ''cargar periodos de pago
+            'Dim tablaperiodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_periodos_pago order by id desc", GestorConexiones.conexionPrinc)
+            'Dim readperiodo As New DataSet
+            'tablaperiodo.Fill(readperiodo)
+            'cmbperiodopago.DataSource = readperiodo.Tables(0)
+            'cmbperiodopago.DisplayMember = readperiodo.Tables(0).Columns(1).Caption.ToString
+            'cmbperiodopago.ValueMember = readperiodo.Tables(0).Columns(0).Caption.ToString
+            'cmbperiodopago.SelectedIndex = -1
         Catch ex As Exception
 
         End Try
@@ -46,8 +46,8 @@ Public Class sueldos
     Public Sub CargarPersonal()
         Try
             Reconectar()
-            'conexionPrinc.ChangeDatabase(database)<
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idpersonal as CodINT, concat(apellidos,',  ', nombre) as Nombre from sdo_personal", conexionPrinc)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)<
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idpersonal as CodINT, concat(apellidos,',  ', nombre) as Nombre from sdo_personal", GestorConexiones.conexionPrinc)
             Dim tablaPers As New DataTable
             'Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
             consulta.Fill(tablaPers)
@@ -84,12 +84,12 @@ Public Class sueldos
         Dim conceptos As String
         Dim categoria As Integer
         Try
-            conexionPrinc.ChangeDatabase(database)
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             cmbmes.Text = ""
             cmbmes.SelectedText = MonthName(Month(Now)).ToUpper
             txtano.Text = Year(Now)
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select convert(left((TIMESTAMPDIFF(MONTH,fecha_ingreso," & Format(dtfecha_pago.Value, "yyyy-MM-dd") & ")-1) /12,2),char(2)) as anos0, convenio, categoria from sdo_personal where idpersonal=" & Idpersonal
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -99,7 +99,7 @@ Public Class sueldos
             lblantiguedad.Text = ANOS & " AÑOS"
             lector.Close()
 
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select * from cm_sdo_centro_costos where categoria_personal= " & categoria & " and  convenio=" & convenio
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -152,9 +152,9 @@ Public Class sueldos
 
 
 
-            conexionPrinc.ChangeDatabase(database)
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "SELECT cs.usar_sueldo, cs.cantidad as Cantidad,cs.codigo as Codigo, cs.concepto as Concepto, ti.nombre as Tipo, cs.monto as Monto, " _
                 & "uni.nombre as Unidad, cs.formula as Formula FROM cm_sdo_conceptos_sueldo as cs, cm_sdo_tipos_conceptos_sueldo as ti,cm_sdo_unidades_calculo as uni " _
                 & "where cs.tipo=ti.id and cs.unidad=uni.id and cs.codigo like '" & cod & "'"
@@ -292,41 +292,41 @@ Public Class sueldos
         End Try
     End Sub
     Private Sub cargarInfoPer()
-        Dim lector As System.Data.IDataReader
-        Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-        Dim cadenabd As String
-        Try
-            Reconectar()
+        'Dim lector As System.Data.IDataReader
+        'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
+        'Dim cadenabd As String
+        'Try
+        '    Reconectar()
 
-            conexionPrinc.ChangeDatabase(database)
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
-            cadenabd = database & ".sdo_personal as per," & database & ".cm_sdo_convenios as cen, " & database & ".cm_sdo_jornada as jor," _
-                & database & ".cm_sdo_modo_contratacion as mc, " & database & ".cm_sdo_categoria_personal as cat "
+        '    'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+        '    'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+        '    sql.Connection = GestorConexiones.conexionPrinc
+        '    cadenabd = database & ".sdo_personal as per," & database & ".cm_sdo_convenios as cen, " & database & ".cm_sdo_jornada as jor," _
+        '        & database & ".cm_sdo_modo_contratacion as mc, " & database & ".cm_sdo_categoria_personal as cat "
 
-            sql.CommandText = "select CASE " _
-                & "WHEN (MONTH(per.fecha_ingreso) < MONTH(current_date)) THEN YEAR(current_date) - YEAR(per.fecha_ingreso) " _
-                & "WHEN (MONTH(per.fecha_ingreso) = MONTH(current_date)) AND (DAY(per.fecha_ingreso) <= DAY(current_date)) THEN YEAR(current_date) - YEAR(per.fecha_ingreso) " _
-                & "ELSE (YEAR(current_date) - YEAR(per.fecha_ingreso)) - 1 " _
-                & "END AS anos, concat(per.apellidos,', ', per.nombre) as nombre, per.doc_num, per.fecha_ingreso, per.cuil, " _
-                & "cat.nombre as categoria, mc.nombre as modocontrat, jor.nombre as jornada, cen.nombre as convenio " _
-                & "from " & cadenabd _
-                & "where per.categoria = cat.idcategoria_personal And per.jornada = jor.id And per.modo_contr = mc.id And per.convenio = cen.id " _
-                & " and per.idpersonal=" & Idpersonal
-            TextBox1.Text = sql.CommandText
-            sql.CommandType = CommandType.Text
-            lector = sql.ExecuteReader
-            lector.Read()
-            lblcategoria.Text = lector("categoria").ToString
-            lblconvenio.Text = lector("convenio").ToString
-            lblcuil.Text = lector("cuil").ToString
-            lbldni.Text = lector("doc_num").ToString
-            lblfing.Text = Format(lector("fecha_ingreso"), "dd-MM-yyyy")
-            lblmodocont.Text = lector("modocontrat").ToString
-            lbljornada.Text = lector("jornada").ToString
-            ANOS = FormatNumber(lector("anos").ToString, 0)
-        Catch ex As Exception
-        End Try
+        '    sql.CommandText = "select CASE " _
+        '        & "WHEN (MONTH(per.fecha_ingreso) < MONTH(current_date)) THEN YEAR(current_date) - YEAR(per.fecha_ingreso) " _
+        '        & "WHEN (MONTH(per.fecha_ingreso) = MONTH(current_date)) AND (DAY(per.fecha_ingreso) <= DAY(current_date)) THEN YEAR(current_date) - YEAR(per.fecha_ingreso) " _
+        '        & "ELSE (YEAR(current_date) - YEAR(per.fecha_ingreso)) - 1 " _
+        '        & "END AS anos, concat(per.apellidos,', ', per.nombre) as nombre, per.doc_num, per.fecha_ingreso, per.cuil, " _
+        '        & "cat.nombre as categoria, mc.nombre as modocontrat, jor.nombre as jornada, cen.nombre as convenio " _
+        '        & "from " & cadenabd _
+        '        & "where per.categoria = cat.idcategoria_personal And per.jornada = jor.id And per.modo_contr = mc.id And per.convenio = cen.id " _
+        '        & " and per.idpersonal=" & Idpersonal
+        '    TextBox1.Text = sql.CommandText
+        '    sql.CommandType = CommandType.Text
+        '    lector = sql.ExecuteReader
+        '    lector.Read()
+        '    lblcategoria.Text = lector("categoria").ToString
+        '    lblconvenio.Text = lector("convenio").ToString
+        '    lblcuil.Text = lector("cuil").ToString
+        '    lbldni.Text = lector("doc_num").ToString
+        '    lblfing.Text = Format(lector("fecha_ingreso"), "dd-MM-yyyy")
+        '    lblmodocont.Text = lector("modocontrat").ToString
+        '    lbljornada.Text = lector("jornada").ToString
+        '    ANOS = FormatNumber(lector("anos").ToString, 0)
+        'Catch ex As Exception
+        'End Try
     End Sub
 
     Private Sub dtpersonal_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellEnter
@@ -384,10 +384,10 @@ Public Class sueldos
     Private Sub CargarDtosGrales()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
-            Dim tablaConcepto As New MySql.Data.MySqlClient.MySqlDataAdapter("select codigo, convert(concat(codigo,' - ',concepto),char(255)) from cm_sdo_conceptos_sueldo order by codigo asc", conexionPrinc)
+            Dim tablaConcepto As New MySql.Data.MySqlClient.MySqlDataAdapter("select codigo, convert(concat(codigo,' - ',concepto),char(255)) from cm_sdo_conceptos_sueldo order by codigo asc", GestorConexiones.conexionPrinc)
             Dim readConcepto As New DataSet
             tablaConcepto.Fill(readConcepto)
             cmbconceptos.DataSource = readConcepto.Tables(0)
@@ -451,12 +451,12 @@ Public Class sueldos
                 cuil = lblcuil.Text
                 letras = lblenletras.Text
                 Reconectar()
-                conexionPrinc.ChangeDatabase(database)
+                'GestorConexiones.conexionPrinc.ChangeDatabase(database)
                 sqlQuery = "insert into sdo_recibos (idpersonal, periodo_pago, mes, ano, fecha_pago, total_remunerativo, total_noremunerativo, " _
                     & "total_descuentos, total_neto, antiguedad,  categoria, cuil, fecha_ingreso, convenio, dni, basico, periodoConcat,enLetras) " _
                 & "values (?persona,?periodo,?mes,?ano,?fecha,?remu,?noremu,?desc,?neto,?antig,?categ, ?cuil,?fing,?convenio,?dni,?basico,?concat,?letras)"
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?persona", Idpersonal)
                     .AddWithValue("?periodo", periodo_pago)
@@ -531,11 +531,11 @@ Public Class sueldos
         Dim sqlQuery As String
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             For i = 0 To dtitemrecibos.RowCount - 1
                 sqlQuery = "insert into sdo_items_recibos (codigo, concepto, unidades, remunerativo, noremunerativo, deducciones, idrecibo) values " _
                 & "(?cod,?conc,?uni,?remu,?noremu,?dedu,?idre)"
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?cod", dtitemrecibos.Rows.Item(i).Cells(0).Value)
                     .AddWithValue("?conc", dtitemrecibos.Rows.Item(i).Cells(1).Value)
@@ -558,8 +558,8 @@ Public Class sueldos
         Try
             cargarReciboSel()
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select concat(periodo_pago, ' ', mes, ' ', ano) as periodo, total_remunerativo,total_noremunerativo, total_descuentos, total_neto, basico from sdo_recibos where id=" & dtrecibos.CurrentRow.Cells.Item(0).Value
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -594,7 +594,7 @@ Public Class sueldos
             'cargamos recibos emitidos
 
             'sql.CommandText = "select id, concat(periodo_pago, ' ', mes, ' ', ano) as periodo from sdo_recibos where idpersonal=" & Idpersonal & " order by id desc " & limite
-            'sql.Connection = conexionPrinc
+            'sql.Connection = GestorConexiones.conexionPrinc
             'sql.CommandType = CommandType.Text
             'lector = sql.ExecuteReader
             'dtrecibos.Rows.Clear()
@@ -607,7 +607,7 @@ Public Class sueldos
             'lector.Close()
 
 
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as NumRec, concat(periodo_pago, ' ', mes, ' ', ano) as Periodo from sdo_recibos where idpersonal=" & Idpersonal & " order by id desc " & limite, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id as NumRec, concat(periodo_pago, ' ', mes, ' ', ano) as Periodo from sdo_recibos where idpersonal=" & Idpersonal & " order by id desc " & limite, GestorConexiones.conexionPrinc)
             Dim tablarec As New DataTable
             Dim j As Integer
             'Dim filas() As DataRow
@@ -622,7 +622,7 @@ Public Class sueldos
             Reconectar()
             'calculamos si trabajo mas de 6 meses
             sql.CommandText = "select (TIMESTAMPDIFF(MONTH,fecha_ingreso,CURDATE())) as mesesTrab from sdo_personal where idpersonal=" & Idpersonal
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             lector.Read()
@@ -631,7 +631,7 @@ Public Class sueldos
             Reconectar()
             If meses < 6 And lblmodocont.Text = "MENSUAL" Then
                 sql.CommandText = "select max(total_remunerativo) as maxSueldo from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
                 lector.Read()
@@ -641,7 +641,7 @@ Public Class sueldos
                 Reconectar()
             ElseIf meses >= 6 And lblmodocont.Text = "MENSUAL" Then
                 sql.CommandText = "select max(total_remunerativo) as maxSueldo from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
                 lector.Read()
@@ -652,7 +652,7 @@ Public Class sueldos
                 End If
 
             ElseIf meses < 6 And lblmodocont.Text = "QUINCENAL" Then
-                Dim consultaQUI As New MySql.Data.MySqlClient.MySqlDataAdapter("select mes, sum(format(total_remunerativo,3)) as suma from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal & " group by mes limit 0,12", conexionPrinc)
+                Dim consultaQUI As New MySql.Data.MySqlClient.MySqlDataAdapter("select mes, sum(format(total_remunerativo,3)) as suma from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal & " group by mes limit 0,12", GestorConexiones.conexionPrinc)
                 Dim tablaQUI As New DataTable
                 consultaQUI.Fill(tablaQUI)
                 Dim maximo As Object = tablaQUI.Compute("MAX(suma)", "")
@@ -662,7 +662,7 @@ Public Class sueldos
                     lblsac.Text = "Aguinaldo/SAC: " & FormatCurrency((maximo * meses) / 12, 2)
                 End If
             ElseIf meses >= 6 And lblmodocont.Text = "QUINCENAL" Then
-                Dim consultaQUI As New MySql.Data.MySqlClient.MySqlDataAdapter("select mes, sum(format(total_remunerativo,3)) as suma from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal & " group by mes", conexionPrinc)
+                Dim consultaQUI As New MySql.Data.MySqlClient.MySqlDataAdapter("select mes, sum(format(total_remunerativo,3)) as suma from sdo_recibos where periodo_pago <> 'AGUINALDO' and idpersonal=" & Idpersonal & " group by mes", GestorConexiones.conexionPrinc)
                 Dim tablaQUI As New DataTable
                 consultaQUI.Fill(tablaQUI)
                 Dim maximo As Object = tablaQUI.Compute("MAX(suma)", "")
@@ -685,7 +685,7 @@ Public Class sueldos
     End Sub
 
     'Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
-    '    If conexionPrinc.Database = "" Then
+    '    If GestorConexiones.conexionPrinc.Database = "" Then
     '        MsgBox("Debe seleccionar una empresa antes de poder imprimir los libros de sueldo")
     '    Else
     '        Dim imprimirlib As New ImprimirLibroSueldo
@@ -696,7 +696,7 @@ Public Class sueldos
     'End Sub
 
     'Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
-    '    If conexionPrinc.Database = "" Then
+    '    If GestorConexiones.conexionPrinc.Database = "" Then
     '        MsgBox("Debe seleccionar una empresa antes de poder imprimir recibos")
     '    Else
     '        Dim imprimirEmp As New ImprimirRecibos
@@ -707,7 +707,7 @@ Public Class sueldos
     'End Sub
 
     Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
-        If conexionPrinc.Database = "" Then
+        If GestorConexiones.conexionPrinc.Database = "" Then
             MsgBox("Debe seleccionar una empresa antes de ver el personal")
         Else
             Dim asp As New empleados
@@ -722,21 +722,21 @@ Public Class sueldos
         If MsgBox("Esta seguro que desea eliminar este recibo?", vbYesNo + vbQuestion) = vbYes Then
             Try
 
-                'conexionPrinc.ChangeDatabase(database)
+                ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
                 'sqlQuery = "delete from sdo_recibos where id=" & dtrecibos.CurrentRow.Cells(0).Value
-                'Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                'Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 'comandoadd.BeginExecuteReader()
 
-                conexionPrinc.ChangeDatabase(database)
+                'GestorConexiones.conexionPrinc.ChangeDatabase(database)
                 sqlQuery = "delete from sdo_recibos where id=" & dtrecibos.CurrentRow.Cells(0).Value
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 comandoadd.BeginExecuteReader()
 
                 'Reconectar()
-                conexionPrinc.ChangeDatabase(database)
+                'GestorConexiones.conexionPrinc.ChangeDatabase(database)
                 MsgBox(dtrecibos.CurrentRow.Cells(0).Value)
                 sqlQuery = "delete from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value
-                Dim comandoadd2 As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd2 As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 comandoadd2.BeginExecuteReader()
 
                 'CargarHistorial()
@@ -754,7 +754,7 @@ Public Class sueldos
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
 
             sql.CommandText = "select * from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value & " order by codigo asc"
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             While lector.Read()
@@ -800,44 +800,44 @@ Public Class sueldos
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         Try
-            Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            conexionPrinc.ChangeDatabase(database)
+            'Reconectar()
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
-            Dim cadenaBD As String = database & ".sdo_personal as per," & database & ".fact_empresa as emp, " & database & ".sdo_recibos as rec"
-            Dim tabRecibos As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim tabItems As New MySql.Data.MySqlClient.MySqlDataAdapter
-            Dim ds As New DatasetRecibos
-            tabRecibos.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "rec.idpersonal, concat(per.apellidos,', ', per.nombre) as nombreapellido, rec.dni as documento, rec.cuil,  " _
-            & "rec.fecha_ingreso as fechaingreso, rec.antiguedad, rec.convenio, rec.categoria, " _
-            & "concat(rec.periodo_pago,' ', rec.mes,' ', rec.ano) as periodoliquidado, " _
-            & "rec.fecha_pago as fechapago, rec.basico as sueldobasico, " _
-            & "concat('Empleador: ',emp.razonsocial, '\n', 'Domicilio: ',emp.direccion,'\n','C.U.I.T.: ',emp.cuit) as empresadtos, " _
-            & "rec.id as id, rec.total_remunerativo as totrem, rec.total_noremunerativo as totnorem, rec.total_descuentos as totdedu, " _
-            & "rec.total_neto as totneto, enletras as letras, sueldobanco, sueldocuenta,aportebanco,aportefecha,aporteperiodo,lugarpago from " _
-            & cadenaBD & " where rec.id=" & dtrecibos.CurrentRow.Cells(0).Value & " and rec.idpersonal=per.idpersonal and per.empresa=emp.id ", conexionPrinc)
-            ' MsgBox("ok")
-            tabItems.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select codigo, concepto, unidades, remunerativo, noremunerativo, deducciones, idrecibo 
-            from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value & " order by id asc", conexionPrinc)
+            'Dim cadenaBD As String = database & ".sdo_personal as per," & database & ".fact_empresa as emp, " & database & ".sdo_recibos as rec"
+            'Dim tabRecibos As New MySql.Data.MySqlClient.MySqlDataAdapter
+            'Dim tabItems As New MySql.Data.MySqlClient.MySqlDataAdapter
+            'Dim ds As New DatasetRecibos
+            'tabRecibos.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
+            '& "rec.idpersonal, concat(per.apellidos,', ', per.nombre) as nombreapellido, rec.dni as documento, rec.cuil,  " _
+            '& "rec.fecha_ingreso as fechaingreso, rec.antiguedad, rec.convenio, rec.categoria, " _
+            '& "concat(rec.periodo_pago,' ', rec.mes,' ', rec.ano) as periodoliquidado, " _
+            '& "rec.fecha_pago as fechapago, rec.basico as sueldobasico, " _
+            '& "concat('Empleador: ',emp.razonsocial, '\n', 'Domicilio: ',emp.direccion,'\n','C.U.I.T.: ',emp.cuit) as empresadtos, " _
+            '& "rec.id as id, rec.total_remunerativo as totrem, rec.total_noremunerativo as totnorem, rec.total_descuentos as totdedu, " _
+            '& "rec.total_neto as totneto, enletras as letras, sueldobanco, sueldocuenta,aportebanco,aportefecha,aporteperiodo,lugarpago from " _
+            '& cadenaBD & " where rec.id=" & dtrecibos.CurrentRow.Cells(0).Value & " and rec.idpersonal=per.idpersonal and per.empresa=emp.id ", GestorConexiones.conexionPrinc)
+            '' MsgBox("ok")
+            'tabItems.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select codigo, concepto, unidades, remunerativo, noremunerativo, deducciones, idrecibo 
+            'from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value & " order by id asc", GestorConexiones.conexionPrinc)
 
-            tabRecibos.Fill(ds.Tables("ReciboEncabeza"))
-            tabItems.Fill(ds.Tables("ReciboItems"))
-            With imprimirrecibo
-                .rptrecibo.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
-                .rptrecibo.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\ReciboEncabezado.rdlc"
-                .rptrecibo.LocalReport.DataSources.Clear()
-                .rptrecibo.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("EncabezaRecibo", ds.Tables("ReciboEncabeza")))
+            'tabRecibos.Fill(ds.Tables("ReciboEncabeza"))
+            'tabItems.Fill(ds.Tables("ReciboItems"))
+            'With imprimirrecibo
+            '    .rptrecibo.ProcessingMode = Microsoft.Reporting.WinForms.ProcessingMode.Local
+            '    .rptrecibo.LocalReport.ReportPath = System.Environment.CurrentDirectory & "\reportes\ReciboEncabezado.rdlc"
+            '    .rptrecibo.LocalReport.DataSources.Clear()
+            '    .rptrecibo.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("EncabezaRecibo", ds.Tables("ReciboEncabeza")))
 
 
-                AddHandler .rptrecibo.LocalReport.SubreportProcessing, AddressOf Me.SubreportProcessingEventHandler
+            '    AddHandler .rptrecibo.LocalReport.SubreportProcessing, AddressOf Me.SubreportProcessingEventHandler
 
-                .rptrecibo.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("ItemsRecibos", ds.Tables("ReciboItems")))
-                .rptrecibo.DocumentMapCollapsed = True
-                .Show()
-                .rptrecibo.RefreshReport()
+            '    .rptrecibo.LocalReport.DataSources.Add(New Microsoft.Reporting.WinForms.ReportDataSource("ItemsRecibos", ds.Tables("ReciboItems")))
+            '    .rptrecibo.DocumentMapCollapsed = True
+            '    .Show()
+            '    .rptrecibo.RefreshReport()
 
-            End With
+            'End With
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -846,11 +846,11 @@ Public Class sueldos
     Public Sub SubreportProcessingEventHandler(ByVal sender As Object, ByVal e As SubreportProcessingEventArgs)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim ds As New DatasetRecibos
             Dim tabItems As New MySql.Data.MySqlClient.MySqlDataAdapter
             tabItems.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select codigo, concepto, unidades, remunerativo, noremunerativo, deducciones, idrecibo 
-            from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value & " order by id asc", conexionPrinc)
+            from sdo_items_recibos where idrecibo=" & dtrecibos.CurrentRow.Cells(0).Value & " order by id asc", GestorConexiones.conexionPrinc)
             tabItems.Fill(ds.Tables("ReciboItems"))
             e.DataSources.Add(New ReportDataSource("ItemsRecibos", ds.Tables("ReciboItems")))
         Catch ex As Exception

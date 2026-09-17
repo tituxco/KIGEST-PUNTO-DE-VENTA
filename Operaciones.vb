@@ -26,20 +26,20 @@
 
     Public Sub Guardar(ByVal Cadena As String, ByVal Fecha As Date)
         Reconectar()
-        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.Parameters.Add("@fecha", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Fecha
         cmd.ExecuteNonQuery()
     End Sub
 
     Public Sub Eliminar(ByVal Cadena As String)
         Reconectar()
-        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.ExecuteNonQuery()
     End Sub
 
     Public Sub Editar(ByVal Cadena As String)
         Reconectar()
-        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.ExecuteNonQuery()
     End Sub
 End Module

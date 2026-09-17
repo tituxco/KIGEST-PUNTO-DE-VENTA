@@ -15,7 +15,7 @@ Public Class informedeventas
         dtdesdefact.Value = obtenerPrimerDiaMes()
         dtdeCotejo.Value = obtenerPrimerDiaMes()
 
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         tablaprov.Fill(readprov)
         cmbInforProv.DataSource = readprov.Tables(0)
@@ -23,7 +23,7 @@ Public Class informedeventas
         cmbInforProv.ValueMember = readprov.Tables(0).Columns(0).Caption.ToString
         cmbInforProv.SelectedIndex = -1
 
-        Dim tablaCateg As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_categoria_insum", conexionPrinc)
+        Dim tablaCateg As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_categoria_insum", GestorConexiones.conexionPrinc)
         Dim readCat As New DataSet
         tablaCateg.Fill(readCat)
         cmbInforCateg.DataSource = readCat.Tables(0)
@@ -41,7 +41,7 @@ Public Class informedeventas
         cmbCategoriaMarginal.ValueMember = readCat.Tables(0).Columns(0).Caption.ToString
         cmbCategoriaMarginal.SelectedIndex = -1
 
-        Dim tablaAlmac As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+        Dim tablaAlmac As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", GestorConexiones.conexionPrinc)
         Dim readAlmac As New DataSet
         tablaAlmac.Fill(readAlmac)
         cmbAlmacenes.DataSource = readAlmac.Tables(0)
@@ -60,7 +60,7 @@ Public Class informedeventas
         cmbAlmacenMarginal.SelectedValue = My.Settings.idAlmacen
 
 
-        Dim tablaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ',nombre) from fact_vendedor", conexionPrinc)
+        Dim tablaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ',nombre) from fact_vendedor", GestorConexiones.conexionPrinc)
         Dim readVend As New DataSet
         tablaVend.Fill(readVend)
         cmbvendedor.DataSource = readVend.Tables(0)
@@ -85,7 +85,7 @@ Public Class informedeventas
 
         If InStr(DatosAcceso.Moduloacc, "4f") = False Then tabseguimientoVendedores.Parent = Nothing
 
-        Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
+        Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", GestorConexiones.conexionPrinc)
         Dim readcajas As New DataSet
         tablaCajas.Fill(readcajas)
         cmbcajas.DataSource = readcajas.Tables(0)
@@ -99,7 +99,7 @@ Public Class informedeventas
         Try
             If idVendedor = 0 Or idVendedor = -1 Then
                 Reconectar()
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("", conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("", GestorConexiones.conexionPrinc)
                 Dim tablal As DataTable
                 consulta.Fill(tablal)
             End If
@@ -187,7 +187,7 @@ Public Class informedeventas
             End If
 
             Dim consultaVend As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-			    comision from fact_vendedor where activo=1 and id= " & IdVendedorSel, conexionPrinc)
+			    comision from fact_vendedor where activo=1 and id= " & IdVendedorSel, GestorConexiones.conexionPrinc)
             Dim TablaVend As New DataTable
             consultaVend.Fill(TablaVend)
 
@@ -195,7 +195,7 @@ Public Class informedeventas
 
             If rdInforgeneral.Checked = True And chkproductos.CheckState = CheckState.Unchecked Then
                 Dim consultaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-			    fact.fecha,  
+			     DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fecha,  
                 round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * 
                 (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    
@@ -213,10 +213,10 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact and 
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", GestorConexiones.conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
-			    fact.fecha,  
+			    DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fecha,  
                 round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad * 
                 (select cotizacion from fact_moneda where id=ins.moneda)),2) as pcosto,
 			    
@@ -234,7 +234,7 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
                 ins.id=itm.cod and fact.id=itm.id_fact and 
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "'" & consIdAlmacen & consIdVendedor & " group by fact.fecha", GestorConexiones.conexionPrinc)
 
                 ' MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
@@ -265,7 +265,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -286,7 +286,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
 
                 'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
@@ -315,7 +315,7 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & consIdVendedor & " group by ins.codprov order by prov.razon asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & consIdVendedor & " group by ins.codprov order by prov.razon asc", GestorConexiones.conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		prov.razon,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -335,7 +335,7 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_proveedores as prov where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.codprov=prov.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & consIdVendedor & " group by ins.codprov order by prov.razon asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & consIdAlmacen & consIdVendedor & " group by ins.codprov order by prov.razon asc", GestorConexiones.conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -369,7 +369,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.descripcion asc", GestorConexiones.conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -390,7 +390,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & provSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -418,7 +418,7 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_categoria_insum as cat where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.categoria=cat.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", GestorConexiones.conexionPrinc)
 
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 		cat.nombre,
@@ -439,7 +439,7 @@ Public Class informedeventas
                 FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact, fact_categoria_insum as cat where
                 ins.id=itm.cod and fact.id=itm.id_fact and ins.categoria=cat.id and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & consIdAlmacen & consIdVendedor & " group by ins.categoria order by cat.nombre asc", GestorConexiones.conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -472,7 +472,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.descripcion asc", conexionPrinc)
+                group by ins.descripcion order by ins.descripcion asc", GestorConexiones.conexionPrinc)
                 'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	ins.codigo,	ins.descripcion, format(sum(itm.cantidad),2,'es_AR') as cantidadVendida,
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -493,7 +493,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & catSel & prodBusq & consIdAlmacen & consIdVendedor & " 
-                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
 
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
@@ -517,7 +517,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & "
-                group by fact.id_cliente order by fact.razon asc", conexionPrinc)
+                group by fact.id_cliente order by fact.razon asc", GestorConexiones.conexionPrinc)
 
                 Dim consultaDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 	fact.id_cliente,fact.razon, 
 			    round(sum(replace(replace(ins.precio,'.',''),',','.') * ((ins.iva+100)/100) * itm.cantidad *
@@ -538,9 +538,9 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & "
-                group by fact.id_cliente order by fact.razon asc", conexionPrinc)
+                group by fact.id_cliente order by fact.razon asc", GestorConexiones.conexionPrinc)
 
-                MsgBox(consultaVTAS.SelectCommand.CommandText)
+                'MsgBox(consultaVTAS.SelectCommand.CommandText)
                 consultaVTAS.Fill(tablaVta)
                 consultaDEV.Fill(tablaDev)
             ElseIf rdPocaRotacion.Checked = True Then
@@ -549,7 +549,7 @@ Public Class informedeventas
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 datediff(curdate(), fact.fecha) >=" & CInt(txtdiasventa.Text) & consIdAlmacen & "
-                group by ins.codigo desc order by max(fact.fecha) asc", conexionPrinc)
+                group by ins.codigo desc order by max(fact.fecha) asc", GestorConexiones.conexionPrinc)
                 consulta.Fill(tablaVta)
             End If
 
@@ -567,7 +567,7 @@ Public Class informedeventas
                      fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
                      group by ins.descripcion 
                      having sum(itm.cantidad)>promo.compra_min
-                     order by ins.cod_bar asc", conexionPrinc)
+                     order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
                 Dim tablaComis As New DataTable
 
                 consultaComis.Fill(tablaComis)
@@ -583,7 +583,7 @@ Public Class informedeventas
                 fact.id=itm.id_fact  and 		
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 ins.categoria in(" & cmbinfocategObjetivos.SelectedValue & ") and
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, GestorConexiones.conexionPrinc)
                 Dim consultaComisDEV As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 'NaN' as codigo, concat('DEVOLUCION CAT','-',cat.nombre) as descripcion, 'NaN' as cantVendida,
 			    round(sum(itm.ptotal),2) *-1 as montoVenta,
                 'NaN' as ventaObjetivo, " & txtporcComisionObjetivo.Text & " AS porcComision,
@@ -595,7 +595,7 @@ Public Class informedeventas
                 fact.id=itm.id_fact  and 		
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'C') and itm.cod<>0 and 
                 ins.categoria in(" & cmbinfocategObjetivos.SelectedValue & ") and
-                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, conexionPrinc)
+                fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor, GestorConexiones.conexionPrinc)
                 Dim tablaComisCat As New DataTable
                 Dim tablacomiscatDEV As New DataTable
                 consultaComisCAT.Fill(tablaComisCat)
@@ -644,7 +644,7 @@ Public Class informedeventas
                 fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod=0 and
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & consIdAlmacen & consIdVendedor & " 
-                group by itm.descripcion order by itm.descripcion asc", conexionPrinc)
+                group by itm.descripcion order by itm.descripcion asc", GestorConexiones.conexionPrinc)
             Dim tablaNoCodif As New DataTable
             'MsgBox(consultaNoCodif.SelectCommand.CommandText)
             consultaNoCodif.Fill(tablaNoCodif)
@@ -807,7 +807,7 @@ Public Class informedeventas
 
             Reconectar()
             Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
-            & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & cmbAlmacenes.SelectedValue & " order by id asc", conexionPrinc)
+            & "where stock >0 and idproducto=" & codigo & " and idalmacen= " & cmbAlmacenes.SelectedValue & " order by id asc", GestorConexiones.conexionPrinc)
             Dim tablastock As New DataTable
             Dim infostock() As DataRow
             consultastock.Fill(tablastock)
@@ -822,7 +822,7 @@ Public Class informedeventas
                     Dim StockLote As Double = infostock(lotes)(1)
                     cant = cant - StockLote
                     Reconectar()
-                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock=0 where id=" & infostock(lotes)(0), GestorConexiones.conexionPrinc)
                     updstock.ExecuteNonQuery()
                     If tablastock.Rows.Count - lotes > 1 Then
                         lotes += 1
@@ -834,7 +834,7 @@ Public Class informedeventas
                     Dim stockLote As Double = infostock(lotes)(1)
                     Dim CantUpd As Double = infostock(lotes)(1) - cant
                     Reconectar()
-                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), conexionPrinc)
+                    Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes Set stock='" & CantUpd & "' where id=" & infostock(lotes)(0), GestorConexiones.conexionPrinc)
                     updstock.ExecuteNonQuery()
                     cant = 0
                     'ElseIf infostock(lotes)(1) > cant
@@ -996,7 +996,7 @@ Public Class informedeventas
             and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
             and fact.fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & Val(txtmeseshistorial.Text) & " month) and date_format(now(),'%Y-%m-%d')
             and cli.vendedor=" & cmbVendedorHistorial.SelectedValue & "
-            group by month(fact.fecha),fact.id_cliente order by month(fact.fecha) asc", conexionPrinc)
+            group by month(fact.fecha),fact.id_cliente order by month(fact.fecha) asc", GestorConexiones.conexionPrinc)
             Dim tablaDatosHistorial As New DataTable
             consulta.Fill(tablaDatosHistorial)
             Dim HistorialCliente As New DataTable
@@ -1070,7 +1070,7 @@ Public Class informedeventas
 concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) 
 FROM fact_facturas where tipofact in (select donfdesc from tipos_comprobantes where debcred='D')  and vendedor=" & cmbVendedorHistorial.SelectedValue & "
 and fecha between date_sub(date_format(now(),'%Y-%m-01'),interval " & txtmeseshistorial.Text & "  month) and date_format(now(),'%Y-%m-%d')
-group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.conexionPrinc)
 
             Dim readvtas As New DataTable
             tablaVTAS.Fill(readvtas)
@@ -1155,7 +1155,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Reconectar()
 
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id idFact, fact.fecha as fechaFact, fact.f_mod as TimeStmp, 
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id idFact,DATE_FORMAT(fact.fecha, '%d-%m-%Y') as fechaFact, fact.f_mod as TimeStmp, 
             concat(tpf.abrev,': ', lpad(fact.ptovta,4,'0'),'-', lpad(fact.num_fact,8,'0')) as factura, 
             concat(vend.nombre,',', vend.apellido) as vendedor, 
             alm.nombre as Sucursal, caja.descripcion as Caja, itm.descripcion as producto, itm.plu, itm.cod as codint, itm.cantidad
@@ -1168,7 +1168,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             " & productoDescripcion & "
             " & vendedorHistorial & "
             " & almacenHistorial & "
-            order by fact.f_mod desc", conexionPrinc)
+            order by fact.f_mod desc", GestorConexiones.conexionPrinc)
             ' MsgBox(consulta.SelectCommand.CommandText)
 
             Dim tablaDatosHistorial As New DataTable
@@ -1223,7 +1223,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             from fact_insumos_historial_lectura where fecha like '" & fecha & " %%:%%:%%'
             and tmp_caja=" & cmbcajas.SelectedValue & "
             group by codProd
-            order by producto asc    ", conexionPrinc)
+            order by producto asc    ", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaLectura As New DataTable
             consultaLectura.Fill(tablaLectura)
@@ -1235,7 +1235,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             and idCaja=" & cmbcajas.SelectedValue & " 
             and tipofact in(select donfdesc from tipos_comprobantes where debcred like 'D')
             group by cod
-            order by descripcion asc", conexionPrinc)
+            order by descripcion asc", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaSalida As New DataTable
             consultaSalida.Fill(tablaSalida)
@@ -1281,7 +1281,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM 
             fact_insumos_produccion where 
             fecha_alta between '" & desde & "' and '" & hasta & "'" &
-            BusqFacturados, conexionPrinc)
+            BusqFacturados, GestorConexiones.conexionPrinc)
         Dim TablaEnvasados As New DataTable
 
         consulta.Fill(TablaEnvasados)
@@ -1297,7 +1297,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             where fact.tipofact in(995) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ") and fact.fecha between '" & desde & "' and '" & hasta & "' 
             and fact.observaciones like 'FACTURADO'
             group by fact.id_cliente
-            order by fact.razon asc", conexionPrinc)
+            order by fact.razon asc", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaPedidos As New DataTable
             consultaPedidos.Fill(tablaPedidos)
@@ -1305,7 +1305,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim consultaFacturas As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
             where fact.tipofact in(1,2,6,999,11,12) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
             group by fact.id_cliente
-            order by fact.razon asc", conexionPrinc)
+            order by fact.razon asc", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaFacturas As New DataTable
             consultaFacturas.Fill(tablaFacturas)
@@ -1313,7 +1313,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim consultaDevoluciones As New MySql.Data.MySqlClient.MySqlDataAdapter("select fact.id_cliente, fact.razon, round(sum(fact.total),2) as totalITM  from fact_facturas as fact
             where fact.tipofact in(3,8,991,13) and fact.vendedor in (" & cmbvendedorCotejo.SelectedValue & ")  and fact.fecha between '" & desde & "' and '" & hasta & "' 
             group by fact.id_cliente
-            order by fact.razon asc", conexionPrinc)
+            order by fact.razon asc", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaDevoluciones As New DataTable
             consultaDevoluciones.Fill(tablaDevoluciones)
@@ -1390,12 +1390,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             '         IF(utilidad5 IS NULL or utilidad5='','0',utilidad5) as utilidad5
 
             '         FROM fact_insumos as ins			
-            '         group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+            '         group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
             '     'MsgBox(consulta.SelectCommand.CommandText)
             '     Dim tablaProductos As New DataTable
             '     consultaProductos.Fill(tablaProductos)
 
-            '     Dim consultaListas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR') as utilidad,auxcol FROM fact_listas_precio", conexionPrinc)
+            '     Dim consultaListas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,nombre,format(utilidad,2,'es_AR') as utilidad,auxcol FROM fact_listas_precio", GestorConexiones.conexionPrinc)
             '     'MsgBox(consulta.SelectCommand.CommandText)
             '     Dim tablaListas As New DataTable
             '     consultaListas.Fill(tablaListas)
@@ -1502,7 +1502,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 ins.id=itm.cod and fact.id=itm.id_fact  and
                 itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
                 fact.fecha between '" & desde & "' and '" & hasta & "' " & prodBusq & consIdAlmacen & consIdCategoria & " 
-                group by ins.descripcion order by ins.cod_bar asc", conexionPrinc)
+                group by ins.descripcion order by ins.cod_bar asc", GestorConexiones.conexionPrinc)
 
             'MsgBox(consultaVTAS.SelectCommand.CommandText)
             consultaVTAS.Fill(tablaVta)

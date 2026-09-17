@@ -37,8 +37,8 @@
             Dim tabla As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
             tall.id as ORDEN,(select concat(et.nombre,'/',ma.nombre,'/',mo.nombre) from tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo  
             where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=tall.modelo) as EQUIPO, 
-            fecha_ing as FechaIngreso,
-            if(fecha_eg='0000-00-00','',fecha_eg) as FechEgreso, tall.serie,  
+            DATE_FORMAT(fecha_ing, '%d-%m-%Y') as FechaIngreso,
+            IF(fecha_eg='0000-00-00','', DATE_FORMAT(fecha_eg, '%d-%m-%Y')) as FechaEgreso, tall.serie,  
             cli.nomapell_razon as Cliente, tall.infoextra as extra,  tall.equipo as codint, 
             te.nombre as estado,  
             case(tall.trab_estado) 
@@ -54,10 +54,10 @@
             from tecni_taller as tall,  fact_clientes as cli, tecni_taller_estado as te where
             fecha_ing between '" & Format(dtpdesdetrab.Value, "yyyy-MM-dd") & "' and '" & Format(dtphastatrab.Value, "yyyy-MM-dd") & "' and 
             cli.idclientes=tall.cliente and tall.estado=te.id " _
-            & consulta, conexionPrinc)
+            & consulta, GestorConexiones.conexionPrinc)
 
             'MsgBox(tabla.SelectCommand)
-            'MsgBox(tabla.SelectCommand.CommandText)
+            ' MsgBox(tabla.SelectCommand.CommandText)
             Dim leertab As New DataTable
             'Dim itemtab() As DataRow
             tabla.Fill(leertab)
@@ -120,13 +120,13 @@
 
 
             Reconectar()
-            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as piecliente, texto2 as pieempresa from tecni_datosgenerales WHERE id=1", conexionPrinc)
+            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as piecliente, texto2 as pieempresa from tecni_datosgenerales WHERE id=1", GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("datosFichaIngreso"))
 
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "lpad(tall.id,4,'0') as orden, " _
+            & "lpad(tall.id,5,'0') as orden, " _
             & "concat('FECHA INGRESO: ',tall.fecha_ing) as fecha, case tall.trabajo_categoria " _
             & "when 4 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon,'(',tall.infoextra,')') " _
             & "when 2 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon) " _
@@ -146,13 +146,13 @@
             & "tecni_equipos as eq " _
             & "where " _
             & "tall.cliente=cl.idclientes and tall.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and tall.recibe=us.id " _
-            & "and tall.id=" & Val(NUMor), conexionPrinc)
+            & "and tall.id=" & Val(NUMor), GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaIngreso"))
 
 
 
             Reconectar()
-            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", conexionPrinc)
+            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", GestorConexiones.conexionPrinc)
             tablaFacturacion.Fill(dsFacturacion.Tables("datosEmpresa"))
 
             Dim imping As New imprimiringreso
@@ -194,13 +194,13 @@
             Dim dsFacturacion As New datosgenerales
 
             Reconectar()
-            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as pie from tecni_datosgenerales WHERE id=2", conexionPrinc)
+            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as pie from tecni_datosgenerales WHERE id=2", GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("datosFichaEgreso"))
 
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "lpad(tall.id,4,'0') as orden, " _
+            & "lpad(tall.id,5,'0') as orden, " _
             & "concat('FECHA INGRESO: ',tall.fecha_ing) as fecha, case tall.trabajo_categoria " _
             & "when 4 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon,'(',tall.infoextra,')') " _
             & "when 2 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon) " _
@@ -219,16 +219,16 @@
             & "tecni_equipos as eq " _
             & "where " _
             & "tall.cliente=cl.idclientes and tall.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and tall.recibe=us.id " _
-            & "and tall.id=" & dtresultado.CurrentRow.Cells(0).Value, conexionPrinc)
+            & "and tall.id=" & dtresultado.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaIngreso"))
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT tall.falla as falla, tall.tarea_realiz as resolucion, tall.mo_monto as montomo, tall.ins_monto as montoins, tall.trab_monto as montotot, tall.fecha_eg as fecha, concat(te.apellido,', ', te.nombre) as tecnico " _
-            & " FROM tecni_taller as tall, tecni_tecnicos as te where tall.tecnico=te.id and tall.id =" & dtresultado.CurrentRow.Cells(0).Value, conexionPrinc)
+            & " FROM tecni_taller as tall, tecni_tecnicos as te where tall.tecnico=te.id and tall.id =" & dtresultado.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaEgreso"))
 
             Reconectar()
-            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", conexionPrinc)
+            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", GestorConexiones.conexionPrinc)
             tablaFacturacion.Fill(dsFacturacion.Tables("datosEmpresa"))
 
             Dim imping As New imprimiregreso

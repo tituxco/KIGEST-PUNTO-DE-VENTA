@@ -9,7 +9,7 @@
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
             concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", GestorConexiones.conexionPrinc)
             Dim tabPlanCuentas As New DataSet
             consPlanCuentas.Fill(tabPlanCuentas)
 
@@ -23,18 +23,18 @@
 
             If ModificarAsiento = True Then
                 Reconectar()
-                Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_libroDiario where codigoAsiento=" & IdAsiento & " limit 1", conexionPrinc)
+                Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_libroDiario where codigoAsiento=" & IdAsiento & " limit 1", GestorConexiones.conexionPrinc)
                 Dim tabLibroDiario As New DataTable
                 '    MsgBox(consLibroDiario.SelectCommand.CommandText)
                 consLibroDiario.Fill(tabLibroDiario)
                 txtAsientoNumero.Text = tabLibroDiario.Rows(0).Item("codigoAsiento")
                 txtAsientoComprobante.Text = tabLibroDiario.Rows(0).Item("comprobanteInterno")
                 txtAsientoConcepto.Text = tabLibroDiario.Rows(0).Item("concepto")
-                fchAsientoFecha.Value = CDate(tabLibroDiario.Rows(0).Item("fecha").ToString)
+                fchAsientoFecha.Value = NormalizarFecha(tabLibroDiario.Rows(0).Item("fecha").ToString) 'CDate(tabLibroDiario.Rows(0).Item("fecha").ToString)
 
                 Reconectar()
                 Dim consAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM cm_Asientos 
-                where (cuentaDebeId<>0 or cuentaHaberId<>0) and  codigoAsiento=" & IdAsiento, conexionPrinc)
+                where (cuentaDebeId<>0 or cuentaHaberId<>0) and  codigoAsiento=" & IdAsiento, GestorConexiones.conexionPrinc)
                 Dim tabAsiento As New DataTable
                 consAsiento.Fill(tabAsiento)
 
@@ -64,8 +64,8 @@
                 End If
                 CalcularTotalAsiento()
             Else
-                Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, fecha,concepto FROM 
-                cm_libroDiario order by id desc limit 1", conexionPrinc)
+                Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, DATE_FORMAT(fecha, '%d-%m-%Y') AS fecha,concepto FROM 
+                cm_libroDiario order by id desc limit 1", GestorConexiones.conexionPrinc)
                 Dim tabUltAsiento As New DataTable
                 consUltAsiento.Fill(tabUltAsiento)
 
@@ -131,7 +131,7 @@
     Private Function ObtenerCodigoCuenta(idCuenta As Integer) As String
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta                
-        FROM cm_planDeCuentas where id=" & idCuenta & " order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle limit 1", conexionPrinc)
+        FROM cm_planDeCuentas where id=" & idCuenta & " order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle limit 1", GestorConexiones.conexionPrinc)
             Dim tabPlanCuentas As New DataTable
             consPlanCuentas.Fill(tabPlanCuentas)
             Return tabPlanCuentas.Rows(0).Item("codigoCuenta")
@@ -142,7 +142,7 @@
     Private Function ComprobarCuenta(idcuenta) As Boolean
         Try
             Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cuentaMovimiento                
-        FROM cm_planDeCuentas where id=" & idcuenta & " order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle limit 1", conexionPrinc)
+        FROM cm_planDeCuentas where id=" & idcuenta & " order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle limit 1", GestorConexiones.conexionPrinc)
             Dim tabPlanCuentas As New DataTable
             consPlanCuentas.Fill(tabPlanCuentas)
             Dim cuentaMovimiento = tabPlanCuentas.Rows(0).Item("cuentaMovimiento")
@@ -174,11 +174,11 @@
                     Exit Sub
                 Else
                     Dim comandoDelAsiento As New MySql.Data.MySqlClient.MySqlCommand("
-                    delete from cm_libroDiario where codigoAsiento=" & IdAsiento, conexionPrinc)
+                    delete from cm_libroDiario where codigoAsiento=" & IdAsiento, GestorConexiones.conexionPrinc)
                     Dim comandoDelAsiento2 As New MySql.Data.MySqlClient.MySqlCommand("
-                    delete from cm_Asientos where codigoAsiento=" & IdAsiento, conexionPrinc)
+                    delete from cm_Asientos where codigoAsiento=" & IdAsiento, GestorConexiones.conexionPrinc)
                     Dim comandoDelAsiento3 As New MySql.Data.MySqlClient.MySqlCommand("
-                    delete from cm_libroMayor where codigoAsiento=" & IdAsiento, conexionPrinc)
+                    delete from cm_libroMayor where codigoAsiento=" & IdAsiento, GestorConexiones.conexionPrinc)
 
                     comandoDelAsiento.ExecuteNonQuery()
                     comandoDelAsiento2.ExecuteNonQuery()
@@ -188,8 +188,8 @@
                 If MsgBox("Esta seguro que desa agregar este asiento?", vbYesNo + vbQuestion) = vbNo Then
                     Exit Sub
                 Else
-                    Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, fecha,concepto FROM 
-                cm_libroDiario order by id desc limit 1", conexionPrinc)
+                    Dim consUltAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id ,comprobanteInterno, DATE_FORMAT(FECHA, '%d-%m-%Y') AS fecha,concepto FROM 
+                cm_libroDiario order by id desc limit 1", GestorConexiones.conexionPrinc)
                     Dim tabUltAsiento As New DataTable
                     consUltAsiento.Fill(tabUltAsiento)
 
@@ -234,7 +234,7 @@
 
                 Dim agregarPartida As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
                 (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
-                Dim comandoPartida As New MySql.Data.MySqlClient.MySqlCommand(agregarPartida, conexionPrinc)
+                Dim comandoPartida As New MySql.Data.MySqlClient.MySqlCommand(agregarPartida, GestorConexiones.conexionPrinc)
                 With comandoPartida.Parameters
                     .AddWithValue("?codigoAsiento", asientoNumero)
                     .AddWithValue("?cuentaDebeId", cuentaDebeId)
@@ -246,9 +246,9 @@
             Next
             'txtresultados.Text = "debetotal:" & totalDebe & "---totalhaber:" & totalHaber
 
-            Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
+            Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento, fecha,concepto,totalDebe,totalHaber,numPartidas) values
             (?comprobanteInterno,?codigoAsiento,?fecha,?concepto,?totalDebe,?totalHaber,?numPartidas)"
-            Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, conexionPrinc)
+            Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, GestorConexiones.conexionPrinc)
             With comandoLibroDiario.Parameters
                 .AddWithValue("?comprobanteInterno", asientoComprobante)
                 .AddWithValue("?codigoAsiento", asientoNumero)
@@ -262,7 +262,7 @@
 
             Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
             (?fecha,?concepto,?codigoAsiento)"
-            Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, conexionPrinc)
+            Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, GestorConexiones.conexionPrinc)
             With comandoLibroMayor.Parameters
                 .AddWithValue("?fecha", asientoFecha)
                 .AddWithValue("?concepto", asientoConcepto)
@@ -366,18 +366,6 @@
                 MsgBox(ex.Message)
             End Try
         End If
-    End Sub
-
-    Private Sub dgvPartidas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellContentClick
-
-    End Sub
-
-    Private Sub cmbBusquedaCuenta_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub dgvPartidas_CellLeave(sender As Object, e As DataGridViewCellEventArgs) Handles dgvPartidas.CellLeave
-
     End Sub
 
     Private Sub cmbBusquedaCuenta_LostFocus(sender As Object, e As EventArgs) Handles cmbBusquedaCuenta.LostFocus

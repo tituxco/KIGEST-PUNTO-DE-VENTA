@@ -204,7 +204,7 @@ Public Class NvaPublicidad
     Public Sub Consultas(ByVal Cadena As String)
         Reconectar()
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
-        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = diasMora
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)
@@ -321,7 +321,7 @@ Public Class NvaPublicidad
                                     "INNER JOIN fact_clientes as cli ON cli.idclientes = pre.ID_CLIENTE " &
                                     "WHERE pre.id = '" & txtPrestamo.Text & "'"
 
-            Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlCabecera, conexionPrinc)
+            Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlCabecera, GestorConexiones.conexionPrinc)
             Dim dtCabecera As New DataTable
             da.Fill(dtCabecera)
 
@@ -408,13 +408,13 @@ Public Class NvaPublicidad
 		DTP.PERIODO, DTP.FECHA AS VENCIMIENTO,DTP.CUOTA AS MONTO, PRE.DESCRIPCION, PRE.CONCEPTO, PRE.ID_PRESTAMO,PRE.FECHA
         from rym_detalle_prestamo AS DTP, rym_prestamo as PRE where 
         PRE.ID_PRESTAMO = DTP.ID_PRESTAMO AND
-        DTP.ID_PRESTAMO='" & txtBuscaPrestamo.Text & "' and DTP.PERIODO <>0 order by DTP.ID asc", conexionPrinc)
+        DTP.ID_PRESTAMO='" & txtBuscaPrestamo.Text & "' and DTP.PERIODO <>0 order by DTP.ID asc", GestorConexiones.conexionPrinc)
         Dim tablaPrestamo As New DataTable
         'Dim filasProd() As DataRow
         tablaEmpresa.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo 
-        FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+        FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
         tablaEmpresa.Fill(DatosGenerales.Tables("datosEmpresa"))
         Reconectar()
@@ -481,20 +481,21 @@ Public Class NvaPublicidad
 
     Private Sub NvaPublicidad_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+
         If InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
             btnBajaPublicidad.Visible = False
         End If
         Me.Text = "Nva " & DatosAcceso.ServMensual
         Label1.Text = "NUEVO SERVICIO " & DatosAcceso.ServMensual
 
-        Dim tablacob As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_cobrador where activo=1", conexionPrinc)
+        Dim tablacob As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_cobrador where activo=1", GestorConexiones.conexionPrinc)
         Dim readcob As New DataSet
         tablacob.Fill(readcob)
         cmbcobrador.DataSource = readcob.Tables(0)
         cmbcobrador.DisplayMember = readcob.Tables(0).Columns(1).Caption.ToString.ToUpper
         cmbcobrador.ValueMember = readcob.Tables(0).Columns(0).Caption.ToString
 
-        Dim tablacons As New MySql.Data.MySqlClient.MySqlDataAdapter("select DISTINCT (concepto) from rym_prestamo  order by CONCEPTO desc", conexionPrinc)
+        Dim tablacons As New MySql.Data.MySqlClient.MySqlDataAdapter("select DISTINCT (concepto) from rym_prestamo  order by CONCEPTO desc", GestorConexiones.conexionPrinc)
         Dim readcons As New DataSet
         tablacons.Fill(readcons)
         txtconcepto.DataSource = readcons.Tables(0)
@@ -559,68 +560,90 @@ Public Class NvaPublicidad
     End Sub
 
     Private Sub Button1_Click_1(sender As Object, e As EventArgs) Handles Button1.Click
-        Try
-            If dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA" Then
-                MsgBox("El periodo ya esta pagado")
-                Exit Sub
-            End If
-            Dim periodo As Integer = dgvPublicidad.CurrentRow.Cells("PERIODO").Value
-            Dim monto As String = dgvPublicidad.CurrentRow.Cells("MONTO").Value
-            Dim fecha As String = Format(CDate(Now), "yyyy-MM-dd")
-            Dim sqlQuery As String
-            sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
-            Reconectar()
-            Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
-            With addPagoPubli.Parameters
-                .AddWithValue("?fecha", fecha)
-                .AddWithValue("?idprestamo", txtPrestamo.Text)
-                .AddWithValue("?periodo", periodo)
-                .AddWithValue("?monto", monto)
-            End With
-            addPagoPubli.ExecuteNonQuery()
-            MsgBox("Pago imputado correctamente")
-            dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA"
-        Catch ex As Exception
+        'Try
+        '    If dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA" Then
+        '        MsgBox("El periodo ya esta pagado")
+        '        Exit Sub
+        '    End If
+        '    Dim periodo As Integer = dgvPublicidad.CurrentRow.Cells("PERIODO").Value
+        '    Dim monto As String = dgvPublicidad.CurrentRow.Cells("MONTO").Value
+        '    Dim fecha As String = Format(CDate(Now), "yyyy-MM-dd")
+        '    Dim sqlQuery As String
+        '    sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
+        '    Reconectar()
+        '    Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
+        '    With addPagoPubli.Parameters
+        '        .AddWithValue("?fecha", fecha)
+        '        .AddWithValue("?idprestamo", txtPrestamo.Text)
+        '        .AddWithValue("?periodo", periodo)
+        '        .AddWithValue("?monto", monto)
+        '    End With
+        '    addPagoPubli.ExecuteNonQuery()
+        '    MsgBox("Pago imputado correctamente")
+        '    dgvPublicidad.CurrentRow.Cells("ESTADO").Value = "PAGADA"
+        'Catch ex As Exception
 
-        End Try
+        'End Try
+
+        ' Validamos que haya una cuota seleccionada en la grilla
+        If dgvPublicidad.CurrentRow Is Nothing Then Exit Sub
+
+        Dim sel As New selfac()
+        sel.LLAMA = "PUBLIFACT" ' <-- Este es el nuevo caso que creamos
+        sel.provclie = txtclientecuenta.Text
+        sel.IdCuotaPublicidad = Convert.ToInt32(dgvPublicidad.CurrentRow.Cells("ID").Value)
+        sel.ShowDialog()
+
+        ' Refrescamos la grilla para que el usuario vea el cambio al instante
+        Me.CargarDetalle()
     End Sub
 
-    Private Sub btnBajaPublicidad_Click(sender As Object, e As EventArgs) Handles btnBajaPublicidad.Click
-
+    Private Sub btnBaja_Click(sender As Object, e As EventArgs) Handles btnBajaPublicidad.Click
         Try
-            ' 1. Validar selección y que no sea la fila de totales
-            If dgvPublicidad.CurrentRow Is Nothing Then Exit Sub
-
-            Dim cellId = txtPrestamo.Text
-            If IsDBNull(cellId) OrElse cellId Is Nothing Then
-                MsgBox("Seleccione una publicidad válida (la fila de totales no puede desactivarse).", MsgBoxStyle.Exclamation)
+            ' 1. Validar que tengamos un préstamo seleccionado
+            If String.IsNullOrWhiteSpace(txtPrestamo.Text) Then
+                MsgBox("No hay una publicidad cargada para dar de baja.", MsgBoxStyle.Exclamation)
                 Exit Sub
             End If
 
-            Dim idPub As Integer = Convert.ToInt32(cellId)
+            Dim idPub As String = txtPrestamo.Text ' Este es el ID_PRESTAMO
             Dim cliente As String = txtclientenombre.Text
 
-            ' 2. Preguntar motivo con Prompt
+            ' 2. Preguntar motivo
             Dim motivo As String = InputBox("Ingrese el motivo de la baja para " & cliente & ":", "Baja de Publicidad")
 
-            ' 3. Si cancela o deja vacío, no hacemos nada
             If String.IsNullOrWhiteSpace(motivo) Then
                 MsgBox("Debe indicar un motivo para poder desactivar la publicidad.", MsgBoxStyle.Information)
                 Exit Sub
             End If
 
-            ' 4. Confirmación final
-            If MsgBox("¿Está seguro de desactivar esta publicidad?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+            ' 3. Confirmación final
+            If MsgBox("¿Está seguro de dar de baja la publicidad ID: " & idPub & "?", MsgBoxStyle.YesNo + MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+
+                ' 4. Llamada al Gestor
                 If GestorPublicidad.DesactivarPublicidad(idPub, motivo) Then
-                    MsgBox("Publicidad desactivada correctamente.", MsgBoxStyle.Information)
-                    ' Refrescar el listado (llamar a tu método de búsqueda)
-                    Me.Close()
+                    MsgBox("Publicidad dada de baja correctamente.", MsgBoxStyle.Information)
+                    ' Refrescamos la interfaz
+                    Me.CargarDetalle()
                 End If
             End If
 
         Catch ex As Exception
-            MsgBox("Error: " & ex.Message, MsgBoxStyle.Critical)
+            MsgBox("Error al procesar la baja: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
 
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        If dgvPublicidad.CurrentRow Is Nothing Then Exit Sub
+
+        Dim sel As New selfac()
+        sel.LLAMA = "PUBLIPAGO"
+        sel.provclie = txtclientecuenta.Text
+        sel.IdCuotaPublicidad = Convert.ToInt32(dgvPublicidad.CurrentRow.Cells("ID").Value)
+
+        sel.ShowDialog()
+
+        ' Refrescamos la grilla
+        Me.CargarDetalle()
+    End Sub
 End Class

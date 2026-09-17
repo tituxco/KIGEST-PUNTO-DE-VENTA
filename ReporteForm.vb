@@ -90,7 +90,7 @@ Public Class ReporteForm
 
         'Detalle Reporte
         '--------------------------------------------------------------------
-        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_pagos where id_prestamo='" & IDPrestamo & "'", conexionPrinc)
+        Dim da As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from rym_pagos where id_prestamo='" & IDPrestamo & "'", GestorConexiones.conexionPrinc)
         Dim ds As New DataSet
         da.Fill(ds)
         Dim fila As DataRow

@@ -7,7 +7,7 @@ Public Class NvaFacturaCompra
     Private Function comprobarComprobanteCompra(ByRef comprobante As String, ByRef contribuyente As String) As Boolean
         Try
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from fact_proveedores_fact_items where nufac like '" & comprobante & "' and " _
-            & "replace(cuit,'-','') like '" & Replace(contribuyente, "-", "") & "'", conexionPrinc)
+            & "replace(cuit,'-','') like '" & Replace(contribuyente, "-", "") & "'", GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             consulta.Fill(tablacl)
             If tablacl.Rows.Count <> 0 Then
@@ -93,7 +93,7 @@ Public Class NvaFacturaCompra
             Reconectar()
             sqlQuery = "insert into fact_proveedores_fact(fecha, tipo,numero,monto,vencimiento,idproveedor,tipoingeg,cerrado) values(
              ?fecha,?tipo,?numero,?monto,?vencimiento,?idproveedor,?tipoingeg,?cerrado)"
-            Dim addFactProvStock As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addFactProvStock As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addFactProvStock.Parameters
                 .AddWithValue("?fecha", fecha)
                 .AddWithValue("?tipo", tipoComprobante)
@@ -113,7 +113,7 @@ Public Class NvaFacturaCompra
             sqlQuery = "insert into fact_proveedores_fact_items(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
             & "acuenta,nogr,perciva,percib,total,obs,bien_uso,cuenta_contable) " _
             & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien,?cuenta_contable)"
-            Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With additem.Parameters
                 .AddWithValue("?per", 0)
                 .AddWithValue("?fech", fecha)
@@ -161,7 +161,7 @@ Public Class NvaFacturaCompra
         'RI'
         when 6 then
         'MON' end as tipoContr  
-        from  fact_proveedores where id=" & idProveedor, conexionPrinc)
+        from  fact_proveedores where id=" & idProveedor, GestorConexiones.conexionPrinc)
         'Dim readrazonSocial As New DataSet
         Dim tablaProv As New DataTable
         tablarazonSocial.Fill(tablaProv)
@@ -179,7 +179,7 @@ Public Class NvaFacturaCompra
 
         txtcuitComp.Text = tablaProv.Rows(0).Item("cuit")
 
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, nombreCuenta FROM cm_planDeCuentas", conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, nombreCuenta FROM cm_planDeCuentas", GestorConexiones.conexionPrinc)
         Dim tablacl As New DataSet
         consulta.Fill(tablacl)
 

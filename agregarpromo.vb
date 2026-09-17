@@ -13,10 +13,10 @@
     Private Sub cargarCategoriasProd()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -42,7 +42,7 @@
 
             'cargamos categorias
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, codigo, descripcion,categoria from fact_insumos " &
-            "where id=" & idproducto & " Or codigo Like '" & txtcodigo.Text & "'", conexionPrinc)
+            "where id=" & idproducto & " Or codigo Like '" & txtcodigo.Text & "'", GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
@@ -83,7 +83,7 @@
             Dim descuentoprod As String = txtdescuento.Text
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,nombrepromo,compra_min,descuento_porc) " &
-            "values (?idprod,'DESCUENTO',?compra,?porc) ", conexionPrinc)
+            "values (?idprod,'DESCUENTO',?compra,?porc) ", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idprod", productopromo)
                 .AddWithValue("?compra", compraminprod)
@@ -104,7 +104,7 @@
             Dim descuentocat As String = txtdescuentocat.Text
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idcategoria,nombrepromo,compra_min,descuento_porc) " &
-            "values (?idcat,'DESCUENTO',?compra,?porc) ", conexionPrinc)
+            "values (?idcat,'DESCUENTO',?compra,?porc) ", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idcat", catpromo)
                 .AddWithValue("?compra", compramincat)
@@ -125,7 +125,7 @@
             Dim descuentoprod As String = txtporcentajeComision.Text
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idproducto,nombrepromo,compra_min,descuento_porc) " &
-            "values (?idprod,'COMISION PRODUCTO',?compra,?porc) ", conexionPrinc)
+            "values (?idprod,'COMISION PRODUCTO',?compra,?porc) ", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idprod", productopromo)
                 .AddWithValue("?compra", compraminprod)
@@ -145,7 +145,7 @@
             Dim descuentocat As String = txtComisCat.Text
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_promociones (idcategoria,compra_min,nombrepromo,descuento_porc) " &
-            "values (?idcat,'0','COMISION CATEGORIA',?porc) ", conexionPrinc)
+            "values (?idcat,'0','COMISION CATEGORIA',?porc) ", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?idcat", Idcategoria)
                 .AddWithValue("?porc", descuentocat)

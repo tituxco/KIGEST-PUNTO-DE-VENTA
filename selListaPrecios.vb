@@ -1,11 +1,22 @@
-﻿Public Class selListaPrecios
+﻿Imports SIGT__KIGEST.GestorInsumos
+
+
+Public Class selListaPrecios
     Dim listaPrecios As List(Of
-    datosEstructura.fact_listaPrecios)
+    fact_listaPrecios)
     Public llama As String
     Private Sub selListaPrecios_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            listaPrecios = datosEstructura.fact_listaPrecios.ObtenerTodos
+            listaPrecios = fact_listaPrecios.ObtenerTodos
             dtlistas.DataSource = listaPrecios
+            For Each col As DataGridViewColumn In dtlistas.Columns
+                ' Dejamos visibles solo "nombre" y "listaPrecios"
+                If col.Name = "nombre" OrElse col.Name = "listaPrecios" Then
+                    col.Visible = True
+                Else
+                    col.Visible = False
+                End If
+            Next
         Catch ex As Exception
 
         End Try
@@ -21,7 +32,7 @@
                     CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
                     Me.Close()
                 Case "ptovtaNvo"
-                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, datosEstructura.fact_listaPrecios)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, fact_listaPrecios)
                     CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosListaPrecios()
                     Me.Close()
             End Select
@@ -41,7 +52,7 @@
                     CType(frmprincipal.ActiveMdiChild, puntoventa).txtcodPLU.Focus()
                     Me.Close()
                 Case "ptovtaNvo"
-                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, datosEstructura.fact_listaPrecios)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaListaPrecios = CType(dtlistas.CurrentRow.DataBoundItem, fact_listaPrecios)
                     CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosListaPrecios()
                     Me.Close()
             End Select

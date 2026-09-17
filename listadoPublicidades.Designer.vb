@@ -411,6 +411,7 @@ Partial Class listadoPublicidades
         Me.txtdiasmora.ForeColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.txtdiasmora.Location = New System.Drawing.Point(3, 19)
         Me.txtdiasmora.Name = "txtdiasmora"
+        Me.txtdiasmora.ReadOnly = True
         Me.txtdiasmora.Size = New System.Drawing.Size(72, 22)
         Me.txtdiasmora.TabIndex = 187
         Me.txtdiasmora.Text = "15"
@@ -522,7 +523,7 @@ Partial Class listadoPublicidades
         Me.tabCtaCte.Location = New System.Drawing.Point(4, 22)
         Me.tabCtaCte.Name = "tabCtaCte"
         Me.tabCtaCte.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabCtaCte.Size = New System.Drawing.Size(1140, 427)
+        Me.tabCtaCte.Size = New System.Drawing.Size(1231, 427)
         Me.tabCtaCte.TabIndex = 1
         Me.tabCtaCte.Text = "Cuenta corriente"
         Me.tabCtaCte.UseVisualStyleBackColor = True
@@ -532,7 +533,7 @@ Partial Class listadoPublicidades
         Me.dgvCtaCte.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvCtaCte.Location = New System.Drawing.Point(3, 92)
         Me.dgvCtaCte.Name = "dgvCtaCte"
-        Me.dgvCtaCte.Size = New System.Drawing.Size(1134, 332)
+        Me.dgvCtaCte.Size = New System.Drawing.Size(1225, 332)
         Me.dgvCtaCte.TabIndex = 79
         '
         'Panel1
@@ -549,7 +550,7 @@ Partial Class listadoPublicidades
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(3, 3)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1134, 89)
+        Me.Panel1.Size = New System.Drawing.Size(1225, 89)
         Me.Panel1.TabIndex = 77
         '
         'Label9
@@ -614,7 +615,7 @@ Partial Class listadoPublicidades
         Me.Button3.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button3.ForeColor = System.Drawing.Color.White
         Me.Button3.Image = CType(resources.GetObject("Button3.Image"), System.Drawing.Image)
-        Me.Button3.Location = New System.Drawing.Point(908, 0)
+        Me.Button3.Location = New System.Drawing.Point(999, 0)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(72, 89)
         Me.Button3.TabIndex = 184
@@ -631,7 +632,7 @@ Partial Class listadoPublicidades
         Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button4.ForeColor = System.Drawing.Color.White
         Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(980, 0)
+        Me.Button4.Location = New System.Drawing.Point(1071, 0)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(72, 89)
         Me.Button4.TabIndex = 170
@@ -648,7 +649,7 @@ Partial Class listadoPublicidades
         Me.Button5.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button5.ForeColor = System.Drawing.Color.White
         Me.Button5.Image = CType(resources.GetObject("Button5.Image"), System.Drawing.Image)
-        Me.Button5.Location = New System.Drawing.Point(1052, 0)
+        Me.Button5.Location = New System.Drawing.Point(1143, 0)
         Me.Button5.Name = "Button5"
         Me.Button5.Size = New System.Drawing.Size(82, 89)
         Me.Button5.TabIndex = 0
@@ -664,7 +665,7 @@ Partial Class listadoPublicidades
         Me.tabInformes.Location = New System.Drawing.Point(4, 22)
         Me.tabInformes.Name = "tabInformes"
         Me.tabInformes.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabInformes.Size = New System.Drawing.Size(1140, 427)
+        Me.tabInformes.Size = New System.Drawing.Size(1231, 427)
         Me.tabInformes.TabIndex = 2
         Me.tabInformes.Text = "Informes"
         Me.tabInformes.UseVisualStyleBackColor = True
@@ -674,7 +675,7 @@ Partial Class listadoPublicidades
         Me.dgvInformes.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvInformes.Location = New System.Drawing.Point(3, 92)
         Me.dgvInformes.Name = "dgvInformes"
-        Me.dgvInformes.Size = New System.Drawing.Size(1134, 332)
+        Me.dgvInformes.Size = New System.Drawing.Size(1225, 332)
         Me.dgvInformes.TabIndex = 81
         '
         'Panel2
@@ -696,7 +697,7 @@ Partial Class listadoPublicidades
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel2.Location = New System.Drawing.Point(3, 3)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(1134, 89)
+        Me.Panel2.Size = New System.Drawing.Size(1225, 89)
         Me.Panel2.TabIndex = 80
         '
         'rdporfechadeinicio
@@ -744,7 +745,7 @@ Partial Class listadoPublicidades
         Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button7.ForeColor = System.Drawing.Color.White
         Me.Button7.Image = Global.SIGT__KIGEST.My.Resources.Resources.business_chat_64px
-        Me.Button7.Location = New System.Drawing.Point(808, 0)
+        Me.Button7.Location = New System.Drawing.Point(899, 0)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(79, 89)
         Me.Button7.TabIndex = 214
@@ -761,7 +762,7 @@ Partial Class listadoPublicidades
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button2.ForeColor = System.Drawing.Color.White
         Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(887, 0)
+        Me.Button2.Location = New System.Drawing.Point(978, 0)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(79, 89)
         Me.Button2.TabIndex = 213
@@ -788,7 +789,7 @@ Partial Class listadoPublicidades
         Me.cmbestadoInforme.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmbestadoInforme.ForeColor = System.Drawing.Color.White
         Me.cmbestadoInforme.FormattingEnabled = True
-        Me.cmbestadoInforme.Items.AddRange(New Object() {"%", "PAGADA", "DEBE", "MOROSO"})
+        Me.cmbestadoInforme.Items.AddRange(New Object() {"%", "PENDIENTE", "FACTURADA", "PAGADA", "MOROSO"})
         Me.cmbestadoInforme.Location = New System.Drawing.Point(337, 19)
         Me.cmbestadoInforme.Name = "cmbestadoInforme"
         Me.cmbestadoInforme.Size = New System.Drawing.Size(134, 23)
@@ -847,7 +848,7 @@ Partial Class listadoPublicidades
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button1.ForeColor = System.Drawing.Color.White
         Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(966, 0)
+        Me.Button1.Location = New System.Drawing.Point(1057, 0)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(79, 89)
         Me.Button1.TabIndex = 184
@@ -864,7 +865,7 @@ Partial Class listadoPublicidades
         Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button6.ForeColor = System.Drawing.Color.White
         Me.Button6.Image = Global.SIGT__KIGEST.My.Resources.Resources.Microsoft_Excel_64px1
-        Me.Button6.Location = New System.Drawing.Point(1045, 0)
+        Me.Button6.Location = New System.Drawing.Point(1136, 0)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(89, 89)
         Me.Button6.TabIndex = 0

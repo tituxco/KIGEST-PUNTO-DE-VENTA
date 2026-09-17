@@ -72,10 +72,10 @@ Public Class ImportacionPrecios
 
             For Each producto As DataGridViewRow In dtimportados.Rows
                 i = 0
-                If conexionSEC.State = ConnectionState.Closed Then
-                    conexionSEC.Open()
-                    conexionSEC.ChangeDatabase(database)
-                End If
+                'If GestorConexiones.conexionSEC.State = ConnectionState.Closed Then
+                '    GestorConexiones.conexionSEC.Open()
+                '    GestorConexiones.conexionSEC.ChangeDatabase(database)
+                'End If
 
                 Dim iva As String = txtlistaimportaiva.Text
                 descripcion = producto.Cells(i).Value.ToString
@@ -151,7 +151,7 @@ Public Class ImportacionPrecios
                 sqlQuery = sqlQueryadd_INSPref & sqlQueryadd_INS & sqlQueryadd_INSValPref & sqlQueryadd_INSVal & sqlQueryupd_UPDPref & sqlQueryupd_UPDVal
                 'MsgBox(sqlQuery)
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionSEC)
                 With comandoadd.Parameters
                     .AddWithValue("?id", ObtenerIDproducto(codigo))
                     .AddWithValue("?codprov", proveedorimport)
@@ -174,26 +174,26 @@ Public Class ImportacionPrecios
 
                 sqlQueryupd_UPDPref = ") On duplicate key update iva=?iva"
                 sqlQueryupd_UPDVal = ""
-                conexionSEC.Close()
+                GestorConexiones.conexionSEC.Close()
                 ImportarListaPrecios2.ReportProgress(CInt((registroactual / dtimportados.RowCount) * 100))
             Next
 
         Catch ex As Exception
 
-            conexionSEC.Close()
+            GestorConexiones.conexionSEC.Close()
             MsgBox(ex.Message)
         End Try
     End Sub
 
     Private Function ObtenerIDproducto(ByRef codigoProd As String) As String
         Try
-            If conexionPrinc.State = ConnectionState.Closed Then
-                conexionPrinc.Open()
+            If GestorConexiones.conexionPrinc.State = ConnectionState.Closed Then
+                GestorConexiones.conexionPrinc.Open()
             End If
             If codigoProd = "" Then
                 codigoProd = "0"
             End If
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id FROM fact_insumos  where codigo Like '" & Replace(codigoProd, "'", "") & "'", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id FROM fact_insumos  where codigo Like '" & Replace(codigoProd, "'", "") & "'", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             consulta.Fill(tablaprod)
             If tablaprod.Rows.Count <> 0 Then
@@ -201,10 +201,10 @@ Public Class ImportacionPrecios
             Else
                 Return ""
             End If
-            conexionPrinc.Close()
+            GestorConexiones.conexionPrinc.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
-            conexionPrinc.Close()
+            GestorConexiones.conexionPrinc.Close()
             Return "''"
         End Try
     End Function
@@ -249,10 +249,10 @@ Public Class ImportacionPrecios
     Private Sub cargarCategoriasProd()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", gestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -272,10 +272,10 @@ Public Class ImportacionPrecios
     Private Sub cargarProveedores()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,razon from fact_proveedores order by razon asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,razon from fact_proveedores order by razon asc", GestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)

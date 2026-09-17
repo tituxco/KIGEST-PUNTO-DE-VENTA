@@ -20,7 +20,7 @@ Public Class Dialog1
             ROUND((SELECT sum(importeDebe) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)),2) as sumDEBE,
             ROUND((SELECT sum(importeHaber) FROM cm_Asientos where codigoAsiento=ld.codigoAsiento and (cuentaDebeId<>0 or cuentaHaberId<>0)),2) as sumHABER
             FROM cm_libroDiario AS ld where ld.fecha like '" & periodo & "-%%" & "'
-            having NumPartidas<>REALES or sumDebe<>sumHaber", conexionPrinc)
+            having NumPartidas<>REALES or sumDebe<>sumHaber", GestorConexiones.conexionPrinc)
             Dim tabla As New DataTable
 
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)

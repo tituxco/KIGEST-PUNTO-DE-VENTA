@@ -17,11 +17,11 @@ Public Class mantenimiento
     Private Sub cargarDtosGrales()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
             'conexionEmp.ChangeDatabase(EmpDB)
 
             'cargar tipos conceptos
-            Dim tablatipCons As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_tipos_conceptos_sueldo", conexionPrinc)
+            Dim tablatipCons As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_tipos_conceptos_sueldo", gestorConexiones.conexionPrinc)
             Dim readtipocons As New DataSet
             tablatipCons.Fill(readtipocons)
             cmbtipo.DataSource = readtipocons.Tables(0)
@@ -30,7 +30,7 @@ Public Class mantenimiento
             cmbtipo.SelectedIndex = -1
 
             'cargar unidades
-            Dim tablaUnidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_unidades_calculo", conexionPrinc)
+            Dim tablaUnidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_unidades_calculo", gestorConexiones.conexionPrinc)
             Dim readunidad As New DataSet
             tablaUnidad.Fill(readunidad)
             cmbunidad.DataSource = readunidad.Tables(0)
@@ -39,7 +39,7 @@ Public Class mantenimiento
             cmbunidad.SelectedIndex = -1
 
             'cargamos centros de costo
-            Dim tablaCentro As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_convenios", conexionPrinc)
+            Dim tablaCentro As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_convenios", gestorConexiones.conexionPrinc)
             Dim readcentro As New DataSet
             tablaCentro.Fill(readcentro)
             cmbconvenio.DataSource = readcentro.Tables(0)
@@ -48,7 +48,7 @@ Public Class mantenimiento
             cmbconvenio.SelectedIndex = -1
 
             'cargamos categorias de trabajo
-            'Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal order by nombre asc", conexionPrinc)
+            'Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal order by nombre asc", GestorConexiones.conexionPrinc)
             'Dim readcatTR As New DataSet
             'tablaCatTra.Fill(readcatTR)
             'cmbcategoria.DataSource = readcatTR.Tables(0)
@@ -57,7 +57,7 @@ Public Class mantenimiento
             'cmbcategoria.SelectedIndex = -1
 
             'cargamos nomenclador de actividades
-            'Dim tablanomenclador As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_actividades_empresas order by nombre asc", conexionPrinc)
+            'Dim tablanomenclador As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_actividades_empresas order by nombre asc", GestorConexiones.conexionPrinc)
             'Dim readnomenc As New DataTable
             'tablanomenclador.Fill(readnomenc)
             'BindingSourcenomencla.DataSource = readnomenc
@@ -75,8 +75,8 @@ Public Class mantenimiento
     Private Sub CargarConceptos()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cs.codigo as Codigo, cs.concepto as Concepto, ti.nombre as Tipo, cs.cantidad as cnt, uni.nombre as Unidades, cs.formula as Formula FROM cm_sdo_conceptos_sueldo as cs, cm_sdo_tipos_conceptos_sueldo as ti,cm_sdo_unidades_calculo as uni where cs.tipo=ti.id and cs.unidad=uni.id order by cs.codigo asc", conexionPrinc)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cs.codigo as Codigo, cs.concepto as Concepto, ti.nombre as Tipo, cs.cantidad as cnt, uni.nombre as Unidades, cs.formula as Formula FROM cm_sdo_conceptos_sueldo as cs, cm_sdo_tipos_conceptos_sueldo as ti,cm_sdo_unidades_calculo as uni where cs.tipo=ti.id and cs.unidad=uni.id order by cs.codigo asc", gestorConexiones.conexionPrinc)
             Dim tablaConc As New DataTable
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
             consulta.Fill(tablaConc)
@@ -96,7 +96,7 @@ Public Class mantenimiento
         Dim cantidad As String
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             codigo = txtcodigo.Text.ToUpper
             concepto = txtconcepto.Text.ToUpper
@@ -108,7 +108,7 @@ Public Class mantenimiento
 
             sqlQuery = "insert into cm_sdo_conceptos_sueldo (codigo, concepto, tipo, monto, unidad, formula, cantidad, usar_sueldo) values (?cod,?conc,?tip,?mont,?uni, ?form,?cant,?usar)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?cod", codigo)
                 .AddWithValue("?conc", concepto)
@@ -173,23 +173,23 @@ Public Class mantenimiento
                 Exit Sub
             ElseIf convenio = 0 And categoria = 0 Then
                 'msgbox("No se selecciono categoria")
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_convenios(nombre) values ('" & cmbconvenio.Text.ToUpper & "')"
-                comando.ExecuteReader()
-                convenio = comando.LastInsertedId
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_convenios(nombre) values ('" & cmbconvenio.Text.ToUpper & "')"
+                '    comando.ExecuteReader()
+                '    convenio = comando.LastInsertedId
 
-                Reconectar()
+                '    Reconectar()
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
-                comando.ExecuteReader()
-                categoria = comando.LastInsertedId
-            ElseIf convenio <> 0 And categoria = 0 Then
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
+                '    comando.ExecuteReader()
+                '    categoria = comando.LastInsertedId
+                'ElseIf convenio <> 0 And categoria = 0 Then
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
-                comando.ExecuteReader()
-                categoria = comando.LastInsertedId
+                '    comando.Connection = gestorConexiones.conexionPrinc
+                '    comando.CommandText = "insert into cm_sdo_categoria_personal(nombre,idconvenio) values ('" & cmbcategoria.Text.ToUpper & "','" & convenio & "')"
+                '    comando.ExecuteReader()
+                '    categoria = comando.LastInsertedId
             End If
             If categoria = 0 Or convenio = 0 Then
                 MsgBox("No hay categoria o convenio seleccionado o ingresado")
@@ -202,7 +202,7 @@ Public Class mantenimiento
             End If
             'MsgBox(cadenaCONC & "----" & centrosel)
             Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?conv", convenio)
                 .AddWithValue("?conc", cadenaCONC)
@@ -236,8 +236,8 @@ Public Class mantenimiento
             txtsueldo.Text = ""
             If cmbconvenio.SelectedValue <> 0 And cmbcategoria.SelectedValue <> 0 Then
 
-                conexionPrinc.ChangeDatabase(database)
-                sql.Connection = conexionPrinc
+                'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "SELECT * from cm_sdo_centro_costos where categoria_personal = " & cmbcategoria.SelectedValue & " and convenio=" & cmbconvenio.SelectedValue
 
                 sql.CommandType = CommandType.Text
@@ -286,10 +286,10 @@ Public Class mantenimiento
             Select Case dtconceptos.CurrentCellAddress.X
                 Case 6
                     'se edito la formula
-                    sqlQuery = "update cm_sdo_conceptos_sueldo set formula='" & dtconceptos.CurrentCell.Value.ToString.ToUpper & "' where codigo=" & dtconceptos.Rows(dtconceptos.CurrentCellAddress.Y).Cells(1).Value
-                    comando.Connection = conexionPrinc
-                    comando.CommandText = sqlQuery
-                    comando.ExecuteReader()
+                    'sqlQuery = "update cm_sdo_conceptos_sueldo set formula='" & dtconceptos.CurrentCell.Value.ToString.ToUpper & "' where codigo=" & dtconceptos.Rows(dtconceptos.CurrentCellAddress.Y).Cells(1).Value
+                    'comando.Connection = GestorConexiones.conexionPrinc
+                    'comando.CommandText = sqlQuery
+                    'comando.ExecuteReader()
                     'CargarConceptos()
                     MsgBox("Formula Actualizada")
 
@@ -316,7 +316,7 @@ Public Class mantenimiento
     '            Case 2
     '                'se edito la formula
     '                sqlQuery = "update cm_actividades_empresas set alicuota='" & dtnomenclador.CurrentCell.Value.ToString.ToUpper & "' where id=" & dtnomenclador.Rows(dtnomenclador.CurrentCellAddress.Y).Cells(0).Value
-    '                comando.Connection = conexionPrinc
+    '                comando.Connection = GestorConexiones.conexionPrinc
     '                comando.CommandText = sqlQuery
     '                comando.ExecuteReader()
     '                'CargarConceptos()
@@ -354,7 +354,7 @@ Public Class mantenimiento
     Private Sub cmbconvenio_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbconvenio.SelectionChangeCommitted
         Dim idconvenio = cmbconvenio.SelectedValue
         Reconectar()
-        Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal where idconvenio=" & idconvenio & " order by nombre asc", conexionPrinc)
+        Dim tablaCatTra As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_sdo_categoria_personal where idconvenio=" & idconvenio & " order by nombre asc", GestorConexiones.conexionPrinc)
         Dim readcatTR As New DataSet
         tablaCatTra.Fill(readcatTR)
         cmbcategoria.DataSource = readcatTR.Tables(0)
@@ -368,7 +368,7 @@ Public Class mantenimiento
     End Sub
 
     'Private Sub TabPage5_Enter(sender As Object, e As EventArgs)
-    '    Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("Show databases like '%" & conexionPrinc.Database.ToString & "%' ", conexionPrinc)
+    '    Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("Show databases like '%" & GestorConexiones.conexionPrinc.Database.ToString & "%' ", GestorConexiones.conexionPrinc)
     '    Dim tablacl As New DataTable
     '    Dim infocl() As DataRow
     '    consulta.Fill(tablacl)

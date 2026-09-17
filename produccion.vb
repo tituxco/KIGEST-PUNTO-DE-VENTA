@@ -12,7 +12,7 @@
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * FROM 
             fact_insumos_produccion where 
             fecha_alta between '" & desde & "' and '" & hasta & "'" &
-            BusqFacturados, conexionPrinc)
+            BusqFacturados, GestorConexiones.conexionPrinc)
         Dim TablaEnvasados As New DataTable
 
         consulta.Fill(TablaEnvasados)

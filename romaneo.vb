@@ -28,7 +28,7 @@
 
     Private Sub cargarAlmacenes()
         Reconectar()
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         Dim readprov2 As new DataSet
         tablaprov.Fill(readprov)
@@ -74,7 +74,7 @@
         End If
         'MsgBox(idfila)
         Reconectar()
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,precio, ganancia, utilidad1, utilidad2 FROM fact_insumos " & Busq, conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion,precio, ganancia, utilidad1, utilidad2 FROM fact_insumos " & Busq, GestorConexiones.conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         ' MsgBox(consulta.SelectCommand.CommandText)
@@ -174,7 +174,7 @@
             sqlQuery = "insert into fact_proveedores_fact " _
                             & "(fecha, tipo,numero,idproveedor) values " _
                             & "('" & Format(Now(), "yyyy-MM-dd") & "', " & "'INT'" & ", 'TR-INTERNA','0')"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
 
             idcomprobante = comandoadd.LastInsertedId
@@ -217,7 +217,7 @@
 
                 sqlQuery = "insert into fact_insumos_lotes (nombre,stock,idproducto,idfactura,compracant,tipo_prod,idalmacen) values " _
                     & "(?nombre,?stock,?idprod,?idfactura,?compracant,?tipoprod,?idalmacen)"
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?nombre", "-")
                     .AddWithValue("?stock", lotstock)
@@ -232,7 +232,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_proveedores_fact set cerrado=1 where id= " & idcomprobante
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader

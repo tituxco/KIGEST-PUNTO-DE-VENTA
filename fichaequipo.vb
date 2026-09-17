@@ -14,7 +14,7 @@
     Private Sub tmrComprobarOR_Tick(sender As Object, e As EventArgs) Handles tmrComprobarOR.Tick
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select max(id) from tecni_taller", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select max(id) from tecni_taller", GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -88,81 +88,182 @@
         End If
 
     End Sub
+    'Private Sub cargarOrden()
+    '    Try
+    '        Reconectar()
+    '        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT tall.trabajo_categoria, tall.equipo, tall.cliente, cl.nomapell_razon,tall.recibe, eq.tipo_equ,eq.marca,eq.modelo, tall.serie, 
+    '        tall.accesorios, tall.motivo_ing, tall.observaciones, tall.falla, tall.tarea_realiz, format(tall.mo_monto,2,'es_AR') as mo_monto,tall.actualizado,tall.tecnico,tall.infoextra,tall.estado,tall.modelo,tall.fecha_ing, 
+    '        tall.trab_estado, tall.mail, tall.telefono,tall.presupuesto, 
+    '        if (tall.fecha_eg like '0000-00-00','SIN TERMINAR',tall.fecha_eg), cl.lista_precios,
+    '        (select especificaciones from tecni_equipos_clientes where id=tall.equipo) as especificaciones 
+    '        FROM tecni_taller as tall, fact_clientes as cl, tecni_equipos as eq 
+    '        where tall.cliente=cl.idclientes and tall.modelo=eq.id and tall.id=" & ORden, GestorConexiones.conexionPrinc)
+    '        Dim tablaequipo As New DataTable
+    '        Dim infoequ() As DataRow
+    '        consulta.Fill(tablaequipo)
+    '        infoequ = tablaequipo.Select("")
+    '        cmbcattrab.SelectedValue = infoequ(0)(0)
+    '        txtnumor.Text = CompletarCeros(ORden, 2)
+    '        txtcodint.Text = infoequ(0)(1)
+    '        txtctaclie.Text = infoequ(0)(2)
+    '        txtrazon.Text = infoequ(0)(3)
+    '        cmbrecibeusuario.SelectedValue = infoequ(0)(4)
+    '        cmbtipoequ.SelectedValue = infoequ(0)(5)
+    '        cmbmarcas.SelectedValue = infoequ(0)(6)
+    '        cmbmodelos.SelectedValue = infoequ(0)(7)
+    '        txtnumeroSerie.Text = infoequ(0)(8)
+    '        txtaccesorios.Text = infoequ(0)(9)
+    '        txtmotivo.Text = infoequ(0)(10)
+    '        txtobservaciones.Text = infoequ(0)(11)
+    '        txtfalla.Text = infoequ(0)(12)
+    '        txtresolucion.Text = infoequ(0)(13)
+    '        txtmanoobra.Text = infoequ(0)(14)
+    '        lblfechaact.Text = "Revisado:" & infoequ(0)(15).ToString
+    '        If infoequ(0)(16) = 0 And infoequ(0)(18) <> 8 Then
+    '            cmbtecnico.SelectedValue = DatosAcceso.Tecnico 'infoequ(0)(16)
+    '        Else
+    '            cmbtecnico.SelectedValue = infoequ(0)(16)
+    '        End If
+
+    '        txtinfoextra.Text = infoequ(0)(17)
+    '        cmbestadotrab.SelectedValue = infoequ(0)(18)
+    '        If infoequ(0)(18) = 8 Then
+    '            cmdfinalizar.Enabled = False
+    '            lblfechafin.Text = "Finalizado: " & infoequ(0)(25).ToString
+    '            cmdimprimir.Enabled = True
+    '        End If
+    '        lblmodelo.Text = infoequ(0)(19)
+    '        lblfecha.Text = "Ingreso: " & infoequ(0)(20).ToString
+    '        If infoequ(0)(21) = 1 Then
+    '            chkfacturado.Checked = True
+    '        End If
+    '        txtmail.Text = infoequ(0)(22).ToString
+    '        txttelefono.Text = infoequ(0)(23).ToString
+    '        txtpresupuesto.Text = infoequ(0)(24).ToString
+    '        'cargamos los repuestos
+    '        txtespecificaciones.Text = infoequ(0)("especificaciones").ToString
+    '        Dim consultarep As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,plu,cantidad,descripcion,
+    '        format(iva,2,'es_AR') as iva, format(punit,2,'es_AR') as punit,format(ptotal,2,'es_AR') as ptotal,idtaller 
+    '        from tecni_taller_insumos where idtaller=" & ORden, GestorConexiones.conexionPrinc)
+    '        Dim tablarep As New DataTable
+    '        Dim inforep() As DataRow
+    '        Dim i As Integer
+    '        consultarep.Fill(tablarep)
+    '        inforep = tablarep.Select("")
+    '        dtproductos.Rows.Clear()
+    '        For i = 0 To inforep.GetUpperBound(0)
+    '            dtproductos.Rows.Add(inforep(i)(0), inforep(i)(1), inforep(i)(3), inforep(i)(4), inforep(i)(5), inforep(i)(6), inforep(i)(7))
+    '            dtproductos.Rows(dtproductos.RowCount - 2).DefaultCellStyle.BackColor = Color.GreenYellow
+    '        Next
+    '        cmblistaprecio.SelectedValue = infoequ(0)(26)
+    '        CalcularTotales()
+    '    Catch ex As Exception
+    '    End Try
+    'End Sub
+
     Private Sub cargarOrden()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT tall.trabajo_categoria, tall.equipo, tall.cliente, cl.nomapell_razon,tall.recibe, eq.tipo_equ,eq.marca,eq.modelo, tall.serie, 
-            tall.accesorios, tall.motivo_ing, tall.observaciones, tall.falla, tall.tarea_realiz, format(tall.mo_monto,2,'es_AR') as mo_monto,tall.actualizado,tall.tecnico,tall.infoextra,tall.estado,tall.modelo,tall.fecha_ing, 
-            tall.trab_estado, tall.mail, tall.telefono,tall.presupuesto, 
-            if (tall.fecha_eg like '0000-00-00','SIN TERMINAR',tall.fecha_eg), cl.lista_precios,
-            (select especificaciones from tecni_equipos_clientes where id=tall.equipo) as especificaciones 
-            FROM tecni_taller as tall, fact_clientes as cl, tecni_equipos as eq 
-            where tall.cliente=cl.idclientes and tall.modelo=eq.id and tall.id=" & ORden, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT tall.trabajo_categoria, tall.equipo, tall.cliente, cl.nomapell_razon,tall.recibe, eq.tipo_equ,eq.marca,eq.modelo, tall.serie, " &
+        "tall.accesorios, tall.motivo_ing, tall.observaciones, tall.falla, tall.tarea_realiz, format(tall.mo_monto,2,'es_AR') as mo_monto,tall.actualizado,tall.tecnico,tall.infoextra,tall.estado,tall.modelo,tall.fecha_ing, " &
+        "tall.trab_estado, tall.mail, tall.telefono,tall.presupuesto, " &
+        "if (tall.fecha_eg like '0000-00-00','SIN TERMINAR',tall.fecha_eg), cl.lista_precios," &
+        "(select especificaciones from tecni_equipos_clientes where id=tall.equipo) as especificaciones " &
+        "FROM tecni_taller as tall, fact_clientes as cl, tecni_equipos as eq " &
+        "where tall.cliente=cl.idclientes and tall.modelo=eq.id and tall.id=" & ORden, GestorConexiones.conexionPrinc)
+
             Dim tablaequipo As New DataTable
             Dim infoequ() As DataRow
             consulta.Fill(tablaequipo)
             infoequ = tablaequipo.Select("")
-            cmbcattrab.SelectedValue = infoequ(0)(0)
-            txtnumor.Text = CompletarCeros(ORden, 2)
-            txtcodint.Text = infoequ(0)(1)
-            txtctaclie.Text = infoequ(0)(2)
-            txtrazon.Text = infoequ(0)(3)
-            cmbrecibeusuario.SelectedValue = infoequ(0)(4)
-            cmbtipoequ.SelectedValue = infoequ(0)(5)
-            cmbmarcas.SelectedValue = infoequ(0)(6)
-            cmbmodelos.SelectedValue = infoequ(0)(7)
-            txtnumeroSerie.Text = infoequ(0)(8)
-            txtaccesorios.Text = infoequ(0)(9)
-            txtmotivo.Text = infoequ(0)(10)
-            txtobservaciones.Text = infoequ(0)(11)
-            txtfalla.Text = infoequ(0)(12)
-            txtresolucion.Text = infoequ(0)(13)
-            txtmanoobra.Text = infoequ(0)(14)
-            lblfechaact.Text = "Revisado:" & infoequ(0)(15).ToString
-            If infoequ(0)(16) = 0 And infoequ(0)(18) <> 8 Then
-                cmbtecnico.SelectedValue = DatosAcceso.Tecnico 'infoequ(0)(16)
-            Else
-                cmbtecnico.SelectedValue = infoequ(0)(16)
+
+            If infoequ.Length > 0 Then
+                ' --- Manejo de ComboBoxes (Solo asigna si no es nulo) ---
+                If Not IsDBNull(infoequ(0)(0)) Then cmbcattrab.SelectedValue = infoequ(0)(0)
+                If Not IsDBNull(infoequ(0)(4)) Then cmbrecibeusuario.SelectedValue = infoequ(0)(4)
+                If Not IsDBNull(infoequ(0)(5)) Then cmbtipoequ.SelectedValue = infoequ(0)(5)
+                If Not IsDBNull(infoequ(0)(6)) Then cmbmarcas.SelectedValue = infoequ(0)(6)
+                If Not IsDBNull(infoequ(0)(7)) Then cmbmodelos.SelectedValue = infoequ(0)(7)
+                If Not IsDBNull(infoequ(0)(26)) Then cmblistaprecio.SelectedValue = infoequ(0)(26)
+
+                ' --- Manejo de TextBoxes y Labels (.ToString() convierte DBNull en string vacío "") ---
+                txtnumor.Text = CompletarCeros(ORden, 2)
+                txtcodint.Text = infoequ(0)(1).ToString()
+                txtctaclie.Text = infoequ(0)(2).ToString()
+                txtrazon.Text = infoequ(0)(3).ToString()
+                txtnumeroSerie.Text = infoequ(0)(8).ToString()
+                txtaccesorios.Text = infoequ(0)(9).ToString()
+                txtmotivo.Text = infoequ(0)(10).ToString()
+                txtobservaciones.Text = infoequ(0)(11).ToString()
+                txtfalla.Text = infoequ(0)(12).ToString()
+                txtresolucion.Text = infoequ(0)(13).ToString()
+                txtmanoobra.Text = infoequ(0)(14).ToString()
+                lblfechaact.Text = "Revisado:" & infoequ(0)(15).ToString()
+                txtinfoextra.Text = infoequ(0)(17).ToString()
+                lblmodelo.Text = infoequ(0)(19).ToString()
+                lblfecha.Text = "Ingreso: " & infoequ(0)(20).ToString()
+                txtmail.Text = infoequ(0)(22).ToString()
+                txttelefono.Text = infoequ(0)(23).ToString()
+                txtpresupuesto.Text = infoequ(0)(24).ToString()
+                txtespecificaciones.Text = infoequ(0)("especificaciones").ToString()
+
+                ' --- Manejo de condiciones numéricas (Validamos nulos antes de comparar) ---
+                Dim tecnico As Integer = If(IsDBNull(infoequ(0)(16)), 0, Convert.ToInt32(infoequ(0)(16)))
+                Dim estado As Integer = If(IsDBNull(infoequ(0)(18)), 0, Convert.ToInt32(infoequ(0)(18)))
+                Dim facturado As Integer = If(IsDBNull(infoequ(0)(21)), 0, Convert.ToInt32(infoequ(0)(21)))
+
+                cmbestadotrab.SelectedValue = estado
+
+                If tecnico = 0 AndAlso estado <> 8 Then
+                    cmbtecnico.SelectedValue = DatosAcceso.Tecnico
+                Else
+                    cmbtecnico.SelectedValue = tecnico
+                End If
+
+                If estado = 8 Then
+                    cmdfinalizar.Enabled = False
+                    lblfechafin.Text = "Finalizado: " & infoequ(0)(25).ToString()
+                    cmdimprimir.Enabled = True
+                End If
+
+                If facturado = 1 Then
+                    chkfacturado.Checked = True
+                End If
+
+                ' --- Carga de repuestos (Con protección .ToString()) ---
+                Dim consultarep As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,plu,cantidad,descripcion," &
+            "format(iva,2,'es_AR') as iva, format(punit,2,'es_AR') as punit,format(ptotal,2,'es_AR') as ptotal,idtaller " &
+            "from tecni_taller_insumos where idtaller=" & ORden, GestorConexiones.conexionPrinc)
+
+                Dim tablarep As New DataTable
+                Dim inforep() As DataRow
+                consultarep.Fill(tablarep)
+                inforep = tablarep.Select("")
+                dtproductos.Rows.Clear()
+
+                For i As Integer = 0 To inforep.GetUpperBound(0)
+                    dtproductos.Rows.Add(
+                    inforep(i)(0).ToString(),
+                    inforep(i)(1).ToString(),
+                    inforep(i)(3).ToString(),
+                    inforep(i)(4).ToString(),
+                    inforep(i)(5).ToString(),
+                    inforep(i)(6).ToString(),
+                    inforep(i)(7).ToString()
+                )
+                    dtproductos.Rows(dtproductos.RowCount - 2).DefaultCellStyle.BackColor = Color.GreenYellow
+                Next
+
+                CalcularTotales()
             End If
 
-            txtinfoextra.Text = infoequ(0)(17)
-            cmbestadotrab.SelectedValue = infoequ(0)(18)
-            If infoequ(0)(18) = 8 Then
-                cmdfinalizar.Enabled = False
-                lblfechafin.Text = "Finalizado: " & infoequ(0)(25).ToString
-                cmdimprimir.Enabled = True
-            End If
-            lblmodelo.Text = infoequ(0)(19)
-            lblfecha.Text = "Ingreso: " & infoequ(0)(20).ToString
-            If infoequ(0)(21) = 1 Then
-                chkfacturado.Checked = True
-            End If
-            txtmail.Text = infoequ(0)(22).ToString
-            txttelefono.Text = infoequ(0)(23).ToString
-            txtpresupuesto.Text = infoequ(0)(24).ToString
-            'cargamos los repuestos
-            txtespecificaciones.Text = infoequ(0)("especificaciones").ToString
-            Dim consultarep As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,plu,cantidad,descripcion,
-            format(iva,2,'es_AR') as iva, format(punit,2,'es_AR') as punit,format(ptotal,2,'es_AR') as ptotal,idtaller 
-            from tecni_taller_insumos where idtaller=" & ORden, conexionPrinc)
-            Dim tablarep As New DataTable
-            Dim inforep() As DataRow
-            Dim i As Integer
-            consultarep.Fill(tablarep)
-            inforep = tablarep.Select("")
-            dtproductos.Rows.Clear()
-            For i = 0 To inforep.GetUpperBound(0)
-                dtproductos.Rows.Add(inforep(i)(0), inforep(i)(1), inforep(i)(3), inforep(i)(4), inforep(i)(5), inforep(i)(6), inforep(i)(7))
-                dtproductos.Rows(dtproductos.RowCount - 2).DefaultCellStyle.BackColor = Color.GreenYellow
-            Next
-            cmblistaprecio.SelectedValue = infoequ(0)(26)
-            CalcularTotales()
         Catch ex As Exception
+            ' Opcional: MsgBox(ex.Message) para depurar si falla algo dentro del bloque
         End Try
     End Sub
     Private Sub CargarCategoriastrab()
         Reconectar()
-        Dim tablacattrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_trabajo_categoria", conexionPrinc)
+        Dim tablacattrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_trabajo_categoria", GestorConexiones.conexionPrinc)
         Dim readcattrab As New DataSet
         tablacattrab.Fill(readcattrab)
         cmbcattrab.DataSource = readcattrab.Tables(0)
@@ -174,7 +275,7 @@
 
     Private Sub CargarEstadoTall()
         Reconectar()
-        Dim tablaesttall As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_taller_estado where id<>18", conexionPrinc)
+        Dim tablaesttall As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_taller_estado where id<>18", GestorConexiones.conexionPrinc)
         Dim readesttall As New DataSet
         tablaesttall.Fill(readesttall)
         cmbestadotrab.DataSource = readesttall.Tables(0)
@@ -186,7 +287,7 @@
 
     Private Sub CargarUsuarios()
         Reconectar()
-        Dim tablausuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from cm_usuarios ", conexionPrinc)
+        Dim tablausuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from cm_usuarios ", GestorConexiones.conexionPrinc)
         Dim readusuarios As New DataSet
         tablausuarios.Fill(readusuarios)
         cmbrecibeusuario.DataSource = readusuarios.Tables(0)
@@ -197,7 +298,7 @@
     End Sub
     Private Sub CargarTecnicos()
         Reconectar()
-        Dim tablatecnicos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from tecni_tecnicos where activo=1 ", conexionPrinc)
+        Dim tablatecnicos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from tecni_tecnicos where activo=1 ", GestorConexiones.conexionPrinc)
         Dim readtecnicos As New DataSet
         tablatecnicos.Fill(readtecnicos)
         cmbtecnico.DataSource = readtecnicos.Tables(0)
@@ -210,10 +311,10 @@
     Private Sub cargarMarcas()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", conexionPrinc)
+            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readmarc As New DataSet
             tablamarca.Fill(readmarc)
             cmbmarcas.DataSource = readmarc.Tables(0)
@@ -228,10 +329,10 @@
     Private Sub cargarModelos(ByRef marca As Integer)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", conexionPrinc)
+            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readmod As New DataSet
             tablamodelo.Fill(readmod)
             cmbmodelos.DataSource = readmod.Tables(0)
@@ -246,7 +347,7 @@
     Private Sub CargarTipoEquipo()
         Try
             Reconectar()
-            Dim tablatipoeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_equipos_tipo", conexionPrinc)
+            Dim tablatipoeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_equipos_tipo", GestorConexiones.conexionPrinc)
             Dim readtipoequ As New DataSet
             tablatipoeq.Fill(readtipoequ)
             cmbtipoequ.DataSource = readtipoequ.Tables(0)
@@ -260,7 +361,7 @@
     Private Sub CargarListas()
         Try
             Reconectar()
-            Dim tablautil As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", conexionPrinc)
+            Dim tablautil As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", GestorConexiones.conexionPrinc)
             Dim readutil As New DataSet
             tablautil.Fill(readutil)
             cmblistaprecio.DataSource = readutil.Tables(0)
@@ -287,7 +388,7 @@
             Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
         End If
 
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, GestorConexiones.conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         'MsgBox(consulta.SelectCommand.CommandText)
@@ -320,14 +421,14 @@
             Dim ganancia As Double
             
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda FROM fact_insumos where id=" & codProd, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda FROM fact_insumos where id=" & codProd, GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
             filasProd = tablaprod.Select("")
 
             'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad FROM fact_listas_precio where id=" & cmblistaprecio.SelectedValue, conexionPrinc)
+            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad FROM fact_listas_precio where id=" & cmblistaprecio.SelectedValue, GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             Dim filaslistas() As DataRow
             consultalis.Fill(tablalistas)
@@ -337,7 +438,7 @@
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select (select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") as cotiza, (select valor from fact_configuraciones where  id =1) as lista"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -395,7 +496,7 @@
     '        Dim sqlQuery As String
     '        sqlQuery = "update tecni_equipos_clientes set especificaciones = " & txtespecificaciones.Text.ToUpper & " where id= " & codint
 
-    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
     '        With comandoadd.Parameters
 
 
@@ -404,49 +505,199 @@
 
     '    End Try
     'End Sub
+    'Private Sub GuardarOrden(ByRef estado As Integer)
+    '    Try
+    '        Dim cliente As Integer = txtctaclie.Text
+    '        Dim motivoIng As String = txtmotivo.Text.ToUpper
+    '        Dim accesorios As String = txtaccesorios.Text.ToUpper
+    '        'Dim fecha As String = FECHAGRAL
+    '        Dim modelo As Integer = lblmodelo.Text
+    '        Dim trabajoCategoria As Integer = cmbcattrab.SelectedValue
+    '        Dim infoExtra As String = txtinfoextra.Text.ToUpper
+    '        Dim tecnico As Integer = cmbtecnico.SelectedValue
+    '        Dim recibe As Integer = cmbrecibeusuario.SelectedValue
+
+    '        'Dim estado As Integer = cmbestadotrab.SelectedValue
+    '        Dim falla As String = txtfalla.Text
+    '        Dim resolucion As String = txtresolucion.Text
+    '        Dim observaciones As String = txtobservaciones.Text
+    '        Dim precioMO As String = txtmanoobra.Text.ToString.Replace(".", "").Replace(",", ".")
+    '        Dim precioINS As String = txttotalinsumos.Text.ToString.Replace(".", "").Replace(",", ".")
+    '        Dim precioTOT As String = txttotaltrabajo.Text.ToString.Replace(".", "").Replace(",", ".")
+    '        Dim sqlQuery As String
+    '        Dim codInt As String = txtcodint.Text
+    '        'Dim f As date =Date.ParseExact(lblfecha.Text.Replace("Ingreso: ", "").ToString, "MM/dd/yyyy", Globalization.CultureInfo.InvariantCulture)
+
+    '        'Dim fecha As String = f.ToString("yyyy-MM-dd")
+
+    '        Reconectar()
+    '        sqlQuery = "INSERT INTO tecni_taller(id,equipo,trab_estado,tecnico,estado,falla,tarea_realiz,
+    '        observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie,
+    '        cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(
+    '        ?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins,
+    '        ?preciomo,?extra,?presup,?mail,?telefono,?serie,
+    '        ?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe)    
+
+    '        ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, 
+    '        tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, 
+    '        observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, 
+    '        mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, 
+    '        telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng,
+    '        accesorios=?accesorios,fecha_ing=?fechaIng,modelo=?modeloEq,
+    '        trabajo_categoria=?trabCateg,recibe=?recibe"
+
+
+
+    '        'Dim feg As String
+
+    '        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
+    '        With comandoadd.Parameters
+    '            .AddWithValue("?tecnico", tecnico)
+    '            .AddWithValue("?estado", estado)
+    '            .AddWithValue("?falla", falla)
+    '            .AddWithValue("?resolucion", resolucion)
+    '            .AddWithValue("?observaciones", observaciones)
+    '            .AddWithValue("?preciomo", precioMO)
+    '            .AddWithValue("?preciotot", precioTOT)
+    '            .AddWithValue("?precioins", precioINS)
+    '            .AddWithValue("?extra", txtinfoextra.Text.ToUpper)
+    '            .AddWithValue("?codint", codInt)
+    '            .AddWithValue("?presup", txtpresupuesto.Text)
+    '            .AddWithValue("?mail", txtmail.Text)
+    '            .AddWithValue("?telefono", txttelefono.Text)
+    '            .AddWithValue("?serie", txtnumeroSerie.Text)
+    '            .AddWithValue("?id", ORden)
+    '            .AddWithValue("?cliente", cliente)
+    '            .AddWithValue("?motivoIng", motivoIng)
+    '            .AddWithValue("?accesorios", accesorios)
+    '            .AddWithValue("?fechaIng", NormalizarFecha(lblfecha.Text.Replace("Ingreso: ", "").ToString))
+    '            .AddWithValue("?modeloEq", modelo)
+    '            .AddWithValue("?trabCateg", trabajoCategoria)
+    '            .AddWithValue("?recibe", recibe)
+
+    '            If chkfacturado.Checked = True Then
+    '                .AddWithValue("?trabest", 1)
+    '            Else
+    '                .AddWithValue("?trabest", 3)
+    '            End If
+    '        End With
+    '        comandoadd.ExecuteNonQuery()
+
+    '        If codInt = 0 And txtespecificaciones.Text <> "" Then
+    '            MsgBox("no se puede guardar las especificaciones hasta que se finalice la orden")
+    '        Else
+    '            ' guardarEspecificaciones
+    '        End If
+
+
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '    End Try
+
+    '    Try
+    '        Dim cod As String
+    '        Dim cantidad As String
+    '        Dim descripcion As String
+    '        Dim iva As String
+    '        Dim punit As String
+    '        Dim ptotal As String
+    '        Dim plu As String
+    '        'Dim num_fact As String
+
+    '        Dim sqlQuery As String
+    '        Dim i As Integer
+    '        sqlQuery = "DELETE FROM tecni_taller_insumos where idtaller=" & ORden
+    '        Reconectar()
+    '        Dim comandodel As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
+    '        comandodel.ExecuteNonQuery()
+
+    '        For i = 0 To dtproductos.RowCount - 2
+    '            If IsNothing(dtproductos.Rows(i).Cells(0).Value) Then
+    '                cod = 0
+    '            Else
+    '                cod = dtproductos.Rows(i).Cells(0).Value
+    '            End If
+    '            plu = dtproductos.Rows(i).Cells(1).Value
+    '            cantidad = dtproductos.Rows(i).Cells(2).Value.ToString.Replace(".", "").Replace(",", ".")
+    '            descripcion = dtproductos.Rows(i).Cells(3).Value.ToString.ToUpper
+    '            iva = dtproductos.Rows(i).Cells(4).Value.ToString.Replace(".", "").Replace(",", ".")
+    '            punit = dtproductos.Rows(i).Cells(5).Value.ToString.Replace(".", "").Replace(",", ".")
+    '            ptotal = dtproductos.Rows(i).Cells(6).Value.ToString.Replace(".", "").Replace(",", ".")
+
+    '            sqlQuery = "insert into tecni_taller_insumos " _
+    '            & "(codigo,plu,cantidad, descripcion, iva, punit, ptotal,idtaller ) values" _
+    '            & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tall)"
+    '            Reconectar()
+    '            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
+    '            With comandoadd.Parameters
+    '                .AddWithValue("?cod", cod)
+    '                .AddWithValue("?plu", plu)
+    '                .AddWithValue("?cant", cantidad)
+    '                .AddWithValue("?desc", descripcion)
+    '                .AddWithValue("?iva", iva)
+    '                .AddWithValue("?punit", punit)
+    '                .AddWithValue("?ptot", ptotal)
+    '                .AddWithValue("?tall", ORden)
+
+    '            End With
+    '            comandoadd.ExecuteNonQuery()
+    '        Next
+
+
+    '        ModProd = False
+    '    Catch ex As Exception
+
+    '    End Try
+    'End Sub
+
     Private Sub GuardarOrden(ByRef estado As Integer)
         Try
-            Dim cliente As Integer = txtctaclie.Text
-            Dim motivoIng As String = txtmotivo.Text.ToUpper
-            Dim accesorios As String = txtaccesorios.Text.ToUpper
-            'Dim fecha As String = FECHAGRAL
-            Dim modelo As Integer = lblmodelo.Text
-            Dim trabajoCategoria As Integer = cmbcattrab.SelectedValue
-            Dim infoExtra As String = txtinfoextra.Text.ToUpper
-            Dim tecnico As Integer = cmbtecnico.SelectedValue
-            Dim recibe As Integer = cmbrecibeusuario.SelectedValue
+            ' --- 1. CAPTURA SEGURA DE VARIABLES ---
+            Dim cliente As Integer = 0
+            Integer.TryParse(txtctaclie.Text, cliente)
 
-            'Dim estado As Integer = cmbestadotrab.SelectedValue
+            Dim modelo As Integer = 0
+            Integer.TryParse(lblmodelo.Text, modelo)
+
+            ' Validamos que el ComboBox tenga un valor antes de asignarlo
+            Dim trabajoCategoria As Integer = If(cmbcattrab.SelectedValue IsNot Nothing, Convert.ToInt32(cmbcattrab.SelectedValue), 0)
+            Dim tecnico As Integer = If(cmbtecnico.SelectedValue IsNot Nothing, Convert.ToInt32(cmbtecnico.SelectedValue), 0)
+            Dim recibe As Integer = If(cmbrecibeusuario.SelectedValue IsNot Nothing, Convert.ToInt32(cmbrecibeusuario.SelectedValue), 0)
+
+            Dim motivoIng As String = txtmotivo.Text.ToUpper()
+            Dim accesorios As String = txtaccesorios.Text.ToUpper()
+            Dim infoExtra As String = txtinfoextra.Text.ToUpper()
             Dim falla As String = txtfalla.Text
             Dim resolucion As String = txtresolucion.Text
             Dim observaciones As String = txtobservaciones.Text
-            Dim precioMO As String = txtmanoobra.Text.ToString.Replace(".", "").Replace(",", ".")
-            Dim precioINS As String = txttotalinsumos.Text.ToString.Replace(".", "").Replace(",", ".")
-            Dim precioTOT As String = txttotaltrabajo.Text.ToString.Replace(".", "").Replace(",", ".")
-            Dim sqlQuery As String
+
+            ' Validamos los textos de montos por si están vacíos
+            Dim precioMO As String = If(String.IsNullOrWhiteSpace(txtmanoobra.Text), "0", txtmanoobra.Text.Replace(".", "").Replace(",", "."))
+            Dim precioINS As String = If(String.IsNullOrWhiteSpace(txttotalinsumos.Text), "0", txttotalinsumos.Text.Replace(".", "").Replace(",", "."))
+            Dim precioTOT As String = If(String.IsNullOrWhiteSpace(txttotaltrabajo.Text), "0", txttotaltrabajo.Text.Replace(".", "").Replace(",", "."))
+
             Dim codInt As String = txtcodint.Text
 
+            ' Limpiamos la fecha de ingreso de forma segura por si el label está vacío
+            Dim textoFecha As String = If(lblfecha.Text IsNot Nothing, lblfecha.Text.Replace("Ingreso: ", "").Trim(), "")
+
+            ' --- 2. GUARDADO EN BASE DE DATOS (TEC_TALLER) ---
             Reconectar()
-            sqlQuery = "INSERT INTO tecni_taller(id,equipo,trab_estado,tecnico,estado,falla,tarea_realiz,
-            observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie,
-            cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(
-            ?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins,
-            ?preciomo,?extra,?presup,?mail,?telefono,?serie,
-            ?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe)    
-            
-            ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, 
-            tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, 
-            observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, 
-            mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, 
-            telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng,
-            accesorios=?accesorios,fecha_ing=?fechaIng,modelo=?modeloEq,
-            trabajo_categoria=?trabCateg,recibe=?recibe"
+            Dim sqlQuery As String = "INSERT INTO tecni_taller(id,equipo,trab_estado,tecnico,estado,falla,tarea_realiz," &
+        "observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie," &
+        "cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(" &
+        "?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins," &
+        "?preciomo,?extra,?presup,?mail,?telefono,?serie," &
+        "?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe) " &
+        "ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, " &
+        "tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, " &
+        "observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, " &
+        "mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, " &
+        "telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng," &
+        "accesorios=?accesorios,fecha_ing=?fechaIng,modelo=?modeloEq," &
+        "trabajo_categoria=?trabCateg,recibe=?recibe"
 
-
-
-            'Dim feg As String
-
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?tecnico", tecnico)
                 .AddWithValue("?estado", estado)
@@ -456,7 +707,7 @@
                 .AddWithValue("?preciomo", precioMO)
                 .AddWithValue("?preciotot", precioTOT)
                 .AddWithValue("?precioins", precioINS)
-                .AddWithValue("?extra", txtinfoextra.Text.ToUpper)
+                .AddWithValue("?extra", infoExtra)
                 .AddWithValue("?codint", codInt)
                 .AddWithValue("?presup", txtpresupuesto.Text)
                 .AddWithValue("?mail", txtmail.Text)
@@ -466,9 +717,7 @@
                 .AddWithValue("?cliente", cliente)
                 .AddWithValue("?motivoIng", motivoIng)
                 .AddWithValue("?accesorios", accesorios)
-                .AddWithValue("?fechaIng", Format(CDate(lblfecha.Text.Replace("Ingreso: ", "").ToString), "yyyy-MM-dd"))
-
-                '.AddWithValue("?fechaEg", Format(FECHAGRAL, "yyyy-MM-dd"))
+                .AddWithValue("?fechaIng", NormalizarFecha(textoFecha))
                 .AddWithValue("?modeloEq", modelo)
                 .AddWithValue("?trabCateg", trabajoCategoria)
                 .AddWithValue("?recibe", recibe)
@@ -481,17 +730,17 @@
             End With
             comandoadd.ExecuteNonQuery()
 
-            If codInt = 0 And txtespecificaciones.Text <> "" Then
-                MsgBox("no se puede guardar las especificaciones hasta que se finalice la orden")
+            If codInt = "0" AndAlso txtespecificaciones.Text <> "" Then
+                MsgBox("No se puede guardar las especificaciones hasta que se finalice la orden.")
             Else
                 ' guardarEspecificaciones
             End If
 
-
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error al guardar datos principales de la orden")
         End Try
 
+        ' --- 3. GUARDADO DE INSUMOS (GRILLA) ---
         Try
             Dim cod As String
             Dim cantidad As String
@@ -500,33 +749,31 @@
             Dim punit As String
             Dim ptotal As String
             Dim plu As String
-            'Dim num_fact As String
 
-            Dim sqlQuery As String
-            Dim i As Integer
-            sqlQuery = "DELETE FROM tecni_taller_insumos where idtaller=" & ORden
+            Dim sqlQuery As String = "DELETE FROM tecni_taller_insumos where idtaller=" & ORden
             Reconectar()
-            Dim comandodel As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandodel As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandodel.ExecuteNonQuery()
 
-            For i = 0 To dtproductos.RowCount - 2
-                If IsNothing(dtproductos.Rows(i).Cells(0).Value) Then
-                    cod = 0
-                Else
-                    cod = dtproductos.Rows(i).Cells(0).Value
-                End If
-                plu = dtproductos.Rows(i).Cells(1).Value
-                cantidad = dtproductos.Rows(i).Cells(2).Value.ToString.Replace(".", "").Replace(",", ".")
-                descripcion = dtproductos.Rows(i).Cells(3).Value.ToString.ToUpper
-                iva = dtproductos.Rows(i).Cells(4).Value.ToString.Replace(".", "").Replace(",", ".")
-                punit = dtproductos.Rows(i).Cells(5).Value.ToString.Replace(".", "").Replace(",", ".")
-                ptotal = dtproductos.Rows(i).Cells(6).Value.ToString.Replace(".", "").Replace(",", ".")
+            For i As Integer = 0 To dtproductos.RowCount - 2
+                ' Variable referencial a la fila para que el código quede más limpio
+                Dim fila As DataGridViewRow = dtproductos.Rows(i)
+
+                ' Verificamos cada celda antes de convertir a String o procesarla
+                cod = If(fila.Cells(0).Value IsNot Nothing, fila.Cells(0).Value.ToString(), "0")
+                plu = If(fila.Cells(1).Value IsNot Nothing, fila.Cells(1).Value.ToString(), "")
+                cantidad = If(fila.Cells(2).Value IsNot Nothing, fila.Cells(2).Value.ToString().Replace(".", "").Replace(",", "."), "0")
+                descripcion = If(fila.Cells(3).Value IsNot Nothing, fila.Cells(3).Value.ToString().ToUpper(), "")
+                iva = If(fila.Cells(4).Value IsNot Nothing, fila.Cells(4).Value.ToString().Replace(".", "").Replace(",", "."), "0")
+                punit = If(fila.Cells(5).Value IsNot Nothing, fila.Cells(5).Value.ToString().Replace(".", "").Replace(",", "."), "0")
+                ptotal = If(fila.Cells(6).Value IsNot Nothing, fila.Cells(6).Value.ToString().Replace(".", "").Replace(",", "."), "0")
 
                 sqlQuery = "insert into tecni_taller_insumos " _
-                & "(codigo,plu,cantidad, descripcion, iva, punit, ptotal,idtaller ) values" _
-                & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tall)"
+            & "(codigo,plu,cantidad, descripcion, iva, punit, ptotal,idtaller ) values" _
+            & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tall)"
+
                 Reconectar()
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?plu", plu)
@@ -536,15 +783,13 @@
                     .AddWithValue("?punit", punit)
                     .AddWithValue("?ptot", ptotal)
                     .AddWithValue("?tall", ORden)
-
                 End With
                 comandoadd.ExecuteNonQuery()
             Next
 
-
             ModProd = False
         Catch ex As Exception
-
+            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error al guardar los insumos")
         End Try
     End Sub
 
@@ -568,7 +813,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into tecni_equipos_tipo(nombre) values ('" & cmbtipoequ.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -580,7 +825,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into fact_marcas (nombre) values ('" & cmbmarcas.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -592,7 +837,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into fact_modelos (idmarca, nombre) values ('" & marca & "','" & cmbmodelos.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -601,7 +846,7 @@
             End If
 
             Reconectar()
-            Dim consultaeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from tecni_equipos where marca=" & marca & " and modelo=" & modelo & " and tipo_equ=" & tipoeq, conexionPrinc)
+            Dim consultaeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from tecni_equipos where marca=" & marca & " and modelo=" & modelo & " and tipo_equ=" & tipoeq, GestorConexiones.conexionPrinc)
             Dim tablaeq As New DataTable
             Dim infoeq() As DataRow
             consultaeq.Fill(tablaeq)
@@ -609,7 +854,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into tecni_equipos (marca, modelo,tipo_equ) values ('" & marca & "','" & modelo & "','" & tipoeq & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -633,7 +878,7 @@
             & "(?prop,?ser,'1',?modelo,?especificaciones)"
 
             Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?prop", propietario)
                 .AddWithValue("?ser", serie)
@@ -708,7 +953,7 @@
             GuardarOrden(cmbestadotrab.SelectedValue)
             MsgBox("Orden de reparacion actualizada")
             Reconectar()
-            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=3 and id<=14", conexionPrinc)
+            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=3 and id<=14", GestorConexiones.conexionPrinc)
             Dim tablaDtosMail As New DataTable
             Dim infoDtosMail() As DataRow
             consultaDtosMail.Fill(tablaDtosMail)
@@ -757,7 +1002,7 @@
 
             'averiguamos el numero de equipo nuevo
             If Val(txtcodint.Text) = 0 Then
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "select max(id) as codint from tecni_equipos_clientes"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -783,7 +1028,7 @@
 
 
             Reconectar()
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update tecni_taller set estado=8, trab_estado=3,fecha_eg='" & Format(FECHAGRAL, "yyyy-MM-dd") & "', equipo=" & codint & " where id=" & ORden
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -795,7 +1040,7 @@
             cargarOrden()
 
             Reconectar()
-            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=15 and id<=25", conexionPrinc)
+            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select texto1 from tecni_datosgenerales where id>=15 and id<=25", GestorConexiones.conexionPrinc)
             Dim tablaDtosMail As New DataTable
             Dim infoDtosMail() As DataRow
             consultaDtosMail.Fill(tablaDtosMail)
@@ -836,13 +1081,13 @@
             Dim dsFacturacion As New datosgenerales
 
             Reconectar()
-            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as pie from tecni_datosgenerales WHERE id=2", conexionPrinc)
+            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as pie from tecni_datosgenerales WHERE id=2", GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("datosFichaEgreso"))
 
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "lpad(tall.id,4,'0') as orden, " _
+            & "lpad(tall.id,5,'0') as orden, " _
             & "concat('FECHA INGRESO: ',tall.fecha_ing) as fecha, case tall.trabajo_categoria " _
             & "when 4 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon,'(',tall.infoextra,')') " _
             & "when 2 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon) " _
@@ -861,16 +1106,16 @@
             & "tecni_equipos as eq " _
             & "where " _
             & "tall.cliente=cl.idclientes and tall.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and tall.recibe=us.id " _
-            & "and tall.id=" & ORden, conexionPrinc)
+            & "and tall.id=" & ORden, GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaIngreso"))
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT tall.falla as falla, tall.tarea_realiz as resolucion, tall.mo_monto as montomo, tall.ins_monto as montoins, tall.trab_monto as montotot, tall.fecha_eg as fecha, concat(te.apellido,', ', te.nombre) as tecnico " _
-            & " FROM tecni_taller as tall, tecni_tecnicos as te where tall.tecnico=te.id and tall.id =" & ORden, conexionPrinc)
+            & " FROM tecni_taller as tall, tecni_tecnicos as te where tall.tecnico=te.id and tall.id =" & ORden, GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaEgreso"))
 
             Reconectar()
-            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", conexionPrinc)
+            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", GestorConexiones.conexionPrinc)
             tablaFacturacion.Fill(dsFacturacion.Tables("datosEmpresa"))
 
             Dim imping As New imprimiregreso
@@ -907,7 +1152,7 @@
             If Val(nvoClie) <> 0 Then
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "update tecni_taller set cliente=" & nvoClie & " where id=" & ORden
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -926,7 +1171,7 @@
             If Val(e.Row.Cells(0).Value) > 0 Then
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "delete from tecni_taller_insumos where id=" & e.Row.Cells(0).Value
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -959,7 +1204,7 @@
                 End If
 
                 Reconectar()
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "update tecni_taller set estado=18, trab_estado=3,fecha_eg='" & Format(Now, "yyyy-MM-dd") & "', equipo=0 where id=" & ORden
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -1027,7 +1272,7 @@
                 End If
                 lblcodexistente.Text = ""
                 Dim sqlQuery As String = "select id from tecni_equipos_clientes where serie like '" & txtnumeroSerie.Text & "'"
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, GestorConexiones.conexionPrinc)
                 Dim tablaequ As New DataTable
                 Dim infoequ() As DataRow
                 consulta.Fill(tablaequ)
@@ -1076,7 +1321,7 @@
     Private Sub cmdcargarInfoTrab_Click(sender As Object, e As EventArgs) Handles cmdcargarInfoTrab.Click
         Try
             Dim sqlQuery As String = "select texto1 from tecni_datosgenerales where nombre ='DATOSRELLENAR'"
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, GestorConexiones.conexionPrinc)
             Dim tabla As New DataTable
 
             consulta.Fill(tabla)
@@ -1093,7 +1338,7 @@
     Private Sub cmdCargarInfoEspecificaciones_Click(sender As Object, e As EventArgs) Handles cmdCargarInfoEspecificaciones.Click
         Try
             Dim sqlQuery As String = "select texto2 from tecni_datosgenerales where nombre ='DATOSRELLENAR' "
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, GestorConexiones.conexionPrinc)
             Dim tabla As New DataTable
 
             consulta.Fill(tabla)

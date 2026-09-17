@@ -23,9 +23,9 @@
         Dim monto As Double = 0
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select proveedor, comprobante, vencimiento, monto from facturasproveedores_impagas " _
-            & " where vencimiento between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", conexionPrinc)
+            & " where vencimiento between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", gestorConexiones.conexionPrinc)
 
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
@@ -44,9 +44,9 @@
         Dim monto As Double = 0
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from vencimiento_cheques " _
-            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", conexionPrinc)
+            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", gestorConexiones.conexionPrinc)
 
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
@@ -66,9 +66,9 @@
         Dim monto As Double = 0
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from vencimiento_cheques " _
-            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", conexionPrinc)
+            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", GestorConexiones.conexionPrinc)
 
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)

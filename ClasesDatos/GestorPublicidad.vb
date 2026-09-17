@@ -1,4 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports WSAFIPFE.Factura
 
 Public Class GestorPublicidad
 
@@ -51,6 +52,36 @@ Public Class GestorPublicidad
         End Get
     End Property
 
+
+    ' =========================================================================
+    ' VINCULACIÓN DE COMPROBANTES CON CUOTAS DE PUBLICIDAD
+    ' =========================================================================
+    Public Shared Sub VincularComprobanteAutomatico(idCuota As Integer, idComprobante As Integer, esRecibo As Boolean)
+        ' Verificamos si el código corresponde al formato de publicidad: #idPrestamo-idCuota
+        Try
+            ' 1. Determinamos columnas y estados según el tipo de comprobante
+            Dim columna As String = If(esRecibo, "id_recibo", "id_factura")
+            Dim estado As String = If(esRecibo, "PAGADA", "FACTURADA")
+
+            ' 2. Armamos la consulta de actualización directa
+            Dim query As String = "UPDATE rym_detalle_prestamo SET " & columna & " = @idComp, estado = @estado WHERE ID = @idCuota"
+
+            Using conn As New MySqlConnection(CadenaConexion)
+                conn.Open()
+                Using cmd As New MySqlCommand(query, conn)
+                    ' Asignamos los parámetros de forma segura
+                    cmd.Parameters.AddWithValue("@idComp", idComprobante)
+                    cmd.Parameters.AddWithValue("@estado", estado)
+                    cmd.Parameters.AddWithValue("@idCuota", idCuota)
+                    cmd.ExecuteNonQuery()
+                End Using
+            End Using
+
+        Catch ex As Exception
+            ' Si ocurre un error, no frena la facturación, pero queda registrado
+            Console.WriteLine("Error al vincular comprobante en publicidad: " & ex.Message)
+        End Try
+    End Sub
     ' --- AQUI EMPEZAMOS A MUDAR LA LOGICA DEL FORMULARIO ---
 
     ''' <summary>
@@ -151,6 +182,8 @@ Public Class GestorPublicidad
         Dim queryBase As String = ""
         Dim havingSql As String = ""
 
+
+
         ' 1. DEFINICIÓN DE QUERIES SEGÚN LA VISTA
         Select Case vista
        ' ===========================================================================
@@ -174,24 +207,47 @@ Public Class GestorPublicidad
                 ' ===========================================================================
             Case Else
                 ' ACÁ AGREGAMOS "dt.ID AS ID_CUOTA"
-                queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, dt.ID AS ID_CUOTA, pr.FECHA as INICIO, " &
-                       "dt.FECHA as VencActual, " &
-                       "(SELECT MAX(fecha) FROM rym_detalle_prestamo WHERE ID_PRESTAMO = pr.ID_PRESTAMO) as FIN, " &
-                       "cl.idclientes, cl.nomapell_razon as CLIENTE, pr.DESCRIPCION, " &
-                       "ROUND(pr.MONTO_PRESTAMO, 2) AS MONTO_TOTAL, ROUND(pr.CUOTA, 2) AS MONTO_MENSUAL, " &
-                       "ROUND(pr.MONTO_PRESTAMO - (SELECT IFNULL(SUM(MONTO_PAGADO), 0) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO), 2) AS SALDO, " &
-                       "pr.CONCEPTO, pr.OBSERVACIONES, cl.vendedor, pr.COBRADOR, " &
-                       "CASE " &
-                       "  WHEN dt.id_recibo > 0 THEN 'PAGADA' " &
-                       "  WHEN dt.id_factura > 0 THEN 'FACTURADA' " &
-                       "  WHEN dt.ID IS NOT NULL THEN 'PENDIENTE' " &
-                       "  ELSE 'SIN CUOTA' " &
-                       "END AS ESTADO_MES_CURSO " &
-                       "FROM rym_prestamo as pr " &
-                       "INNER JOIN fact_clientes as cl ON pr.ID_CLIENTE = cl.idclientes " &
-                       "LEFT JOIN rym_detalle_prestamo as dt ON dt.ID_PRESTAMO = pr.ID_PRESTAMO " &
-                       "   AND MONTH(dt.FECHA) = MONTH(?fechaDesde) AND YEAR(dt.FECHA) = YEAR(?fechaDesde) " &
-                       "WHERE pr.ESTADO = 1 "
+                queryBase = "SELECT
+                      pr.ID_PRESTAMO AS ID_PUBLICIDAD,
+                      dt.ID AS ID_CUOTA,
+                      pr.FECHA AS INICIO,
+                      dt.FECHA AS VencActual,
+                      (SELECT DATE_SUB(MAX(fecha), INTERVAL 1 DAY)
+                         FROM rym_detalle_prestamo
+                        WHERE ID_PRESTAMO = pr.ID_PRESTAMO) AS FIN,
+                      cl.idclientes,
+                      cl.nomapell_razon AS CLIENTE,
+                      pr.DESCRIPCION,
+                      ROUND(pr.MONTO_PRESTAMO, 2) AS MONTO_TOTAL,
+                      ROUND(pr.CUOTA, 2) AS MONTO_MENSUAL,
+                      ROUND(pr.MONTO_PRESTAMO - (SELECT IFNULL(SUM(MONTO_PAGADO), 0)
+                                                  FROM rym_pagos
+                                                 WHERE ID_PRESTAMO = pr.ID_PRESTAMO), 2) AS SALDO,
+                      pr.CONCEPTO,
+                      pr.OBSERVACIONES,
+                      cl.vendedor,
+                      pr.COBRADOR,
+                      CASE
+                        WHEN dt.id_recibo > 0 THEN 'PAGADA'
+                        WHEN dt.id_factura > 0 THEN 'FACTURADA'
+                        WHEN dt.ID IS NOT NULL THEN 'PENDIENTE'
+                        ELSE 'SIN CUOTA'
+                      END AS ESTADO_MES_CURSO,
+                      -- Número de factura: ptovta (4) + num_fact (8) con ceros a la izquierda; vacío si no existe factura
+                      COALESCE(CONCAT(LPAD(f.ptovta, 4, '0'), '-', LPAD(f.num_fact, 8, '0')), '') AS NUMERO_FACTURA,
+                      -- Monto de la factura (total) convertido a decimal y redondeado; NULL si no existe factura o total vacío
+                      CASE
+                        WHEN f.total IS NULL OR TRIM(f.total) = '' THEN NULL
+                        ELSE ROUND(CAST(REPLACE(f.total, ',', '.') AS DECIMAL(15,2)), 2)
+                      END AS MONTO_FACTURA
+                    FROM rym_prestamo AS pr
+                    INNER JOIN fact_clientes AS cl ON pr.ID_CLIENTE = cl.idclientes
+                    LEFT JOIN rym_detalle_prestamo AS dt
+                      ON dt.ID_PRESTAMO = pr.ID_PRESTAMO
+                      AND MONTH(dt.FECHA) = MONTH(?fechaDesde)
+                      AND YEAR(dt.FECHA) = YEAR(?fechaDesde)
+                    LEFT JOIN fact_facturas AS f ON f.id = NULLIF(dt.id_factura, 0)
+                    WHERE pr.ESTADO = 1  "
 
                 ' Lógica de filtrado por tipo de vista contable
                 Select Case vista
@@ -209,15 +265,21 @@ Public Class GestorPublicidad
                 End Select
         End Select
 
-        ' 2. FILTROS DINÁMICOS (Buscador, Vendedor, etc.)
+        ' 2. FILTROS DINÁMICOS (Buscador, Cobrador, etc.)
         If Not String.IsNullOrWhiteSpace(filtros.TextoBusqueda) Then
             filtrosSql &= " AND (cl.nomapell_razon LIKE ?textoBusqueda OR pr.ID_PRESTAMO = ?codigoPrestamo) "
         End If
-        If filtros.IdVendedor > 0 Then filtrosSql &= " AND cl.vendedor = ?idVendedor "
 
+        ' Cambio de  idCobrador
+        If filtros.IdCobrador > 0 Then
+            filtrosSql &= " AND pr.COBRADOR = ?idCobrador "
+        End If
+        If filtros.IdVendedor > 0 Then
+            filtrosSql &= " AND cl.vendedor = ?idVendedor "
+        End If
         ' 3. ENSAMBLADO FINAL
         Dim queryFinal As String = queryBase & filtrosSql & havingSql & " ORDER BY " & filtros.OrdenarPor
-
+        'sgBox(queryFinal)
         Try
             Using conn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(queryFinal, conn)
@@ -227,7 +289,13 @@ Public Class GestorPublicidad
                         cmd.Parameters.AddWithValue("?textoBusqueda", "%" & filtros.TextoBusqueda & "%")
                         cmd.Parameters.AddWithValue("?codigoPrestamo", filtros.TextoBusqueda.Trim())
                     End If
-                    If filtros.IdVendedor > 0 Then cmd.Parameters.AddWithValue("?idVendedor", filtros.IdVendedor)
+                    If filtros.IdCobrador > 0 Then
+                        cmd.Parameters.AddWithValue("?idCobrador", filtros.IdCobrador)
+                    End If
+
+                    If filtros.IdVendedor > 0 Then
+                        cmd.Parameters.AddWithValue("?idVendedor", filtros.IdVendedor)
+                    End If
 
                     conn.Open()
                     Using da As New MySqlDataAdapter(cmd)
@@ -255,293 +323,234 @@ Public Class GestorPublicidad
 
         Return dtResultados
     End Function
-    'Public Shared Function ObtenerListado(vista As TipoVistaPublicidad, filtros As FiltrosPublicidad) As DataTable
-    '    Dim dtResultados As New DataTable()
-    '    Dim filtrosSql As String = ""
-    '    Dim queryBase As String = ""
-    '    Dim havingSql As String = ""
 
-    '    ' 1. DEFINICIÓN DE QUERIES SEGÚN LA VISTA
-    '    Select Case vista
-    '    ' ===========================================================================
-    '    ' VISTA OPERADOR: Solo información de ejecución, nada de montos ni facturas
-    '    ' ===========================================================================
-    '        Case TipoVistaPublicidad.Operador
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                    "(SELECT MAX(fecha) FROM rym_detalle_prestamo WHERE ID_PRESTAMO = pr.ID_PRESTAMO) as FIN, " &
-    '                    "cl.nomapell_razon as CLIENTE, pr.DESCRIPCION, pr.CONCEPTO, pr.OBSERVACIONES, " &
-    '                    "cl.vendedor, pr.COBRADOR " &
-    '                    "FROM rym_prestamo as pr " &
-    '                    "INNER JOIN fact_clientes as cl ON pr.ID_CLIENTE = cl.idclientes " &
-    '                    "WHERE pr.ESTADO = 1 "
-
-    '            ' Filtro de vigencia para el operador
-    '            havingSql = " HAVING FIN >= DATE_FORMAT(?fechaDesde, '%Y-%m-01') "
-
-    '            ' ===========================================================================
-    '            ' VISTAS CONTABLES: Vigentes, A Facturar, A Vencer (Con montos y estados)
-    '            ' ===========================================================================
-    '        Case Else
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                    "dt.FECHA as VencActual, " &
-    '                    "(SELECT MAX(fecha) FROM rym_detalle_prestamo WHERE ID_PRESTAMO = pr.ID_PRESTAMO) as FIN, " &
-    '                    "cl.idclientes, cl.nomapell_razon as CLIENTE, pr.DESCRIPCION, " &
-    '                    "ROUND(pr.MONTO_PRESTAMO, 2) AS MONTO_TOTAL, ROUND(pr.CUOTA, 2) AS MONTO_MENSUAL, " &
-    '                    "ROUND(pr.MONTO_PRESTAMO - (SELECT IFNULL(SUM(MONTO_PAGADO), 0) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO), 2) AS SALDO, " &
-    '                    "pr.CONCEPTO, pr.OBSERVACIONES, cl.vendedor, pr.COBRADOR, " &
-    '                    "CASE " &
-    '                    "  WHEN dt.id_recibo > 0 THEN 'PAGADA' " &
-    '                    "  WHEN dt.id_factura > 0 THEN 'FACTURADA' " &
-    '                    "  WHEN dt.ID IS NOT NULL THEN 'PENDIENTE' " &
-    '                    "  ELSE 'SIN CUOTA' " &
-    '                    "END AS ESTADO_MES_CURSO " &
-    '                    "FROM rym_prestamo as pr " &
-    '                    "INNER JOIN fact_clientes as cl ON pr.ID_CLIENTE = cl.idclientes " &
-    '                    "LEFT JOIN rym_detalle_prestamo as dt ON dt.ID_PRESTAMO = pr.ID_PRESTAMO " &
-    '                    "   AND MONTH(dt.FECHA) = MONTH(?fechaDesde) AND YEAR(dt.FECHA) = YEAR(?fechaDesde) " &
-    '                    "WHERE pr.ESTADO = 1 "
-
-    '            ' Lógica de filtrado por tipo de vista contable
-    '            Select Case vista
-    '                Case TipoVistaPublicidad.AFacturar
-    '                    ' Solo las que tienen cuota programada este mes y no tienen factura
-    '                    filtrosSql &= " AND dt.ID_DETALLE IS NOT NULL AND dt.id_factura = 0 "
-
-    '                Case TipoVistaPublicidad.AVencer
-    '                    ' Solo las que la última cuota (FIN) es en este mes
-    '                    havingSql = " HAVING MONTH(FIN) = MONTH(?fechaDesde) AND YEAR(FIN) = YEAR(?fechaDesde) "
-
-    '                Case TipoVistaPublicidad.Vigentes
-    '                    ' Todo lo que termina de hoy en adelante
-    '                    havingSql = " HAVING FIN >= DATE_FORMAT(?fechaDesde, '%Y-%m-01') "
-    '            End Select
-    '    End Select
-
-    '    ' 2. FILTROS DINÁMICOS (Buscador, Vendedor, etc.)
-    '    If Not String.IsNullOrWhiteSpace(filtros.TextoBusqueda) Then
-    '        filtrosSql &= " AND (cl.nomapell_razon LIKE ?textoBusqueda OR pr.ID_PRESTAMO = ?codigoPrestamo) "
-    '    End If
-    '    If filtros.IdVendedor > 0 Then filtrosSql &= " AND cl.vendedor = ?idVendedor "
-
-    '    ' 3. ENSAMBLADO FINAL
-    '    Dim queryFinal As String = queryBase & filtrosSql & havingSql & " ORDER BY " & filtros.OrdenarPor
-
-    '    Try
-    '        Using conn As New MySqlConnection(CadenaConexion)
-    '            Using cmd As New MySqlCommand(queryFinal, conn)
-    '                cmd.Parameters.AddWithValue("?fechaDesde", filtros.FechaDesde)
-
-    '                If Not String.IsNullOrWhiteSpace(filtros.TextoBusqueda) Then
-    '                    cmd.Parameters.AddWithValue("?textoBusqueda", "%" & filtros.TextoBusqueda & "%")
-    '                    cmd.Parameters.AddWithValue("?codigoPrestamo", filtros.TextoBusqueda.Trim())
-    '                End If
-    '                If filtros.IdVendedor > 0 Then cmd.Parameters.AddWithValue("?idVendedor", filtros.IdVendedor)
-
-    '                conn.Open()
-    '                Using da As New MySqlDataAdapter(cmd)
-    '                    da.Fill(dtResultados)
-    '                End Using
-    '            End Using
-    '        End Using
-
-    '        ' 4. FILA DE TOTALES CON FORMATO
-    '        If dtResultados.Rows.Count > 0 AndAlso vista <> TipoVistaPublicidad.Operador Then
-    '            Dim sumaMensual As Decimal = 0
-    '            For Each row As DataRow In dtResultados.Rows
-    '                If Not IsDBNull(row("MONTO_MENSUAL")) Then sumaMensual += Convert.ToDecimal(row("MONTO_MENSUAL"))
-    '            Next
-
-    '            Dim drTotal As DataRow = dtResultados.NewRow()
-    '            drTotal("CLIENTE") = ">>> TOTALES <<<"
-    '            ' Formateamos el número como String para que incluya los puntos y comas en la última fila
-    '            ' "N2" aplica el formato numérico con 2 decimales y separador de miles
-    '            drTotal("MONTO_MENSUAL") = sumaMensual
-    '            dtResultados.Rows.Add(drTotal)
-    '        End If
-
-    '    Catch ex As Exception
-    '        Throw New Exception("Error en Listado: " & ex.Message)
-    '    End Try
-
-    '    Return dtResultados
-    'End Function
-    '''' <summary>
-    '''' Ejecuta la consulta principal del listado de publicidades devolviendo un DataTable.
-    '''' </summary>
-    'Public Shared Function ObtenerListado(vista As TipoVistaPublicidad, filtros As FiltrosPublicidad) As DataTable
-    '    Dim dtResultados As New DataTable()
-    '    Dim queryBase As String = ""
-    '    Dim filtrosSql As String = ""
-    '    Dim havingSql As String = ""
-
-    '    ' 1. Armamos la consulta base según la vista
-    '    Select Case vista
-    '        Case TipoVistaPublicidad.Vigentes
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                            "(SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(?fechaDesde, interval 1 month))) as VencActual, " &
-    '                            "(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN, " &
-    '                            "cl.idclientes, cl.nomapell_razon as CLIENTE, pr.DESCRIPCION as DESCRIPCION, " &
-    '                            "round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, " &
-    '                            "ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2) AS SALDO, pr.CONCEPTO, " &
-    '                            "pr.OBSERVACIONES, " &
-    '                            "(select group_concat(facturaActual) from factura_actual_servicios where plu like concat('%#',pr.ID_PRESTAMO,'%')) AS FACTURA_ACTUAL, " &
-    '                            "cl.vendedor, pr.COBRADOR " &
-    '                            "FROM rym_prestamo as pr, fact_clientes as cl " &
-    '                            "WHERE pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 "
-    '            havingSql = " HAVING FIN >= date_add(?fechaDesde, interval -1 day) "
-
-    '        Case TipoVistaPublicidad.AFacturar
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                            "(SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month)) and YEAR(fecha)=YEAR(now())) as VencActual, " &
-    '                            "(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN, " &
-    '                            "cl.idclientes, cl.nomapell_razon as CLIENTE, pr.DESCRIPCION as DESCRIPCION, " &
-    '                            "round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, " &
-    '                            "ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2) AS SALDO, pr.CONCEPTO, " &
-    '                            "pr.OBSERVACIONES, " &
-    '                            "(select group_concat(facturaActual) from factura_actual_servicios where plu like concat('%#',pr.ID_PRESTAMO,'%')) AS FACTURA_ACTUAL, " &
-    '                            "cl.vendedor, pr.COBRADOR " &
-    '                            "FROM rym_prestamo as pr, fact_clientes as cl " &
-    '                            "WHERE pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 "
-    '            havingSql = " HAVING VencActual is not null "
-
-    '        Case TipoVistaPublicidad.AVencer
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                            "(SELECT group_concat(FECHA) FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, " &
-    '                            "(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN, " &
-    '                            "cl.idclientes, cl.nomapell_razon as CLIENTE, pr.DESCRIPCION as DESCRIPCION, " &
-    '                            "round(pr.MONTO_PRESTAMO,2) AS MONTO_TOTAL, round(pr.CUOTA,2) AS MONTO_MENSUAL, " &
-    '                            "ROUND(pr.MONTO_PRESTAMO - (SELECT SUM(MONTO_PAGADO) FROM rym_pagos WHERE ID_PRESTAMO = pr.ID_PRESTAMO),2) AS SALDO, pr.CONCEPTO, " &
-    '                            "pr.OBSERVACIONES, " &
-    '                            "(select group_concat(facturaActual) from factura_actual_servicios where plu like concat('%#',pr.ID_PRESTAMO,'%')) AS FACTURA_ACTUAL, " &
-    '                            "cl.vendedor, pr.COBRADOR " &
-    '                            "FROM rym_prestamo as pr, fact_clientes as cl " &
-    '                            "WHERE pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 "
-    '            havingSql = " HAVING date_format(FIN,'%Y-%m') = date_format(?fechaDesde,'%Y-%m') "
-
-    '        Case TipoVistaPublicidad.Operador
-    '            queryBase = "SELECT pr.ID_PRESTAMO AS ID_PUBLICIDAD, pr.FECHA as INICIO, " &
-    '                            "(SELECT FECHA FROM rym_detalle_prestamo where ID_PRESTAMO=pr.ID_PRESTAMO and MONTH(FECHA) LIKE MONTH(date_sub(now(),interval 1 month))) as VencActual, " &
-    '                            "(select date_add(max(fecha),interval -1 day) from rym_detalle_prestamo AS DTP where DTP.ID_PRESTAMO=pr.ID_PRESTAMO) as FIN, " &
-    '                            "cl.nomapell_razon as CLIENTE, pr.DESCRIPCION as DESCRIPCION, " &
-    '                            "pr.CONCEPTO, pr.OBSERVACIONES, cl.vendedor, pr.COBRADOR " &
-    '                            "FROM rym_prestamo as pr, fact_clientes as cl " &
-    '                            "WHERE pr.ID_CLIENTE=cl.idclientes and pr.ESTADO=1 "
-    '            havingSql = " HAVING FIN >= date_add(?fechaDesde, interval -1 day) "
-    '    End Select
-
-    '    ' 2. Agregamos los filtros dinámicos (Cláusulas AND)
-    '    If Not String.IsNullOrWhiteSpace(filtros.TextoBusqueda) Then
-    '        filtrosSql &= " AND (cl.nomapell_razon LIKE ?textoBusqueda OR pr.ID_PRESTAMO = ?codigoPrestamo) "
-    '    End If
-
-    '    If filtros.IdVendedor > 0 Then filtrosSql &= " AND cl.vendedor = ?idVendedor "
-    '    If filtros.IdCobrador > 0 Then filtrosSql &= " AND pr.COBRADOR = ?idCobrador "
-    '    If Not String.IsNullOrWhiteSpace(filtros.Concepto) Then filtrosSql &= " AND pr.CONCEPTO = ?concepto "
-
-    '    ' Filtros que actúan sobre el HAVING (Resultados calculados)
-    '    If filtros.SoloMorosos Then
-    '        ' Reemplazamos la lógica vieja por una condición segura en el HAVING
-    '        Dim sqlMoroso As String = " (select count(*) from rym_detalle_prestamo as DTP where DTP.ID_PRESTAMO not in (select id FROM rym_pagos as pg where pg.ID_PRESTAMO=DTP.ID_PRESTAMO) and DTP.ID_PRESTAMO=pr.ID_PRESTAMO AND DATEDIFF(NOW(),DTP.FECHA) > 14) > 0 "
-    '        havingSql &= If(havingSql.Contains("HAVING"), " AND " & sqlMoroso, " HAVING " & sqlMoroso)
-    '    End If
-
-    '    If filtros.SoloSinFacturar Then
-    '        havingSql &= If(havingSql.Contains("HAVING"), " AND FACTURA_ACTUAL IS NULL ", " HAVING FACTURA_ACTUAL IS NULL ")
-    '    End If
-
-    '    ' 3. Ensamblamos la consulta
-    '    Dim queryFinal As String = queryBase & filtrosSql & havingSql & " ORDER BY " & filtros.OrdenarPor
-
-    '    ' 4. Ejecutamos usando parámetros para evitar inyecciones SQL
-    '    Try
-    '        Using conn As New MySqlConnection(CadenaConexion)
-    '            Using cmd As New MySqlCommand(queryFinal, conn)
-    '                ' Asignamos los parámetros de forma limpia
-    '                cmd.Parameters.AddWithValue("?fechaDesde", filtros.FechaDesde.ToString("yyyy-MM-dd"))
-
-    '                If Not String.IsNullOrWhiteSpace(filtros.TextoBusqueda) Then
-    '                    cmd.Parameters.AddWithValue("?textoBusqueda", "%" & filtros.TextoBusqueda & "%")
-    '                    cmd.Parameters.AddWithValue("?codigoPrestamo", filtros.TextoBusqueda.Trim())
-    '                End If
-
-    '                If filtros.IdVendedor > 0 Then cmd.Parameters.AddWithValue("?idVendedor", filtros.IdVendedor)
-    '                If filtros.IdCobrador > 0 Then cmd.Parameters.AddWithValue("?idCobrador", filtros.IdCobrador)
-    '                If Not String.IsNullOrWhiteSpace(filtros.Concepto) Then cmd.Parameters.AddWithValue("?concepto", filtros.Concepto)
-
-    '                conn.Open()
-    '                Using da As New MySqlDataAdapter(cmd)
-    '                    da.Fill(dtResultados)
-    '                End Using
-    '            End Using
-    '        End Using
-    '    Catch ex As Exception
-    '        Throw New Exception("Error al obtener listado de publicidades: " & ex.Message)
-    '    End Try
-    '    ' 5. Agregamos la fila de Totales al final del DataTable
-    '    If dtResultados.Rows.Count > 0 Then
-    '        Dim drTotal As DataRow = dtResultados.NewRow()
-
-    '        ' Sumamos las columnas numéricas
-    '        ' Usamos un bucle para evitar errores si la vista no tiene alguna columna
-    '        Dim sumaTotal As Decimal = 0
-    '        Dim sumaMensual As Decimal = 0
-    '        Dim sumaSaldo As Decimal = 0
-
-    '        For Each row As DataRow In dtResultados.Rows
-    '            If dtResultados.Columns.Contains("MONTO_TOTAL") AndAlso Not IsDBNull(row("MONTO_TOTAL")) Then
-    '                sumaTotal += Convert.ToDecimal(row("MONTO_TOTAL"))
-    '            End If
-    '            If dtResultados.Columns.Contains("MONTO_MENSUAL") AndAlso Not IsDBNull(row("MONTO_MENSUAL")) Then
-    '                sumaMensual += Convert.ToDecimal(row("MONTO_MENSUAL"))
-    '            End If
-    '            If dtResultados.Columns.Contains("SALDO") AndAlso Not IsDBNull(row("SALDO")) Then
-    '                sumaSaldo += Convert.ToDecimal(row("SALDO"))
-    '            End If
-    '        Next
-
-    '        ' Asignamos los valores a la fila especial
-    '        drTotal("CLIENTE") = ">>> TOTALES GENERALES <<<"
-    '        If dtResultados.Columns.Contains("MONTO_TOTAL") Then drTotal("MONTO_TOTAL") = sumaTotal
-    '        If dtResultados.Columns.Contains("MONTO_MENSUAL") Then drTotal("MONTO_MENSUAL") = sumaMensual
-    '        If dtResultados.Columns.Contains("SALDO") Then drTotal("SALDO") = sumaSaldo
-
-    '        dtResultados.Rows.Add(drTotal)
-    '    End If
-
-    '    Return dtResultados
-    'End Function
-
-    ''' <summary>
-    ''' Genera el informe anual pivot. 
-    ''' Si porFechaInicio es True, desplaza las cuotas un mes hacia atrás para coincidir con la prestación del servicio.
-    ''' </summary>
     Public Shared Function ObtenerInformeAnualPivot(anio As Integer, porFechaInicio As Boolean) As DataTable
         Dim dtResultados As New DataTable()
 
         ' Si es por inicio, restamos 1 mes a la fecha del detalle para que la cuota de Febrero se vea en Enero.
         ' Si es por vencimiento, dejamos el desplazamiento mínimo de 1 día que ya tenías.
-        Dim intervalo As String = If(porFechaInicio, "interval 1 month", "interval 1 day")
+        Dim intervalo As String = If(porFechaInicio, " INTERVAL 1 MONTH ", "interval 1 day")
 
         ' Usamos la variable {intervalo} dentro de los DATE_SUB de la consulta
-        Dim query As String = "SELECT publi.ID_PRESTAMO as ID, cli.idClientes, cli.nomapell_razon, publi.CONCEPTO, publi.DESCRIPCION, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=1) as enero, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=2) as febrero, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=3) as marzo, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=4) as abril, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=5) as mayo, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=6) as junio, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=7) as julio, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=8) as agosto, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=9) as septiembre, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=10) as octubre, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=11) as noviembre, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio and month(date_sub(publiDet.FECHA, " & intervalo & "))=12) as diciembre, " &
-                                  "(select sum(replace(replace(CUOTA,'.',''),',','.')) from rym_detalle_prestamo as publiDet where publiDet.ID_PRESTAMO = publi.ID_PRESTAMO and year(date_sub(publiDet.FECHA, " & intervalo & "))=@anio) as total " &
-                                  "from fact_clientes as cli, rym_prestamo as publi " &
-                                  "where cli.idclientes = publi.ID_CLIENTE " &
-                                  "AND EXISTS (SELECT 1 FROM rym_detalle_prestamo as dp WHERE dp.ID_PRESTAMO = publi.ID_PRESTAMO AND YEAR(date_sub(dp.FECHA, " & intervalo & ")) = @anio) " &
-                                  "order by cli.nomapell_razon asc, publi.ID_PRESTAMO asc"
+        Dim query As String = "SELECT 
+                     MAX(publi.ID_PRESTAMO) AS IDPUBLICIDAD,
+                     cli.idClientes, 
+                     cli.nomapell_razon, 
+                     publi.CONCEPTO, 
+                     CAST(GROUP_CONCAT(DISTINCT publi.DESCRIPCION SEPARATOR ' | ') AS CHAR) AS DESCRIPCION,
+    
+                     -- ENERO 
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 1 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 1 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 1 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS enero,
+    
+                     -- FEBRERO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 2 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 2 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 2 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS febrero,
+    
+                     -- MARZO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 3 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 3 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 3 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS marzo,
+    
+                     -- ABRIL
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 4 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 4 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 4 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS abril,
+    
+                     -- MAYO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 5 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 5 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 5 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS mayo,
+    
+                     -- JUNIO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 6 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 6 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 6 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS junio,
+    
+                     -- JULIO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 7 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 7 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 7 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS julio,
+    
+                     -- AGOSTO
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 8 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 8 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 8 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS agosto,
+    
+                     -- SEPTIEMBRE
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 9 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 9 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 9 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS septiembre,
+    
+                     -- OCTUBRE
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 10 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 10 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 10 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS octubre,
+    
+                     -- NOVIEMBRE
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 11 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 11 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 11 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS noviembre,
+    
+                     -- DICIEMBRE
+                     CAST(CONCAT(
+                         SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 12 
+                             THEN REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.') ELSE 0 END),
+                         CASE 
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 12 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN MONTH(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = 12 
+                                            AND DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS diciembre,
+    
+                     -- TOTAL ANUAL
+                     CAST(CONCAT(
+                         -- el monto total anual incluye todas las cuotas (proyección incluida)
+                         SUM(REPLACE(REPLACE(publiDet.CUOTA,'.',''),',','.')),
+                         -- pero los asteriscos sólo si la fecha ajustada ya venció y está sin factura/recibo
+                         CASE 
+                             WHEN SUM(CASE WHEN DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_factura = 0 OR publiDet.id_factura IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (**)'
+                             WHEN SUM(CASE WHEN DATE_SUB(publiDet.FECHA, " & intervalo & ") <= CURDATE()
+                                            AND (publiDet.id_recibo = 0 OR publiDet.id_recibo IS NULL) THEN 1 ELSE 0 END) > 0 THEN ' (*)'
+                             ELSE '' 
+                         END
+                     ) AS CHAR) AS total 
 
+                 FROM fact_clientes AS cli
+                 INNER JOIN rym_prestamo AS publi ON cli.idClientes = publi.ID_CLIENTE
+                 INNER JOIN rym_detalle_prestamo AS publiDet ON publi.ID_PRESTAMO = publiDet.ID_PRESTAMO
+
+                 WHERE publi.estado = 1 
+                   AND YEAR(DATE_SUB(publiDet.FECHA, " & intervalo & ")) = @anio
+
+                 GROUP BY 
+                     cli.idClientes, 
+                     cli.nomapell_razon, 
+                     publi.CONCEPTO
+    
+                 ORDER BY 
+                     cli.nomapell_razon ASC, 
+                     publi.CONCEPTO ASC;
+"
+
+        'MsgBox(query)
         Try
             Using conn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(query, conn)
@@ -557,6 +566,7 @@ Public Class GestorPublicidad
         End Try
 
         Return dtResultados
+
     End Function
 
     Public Shared Function ObtenerDetallePublicidad(idPrestamo As String, diasMora As Integer) As DataTable
@@ -611,22 +621,34 @@ Public Class GestorPublicidad
         Dim filtroCancelados As String = If(incluirCancelados, " AND DTP.CUOTA > 0 ", "")
 
         ' Consulta optimizada: JOINs directos por ID
-        Dim query As String = "SELECT DTP.ID_PRESTAMO AS ID, cli.idClientes, cli.nomapell_razon, publi.CONCEPTO, publi.DESCRIPCION, " &
-                          "DTP.FECHA AS VENCIMIENTO, DTP.CUOTA AS MONTO, " &
-                          "CONCAT(compF.abrev, ' ', LPAD(fFact.ptovta, 4, '0'), '-', LPAD(fFact.num_fact, 8, '0')) AS FACTURA, " &
-                          "CONCAT(compR.abrev, ' ', LPAD(fRec.ptovta, 4, '0'), '-', LPAD(fRec.num_fact, 8, '0')) AS RECIBO, " &
-                          "DTP.estado AS ESTADO " &
-                          "FROM rym_detalle_prestamo AS DTP " &
-                          "INNER JOIN rym_prestamo AS publi ON DTP.ID_PRESTAMO = publi.ID_PRESTAMO " &
-                          "INNER JOIN fact_clientes AS cli ON publi.ID_CLIENTE = cli.idClientes " &
-                          "LEFT JOIN fact_facturas AS fFact ON DTP.id_factura = fFact.id " &
-                          "LEFT JOIN tipos_comprobantes AS compF ON fFact.tipofact = compF.donfdesc AND fFact.ptovta = compF.ptovta " &
-                          "LEFT JOIN fact_facturas AS fRec ON DTP.id_recibo = fRec.id " &
-                          "LEFT JOIN tipos_comprobantes AS compR ON fRec.tipofact = compR.donfdesc AND fRec.ptovta = compR.ptovta " &
-                          "WHERE YEAR(publi.fecha) = @anio " &
-                          "AND DTP.estado LIKE @estado " & filtroCancelados & " " &
-                          "ORDER BY cli.nomapell_razon ASC, DTP.ID_PRESTAMO ASC, DTP.FECHA ASC"
-
+        Dim query As String = "SELECT 
+                            DTP.ID_PRESTAMO AS ID, 
+                            cli.idClientes, 
+                            cli.nomapell_razon, 
+                            publi.CONCEPTO, 
+                            publi.DESCRIPCION, 
+                            DTP.FECHA AS VENCIMIENTO, 
+                            DTP.CUOTA AS MONTO, 
+                            CONCAT(compF.abrev, ' ', LPAD(fFact.ptovta, 4, '0'), '-', LPAD(fFact.num_fact, 8, '0')) AS FACTURA, 
+                            CONCAT(compR.abrev, ' ', LPAD(fRec.ptovta, 4, '0'), '-', LPAD(fRec.num_fact, 8, '0')) AS RECIBO, 
+    
+                            /* AQUI EVALUAMOS EL ESTADO DINÁMICAMENTE */
+                            CASE 
+                                WHEN DTP.estado = 'facturado' AND DATEDIFF(CURDATE(), fFact.fecha) > 15 THEN 'MOROSO'
+                                ELSE DTP.estado 
+                            END AS ESTADO 
+                        FROM rym_detalle_prestamo AS DTP 
+                        INNER JOIN rym_prestamo AS publi ON DTP.ID_PRESTAMO = publi.ID_PRESTAMO 
+                        INNER JOIN fact_clientes AS cli ON publi.ID_CLIENTE = cli.idClientes 
+                        LEFT JOIN fact_facturas AS fFact ON DTP.id_factura = fFact.id 
+                        LEFT JOIN tipos_comprobantes AS compF ON fFact.tipofact = compF.donfdesc AND fFact.ptovta = compF.ptovta 
+                        LEFT JOIN fact_facturas AS fRec ON DTP.id_recibo = fRec.id 
+                        LEFT JOIN tipos_comprobantes AS compR ON fRec.tipofact = compR.donfdesc AND fRec.ptovta = compR.ptovta 
+                        WHERE YEAR(publi.fecha) = @anio 
+                        AND publi.estado=1 " & filtroCancelados &
+                        "HAVING ESTADO LIKE '" & estadoInforme & "'" &
+                        "ORDER BY cli.nomapell_razon ASC, DTP.ID_PRESTAMO ASC, DTP.FECHA ASC"
+        'MsgBox(query)
         Try
             Using conn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(query, conn)
@@ -719,11 +741,10 @@ Public Class GestorPublicidad
     ' ==========================================
     ' 3. CLASES DE TRANSFERENCIA Y ENUMS (DTO)
     ' ==========================================
-
     Public Enum TipoVistaPublicidad
-            Vigentes = 1
-            AFacturar = 2
-            AVencer = 3
+        Vigentes = 1
+        AFacturar = 2
+        AVencer = 3
             Operador = 4
         End Enum
 

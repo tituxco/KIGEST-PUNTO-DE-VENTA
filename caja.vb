@@ -8,7 +8,7 @@
         Try
             Reconectar()
 
-            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", conexionPrinc)
+            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", GestorConexiones.conexionPrinc)
             Dim readcajas As New DataSet
             tablacajas.Fill(readcajas)
             cmbcajas.DataSource = readcajas.Tables(0)
@@ -23,7 +23,7 @@
 
     Private Sub cmbcajas_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbcajas.SelectionChangeCommitted
         Try
-            Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & cmbcajas.SelectedValue & " order by id desc", conexionPrinc)
+            Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & cmbcajas.SelectedValue & " order by id desc", GestorConexiones.conexionPrinc)
             Dim readcierres As New DataSet
             tablacierres.Fill(readcierres)
             cmbcierresCajas.DataSource = readcierres.Tables(0)
@@ -52,7 +52,7 @@
             Reconectar()
             sqlQuery = "insert into fact_cajas_cierres(monto,caja) values (?monto,?caja)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?monto", FormatNumber(montoRemanente, 2))
                 .AddWithValue("?caja", cmbcajas.SelectedValue)
@@ -104,7 +104,7 @@
             '              'MsgBox(SQLARQUEO)
             '          End If
 
-            '          Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, conexionPrinc)
+            '          Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, GestorConexiones.conexionPrinc)
             '          'MsgBox(consultacierre.SelectCommand.CommandText)
             '          Dim tablacierr As New DataTable
             '          Dim infocierr() As DataRow
@@ -208,9 +208,9 @@
 
             '          End If
             '          'MsgBox(SqlTEXT)
-            '          Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlTEXT, conexionPrinc)
-            '          Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, conexionPrinc)
-            '          Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, conexionPrinc)
+            '          Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SqlTEXT, GestorConexiones.conexionPrinc)
+            '          Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, GestorConexiones.conexionPrinc)
+            '          Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, GestorConexiones.conexionPrinc)
             '          Dim tablacheques As New DataTable
             '          Dim tablatarjetas As New DataTable
             '          Dim tablacaja As New DataTable
@@ -286,7 +286,7 @@
 
             End If
             Reconectar()
-            Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, conexionPrinc)
+            Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, GestorConexiones.conexionPrinc)
             Dim tablacierr As New DataTable
             Dim infocierr() As DataRow
             consultacierre.Fill(tablacierr)
@@ -390,9 +390,9 @@
             Reconectar()
             ' MsgBox(SQLCAJA)
 
-            Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, conexionPrinc)
-            Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, conexionPrinc)
-            Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, conexionPrinc)
+            Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, GestorConexiones.conexionPrinc)
+            Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, GestorConexiones.conexionPrinc)
+            Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, GestorConexiones.conexionPrinc)
             Dim tablacheques As New DataTable
             Dim tablatarjetas As New DataTable
             Dim tablacaja As New DataTable

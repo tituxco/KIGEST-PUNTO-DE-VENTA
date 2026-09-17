@@ -1,14 +1,17 @@
 ﻿Imports System.ComponentModel
+Imports SIGT__KIGEST.GestorClientes
+
 
 Public Class selclie
     ' Quitamos el "Shared" para evitar cruces de datos si abrís dos buscadores a la vez
     Public busqueda As String = ""
     Public llama As String = ""
-    Public clienteSeleccionado As datosEstructura.fact_clientes
+    Public clienteSeleccionado As fact_clientes
 
     Private Sub SELPAC_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If Not String.IsNullOrEmpty(busqueda) Then
             txtBusquedaCliente.Text = busqueda
+            txtBusquedaCliente.Focus()
             IniciarBusqueda()
         End If
     End Sub
@@ -52,7 +55,7 @@ Public Class selclie
 
     Private Sub CargarDatosAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarDatosAsync.DoWork
         Dim textoBusqueda As String = e.Argument.ToString()
-        e.Result = datosEstructura.fact_clientes.BuscarPorNombre(textoBusqueda)
+        e.Result = fact_clientes.BuscarPorNombre(textoBusqueda)
     End Sub
 
     Private Sub CargarDatosAsync_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarDatosAsync.RunWorkerCompleted
@@ -70,7 +73,7 @@ Public Class selclie
             If e.Cancelled Then Exit Sub
 
             ' 3. Intento de conversión segura (TryCast)
-            Dim listaClientes = TryCast(e.Result, List(Of datosEstructura.fact_clientes))
+            Dim listaClientes = TryCast(e.Result, List(Of fact_clientes))
 
             If listaClientes IsNot Nothing Then
                 ' Si la lista es correcta, la asignamos
@@ -107,7 +110,7 @@ Public Class selclie
             If dtpersonal.CurrentRow Is Nothing Then Exit Sub
 
             ' Capturamos el objeto completo (POO puro)
-            Me.clienteSeleccionado = CType(dtpersonal.CurrentRow.DataBoundItem, datosEstructura.fact_clientes)
+            Me.clienteSeleccionado = CType(dtpersonal.CurrentRow.DataBoundItem, fact_clientes)
 
             ' SI ES UN MÓDULO NUEVO O REFACTORIZADO (El padre captura el DialogResult.OK)
             If llama = "nuevoServicio" Or llama = "infoAlumno" Then

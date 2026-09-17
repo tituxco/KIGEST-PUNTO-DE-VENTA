@@ -32,7 +32,7 @@
     Public Sub cargarStockAlmacen(idProd As Integer)
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select lt.idproducto as ID, al.nombre as Almacen, sum(lt.stock) as Stock from fact_insumos_almacenes as al, fact_insumos_lotes as lt
-            where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", conexionPrinc)
+            where lt.idalmacen = al.id  and lt.idproducto = " & idProd & " group by lt.idproducto, lt.idalmacen", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
 
             consultaPRod.Fill(tablaprod)
@@ -66,7 +66,7 @@
         Application.DoEvents()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim busqtxt As String
 
             Dim cadenaComp As String
@@ -111,8 +111,8 @@
             cadenaComp = busqNomb & " And " & busqCat & " And " & busqProv & busqStock & busqCod
             'MsgBox(cadenaComp)
             If imprimirlist = False And imprimiretiq = False Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, concat(pro.descripcion,' ', pro.detalles) as Descripcion, pro.codigo as PLU, 
-            pro.precio as costosiniva, pro.ganancia,pro.utilidad1, pro.utilidad2, pro.iva  from fact_insumos as pro " & cadenaComp & " order by pro.descripcion asc", conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.id as CodInterno, CONCAT_WS(' ', pro.descripcion, pro.detalles) AS Descripcion, pro.codigo as PLU, 
+                pro.precio as costosiniva, pro.ganancia,pro.utilidad1, pro.utilidad2, pro.iva  from fact_insumos as pro " & cadenaComp & " order by pro.descripcion asc", gestorConexiones.conexionPrinc)
                 Dim tablaprod As New DataTable
                 'Dim filasProd() As DataRow
                 consulta.Fill(tablaprod)
@@ -142,14 +142,14 @@
                 '((pro.iva+100)/100) *
                 '((pro.ganancia+100)/100)*
                 '(((select listas.utilidad from fact_listas_precio as listas where listas.id=" & dtlistas.CurrentRow.Cells(3).Value & ")+100)/100),2,'es_AR') as precio
-                'from fact_insumos as pro   " & cadenaComp, conexionPrinc)
+                'from fact_insumos as pro   " & cadenaComp, GestorConexiones.conexionPrinc)
                 'MsgBox(consulta.SelectCommand.CommandText)
                 'Dim tablaprod As New DataTable
                 ''Dim filasProd() As DataRow
                 'tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
                 '& "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
                 '& "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-                '& "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+                '& "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
                 'tabEmp.Fill(fac.Tables("membreteenca"))
                 'Reconectar()
@@ -222,10 +222,10 @@
     Private Sub cargarCategoriasProd()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -247,7 +247,7 @@
     Private Sub calcularPrecios()
         Try
             Dim consultaPRod As New MySql.Data.MySqlClient.MySqlDataAdapter("select prod.precio, (select mon.cotizacion from fact_moneda as mon where mon.id=prod.moneda) as cotizacion,  " &
-            "prod.iva, prod.ganancia as utilidad0, prod.utilidad1, prod.utilidad2,prod.utilidad3,prod.utilidad4,prod.utilidad5 from fact_insumos as prod where prod.id=" & dtproductos.CurrentRow.Cells(0).Value, conexionPrinc)
+            "prod.iva, prod.ganancia as utilidad0, prod.utilidad1, prod.utilidad2,prod.utilidad3,prod.utilidad4,prod.utilidad5 from fact_insumos as prod where prod.id=" & dtproductos.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             Dim infoprod() As DataRow
             consultaPRod.Fill(tablaprod)
@@ -334,7 +334,7 @@
     Private Sub cargarListas()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, format(utilidad,2,'es_AR'),id,auxcol from fact_listas_precio", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select nombre, format(utilidad,2,'es_AR'),id,auxcol from fact_listas_precio", GestorConexiones.conexionPrinc)
             Dim tablalist As New DataTable
             Dim i As Integer
             Dim infolist() As DataRow
@@ -354,7 +354,7 @@
         End Try
     End Sub
     Private Sub cargarProveedores()
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         tablaprov.Fill(readprov)
         cmbproveedor.DataSource = readprov.Tables(0)
@@ -425,7 +425,7 @@
             If Not String.IsNullOrEmpty(dtproductos.CurrentRow.Cells("PLU").Value.ToString()) Then
                 Dim codigoNvo As String = dtproductos.CurrentRow.Cells("PLU").Value.ToString().ToUpper
                 'MsgBox("actualizando plu " & codigoNvo & " en id:" & idprod)
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set cod_bar='" & codigoNvo & "', codigo='" & codigoNvo & "' where id=" & idprod, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set cod_bar='" & codigoNvo & "', codigo='" & codigoNvo & "' where id=" & idprod, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
 
@@ -437,25 +437,25 @@
                     costo = Math.Round(FormatNumber(costo, 2) / ((FormatNumber(iva, 2) + 100) / 100), 2)
                     dtproductos.CurrentCell.Value = costo
                 End If
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set precio='" & costo & "' where id=" & idprod, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set precio='" & costo & "' where id=" & idprod, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 4 Then
             If IsNumeric(dtproductos.CurrentRow.Cells("ganancia").Value) Then
                 Dim ganancia As String = dtproductos.CurrentRow.Cells("ganancia").Value
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set ganancia='" & ganancia & "' where id=" & idprod, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set ganancia='" & ganancia & "' where id=" & idprod, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 5 Then
             If IsNumeric(dtproductos.CurrentRow.Cells("utilidad1").Value) Then
                 Dim ganancia As String = dtproductos.CurrentRow.Cells("utilidad1").Value
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad1='" & ganancia & "' where id=" & idprod, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad1='" & ganancia & "' where id=" & idprod, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
         ElseIf e.ColumnIndex = 6 Then
             If IsNumeric(dtproductos.CurrentRow.Cells("utilidad2").Value) Then
                 Dim ganancia As String = dtproductos.CurrentRow.Cells("utilidad2").Value
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad2='" & ganancia & "' where id=" & idprod, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set utilidad2='" & ganancia & "' where id=" & idprod, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
             End If
 
@@ -487,7 +487,7 @@
                     Dim codprov As Integer = cmbproveedor.SelectedValue
                     Reconectar()
                     ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') where codprov=" & codprov
-                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
+                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, GestorConexiones.conexionPrinc)
                     consulta.ExecuteNonQuery()
                     MsgBox("Precios actualizados")
                 Else
@@ -513,7 +513,7 @@
                     Dim categoria As Integer = cmbcatProd.SelectedValue
                     Reconectar()
                     ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') where categoria=" & categoria
-                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
+                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, GestorConexiones.conexionPrinc)
                     consulta.ExecuteNonQuery()
                     MsgBox("Precios actualizados")
                 Else
@@ -539,7 +539,7 @@
                 'MsgBox(porcentaje.ToString.Replace(",", "."))
                 Reconectar()
                 ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',')"
-                Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, GestorConexiones.conexionPrinc)
                 consulta.ExecuteNonQuery()
                 MsgBox("Precios actualizados")
             Else
@@ -562,7 +562,7 @@
                     Reconectar()
                     ConsultaSQL = "update fact_insumos set precio= replace(round(replace(precio,',','.') * " & porcentaje.ToString.Replace(",", ".") & ",2),'.',',') 
                     where id=" & producto.Cells(0).Value
-                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, conexionPrinc)
+                    Dim consulta As New MySql.Data.MySqlClient.MySqlCommand(ConsultaSQL, GestorConexiones.conexionPrinc)
                     consulta.ExecuteNonQuery()
                 Next
                 MsgBox("Precios actualizados, realice nuevamente la busqueda para ver los cambios")

@@ -18,7 +18,7 @@ Public Class tecnico
         TreeView1.Nodes.Clear()
         Reconectar()
         Dim tablateq As New MySql.Data.MySqlClient.MySqlDataAdapter("select te.id, te.nombre from tecni_equipos_tipo as te " _
-        & "where te.id in (select tipo_equ from tecni_equipos) order by te.nombre", conexionPrinc)
+        & "where te.id in (select tipo_equ from tecni_equipos) order by te.nombre", GestorConexiones.conexionPrinc)
         Dim readteq As New DataTable
         Dim infoeq() As DataRow
         tablateq.Fill(readteq)
@@ -34,7 +34,7 @@ Public Class tecnico
         'TreeView1.Nodes.Clear()
         Reconectar()
         Dim tablatmar As New MySql.Data.MySqlClient.MySqlDataAdapter("select ma.id, ma.nombre from fact_marcas as ma " _
-        & " order by ma.nombre", conexionPrinc)
+        & " order by ma.nombre", GestorConexiones.conexionPrinc)
         Dim readmar As New DataTable
         Dim infomar() As DataRow
         tablatmar.Fill(readmar)
@@ -51,7 +51,7 @@ Public Class tecnico
     Private Sub CargarMarc_falla()
         Reconectar()
         Dim tablamarc As New MySql.Data.MySqlClient.MySqlDataAdapter("select ma.id, ma.nombre from fact_marcas as ma " _
-        & "where ma.id in (select marca from tecni_equipos where tipo_equ=" & cmbteq.SelectedValue & ")", conexionPrinc)
+        & "where ma.id in (select marca from tecni_equipos where tipo_equ=" & cmbteq.SelectedValue & ")", GestorConexiones.conexionPrinc)
         Dim readmarc As New DataSet
         tablamarc.Fill(readmarc)
         cmbmarc.DataSource = readmarc.Tables(0)
@@ -63,7 +63,7 @@ Public Class tecnico
     Private Sub CargarMod_falla()
         Reconectar()
         Dim tablamo As New MySql.Data.MySqlClient.MySqlDataAdapter("select eq.id, mo.nombre from  tecni_equipos as eq, fact_modelos as mo " _
-        & "where tipo_equ=" & cmbteq.SelectedValue & " and marca=" & cmbmarc.SelectedValue & " and mo.id=eq.modelo", conexionPrinc)
+        & "where tipo_equ=" & cmbteq.SelectedValue & " and marca=" & cmbmarc.SelectedValue & " and mo.id=eq.modelo", GestorConexiones.conexionPrinc)
         Dim readmo As New DataTable
         tablamo.Fill(readmo)
         dtmodelosgral.DataSource = readmo
@@ -108,7 +108,7 @@ Public Class tecnico
 
     Private Sub CargarTecnicos()
         Reconectar()
-        Dim tablatecnicos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from tecni_tecnicos where activo=1", conexionPrinc)
+        Dim tablatecnicos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from tecni_tecnicos where activo=1", GestorConexiones.conexionPrinc)
         Dim readtecnicos As New DataSet
         tablatecnicos.Fill(readtecnicos)
         cmbtecnico.DataSource = readtecnicos.Tables(0)
@@ -165,7 +165,7 @@ Public Class tecnico
             End If
             Dim consultaestad As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
             & " id as Orden, fecha_ing as Ingreso, fecha_eg as Egreso, mo_monto as MO, ins_monto INS, trab_monto as TOTAL " _
-            & " from tecni_taller where estado=8 and fecha_eg between '" & Format(CDate(dtdeestad.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dthastaestad.Value), "yyyy-MM-dd") & "' " & extratec, conexionPrinc)
+            & " from tecni_taller where estado=8 and fecha_eg between '" & Format(CDate(dtdeestad.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dthastaestad.Value), "yyyy-MM-dd") & "' " & extratec, GestorConexiones.conexionPrinc)
 
             Dim tablaEstad As New DataTable
             consultaestad.Fill(tablaEstad)
@@ -215,7 +215,7 @@ Public Class tecnico
             Dim tabla As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
             & " concat(date_format(tec.fecha_ing,'%m'),'/',date_format(tec.fecha_ing,'%Y')) as mes, count(id) as ingresos from tecni_taller as tec " _
             & " where tec.fecha_ing between '" & Format(CDate(dtdegraf.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dthastagraf.Value), "yyyy-MM-dd") & "'" _
-            & " group by date_format(tec.fecha_ing,'%Y-%m')", conexionPrinc)
+            & " group by date_format(tec.fecha_ing,'%Y-%m')", GestorConexiones.conexionPrinc)
 
             Dim readgraf As New DataSet
             tabla.Fill(readgraf, "tec")
@@ -246,7 +246,7 @@ Public Class tecnico
             & " concat(date_format(tec.fecha_eg,'%m'),'/',date_format(tec.fecha_eg,'%Y')) as mes, count(id) as egresos, sum(replace(tec.trab_monto,',','.')) as facturado " _
             & " from tecni_taller as tec " _
             & " where tec.fecha_eg between '" & Format(CDate(dtdegraf.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dthastagraf.Value), "yyyy-MM-dd") & "'" _
-            & " group by date_format(tec.fecha_eg,'%Y-%m')", conexionPrinc)
+            & " group by date_format(tec.fecha_eg,'%Y-%m')", GestorConexiones.conexionPrinc)
             Dim readgraf As New DataSet
             tabla.Fill(readgraf, "tec")
 
@@ -284,7 +284,7 @@ Public Class tecnico
             & " if (tec.trab_estado=3,round(sum(replace(tec.trab_monto,',','.')),2),'') as espera, " _
             & " round(sum(replace(tec.ins_monto,',','.')),2) as insumos " _
             & " from tecni_taller as tec  where tec.fecha_eg between '" & Format(CDate(dtdegraf.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dthastagraf.Value), "yyyy-MM-dd") & "' " _
-            & " group by date_format(tec.fecha_eg,'%Y-%m')", conexionPrinc)
+            & " group by date_format(tec.fecha_eg,'%Y-%m')", GestorConexiones.conexionPrinc)
             Dim readgraf As New DataSet
 
             tabla.Fill(readgraf, "tec")
@@ -376,7 +376,7 @@ Public Class tecnico
             ECli.serie as SERIE,
             (select count(*) from tecni_taller where equipo=ECli.id)
             from tecni_equipos_clientes as ECli, fact_clientes as clie 
-            where clie.idclientes=ECli.propietario and " & consulta, conexionPrinc)
+            where clie.idclientes=ECli.propietario and " & consulta, GestorConexiones.conexionPrinc)
             'MsgBox(tabla.SelectCommand.CommandText)
             Dim leertab As New DataTable
             Dim itemtab() As DataRow
@@ -388,7 +388,7 @@ Public Class tecnico
 
                 treequipos.SelectedNode = treequipos.Nodes(treequipos.Nodes.Count - 1)
                 Dim taborden As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-                & "id from tecni_taller where equipo=" & itemtab(i)(0), conexionPrinc)
+                & "id from tecni_taller where equipo=" & itemtab(i)(0), GestorConexiones.conexionPrinc)
                 Dim leerorden As New DataTable
                 Dim itemorden() As DataRow
 
@@ -479,7 +479,7 @@ Public Class tecnico
             & "where eq.marca=ma.id and eq.modelo=mo.id and eq.tipo_equ=et.id and eq.id=ecli.modelo) as EQUIPO " _
             & "from tecni_equipos_clientes as ecli where ecli.id=" & codigo
 
-            Dim consespec As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlquery, conexionPrinc)
+            Dim consespec As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlquery, GestorConexiones.conexionPrinc)
             Dim tabespec As New DataTable
             Dim itemespec() As DataRow
 

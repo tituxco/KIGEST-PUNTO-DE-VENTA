@@ -31,10 +31,10 @@ Public Class productos
     Private Sub cargarCategoriasProd()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -63,10 +63,10 @@ Public Class productos
     Private Sub cargarProveedores()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos categorias
-            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,razon from fact_proveedores order by razon asc", conexionPrinc)
+            Dim tablacatprod As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,razon from fact_proveedores order by razon asc", GestorConexiones.conexionPrinc)
             Dim readcat As New DataSet
             Dim readcat2 As New DataSet
             tablacatprod.Fill(readcat)
@@ -88,10 +88,10 @@ Public Class productos
     Private Sub cargarMarcas()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", conexionPrinc)
+            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readmarc As New DataSet
             tablamarca.Fill(readmarc)
             cmbmarcas.DataSource = readmarc.Tables(0)
@@ -107,10 +107,10 @@ Public Class productos
     Private Sub cargarunidades()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablaunidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_unidades order by nombre asc", conexionPrinc)
+            Dim tablaunidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_unidades order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readunid As New DataSet
             tablaunidad.Fill(readunid)
             cmbunidades.DataSource = readunid.Tables(0)
@@ -125,10 +125,10 @@ Public Class productos
     Private Sub cargarPresentacion()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablaunidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(presentacion) from fact_insumos order by presentacion desc", conexionPrinc)
+            Dim tablaunidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(presentacion) from fact_insumos order by presentacion desc", GestorConexiones.conexionPrinc)
             Dim readunid As New DataSet
             tablaunidad.Fill(readunid)
             cmbpresentacion.DataSource = readunid.Tables(0)
@@ -143,10 +143,10 @@ Public Class productos
     Private Sub cargarModelos(ByRef marca As Integer)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", conexionPrinc)
+            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readmod As New DataSet
             tablamodelo.Fill(readmod)
             cmbmodelos.DataSource = readmod.Tables(0)
@@ -162,10 +162,10 @@ Public Class productos
     Private Sub cargarMoneda()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamoneda As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_moneda ", conexionPrinc)
+            Dim tablamoneda As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_moneda ", GestorConexiones.conexionPrinc)
             Dim readmone As New DataSet
             tablamoneda.Fill(readmone)
             cmbmoneda.DataSource = readmone.Tables(0)
@@ -177,7 +177,7 @@ Public Class productos
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select valor from fact_configuraciones where  id = 1"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -294,7 +294,7 @@ Public Class productos
     Private Sub cargarProductos(ByRef codigo As String, ByRef nombre As String, ByRef categoria As String)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim busqtxt As String
 
             Dim cadenaComp As String
@@ -357,7 +357,7 @@ Public Class productos
 
             If imprimirlist = False Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id as CodInterno, descripcion as Producto, codigo as Codigo 
-                FROM fact_insumos as pro " & cadenaComp, conexionPrinc)
+                FROM fact_insumos as pro " & cadenaComp, GestorConexiones.conexionPrinc)
                 Dim tablaprod As New DataTable
                 'MsgBox(consulta.SelectCommand.CommandText)
                 'Dim filasProd() As DataRow
@@ -402,7 +402,7 @@ Public Class productos
                 end as precio, 
                 
                 cat.nombre as categoria
-                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, conexionPrinc)
+                from fact_insumos as pro, fact_categoria_insum as cat " & cadenaComp, GestorConexiones.conexionPrinc)
                 Dim tablaprod As New DataTable
                 consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idlst", MySql.Data.MySqlClient.MySqlDbType.Text))
                 consulta.SelectCommand.Parameters("@idlst").Value = dtlistas.CurrentRow.Cells(3).Value
@@ -411,7 +411,7 @@ Public Class productos
                 tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
                 tabEmp.Fill(fac.Tables("membreteenca"))
                 Reconectar()
@@ -468,7 +468,7 @@ Public Class productos
     Private Sub cargarListas()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select concat(nombre ,' (',utilidad,'%)'), format(utilidad,2,'es_AR'), auxcol from fact_listas_precio order by id asc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select concat(nombre ,' (',utilidad,'%)'), format(utilidad,2,'es_AR'), auxcol from fact_listas_precio order by id asc", GestorConexiones.conexionPrinc)
             Dim tablalist As New DataTable
             Dim i As Integer
             Dim infolist() As DataRow
@@ -629,10 +629,10 @@ Public Class productos
     Private Sub CargarInfoProd(ByRef codigo As Integer)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT pro.*, (select sum(replace(stock,',','.')) from fact_insumos_lotes  where idproducto=pro.id) as stock,   
             (select peso from cm_pesoEspecifico  where id=pro.id) as PEspecifico
-            from fact_insumos as pro where pro.id = " & codigo, conexionPrinc)
+            from fact_insumos as pro where pro.id = " & codigo, GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
 
             Dim tablaprod As New DataTable
@@ -672,7 +672,7 @@ Public Class productos
             'End If
 
             txtgarantia.Text = infoProd(0)("garantia")
-            txtinfoextra.Text = infoProd(0)("detalles")
+            txtinfoextra.Text = infoProd(0)("detalles").ToString()
             txtcodigo.Text = infoProd(0)("codigo")
             cmbtipoprod.SelectedIndex = infoProd(0)("tipo")
             ''si es combustible habilitamos otras opciones
@@ -716,7 +716,7 @@ Public Class productos
                     (select nombre from fact_insumos_almacenes where id=lt.idalmacen) as Almacen
                     from fact_insumos_lotes as lt, fact_proveedores as pro, fact_proveedores_fact as pfac 
                     where  pro.id = pfac.idproveedor and lt.idfactura=pfac.id and idproducto='" & codigo & "'			
-                    order by lt.id  desc", conexionPrinc)
+                    order by lt.id  desc", GestorConexiones.conexionPrinc)
                     'MsgBox(consProv.SelectCommand.CommandText)
                     Dim tablaprov As New DataTable
 
@@ -725,7 +725,7 @@ Public Class productos
                 ElseIf cmbtipoprod.SelectedIndex = 1 Then
                     Dim consProv As New MySql.Data.MySqlClient.MySqlDataAdapter("select pro.fecha as ORIGEN, " _
                     & "lt.stock  as Stock from fact_insumos_lotes as lt, fact_produccion as pro  " _
-                    & "where lt.idfactura=pro.id and lt.idproducto=" & codigo & " order by lt.id asc", conexionPrinc)
+                    & "where lt.idfactura=pro.id and lt.idproducto=" & codigo & " order by lt.id asc", GestorConexiones.conexionPrinc)
                     Dim tablaprov As New DataTable
 
                     consProv.Fill(tablaprov)
@@ -786,7 +786,7 @@ Public Class productos
             dtdescuentos.Rows.Clear()
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat(prom.nombrepromo,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & idProductoGral, conexionPrinc)
+            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto and prom.idproducto=" & idProductoGral, GestorConexiones.conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
             consultaDescProd.Fill(tablaDescProd)
@@ -794,7 +794,7 @@ Public Class productos
 
             Reconectar()
             Dim consultaDescCat As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat(prom.nombrepromo,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones As prom Where  prom.idCategoria=" & cmbcatprod.SelectedValue, conexionPrinc)
+            "From fact_promociones As prom Where  prom.idCategoria=" & cmbcatprod.SelectedValue, GestorConexiones.conexionPrinc)
             Dim tablaDescCat As New DataTable
             Dim filasDescCat() As DataRow
             consultaDescCat.Fill(tablaDescCat)
@@ -816,11 +816,11 @@ Public Class productos
     Private Sub cmbmoneda_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbmoneda.SelectedValueChanged
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select cotizacion from fact_moneda  where  id = " & cmbmoneda.SelectedValue
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -1007,7 +1007,7 @@ Public Class productos
                 End If
                 Reconectar()
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?desc", nombre)
                     .AddWithValue("?prec", costo)
@@ -1049,7 +1049,7 @@ Public Class productos
                     Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
                     Reconectar()
                     Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
-                on duplicate key update peso=?peso", conexionPrinc)
+                on duplicate key update peso=?peso", GestorConexiones.conexionPrinc)
                     comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
                     comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
 
@@ -1060,33 +1060,33 @@ Public Class productos
                 Reconectar()
                 'If categoria = 0 And cmbcatprod.Text = "" Then
                 '    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand(
-                '        "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", conexionPrinc)
+                '        "insert into fact_categoria_insum(nombre) values('" & cmbcatprod.Text.ToUpper & "')", GestorConexiones.conexionPrinc)
                 '    '   "SET @ID_CAT=(select MAX(id) from fact_categoria_insum where nombre like '" & cmbcatprod.Text.ToUpper & "');
                 '    '   insert into  fact_categoria_insum (id,nombre) values 
                 '    '   (@ID_CAT,'" & cmbcatprod.Text.ToUpper & "')
                 '    '   ON DUPLICATE KEY UPDATE 
-                '    'nombre= '" & cmbcatprod.Text.ToUpper & "'", conexionPrinc)
+                '    'nombre= '" & cmbcatprod.Text.ToUpper & "'", GestorConexiones.conexionPrinc)
                 '    comandoad.ExecuteNonQuery()
                 '    categoria = comandoad.LastInsertedId
                 'End If
 
                 Reconectar()
                 If marca = 0 And cmbmarcas.Text <> "" Then
-                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_marcas(nombre) values('" & cmbmarcas.Text.ToUpper & "')", conexionPrinc)
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_marcas(nombre) values('" & cmbmarcas.Text.ToUpper & "')", GestorConexiones.conexionPrinc)
                     comandoad.ExecuteNonQuery()
                     marca = comandoad.LastInsertedId
                 End If
 
                 Reconectar()
                 If modelo = 0 And cmbmodelos.Text <> "" Then
-                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_modelos (idmarca,nombre) values('" & marca & "','" & cmbmodelos.Text.ToUpper & "')", conexionPrinc)
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_modelos (idmarca,nombre) values('" & marca & "','" & cmbmodelos.Text.ToUpper & "')", GestorConexiones.conexionPrinc)
                     comandoad.ExecuteNonQuery()
                     modelo = comandoad.LastInsertedId
                 End If
 
                 Reconectar()
                 If moneda = 0 And cmbmoneda.Text <> "" Then
-                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_moneda (nombre,cotizacion) values('" & cmbmoneda.Text.ToUpper & "','1')", conexionPrinc)
+                    Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_moneda (nombre,cotizacion) values('" & cmbmoneda.Text.ToUpper & "','1')", GestorConexiones.conexionPrinc)
                     comandoad.ExecuteNonQuery()
                     modelo = comandoad.LastInsertedId
                 End If
@@ -1107,7 +1107,7 @@ Public Class productos
                 End If
                 Reconectar()
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?desc", nombre)
                     .AddWithValue("?prec", costo)
@@ -1146,7 +1146,7 @@ Public Class productos
                     Dim PesoEspecifio As String = txtPesoEspecifico.Text.Replace(".", ",")
                     Reconectar()
                     Dim comandoPesoEsp As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_pesoEspecifico (id,peso) values (?id,?peso) 
-                on duplicate key update peso=?peso", conexionPrinc)
+                on duplicate key update peso=?peso", GestorConexiones.conexionPrinc)
                     comandoPesoEsp.Parameters.AddWithValue("?id", idProductoGral)
                     comandoPesoEsp.Parameters.AddWithValue("?peso", PesoEspecifio)
 
@@ -1222,7 +1222,7 @@ Public Class productos
             Dim sqlquery As String
             If MsgBox("Esta seguro que desea eliminar este producto? esta acción no se puede deshacer", vbYesNo + vbQuestion) = vbYes Then
                 sqlquery = "delete from fact_insumos where id=" & DgvProductos.dgvVista.CurrentRow.Cells(0).Value
-                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, conexionPrinc)
+                Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(sqlquery, GestorConexiones.conexionPrinc)
                 comandoupd.ExecuteNonQuery()
                 DgvProductos.dgvVista.Rows.Remove(DgvProductos.dgvVista.CurrentRow)
                 MsgBox("Producto eliminado")
@@ -1355,9 +1355,9 @@ Public Class productos
                     Continue For
                 End If
                 i = 0
-                If conexionSEC.State = ConnectionState.Closed Then
-                    conexionSEC.Open()
-                    conexionSEC.ChangeDatabase(database)
+                If GestorConexiones.conexionSEC.State = ConnectionState.Closed Then
+                    GestorConexiones.conexionSEC.Open()
+                    'GestorConexiones.conexionSEC.ChangeDatabase(database)
                 End If
 
                 Dim iva As String = txtlistaimportaiva.Text
@@ -1446,7 +1446,7 @@ Public Class productos
                 sqlQuery = sqlQueryadd_INSPref & sqlQueryadd_INS & sqlQueryadd_INSValPref & sqlQueryadd_INSVal & sqlQueryupd_UPDPref & sqlQueryupd_UPDVal
                 'MsgBox(sqlQuery)
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionSEC)
                 With comandoadd.Parameters
                     .AddWithValue("?id", ObtenerIDproducto(codigo))
                     .AddWithValue("?codprov", proveedorimport)
@@ -1470,25 +1470,25 @@ Public Class productos
 
                 sqlQueryupd_UPDPref = ") On duplicate key update iva=?iva"
                 sqlQueryupd_UPDVal = ""
-                conexionSEC.Close()
+                GestorConexiones.conexionSEC.Close()
                 ImportarListaPrecios.ReportProgress(CInt((registroactual / dtimportados.RowCount) * 100))
             Next
 
         Catch ex As Exception
 
-            conexionSEC.Close()
+            GestorConexiones.conexionSEC.Close()
             MsgBox(ex.Message)
         End Try
     End Sub
     Private Function ObtenerIDproducto(ByRef codigoProd As String) As String
         Try
-            If conexionPrinc.State = ConnectionState.Closed Then
-                conexionPrinc.Open()
+            If GestorConexiones.conexionPrinc.State = ConnectionState.Closed Then
+                GestorConexiones.conexionPrinc.Open()
             End If
             If codigoProd = "" Then
                 codigoProd = "0"
             End If
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id FROM fact_insumos  where codigo Like '" & Replace(codigoProd, "'", "") & "'", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id FROM fact_insumos  where codigo Like '" & Replace(codigoProd, "'", "") & "'", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             consulta.Fill(tablaprod)
             If tablaprod.Rows.Count <> 0 Then
@@ -1496,10 +1496,10 @@ Public Class productos
             Else
                 Return ""
             End If
-            conexionPrinc.Close()
+            GestorConexiones.conexionPrinc.Close()
         Catch ex As Exception
             MsgBox(ex.Message)
-            conexionPrinc.Close()
+            GestorConexiones.conexionPrinc.Close()
             Return "''"
         End Try
     End Function
@@ -1523,7 +1523,7 @@ Public Class productos
                 Exit Sub
             Else
                 Reconectar()
-                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("", conexionPrinc)
+                Dim comandoad As New MySql.Data.MySqlClient.MySqlCommand("", GestorConexiones.conexionPrinc)
                 comandoad.ExecuteNonQuery()
             End If
         Catch ex As Exception
@@ -1595,7 +1595,7 @@ Public Class productos
             Dim iddesc As Integer = dtdescuentos.CurrentRow.Cells(0).Value
             Reconectar()
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_promociones set compra_min='" & compramin & "', descuento_porc='" & descuento & "' " &
-            "where id=" & iddesc, conexionPrinc)
+            "where id=" & iddesc, GestorConexiones.conexionPrinc)
             comandoupd.ExecuteNonQuery()
             MsgBox("actualizado correctamente")
         Catch ex As Exception
@@ -1643,7 +1643,7 @@ Public Class productos
         Try
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(" & My.Settings.obtCodProd & ")+1 as ProxCod FROM fact_insumos 
-            having ProxCod not in(select " & My.Settings.obtCodProd & " from fact_insumos )", conexionPrinc)
+            having ProxCod not in(select " & My.Settings.obtCodProd & " from fact_insumos )", GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             consulta.Fill(tablaprod)
             'If tablaprod.Rows.Count <> 0 Then
@@ -1652,7 +1652,7 @@ Public Class productos
             'Dim numaleat As New Random(CInt(DateTime.Now.Ticks And 999999))
             '    txtcodigo.Text = numaleat.Next
             'End If
-            conexionPrinc.Close()
+            GestorConexiones.conexionPrinc.Close()
         Catch ex As Exception
 
         End Try
@@ -1730,7 +1730,7 @@ Public Class productos
             and itm.cod=" & idProductoGral & "				
             group by month(fact.fecha),itm.cod order by month(fact.fecha) asc"
 
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqLCons, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqLCons, GestorConexiones.conexionPrinc)
             Dim tablaDatosHistorial As New DataTable
             consulta.Fill(tablaDatosHistorial)
             Dim HistorialCliente As New DataTable

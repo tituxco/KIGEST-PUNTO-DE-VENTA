@@ -113,7 +113,7 @@
     End Function
     Private Sub CargarCategoriastrab()
         Reconectar()
-        Dim tablacattrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_trabajo_categoria", conexionPrinc)
+        Dim tablacattrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_trabajo_categoria", GestorConexiones.conexionPrinc)
         Dim readcattrab As New DataSet
         tablacattrab.Fill(readcattrab)
         cmbcattrab.DataSource = readcattrab.Tables(0)
@@ -125,7 +125,7 @@
 
     Private Sub CargarUsuarios()
         Reconectar()
-        Dim tablausuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from cm_usuarios WHERE activo=1 ", conexionPrinc)
+        Dim tablausuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,',',nombre) from cm_usuarios WHERE activo=1 ", GestorConexiones.conexionPrinc)
         Dim readusuarios As New DataSet
         tablausuarios.Fill(readusuarios)
         cmbrecibeusuario.DataSource = readusuarios.Tables(0)
@@ -138,10 +138,10 @@
     Private Sub cargarMarcas()
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ' 'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", conexionPrinc)
+            Dim tablamarca As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_marcas order by nombre asc", gestorConexiones.conexionPrinc)
             Dim readmarc As New DataSet
             tablamarca.Fill(readmarc)
             cmbmarcas.DataSource = readmarc.Tables(0)
@@ -156,10 +156,10 @@
     Private Sub cargarModelos(ByRef marca As Integer)
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos marcas
-            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", conexionPrinc)
+            Dim tablamodelo As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_modelos where idmarca=" & marca & " order by nombre asc", GestorConexiones.conexionPrinc)
             Dim readmod As New DataSet
             tablamodelo.Fill(readmod)
             cmbmodelos.DataSource = readmod.Tables(0)
@@ -176,7 +176,7 @@
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre, " _
             & "concat(cl.telefono,'/',cl.celular), cl.email " _
-            & " from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, conexionPrinc)
+            & " from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -191,7 +191,7 @@
     Private Sub CargarTipoEquipo()
         Try
             Reconectar()
-            Dim tablatipoeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_equipos_tipo", conexionPrinc)
+            Dim tablatipoeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from tecni_equipos_tipo", GestorConexiones.conexionPrinc)
             Dim readtipoequ As New DataSet
             tablatipoeq.Fill(readtipoequ)
             cmbtipoequ.DataSource = readtipoequ.Tables(0)
@@ -212,7 +212,7 @@
             'MsgBox(busTXT)
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select et.id,ma.id,mo.id,ecli.serie " _
             & "from tecni_equipos_clientes as ecli, tecni_equipos as eq, tecni_equipos_tipo as et, fact_marcas as ma, fact_modelos as mo " _
-            & "where ecli.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id " & busTXT, conexionPrinc)
+            & "where ecli.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id " & busTXT, GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -322,13 +322,13 @@
 
 
             Reconectar()
-            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as piecliente, texto2 as pieempresa from tecni_datosgenerales WHERE id=1", conexionPrinc)
+            tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select texto1 as piecliente, texto2 as pieempresa from tecni_datosgenerales WHERE id=1", GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("datosFichaIngreso"))
 
 
             Reconectar()
             tablaDTGFicha.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "lpad(tall.id,4,'0') as orden, " _
+            & "lpad(tall.id,5,'0') as orden, " _
             & "concat('FECHA INGRESO: ',tall.fecha_ing) as fecha, case tall.trabajo_categoria " _
             & "when 4 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon,'(',tall.infoextra,')') " _
             & "when 2 then concat('CLIENTE: ', cl.idclientes,' - ',cl.nomapell_razon) " _
@@ -347,11 +347,11 @@
             & "tecni_equipos as eq " _
             & "where " _
             & "tall.cliente=cl.idclientes and tall.modelo=eq.id and eq.tipo_equ=et.id and eq.marca=ma.id and eq.modelo=mo.id and tall.recibe=us.id " _
-            & "and tall.id=" & Val(txtnumor.Text), conexionPrinc)
+            & "and tall.id=" & Val(txtnumor.Text), GestorConexiones.conexionPrinc)
             tablaDTGFicha.Fill(dsDTGFicha.Tables("fichaIngreso"))
 
             Reconectar()
-            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", conexionPrinc)
+            tablaFacturacion.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select nombrefantasia, razonsocial, concat('Direccion: ',direccion,' - ',otrosdatos) as direccion, localidad, cuit, ingbrutos, ivatipo, inicioact, drei from fact_empresa where id=1", GestorConexiones.conexionPrinc)
             tablaFacturacion.Fill(dsFacturacion.Tables("datosEmpresa"))
 
             Dim imping As New imprimiringreso
@@ -405,12 +405,14 @@
             Dim modelo As Integer = cmbmodelos.SelectedValue
             Dim serie As String = txtnumeroSerie.Text.ToUpper
             Dim equipo As Integer
+            Dim estado As Integer = 1 'sin revisar
+
             Dim numor As Integer = txtnumor.Text
             If tipoeq = 0 Then
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into tecni_equipos_tipo(nombre) values ('" & cmbtipoequ.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -422,7 +424,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into fact_marcas (nombre) values ('" & cmbmarcas.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -434,7 +436,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into fact_modelos (idmarca, nombre) values ('" & marca & "','" & cmbmodelos.Text.ToUpper & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -443,7 +445,7 @@
             End If
 
             Reconectar()
-            Dim consultaeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from tecni_equipos where marca=" & marca & " and modelo=" & modelo & " and tipo_equ=" & tipoeq, conexionPrinc)
+            Dim consultaeq As New MySql.Data.MySqlClient.MySqlDataAdapter("select id from tecni_equipos where marca=" & marca & " and modelo=" & modelo & " and tipo_equ=" & tipoeq, GestorConexiones.conexionPrinc)
             Dim tablaeq As New DataTable
             Dim infoeq() As DataRow
             consultaeq.Fill(tablaeq)
@@ -451,7 +453,7 @@
                 Reconectar()
                 Dim lector As System.Data.IDataReader
                 Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "insert into tecni_equipos (marca, modelo,tipo_equ) values ('" & marca & "','" & modelo & "','" & tipoeq & "')"
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -483,7 +485,7 @@
             sqlQuery = "insert into tecni_taller (id,cliente,motivo_ing, accesorios,fecha_ing,modelo,serie,observaciones,trabajo_categoria,infoextra,recibe,equipo,mail,telefono) values " _
             & "(?id,?clie,?mot,?acc,?fing,?mod,?serie,?obs,?cat,?info,?recibe,?equipo,?mail,?tel)"
             Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?id", numor)
                 .AddWithValue("?clie", cliente)
@@ -531,7 +533,7 @@
     Private Sub tmrComprobarOR_Tick(sender As Object, e As EventArgs) Handles tmrComprobarOR.Tick
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select max(id) from tecni_taller", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select max(id) from tecni_taller", GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -561,7 +563,7 @@
                 lblcodexistente.Text = ""
                 Dim sqlQuery As String = "select id from tecni_equipos where " _
                 & "marca=" & cmbmarcas.SelectedValue & " and tipo_equ= " & cmbtipoequ.SelectedValue & " and modelo=" & cmbmodelos.SelectedValue
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, GestorConexiones.conexionPrinc)
                 Dim tablaequ As New DataTable
                 Dim infoequ() As DataRow
                 consulta.Fill(tablaequ)
@@ -582,7 +584,7 @@
             End If
             lblcodexistente.Text = ""
             Dim sqlQuery As String = "select id from tecni_equipos_clientes where serie like '" & txtnumeroSerie.Text & "'"
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlQuery, GestorConexiones.conexionPrinc)
             Dim tablaequ As New DataTable
             Dim infoequ() As DataRow
             consulta.Fill(tablaequ)

@@ -18,7 +18,7 @@ Public Class movimientodecaja
         Try
             Reconectar()
 
-            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from fact_conffiscal where (tip=2 or tip=3) and ptovta=" & ptovta, conexionPrinc)
+            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from fact_conffiscal where (tip=2 or tip=3) and ptovta=" & ptovta, GestorConexiones.conexionPrinc)
             Dim readftipo As New DataSet
             tablaftipo.Fill(readftipo)
             cmbtipofac.DataSource = readftipo.Tables(0)
@@ -27,7 +27,7 @@ Public Class movimientodecaja
             cmbtipofac.SelectedIndex = -1
 
             Reconectar()
-            Dim tablaconceptoing As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_ingresos_concepto", conexionPrinc)
+            Dim tablaconceptoing As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_ingresos_concepto", GestorConexiones.conexionPrinc)
             Dim readconcing As New DataSet
             tablaconceptoing.Fill(readconcing)
             cmbconceptoing.DataSource = readconcing.Tables(0)
@@ -36,7 +36,7 @@ Public Class movimientodecaja
             cmbconceptoing.SelectedIndex = -1
 
             Reconectar()
-            Dim tablaconceptoeg As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", conexionPrinc)
+            Dim tablaconceptoeg As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", GestorConexiones.conexionPrinc)
             Dim readconceg As New DataSet
             tablaconceptoeg.Fill(readconceg)
             cmbconceptoegreso.DataSource = readconceg.Tables(0)
@@ -45,7 +45,7 @@ Public Class movimientodecaja
             cmbconceptoegreso.SelectedIndex = -1
 
             Reconectar()
-            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", conexionPrinc)
+            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", GestorConexiones.conexionPrinc)
             Dim readivat As New DataSet
             tablaivat.Fill(readivat)
             cmbtipocontr.DataSource = readivat.Tables(0)
@@ -59,7 +59,7 @@ Public Class movimientodecaja
             cmbproviva.SelectedIndex = -1
 
             Reconectar()
-            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", conexionPrinc)
+            Dim tablacajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cajas", GestorConexiones.conexionPrinc)
             Dim readcajas As New DataSet
             Dim readcajas2 As New DataSet
             tablacajas.Fill(readcajas)
@@ -87,7 +87,7 @@ Public Class movimientodecaja
             cmbctahacia.SelectedIndex = -1
 
             Reconectar()
-            Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+            Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", GestorConexiones.conexionPrinc)
             Dim readprov As New DataSet
             tablaprov.Fill(readprov)
             cmbproveedores.DataSource = readprov.Tables(0)
@@ -105,7 +105,7 @@ Public Class movimientodecaja
         Try
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre," _
-            & " cl.iva_tipo, cl.cuit from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, conexionPrinc)
+            & " cl.iva_tipo, cl.cuit from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and  idclientes = " & txtctaclie.Text, GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -221,7 +221,7 @@ Public Class movimientodecaja
             If e.ColumnIndex = 1 And dtconceptos.Rows(e.RowIndex).Cells(1).Value.ToString <> "%" Then
                 Reconectar()
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select cta.id,fi.abrev,lpad(fa.ptovta,4,'0'),lpad(fa.num_fact,8,'0'),fa.total,fa.id from fact_conffiscal as fi, fact_facturas as fa, fact_cuentaclie as cta " _
-                & "where cta.pago=0 and cta.idcomp=fa.id and fa.tipofact=fi.donfdesc and fa.num_fact like '" & dtconceptos.Rows(e.RowIndex).Cells(1).Value & "' and cta.idclie=" & Val(txtctaclie.Text), conexionPrinc)
+                & "where cta.pago=0 and cta.idcomp=fa.id and fa.tipofact=fi.donfdesc and fa.num_fact like '" & dtconceptos.Rows(e.RowIndex).Cells(1).Value & "' and cta.idclie=" & Val(txtctaclie.Text), GestorConexiones.conexionPrinc)
                 Dim tablacl As New DataTable
                 Dim infocl() As DataRow
                 consulta.Fill(tablacl)
@@ -282,7 +282,7 @@ Public Class movimientodecaja
                 grpCuentaContable.Visible = True
                 Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,concat(grupo,subgrupo,cuenta,'.',subcuenta,cuentadetalle) as codigoCuenta, 
                 concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-                FROM cm_planDeCuentas where cuentaMovimiento=1 order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+                FROM cm_planDeCuentas where cuentaMovimiento=1 order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", GestorConexiones.conexionPrinc)
                 Dim tabCtasDebe As New DataSet
                 Dim tabCtasHaber As New DataSet
                 consPlanCuentas.Fill(tabCtasDebe)
@@ -328,7 +328,7 @@ Public Class movimientodecaja
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & ptovta
 
             sql.CommandType = CommandType.Text
@@ -432,7 +432,7 @@ Public Class movimientodecaja
                 & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,total,observaciones) values " _
                 & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?tot,?observa)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -457,7 +457,7 @@ Public Class movimientodecaja
                     sqlQuery = "insert into fact_cheques " _
                 & "(cliente,comprobante,fecha_cobro,banco,serie,importe,tipo_cheque) values " _
                 & "(?cliente,?comprobante,?fcobro,?banco,?serie,?importe,'1')"
-                    Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                     With comandoch.Parameters
                         .AddWithValue("?cliente", idcliente)
                         .AddWithValue("?comprobante", idfactura)
@@ -476,7 +476,7 @@ Public Class movimientodecaja
                     sqlQuery = "insert into fact_tarjetas " _
                 & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
                 & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
-                    Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                     With comandoch.Parameters
                         .AddWithValue("?cliente", idcliente)
                         .AddWithValue("?comprobante", idfactura)
@@ -495,7 +495,7 @@ Public Class movimientodecaja
                 sqlQuery = "insert into fact_tarjetas " _
                 & "(fecha,nombre,autorizacion,cliente,importe,comprobante) values " _
                 & "(?fecha,?nombre,?autorizacion,?cliente,?importe,?comprobante)"
-                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoch As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoch.Parameters
                     .AddWithValue("?cliente", idcliente)
                     .AddWithValue("?comprobante", idfactura)
@@ -511,7 +511,7 @@ Public Class movimientodecaja
                 Reconectar()
                 sqlQuery = "insert into fact_retenciones (fecha, cliente, importe, comprobante) values " _
                 & "(?fecha,?cliente,?importe,?comprobante)"
-                Dim comandoreten As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoreten As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoreten.Parameters
                     .AddWithValue("?fecha", fecha)
                     .AddWithValue("?cliente", idcliente)
@@ -547,7 +547,7 @@ Public Class movimientodecaja
             'pr.periodo not in(select periodo from rym_pagos where ID_PRESTAMO=pr.ID_PRESTAMO) and
             'pr.ID_PRESTAMO=" & idPublicidad & "
             'order by pr.periodo asc
-            'limit 1", conexionPrinc)
+            'limit 1", GestorConexiones.conexionPrinc)
 
             '    Dim tablaPublicidad As New DataTable
             '    consultaPeriodo.Fill(tablaPublicidad)
@@ -559,7 +559,7 @@ Public Class movimientodecaja
 
             '        sqlQuery = "insert into rym_pagos (fecha,id_prestamo,periodo,monto_pagado) values (?fecha,?idprestamo,?periodo,?monto)"
             '        Reconectar()
-            '        Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            '        Dim addPagoPubli As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             '        With addPagoPubli.Parameters
             '            .AddWithValue("?fecha", fecha)
             '            .AddWithValue("?idprestamo", idPublicidad)
@@ -573,7 +573,7 @@ Public Class movimientodecaja
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where donfdesc= " & cmbtipofac.SelectedValue & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -611,14 +611,14 @@ Public Class movimientodecaja
 
                 'poner factura como pagada
                 Reconectar()
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "update fact_cuentaclie set pago=1 where id= " & factconcepto.Cells(0).Value
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
                 lector.Read()
 
                 Reconectar()
-                sql.Connection = conexionPrinc
+                sql.Connection = GestorConexiones.conexionPrinc
                 sql.CommandText = "update fact_facturas set observaciones2=concat(observaciones2,'\n','" & numcomp & "') where id= " & factconcepto.Cells(3).Value
                 sql.CommandType = CommandType.Text
                 lector = sql.ExecuteReader
@@ -629,7 +629,7 @@ Public Class movimientodecaja
                 & "(?cod,?desc,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 Reconectar()
-                Dim addItemRec As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim addItemRec As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With addItemRec.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?desc", descripcion)
@@ -661,7 +661,7 @@ Public Class movimientodecaja
             & "(idclie,idcomp,pago) values" _
             & "(?clie, ?idcomp,'1')"
             Reconectar()
-            Dim addCtaClie As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addCtaClie As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addCtaClie.Parameters
                 .AddWithValue("?clie", txtctaclie.Text)
                 .AddWithValue("?idcomp", idfactura)
@@ -675,7 +675,7 @@ Public Class movimientodecaja
                     & "(?conc,?monto,?comp,?caja,'1',?desc)"
 
             Reconectar()
-            Dim addCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim addCaja As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With addCaja.Parameters
                 .AddWithValue("?monto", NetodeRetenciones)
                 .AddWithValue("?comp", idfactura)
@@ -701,7 +701,7 @@ Public Class movimientodecaja
         ' Consultamos los ítems de la factura origen para ver qué cuotas de publicidad se están pagando
         Dim queryItems As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE '#%-%'"
         Reconectar()
-        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, conexionPrinc)
+        Dim cmdItems As New MySql.Data.MySqlClient.MySqlCommand(queryItems, GestorConexiones.conexionPrinc)
         Dim dr As System.Data.IDataReader = cmdItems.ExecuteReader()
 
         Dim listaActualizar As New List(Of Integer)
@@ -717,12 +717,7 @@ Public Class movimientodecaja
 
         ' Realizamos los UPDATES en la tabla de detalle
         For Each idCuota As Integer In listaActualizar
-            Dim sqlUpdRecibo As String = "UPDATE rym_detalle_prestamo SET id_recibo = ?idRecibo WHERE ID = ?idCuota"
-            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdRecibo, conexionPrinc)
-                cmdUpd.Parameters.AddWithValue("?idRecibo", idrecibo)
-                cmdUpd.Parameters.AddWithValue("?idCuota", idCuota)
-                cmdUpd.ExecuteNonQuery()
-            End Using
+            GestorPublicidad.VincularComprobanteAutomatico(idCuota, idrecibo, True)
         Next
     End Sub
     Public Sub cargarCuentaProv(ByRef idprov As Integer)
@@ -733,7 +728,7 @@ Public Class movimientodecaja
         Try
             Reconectar()
             Dim consultaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select direccion,
-            tipo_iva, cuit, cuentagastos from fact_proveedores where id=" & idprov, conexionPrinc)
+            tipo_iva, cuit, cuentagastos from fact_proveedores where id=" & idprov, GestorConexiones.conexionPrinc)
 
             Dim tablaprov As New DataTable
             consultaprov.Fill(tablaprov)
@@ -784,7 +779,7 @@ Public Class movimientodecaja
             Reconectar()
             Dim addfact As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_proveedores_fact  
             (fecha, tipo, numero, monto, vencimiento,idproveedor,tipoingeg) values 
-            (?fecha,?tipo,?numero,?monto,?fecha,?prov,'2')", conexionPrinc)
+            (?fecha,?tipo,?numero,?monto,?fecha,?prov,'2')", GestorConexiones.conexionPrinc)
             With addfact.Parameters
                 .AddWithValue("?tipo", tipoFact)
                 .AddWithValue("?numero", num_fact)
@@ -798,7 +793,7 @@ Public Class movimientodecaja
             idfactura = addfact.LastInsertedId
 
             Reconectar()
-            Dim UpdFiscal As New MySql.Data.MySqlClient.MySqlCommand("Update fact_conffiscal Set confnume= " & numerofact_conf & " where donfdesc=" & tipoFact & " and ptovta=" & ptovta, conexionPrinc)
+            Dim UpdFiscal As New MySql.Data.MySqlClient.MySqlCommand("Update fact_conffiscal Set confnume= " & numerofact_conf & " where donfdesc=" & tipoFact & " and ptovta=" & ptovta, GestorConexiones.conexionPrinc)
             UpdFiscal.ExecuteNonQuery()
 
 
@@ -818,12 +813,12 @@ Public Class movimientodecaja
                 ptotal = remplazarPunto(dtfacturaspago.Rows(i).Cells(2).Value)
                 'poner factura como pagada
                 Reconectar()
-                Dim actualizaFactProv As New MySql.Data.MySqlClient.MySqlCommand("update fact_proveedores_fact set pagada=1 where id=" & dtfacturaspago.Rows(i).Cells(0).Value, conexionPrinc)
+                Dim actualizaFactProv As New MySql.Data.MySqlClient.MySqlCommand("update fact_proveedores_fact set pagada=1 where id=" & dtfacturaspago.Rows(i).Cells(0).Value, GestorConexiones.conexionPrinc)
                 actualizaFactProv.ExecuteNonQuery()
 
 
                 Reconectar()
-                Dim agregaItemOP As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_pagoitems (descripcion, ptotal,num_fact) values (?desc,?ptot,?num_fact)", conexionPrinc)
+                Dim agregaItemOP As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_pagoitems (descripcion, ptotal,num_fact) values (?desc,?ptot,?num_fact)", GestorConexiones.conexionPrinc)
                 With agregaItemOP.Parameters
                     .AddWithValue("?desc", descripcion)
                     .AddWithValue("?ptot", ptotal)
@@ -835,7 +830,7 @@ Public Class movimientodecaja
             For Each cheque As DataGridViewRow In dtopcheques.Rows
                 Reconectar()
                 Dim SqlCh As String = "update fact_cheques set estado_cheque='4', comprobante_eg='" & idfactura & "' where id=" & cheque.Cells(0).Value
-                Dim UpdCheque As New MySql.Data.MySqlClient.MySqlCommand(SqlCh, conexionPrinc)
+                Dim UpdCheque As New MySql.Data.MySqlClient.MySqlCommand(SqlCh, GestorConexiones.conexionPrinc)
                 UpdCheque.ExecuteNonQuery()
             Next
 
@@ -845,7 +840,7 @@ Public Class movimientodecaja
             Reconectar()
             Dim agregaCaja As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_ingreso_egreso " _
                     & "(concepto,monto,comprobante,caja,tipo, descripcion) values" _
-                    & "(?conc,?monto,?comp,?caja,'2', ?desc)", conexionPrinc)
+                    & "(?conc,?monto,?comp,?caja,'2', ?desc)", GestorConexiones.conexionPrinc)
             With agregaCaja.Parameters
                 .AddWithValue("?monto", remplazarPunto(txttotalop.Text))
                 .AddWithValue("?comp", idfactura)
@@ -931,7 +926,7 @@ Public Class movimientodecaja
                 & "(fecha, tipo, numero, monto,tipoingeg) values " _
                 & "(?fecha,?tipo,?numero,?monto,'2')"
 
-            Dim comandoaddde As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoaddde As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoaddde.Parameters
                 .AddWithValue("?tipo", tipoFact)
                 .AddWithValue("?numero", num_fact)
@@ -948,7 +943,7 @@ Public Class movimientodecaja
                 & "(tipofact,ptovta, num_fact,fecha,total) values " _
                 & "(?tipofact, ?ptov,?nfac,?fech,?tot)"
 
-            Dim comandoaddhacia As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoaddhacia As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoaddhacia.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -965,7 +960,7 @@ Public Class movimientodecaja
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(txtnufac.Text) & " where donfdesc= " & cmbtipofac.SelectedValue & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -978,7 +973,7 @@ Public Class movimientodecaja
                 & "('10',?monto,?comp,?caja,'2')"
 
             Reconectar()
-            Dim comandoaddeg As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoaddeg As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoaddeg.Parameters
                 .AddWithValue("?monto", remplazarPunto(txttotalmovimiento.Text))
                 .AddWithValue("?comp", idfacturade)
@@ -992,7 +987,7 @@ Public Class movimientodecaja
                 & "('4',?monto,?comp,?caja,'1')"
 
             Reconectar()
-            Dim comandoadding As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadding As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadding.Parameters
                 .AddWithValue("?monto", remplazarPunto(txttotalmovimiento.Text))
                 .AddWithValue("?comp", idfacturahacia)
@@ -1007,7 +1002,7 @@ Public Class movimientodecaja
                 Dim SqlCh As String = "update fact_cheques set estado_cheque='3', cuenta='" & cmbctahacia.SelectedValue & "', comprobante_eg = '" & idfacturahacia & "'" _
                 & " where id =" & cheque.Cells(0).Value
 
-                Dim UpdCheque As New MySql.Data.MySqlClient.MySqlCommand(SqlCh, conexionPrinc)
+                Dim UpdCheque As New MySql.Data.MySqlClient.MySqlCommand(SqlCh, GestorConexiones.conexionPrinc)
                 UpdCheque.ExecuteNonQuery()
             Next
 
@@ -1051,24 +1046,24 @@ Public Class movimientodecaja
             & "fac.direccion As facdire, fac.localidad As facloca, fac.tipocontr As factipocontr, fac.cuit As faccuit, fac.vendedor As facvend, " _
             & "fac.condvta as faccondvta, fac.iva105, fac.iva21,fac.total,  " _
             & "fac.observaciones as facobserva " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, conexionPrinc)
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, GestorConexiones.conexionPrinc)
             tabEmp.Fill(fac.Tables("factura_enca"))
 
             Reconectar()
             tabVal.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "banco, serie as numero, fecha_cobro as fcobro, format(importe,2,'es_AR') as importe from fact_cheques where comprobante = " & idfactura, conexionPrinc)
+            & "banco, serie as numero, fecha_cobro as fcobro, format(importe,2,'es_AR') as importe from fact_cheques where comprobante = " & idfactura, GestorConexiones.conexionPrinc)
             tabVal.Fill(fac.Tables("valoresrecibo"))
 
 
             Reconectar()
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
             & "descripcion,format(ptotal,2,'es_AR') as ptotal from fact_items where " _
-            & "id_fact=" & idfactura, conexionPrinc)
+            & "id_fact=" & idfactura, GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("reciboitems"))
 
             Reconectar()
             tabtarj.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "nombre,autorizacion,format(importe,2,'es_AR') as importe from fact_tarjetas where comprobante=" & idfactura, conexionPrinc)
+            & "nombre,autorizacion,format(importe,2,'es_AR') as importe from fact_tarjetas where comprobante=" & idfactura, GestorConexiones.conexionPrinc)
             tabtarj.Fill(fac.Tables(("tarjetarecbo")))
 
             Reconectar()
@@ -1079,7 +1074,7 @@ Public Class movimientodecaja
                     FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_retenciones WHERE comprobante = fact.id),0),2,'es_AR') as retenciones,
                     FORMAT(IFNULL((SELECT (replace(importe,',','.')) FROM fact_tarjetas WHERE comprobante = fact.id),0),2,'es_AR') AS tarjeta,
                     FORMAT(replace(fact.total,',','.'),2,'es_AR') as total 
-                    FROM fact_facturas as fact where fact.id= " & idfactura, conexionPrinc)
+                    FROM fact_facturas as fact where fact.id= " & idfactura, GestorConexiones.conexionPrinc)
             totrec.Fill(fac.Tables("totalesrecibo"))
 
             Dim imprimirx As New imprimirFX
@@ -1114,7 +1109,7 @@ Public Class movimientodecaja
             & "concat('-',fa.total) " _
             & "end as total, " _
             & "fa.fecha, fa.id from fact_facturas as fa, " _
-            & "fact_conffiscal as tip, fact_cuentaclie as cta where cta.pago=0 and fa.id=cta.idcomp and fa.tipofact=tip.donfdesc and cta.idclie= " & txtctaclie.Text, conexionPrinc)
+            & "fact_conffiscal as tip, fact_cuentaclie as cta where cta.pago=0 and fa.id=cta.idcomp and fa.tipofact=tip.donfdesc and cta.idclie= " & txtctaclie.Text, GestorConexiones.conexionPrinc)
             Dim tablafac As New DataTable
             Dim comando As New MySql.Data.MySqlClient.MySqlCommandBuilder(consulta)
             Dim infofac() As DataRow
@@ -1314,7 +1309,7 @@ Public Class movimientodecaja
             Dim query As String = "SELECT plu FROM fact_items WHERE id_fact = " & idFacturaOrigen & " AND plu LIKE 'CTA-%'"
 
             Reconectar()
-            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, conexionPrinc)
+            Dim cmd As New MySql.Data.MySqlClient.MySqlCommand(query, GestorConexiones.conexionPrinc)
             Dim lectorItems As System.Data.IDataReader = cmd.ExecuteReader()
 
             Dim idsCuotas As New List(Of Integer)

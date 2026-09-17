@@ -17,102 +17,76 @@ Public Class frmInicializar2
         'End If
     End Sub
 
-
     Private Sub cmdAceptar_Click(sender As Object, e As EventArgs) Handles cmdAceptar.Click
+        Dim usuarioInput As String = txtuser.Text.Trim()
+        Dim claveInput As String = txtContraseña.Text.Trim()
 
-        ' MsgBox(GetMd5Hash(txtContraseña.Text))
+        If String.IsNullOrEmpty(claveInput) OrElse String.IsNullOrEmpty(usuarioInput) Then
+            lblEstado.Text = "Debe ingresar usuario y clave de acceso"
+            Return
+        End If
 
-        'guardo los datos de conexion en el caso de que hayan tildado la opcion
         pbprogresocons.Visible = True
+        lblEstado.Text = "Autenticando usuario..."
+        Application.DoEvents() ' Permite que la interfaz se refresque visualmente
+
         Try
-            clav = txtContraseña.Text
-            user = txtuser.Text
-            If clav = "" Then
-                lblEstado.Text = "Debe ingresar clave de acceso"
-                Exit Sub
-            End If
-            'compruebo que este autorizado
-            If ConectarAuth() = True Then
-                lblEstado.Text = "Conectando"
-                If ComprobarAuth() = True Then
-                    lblEstado.Text = "Comprobando credenciales"
-                    If conectar(serv, port, user, pass, database) = True Then
-                        My.Settings.servidor = serv
-                        My.Settings.puerto = port
-                        My.Settings.bd = database
-                        My.Settings.usuario = user
-                        My.Settings.pass = pass
-                        My.Settings.authpass = txtContraseña.Text
-                        My.Settings.authuser = txtuser.Text
-                        My.Settings.priv = DatosAcceso.Moduloacc
-                        My.Settings.idint = DatosAcceso.UsuarioINT
-                        'My.Settings.idAlmacen = DatosAcceso.IdAlmacen
-                        My.Settings.Save()
+            ' 1. Autenticar en AuthServ usando nuestra nueva clase (MD5 / SHA1)
+            If GestorConexiones.AutenticarYObtenerConfig(usuarioInput, claveInput) Then
 
+                lblEstado.Text = "Conectando al servidor de trabajo..."
+                Application.DoEvents()
 
+                ' 2. Conectar a la base de datos principal usando las credenciales obtenidas
+                If GestorConexiones.ConectarBaseTrabajo(DatosAcceso.CLOUDserv, DatosAcceso.puerto, DatosAcceso.usuario, DatosAcceso.pass, DatosAcceso.bd) Then
 
-                        If comprobar_base_de_datos_principal() = True Then
-                            'compruebo que las tablas de la base de datos principal esten correctas
-                            If comprobar_tablas_princ() = True Then
-                                If DatosAcceso.debe = 1 Then 'MENSAJE DE DEUDA
-                                    MsgBox("ATENCION: SU CUENTA DE CLOUDING REGISTRA DEUDA" & vbNewLine &
-                                           "POR FAVOR REGULARICE SU SITUACION, COMUNIQUESE AL tel- 3482-621473" & vbNewLine & DatosAcceso.mensaje)
-                                ElseIf DatosAcceso.debe = 2 Then 'solo un mensaje
-                                    MsgBox("ATENCION MENSAJE DEL ADMINISTRADOR;" & vbNewLine & DatosAcceso.mensaje & vbNewLine &
-                                           "POR CUALQUIER DUDA, COMUNIQUESE AL tel- 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR" & vbNewLine)
-                                End If
-                                frmprincipal.Show()
-                                Me.Close()
-                            Else
-                                lblEstado.Text = "Error en la estructura de las tablas"
-                            End If
-                        Else
-                            lblEstado.Text = "Error en la estructura de la base de datos"
+                    ' 3. Guardar en Settings locales
+                    My.Settings.servidor = DatosAcceso.CLOUDserv
+                    My.Settings.puerto = DatosAcceso.puerto
+                    My.Settings.bd = DatosAcceso.bd
+                    My.Settings.usuario = DatosAcceso.usuario
+                    My.Settings.pass = DatosAcceso.pass
+                    My.Settings.authpass = claveInput
+                    My.Settings.authuser = usuarioInput
+                    My.Settings.priv = DatosAcceso.Moduloacc
+                    My.Settings.idint = DatosAcceso.UsuarioINT
+                    My.Settings.Save()
+
+                    ' 4. Comprobaciones de integridad de tablas (tus funciones ya existentes)
+                    lblEstado.Text = "Verificando estructura de base de datos..."
+
+                    If ValidadorBaseDatos.ComprobarBasePrincipal() AndAlso ValidadorBaseDatos.ComprobarTablas Then
+
+                        ' Mensajes de Clouding (Deuda o Avisos)
+                        If DatosAcceso.debe = 1 Then
+                            MsgBox("ATENCION: SU CUENTA DE CLOUDING REGISTRA DEUDA" & vbNewLine &
+                                   "POR FAVOR REGULARICE SU SITUACION, COMUNIQUESE AL tel- 3482-621473" & vbNewLine &
+                                   DatosAcceso.mensaje, MsgBoxStyle.Exclamation)
+                        ElseIf DatosAcceso.debe = 2 Then
+                            MsgBox("ATENCION MENSAJE DEL ADMINISTRADOR:" & vbNewLine &
+                                   DatosAcceso.mensaje & vbNewLine &
+                                   "POR CUALQUIER DUDA, COMUNIQUESE AL tel- 3482-621473 O AL MAIL: INFO@KIBIT.COM.AR", MsgBoxStyle.Information)
                         End If
+
+                        ' ÉXITO: Entramos al sistema
+                        frmprincipal.Show()
+                        Me.Close()
                     Else
-                        MsgBox("Se conecto correctamente al servidor de autorizacion, pero no se puede conectar a su servidor de trabajo")
+                        lblEstado.Text = "Error en la estructura de tablas o BD."
                     End If
                 Else
-                    MsgBox("El servidor de autorizacion no permite acceso al sistema")
+                    lblEstado.Text = "No se pudo acceder a los datos de la empresa."
                 End If
             Else
-                MsgBox("no se pudo conectar al servidor de autorizacion, de todos modos se intentara conectar al ultimo servidor utilizado", vbInformation)
-                If My.Settings.authpass = txtContraseña.Text And My.Settings.authuser = txtuser.Text Then
-                    serv = My.Settings.servidor
-                    port = My.Settings.puerto
-                    database = My.Settings.servidor
-                    user = My.Settings.usuario
-                    pass = My.Settings.pass
-                    DatosAcceso.Moduloacc = Val(My.Settings.priv.ToString)
-                    If conectar(serv, port, user, pass, database) = True Then
-                        My.Settings.Save()
-                        'en el caso de que no pueda conectar muestro una advertencia
-                        lblEstado.Text = "No se pudo conectar al servidor"
-                        If comprobar_base_de_datos_principal() = True Then
-                            'compruebo que las tablas de la base de datos principal esten correctas
-                            If comprobar_tablas_princ() = True Then
-
-
-                                frmprincipal.Show()
-                                Me.Close()
-                            Else
-                                lblEstado.Text = "Error en la estructura de las tablas"
-                            End If
-                        Else
-                            lblEstado.Text = "Error en la estructura de la base de datos"
-                        End If
-                    End If
-                Else
-                    MsgBox("Usuario o contraseña incorrectos")
-                    Exit Sub
-                End If
-                pbprogresocons.Visible = False
+                lblEstado.Text = "Acceso denegado."
             End If
+
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox("Se produjo un error inesperado: " & ex.Message, MsgBoxStyle.Critical)
+            lblEstado.Text = "Error al iniciar."
+        Finally
             pbprogresocons.Visible = False
         End Try
-
     End Sub
 
     Private Sub cmdCancelar_Click(sender As Object, e As EventArgs) Handles cmdCancelar.Click
@@ -138,23 +112,23 @@ Public Class frmInicializar2
 
 
 
-            If e.Control And e.Alt And e.KeyCode = Keys.N Then
-                pass = InputBox("Ingrese Contraseña", "Contraseña admin")
-                If pass <> "Narinas1830" Then
-                    Exit Sub
-                End If
+            'If e.Control And e.Alt And e.KeyCode = Keys.N Then
+            '    pass = InputBox("Ingrese Contraseña", "Contraseña admin")
+            '    If pass <> "Narinas1830" Then
+            '        Exit Sub
+            '    End If
 
-                frmInicializar.Visible = True
-                Me.Visible = False
-                Show(frmInicializar)
-                Me.Close()
-            End If
+            '    frmInicializar.Visible = True
+            '    Me.Visible = False
+            '    Show(frmInicializar)
+            '    Me.Close()
+            'End If
         Catch ex As Exception
 
         End Try
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        System.Diagnostics.Process.Start("http://66.97.35.86/kigest_fact_update2/")
+        System.Diagnostics.Process.Start("http://kicloud.com.ar/kigest_fact_update2/")
     End Sub
 End Class

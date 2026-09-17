@@ -24,7 +24,7 @@
     Public Sub Consultas(ByVal Cadena As String)
         Reconectar()
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
-        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = "15"
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)

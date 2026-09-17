@@ -5,7 +5,7 @@
 
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, fecha,concat(lpad(ptovta,4,'0'),'-',lpad(num_fact,8,'0')) as comprobante 
         from fact_facturas where tipofact=997
-        order by fecha desc LIMIT " & My.Settings.paginacion, conexionPrinc)
+        order by fecha desc LIMIT " & My.Settings.paginacion, GestorConexiones.conexionPrinc)
         Dim tablaped As New DataTable
         consulta.Fill(tablaped)
 
@@ -27,14 +27,14 @@
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo," _
-            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,fac.fecha as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon," _
+            & "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum,DATE_FORMAT(fac.fecha, '%d-%m-%Y') as facfech,concat(fac.id_cliente,'-',fac.razon) as facrazon," _
             & "concat(fac.direccion, ' - ', fac.localidad)  as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit,fac.vendedor as facvend, " _
             & "fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21 " _
-            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, conexionPrinc)
+            & "FROM fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac where emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idfactura, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idfactura & " order by producto asc", conexionPrinc)
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM ariel_itmlistacarga where idcomprobante=" & idfactura & " order by producto asc", GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("ariel_itmlistacarga"))
 
 

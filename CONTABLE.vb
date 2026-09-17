@@ -167,7 +167,7 @@ Public Class CONTABLE
         Try
             Reconectar()
 
-            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, concat('<',ptovta,'>','-',abrev) from tipos_comprobantes where tip=1 order by ptovta, id", conexionPrinc)
+            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, concat('<',ptovta,'>','-',abrev) from tipos_comprobantes where tip=1 order by ptovta, id", GestorConexiones.conexionPrinc)
             Dim readftipo As New DataSet
             tablaftipo.Fill(readftipo)
             cmbtipofac.DataSource = readftipo.Tables(0)
@@ -175,7 +175,7 @@ Public Class CONTABLE
             cmbtipofac.ValueMember = readftipo.Tables(0).Columns(0).Caption.ToString
             cmbtipofac.SelectedIndex = -1
 
-            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", conexionPrinc)
+            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", GestorConexiones.conexionPrinc)
             Dim readvend As New DataSet
             tablavend.Fill(readvend)
             cmbvendedor.DataSource = readvend.Tables(0)
@@ -193,11 +193,11 @@ Public Class CONTABLE
             cmbcobvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
             'cmbcobvendedor.SelectedIndex = -1
 
-            Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", conexionPrinc)
+            Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_puntosventa", GestorConexiones.conexionPrinc)
             Dim readptovta As New DataSet
             tablaptovta.Fill(readptovta)
 
-            Dim tablaptovtaLeg As New MySql.Data.MySqlClient.MySqlDataAdapter("select ptovta as id, ptovta from fact_conffiscal where leg=1 group by ptovta", conexionPrinc)
+            Dim tablaptovtaLeg As New MySql.Data.MySqlClient.MySqlDataAdapter("select ptovta as id, ptovta from fact_conffiscal where leg=1 group by ptovta", GestorConexiones.conexionPrinc)
             Dim readptovtaLeg As New DataSet
             tablaptovtaLeg.Fill(readptovtaLeg)
             cmbInforPtoVta.DataSource = readptovta.Tables(0)
@@ -223,7 +223,7 @@ Public Class CONTABLE
 
 
 
-            Dim tablaAlmacen As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", conexionPrinc)
+            Dim tablaAlmacen As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_insumos_almacenes", GestorConexiones.conexionPrinc)
             Dim readAlmacen As New DataSet
             tablaAlmacen.Fill(readAlmacen)
             cmbinforalmacen.DataSource = readAlmacen.Tables(0)
@@ -232,7 +232,7 @@ Public Class CONTABLE
 
             cmbinforalmacen.SelectedValue = My.Settings.idAlmacen
 
-            Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", conexionPrinc)
+            Dim tablaCajas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, descripcion from fact_cajas", GestorConexiones.conexionPrinc)
             Dim readCajas As New DataSet
             tablaCajas.Fill(readCajas)
             cmbGtosCaja.DataSource = readCajas.Tables(0)
@@ -241,7 +241,7 @@ Public Class CONTABLE
 
             cmbGtosCaja.SelectedValue = My.Settings.CajaDef
 
-            Dim tablaConceptos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", conexionPrinc)
+            Dim tablaConceptos As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concepto from fact_egresos_concepto", GestorConexiones.conexionPrinc)
             Dim readConceptos As New DataSet
             tablaConceptos.Fill(readConceptos)
             cmbGtosConcepto.DataSource = readConceptos.Tables(0)
@@ -342,7 +342,7 @@ Public Class CONTABLE
             If rdninguno.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
                 fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as FacturaNum,
-                fact.fecha,fact.razon,fact.direccion, 
+                DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon,fact.direccion, 
                 fact.localidad, con.condicion, 
                 case when fis.debcred='C' then 
                 concat('-',FORMAT(fact.total,2,'es_AR')) 
@@ -355,7 +355,7 @@ Public Class CONTABLE
                   
                 and fact.id=itm.id_fact                
                 and fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq & consAlmacen &
-                " group by fact.id order by fact.razon asc", conexionPrinc)
+                " group by fact.id order by fact.razon asc", GestorConexiones.conexionPrinc)
                 columna = 7
                 consulta.SelectCommand.CommandTimeout = 60 '60segundos de tiempo de espera para la consulta incrementar en el caso de que tire timeout
 
@@ -379,7 +379,7 @@ Public Class CONTABLE
                 'fis.donfdesc=fact.tipofact and
                 'con.id=fact.condvta and
                 'fact.fecha between  '" & desde & "' and '" & hasta & "'" & parambusq &
-                '" group by fact.id " & consPtovta, conexionPrinc)
+                '" group by fact.id " & consPtovta, GestorConexiones.conexionPrinc)
                 'columna = 7
                 ''MsgBox(consulta.SelectCommand.CommandText)
                 'consulta.Fill(tablaprod)
@@ -388,11 +388,11 @@ Public Class CONTABLE
 
             End If
             If rdventadiaria.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT '' as factid, 'TOTAL DIARIO' as factnum ,fact.fecha as fecha,'-' as razon,'-' as direccion, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT '' as factid, 'TOTAL DIARIO' as factnum ,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,'-' as razon,'-' as direccion, 
                 '-' as localidad, '-' as condicion,  FORMAT(sum(itm.ptotal),2,'es_AR') as total, '' as observaciones2, ' ' as tipofact, '' as ptovta                 
                 FROM fact_items as itm, fact_facturas as fact
                 where itm.id_fact=fact.id and fact.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') 
-                and fact.fecha between '" & desde & "' and '" & hasta & "'" & consAlmacen & " group by fact.fecha", conexionPrinc)
+                and fact.fecha between '" & desde & "' and '" & hasta & "'" & consAlmacen & " group by fact.fecha", GestorConexiones.conexionPrinc)
                 columna = 7
                 consulta.Fill(tablaprod)
             End If
@@ -444,7 +444,7 @@ Public Class CONTABLE
             Reconectar()
             Dim consultaclie As New MySql.Data.MySqlClient.MySqlDataAdapter("select clie.nomapell_razon as razon," _
             & " concat(clie.dir_domicilio, ' - ',loc.nombre, '  ', ivt.tipo,' CUIT: ', clie.cuit) from fact_clientes as clie,  cm_localidad as  loc,  fact_ivatipo as ivt " _
-            & " where clie.dir_localidad=loc.id and clie.iva_tipo=ivt.id and idclientes=" & idcliente, conexionPrinc)
+            & " where clie.dir_localidad=loc.id and clie.iva_tipo=ivt.id and idclientes=" & idcliente, GestorConexiones.conexionPrinc)
 
             Dim tablaclie As New DataTable
             consultaclie.Fill(tablaclie)
@@ -460,7 +460,7 @@ Public Class CONTABLE
             If cmbMovimientosHistoricos.SelectedIndex = 0 Or cmbMovimientosHistoricos.SelectedIndex = -1 Then
                 consultaSTR = "
             SELECT 
-            fact.id,fact.fecha,tip.abrev, LPAD(fact.ptovta, 4, '0'),LPAD(fact.num_fact, 8, '0'), format((fact.total),2,'es_AR') AS total,
+            fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,tip.abrev, LPAD(fact.ptovta, 4, '0'),LPAD(fact.num_fact, 8, '0'), format((fact.total),2,'es_AR') AS total,
             fact.tipofact,fact.pago,fact.id as idfactura,fact.id_cliente from
             tipos_comprobantes as tip, fact_facturas as fact where         
             tip.donfdesc = fact.tipofact AND 
@@ -468,11 +468,11 @@ Public Class CONTABLE
             fact.id_cliente<>9999 and
             fact.tipofact in (select donfdesc from tipos_comprobantes where debcred ='D' or debcred ='C')
             and fact.id_cliente=" & idcliente & "
-            order by fecha,id asc"
+            order by fact.fecha, fact.id asc"
             Else
                 consultaSTR = "SELECT * FROM cuentaclie where id_cliente=" & idcliente & " order by fecha,id asc"
             End If
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(consultaSTR, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(consultaSTR, GestorConexiones.conexionPrinc)
             ' MsgBox(consulta.SelectCommand.CommandText)
             Dim tabla As New DataTable
             consulta.Fill(tabla)
@@ -538,7 +538,7 @@ Public Class CONTABLE
             Reconectar()
             Dim consultaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select razon," _
             & " direccion from fact_proveedores as clie,  fact_ivatipo as ivt " _
-            & " where clie.tipo_iva=ivt.id and clie.id=" & idprov, conexionPrinc)
+            & " where clie.tipo_iva=ivt.id and clie.id=" & idprov, GestorConexiones.conexionPrinc)
 
             Dim tablaprov As New DataTable
             consultaprov.Fill(tablaprov)
@@ -548,7 +548,7 @@ Public Class CONTABLE
             lbldatoscuentaprov.Text = dtoprov(0)(1)
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cuentaprov where idproveedor=" & idprov, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cuentaprov where idproveedor=" & idprov, GestorConexiones.conexionPrinc)
 
             Dim tabla As New DataTable
             consulta.Fill(tabla)
@@ -669,7 +669,7 @@ Public Class CONTABLE
         End If
         Try
             Dim consultaResumenCtaCte As New MySql.Data.MySqlClient.MySqlDataAdapter(
-                "select * from resumen_cta_cte where vendedor LIKE '" & vendedor & "'  " & filtro, conexionPrinc)
+                "select * from resumen_cta_cte where vendedor LIKE '" & vendedor & "'  " & filtro, GestorConexiones.conexionPrinc)
 
             Dim tablaResumenCtaCte As New DataTable
 
@@ -740,7 +740,7 @@ Public Class CONTABLE
             round(sum((select round(sum(replace(precio,',','.')*mon.cotizacion),2) from fact_insumos where moneda=mon.id and id=prod.id)* 
             (select sum(stock) from fact_insumos_lotes where idproducto=prod.id)),2) as Saldo
             from fact_insumos as prod, fact_moneda as mon, fact_categoria_insum as cat, fact_insumos_lotes as st 
-            where cat.id=prod.categoria and mon.id=prod.moneda and st.stock>0 and st.idproducto=prod.id group by cat.nombre order by cat.nombre asc", conexionPrinc)
+            where cat.id=prod.categoria and mon.id=prod.moneda and st.stock>0 and st.idproducto=prod.id group by cat.nombre order by cat.nombre asc", GestorConexiones.conexionPrinc)
 
             Dim tablastock As New DataTable
             consulta.SelectCommand.CommandTimeout = 300
@@ -808,12 +808,12 @@ Public Class CONTABLE
         tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  
         emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, 
         emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo, 
-        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, fac.fecha as facfech, 
+        concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, DATE_FORMAT(fac.fecha, '%d-%m-%Y') AS  facfech, 
         concat(fac.id_cliente,'-',fac.razon) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, 
         concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva,format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21,
         '','',fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR'),format(fac.subtotal,2,'es_AR')   
         FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac,fact_condventas as condvent  
-        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & idFactura, conexionPrinc)
+        where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and condvent.id=fac.condvta and fac.id=" & idFactura, GestorConexiones.conexionPrinc)
 
         Dim tablaEmpresa As New DataTable
         tabEmp.Fill(tablaEmpresa)
@@ -826,7 +826,7 @@ Public Class CONTABLE
             format(replace(iva,',','.'),2,'es_AR') as iva ,
             format(replace(punit,',','.'),2,'es_AR') as punit ,
             format(replace(ptotal,',','.'),2,'es_AR') as ptotal 
-            from fact_items where id_fact=" & idFactura, conexionPrinc)
+            from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
         Dim tablaProd As New DataTable
         tabFac.Fill(tablaProd)
 
@@ -980,7 +980,7 @@ Public Class CONTABLE
     Private Sub cargarListas()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtlistasprecio.DataSource = tablalistas
@@ -993,7 +993,7 @@ Public Class CONTABLE
     Private Sub cargarCategorias()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_categoria_insum order by nombre asc", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtcategorias.DataSource = tablalistas
@@ -1007,7 +1007,7 @@ Public Class CONTABLE
     Private Sub cargarFiscal(ByVal ptovta As Integer)
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from tipos_comprobantes where ptovta =" & ptovta, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from tipos_comprobantes where ptovta =" & ptovta, GestorConexiones.conexionPrinc)
             Dim tablafiscal As New DataTable
             consulta.Fill(tablafiscal)
             dtfiscal.DataSource = tablafiscal
@@ -1020,7 +1020,7 @@ Public Class CONTABLE
     Private Sub cargarVendedores()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_vendedor", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_vendedor", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtvendedores.DataSource = tablalistas
@@ -1033,7 +1033,7 @@ Public Class CONTABLE
     Private Sub cargarConceptosIngresos()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ingresos_concepto", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ingresos_concepto", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtconceptosingresos.DataSource = tablalistas
@@ -1045,7 +1045,7 @@ Public Class CONTABLE
     Private Sub cargarConceptosEgresos()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_egresos_concepto", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_egresos_concepto", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtconceptosegresos.DataSource = tablalistas
@@ -1060,7 +1060,7 @@ Public Class CONTABLE
             dtdescuentos.Rows.Clear()
             Reconectar()
             Dim consultaDescProd As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prom.id,concat('Descuento producto ' , ins.descripcion,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
-            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto ", conexionPrinc)
+            "From fact_promociones As prom, fact_insumos As ins Where ins.id = prom.idproducto ", GestorConexiones.conexionPrinc)
             Dim tablaDescProd As New DataTable
             Dim filasDescProd() As DataRow
             consultaDescProd.Fill(tablaDescProd)
@@ -1069,7 +1069,7 @@ Public Class CONTABLE
             Reconectar()
             Dim consultaDescCat As New MySql.Data.MySqlClient.MySqlDataAdapter("Select prom.id, concat('Descuento categoria ' , cat.nombre,' ', prom.descuento_porc ,'%'),prom.compra_min,prom.descuento_porc " &
             "FROM fact_promociones As prom, fact_categoria_insum as cat  " &
-            "where prom.idcategoria=cat.id and cat.id<>0", conexionPrinc)
+            "where prom.idcategoria=cat.id and cat.id<>0", GestorConexiones.conexionPrinc)
             Dim tablaDescCat As New DataTable
             Dim filasDescCat() As DataRow
             consultaDescCat.Fill(tablaDescCat)
@@ -1092,7 +1092,7 @@ Public Class CONTABLE
     Private Sub cargarMoneda()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_moneda", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_moneda", GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             consulta.Fill(tablalistas)
             dtmoneda.DataSource = tablalistas
@@ -1110,7 +1110,7 @@ Public Class CONTABLE
     Private Sub TabPage13_Enter(sender As Object, e As EventArgs) Handles TabPage13.Enter
         Try
             Reconectar()
-            Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, numero from fact_puntosventa", conexionPrinc)
+            Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, numero from fact_puntosventa", GestorConexiones.conexionPrinc)
             Dim readtptovta As New DataSet
             tablaptovta.Fill(readtptovta)
             cmbptovtaconf.DataSource = readtptovta.Tables(0)
@@ -1137,7 +1137,7 @@ Public Class CONTABLE
                     sql = "update fact_conffiscal set confnume='" & dtfiscal.CurrentCell.Value & "' where id=" & dtfiscal.CurrentRow.Cells(0).Value
             End Select
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
         Catch ex As Exception
 
@@ -1204,20 +1204,20 @@ Public Class CONTABLE
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT " _
-            & " fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,fac.fecha,fac.razon,fac.direccion, " _
+            & " fac.id, concat(fis.abrev,' ',lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as factnum ,DATE_FORMAT(fac.fecha, '%d-%m-%Y') AS fecha,fac.razon,fac.direccion, " _
             & " fac.localidad, con.condicion, " _
             & " case when fis.debcred='C' then " _
             & " concat('-',format(fac.total,2,'es_AR')) " _
             & " else format(fac.total,2,'es_AR') end as total, " _
             & " fac.observaciones from fact_conffiscal as fis, fact_facturas as fac, fact_condventas as con " _
             & " where fis.donfdesc=fac.tipofact and con.id=fac.condvta and fis.ptovta=fac.ptovta " _
-            & " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " order by fac.razon asc", conexionPrinc)
+            & " and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq & " order by fac.razon asc", GestorConexiones.conexionPrinc)
             'MsgBox(tabFac.SelectCommand.CommandText)
             tabFac.Fill(fac.Tables("listadofacturas"))
             Dim imprimirx As New imprimirFX
@@ -1256,10 +1256,10 @@ Public Class CONTABLE
             Dim sql As String = "update fact_facturas set razon='FACTURA ANULADA', direccion='FACTURA ANULADA', localidad='FACTURA ANULADA'," _
             & "tipocontr='FACTURA ANULADA', cuit='FACTURA ANULADA', subtotal=0,iva105=0, iva21=0, total=0 where id=" & idFactura
 
-            Dim comandodelfact As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandodelfact As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandodelfact.ExecuteNonQuery()
 
-            Dim consultaitmtrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select cod from fact_items where id_fact=" & idFactura, conexionPrinc)
+            Dim consultaitmtrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select cod from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
             Dim tablaitm As New DataTable
             Dim infoitm() As DataRow
             consultaitmtrab.Fill(tablaitm)
@@ -1271,13 +1271,13 @@ Public Class CONTABLE
                     Reconectar()
                     numtrab = Replace(infoitm(i)(0), "&", "")
                     sql = "update tecni_taller set trab_estado=3 where id=" & numtrab
-                    Dim consultaupdtrab As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+                    Dim consultaupdtrab As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
                     consultaupdtrab.ExecuteNonQuery()
                 End If
             Next
 
             sql = "delete from fact_items where id_fact=" & idFactura
-            Dim consultadelitm As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim consultadelitm As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             consultadelitm.ExecuteNonQuery()
 
             MsgBox("factura anulada correctamente")
@@ -1367,7 +1367,7 @@ Public Class CONTABLE
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
@@ -1378,7 +1378,7 @@ Public Class CONTABLE
             & "where fis.donfdesc=fac.tipofact and fis.debcred in ('D') and   " _
             & "fac.id_cliente=cli.idclientes and fac.id_cliente<>9999 and " _
             & "fac.fecha between @de and @hasta and fac.vendedor like @vendedor " _
-            & "group by fac.id_cliente", conexionPrinc)
+            & "group by fac.id_cliente", GestorConexiones.conexionPrinc)
             consultaComp.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@de", MySql.Data.MySqlClient.MySqlDbType.Text))
             consultaComp.SelectCommand.Parameters("@de").Value = desde
             consultaComp.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@hasta", MySql.Data.MySqlClient.MySqlDbType.Text))
@@ -1392,7 +1392,7 @@ Public Class CONTABLE
             & "where fis.donfdesc=fac.tipofact and fis.debcred in ('C') and " _
             & "fac.id_cliente=cli.idclientes and fac.id_cliente<>9999 and " _
             & "fac.fecha between @de and @hasta " _
-            & "group by fac.id_cliente ", conexionPrinc)
+            & "group by fac.id_cliente ", GestorConexiones.conexionPrinc)
             consultaCobr.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@de", MySql.Data.MySqlClient.MySqlDbType.Text))
             consultaCobr.SelectCommand.Parameters("@de").Value = desde
             consultaCobr.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@hasta", MySql.Data.MySqlClient.MySqlDbType.Text))
@@ -1494,9 +1494,9 @@ Public Class CONTABLE
             Dim elimfact As String = "delete from fact_facturas where id=" & dtcuentaclie.CurrentRow.Cells(6).Value
             Dim elimfactitm As String = "delete from fact_items where id_fact=" & dtcuentaclie.CurrentRow.Cells(6).Value
 
-            Dim cmdelcta As New MySql.Data.MySqlClient.MySqlCommand(elimctaitm, conexionPrinc)
-            Dim cmdelfac As New MySql.Data.MySqlClient.MySqlCommand(elimfact, conexionPrinc)
-            Dim cmdelfacitm As New MySql.Data.MySqlClient.MySqlCommand(elimfactitm, conexionPrinc)
+            Dim cmdelcta As New MySql.Data.MySqlClient.MySqlCommand(elimctaitm, GestorConexiones.conexionPrinc)
+            Dim cmdelfac As New MySql.Data.MySqlClient.MySqlCommand(elimfact, GestorConexiones.conexionPrinc)
+            Dim cmdelfacitm As New MySql.Data.MySqlClient.MySqlCommand(elimfactitm, GestorConexiones.conexionPrinc)
             Reconectar()
             cmdelcta.ExecuteNonQuery()
             Reconectar()
@@ -1665,21 +1665,21 @@ Public Class CONTABLE
             tablacob.Clear()
             ' Dim parambusq As String = " and fac.tipofact in ('5') "
             If rdcobranzadiaria.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.fecha, 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, 
                 format(sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalTarjeta, 
                 format(sum(replace(total,',','.')) -
                 sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalEfectivo, 
                 format(sum(replace(total,',','.')),2,'es_AR') as totalRecibo
                 FROM fact_facturas as fact                 
                 where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
-                "group by fecha order by fecha desc", conexionPrinc)
+                "group by fecha order by fecha desc", GestorConexiones.conexionPrinc)
                 columna = 3
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
             End If
             If rdcobranzaintervalo.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',
-                lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, fact.fecha,fact.razon, 
+                lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, 
                 format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
                 if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
                 format(replace(total,',','.') -
@@ -1692,7 +1692,7 @@ Public Class CONTABLE
                 FROM fact_facturas as fact, fact_conffiscal as fis
 
                 where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and  fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
-                "order by fact.razon asc", conexionPrinc)
+                "order by fact.razon asc", GestorConexiones.conexionPrinc)
                 columna = 6
                 'MsgBox(consulta.SelectCommand.CommandText)
 
@@ -1706,7 +1706,7 @@ Public Class CONTABLE
                 where ft.fecha between '" & desde & "' and '" & hasta & "' and 
                 fact.id = ft.comprobante " &
                 consPtovta & "
-                GROUP by ft.nombre ", conexionPrinc)
+                GROUP by ft.nombre ", GestorConexiones.conexionPrinc)
                 columna = 1
                 consulta.Fill(tablacob)
                 'Dim bindintarjetas As New DataView(tablacob)
@@ -1714,12 +1714,12 @@ Public Class CONTABLE
                 dtlistacob.DataSource = tablacob 'bindintarjetas
                 'dtlistacob.Columns(0).Visible = False
             ElseIf rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex <> -1 Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
                 format((select replace(importe,',','.') as totalTarjeta from fact_tarjetas where comprobante=fact.id and nombre like '%" & cmbTarjetasMarcas.Text.Replace(" ", "%") & "%'),2,'es_AR') as totalTarjeta			
                 FROM fact_facturas as fact 
                 where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' 
                 and fact.id in (select comprobante from fact_tarjetas) " & consPtovta &
-                "order by fact.razon asc", conexionPrinc)
+                "order by fact.razon asc", GestorConexiones.conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 Dim bindintarjetas As New DataView(tablacob)
@@ -1728,14 +1728,14 @@ Public Class CONTABLE
                 dtlistacob.Columns(0).Visible = False
             End If
             If rdefectivo.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,fact.fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 			
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 			
                 if (fact.id not in (select comprobante from fact_tarjetas),
                 format(replace(total,',','.'),2,'es_AR'),format(replace(total,',','.') -
                 (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo	
                 FROM fact_facturas as fact 
                 where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
                 " having totalEfectivo<>0
-                order by fact.razon  asc", conexionPrinc)
+                order by fact.razon  asc", GestorConexiones.conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
@@ -1787,7 +1787,7 @@ Public Class CONTABLE
             & "end as destino, " _
             & "che.fecha_cobro, format(che.importe,2,'es_AR') " _
             & "from fact_clientes as clie, fact_facturas as fac, fact_cheques as che " _
-            & "where che.tipo_cheque=1 and che.comprobante = fac.id And fac.id_cliente = clie.idclientes " & consul, conexionPrinc)
+            & "where che.tipo_cheque=1 and che.comprobante = fac.id And fac.id_cliente = clie.idclientes " & consul, GestorConexiones.conexionPrinc)
             Dim tablacheques As New DataTable
             'MsgBox(consulta.SelectCommand.CommandText)
 
@@ -1884,7 +1884,7 @@ Public Class CONTABLE
             & "che.banco, che.serie, " _
             & "che.fecha_cobro,format(che.importe,2,'es_AR') as importe, che.observaciones " _
             & "from fact_cheques as che " _
-            & "where che.tipo_cheque=2 " & consul, conexionPrinc)
+            & "where che.tipo_cheque=2 " & consul, GestorConexiones.conexionPrinc)
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablacheques As New DataTable
 
@@ -1910,10 +1910,10 @@ Public Class CONTABLE
             Reconectar()
             Dim tablaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT " _
             & "concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) FROM kigest_fact.fact_facturas where tipofact in (1,2,3,8,10,12) " _
-            & "group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+            & "group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.conexionPrinc)
             Dim tablaCOBR As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT " _
             & "concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) FROM kigest_fact.fact_facturas where tipofact in (4,5,11,13) " _
-            & "group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+            & "group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.conexionPrinc)
             Dim readvtas As New DataTable
             Dim readcobr As New DataTable
 
@@ -1979,12 +1979,12 @@ Public Class CONTABLE
             Dim tablaVTAS As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
 concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) 
 FROM fact_facturas where tipofact in (select donfdesc from tipos_comprobantes where debcred='D') 
-group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.conexionPrinc)
 
             Dim tablaCOBR As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
 concat(year(fecha),'/',lpad(month(fecha),2,'0')) as periodo, round(sum(replace(total,',','.')),2) 
 FROM fact_facturas where tipofact in (select donfdesc from tipos_comprobantes where debcred='C') 
-group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
+group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.conexionPrinc)
 
             Dim readvtas As New DataTable
             Dim readcobr As New DataTable
@@ -2082,7 +2082,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     sql = "update fact_vendedor set activo='" & dtvendedores.CurrentCell.Value.ToString.ToUpper & "' where id=" & dtvendedores.CurrentRow.Cells(0).Value
             End Select
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
         Catch ex As Exception
 
@@ -2094,7 +2094,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim sql As String
             sql = "insert into fact_vendedor (nombre,apellido,comision,activo) values ('" & dtvendedores.CurrentRow.Cells(1).Value.ToString.ToUpper & "'," _
             & "'" & dtvendedores.CurrentRow.Cells(2).Value.ToString.ToUpper & "','" & dtvendedores.CurrentRow.Cells(3).Value & "','1')"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             dtvendedores.CurrentRow.Cells(0).Value = comandoadd.LastInsertedId
             'cargarVendedores()
@@ -2116,7 +2116,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     sql = "update fact_ingresos_concepto set concepto='" & dtconceptosingresos.CurrentCell.Value.ToString.ToUpper & "' where id=" & dtconceptosingresos.CurrentRow.Cells(0).Value
             End Select
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
         Catch ex As Exception
 
@@ -2162,7 +2162,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     sql = "update fact_egresos_concepto set concepto='" & dtconceptosegresos.CurrentCell.Value.ToString.ToUpper & "' where id=" & dtconceptosegresos.CurrentRow.Cells(0).Value
             End Select
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
         Catch ex As Exception
 
@@ -2173,7 +2173,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim sql As String
             sql = "insert into fact_ingresos_concepto (concepto) values ('" & dtconceptosingresos.CurrentCell.Value.ToString.ToUpper & "' )"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             dtconceptosingresos.CurrentRow.Cells(0).Value = comandoadd.LastInsertedId
             'cargarConceptosIngresos()
@@ -2186,7 +2186,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim sql As String
             sql = "insert into fact_egresos_concepto (concepto) values ('" & dtconceptosegresos.CurrentCell.Value.ToString.ToUpper & "' )"
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             dtconceptosegresos.CurrentRow.Cells(0).Value = comandoadd.LastInsertedId
             'cargarConceptosEgresos()
@@ -2243,7 +2243,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
@@ -2267,10 +2267,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             '    & "from fact_retenciones as ret where fac.id=ret.comprobante) as retenciones, " _
             '    & "fac.total from fact_conffiscal as fis, fact_facturas as fac " _
             '    & "where fis.id=fac.tipofact " _
-            '    & "and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+            '    & "and fac.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, GestorConexiones.conexionPrinc)
             '    tabFac.Fill(fac.Tables("listadorecibos"))
             'Else
-            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select * from cobranzas where fecha between '" & desde & "' and '" & hasta & "'", conexionPrinc)
+            tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select * from cobranzas where fecha between '" & desde & "' and '" & hasta & "'", GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("listadorecibos"))
             'End If
             Dim imprimirx As New imprimirFX
@@ -2309,7 +2309,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     '    Try
     '        If MsgBox("Esta seguro que desea aumentar un " & txtporcentaje.Text & " porciento los precios de la categoria " & dtcategorias.CurrentRow.Cells(1).Value, vbYesNo + vbQuestion) = vbYes Then
     '            Dim coef As Double = FormatNumber((txtporcentaje.Text + 100) / 100)
-    '            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update kigest_igp.fact_insumos Set precio= replace(precio*?coef,'.',',') where categoria = " & dtcategorias.CurrentRow.Cells(0).Value, conexionPrinc)
+    '            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update kigest_igp.fact_insumos Set precio= replace(precio*?coef,'.',',') where categoria = " & dtcategorias.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
     '            With comandoadd.Parameters
     '                .AddWithValue("?coef", coef)
     '            End With
@@ -2326,7 +2326,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     '    Try
     '        If MsgBox("Esta seguro que desea rebajar un " & txtporcentaje.Text & " porciento los precios de la categoria " & dtcategorias.CurrentRow.Cells(1).Value, vbYesNo + vbQuestion) = vbYes Then
     '            Dim coef As Double = FormatNumber((txtporcentaje.Text + 100) / 100)
-    '            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update kigest_igp.fact_insumos set precio= replace(precio/?coef,'.',',') where categoria = " & dtcategorias.CurrentRow.Cells(0).Value, conexionPrinc)
+    '            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update kigest_igp.fact_insumos set precio= replace(precio/?coef,'.',',') where categoria = " & dtcategorias.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
     '            With comandoadd.Parameters
     '                .AddWithValue("?coef", coef)
     '            End With
@@ -2370,14 +2370,14 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         'End If
 
         'cargamos bancos
-        Dim tablabco As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(banco) from fact_cheques order by banco desc", conexionPrinc)
+        Dim tablabco As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct(banco) from fact_cheques order by banco desc", GestorConexiones.conexionPrinc)
         Dim readbco As New DataSet
         tablabco.Fill(readbco)
         cmbchequebanco.DataSource = readbco.Tables(0)
         cmbchequebanco.DisplayMember = readbco.Tables(0).Columns(0).Caption.ToString
 
         'cargamos estados cheques
-        Dim tablaest As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cheques_estado order by estado desc", conexionPrinc)
+        Dim tablaest As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_cheques_estado order by estado desc", GestorConexiones.conexionPrinc)
         Dim readest As New DataSet
         tablaest.Fill(readest)
         cmbchequeestado.DataSource = readest.Tables(0)
@@ -2420,7 +2420,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         '    cmbproveedores.Enabled = False
         '    Exit Sub
         'End If
-        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", conexionPrinc)
+        Dim tablaprov As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, razon from fact_proveedores", GestorConexiones.conexionPrinc)
         Dim readprov As New DataSet
         tablaprov.Fill(readprov)
         cmbproveedores.DataSource = readprov.Tables(0)
@@ -2441,7 +2441,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub cargardatosempresa()
         Try
             Reconectar()
-            Dim datosEmp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa where id=1 ", conexionPrinc)
+            Dim datosEmp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa where id=1 ", GestorConexiones.conexionPrinc)
             Dim tablaemp As New DataTable
             Dim infoemp() As DataRow
             datosEmp.Fill(tablaemp)
@@ -2551,11 +2551,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             'Dim filasProd() As DataRow
             If rdninguno.Checked = True Then
                 Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT " _
-                & " fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,fact.fecha,fact.razon,fact.direccion, " _
+                & " fact.id, concat(fis.abrev,' ',lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as factnum ,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon,fact.direccion, " _
                 & " fact.localidad, con.condicion, " _
                 & " fact.observaciones, fact.tipofact from fact_conffiscal as fis, fact_facturas as fact, fact_condventas as con " _
                 & " where fis.donfdesc=fact.tipofact and con.id=fact.condvta " _
-                & " and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, conexionPrinc)
+                & " and fact.fecha between '" & desde & "' and '" & hasta & "'" & parambusq, GestorConexiones.conexionPrinc)
 
                 consulta.Fill(tablaprod)
             End If
@@ -2598,13 +2598,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             & "concat(fac.id_cliente,'-',fac.razon,' - tel- ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr,fac.cuit as faccuit, " _
             & "concat(vend.apellido,', ',vend.nombre) as facvend, fac.condvta as faccondvta, fac.observaciones as facobserva,fac.iva105, fac.iva21, fac.total,'',fis.donfdesc as descfact " _
             & "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac  " _
-            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idFactura, conexionPrinc)
+            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.donfdesc=fac.tipofact and fac.id=" & idFactura, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
-            & "cantidad as cant, descripcion, iva ,punit ,ptotal as ptotal, plu as codigo from fact_items where id_fact=" & idFactura, conexionPrinc)
+            & "cantidad as cant, descripcion, iva ,punit ,ptotal as ptotal, plu as codigo from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("facturax"))
             Dim imprimirx As New imprimirFX
             With imprimirx
@@ -2634,10 +2634,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim sql As String = "update fact_facturas set razon='REMITO ANULADO', direccion='REMITO ANULADO', localidad='REMITO ANULADO'," _
             & "tipocontr='REMITO ANULADO', cuit='REMITO ANULADO', subtotal=0,iva105=0, iva21=0, total=0 where id=" & idFactura
 
-            Dim comandodelfact As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim comandodelfact As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             comandodelfact.ExecuteNonQuery()
 
-            Dim consultaitmtrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select cod from fact_items where id_fact=" & idFactura, conexionPrinc)
+            Dim consultaitmtrab As New MySql.Data.MySqlClient.MySqlDataAdapter("select cod from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
             Dim tablaitm As New DataTable
             Dim infoitm() As DataRow
             consultaitmtrab.Fill(tablaitm)
@@ -2649,13 +2649,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Reconectar()
                     numtrab = Replace(infoitm(i)(0), "&", "")
                     sql = "update tecni_taller set trab_estado=3 where id=" & numtrab
-                    Dim consultaupdtrab As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+                    Dim consultaupdtrab As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
                     consultaupdtrab.ExecuteNonQuery()
                 End If
             Next
 
             sql = "delete from fact_items where id_fact=" & idFactura
-            Dim consultadelitm As New MySql.Data.MySqlClient.MySqlCommand(sql, conexionPrinc)
+            Dim consultadelitm As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
             consultadelitm.ExecuteNonQuery()
 
             MsgBox("REMITO anulada correctamente")
@@ -2678,7 +2678,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             & "fac.razon as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr, " _
             & "fac.cuit as faccuit, fac.vendedor as facvend, fac.condvta as faccondvta, fac.total, fac.ptovta, fac.id_cliente,fac.tipofact, fac.remito,fac.fecha " _
             & "FROM fact_facturas as fac  " _
-            & "where fac.id=" & idFactura, conexionPrinc)
+            & "where fac.id=" & idFactura, GestorConexiones.conexionPrinc)
             tabEmp.Fill(fac.Tables("EncaRemito"))
             Dim encabezado() As DataRow
             encabezado = fac.Tables("EncaRemito").Select()
@@ -2695,7 +2695,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select 
-            cantidad as cant, descripcion, iva ,format(punit,2,'es_AR') ,format(ptotal,2,'es_AR') as ptotal, cod as codigo,plu from fact_items where id_fact=" & idFactura, conexionPrinc)
+            cantidad as cant, descripcion, iva ,format(punit,2,'es_AR') ,format(ptotal,2,'es_AR') as ptotal, cod as codigo,plu from fact_items where id_fact=" & idFactura, GestorConexiones.conexionPrinc)
             Dim items As New DataTable
             tabFac.Fill(items)
             'tabFac.Fill(fac.Tables("facturax"))
@@ -2730,7 +2730,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2) values " _
                 & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?transp)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -2756,7 +2756,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_remit) & " where donfdesc= " & tipoFact & " and ptovta=" & ptovta
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -2767,7 +2767,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             'asignamos el remito a la factura
             SqlQuery = "update fact_facturas set remito=?idremito where id=?idfactura"
             Reconectar()
-            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
             With comandoupd.Parameters
                 .AddWithValue("?idremito", idRemito)
                 .AddWithValue("?idfactura", idFactura)
@@ -2811,7 +2811,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact,?plu)"
 
                 Reconectar()
-                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+                Dim comandoadditm As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadditm.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?cant", cantidad)
@@ -2948,7 +2948,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
     Private Sub dtlistasprecio_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistasprecio.CellEndEdit
         Reconectar()
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_listas_precio set nombre=?nmb, utilidad=?util,auxcol=?auxcol where id=?id", conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_listas_precio set nombre=?nmb, utilidad=?util,auxcol=?auxcol where id=?id", GestorConexiones.conexionPrinc)
         With comandoadd.Parameters
             .AddWithValue("?nmb", dtlistasprecio.Rows(e.RowIndex).Cells(1).Value)
             .AddWithValue("?util", dtlistasprecio.Rows(e.RowIndex).Cells(2).Value)
@@ -2962,7 +2962,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub dtmoneda_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtmoneda.CellEndEdit
         Reconectar()
-        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set nombre=?nmb, cotizacion=?coti where id=?id", conexionPrinc)
+        Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set nombre=?nmb, cotizacion=?coti where id=?id", GestorConexiones.conexionPrinc)
         With comandoadd.Parameters
             .AddWithValue("?nmb", dtmoneda.Rows(e.RowIndex).Cells(1).Value)
             .AddWithValue("?coti", dtmoneda.Rows(e.RowIndex).Cells(2).Value)
@@ -2976,7 +2976,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub dtlistasprecio_UserDeletingRow(sender As Object, e As DataGridViewRowCancelEventArgs) Handles dtlistasprecio.UserDeletingRow
         If MsgBox("Esta seguro que desea eliminar esta lista de precios?", vbYesNo + vbQuestion) = MsgBoxResult.Yes Then
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_listas_precio where id=?id", conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_listas_precio where id=?id", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?id", e.Row.Cells(0).Value)
             End With
@@ -2992,7 +2992,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Reconectar()
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_listas_precio (nombre,utilidad) values " _
-        & "(?nmb,?util)", conexionPrinc)
+        & "(?nmb,?util)", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?nmb", dtlistasprecio.CurrentRow.Cells(1).Value.ToString.ToUpper)
                 .AddWithValue("?util", dtlistasprecio.CurrentRow.Cells(2).Value)
@@ -3019,7 +3019,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub dtcategorias_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcategorias.CellEndEdit
         Try
             Reconectar()
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_categoria_insum set nombre=?nmb where id=?id", conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update fact_categoria_insum set nombre=?nmb where id=?id", GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?nmb", dtcategorias.CurrentRow.Cells(1).Value)
                 .AddWithValue("?id", dtcategorias.CurrentRow.Cells(0).Value)
@@ -3038,7 +3038,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim iddesc As Integer = dtdescuentos.CurrentRow.Cells(0).Value
             Reconectar()
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand("update fact_promociones set compra_min='" & compramin & "', descuento_porc='" & descuento & "' " &
-            "where id=" & iddesc, conexionPrinc)
+            "where id=" & iddesc, GestorConexiones.conexionPrinc)
             comandoupd.ExecuteNonQuery()
             MsgBox("Promocion actualizada")
         Catch ex As Exception
@@ -3085,7 +3085,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         '         FROM fact_items as itm, fact_insumos as ins, fact_facturas as fact where
         '         ins.id=itm.cod and fact.id=itm.id_fact and 
         '         itm.tipofact in (select donfdesc from tipos_comprobantes where debcred like 'D') and itm.cod<>0 and 
-        '         fact.fecha like '" & fecha & "' group by itm.num_fact", conexionPrinc)
+        '         fact.fecha like '" & fecha & "' group by itm.num_fact", GestorConexiones.conexionPrinc)
         '         'columna = 6
 
         '         consulta.Fill(tablabal)
@@ -3134,7 +3134,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim tablabal As New DataTable
             tablabal.Clear()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fecha, total_ventas,total_costo,total_ganancia FROM fact_balances_diarios
-            where fecha between '" & desde & "' and '" & hasta & "'", conexionPrinc)
+            where fecha between '" & desde & "' and '" & hasta & "'", GestorConexiones.conexionPrinc)
             'columna = 6
 
             consulta.Fill(tablabal)
@@ -3150,7 +3150,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
-        Dim consAFIP As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_archivos order by id asc", conexionPrinc)
+        Dim consAFIP As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_archivos order by id asc", GestorConexiones.conexionPrinc)
         Dim tablaAFIP As New DataTable
         Dim infoAFIP() As DataRow
         consAFIP.Fill(tablaAFIP)
@@ -3231,10 +3231,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             End If
         Next
         'Dim sqlQuery As String =
-        Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set categoria= '" & categDef & "' where categoria in (" & categSel & ")", conexionPrinc)
+        Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos set categoria= '" & categDef & "' where categoria in (" & categSel & ")", GestorConexiones.conexionPrinc)
         'MsgBox(comandoUPD.CommandText)
         comandoUPD.ExecuteNonQuery()
-        Dim comandoELIM As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_categoria_insum where id  in (" & categSel & ")", conexionPrinc)
+        Dim comandoELIM As New MySql.Data.MySqlClient.MySqlCommand("delete from fact_categoria_insum where id  in (" & categSel & ")", GestorConexiones.conexionPrinc)
         comandoELIM.ExecuteNonQuery()
 
         'MsgBox("Categorias actualizadas")
@@ -3306,7 +3306,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Exit Sub
         End If
         Try
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  fact.fecha,tip.abrev as tipocom, concat(lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,'8','0')) as nufac, 
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha ,tip.abrev as tipocom, 
+            concat(lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,'8','0')) as nufac, 
             fact.razon,trim(fact.cuit) as cuit, fact.tipocontr, round(fact.subtotal,2) as neto, round(fact.iva21,2) as iva21,
             round(fact.iva105,2) as iva105, round(fact.otroiva,2) as otroiva, 0 as ret_iva, 0 as ret_ib,0 as ret_gan,round(fact.total,2)as total, 
             fact.observaciones as observa, fact.id
@@ -3315,7 +3316,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             tip.donfdesc=fact.tipofact and tip.ptovta=fact.ptovta and 
             fecha like '" & cmbperiodocarg.Text & "-%%' and 
             fact.ptovta like '" & cmbptovtaivaventas.SelectedValue & "' 
-            order by fact.ptovta,fact.num_fact", conexionPrinc)
+            order by fact.ptovta,fact.num_fact", GestorConexiones.conexionPrinc)
             Dim tablaIVAVENTAS As New DataTable
             'MsgBox(consulta.SelectCommand.CommandText)
             consulta.Fill(tablaIVAVENTAS)
@@ -3517,7 +3518,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub ivaVentas_Enter(sender As Object, e As EventArgs) Handles ivaVentas.Enter
         Reconectar()
-        Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_facturas order by fecha desc", conexionPrinc)
+        Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_facturas order by fecha desc", GestorConexiones.conexionPrinc)
 
         Dim readPeriodo As New DataSet
         TablaPeriodo.Fill(readPeriodo)
@@ -3533,11 +3534,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 MsgBox("debe ingresar una base de datos")
                 Exit Sub
             End If
-            conexionSEC.ChangeDatabase(txtbdSincronizar.Text)
+            gestorConexiones.conexionSEC.ChangeDatabase(txtbdSincronizar.Text)
             Reconectar()
             Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("
             SELECT id, concat(mes,'-', ano) FROM iv_periodos
-            order by id desc", conexionSEC)
+            order by id desc", gestorConexiones.conexionSEC)
 
             Dim readPeriodo As New DataSet
             TablaPeriodo.Fill(readPeriodo)
@@ -3610,9 +3611,9 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
             sqlQuery = "insert into iv_items_ventas(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto,iva105, iva21,otroiva,total,obs,ret_iva,ret_ib,ret_gan,provincia,actividad,bien_uso) " _
                 & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto,?iva105,?iva21,?otroiva,?tot,?obs,?retiva,?retib,?retgan,?prov,?activ,?bien)"
-            Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+            Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionSEC)
             With additem.Parameters
-                .AddWithValue("?per", IDperiodo)
+                .AddWithValue("?per", IDPeriodo)
                 .AddWithValue("?fech", fecha)
                 .AddWithValue("?tcomp", tipocomp)
                 .AddWithValue("?nfac", numfac)
@@ -3660,7 +3661,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub CargarPlanDeCuentas()
         Reconectar()
         Dim ConsultaPlanCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("
-            SELECT * FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionSEC)
+            SELECT * FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", gestorConexiones.conexionSEC)
 
         Dim TablaPlanCuenta As New DataTable
         ConsultaPlanCuenta.Fill(TablaPlanCuenta)
@@ -3757,7 +3758,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 cuentaMovimiento= ?cuentaMovimiento, cuentaResultado=?cuentaResultado where id=?idCuenta"
             End If
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(SqlQuery, gestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?nombreCuenta", CuentaNombre)
                 .AddWithValue("?grupo", CuentaGrupo)
@@ -3783,7 +3784,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     fila.Selected = True
                     filaEncontrada = fila.Index
                     Exit For
-                ElseIf fila.Cells(0).value = idPLanCuenta And ModificaPlanDeCuentas = True Then
+                ElseIf fila.Cells(0).Value = idPLanCuenta And ModificaPlanDeCuentas = True Then
 
                     'If ModificaPlanDeCuentas = True Then
                     fila.Selected = True
@@ -3804,7 +3805,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Dim ConsultaPlanCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("
             SELECT * FROM cm_planDeCuentas 
-            where grupo=" & G & " and  subGrupo=" & sG & " and cuenta=" & C & " and subCuenta= " & sC & " and cuentaDetalle=" & cD, conexionSEC)
+            where grupo=" & G & " and  subGrupo=" & sG & " and cuenta=" & C & " and subCuenta= " & sC & " and cuentaDetalle=" & cD, gestorConexiones.conexionSEC)
 
             Dim TablaPlanCuenta As New DataTable
             ConsultaPlanCuenta.Fill(TablaPlanCuenta)
@@ -3836,7 +3837,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub IniciarLibroMayor()
         Reconectar()
         Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", gestorConexiones.conexionPrinc)
         Dim dsPlanCuentas As New DataSet
         consPlanCuentas.Fill(dsPlanCuentas)
 
@@ -3854,7 +3855,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') as periodo
             from cm_libroDiario
             having periodo > (select valor from fact_configuraciones where id=77)  
-            order by fecha desc", conexionPrinc)
+            order by fecha desc", gestorConexiones.conexionPrinc)
 
             Dim readPeriodo As New DataSet
             TablaPeriodo.Fill(readPeriodo)
@@ -3876,8 +3877,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
             Reconectar()
             dgvLibroDiario.Rows.Clear()
-            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select *  from cm_libroDiario  
-            where fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by fecha desc, codigoAsiento desc", conexionPrinc)
+            Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT 
+                id,
+                comprobanteInterno,
+                codigoAsiento,
+                DATE_FORMAT(fecha, '%d-%m-%Y') AS fecha,
+                concepto,
+                totalDebe,
+                totalHaber,
+                NumPartidas
+            FROM cm_libroDiario
+            WHERE DATE_FORMAT(fecha, '%Y-%m') = '" & cmbperiodoLibroDiario.Text & "'
+            ORDER BY fecha DESC, codigoAsiento DESC", gestorConexiones.conexionPrinc)
             Dim tabLibroDiario As New DataTable
             consLibroDiario.Fill(tabLibroDiario)
             For Each asientoContable As DataRow In tabLibroDiario.Rows
@@ -3964,7 +3975,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub cmbCuentas_SelectedValueChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedValueChanged
-        cargarLibroMayor
+        CargarLibroMayor()
 
     End Sub
     Private Sub CargarLibroMayor()
@@ -3976,7 +3987,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim idCuentaSel As Integer = cmbCuentas.SelectedValue
                 Dim consSaldoCuenta As New MySql.Data.MySqlClient.MySqlDataAdapter("select saldo as saldoAnterior from cm_saldos_cuentas
                 where periodo like date_format(date_sub('" & cmbPeriodoLibroMayor.Text & "-01',interval 1 month),'%Y-%m') and
-                idCuenta=" & idCuentaSel, conexionPrinc)
+                idCuenta=" & idCuentaSel, gestorConexiones.conexionPrinc)
                 Dim tabSaldoCuenta As New DataTable
                 consSaldoCuenta.Fill(tabSaldoCuenta)
                 'MsgBox(consSaldoCuenta.SelectCommand.CommandText)
@@ -4000,7 +4011,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 LD.codigoAsiento=LM.codigoAsiento and
                 (asi.cuentaDebeId= " & idCuentaSel & " or 
                 asi.cuentaHaberId=" & idCuentaSel & ")
-                order by LM.fecha asc,LD.id asc", conexionPrinc)
+                order by LM.fecha asc,LD.id asc", gestorConexiones.conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 Dim saldoDeudor As Double = 0
@@ -4079,7 +4090,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 CONVERT('0',DECIMAL) as importeDebe, CONVERT('0', DECIMAL) as importeHaber														
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
-                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", gestorConexiones.conexionPrinc)
                 Dim tabSaldosAnteriores As New DataTable
                 consSaldosAnteriores.Fill(tabSaldosAnteriores)
 
@@ -4094,7 +4105,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 LM.fecha like '" & cmbPeriodoLibroMayor.Text & "-%%'  and
                 LD.codigoAsiento=LM.codigoAsiento and 
                 (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
-                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc, LD.fecha, LD.comprobanteInterno asc", conexionPrinc)
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc, LD.fecha, LD.comprobanteInterno asc", gestorConexiones.conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
 
@@ -4279,12 +4290,12 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LD.codigoAsiento=stos.codigoAsiento and
             (PC.id=stos.cuentaDebeId or PC.id=stos.cuentaHaberId) and
             LD.fecha like '" & cmbperiodoLibroDiario.Text & "-%%' order by LD.fecha asc, stos.id ASC
-            ", conexionPrinc)
+            ", gestorConexiones.conexionPrinc)
 
             tabContable.Fill(datosContables.Tables("libroDiario"))
             'Reconectar()
 
-            'tabContable.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select * from cobranzas where fecha between '" & desde & "' and '" & hasta & "'", conexionPrinc)
+            'tabContable.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select * from cobranzas where fecha between '" & desde & "' and '" & hasta & "'", GestorConexiones.conexionPrinc)
             'tabContable.Fill(datosContables.Tables("listadorecibos"))
             'End If
             Dim imprimirx As New imprimirFX
@@ -4371,7 +4382,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                                 
                 from cm_planDeCuentas as CTA 
                 where CTA.cuentaMovimiento=1
-                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                order by  CTA.cuentaResultado desc,CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", gestorConexiones.conexionPrinc)
                 consSaldoCuenta.SelectCommand.CommandTimeout = 300
 
                 ' MsgBox(consSaldoCuenta.SelectCommand.CommandText)
@@ -4436,7 +4447,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 ),0) as saldoAnterior,
                  CTA.cuentaMovimiento,CTA.cuentaResultado                											
                 from cm_planDeCuentas as CTA 	
-                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionPrinc)
+                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", gestorConexiones.conexionPrinc)
                 Dim tabBalance As New DataTable
                 Dim infoBalance() As DataRow
                 'MsgBox(consbalance.SelectCommand.CommandText)
@@ -5110,7 +5121,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 ),0) as MES
                                 
                 from cm_planDeCuentas as CTA 	
-                order by CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle desc", conexionPrinc)
+                order by CTA.grupo,CTA.subGrupo,CTA.cuenta,CTA.subCuenta,CTA.cuentaDetalle desc", gestorConexiones.conexionPrinc)
 
             consBalance.Fill(datosContables.Tables("balanceCuentas"))
 
@@ -5186,7 +5197,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             LM.fecha like ''" & cmbPeriodoLibroMayor.Text & "-%%'-%%' and
             LD.codigoAsiento=LM.codigoAsiento and 
             (asi.cuentaDebeId=CTA.id or asi.cuentaHaberId=CTA.id)
-             order by CTA.id,fecha asc", conexionPrinc)
+             order by CTA.id,fecha asc", gestorConexiones.conexionPrinc)
             Dim tabLibroMayor As New DataTable
             consLibroMayor.Fill(tabLibroMayor)
             Dim saldoDeudor As Double = 0
@@ -5295,17 +5306,17 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub TabPage6_Enter(sender As Object, e As EventArgs) Handles tabUsuarios.Enter
-        Try
-            Reconectar()
-            Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave,(select  
-            FROM AuthServ.CliAuth  where bd like '" & DatosAcceso.bd & "'  ", conexionAuth)
-            Dim tabUsuarios As New DataTable
-            consUsuarios.Fill(tabUsuarios)
+        'Try
+        '    Reconectar()
+        '    Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave,(select  
+        '    FROM AuthServ.CliAuth  where bd like '" & DatosAcceso.bd & "'  ", conexionAuth)
+        '    Dim tabUsuarios As New DataTable
+        '    consUsuarios.Fill(tabUsuarios)
 
-            dgvUsuarios.DataSource = tabUsuarios
-        Catch ex As Exception
+        '    dgvUsuarios.DataSource = tabUsuarios
+        'Catch ex As Exception
 
-        End Try
+        'End Try
     End Sub
 
     Private Sub TabLog_Enter(sender As Object, e As EventArgs) Handles tabLog.Enter
@@ -5319,18 +5330,18 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub CargarLogAcceso()
-        Try
-            Reconectar()
-            Dim consLog As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT Clie as Usuario, tarea, ip, fecha_hora FROM 
-            AuthServ.LogAcc where bd like '" & DatosAcceso.bd & "'  and fecha_hora like '" & Format(dtfechalog.Value, "yyyy-MM-dd") & " %%:%%:%%' order by id desc", conexionAuth)
-            Dim tabLog As New DataTable
-            consLog.Fill(tabLog)
+        'Try
+        '    Reconectar()
+        '    Dim consLog As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT Clie as Usuario, tarea, ip, fecha_hora FROM 
+        '    AuthServ.LogAcc where bd like '" & DatosAcceso.bd & "'  and fecha_hora like '" & Format(dtfechalog.Value, "yyyy-MM-dd") & " %%:%%:%%' order by id desc", conexionAuth)
+        '    Dim tabLog As New DataTable
+        '    consLog.Fill(tabLog)
 
-            ' MsgBox(consLog.SelectCommand.CommandText)
-            dgvLog.DataSource = tabLog
-        Catch ex As Exception
+        '    ' MsgBox(consLog.SelectCommand.CommandText)
+        '    dgvLog.DataSource = tabLog
+        'Catch ex As Exception
 
-        End Try
+        'End Try
     End Sub
     Private Sub Button39_Click_1(sender As Object, e As EventArgs) Handles Button39.Click
         CargarLogAcceso()
@@ -5347,7 +5358,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     Private Sub servidorCorreo_Enter(sender As Object, e As EventArgs) Handles servidorCorreo.Enter
         Try
             Reconectar()
-            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,nombre,texto1 from tecni_datosgenerales where id>=26 and id<=30", conexionPrinc)
+            Dim consultaDtosMail As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,nombre,texto1 from tecni_datosgenerales where id>=26 and id<=30", gestorConexiones.conexionPrinc)
             Dim tablaDtosMail As New DataTable
             consultaDtosMail.Fill(tablaDtosMail)
             dgvServidorCorreo.Rows.Clear()
@@ -5364,7 +5375,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             If e.ColumnIndex = 2 Then
                 Dim id As Integer = dgvServidorCorreo.Rows(e.RowIndex).Cells(0).Value
                 Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("update tecni_datosgenerales set texto1='" &
-                                                                          dgvServidorCorreo.CurrentCell.Value & "' where id=" & id, conexionPrinc)
+                                                                          dgvServidorCorreo.CurrentCell.Value & "' where id=" & id, gestorConexiones.conexionPrinc)
                 comandoadd.ExecuteNonQuery()
                 MsgBox("valor actualizado")
             End If
@@ -5410,7 +5421,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                     Exit Sub
                 Else
                     Reconectar()
-                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", conexionPrinc)
+                    Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_periodos_cerrados (periodo) values ('" & cmbperiodoLibroDiario.Text & "')", gestorConexiones.conexionPrinc)
                     comandoadd.ExecuteNonQuery()
                     For Each cuentaSaldo As DataGridViewRow In dgvListadoCuentaConSaldos.Rows
                         'MsgBox(cuentaSaldo.Cells(7).Value & "--" & CDbl(cuentaSaldo.Cells(7).Value.ToString.Replace(".", "")))
@@ -5420,7 +5431,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                         'MsgBox(saldoCuenta & "----" & saldotxt)
                         Reconectar()
                         Dim comandoadd2 As New MySql.Data.MySqlClient.MySqlCommand("insert into cm_saldos_cuentas (idCuenta, periodo,saldo)
-                        values (?idcuenta,?periodo,?saldo)", conexionPrinc)
+                        values (?idcuenta,?periodo,?saldo)", gestorConexiones.conexionPrinc)
                         With comandoadd2.Parameters
                             .AddWithValue("?idcuenta", idcuenta)
                             .AddWithValue("?periodo", cmbBalCtasPeriodo.Text)
@@ -5453,7 +5464,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             cmbTarjetasMarcas.Enabled = False
         End If
         Reconectar()
-        Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", conexionPrinc)
+        Dim tablatajetasNombre As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_tarjetasNombres", gestorConexiones.conexionPrinc)
         Dim readTarjetasNombre As New DataSet
         tablatajetasNombre.Fill(readTarjetasNombre)
         cmbTarjetasMarcas.DataSource = readTarjetasNombre.Tables(0)
@@ -5487,7 +5498,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
     End Sub
 
     Private Sub tabCompras_Enter(sender As Object, e As EventArgs) Handles tabCompras.Enter
-        Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_proveedores_fact_items order by fecha desc", conexionPrinc)
+        Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("select distinct date_format(fecha,'%Y-%m') from fact_proveedores_fact_items order by fecha desc", gestorConexiones.conexionPrinc)
 
         Dim readPeriodo As New DataSet
         TablaPeriodo.Fill(readPeriodo)
@@ -5501,10 +5512,10 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Dim sql As New MySql.Data.MySqlClient.MySqlCommand
         Try
             Reconectar()
-            Dim consPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * from fact_proveedores_fact_items where fecha like '" & cmbPeriodoComp.Text & "-%%'", conexionPrinc)
+            Dim consPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT * from fact_proveedores_fact_items where fecha like '" & cmbPeriodoComp.Text & "-%%'", gestorConexiones.conexionPrinc)
             Dim tablaPeriodo As New DataTable
             consPeriodo.Fill(tablaPeriodo)
-            'sql.Connection = conexionPrinc
+            'sql.Connection = GestorConexiones.conexionPrinc
             'sql.CommandText =
             'sql.CommandType = CommandType.Text
             'lector = sql.ExecuteReader
@@ -5516,7 +5527,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Exit Sub
             End If
             For Each factura As DataRow In tablaPeriodo.Rows
-                Dim fecha As String = Format(CDate(factura.Item("fecha").ToString), "dd-MM-yyyy")
+                Dim fecha As String = NormalizarFecha(factura.Item("fecha").ToString)
                 Dim tipocomp As String = factura.Item("tipocom").ToString
                 Dim numfac As String = factura.Item("nufac").ToString
                 Dim razon As String = factura.Item("razon").ToString
@@ -5560,7 +5571,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Exit Sub
             End If
             For Each registro As DataGridViewRow In dtlibrocomp.Rows
-                Dim fcomp As String = Format(CDate(registro.Cells(0).Value), "yyyyMMdd") 'fecha del comprobante
+                Dim fcomp As String = Format(CDate(NormalizarFecha(registro.Cells(0).Value)), "yyyyMMdd") 'fecha del comprobante
                 Dim codigoComp As String = ObternerCodigoComp(registro.Cells(1).Value) 'codigo de comprobante
                 Dim ptovta As String = Strings.Left(registro.Cells(2).Value.ToString, 4) 'punto de venta
                 ptovta = ptovta.PadLeft(5, "0")
@@ -5745,11 +5756,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 MsgBox("debe ingresar una base de datos")
                 Exit Sub
             End If
-            conexionSEC.ChangeDatabase(txtbdSincronizar.Text)
+            gestorConexiones.conexionSEC.ChangeDatabase(txtbdSincronizar.Text)
             Reconectar()
             Dim TablaPeriodo As New MySql.Data.MySqlClient.MySqlDataAdapter("
             SELECT id, concat(mes,'-', ano) FROM iv_periodos
-            order by id desc", conexionSEC)
+            order by id desc", gestorConexiones.conexionSEC)
 
             Dim readPeriodo As New DataSet
             TablaPeriodo.Fill(readPeriodo)
@@ -5784,13 +5795,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         If e.ColumnIndex = 4 Then
 
             Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dgvUsuarios.CurrentRow.Cells("clave").Value & "') where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             'CargaServiciosCloud()
             dgvUsuarios.Rows(e.RowIndex).Selected = True
         ElseIf e.ColumnIndex = 3 Then
             Dim sqlQuery As String = "update AuthServ.CliAuth set codus='" & dgvUsuarios.CurrentRow.Cells("clave").Value & "' where id=" & dgvUsuarios.CurrentRow.Cells("id").Value
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             'CargaServiciosCloud()
             dgvUsuarios.Rows(e.RowIndex).Selected = True
@@ -5803,7 +5814,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Dim TablaPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("
             select concat(CTA.grupo,CTA.subGrupo,CTA.cuenta,'.',CTA.subcuenta,CTA.cuentaDetalle) as numCuenta, CTA.nombreCuenta        
                 from cm_planDeCuentas as CTA 	
-                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", conexionSEC)
+                order by CTA.grupo asc,CTA.subGrupo asc,CTA.cuenta asc,CTA.subCuenta asc,CTA.cuentaDetalle asc", gestorConexiones.conexionSEC)
             Dim readPeriodo As New DataSet
             TablaPlanCuentas.Fill(datosContables.Tables("planCuentas"))
 
@@ -5844,7 +5855,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 delete  FROM fact_cuentaclie where idcomp=@idComprobante;
                 delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
                 delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
-                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", gestorConexiones.conexionPrinc)
 
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
@@ -5871,7 +5882,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
                 Dim comandofact As New MySql.Data.MySqlClient.MySqlCommand("delete FROM cm_libroMayor where codigoAsiento =@codigoAsiento;
                 delete FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
-                delete FROM cm_Asientos where codigoAsiento=@codigoAsiento;", conexionPrinc)
+                delete FROM cm_Asientos where codigoAsiento=@codigoAsiento;", gestorConexiones.conexionPrinc)
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters("@codigoAsiento").Value = dgvLibroDiario.CurrentRow.Cells("CodigoAsiento").Value
 
@@ -5898,7 +5909,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 delete  FROM fact_cuentaclie where idcomp=@idComprobante;
                 delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
                 delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
-                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", gestorConexiones.conexionPrinc)
 
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
@@ -5935,7 +5946,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             Reconectar()
             If rdMovimientosEjercicios.Checked = True Then
                 Dim consLibroMayor As New MySql.Data.MySqlClient.MySqlDataAdapter("
-                SELECT LD.comprobanteInterno, LM.fecha,LM.concepto, asi.importeDebe, asi.importeHaber, '' as saldoDeudor,'' as saldoAcreedor
+                SELECT LD.comprobanteInterno, DATE_FORMAT( LM.fecha, '%d-%m-%Y') AS fecha,LM.concepto, asi.importeDebe, asi.importeHaber, '' as saldoDeudor,'' as saldoAcreedor
                 From cm_libroMayor as LM, cm_Asientos as asi, cm_libroDiario as LD
                 where LM.codigoAsiento=asi.codigoAsiento and
                 LM.fecha between 
@@ -5946,7 +5957,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
                 asi.cuentaHaberId= " & cmbCuentaEjercicio.SelectedValue & " ) and
 				LM.concepto like '%" & txtconceptoEjercicio.Text.Replace(" ", "%") & "%'
-                order by LM.fecha asc,LD.comprobanteInterno asc", conexionPrinc)
+                order by LM.fecha asc,LD.comprobanteInterno asc", gestorConexiones.conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 'MsgBox(consLibroMayor.SelectCommand.CommandText)
                 consLibroMayor.Fill(tabLibroMayor)
@@ -6020,7 +6031,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 (asi.cuentaDebeId= " & cmbCuentaEjercicio.SelectedValue & " or 
                 asi.cuentaHaberId=" & cmbCuentaEjercicio.SelectedValue & " ) and
 				LM.concepto like '%" & txtconceptoEjercicio.Text.Replace(" ", "%") & "%'
-                group by month(LM.fecha)", conexionPrinc)
+                group by month(LM.fecha)", gestorConexiones.conexionPrinc)
                 Dim tabLibroMayor As New DataTable
                 consLibroMayor.Fill(tabLibroMayor)
                 'MsgBox(consLibroMayor.SelectCommand.CommandText)
@@ -6039,7 +6050,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
     Private Sub CargarEjerciciosAnteriores()
         Reconectar()
-        Dim consEjerciciosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT periodoFiscal from cm_ejercicios_cerrados", conexionPrinc)
+        Dim consEjerciciosAnteriores As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT periodoFiscal from cm_ejercicios_cerrados", gestorConexiones.conexionPrinc)
         Dim dsEjerciciosAnteriores As New DataSet
         consEjerciciosAnteriores.Fill(dsEjerciciosAnteriores)
 
@@ -6049,7 +6060,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
         Reconectar()
         Dim consPlanCuentas As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, concat(nombreCuenta,'<>',concat(grupo,subgrupo,cuenta,subcuenta,cuentadetalle)) as nombreCuenta
-            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", conexionPrinc)
+            FROM cm_planDeCuentas order by grupo,subGrupo,cuenta,subCuenta,cuentaDetalle", gestorConexiones.conexionPrinc)
         Dim dsPlanCuentas As New DataSet
         consPlanCuentas.Fill(dsPlanCuentas)
 
@@ -6063,7 +6074,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         Try
             Reconectar()
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand("insert into fact_categoria_insum (nombre) values " _
-        & "(?nmb)", conexionPrinc)
+        & "(?nmb)", gestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?nmb", dtcategorias.CurrentRow.Cells(1).Value.ToString.ToUpper)
 
@@ -6077,40 +6088,8 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
         End Try
     End Sub
 
-    Private Sub dgvDatosEjercicio_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvDatosEjercicio.CellContentClick
-
-    End Sub
-
     Private Sub Button51_Click(sender As Object, e As EventArgs) Handles Button51.Click
         GenerarExcel(dgvDatosEjercicio)
-
-    End Sub
-
-    Private Sub tabcontable_SelectedIndexChanged(sender As Object, e As EventArgs) Handles tabcontable.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabControl3_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl3.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabControl2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl2.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabControl4_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl4.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub TabPage14_Click(sender As Object, e As EventArgs) Handles TabPage14.Click
-
-    End Sub
-
-    Private Sub dtlistasprecio_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtlistasprecio.CellContentClick
 
     End Sub
 
@@ -6122,7 +6101,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
 
 
 
-                Dim fecha As String = Format(CDate(facturaCompra.Cells("fecha").Value), "yyyy-MM-dd")
+                Dim fecha As String = NormalizarFecha(facturaCompra.Cells("fecha").Value) 'Format(CDate(facturaCompra.Cells("fecha").Value), "yyyy-MM-dd")
                 Dim tipocomp As String = facturaCompra.Cells("TipoComp").Value
                 Dim numfac As String = facturaCompra.Cells("nufac").Value
                 Dim razon As String = facturaCompra.Cells("razonComp").Value
@@ -6143,29 +6122,11 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 Dim IdPeriodo As Integer = cmbperiodosincronizarCOMP.SelectedValue
                 Dim sqlQuery As String
 
-                'If comprobarComprobanteCompra(numfac, cuit, conexionSEC) = True Then
-                '    MsgBox("el comprobante ya fue cargado, por favor verifique")
-                '    Exit Sub
-                'End If
-
-                'If tipocomp = "NC" Then
-                '    If neto21 <> 0 Then neto21 = "-" & neto21
-                '    If neto105 <> 0 Then neto105 = "-" & neto105
-                '    If neto27 <> 0 Then neto27 = "-" & neto27
-                '    If iva <> 0 Then iva = "-" & iva
-                '    If monot <> 0 Then monot = "-" & monot
-                '    If pcuenta <> 0 Then pcuenta = "-" & pcuenta
-                '    If nogrex <> 0 Then nogrex = "-" & nogrex
-                '    If periv <> 0 Then periv = "-" & periv
-                '    If perib <> 0 Then perib = "-" & perib
-                '    If perib <> 0 Then total = "-" & total
-                'End If
-
                 Reconectar()
                 sqlQuery = "insert into iv_items_compras(periodo, fecha,tipocom,nufac,razon,cuit,tipocontr,neto21,neto105,neto27,iva,monot," _
                     & "acuenta,nogr,perciva,percib,total,obs,bien_uso) " _
                     & "values(?per,?fech,?tcomp,?nfac,?raz,?cuit,?tcontr,?neto21,?neto105,?neto27,?iva,?mon,?acuenta,?nogr,?periva,?perib,?tot,?obs,?bien)"
-                Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionSEC)
+                Dim additem As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionSEC)
                 With additem.Parameters
                     .AddWithValue("?per", IDperiodo)
                     .AddWithValue("?fech", fecha)
@@ -6261,14 +6222,16 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             ' Dim parambusq As String = " and fac.tipofact in ('5') "
 
             'If rdefectivo.Checked = True Then
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  Pfact.id, Pfact.fecha,ec.concepto, prov.razon,ie.descripcion as detalles, concat(tip.abrev,' ', Pfact.numero) as comprobante,format(replace(Pfact.monto,',','.'),2,'es_AR') as monto, caja.descripcion
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT  Pfact.id, DATE_FORMAT(Pfact.fecha, '%d-%m-%Y') AS fecha,ec.concepto, 
+            prov.razon,ie.descripcion as detalles, concat(tip.abrev,' ', Pfact.numero) as comprobante,format(replace(Pfact.monto,',','.'),2,'es_AR') as monto, 
+            caja.descripcion
             FROM fact_proveedores_fact as Pfact, tipos_comprobantes as tip, fact_cajas as caja,
             fact_proveedores as prov,fact_ingreso_egreso as ie, fact_egresos_concepto as ec
             where Pfact.tipo=tip.donfdesc and Pfact.idproveedor=prov.id and ie.comprobante=Pfact.id and Pfact.tipo=993 and ec.id= ie.concepto and ie.tipo=2
             and caja.id=ie.caja and tip.ptovta=caja.id            
             " & consGtos & consRazonDetalles & "
-            order by Pfact.fecha asc", conexionPrinc)
-            MsgBox(consulta.SelectCommand.CommandText)
+            order by Pfact.fecha asc", GestorConexiones.conexionPrinc)
+            'MsgBox(consulta.SelectCommand.CommandText)
             columna = 6
             consulta.Fill(tablagtos)
             dgvgastos.DataSource = tablagtos
@@ -6280,10 +6243,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             MsgBox(ex.Message)
             EnProgreso.Close()
         End Try
-    End Sub
-
-    Private Sub DateTimePicker2_ValueChanged(sender As Object, e As EventArgs) Handles dtpgastoshasta.ValueChanged
-
     End Sub
 
     Private Sub Button50_Click(sender As Object, e As EventArgs) Handles Button50.Click
@@ -6309,7 +6268,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             'Dim hojacomp As Integer = lector("hojacomp")
             Reconectar()
 
-            tabItmIVcomp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * from fact_proveedores_fact_items where fecha like '" & cmbPeriodoComp.Text & "-%%'", conexionPrinc)
+            tabItmIVcomp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT * from fact_proveedores_fact_items where fecha like '" & cmbPeriodoComp.Text & "-%%'", GestorConexiones.conexionPrinc)
             tabItmIVcomp.Fill(ds.Tables("IvaCompraItems"))
 
             Dim parameters As New List(Of Microsoft.Reporting.WinForms.ReportParameter)()
@@ -6355,7 +6314,7 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
                 delete  FROM fact_cuentaclie where idcomp=@idComprobante;
                 delete  FROM cm_Asientos where codigoAsiento=@codigoAsiento;
                 delete  FROM cm_libroDiario where codigoAsiento=@codigoAsiento;
-                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", conexionPrinc)
+                delete  FROM cm_libroMayor where codigoAsiento=@codigoAsiento", GestorConexiones.conexionPrinc)
 
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@idComprobante", MySql.Data.MySqlClient.MySqlDbType.Text))
                 comandofact.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@codigoAsiento", MySql.Data.MySqlClient.MySqlDbType.Text))
@@ -6370,14 +6329,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", conexionPrinc)
             End If
 
         End If
-    End Sub
-
-    Private Sub dgvLibroDiario_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvLibroDiario.CellContentClick
-
-    End Sub
-
-    Private Sub Panel33_Paint(sender As Object, e As PaintEventArgs) Handles Panel33.Paint
-
     End Sub
 
     Private Sub Button53_Click(sender As Object, e As EventArgs) Handles Button53.Click

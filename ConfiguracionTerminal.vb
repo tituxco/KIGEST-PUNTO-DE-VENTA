@@ -79,7 +79,7 @@
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
 
-            Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", conexionPrinc)
+            Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", GestorConexiones.conexionPrinc)
             Dim tablaConfigTerm As New DataTable
             consultaConfigTerm.Fill(tablaConfigTerm)
 
@@ -95,7 +95,7 @@
                 respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
             Loop
 
-            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where nombreTerminal like '" & NombreEquipo & "'", conexionPrinc)
+            comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where nombreTerminal like '" & NombreEquipo & "'", GestorConexiones.conexionPrinc)
             comandoupd.ExecuteNonQuery()
 
             funciones_Globales.aplicarConfiguracionTerminal()

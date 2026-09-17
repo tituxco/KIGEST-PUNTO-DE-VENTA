@@ -6,6 +6,15 @@
         Try
             listaVendedor = datosEstructura.fact_vendedor.ObtenerTodos
             dtvendedor.DataSource = listaVendedor
+
+            For Each col As DataGridViewColumn In dtvendedor.Columns
+                ' Dejamos visibles solo "nombre" y "listaPrecios"
+                If col.Name = "nombre" OrElse col.Name = "listaPrecios" Then
+                    col.Visible = True
+                Else
+                    col.Visible = False
+                End If
+            Next
         Catch ex As Exception
 
         End Try

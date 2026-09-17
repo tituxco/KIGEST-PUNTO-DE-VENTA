@@ -61,7 +61,7 @@ Public Class nuevaventa
 
             If numOR <> "" And numOR <> "0" And Val(numOR) <> 0 Then
                 Reconectar()
-                Dim consultaorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT format(tall.mo_monto,2,'es_AR'), tall.estado, tall.trab_estado, (select count(tcn.id) from tecni_taller_insumos as tcn where tcn.idtaller=tall.id) as insumos from tecni_taller as tall where tall.id=" & numOR, conexionPrinc)
+                Dim consultaorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT format(tall.mo_monto,2,'es_AR'), tall.estado, tall.trab_estado, (select count(tcn.id) from tecni_taller_insumos as tcn where tcn.idtaller=tall.id) as insumos from tecni_taller as tall where tall.id=" & numOR, GestorConexiones.conexionPrinc)
                 Dim tablaorden As New DataTable
                 Dim infoorden() As DataRow
                 consultaorden.Fill(tablaorden)
@@ -80,7 +80,7 @@ Public Class nuevaventa
                 dtproductos.Rows(fila).Cells(5).Value = infoorden(0)(0)
                 dtproductos.Rows(fila).Cells(6).Value = infoorden(0)(0)
                 If infoorden(0)(3) <> 0 Then
-                    Dim consultaprodorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT codigo, cantidad, descripcion, format(iva,2,'es_AR'), format(punit,2,'es_AR'), format(ptotal,2,'es_AR') from tecni_taller_insumos where idtaller=" & numOR, conexionPrinc)
+                    Dim consultaprodorden As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT codigo, cantidad, descripcion, format(iva,2,'es_AR'), format(punit,2,'es_AR'), format(ptotal,2,'es_AR') from tecni_taller_insumos where idtaller=" & numOR, GestorConexiones.conexionPrinc)
                     Dim tablaprodorden As New DataTable
                     Dim infoprodorden() As DataRow
                     consultaprodorden.Fill(tablaprodorden)
@@ -112,7 +112,7 @@ Public Class nuevaventa
             Busq = "where  codigo like '" & codPLU & "' or cod_bar like '" & codPLU & "'"
         End If
         Reconectar()
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, GestorConexiones.conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         consulta.Fill(tablaprod)
@@ -169,7 +169,7 @@ Public Class nuevaventa
         End If
 
         Reconectar()
-        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, conexionPrinc)
+        Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,iva,descripcion FROM fact_insumos " & Busq, GestorConexiones.conexionPrinc)
         Dim tablaprod As New DataTable
         Dim filasProd() As DataRow
         consulta.Fill(tablaprod)
@@ -195,14 +195,14 @@ Public Class nuevaventa
             Dim ganancia As Double
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda FROM fact_insumos where id=" & codProd, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT precio, ganancia, iva, moneda FROM fact_insumos where id=" & codProd, GestorConexiones.conexionPrinc)
             Dim tablaprod As New DataTable
             Dim filasProd() As DataRow
             consulta.Fill(tablaprod)
             filasProd = tablaprod.Select("")
 
             'cargamos listas de precios
-            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad FROM fact_listas_precio where id=" & cmblistaprecio.SelectedValue, conexionPrinc)
+            Dim consultalis As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT utilidad FROM fact_listas_precio where id=" & cmblistaprecio.SelectedValue, GestorConexiones.conexionPrinc)
             Dim tablalistas As New DataTable
             Dim filaslistas() As DataRow
             consultalis.Fill(tablalistas)
@@ -212,7 +212,7 @@ Public Class nuevaventa
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select (select cotizacion from fact_moneda  where  id =" & filasProd(0)(3) & ") as cotiza, (select valor from fact_configuraciones where  id =1) as lista"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -346,7 +346,7 @@ Public Class nuevaventa
     Private Sub cargarDatosGrales() 'igp
         Try
             Reconectar()
-                Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, numero from fact_puntosventa", conexionPrinc)
+                Dim tablaptovta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, numero from fact_puntosventa", GestorConexiones.conexionPrinc)
                 Dim readtptovta As New DataSet
                 tablaptovta.Fill(readtptovta)
                 txtptovta.DataSource = readtptovta.Tables(0)
@@ -355,7 +355,7 @@ Public Class nuevaventa
                 txtptovta.SelectedIndex = -1
 
 
-            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", conexionPrinc)
+            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", GestorConexiones.conexionPrinc)
                 Dim readivat As New DataSet
                 tablaivat.Fill(readivat)
                 cmbtipocontr.DataSource = readivat.Tables(0)
@@ -364,7 +364,7 @@ Public Class nuevaventa
                 cmbtipocontr.SelectedIndex = -1
 
 
-                Dim tablaconvtta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_condventas", conexionPrinc)
+                Dim tablaconvtta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_condventas", GestorConexiones.conexionPrinc)
                 Dim readconvta As New DataSet
                 tablaconvtta.Fill(readconvta)
                 cmbcondvta.DataSource = readconvta.Tables(0)
@@ -372,7 +372,7 @@ Public Class nuevaventa
                 cmbcondvta.ValueMember = readconvta.Tables(0).Columns(0).Caption.ToString
             cmbcondvta.SelectedIndex = -1
 
-            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", conexionPrinc)
+            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", GestorConexiones.conexionPrinc)
                 Dim readvend As New DataSet
                 tablavend.Fill(readvend)
                 cmbvendedor.DataSource = readvend.Tables(0)
@@ -380,7 +380,7 @@ Public Class nuevaventa
                 cmbvendedor.ValueMember = readvend.Tables(0).Columns(0).Caption.ToString
             cmbvendedor.SelectedValue = DatosAcceso.Vendedor
 
-            Dim tablautil As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", conexionPrinc)
+            Dim tablautil As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_listas_precio", GestorConexiones.conexionPrinc)
                 Dim readutil As New DataSet
                 tablautil.Fill(readutil)
                 cmblistaprecio.DataSource = readutil.Tables(0)
@@ -428,7 +428,7 @@ Public Class nuevaventa
             Reconectar()
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cl.nomapell_razon as clie, cl.dir_domicilio, lc.nombre,
             cl.iva_tipo, cl.cuit, cl.lista_precios,cl.vendedor,cl.idclientes from fact_clientes as cl,  cm_localidad as lc where lc.id=cl.dir_localidad and 
-            (cl.idclientes ='" & txtctaclie.Text & "' or   replace(cl.cuit,'-','') like '" & txtcuit.Text & "') limit 1", conexionPrinc)
+            (cl.idclientes ='" & txtctaclie.Text & "' or   replace(cl.cuit,'-','') like '" & txtcuit.Text & "') limit 1", GestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             'Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -522,7 +522,7 @@ Public Class nuevaventa
             'Reconectar()
             'Dim lector As System.Data.IDataReader
             'Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            'sql.Connection = conexionPrinc
+            'sql.Connection = GestorConexiones.conexionPrinc
             'sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & txtptovta.SelectedValue
             'sql.CommandType = CommandType.Text
             'lector = sql.ExecuteReader
@@ -694,14 +694,14 @@ Public Class nuevaventa
         Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
         Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
         Dim Transaccion As MySql.Data.MySqlClient.MySqlTransaction
-        Transaccion = conexionPrinc.BeginTransaction
+        Transaccion = GestorConexiones.conexionPrinc.BeginTransaction
 
         Try
             'GUARDO LOS DATOS DE LA FACTURA
             sqlQuery = "insert into fact_facturas  " _
             & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2,cae,vtocae,codbarra,codigo_qr) values " _
             & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?obs2,?cae,?vtocae,?codbarra,?codigo_qr)"
-            comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -733,7 +733,7 @@ Public Class nuevaventa
             If txtptovta.Text <> 3 Then
                 Reconectar()
                 sqlQuery = "update fact_conffiscal set confnume=" & Val(num_fact) & " where id= " & cmbtipofac.SelectedValue
-                comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 comandoupd.Transaction = Transaccion
                 comandoupd.ExecuteNonQuery()
             End If
@@ -761,7 +761,7 @@ Public Class nuevaventa
 
                     Reconectar()
                     Dim consultastock As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, stock FROM fact_insumos_lotes " _
-                    & "where stock >0 and idproducto=" & codigo & " order by id asc", conexionPrinc)
+                    & "where stock >0 and idproducto=" & codigo & " order by id asc", GestorConexiones.conexionPrinc)
                     Dim tablastock As New DataTable
                     Dim infostock() As DataRow
                     consultastock.Fill(tablastock)
@@ -770,13 +770,13 @@ Public Class nuevaventa
                         If infostock(lotes)(1) <= cant Then
                             cant = cant - infostock(lotes)(1)
                             Reconectar()
-                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=0 where id=" & infostock(lotes)(0), conexionPrinc)
+                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=0 where id=" & infostock(lotes)(0), GestorConexiones.conexionPrinc)
                             updstock.Transaction = Transaccion
                             updstock.ExecuteNonQuery()
                             lotes += 1
                         ElseIf infostock(lotes)(1) > cant Then
                             Reconectar()
-                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=stock-" & cant & " where id=" & infostock(lotes)(0), conexionPrinc)
+                            Dim updstock As New MySql.Data.MySqlClient.MySqlCommand("update fact_insumos_lotes set stock=stock-" & cant & " where id=" & infostock(lotes)(0), GestorConexiones.conexionPrinc)
                             updstock.Transaction = Transaccion
                             updstock.ExecuteNonQuery()
                             cant = 0
@@ -790,7 +790,7 @@ Public Class nuevaventa
                 & "(cod,plu,cantidad, descripcion, iva, punit, ptotal, tipofact,idAlmacen,idCaja,id_fact) values" _
                 & "(?cod,?plu, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
-                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?cod", cod)
                     .AddWithValue("?plu", codbar)
@@ -811,7 +811,7 @@ Public Class nuevaventa
                 If InStr(itemsFact.Cells(1).Value.ToString, "&") <> 0 Then
                     Dim idtrab As Integer = Microsoft.VisualBasic.Right(itemsFact.Cells(1).Value.ToString, Len(itemsFact.Cells(1).Value.ToString) - 1)
                     sqlQuery = "update tecni_taller set trab_estado=1, factura=" & idFactura & " where id=" & idtrab
-                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                     comandoupd.Transaction = Transaccion
                     comandoupd.ExecuteNonQuery()
                 End If
@@ -820,7 +820,7 @@ Public Class nuevaventa
             'dependiendo de la condicion de venta hacemos distintas acciones
             Reconectar()
             sqlQuery = "insert into fact_cuentaclie (idclie,idcomp) values (?clie, ?idcomp)"
-            comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?clie", txtctaclie.Text)
                 .AddWithValue("?idcomp", idFactura)
@@ -859,7 +859,7 @@ Public Class nuevaventa
                 For Each pedido As DataGridViewRow In dtpedidosfact.Rows
                     If pedido.Cells(0).Value.ToString <> "" Then
                         sqlQuery = "update fact_facturas set observaciones='FACTURADO' where id=" & pedido.Cells(0).Value
-                        comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                        comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                         comandoupd.Transaction = Transaccion
                         comandoupd.ExecuteNonQuery()
                     End If
@@ -868,7 +868,7 @@ Public Class nuevaventa
                 For Each pedido As DataGridViewRow In dtpedidosfact.Rows
                     If pedido.Cells(1).Value.ToString <> "" Then
                         sqlQuery = "update fact_gtia set fventa=?fventa, compvta=?compvta where serie like'" & pedido.Cells(1).Value & "'"
-                        comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                        comandoupd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                         With comandoupd.Parameters
                             .AddWithValue("?fventa", fecha)
                             .AddWithValue("?compvta", idFactura)
@@ -958,7 +958,7 @@ Public Class nuevaventa
             If e.ColumnIndex = 1 And rdpedido.Checked = True Then
                 Reconectar()
                 Dim consultapedido As New MySql.Data.MySqlClient.MySqlDataAdapter("select " _
-                & "id, condvta, vendedor from fact_facturas where observaciones like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=9", conexionPrinc)
+                & "id, condvta, vendedor from fact_facturas where observaciones like 'PENDIENTE' AND ptovta=1 and num_fact=" & dtpedidosfact.CurrentCell.Value & " and tipofact=9", GestorConexiones.conexionPrinc)
                 Dim tablaped As New DataTable
                 Dim infoped() As DataRow
                 consultapedido.Fill(tablaped)
@@ -974,7 +974,7 @@ Public Class nuevaventa
                 cmbvendedor.SelectedValue = infoped(0)(2)
 
                 Reconectar()
-                Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, conexionPrinc)
+                Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT cod,codint, cantidad, descripcion, iva, punit, ptotal from fact_items where id_fact=" & dtpedidosfact.CurrentRow.Cells(0).Value, GestorConexiones.conexionPrinc)
                 Dim tablaitm As New DataTable
                 Dim infoitm() As DataRow
                 consultapedidoitems.Fill(tablaitm)
@@ -988,7 +988,7 @@ Public Class nuevaventa
                 Reconectar()
                 Dim consultapedidoitems As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT prod.codigo " _
                 & "FROM fact_gtia as gtia, fact_insumos as prod " _
-                & "where prod.codigo=gtia.codigo and gtia.serie like '" & dtpedidosfact.CurrentCell.Value & "'", conexionPrinc)
+                & "where prod.codigo=gtia.codigo and gtia.serie like '" & dtpedidosfact.CurrentCell.Value & "'", GestorConexiones.conexionPrinc)
                 ' MsgBox(consultapedidoitems.SelectCommand.CommandText)
                 Dim tablaitm As New DataTable
                 Dim infoitm() As DataRow
@@ -1013,7 +1013,7 @@ Public Class nuevaventa
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select confnume from fact_conffiscal where donfdesc=" & cmbtipofac.SelectedValue & " and ptovta=" & txtptovta.SelectedValue
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -1066,7 +1066,7 @@ Public Class nuevaventa
                 & "(tipofact,ptovta, num_fact,fecha,id_cliente,razon,direccion,localidad,tipocontr,cuit,condvta,subtotal,iva105,iva21,total,vendedor,observaciones2) values " _
                 & "(?tipofact, ?ptov,?nfac,?fech,?idclie,?razon,?dire,?loca,?tipocont,?cuit,?condvta,?subt,?105,?21,?tot,?vend,?transp)"
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?ptov", Val(ptovta))
                 .AddWithValue("?tipofact", tipoFact)
@@ -1092,7 +1092,7 @@ Public Class nuevaventa
             Reconectar()
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-            sql.Connection = conexionPrinc
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "update fact_conffiscal set confnume=" & Val(num_fact) & " where id= " & tipoFact
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -1147,7 +1147,7 @@ Public Class nuevaventa
                 & "(?cod, ?cant,?desc,?iva,?punit,?ptot,?tipofact,?idAlmacen,?idCaja,?id_fact)"
 
                 Reconectar()
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
 
                     .AddWithValue("?cod", cod)
@@ -1169,7 +1169,7 @@ Public Class nuevaventa
             'asignamos el remito a la factura
             sqlQuery = "update fact_facturas set remito=?idremito where id=?idfactura"
             Reconectar()
-            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoupd.Parameters
                 .AddWithValue("?idremito", idRemito)
                 .AddWithValue("?idfactura", idFactura)
@@ -1192,14 +1192,14 @@ Public Class nuevaventa
             & "concat(vend.apellido,', ',vend.nombre) as facvend, fac.condvta as faccondvta, fac.observaciones2 as facobserva,fac.iva105, fac.iva21," _
             & "fac.total,'',fis.donfdesc " _
             & "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa as emp, fact_facturas as fac  " _
-            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.id=fac.tipofact and fac.id=" & idRemito, conexionPrinc)
+            & "where vend.id=fac.vendedor and cl.idclientes=fac.id_cliente and emp.id=1 and fis.id=fac.tipofact and fac.id=" & idRemito, GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("factura_enca"))
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
             & "cantidad as cant, descripcion,iva,punit,ptotal from fact_items where " _
-            & "id_fact=" & idRemito, conexionPrinc)
+            & "id_fact=" & idRemito, GestorConexiones.conexionPrinc)
             tabFac.Fill(fac.Tables("facturax"))
 
             Dim imprimirx As New imprimirFX
@@ -1584,7 +1584,7 @@ Public Class nuevaventa
                             Reconectar()
                             Dim lector As System.Data.IDataReader
                             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
-                            sql.Connection = conexionPrinc
+                            sql.Connection = GestorConexiones.conexionPrinc
                             sql.CommandText = "update fact_conffiscal set confnume=" & Val(txtnufac.Text) & " where id= " & cmbtipofac.SelectedValue
                             sql.CommandType = CommandType.Text
                             lector = sql.ExecuteReader
@@ -1697,7 +1697,7 @@ Public Class nuevaventa
     Private Sub txtptovta_SelectedValueChanged(sender As Object, e As EventArgs) Handles txtptovta.SelectedValueChanged
         Try
             Reconectar()
-            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from tipos_comprobantes where ptovta=" & txtptovta.SelectedValue & " and tip=1", conexionPrinc)
+            Dim tablaftipo As New MySql.Data.MySqlClient.MySqlDataAdapter("select donfdesc, abrev from tipos_comprobantes where ptovta=" & txtptovta.SelectedValue & " and tip=1", GestorConexiones.conexionPrinc)
             Dim readftipo As New DataSet
             'MsgBox(tablaftipo.SelectCommand.CommandText)
             tablaftipo.Fill(readftipo)

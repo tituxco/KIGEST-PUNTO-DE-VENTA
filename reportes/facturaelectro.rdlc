@@ -912,7 +912,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Razón social: " &amp; First(Fields!emprazon.Value, "encabezado")</Value>
+                    <Value>="Razon social: " &amp; First(Fields!emprazon.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                       <FontWeight>Bold</FontWeight>
@@ -945,7 +945,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Dirección: " &amp; First(Fields!empdire.Value, "encabezado")</Value>
+                    <Value>="Direccion: " &amp; First(Fields!empdire.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -977,7 +977,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Condición: " &amp; First(Fields!empcontr.Value, "encabezado")</Value>
+                    <Value>="Condicion: " &amp; First(Fields!empcontr.Value, "encabezado")</Value>
                     <Style>
                       <FontSize>8pt</FontSize>
                     </Style>
@@ -1108,6 +1108,7 @@
                     <Value>="Fecha: " &amp; First(Fields!facfech.Value, "encabezado")</Value>
                     <Style>
                       <FontWeight>Bold</FontWeight>
+                      <Format>d</Format>
                     </Style>
                   </TextRun>
                 </TextRuns>
@@ -1367,7 +1368,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>="Condición de venta: " &amp; First(Fields!faccondvta.Value, "encabezado")</Value>
+                    <Value>="Condicion de venta: " &amp; First(Fields!faccondvta.Value, "encabezado")</Value>
                     <Style>
                       <FontStyle>Italic</FontStyle>
                       <FontSize>8pt</FontSize>

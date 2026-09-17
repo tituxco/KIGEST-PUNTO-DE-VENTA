@@ -5,7 +5,7 @@ Public Class CajaDiaria
     Dim saldoCaja As Double = 0
     Dim CajaDef As Integer = My.Settings.CajaDef
     Private Sub CajaDiaria_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & CajaDef & " order by id desc", conexionPrinc)
+        Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & CajaDef & " order by id desc", GestorConexiones.conexionPrinc)
         Dim readcierres As New DataSet
         tablacierres.Fill(readcierres)
         cmbcierresCajas.DataSource = readcierres.Tables(0)
@@ -48,7 +48,7 @@ Public Class CajaDiaria
 
         End If
         Reconectar()
-        Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, conexionPrinc)
+        Dim consultacierre As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLARQUEO, GestorConexiones.conexionPrinc)
         Dim tablacierr As New DataTable
         Dim infocierr() As DataRow
         consultacierre.Fill(tablacierr)
@@ -156,9 +156,9 @@ Public Class CajaDiaria
         Reconectar()
         ' MsgBox(SQLCAJA)
 
-        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, conexionPrinc)
-        Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, conexionPrinc)
-        Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, conexionPrinc)
+        Dim consultacaja As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLCAJA, GestorConexiones.conexionPrinc)
+        Dim consultacheques As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLcheques, GestorConexiones.conexionPrinc)
+        Dim consultatarjetas As New MySql.Data.MySqlClient.MySqlDataAdapter(SQLtarjetas, GestorConexiones.conexionPrinc)
         Dim tablacheques As New DataTable
         Dim tablatarjetas As New DataTable
         Dim tablacaja As New DataTable
@@ -245,7 +245,7 @@ Public Class CajaDiaria
                 Reconectar()
                 sqlQuery = "insert into fact_cajas_cierres(monto,caja) values (?monto,?caja)"
 
-                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
                 With comandoadd.Parameters
                     .AddWithValue("?monto", FormatNumber(montoRemanente, 2))
                     .AddWithValue("?caja", My.Settings.CajaDef)

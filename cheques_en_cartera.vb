@@ -25,7 +25,7 @@
         End If
         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select che.id, che.banco, che.serie, che.fecha_cobro, che.importe " _
             & "from fact_cheques as che " _
-            & busq, conexionPrinc)
+            & busq, GestorConexiones.conexionPrinc)
         ' MsgBox(consulta.SelectCommand.CommandText)
         Dim tablacheques As New DataTable
         consulta.Fill(tablacheques)
@@ -43,7 +43,7 @@
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select che.id, che.banco, che.serie, " _
             & "che.fecha_cobro, che.importe " _
             & "from fact_cheques as che " _
-            & "where che.tipo_cheque=2 and che.estado_cheque=1", conexionPrinc)
+            & "where che.tipo_cheque=2 and che.estado_cheque=1", GestorConexiones.conexionPrinc)
             Dim tablacheques As New DataTable
 
             consulta.Fill(tablacheques)

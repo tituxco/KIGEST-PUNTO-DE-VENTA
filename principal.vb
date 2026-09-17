@@ -15,7 +15,7 @@ Public Class frmprincipal
     Dim i As Integer
 
     Private Sub cargarEmpresas()
-        Dim tablaEmp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa2", conexionPrinc)
+        Dim tablaEmp As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_empresa2", gestorConexiones.conexionPrinc)
         Dim readEmp As New DataSet
         tablaEmp.Fill(readEmp)
         cmbempresas.ComboBox.DataSource = readEmp.Tables(0)
@@ -39,18 +39,18 @@ Public Class frmprincipal
             Dim idEmpresa = cmbempresas.ComboBox.SelectedValue
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand
             Dim comandoupd As New MySql.Data.MySqlClient.MySqlCommand
-            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales where nombreTerminal like '" & NombreEquipo & "' and idEmpresa=" & Variables_Globales.IdEmpresa, conexionPrinc)
+            Dim consultaTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales where nombreTerminal like '" & NombreEquipo & "' and idEmpresa=" & Variables_Globales.IdEmpresa, gestorConexiones.conexionPrinc)
             Dim tablaTerm As New DataTable
             consultaTerm.Fill(tablaTerm)
             If tablaTerm.Rows.Count = 0 Then ''si la terminal no esta registrada....
                 MsgBox("su terminal no esta registrada en el servidor, se procedera a agregarla para proceder a su configuracion")
                 Dim sqlQuery As String = "insert into cm_terminales (nombreTerminal,idEmpresa) values ('" & NombreEquipo & "','" & Variables_Globales.IdEmpresa & "')"
-                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+                comandoadd = New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
                 comandoadd.ExecuteNonQuery()
                 Dim idTerminal As Integer = comandoadd.LastInsertedId
 
                 Reconectar()
-                Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", conexionPrinc)
+                Dim consultaConfigTerm As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_terminales_configuracion", gestorConexiones.conexionPrinc)
                 Dim tablaConfigTerm As New DataTable
                 Dim infoConfigTerm() As DataRow
 
@@ -58,7 +58,7 @@ Public Class frmprincipal
                 If tablaConfigTerm.Rows.Count <= 1 Then ''si solo hay una configuracion disponible....
                     MsgBox("solo existe una configuracion posible para la terminal, se procedera a setearla para su equipo")
                     comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & tablaConfigTerm.Rows(0).Item("id") &
-                                                                         " where nombreTerminal like '" & NombreEquipo & "' and idEmpresa= " & Variables_Globales.IdEmpresa, conexionPrinc)
+                                                                         " where nombreTerminal like '" & NombreEquipo & "' and idEmpresa= " & Variables_Globales.IdEmpresa, gestorConexiones.conexionPrinc)
                     comandoupd.ExecuteNonQuery()
                     MsgBox("Configuracion guardada correctamente")
                 Else
@@ -72,7 +72,7 @@ Public Class frmprincipal
                         respuesta = InputBox("Por favor seleccione una configuracion disponible para su terminal y presione OK " & vbNewLine & ConfiguracionesDisponibles, "Aplicar configuracion de terminal", 1)
                     Loop
 
-                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where id= " & idTerminal, conexionPrinc)
+                    comandoupd = New MySql.Data.MySqlClient.MySqlCommand("update cm_terminales set idConfiguracion=" & respuesta & " where id= " & idTerminal, gestorConexiones.conexionPrinc)
                     comandoupd.ExecuteNonQuery()
                     MsgBox("Configuracion guardada correctamente")
                 End If
@@ -117,7 +117,7 @@ Public Class frmprincipal
                 COUNT(*) as conexiones
                 FROM   information_schema.processlist
                 GROUP  BY IPConexion,db
-                ORDER  BY IPConexion,db;", conexionPrinc)
+                ORDER  BY IPConexion,db;", gestorConexiones.conexionPrinc)
                 Dim tablaconex As New DataTable
                 'Dim infoconex As Datata
                 consultaconex.Fill(tablaconex)
@@ -145,6 +145,8 @@ Public Class frmprincipal
         End Try
     End Function
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+
         cargarEmpresas()
         cargarConfiguracionDeTerminal()
         cargar_valores_generales()
@@ -163,7 +165,7 @@ Public Class frmprincipal
     End Sub
     Private Sub cargar_valores_generales()
         Try
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_configuraciones order by id asc", conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_configuraciones order by id asc", gestorConexiones.conexionPrinc)
             Dim tablacl As New DataTable
             Dim infocl() As DataRow
             consulta.Fill(tablacl)
@@ -226,7 +228,7 @@ Public Class frmprincipal
             'If tablacl.Rows.Count > 6 Then
             '    DatosAcceso.ServMensual = infocl(6)(2)
             'End If
-            Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico from cm_usuarios where id=" & DatosAcceso.UsuarioINT, conexionPrinc)
+            Dim cons2 As New MySql.Data.MySqlClient.MySqlDataAdapter("select idvendedor, idtecnico from cm_usuarios where id=" & DatosAcceso.UsuarioINT, gestorConexiones.conexionPrinc)
             Dim tabla2 As New DataTable
             Dim info2() As DataRow
             cons2.Fill(tabla2)
@@ -249,7 +251,7 @@ Public Class frmprincipal
         Reconectar()
         Try
 
-            'If conexionPrinc.State = ConnectionState.Broken Or conexionPrinc.State = ConnectionState.Closed Or conexionPrinc.Database = "" Then
+            'If GestorConexiones.conexionPrinc.State = ConnectionState.Broken Or GestorConexiones.conexionPrinc.State = ConnectionState.Closed Or GestorConexiones.conexionPrinc.Database = "" Then
             '    pntitulo.Enabled = False
             '    lbltitulo.Text = Application.ProductName & "(desconectado)"
             'Else
@@ -257,7 +259,7 @@ Public Class frmprincipal
             '    lbltitulo.Text = Application.ProductName
             'End If
             'compruebo las empresas
-            'lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & conexionPrinc.State.ToString'
+            'lblstatusServer.Text = "Estado de servidor: " & GestorConexiones.conexionPrinc.ServerVersion & "-" & My.Settings.servidor & ": " & GestorConexiones.conexionPrinc.State.ToString'
             lblstatusBDprinc.Text = "Mi IP: " & IPPublica '& Environment.MachineName
 
             'lblstatcodus.Text = "Codigo de usuario: " & codus
@@ -285,8 +287,8 @@ Public Class frmprincipal
 
     Private Sub ToolStripSplitButton1_ButtonClick(sender As Object, e As EventArgs)
         Reconectar()
-        'lblstatusServer.Text = "Estado de servidor: " & conexionPrinc.State.ToString
-        lblstatusBDprinc.Text = "Base de datos principal: " & conexionPrinc.Database
+        'lblstatusServer.Text = "Estado de servidor: " & GestorConexiones.conexionPrinc.State.ToString
+        lblstatusBDprinc.Text = "Base de datos principal: " & gestorConexiones.conexionPrinc.Database
         ' lblStatusEmp.Text = "Empresa Seleccionada: " & conexionEmp.State.ToString & ">>>" & conexionEmp.Database
         'Label2.Text = ""
     End Sub
@@ -765,7 +767,7 @@ Public Class frmprincipal
 
             If IsNumeric(Cotizacion) Then
                 Reconectar()
-                Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set cotizacion = '" & Cotizacion.Replace(".", ",") & "' where id=2", conexionPrinc)
+                Dim comandoUPD As New MySql.Data.MySqlClient.MySqlCommand("update fact_moneda set cotizacion = '" & Cotizacion.Replace(".", ",") & "' where id=2", gestorConexiones.conexionPrinc)
                 comandoUPD.ExecuteNonQuery()
 
                 lblPrincipalDolar.Text = "DOLAR: " & Cotizacion.Replace(".", ",")
@@ -954,16 +956,16 @@ Public Class frmprincipal
     End Sub
 
     Private Sub frmprincipal_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
-        Try
-            conexionAuth.Close()
-            conexionPrinc.Close()
-            conexionSEC.Close()
+        'Try
+        '    conexionAuth.Close()
+        '    GestorConexiones.conexionPrinc.Close()
+        '    GestorConexiones.conexionSEC.Close()
 
 
-        Catch ex As Exception
-            Debug.WriteLine("error " + ex.Message)
+        'Catch ex As Exception
+        '    Debug.WriteLine("error " + ex.Message)
 
-        End Try
+        'End Try
     End Sub
 
     Private Sub cmbempresas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbempresas.SelectedIndexChanged

@@ -34,8 +34,8 @@ Public Class frmaspirantes
 
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, idclientes as Codigo from fact_clientes where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq", conexionPrinc)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, idclientes as Codigo from fact_clientes where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq", gestorConexiones.conexionPrinc)
             consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@busq", MySql.Data.MySqlClient.MySqlDbType.Text))
             consulta.SelectCommand.Parameters("@busq").Value = "%" & busqueda & "%"
             'MsgBox(consulta.SelectCommand.CommandText)
@@ -63,8 +63,8 @@ Public Class frmaspirantes
         Try
             Reconectar()
 
-            conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_clientes where idclientes=" & Idcliente, conexionPrinc)
+            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_clientes where idclientes=" & Idcliente, gestorConexiones.conexionPrinc)
             Dim tablacli As New DataTable
             Dim infocli() As DataRow
             consulta.Fill(tablacli)
@@ -96,10 +96,10 @@ Public Class frmaspirantes
         pbprogresocons.Visible = True
         Try
             Reconectar()
-            conexionPrinc.ChangeDatabase(database)
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos listas
-            Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", conexionPrinc)
+            Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", gestorConexiones.conexionPrinc)
             Dim readlis As New DataSet
             tablalistas.Fill(readlis)
             cmblistas.DataSource = readlis.Tables(0)
@@ -108,7 +108,7 @@ Public Class frmaspirantes
             cmblistas.SelectedValue = My.Settings.idListaDef
 
             'cargamos localidades
-            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", conexionPrinc)
+            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", gestorConexiones.conexionPrinc)
             Dim readloc As New DataSet
             tablalocalidad.Fill(readloc)
             cmblocalidad.DataSource = readloc.Tables(0)
@@ -121,7 +121,7 @@ Public Class frmaspirantes
 
 
             'cargamos tipos de contribuyentes
-            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", conexionPrinc)
+            Dim tablaivat As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_ivatipo", gestorConexiones.conexionPrinc)
             Dim readivat As New DataSet
             tablaivat.Fill(readivat)
             cmbcondiva.DataSource = readivat.Tables(0)
@@ -130,7 +130,7 @@ Public Class frmaspirantes
             'cmbcondiva.SelectedValue = 4
 
             'cargamos vendedores
-            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", conexionPrinc)
+            Dim tablavend As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, concat(apellido,', ', nombre) from fact_vendedor where activo=1", gestorConexiones.conexionPrinc)
             Dim readvend As New DataSet
             tablavend.Fill(readvend)
             cmbvendedor.DataSource = readvend.Tables(0)
@@ -250,10 +250,10 @@ Public Class frmaspirantes
             If localidad = 0 Then
                 'MsgBox("no se selecciono localidad, se agregara")
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "insert into  cm_localidad(nombre) values('" & cmblocalidad.Text.ToUpper & "')"
-                comando.ExecuteReader()
-                localidad = comando.LastInsertedId
+                'comando.Connection = gestorConexiones.conexionPrinc
+                'comando.CommandText = "insert into  cm_localidad(nombre) values('" & cmblocalidad.Text.ToUpper & "')"
+                'comando.ExecuteReader()
+                'localidad = comando.LastInsertedId
             End If
             Reconectar()
 
@@ -267,7 +267,7 @@ Public Class frmaspirantes
                     & " telefono=?tel, contacto=?cont, celular=?cel, email=?mail, observaciones=?obs, lista_precios=?lista, codClie=?codclie, vendedor=?vendedor where idclientes=?idc"
             End If
 
-            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, conexionPrinc)
+            Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, gestorConexiones.conexionPrinc)
             With comandoadd.Parameters
                 .AddWithValue("?nomb", razon)
                 .AddWithValue("?domi", domicilio)
@@ -356,8 +356,8 @@ Public Class frmaspirantes
             Dim lector As System.Data.IDataReader
             Dim sql As New MySql.Data.MySqlClient.MySqlCommand
             Dim i As Integer = 0
-            conexionPrinc.ChangeDatabase(database)
-            sql.Connection = conexionPrinc
+            'GestorConexiones.conexionPrinc.ChangeDatabase(database)
+            sql.Connection = GestorConexiones.conexionPrinc
             sql.CommandText = "select id from pacientes where dni like '" & dni & "'"
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
@@ -441,12 +441,12 @@ Public Class frmaspirantes
             Reconectar()
             If MsgBox("Esta seguro que desea eliminar este Cliente?, se borraran todos los datos asociados a él?", MsgBoxStyle.OkCancel + MsgBoxStyle.Question, "Eliminar Cliente") = MsgBoxResult.Ok Then
 
-                comando.Connection = conexionPrinc
-                comando.CommandText = "DELETE from fact_clientes where idclientes=" & Idcliente
-                comando.ExecuteReader()
-                CargarPersonal(txtbuscar.Text)
-                lblestado.ForeColor = Color.GreenYellow
-                lblestado.Text = "Se elimino correctamente"
+                'comando.Connection = GestorConexiones.conexionPrinc
+                'comando.CommandText = "DELETE from fact_clientes where idclientes=" & Idcliente
+                'comando.ExecuteReader()
+                'CargarPersonal(txtbuscar.Text)
+                'lblestado.ForeColor = Color.GreenYellow
+                'lblestado.Text = "Se elimino correctamente"
             End If
 
         Catch ex As Exception
@@ -576,7 +576,7 @@ Public Class frmaspirantes
 
             Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
             idclientes as Cuenta, nomapell_razon as Cliente,contacto,telefono,celular,dir_domicilio,cuit,date_format(f_alta,'%d-%m-%Y')  
-            from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor & filtroFecha & " order by f_alta desc", conexionPrinc)
+            from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor & filtroFecha & " order by f_alta desc", GestorConexiones.conexionPrinc)
 
             'MsgBox(consulta.SelectCommand.CommandText)
             Dim tablaPers As New DataTable
@@ -612,14 +612,14 @@ Public Class frmaspirantes
             tabEmp.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("SELECT  " _
             & "emp.nombrefantasia as empnombre,emp.razonsocial as emprazon,emp.direccion as empdire, emp.localidad as emploca, " _
             & "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr,emp.inicioact as empinicioact, emp.drei as empdrei,emp.logo as emplogo " _
-            & "FROM fact_empresa as emp where emp.id=1", conexionPrinc)
+            & "FROM fact_empresa as emp where emp.id=1", GestorConexiones.conexionPrinc)
 
             tabEmp.Fill(fac.Tables("membreteenca"))
             Reconectar()
 
             tabFac.SelectCommand = New MySql.Data.MySqlClient.MySqlCommand("select " _
             & "idclientes as cuenta, nomapell_razon as cliente,contacto,telefono,celular,dir_domicilio as domicilio, cuit " _
-            & "from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor, conexionPrinc)
+            & "from fact_clientes where nomapell_razon like '%'  " & filtraloca & filtravendedor, GestorConexiones.conexionPrinc)
 
             Dim tablaestado As New DataTable
             tabFac.Fill(fac.Tables("listaclientes"))
@@ -775,7 +775,7 @@ Public Class frmaspirantes
             group by month(fact.fecha),fact.id_cliente order by month(fact.fecha) asc"
             End If
 
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqLCons, conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(SqLCons, GestorConexiones.conexionPrinc)
             Dim tablaDatosHistorial As New DataTable
             consulta.Fill(tablaDatosHistorial)
             Dim HistorialCliente As New DataTable
@@ -858,7 +858,7 @@ Public Class frmaspirantes
     Public Sub Consultas(ByVal Cadena As String)
         Reconectar()
         'Dim fecha As MySql.Data.Types.MySqlDateTime()
-        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, conexionPrinc)
+        cmd = New MySql.Data.MySqlClient.MySqlCommand(Cadena, GestorConexiones.conexionPrinc)
         'cmd.Parameters.AddWithValue("@FECHA", MySql.Data.MySqlClient.MySqlDbType.Date).Value = Today.Date
         'cmd.Parameters.AddWithValue("@DIASMORA", MySql.Data.MySqlClient.MySqlDbType.Text).Value = txtdiasmora.Text
         da = New MySql.Data.MySqlClient.MySqlDataAdapter(cmd)

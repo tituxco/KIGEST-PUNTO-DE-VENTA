@@ -1,10 +1,12 @@
-﻿Public Class selAlmacen
+﻿Imports SIGT__KIGEST.GestorInsumos
+
+Public Class selAlmacen
     Dim listaAlmacen As List(Of
-    datosEstructura.fact_insumos_almacenes)
+    fact_insumos_almacenes)
     Public llama As String
     Private Sub selAlmacen_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
-            listaAlmacen = datosEstructura.fact_insumos_almacenes.ObtenerTodos
+            listaAlmacen = fact_insumos_almacenes.ObtenerTodos
             dtAlmacen.DataSource = listaAlmacen
         Catch ex As Exception
 
@@ -18,7 +20,7 @@
                 Case "ptovta"
 
                 Case "ptovtaNvo"
-                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaAlmacen = CType(dtAlmacen.CurrentRow.DataBoundItem, datosEstructura.fact_insumos_almacenes)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaAlmacen = CType(dtAlmacen.CurrentRow.DataBoundItem, fact_insumos_almacenes)
                     CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosAlmacen()
                     Me.Close()
             End Select
@@ -34,7 +36,7 @@
                 Case "ptovta"
 
                 Case "ptovtaNvo"
-                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaAlmacen = CType(dtAlmacen.CurrentRow.DataBoundItem, datosEstructura.fact_insumos_almacenes)
+                    CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).facturaAlmacen = CType(dtAlmacen.CurrentRow.DataBoundItem, fact_insumos_almacenes)
                     CType(frmprincipal.ActiveMdiChild, frmPtoVtaNvo).CargarDatosAlmacen()
                     Me.Close()
             End Select
