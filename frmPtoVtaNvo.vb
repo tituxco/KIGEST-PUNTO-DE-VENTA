@@ -656,9 +656,17 @@ Public Class frmPtoVtaNvo
             MsgBox("NO SE PUEDE CERRAR UNA COMPROBANTE EN CERO (0) O SIN ITEMS")
             Exit Sub
         End If
+        Dim tiposValidos As Integer() = {1, 6, 11, 999}
+        'a consumidor final solamente se pueden hacer facturas no notas de credito ni de debito
+        If Not tiposValidos.Contains(facturaTipoCompobante.id) AndAlso facturaCliente.idCliente <> 9999 Then
+            MsgBox("este comprobante no se puede realizar a un consumidor final, debe seleccionar o agregar un cliente")
+            Exit Sub
+        End If
 
-
-
+        If facturaCliente.idCliente = 9999 And facturaCondicionVenta.id <> 1 Then
+            MsgBox("No se puede realizar venta o nota de credito a un consumidor final en cuenta corriente, por favor seleccione un cliente o agregue")
+            Exit Sub
+        End If
         If btnFacturaFinalizar.Tag IsNot Nothing AndAlso btnFacturaFinalizar.Tag.ToString() = "NUEVA_VENTA" Then
 
             LimpiarPantallaVenta()

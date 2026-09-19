@@ -580,6 +580,7 @@ Public Class imprimirEtiquetas
         lblprecios.Text = "$" & Math.Round(ProCant * precioUnit, 2)
         ProPrecio = Math.Round(ProCant * precioUnit, 2)
         ProEtiquetaCod = "00" & ProId & ObtenerSiguienteCodigo()
+        'MsgBox(ProEtiquetaCod)
 
     End Sub
     Private Sub ImprimirBoleta(ByVal sender As System.Object, ByVal e As PrintPageEventArgs)

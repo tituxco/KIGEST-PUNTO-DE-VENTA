@@ -756,6 +756,83 @@ Public Class GestorAcademia
                 Return False
             End Try
         End Function
+
+        'Public Shared Function RegistrarPagoMultiple(cuotasSeleccionadas As List(Of Tuple(Of Integer, Decimal, String)), montoTotalEntregado As Decimal, idContrato As Integer, Optional idComprobanteFacturacion As Integer = 0) As Boolean
+        '    Try
+        '        Using conn As New MySqlConnection(CadenaConexion)
+        '            conn.Open()
+        '            Dim dineroRestanteAImputar As Decimal = montoTotalEntregado
+
+        '                For Each item As Tuple(Of Integer, Decimal, String) In cuotasSeleccionadas
+        '                    Dim idDetalleCuota As Integer = item.Item1
+        '                    Dim saldoPendienteCuota As Decimal = item.Item2
+
+        '                    If dineroRestanteAImputar <= 0 Then Exit For
+
+        '                    ' Determinamos cuánto se le asigna a esta cuota específica
+        '                    Dim montoAsignadoAEstaCuota As Decimal = Math.Min(dineroRestanteAImputar, saldoPendienteCuota)
+        '                    dineroRestanteAImputar -= montoAsignadoAEstaCuota
+
+        '                    ' 1. Obtener el valor original de la cuota
+        '                    Dim valorCuotaOriginal As Decimal = 0
+        '                    Dim sqlGetInfo As String = "SELECT IFNULL(monto, 0) as VALOR FROM serv_detalle WHERE id = ?id"
+
+        '                    Using cmdInfo As New MySqlCommand(sqlGetInfo, conn)
+        '                        cmdInfo.Parameters.AddWithValue("?id", idDetalleCuota)
+        '                        Dim resultado = cmdInfo.ExecuteScalar()
+        '                        If resultado IsNot Nothing AndAlso Not DBNull.Value.Equals(resultado) Then
+        '                            valorCuotaOriginal = Convert.ToDecimal(resultado)
+        '                        Else
+        '                            Throw New Exception($"No se encontró la cuota con ID {idDetalleCuota}.")
+        '                        End If
+        '                    End Using
+
+        '                    ' 2. Guardar el movimiento en rym_pagos
+        '                    Dim sqlInsertPago As String = "INSERT INTO rym_pagos (FECHA, ID_PRESTAMO, ID_DETALLE, MONTO_PAGADO, ID_RECIBO) " &
+        '                                              "VALUES (NOW(), ?idPres, ?idDet, ?monto, ?idRec)"
+
+        '                    Using cmdInsert As New MySqlCommand(sqlInsertPago, conn)
+        '                        cmdInsert.Parameters.AddWithValue("?idPres", idContrato)
+        '                        cmdInsert.Parameters.AddWithValue("?idDet", idDetalleCuota)
+        '                        cmdInsert.Parameters.AddWithValue("?monto", montoAsignadoAEstaCuota)
+        '                        cmdInsert.Parameters.AddWithValue("?idRec", If(idComprobanteFacturacion > 0, idComprobanteFacturacion, 0))
+        '                        cmdInsert.ExecuteNonQuery()
+        '                    End Using
+
+        '                    ' 3. Calcular el total acumulado en pagos para esta cuota
+        '                    Dim totalPagadoAcumulado As Decimal = 0
+        '                    Dim sqlSumar As String = "SELECT IFNULL(SUM(MONTO_PAGADO), 0) FROM rym_pagos WHERE ID_DETALLE = ?idDet"
+
+        '                    Using cmdSumar As New MySqlCommand(sqlSumar, conn)
+        '                        cmdSumar.Parameters.AddWithValue("?idDet", idDetalleCuota)
+        '                        totalPagadoAcumulado = Convert.ToDecimal(cmdSumar.ExecuteScalar())
+        '                    End Using
+
+        '                    ' 4. Evaluar nuevo estado de la cuota
+        '                    Dim nuevoEstado As String = "PENDIENTE"
+        '                    If totalPagadoAcumulado >= valorCuotaOriginal Then
+        '                        nuevoEstado = "PAGADO"
+        '                    ElseIf totalPagadoAcumulado > 0 Then
+        '                        nuevoEstado = "PAGO PARCIAL"
+        '                    End If
+
+        '                    ' 5. Actualizar el estado en serv_detalle
+        '                    Dim sqlUpdateCuota As String = "UPDATE serv_detalle SET estado = ?estado WHERE id = ?idDet"
+
+        '                    Using cmdUpdate As New MySqlCommand(sqlUpdateCuota, conn)
+        '                        cmdUpdate.Parameters.AddWithValue("?estado", nuevoEstado)
+        '                        cmdUpdate.Parameters.AddWithValue("?idDet", idDetalleCuota)
+        '                        cmdUpdate.ExecuteNonQuery()
+        '                    End Using
+        '                Next
+        '                Return True
+        '        End Using
+
+        '    Catch ex As Exception
+        '        MsgBox("Error al registrar el pago múltiple: " & ex.Message, MsgBoxStyle.Critical)
+        '        Return False
+        '    End Try
+        'End Function
         Public Shared Function ActualizarEstado(idDetalle As Integer, nuevoEstado As String) As Boolean
             Try
                 Using conn As New MySqlConnection(CadenaConexion)

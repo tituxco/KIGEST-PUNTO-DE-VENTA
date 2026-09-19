@@ -389,9 +389,9 @@ Public Class nuevoServicio
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If dgvDetallePlan.CurrentRow IsNot Nothing Then
 
-            ' 1. Obtenemos los datos de la fila con CONVERSIONES ESTRICTAS (Option Strict On)
-            Dim idCuota As Integer = Convert.ToInt32(dgvDetallePlan.CurrentRow.Cells("id").Value)
-            Dim estado As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("estado").Value)
+            '' 1. Obtenemos los datos de la fila con CONVERSIONES ESTRICTAS (Option Strict On)
+            'Dim idCuota As Integer = Convert.ToInt32(dgvDetallePlan.CurrentRow.Cells("id").Value)
+            'Dim estado As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("estado").Value)
             Dim concepto As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("detalle").Value)
             Dim monto As Decimal = Convert.ToDecimal(dgvDetallePlan.CurrentRow.Cells("monto").Value)
 
@@ -416,59 +416,148 @@ Public Class nuevoServicio
                 End If
                 Exit Sub
             End If
-
             ' =========================================================================
-            ' --- MODO 2: IMPUTAR PAGO (Lógica de Pagos Parciales) ---
+            ' --- MODO 2: IMPUTAR PAGO (Soporte Múltiple Simple) ---
             ' =========================================================================
             If Button1.Text = "IMPUTAR PAGO" Then
-                ' Validamos que no esté pagada ni facturada
-                If estado = "PAGADO" Then
-                    MsgBox("Esta cuota ya se encuentra cancelada.", MsgBoxStyle.Information)
-                    Exit Sub
-                ElseIf estado = "FACTURADA" Then
-                    MsgBox("El pago de la cuota se debe imputar desde el sistema contable.", MsgBoxStyle.Information)
+
+                ' 1. Verificamos que haya algo seleccionado
+                If dgvDetallePlan.SelectedRows.Count = 0 Then
+                    MsgBox("Debe seleccionar al menos una cuota para imputar el pago.", MsgBoxStyle.Information)
                     Exit Sub
                 End If
 
-                ' 1. Calculamos cuánto debe realmente de esta cuota
-                ' 1. Calculamos cuánto debe realmente de esta cuota
-                Dim saldoPendiente As Decimal = serv_detalle.ObtenerSaldoPendiente(idCuota, monto)
+                If idContratoRecibido = 0 Then
+                    MsgBox("No hay contrato guardado.", MsgBoxStyle.Information)
+                    Exit Sub
+                End If
 
-                ' 2. Llamamos a nuestro Formulario dinámico
+                ' 2. Guardamos las filas seleccionadas en una lista y las ordenamos por vencimiento (las más viejas primero)
+                Dim filasSeleccionadas As New List(Of DataGridViewRow)
+                For Each r As DataGridViewRow In dgvDetallePlan.SelectedRows
+                    filasSeleccionadas.Add(r)
+                Next
+                filasSeleccionadas = filasSeleccionadas.OrderBy(Function(r) Convert.ToDateTime(r.Cells("vencimiento").Value)).ToList()
+
+                ' 3. Calculamos la deuda total de las filas que seleccionó
+                Dim montoTotalPendiente As Decimal = 0
+                For Each row As DataGridViewRow In filasSeleccionadas
+                    Dim idCuota As Integer = Convert.ToInt32(row.Cells("id").Value)
+                    Dim estado As String = Convert.ToString(row.Cells("estado").Value)
+                    Dim montoCuota As Decimal = Convert.ToDecimal(row.Cells("monto").Value)
+                    'Dim concepto As String = Convert.ToString(dgvDetallePlan.CurrentRow.Cells("detalle").Value)
+
+                    If estado = "PAGADO" Or estado = "FACTURADA" Then
+                        MsgBox($"Ha seleccionado una cuota que ya está {estado}. Por favor, desmárquela.", MsgBoxStyle.Information)
+                        Exit Sub
+                    End If
+
+                    montoTotalPendiente += serv_detalle.ObtenerSaldoPendiente(idCuota, montoCuota)
+                Next
+
+                ' 4. Le pedimos al usuario con cuánto va a pagar
+                Dim cantidadCuotas As Integer = filasSeleccionadas.Count
+                Dim titulo As String = If(cantidadCuotas = 1, "Registrar Pago", "Registrar Pago Múltiple")
+
                 Dim montoEntregado As Decimal = MostrarInputCobro(
-                    "Registrar Pago Parcial/Total",
-                    $"Valor de la cuota: ${monto.ToString("N2")}" & vbCrLf & $"Saldo pendiente: ${saldoPendiente.ToString("N2")}",
-                    saldoPendiente)
+                    titulo,
+                         $"Total pendiente de las {cantidadCuotas} cuotas seleccionadas: ${montoTotalPendiente.ToString("N2")}",
+                            montoTotalPendiente)
 
-                ' 3. Evaluamos qué decidió el usuario
-                If montoEntregado = 0 Then
-                    ' Presionó cancelar, la X, o dejó en 0. Salimos en silencio.
+                If montoEntregado <= 0 Then Exit Sub ' Canceló o puso 0
+
+                If montoEntregado > montoTotalPendiente Then
+                    MsgBox("El monto no puede superar el total pendiente seleccionado.", MsgBoxStyle.Exclamation)
                     Exit Sub
                 End If
 
-                ' Validamos que no cobre más de la cuenta
-                If montoEntregado > saldoPendiente Then
-                    MsgBox("El monto ingresado no puede ser mayor al saldo pendiente.", MsgBoxStyle.Exclamation)
-                    Exit Sub
-                End If
+                If MsgBox($"¿Confirmar el pago por ${montoEntregado.ToString("N2")}?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
 
-                ' 4. Confirmamos y cobramos (USO ESTRICTO)
-                If MsgBox($"¿Confirmar el registro de un pago por ${montoEntregado.ToString("N2")}?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+                    ' 5. EL NÚCLEO SIMPLE: Repartimos la plata llamando a tu función original que YA FUNCIONA
+                    Dim dineroRestante As Decimal = montoEntregado
 
-                    If serv_detalle.RegistrarPagoParcial(idCuota, montoEntregado, 0) Then
-                        ' IMPORTANTE: El recibo ahora se genera por lo que entregó hoy
-                        GenerarReciboRDLC_PDF(txtApellidoNombre.Text, concepto, montoEntregado, "interno")
+                    For Each row As DataGridViewRow In filasSeleccionadas
+                        If dineroRestante <= 0 Then Exit For ' Si ya se acabó la plata, cortamos el bucle
 
-                        MsgBox("Pago registrado exitosamente.", MsgBoxStyle.Information)
-                        CargarPlanRealExistente()
+                        Dim idCuota As Integer = Convert.ToInt32(row.Cells("id").Value)
+                        Dim montoCuota As Decimal = Convert.ToDecimal(row.Cells("monto").Value)
+                        Dim saldoPendiente As Decimal = serv_detalle.ObtenerSaldoPendiente(idCuota, montoCuota)
 
-                        If MsgBox("¿Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
-                            EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20envio%20el%20recibo%20de%20tu%20pago%3A%20" & concepto)
-                        End If
+                        ' Vemos cuánto de la plata que nos queda le toca a esta cuota
+                        Dim pagarEnEstaCuota As Decimal = Math.Min(dineroRestante, saldoPendiente)
+
+                        ' Llamamos a tu función original cuota por cuota
+                        serv_detalle.RegistrarPagoParcial(idCuota, pagarEnEstaCuota, 0)
+
+                        ' Restamos la plata que acabamos de usar
+                        dineroRestante -= pagarEnEstaCuota
+                    Next
+
+                    ' 6. Terminamos: un solo recibo global por el total y refrescamos la grilla
+                    Dim conceptoRecibo As String = If(cantidadCuotas = 1, Convert.ToString(filasSeleccionadas(0).Cells("detalle").Value), "Pago de varias Cuotas")
+
+                    GenerarReciboRDLC_PDF(txtApellidoNombre.Text, conceptoRecibo, montoEntregado, "interno")
+                    MsgBox("Pago registrado exitosamente.", MsgBoxStyle.Information)
+                    CargarPlanRealExistente()
+
+                    If MsgBox("¿Desea enviar WhatsApp con el recibo al numero registrado?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+                        EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20envio%20el%20recibo%20de%20tu%20pago%3A%20" & conceptoRecibo)
                     End If
                 End If
             End If
         End If
+        '    ' =========================================================================
+        '    ' --- MODO 2: IMPUTAR PAGO (Lógica de Pagos Parciales) ---
+        '    ' =========================================================================
+        '    If Button1.Text = "IMPUTAR PAGO" Then
+        '        ' Validamos que no esté pagada ni facturada
+        '        If estado = "PAGADO" Then
+        '            MsgBox("Esta cuota ya se encuentra cancelada.", MsgBoxStyle.Information)
+        '            Exit Sub
+        '        ElseIf estado = "FACTURADA" Then
+        '            MsgBox("El pago de la cuota se debe imputar desde el sistema contable.", MsgBoxStyle.Information)
+        '            Exit Sub
+        '        End If
+
+        '        ' 1. Calculamos cuánto debe realmente de esta cuota
+        '        ' 1. Calculamos cuánto debe realmente de esta cuota
+        '        Dim saldoPendiente As Decimal = serv_detalle.ObtenerSaldoPendiente(idCuota, monto)
+
+        '        ' 2. Llamamos a nuestro Formulario dinámico
+        '        Dim montoEntregado As Decimal = MostrarInputCobro(
+        '            "Registrar Pago Parcial/Total",
+        '            $"Valor de la cuota: ${monto.ToString("N2")}" & vbCrLf & $"Saldo pendiente: ${saldoPendiente.ToString("N2")}",
+        '            saldoPendiente)
+
+        '        ' 3. Evaluamos qué decidió el usuario
+        '        If montoEntregado = 0 Then
+        '            ' Presionó cancelar, la X, o dejó en 0. Salimos en silencio.
+        '            Exit Sub
+        '        End If
+
+        '        ' Validamos que no cobre más de la cuenta
+        '        If montoEntregado > saldoPendiente Then
+        '            MsgBox("El monto ingresado no puede ser mayor al saldo pendiente.", MsgBoxStyle.Exclamation)
+        '            Exit Sub
+        '        End If
+
+        '        ' 4. Confirmamos y cobramos (USO ESTRICTO)
+        '        If MsgBox($"¿Confirmar el registro de un pago por ${montoEntregado.ToString("N2")}?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+
+        '            If serv_detalle.RegistrarPagoParcial(idCuota, montoEntregado, 0) Then
+        '                ' IMPORTANTE: El recibo ahora se genera por lo que entregó hoy
+        '                GenerarReciboRDLC_PDF(txtApellidoNombre.Text, concepto, montoEntregado, "interno")
+
+        '                MsgBox("Pago registrado exitosamente.", MsgBoxStyle.Information)
+        '                CargarPlanRealExistente()
+
+        '                If MsgBox("¿Desea enviar WhatsApp con el recibo de pago al numero registrado?", MsgBoxStyle.YesNo Or MsgBoxStyle.Question) = MsgBoxResult.Yes Then
+        '                    EnviarArchivoWhatsapp(txtCelular.Text, My.Settings.capetaAlmacenamDocum, "Hola%2C%20te%20envio%20el%20recibo%20de%20tu%20pago%3A%20" & concepto)
+        '                End If
+        '            End If
+        '        End If
+        '    End If
+        'End If
     End Sub
     'If dgvDetallePlan.CurrentRow IsNot Nothing Then
     '    ' 1. Obtenemos los datos de la fila

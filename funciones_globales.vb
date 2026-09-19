@@ -2638,7 +2638,7 @@ Module funciones_Globales
                     If IsDBNull(valor) Then
                         data(fila + 1, col) = ""
                     Else
-                        data(fila + 1, col) = valor
+                        data(fila + 1, col) = valor.ToString.Replace("(", "").Replace(")", "").Replace("*", "").Trim
                     End If
                 Next
             Next
