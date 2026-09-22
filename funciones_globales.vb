@@ -76,16 +76,48 @@ Module funciones_Globales
     End Function
 
     Public Function ParsearDecimal(valor As Object) As Decimal
+        'If valor Is Nothing OrElse IsDBNull(valor) Then Return 0
+        'Dim texto As String = valor.ToString().Trim().Replace(".", "")
+
+        'If String.IsNullOrWhiteSpace(texto) Then Return 0
+
+        'Dim separadorDecimal As String = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator
+        'texto = texto.Replace(".", separadorDecimal).Replace(",", separadorDecimal)
+
+        'Dim resultado As Decimal = 0
+        'Decimal.TryParse(texto, resultado)
+        'Return resultado
+
+
         If valor Is Nothing OrElse IsDBNull(valor) Then Return 0
-        Dim texto As String = valor.ToString().Trim().Replace(".", "")
+        Dim texto As String = valor.ToString().Trim()
 
         If String.IsNullOrWhiteSpace(texto) Then Return 0
 
         Dim separadorDecimal As String = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator
-        texto = texto.Replace(".", separadorDecimal).Replace(",", separadorDecimal)
+
+        ' Si el texto contiene AMBOS símbolos (ej. 1.000,50 o 1,000.50)
+        If texto.Contains(".") AndAlso texto.Contains(",") Then
+            Dim ultimoPunto As Integer = texto.LastIndexOf(".")
+            Dim ultimaComa As Integer = texto.LastIndexOf(",")
+
+            If ultimaComa > ultimoPunto Then
+                ' Formato 1.000,50 -> Quitamos miles (punto) y normalizamos decimal (coma)
+                texto = texto.Replace(".", "").Replace(",", separadorDecimal)
+            Else
+                ' Formato 1,000.50 -> Quitamos miles (coma) y normalizamos decimal (punto)
+                texto = texto.Replace(",", "").Replace(".", separadorDecimal)
+            End If
+        Else
+            ' Si el usuario solo tipeó un separador (ej. "10.5" o "10,5"), 
+            ' simplemente lo reemplazamos por el separador válido que espera el sistema operativo.
+            texto = texto.Replace(".", separadorDecimal).Replace(",", separadorDecimal)
+        End If
 
         Dim resultado As Decimal = 0
-        Decimal.TryParse(texto, resultado)
+        ' Usamos NumberStyles.Any para asegurar la mayor flexibilidad al parsear
+        Decimal.TryParse(texto, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.CurrentCulture, resultado)
+
         Return resultado
     End Function
 

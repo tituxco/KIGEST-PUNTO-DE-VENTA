@@ -33,7 +33,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>577</ApplicationRevision>
+    <ApplicationRevision>578</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -216,9 +216,9 @@
       <HintPath>packages\Whatsapp.NET.1.2.2\lib\WhatsAppApi.dll</HintPath>
     </Reference>
     <Reference Include="WindowsBase" />
-    <Reference Include="WSAFIPFE, Version=99.8.6.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
+    <Reference Include="WSAFIPFE, Version=100.95.0.0, Culture=neutral, PublicKeyToken=e3525bb207303650, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\KIGEST - SISTEMAS PUBLICADOS\WSAFIPFE\WSAFIPFE.dll</HintPath>
+      <HintPath>bin\Debug\WSAFIPFE.dll</HintPath>
     </Reference>
     <Reference Include="ZstdSharp, Version=0.8.6.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
       <HintPath>packages\ZstdSharp.Port.0.8.6\lib\net462\ZstdSharp.dll</HintPath>

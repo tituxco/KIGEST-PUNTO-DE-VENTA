@@ -278,9 +278,9 @@ Public Class frmPtoVtaNvo
         ' ATENCIÓN: Ajustá los nombres "codProducto", "descProducto", etc. a los Name reales de tus columnas
         fila.Cells("codProducto").Value = prod.codigo
         fila.Cells("descProducto").Value = prod.descripcion
-        fila.Cells("cantProducto").Value = cantidad
-        fila.Cells("punitProducto").Value = Math.Round(precioUnitarioFinal, 4)
-        fila.Cells("ptotalProducto").Value = Math.Round(subtotalLinea, 2)
+        fila.Cells("cantProducto").Value = ParsearDecimal(cantidad)
+        fila.Cells("punitProducto").Value = ParsearDecimal(precioUnitarioFinal)
+        fila.Cells("ptotalProducto").Value = ParsearDecimal(subtotalLinea)
 
         ' Guardamos los datos ocultos que tenés en tu Add
         fila.Cells("gananciaProducto").Value = prod.ganancia
@@ -958,7 +958,7 @@ Public Class frmPtoVtaNvo
 
             Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
             Dim precioUnitario As Decimal = ParsearDecimal(row.Cells("punitProducto").Value)
-
+            ' MsgBox($"PRECIO: {cantidad} * {precioUnitario }")
             ' Actualizamos los tags de la celda
             row.Cells("cantProducto").Tag = cantidad
             row.Cells("punitProducto").Tag = precioUnitario
@@ -1375,6 +1375,14 @@ Public Class frmPtoVtaNvo
             lblFacturaNumComprobante.Visible = True
         End If
 
+
+    End Sub
+
+    Private Sub dgvFacturaProductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellContentClick
+
+    End Sub
+
+    Private Sub dgvFacturaProductos_CellValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellValidated
 
     End Sub
 End Class
