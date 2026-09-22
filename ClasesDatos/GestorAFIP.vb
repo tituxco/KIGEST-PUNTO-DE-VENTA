@@ -47,19 +47,19 @@ Public Class GestorAFIP
             End Select
 
             ' 2. MAPEO DE CONTRIBUYENTE Y DOCUMENTO
-            ' (Asumimos que tu clase cliente tiene estas propiedades. Ajustá los IDs según tu base de datos)
+            ' 2. MAPEO DE CONTRIBUYENTE Y DOCUMENTO
             Select Case factura.cliente.ivaTipo.id
                 Case 1 ' Inscripto
                     contribtipo = WSAFIPFE.Factura.TipoReponsable.ResponsableInscripto
                     doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
-                    'condIvaReceptor = 1    'para nueva adecuacion ARCA
+                    condIvaReceptor = 1    ' NUEVO ARCA: Inscripto
                 Case 5 ' Exento
                     contribtipo = WSAFIPFE.Factura.TipoReponsable.Exento
                     doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
-                    'condIvaReceptor = 4    'para nueva adecuacion ARCA
+                    condIvaReceptor = 4    ' NUEVO ARCA: Exento
                 Case 4 ' Consumidor Final
                     contribtipo = WSAFIPFE.Factura.TipoReponsable.ConsumidorFinal
-                    'condIvaReceptor =5    'para nueva adecuacion ARCA
+                    condIvaReceptor = 5    ' NUEVO ARCA: Consumidor Final
                     If factura.cliente.cuit = "" OrElse factura.cliente.cuit = "0" Then
                         doctipo = WSAFIPFE.Factura.TipoDocumento.SinIdentificacionGlobalDiario
                     Else
@@ -68,7 +68,7 @@ Public Class GestorAFIP
                 Case 6 ' Monotributo
                     contribtipo = WSAFIPFE.Factura.TipoReponsable.Monotributo
                     doctipo = WSAFIPFE.Factura.TipoDocumento.CUIT
-                    'condIvaReceptor =6    'para nueva adecuacion ARCA
+                    condIvaReceptor = 6    ' NUEVO ARCA: Monotributista
                 Case Else
                     Me.MensajeError = "Tipo de contribuyente no admitido."
                     Return False
@@ -89,9 +89,13 @@ Public Class GestorAFIP
             fe.F1CabeceraCantReg = 1
             fe.F1DetalleMonId = "PES"
             fe.F1DetalleMonCotiz = 1
+            fe.F1DetalleCanMisMonExt = "N" ' NUEVO ARCA: Indicador de cancelación en moneda extranjera (Obligatorio en N para PES)
+
             fe.F1DetalleConcepto = 1
             fe.F1DetalleDocTipo = doctipo
             fe.F1DetalleDocNro = factura.cliente.cuit.Replace("-", "")
+            fe.F1DetalleCondicionIvaReceptor = condIvaReceptor ' NUEVO ARCA: Se envía la condición de IVA evaluada en el paso 2
+
             fe.F1DetalleCbteDesdeS = factura.num_fact
             fe.F1DetalleCbteHastaS = factura.num_fact
             fe.F1DetalleCbteFch = factura.fecha.ToString("yyyyMMdd")

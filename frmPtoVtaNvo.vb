@@ -1238,10 +1238,11 @@ Public Class frmPtoVtaNvo
             ' (Ajustá los nombres de tus labels según correspondan)
             lblFacturaClienteNombreApellido.Text = "Seleccione un cliente (Resp. Inscripto)..."
             lblFacturaClienteOtrosDatos.Text = "-"
+
         Else
             ' Si es Factura B, Factura C, o Factura X, forzamos Consumidor Final por defecto
             facturaCliente = GestorClientes.fact_clientes.BuscarPorID(9999)
-            CargarDatosCliente() ' Usamos tu propio método para repintar los datos en pantalla
+            CargarDatosCliente() ' Usamos tu propio método para repintar los datos en pantalla            
         End If
 
         ' NOTA IMPORTANTE:
