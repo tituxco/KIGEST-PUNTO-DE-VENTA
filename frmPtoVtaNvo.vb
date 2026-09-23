@@ -85,6 +85,8 @@ Public Class frmPtoVtaNvo
 
             facturaListaPrecios = facturaCliente.listaPrecios
             facturaVendedor = facturaCliente.vendedor
+            CargarDatosListaPrecios()
+            CargarDatosVendedor()
             RecalcularPreciosGrilla()
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -667,6 +669,7 @@ Public Class frmPtoVtaNvo
             MsgBox("No se puede realizar venta o nota de credito a un consumidor final en cuenta corriente, por favor seleccione un cliente o agregue")
             Exit Sub
         End If
+
         If btnFacturaFinalizar.Tag IsNot Nothing AndAlso btnFacturaFinalizar.Tag.ToString() = "NUEVA_VENTA" Then
 
             LimpiarPantallaVenta()

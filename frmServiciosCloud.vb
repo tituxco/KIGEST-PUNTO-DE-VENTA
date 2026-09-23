@@ -158,7 +158,7 @@
     End Sub
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        agregarUsuarioCloud.Show()
+        agregarUsuarioCloud.ShowDialog()
     End Sub
 
     Private Sub cmdbuscar_Click(sender As Object, e As EventArgs) Handles cmdbuscar.Click

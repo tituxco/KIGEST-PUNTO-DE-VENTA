@@ -14,6 +14,7 @@
         ' Etiqueta de texto
         Dim lbl As New Label()
         With lbl
+            .Name = "lblMensaje" ' <--- AGREGAR ESTA LÍNEA
             .Text = mensaje
             .Location = New Point(20, 20)
             .AutoSize = True

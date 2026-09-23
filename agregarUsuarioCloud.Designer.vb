@@ -57,7 +57,7 @@ Partial Class agregarUsuarioCloud
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(402, 40)
+        Me.pntitulo.Size = New System.Drawing.Size(389, 40)
         Me.pntitulo.TabIndex = 65
         '
         'Label1
@@ -86,14 +86,14 @@ Partial Class agregarUsuarioCloud
         Me.txtCloudNomApell.Location = New System.Drawing.Point(126, 63)
         Me.txtCloudNomApell.Name = "txtCloudNomApell"
         Me.txtCloudNomApell.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudNomApell.TabIndex = 67
+        Me.txtCloudNomApell.TabIndex = 0
         '
         'txtCloudEmpresa
         '
         Me.txtCloudEmpresa.Location = New System.Drawing.Point(126, 89)
         Me.txtCloudEmpresa.Name = "txtCloudEmpresa"
         Me.txtCloudEmpresa.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudEmpresa.TabIndex = 69
+        Me.txtCloudEmpresa.TabIndex = 1
         '
         'Label3
         '
@@ -110,7 +110,7 @@ Partial Class agregarUsuarioCloud
         Me.txtCloudBD.Location = New System.Drawing.Point(126, 115)
         Me.txtCloudBD.Name = "txtCloudBD"
         Me.txtCloudBD.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudBD.TabIndex = 71
+        Me.txtCloudBD.TabIndex = 2
         '
         'Label4
         '
@@ -124,16 +124,16 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudUsuario
         '
-        Me.txtCloudUsuario.Location = New System.Drawing.Point(126, 141)
+        Me.txtCloudUsuario.Location = New System.Drawing.Point(126, 194)
         Me.txtCloudUsuario.Name = "txtCloudUsuario"
         Me.txtCloudUsuario.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudUsuario.TabIndex = 73
+        Me.txtCloudUsuario.TabIndex = 5
         '
         'Label5
         '
         Me.Label5.AutoSize = True
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label5.Location = New System.Drawing.Point(26, 144)
+        Me.Label5.Location = New System.Drawing.Point(26, 197)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(94, 13)
         Me.Label5.TabIndex = 72
@@ -141,17 +141,17 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudContraseña
         '
-        Me.txtCloudContraseña.Location = New System.Drawing.Point(126, 167)
+        Me.txtCloudContraseña.Location = New System.Drawing.Point(126, 220)
         Me.txtCloudContraseña.Name = "txtCloudContraseña"
         Me.txtCloudContraseña.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtCloudContraseña.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudContraseña.TabIndex = 75
+        Me.txtCloudContraseña.TabIndex = 6
         '
         'Label6
         '
         Me.Label6.AutoSize = True
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(5, 170)
+        Me.Label6.Location = New System.Drawing.Point(5, 223)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(115, 13)
         Me.Label6.TabIndex = 74
@@ -159,16 +159,16 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudHost
         '
-        Me.txtCloudHost.Location = New System.Drawing.Point(126, 193)
+        Me.txtCloudHost.Location = New System.Drawing.Point(126, 246)
         Me.txtCloudHost.Name = "txtCloudHost"
         Me.txtCloudHost.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudHost.TabIndex = 77
+        Me.txtCloudHost.TabIndex = 7
         '
         'Label7
         '
         Me.Label7.AutoSize = True
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label7.Location = New System.Drawing.Point(87, 196)
+        Me.Label7.Location = New System.Drawing.Point(87, 249)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(33, 13)
         Me.Label7.TabIndex = 76
@@ -176,16 +176,16 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudHostPuerto
         '
-        Me.txtCloudHostPuerto.Location = New System.Drawing.Point(126, 219)
+        Me.txtCloudHostPuerto.Location = New System.Drawing.Point(126, 272)
         Me.txtCloudHostPuerto.Name = "txtCloudHostPuerto"
         Me.txtCloudHostPuerto.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudHostPuerto.TabIndex = 79
+        Me.txtCloudHostPuerto.TabIndex = 8
         '
         'Label8
         '
         Me.Label8.AutoSize = True
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label8.Location = New System.Drawing.Point(76, 222)
+        Me.Label8.Location = New System.Drawing.Point(76, 275)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(44, 13)
         Me.Label8.TabIndex = 78
@@ -193,16 +193,16 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudHostUsuario
         '
-        Me.txtCloudHostUsuario.Location = New System.Drawing.Point(126, 245)
+        Me.txtCloudHostUsuario.Location = New System.Drawing.Point(126, 141)
         Me.txtCloudHostUsuario.Name = "txtCloudHostUsuario"
         Me.txtCloudHostUsuario.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudHostUsuario.TabIndex = 81
+        Me.txtCloudHostUsuario.TabIndex = 3
         '
         'Label9
         '
         Me.Label9.AutoSize = True
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(49, 248)
+        Me.Label9.Location = New System.Drawing.Point(49, 144)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(71, 13)
         Me.Label9.TabIndex = 80
@@ -210,17 +210,17 @@ Partial Class agregarUsuarioCloud
         '
         'txtCloudHostContraseña
         '
-        Me.txtCloudHostContraseña.Location = New System.Drawing.Point(126, 271)
+        Me.txtCloudHostContraseña.Location = New System.Drawing.Point(126, 167)
         Me.txtCloudHostContraseña.Name = "txtCloudHostContraseña"
         Me.txtCloudHostContraseña.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.txtCloudHostContraseña.Size = New System.Drawing.Size(175, 20)
-        Me.txtCloudHostContraseña.TabIndex = 83
+        Me.txtCloudHostContraseña.TabIndex = 4
         '
         'Label10
         '
         Me.Label10.AutoSize = True
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(28, 275)
+        Me.Label10.Location = New System.Drawing.Point(28, 171)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(92, 13)
         Me.Label10.TabIndex = 82
@@ -234,7 +234,7 @@ Partial Class agregarUsuarioCloud
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Panel1.Location = New System.Drawing.Point(0, 309)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(402, 108)
+        Me.Panel1.Size = New System.Drawing.Size(389, 108)
         Me.Panel1.TabIndex = 92
         '
         'Button33
@@ -245,10 +245,10 @@ Partial Class agregarUsuarioCloud
         Me.Button33.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Button33.ForeColor = System.Drawing.Color.White
         Me.Button33.Image = Global.SIGT__KIGEST.My.Resources.Resources.Cancel_64px
-        Me.Button33.Location = New System.Drawing.Point(233, 5)
+        Me.Button33.Location = New System.Drawing.Point(220, 5)
         Me.Button33.Name = "Button33"
         Me.Button33.Size = New System.Drawing.Size(80, 100)
-        Me.Button33.TabIndex = 93
+        Me.Button33.TabIndex = 10
         Me.Button33.Text = "Cancela"
         Me.Button33.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button33.UseVisualStyleBackColor = False
@@ -261,10 +261,10 @@ Partial Class agregarUsuarioCloud
         Me.cmdGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cmdGuardar.ForeColor = System.Drawing.Color.White
         Me.cmdGuardar.Image = CType(resources.GetObject("cmdGuardar.Image"), System.Drawing.Image)
-        Me.cmdGuardar.Location = New System.Drawing.Point(319, 5)
+        Me.cmdGuardar.Location = New System.Drawing.Point(306, 5)
         Me.cmdGuardar.Name = "cmdGuardar"
         Me.cmdGuardar.Size = New System.Drawing.Size(80, 100)
-        Me.cmdGuardar.TabIndex = 92
+        Me.cmdGuardar.TabIndex = 9
         Me.cmdGuardar.Text = "Guardar"
         Me.cmdGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.cmdGuardar.UseVisualStyleBackColor = False
@@ -274,7 +274,7 @@ Partial Class agregarUsuarioCloud
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(402, 417)
+        Me.ClientSize = New System.Drawing.Size(389, 417)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.txtCloudHostContraseña)
         Me.Controls.Add(Me.Label10)

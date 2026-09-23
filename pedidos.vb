@@ -403,8 +403,6 @@
 
     Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
 
-
-
         Try
             If dgvPedidos.dgvVista.CurrentRow.Cells(8).Value = "FACTURADO" Then
                 MsgBox("El pedido ya fue facturado")
