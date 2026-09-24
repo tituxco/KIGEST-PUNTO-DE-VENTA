@@ -51,6 +51,8 @@ Public Class selclie
         If Not CargarDatosAsync.IsBusy Then
             CargarDatosAsync.RunWorkerAsync(txtBusquedaCliente.Text)
         End If
+
+
     End Sub
 
     Private Sub CargarDatosAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarDatosAsync.DoWork
@@ -86,10 +88,18 @@ Public Class selclie
                 ' TIP: Para debuguear, podés ver qué tipo está llegando realmente:
                 ' MsgBox("Tipo recibido: " & e.Result.GetType().ToString())
             End If
-
+            ConfigurarColumnasVisibles()
         Catch ex As Exception
             MsgBox("Error en RunWorkerCompleted: " & ex.Message)
         End Try
+    End Sub
+
+    Private Sub dtpersonal_DataError(sender As Object, e As DataGridViewDataErrorEventArgs) Handles dtpersonal.DataError
+        ' Esto evita que Windows lance la ventana emergente roja de error y detenga la aplicación
+        e.ThrowException = False
+
+        ' (Opcional) Te sirve a vos como programador para debugear silenciosamente en la consola
+        Console.WriteLine($"DataError en Fila {e.RowIndex}, Columna {e.ColumnIndex}: {e.Exception.Message}")
     End Sub
     ' =====================================================================
     ' 2. LÓGICA DE SELECCIÓN (Sin código duplicado)
@@ -208,7 +218,47 @@ Public Class selclie
         Me.Close()
     End Sub
 
-    Private Sub dtpersonal_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtpersonal.CellContentClick
+    Private Sub ConfigurarColumnasVisibles()
+        ' 1. Ocultamos TODAS las columnas que se autogeneran
+        For Each col As DataGridViewColumn In dtpersonal.Columns
+            col.Visible = False
+        Next
 
+        ' 2. Habilitamos y ordenamos solo las que pediste
+        If dtpersonal.Columns.Contains("nomapellRazon") Then
+            With dtpersonal.Columns("nomapellRazon")
+                .Visible = True
+                .HeaderText = "Razón Social / Apellido y Nombre"
+                .DisplayIndex = 0
+                .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill ' Para que ocupe el espacio principal
+            End With
+        End If
+
+        If dtpersonal.Columns.Contains("dirDomicilio") Then
+            With dtpersonal.Columns("dirDomicilio")
+                .Visible = True
+                .HeaderText = "Domicilio"
+                .DisplayIndex = 1
+                .Width = 200
+            End With
+        End If
+
+        If dtpersonal.Columns.Contains("dirLocalidad") Then
+            With dtpersonal.Columns("dirLocalidad")
+                .Visible = True
+                .HeaderText = "Localidad"
+                .DisplayIndex = 2
+                .Width = 150
+            End With
+        End If
+
+        If dtpersonal.Columns.Contains("vendedor") Then
+            With dtpersonal.Columns("vendedor")
+                .Visible = True
+                .HeaderText = "Vendedor"
+                .DisplayIndex = 3
+                .Width = 150
+            End With
+        End If
     End Sub
 End Class

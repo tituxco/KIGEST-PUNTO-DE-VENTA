@@ -314,6 +314,7 @@
     <Compile Include="ClasesDatos\GestorFacturacion.vb" />
     <Compile Include="ClasesDatos\GestorImpresion.vb" />
     <Compile Include="ClasesDatos\GestorInsumos.vb" />
+    <Compile Include="ClasesDatos\GestorPedidos.vb" />
     <Compile Include="ClasesDatos\GestorPublicidad.vb" />
     <Compile Include="ClasesDatos\GestorUtilidades.vb" />
     <Compile Include="ClasesDatos\ValidadorBaseDatos.vb" />
