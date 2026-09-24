@@ -182,31 +182,37 @@ Public Class GestorClientes
             Try
                 Using conn As New MySqlConnection(CadenaConexion)
                     conn.Open()
-                    ' Traemos todo con JOIN para que sea UNA SOLA consulta
-                    Dim sql As String = "SELECT c.*, l.nombre as nom_loc, v.apellido as ape_vend, v.nombre as nom_vend, i.tipo as nom_iva, lp.nombre as nom_lista " &
-                                        "FROM fact_clientes c " &
-                                        "LEFT JOIN cm_localidad l ON c.dir_localidad = l.id " &
-                                        "LEFT JOIN fact_vendedor v ON c.vendedor = v.id " &
-                                        "LEFT JOIN fact_ivatipo i ON c.iva_tipo = i.id " &
-                                        "LEFT JOIN fact_listas_precio lp ON c.lista_precios = lp.id " &
-                                        "WHERE c.nomapell_razon LIKE @busq OR c.cuit LIKE @busq"
+                    ' Simplificamos el SQL para que sea idéntico al BuscarPorID (sin JOINs)
+                    Dim sql As String = "SELECT * FROM fact_clientes WHERE nomapell_razon LIKE @busq OR cuit LIKE @busq"
 
                     Using cmd As New MySqlCommand(sql, conn)
                         cmd.Parameters.AddWithValue("@busq", "%" & nombreBuscar & "%")
                         Using lector As MySqlDataReader = cmd.ExecuteReader
                             While lector.Read
                                 Dim cli As New fact_clientes
-                                ' Mapeo básico
-                                cli.idCliente = Convert.ToInt32(lector("idclientes"))
-                                cli.nomapellRazon = lector("nomapell_razon").ToString()
-                                cli.cuit = lector("cuit").ToString()
 
-                                ' CARGA INSTANTÁNEA: Creamos los objetos hijos con los datos del JOIN
-                                ' Así evitamos volver a consultar la base de datos
-                                cli.dirLocalidad = New cm_localidades With {.id = Convert.ToInt32(lector("dir_localidad")), .nombre = lector("nom_loc").ToString()}
-                                cli.vendedor = New fact_vendedor With {.id = Convert.ToInt32(lector("vendedor")), .apellido = lector("ape_vend").ToString(), .nombre = lector("nom_vend").ToString()}
-                                cli.ivaTipo = New fact_ivaTipo With {.id = Convert.ToInt32(lector("iva_tipo")), .nombre = lector("nom_iva").ToString()}
-                                cli.listaPrecios = New fact_listaPrecios With {.id = Convert.ToInt32(lector("lista_precios")), .nombre = lector("nom_lista").ToString()}
+                                ' 1. Mapeo idéntico al de BuscarPorID
+                                cli.idCliente = lector("idclientes")
+                                cli.nomapellRazon = lector("nomapell_razon").ToString
+                                cli.dirDomicilio = lector("dir_domicilio").ToString
+                                cli.cuit = lector("cuit").ToString
+                                cli.telefono = lector("telefono").ToString
+                                cli.contacto = lector("contacto").ToString
+                                cli.celular = lector("celular").ToString
+                                cli.email = lector("email").ToString
+                                cli.observaciones = lector("observaciones").ToString
+                                cli.codClie = lector("codClie").ToString
+
+                                cli.idListaPrecios = lector("lista_precios")
+                                cli.idIvaTipo = lector("iva_tipo")
+                                cli.idLocalidad = lector("dir_localidad")
+                                cli.idVendedor = lector("vendedor")
+                                'lector.Close()
+                                ' 2. Carga profunda de los objetos hijos (Igual que en BuscarPorID)
+                                cli.listaPrecios = fact_listaPrecios.BuscarPorID(cli.idListaPrecios)
+                                cli.vendedor = fact_vendedor.BuscarPorID(cli.idVendedor)
+                                cli.dirLocalidad = cm_localidades.BuscarPorID(cli.idLocalidad)
+                                cli.ivaTipo = fact_ivaTipo.BuscarPorID(cli.idIvaTipo)
 
                                 lista.Add(cli)
                             End While

@@ -650,6 +650,7 @@ Public Class GestorInsumos
             ' 4. Aplicamos el IVA al final para obtener el precio de venta final
             Dim precioFinalVenta As Decimal = precioConGanancia * (1 + (prod.iva / 100))
 
+            'MsgBox($"VARIABLES PARA CALCULO: {costoBase } * {utilidadInsumo } * {utilidadLista } = {precioConGanancia } * {prod.iva  } = {precioFinalVenta } ")
             Return Math.Round(precioFinalVenta, 2)
         End Function
     End Class

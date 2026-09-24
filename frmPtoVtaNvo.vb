@@ -5,6 +5,7 @@ Imports SIGT__KIGEST.GestorClientes
 Imports SIGT__KIGEST.GestorFacturacion
 Imports WSAFIPFE.Factura
 Imports SIGT__KIGEST.datosEstructura
+Imports WSAFIPFE
 
 
 Public Class frmPtoVtaNvo
@@ -25,6 +26,10 @@ Public Class frmPtoVtaNvo
     Public nuevaFactura_Datos As GestorFacturacion.factNuevaFactura_Datos
 
     Public PedidosVinculados As New List(Of Integer)
+
+    ' SEMÁFORO DE EVENTOS
+    Private bloqueandoEventosGrilla As Boolean = False
+
     'Public nuevaFactura_Items As GestorFacturacion.factNuevaFactura_Items
 
     Private Sub frmPtoVtaNvo_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -86,7 +91,7 @@ Public Class frmPtoVtaNvo
             facturaListaPrecios = facturaCliente.listaPrecios
             facturaVendedor = facturaCliente.vendedor
             CargarDatosListaPrecios()
-            CargarDatosVendedor()
+            'CargarDatosVendedor()
             RecalcularPreciosGrilla()
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -260,44 +265,52 @@ Public Class frmPtoVtaNvo
         End Try
     End Sub
     Private Sub ActualizarProductoEnFila(indexFila As Integer, prod As GestorInsumos.fact_insumos, cantidad As Double)
-        ' 1. Obtenemos la cotización (Misma lógica que ya tenés)
-        Dim cotizacionItem As Decimal = 1
-        If prod.monedaId > 0 Then
-            Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
-            If objMoneda IsNot Nothing Then
-                cotizacionItem = objMoneda.GetCotizacionNumeric()
-                If cotizacionItem = 0 Then cotizacionItem = 1
+        bloqueandoEventosGrilla = True
+        Try
+            ' 1. Obtenemos la cotización (Misma lógica que ya tenés)
+            Dim cotizacionItem As Decimal = 1
+            If prod.monedaId > 0 Then
+                Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
+                If objMoneda IsNot Nothing Then
+                    cotizacionItem = objMoneda.GetCotizacionNumeric()
+                    If cotizacionItem = 0 Then cotizacionItem = 1
+                End If
             End If
-        End If
 
-        ' 2. Calculamos el precio unitario final completo
-        Dim precioUnitarioFinal As Decimal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
-        Dim subtotalLinea As Decimal = precioUnitarioFinal * CDec(cantidad)
+            ' 2. Calculamos el precio unitario final completo
+            Dim precioUnitarioFinal As Decimal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
+            Dim subtotalLinea As Decimal = precioUnitarioFinal * CDec(cantidad)
 
-        ' 3. Volcamos los datos a la fila EXISTENTE
-        Dim fila As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
+            ' 3. Volcamos los datos a la fila EXISTENTE
+            Dim fila As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
 
-        ' ATENCIÓN: Ajustá los nombres "codProducto", "descProducto", etc. a los Name reales de tus columnas
-        fila.Cells("codProducto").Value = prod.codigo
-        fila.Cells("descProducto").Value = prod.descripcion
-        fila.Cells("cantProducto").Value = ParsearDecimal(cantidad)
-        fila.Cells("punitProducto").Value = ParsearDecimal(precioUnitarioFinal)
-        fila.Cells("ptotalProducto").Value = ParsearDecimal(subtotalLinea)
+            ' ATENCIÓN: Ajustá los nombres "codProducto", "descProducto", etc. a los Name reales de tus columnas
+            fila.Cells("codProducto").Value = prod.codigo
+            fila.Cells("descProducto").Value = prod.descripcion
+            fila.Cells("cantProducto").Value = ParsearDecimal(cantidad)
+            fila.Cells("punitProducto").Value = ParsearDecimal(precioUnitarioFinal)
+            fila.Cells("ptotalProducto").Value = ParsearDecimal(subtotalLinea)
 
-        ' Guardamos los datos ocultos que tenés en tu Add
-        fila.Cells("gananciaProducto").Value = prod.ganancia
-        fila.Cells("ivaProducto").Value = prod.iva
-        fila.Cells("impFijo1Producto").Value = prod.impuestoFijo01
-        fila.Cells("impFijo2Producto").Value = prod.impuestoFijo02
-        fila.Cells("idProducto").Value = prod.id
-        fila.Cells("monedaProducto").Value = prod.monedaId
+            ' Guardamos los datos ocultos que tenés en tu Add
+            fila.Cells("gananciaProducto").Value = prod.ganancia
+            fila.Cells("ivaProducto").Value = prod.iva
+            fila.Cells("impFijo1Producto").Value = prod.impuestoFijo01
+            fila.Cells("impFijo2Producto").Value = prod.impuestoFijo02
+            fila.Cells("idProducto").Value = prod.id
+            fila.Cells("monedaProducto").Value = prod.monedaId
 
-        ' Guardamos el objeto en el Tag
-        fila.Cells("codProducto").Tag = prod
+            ' Guardamos el objeto en el Tag
+            fila.Cells("codProducto").Tag = prod
 
-        ' 4. Actualizamos totales e ítems
-        CalcularTotalesFactura()
-        ActualizarCantidadTotalItems()
+            ' 4. Actualizamos totales e ítems
+            CalcularTotalesFactura()
+            ActualizarCantidadTotalItems()
+        Catch ex As Exception
+            MsgBox($"hubo un error al actualizar los productos {ex.Message }", vbCritical)
+        Finally
+            bloqueandoEventosGrilla = False
+
+        End Try
     End Sub
     'Private Sub AgregarProductoAGrilla(prod As GestorInsumos.fact_insumos, cantidad As Double, Optional esDeProduccion As Boolean = False)
     '    Dim precioUnitarioFinal As Decimal = 0
@@ -348,25 +361,27 @@ Public Class frmPtoVtaNvo
     '    ActualizarCantidadTotalItems()
     'End Sub
     Private Sub AgregarProductoAGrilla(prod As GestorInsumos.fact_insumos, cantidad As Double, Optional esDeProduccion As Boolean = False)
-        Dim precioUnitarioFinal As Decimal = 0
+        bloqueandoEventosGrilla = True
+        Try
+            Dim precioUnitarioFinal As Decimal = 0
 
-        If esDeProduccion Then
-            precioUnitarioFinal = prod.precio
-        Else
-            Dim cotizacionItem As Decimal = 1
-            If prod.monedaId > 0 Then
-                Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
-                If objMoneda IsNot Nothing Then
-                    cotizacionItem = objMoneda.GetCotizacionNumeric()
-                    If cotizacionItem = 0 Then cotizacionItem = 1
+            If esDeProduccion Then
+                precioUnitarioFinal = prod.precio
+            Else
+                Dim cotizacionItem As Decimal = 1
+                If prod.monedaId > 0 Then
+                    Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
+                    If objMoneda IsNot Nothing Then
+                        cotizacionItem = objMoneda.GetCotizacionNumeric()
+                        If cotizacionItem = 0 Then cotizacionItem = 1
+                    End If
                 End If
+                precioUnitarioFinal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
             End If
-            precioUnitarioFinal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
-        End If
 
-        Dim subtotalLinea As Decimal = precioUnitarioFinal * CDec(cantidad)
+            Dim subtotalLinea As Decimal = precioUnitarioFinal * CDec(cantidad)
 
-        Dim indexFila As Integer = dgvFacturaProductos.Rows.Add(
+            Dim indexFila As Integer = dgvFacturaProductos.Rows.Add(
         prod.codigo,
         prod.descripcion,
         cantidad,
@@ -380,19 +395,25 @@ Public Class frmPtoVtaNvo
         prod.monedaId
     )
 
-        Dim filaNueva As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
+            Dim filaNueva As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
 
-        ' GUARDAMOS LOS DATOS EN LOS TAGS DE CADA CELDA CORRESPONDIENTE
-        filaNueva.Cells("codProducto").Tag = prod
-        filaNueva.Cells("cantProducto").Tag = CDec(cantidad)
-        filaNueva.Cells("punitProducto").Tag = CDec(precioUnitarioFinal)
-        filaNueva.Cells("ptotalProducto").Tag = CDec(subtotalLinea)
+            ' GUARDAMOS LOS DATOS EN LOS TAGS DE CADA CELDA CORRESPONDIENTE
+            filaNueva.Cells("codProducto").Tag = prod
+            filaNueva.Cells("cantProducto").Tag = CDec(cantidad)
+            filaNueva.Cells("punitProducto").Tag = CDec(precioUnitarioFinal)
+            filaNueva.Cells("ptotalProducto").Tag = CDec(subtotalLinea)
 
-        ' Indicamos por defecto que NO fue modificado manualmente a mano
-        filaNueva.Tag = False ' False = Precio de sistema, True = Modificado por operador
+            ' Indicamos por defecto que NO fue modificado manualmente a mano
+            filaNueva.Tag = False ' False = Precio de sistema, True = Modificado por operador
 
-        CalcularTotalesFactura()
-        ActualizarCantidadTotalItems()
+            CalcularTotalesFactura()
+            ActualizarCantidadTotalItems()
+        Catch ex As Exception
+            MsgBox($"hubo un error al agregar el prodcto {ex.Message } ", vbCritical)
+        Finally
+            bloqueandoEventosGrilla = False
+        End Try
+
     End Sub
     Private Sub ActualizarCantidadTotalItems()
         Dim cantidadTotal As Decimal = 0
@@ -408,61 +429,97 @@ Public Class frmPtoVtaNvo
     End Sub
 
     Private Sub RecalcularPreciosGrilla()
-        For Each row As DataGridViewRow In dgvFacturaProductos.Rows
-            If Not row.IsNewRow Then
-                If row.Cells("codProducto").Tag IsNot Nothing Then
-
-                    Dim prod As GestorInsumos.fact_insumos = CType(row.Cells("codProducto").Tag, GestorInsumos.fact_insumos)
-
-                    ' SI ES UN PRODUCTO GENÉRICO ("VARIOS" o id = 0) O FUE MODIFICADO A MANO, NO LO RECALCULAMOS
-                    Dim esGenerico As Boolean = (prod.id = 0 OrElse prod.codigo = "VARIOS")
-                    Dim modificadoAMano As Boolean = (row.Tag IsNot Nothing AndAlso CBool(row.Tag) = True)
-
-                    If esGenerico OrElse modificadoAMano Then
-                        Continue For ' Salta al siguiente sin modificar el precio actual del operador
-                    End If
-
-                    Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
-
-                    Dim cotizacionItem As Decimal = 1
-                    If prod.monedaId > 0 Then
-                        Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
-                        If objMoneda IsNot Nothing Then
-                            cotizacionItem = objMoneda.GetCotizacionNumeric()
-                            If cotizacionItem = 0 Then cotizacionItem = 1
-                        End If
-                    End If
-
-                    Dim nuevoPrecio As Decimal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
-                    Dim nuevoSubtotal As Decimal = Math.Round(nuevoPrecio * cantidad, 2)
-
-                    ' Actualizamos valores y sus Tags
-                    row.Cells("punitProducto").Value = nuevoPrecio
-                    row.Cells("punitProducto").Tag = nuevoPrecio
-                    row.Cells("ptotalProducto").Value = nuevoSubtotal
-                    row.Cells("ptotalProducto").Tag = nuevoSubtotal
-                End If
+        bloqueandoEventosGrilla = True
+        Try
+            Dim idComprobante As Integer = 0
+            If facturaTipoCompobante IsNot Nothing Then
+                idComprobante = facturaTipoCompobante.id
             End If
-        Next
 
-        CalcularTotalesFactura()
-        ActualizarCantidadTotalItems()
+            Dim esFacturaA As Boolean = (idComprobante >= 1 AndAlso idComprobante <= 3)
+            Dim esFacturaC As Boolean = (idComprobante >= 11 AndAlso idComprobante <= 13)
+            Dim preciosFinales As Boolean = 1 'chkPreciosFinales.Checked
+            For Each row As DataGridViewRow In dgvFacturaProductos.Rows
+                If Not row.IsNewRow Then
+                    If row.Cells("codProducto").Tag IsNot Nothing Then
+
+                        Dim prod As GestorInsumos.fact_insumos = CType(row.Cells("codProducto").Tag, GestorInsumos.fact_insumos)
+
+                        ' SI ES UN PRODUCTO GENÉRICO ("VARIOS" o id = 0) O FUE MODIFICADO A MANO
+                        Dim esGenerico As Boolean = (prod.id = 0 OrElse prod.codigo = "VARIOS")
+                        Dim modificadoAMano As Boolean = (row.Tag IsNot Nothing AndAlso CBool(row.Tag) = True)
+
+                        If esGenerico OrElse modificadoAMano Then
+                            ' SOLUCIÓN: Sincronizar el valor manual con el Tag antes de saltar
+                            Dim precioManual As Decimal = ParsearDecimal(row.Cells("punitProducto").Value)
+                            Dim cantidadManual As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
+                            Dim alicuotaIva As Decimal = ParsearDecimal(row.Cells("ivaProducto").Value)
+
+                            ' El Tag siempre debe almacenar el Precio Final.
+                            ' Si es Factura A, el operador tipeó el precio Neto, por lo que le sumamos el IVA para guardarlo en el Tag.
+                            If preciosFinales AndAlso esFacturaA Then
+                                row.Cells("punitProducto").Tag = precioManual * (1D + (alicuotaIva / 100D))
+                            Else
+                                row.Cells("punitProducto").Tag = precioManual
+                            End If
+
+                            ' Forzamos también el cálculo del subtotal visual para la línea
+                            row.Cells("ptotalProducto").Value = Math.Round(precioManual * cantidadManual, 2)
+
+                            Continue For ' Salta al siguiente sin destruir el precio del operador
+                        End If
+
+                        ' LÓGICA NORMAL PARA PRODUCTOS DE LISTA
+                        Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
+
+                        Dim cotizacionItem As Decimal = 1
+                        If prod.monedaId > 0 Then
+                            Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
+                            If objMoneda IsNot Nothing Then
+                                cotizacionItem = objMoneda.GetCotizacionNumeric()
+                                If cotizacionItem = 0 Then cotizacionItem = 1
+                            End If
+                        End If
+
+                        Dim nuevoPrecio As Decimal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
+                        Dim nuevoSubtotal As Decimal = Math.Round(nuevoPrecio * cantidad, 2)
+
+                        ' Actualizamos valores y sus Tags
+                        row.Cells("punitProducto").Value = nuevoPrecio
+                        row.Cells("punitProducto").Tag = nuevoPrecio
+                        row.Cells("ptotalProducto").Value = nuevoSubtotal
+                        row.Cells("ptotalProducto").Tag = nuevoSubtotal
+                    End If
+                End If
+            Next
+
+            CalcularTotalesFactura()
+            ActualizarCantidadTotalItems()
+        Catch ex As Exception
+            MsgBox($"hubo un error al recalcular los precios {ex.Message }", vbCritical)
+        Finally
+            bloqueandoEventosGrilla = False
+        End Try
     End Sub
+
+
     'Private Sub RecalcularPreciosGrilla()
     '    For Each row As DataGridViewRow In dgvFacturaProductos.Rows
-    '        ' Evitamos la fila vacía del final
     '        If Not row.IsNewRow Then
-
-    '            ' Buscamos el Tag adentro de la celda específica
     '            If row.Cells("codProducto").Tag IsNot Nothing Then
 
-    '                ' Recuperamos el objeto insumo
     '                Dim prod As GestorInsumos.fact_insumos = CType(row.Cells("codProducto").Tag, GestorInsumos.fact_insumos)
 
-    '                ' --- NUEVO: Usamos el parseo seguro para leer la cantidad ---
+    '                ' SI ES UN PRODUCTO GENÉRICO ("VARIOS" o id = 0) O FUE MODIFICADO A MANO, NO LO RECALCULAMOS
+    '                Dim esGenerico As Boolean = (prod.id = 0 OrElse prod.codigo = "VARIOS")
+    '                Dim modificadoAMano As Boolean = (row.Tag IsNot Nothing AndAlso CBool(row.Tag) = True)
+
+    '                If esGenerico OrElse modificadoAMano Then
+    '                    Continue For ' Salta al siguiente sin modificar el precio actual del operador
+    '                End If
+
     '                Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
 
-    '                ' Buscamos la cotización según la moneda del producto
     '                Dim cotizacionItem As Decimal = 1
     '                If prod.monedaId > 0 Then
     '                    Dim objMoneda As fact_moneda = fact_moneda.BuscarPorID(prod.monedaId)
@@ -472,24 +529,22 @@ Public Class frmPtoVtaNvo
     '                    End If
     '                End If
 
-    '                ' Recalculamos con la función de precios unitarios pasándole su cotización real
     '                Dim nuevoPrecio As Decimal = fact_insumos.CalcularPrecioUnitarioFinal(prod, cotizacionItem, facturaListaPrecios)
     '                Dim nuevoSubtotal As Decimal = Math.Round(nuevoPrecio * cantidad, 2)
 
-    '                ' Actualizamos visualmente las celdas de la grilla
+    '                ' Actualizamos valores y sus Tags
     '                row.Cells("punitProducto").Value = nuevoPrecio
+    '                row.Cells("punitProducto").Tag = nuevoPrecio
     '                row.Cells("ptotalProducto").Value = nuevoSubtotal
-    '            Else
-    '                MsgBox("El producto se perdió en la fila: " & row.Index)
+    '                row.Cells("ptotalProducto").Tag = nuevoSubtotal
     '            End If
-
     '        End If
     '    Next
 
-    '    ' Actualizamos los totales generales y la cantidad de ítems abajo
     '    CalcularTotalesFactura()
     '    ActualizarCantidadTotalItems()
     'End Sub
+
     Public Sub AgregarProductoDesdeBuscador(prod As GestorInsumos.fact_insumos, cantidad As Double)
         ' Llamamos directamente a método existente que ya calcula precios y carga la grilla dgvFacturaProductos
         AgregarProductoAGrilla(prod, cantidad)
@@ -525,73 +580,76 @@ Public Class frmPtoVtaNvo
 
                 Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
                 Dim alicuotaIva As Decimal = ParsearDecimal(row.Cells("ivaProducto").Value)
-                Dim precioUnitario As Decimal = 0
+                Dim precioOriginal As Decimal = 0
 
+                ' Recuperar el precio original (etiquetado en el Tag para no perderlo)
                 If row.Cells("punitProducto").Tag Is Nothing Then
-                    precioUnitario = ParsearDecimal(row.Cells("punitProducto").Value)
-                    row.Cells("punitProducto").Tag = precioUnitario
+                    precioOriginal = ParsearDecimal(row.Cells("punitProducto").Value)
+                    row.Cells("punitProducto").Tag = precioOriginal
                 Else
-                    precioUnitario = ParsearDecimal(row.Cells("punitProducto").Tag)
+                    precioOriginal = ParsearDecimal(row.Cells("punitProducto").Tag)
                 End If
 
-                If preciosFinales AndAlso esFacturaA Then
-                    precioUnitario = precioUnitario / (1 + (alicuotaIva / 100))
-                    row.Cells("punitProducto").Value = Math.Round(precioUnitario, 4)
-                    row.Cells("ptotalProducto").Value = Math.Round(precioUnitario * cantidad, 2)
+                ' 1. Determinar el Precio Neto y el Precio Final real unitario
+                Dim precioUnitarioNeto As Decimal = 0
+                Dim precioUnitarioFinal As Decimal = 0
+
+                If preciosFinales Then
+                    precioUnitarioFinal = precioOriginal
+                    precioUnitarioNeto = precioOriginal / (1 + (alicuotaIva / 100))
                 Else
-                    row.Cells("punitProducto").Value = Math.Round(precioUnitario, 4)
-                    row.Cells("ptotalProducto").Value = Math.Round(precioUnitario * cantidad, 2)
+                    precioUnitarioNeto = precioOriginal
+                    precioUnitarioFinal = precioOriginal * (1 + (alicuotaIva / 100))
                 End If
 
-                Dim totalLinea As Decimal = ParsearDecimal(row.Cells("ptotalProducto").Value)
+                ' 2. Calcular los montos totales de la línea
+                Dim netoLinea As Decimal = Math.Round(precioUnitarioNeto * cantidad, 2)
+                Dim totalLinea As Decimal = Math.Round(precioUnitarioFinal * cantidad, 2)
+                Dim ivaLinea As Decimal = totalLinea - netoLinea ' Evita diferencias por redondeo decimal
 
+                ' 3. Reflejar en la grilla según el tipo de comprobante
+                If esFacturaA Then
+                    ' Factura A: Muestra precios netos en la grilla
+                    row.Cells("punitProducto").Value = Math.Round(precioUnitarioNeto, 4)
+                    row.Cells("ptotalProducto").Value = netoLinea
+                Else
+                    ' Factura B, C o Interno: Muestra precios finales en la grilla
+                    row.Cells("punitProducto").Value = Math.Round(precioUnitarioFinal, 4)
+                    row.Cells("ptotalProducto").Value = totalLinea
+                End If
+
+                ' 4. Acumular en los Totalizadores Generales
                 If esComprobanteInterno OrElse esFacturaC Then
-                    ' Comprobantes Internos / Remitos: Todo pasa de largo sin desglosar IVA
+                    ' Remitos e Internos: Todo pasa como total
                     subtotalNeto += totalLinea
                     totalGeneral += totalLinea
-
-                    ' Para Facturas C, la AFIP suele requerir que el monto total se envíe como importe Neto No Gravado o Exento 
-                    ' (generalmente en la base imponible 0 o sub0). Lo acumulamos acá:
-                    'If esFacturaC Then
-                    '    sub0 += totalLinea
-                    'End If
                 Else
-                    ' Comprobantes Legales (Facturas A, B, C, etc.)
-                    Dim netoCalculado As Decimal = 0
-                    Dim ivaCalculado As Decimal = 0
+                    ' Comprobantes Legales A y B: Desglose de Bases e IVA
+                    subtotalNeto += netoLinea
+                    totalGeneral += totalLinea
 
-                    If preciosFinales AndAlso Not esFacturaA Then
-                        netoCalculado = totalLinea / (1 + (alicuotaIva / 100))
-                        ivaCalculado = totalLinea - netoCalculado
-                        totalGeneral += totalLinea
+                    If alicuotaIva = 21D Then
+                        totalIva21 += ivaLinea
+                        sub21 += netoLinea
+                    ElseIf alicuotaIva = 10.5D Then
+                        totalIva105 += ivaLinea
+                        sub105 += netoLinea
+                    ElseIf alicuotaIva > 0D Then
+                        totalOtroIva += ivaLinea
                     Else
-                        netoCalculado = totalLinea
-                        ivaCalculado = totalLinea * (alicuotaIva / 100)
-                        totalGeneral += (netoCalculado + ivaCalculado)
-                    End If
-
-                    subtotalNeto += netoCalculado
-
-                    If alicuotaIva = 21 OrElse alicuotaIva = 21.0 OrElse alicuotaIva = 21.0 Then
-                        totalIva21 += ivaCalculado
-                        sub21 += netoCalculado
-                    ElseIf alicuotaIva = 10.5 OrElse alicuotaIva = 10.5 Then
-                        totalIva105 += ivaCalculado
-                        sub105 += netoCalculado
-                    ElseIf alicuotaIva > 0 Then
-                        totalOtroIva += ivaCalculado
-                    Else
-                        sub0 += netoCalculado
+                        sub0 += netoLinea
                     End If
                 End If
 
-                If row.Cells("impFijo1Producto") IsNot Nothing AndAlso row.Cells("impFijo1Producto").Value IsNot Nothing AndAlso row.Cells("impFijo1Producto").Value.ToString() <> "" Then
+                ' 5. Impuestos Fijos (IDC / ICL)
+                If row.Cells("impFijo1Producto") IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(row.Cells("impFijo1Producto").Value?.ToString()) Then
                     Dim idc As Decimal = ParsearDecimal(row.Cells("impFijo1Producto").Value)
-                    totIDC += cantidad * idc
+                    totIDC += (cantidad * idc)
                 End If
-                If row.Cells("impFijo2Producto") IsNot Nothing AndAlso row.Cells("impFijo2Producto").Value IsNot Nothing AndAlso row.Cells("impFijo2Producto").Value.ToString() <> "" Then
+
+                If row.Cells("impFijo2Producto") IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(row.Cells("impFijo2Producto").Value?.ToString()) Then
                     Dim icl As Decimal = ParsearDecimal(row.Cells("impFijo2Producto").Value)
-                    totICL += cantidad * icl
+                    totICL += (cantidad * icl)
                 End If
 
             End If
@@ -949,6 +1007,8 @@ Public Class frmPtoVtaNvo
 
     Private Sub dgvFacturaProductos_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellValueChanged
         If e.RowIndex < 0 Then Return
+        ' SALIDA DE EMERGENCIA: Ignoramos el evento si el código está dibujando la grilla
+        If bloqueandoEventosGrilla Then Return
 
         Dim row As DataGridViewRow = dgvFacturaProductos.Rows(e.RowIndex)
 
@@ -974,141 +1034,125 @@ Public Class frmPtoVtaNvo
         CalcularTotalesFactura()
         ActualizarCantidadTotalItems()
     End Sub
-    'Private Sub dgvFacturaProductos_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellValueChanged
-    '    If e.RowIndex < 0 Then Return
 
-    '    Dim row As DataGridViewRow = dgvFacturaProductos.Rows(e.RowIndex)
-    '    If dgvFacturaProductos.Columns(e.ColumnIndex).Name = "cantProducto" Or dgvFacturaProductos.Columns(e.ColumnIndex).Name = "punitProducto" Then
-
-    '        Dim prod As GestorInsumos.fact_insumos = CType(row.Cells("codProducto").Tag, GestorInsumos.fact_insumos)
-
-    '        ' Si el usuario cambió el precio a mano, actualizamos el Tag para que tu rutina no lo pise
-    '        If dgvFacturaProductos.Columns(e.ColumnIndex).Name = "punitProducto" Then
-
-    '            '                row.Cells("punitProducto").Tag = ParsearDecimal(row.Cells("punitProducto").Value)
-    '            prod.precio =
-    '        End If
-    '        Dim cantidad As Decimal = ParsearDecimal(row.Cells("cantProducto").Value)
-    '        Dim precioUnitario As Decimal = ParsearDecimal(row.Cells("punitProducto").Tag) ' Ahora leemos del Tag actualizado
-
-    '        row.Cells("ptotalProducto").Value = Math.Round(precioUnitario * cantidad, 2)
-
-    '    End If
-
-    '    CalcularTotalesFactura()
-    '    ActualizarCantidadTotalItems()
-    'End Sub
     Private Sub dgvFacturaProductos_CurrentCellDirtyStateChanged(sender As Object, e As EventArgs) Handles dgvFacturaProductos.CurrentCellDirtyStateChanged
         If dgvFacturaProductos.IsCurrentCellDirty Then
             dgvFacturaProductos.CommitEdit(DataGridViewDataErrorContexts.Commit)
         End If
     End Sub
     Private Sub PedirYAgregarProductoGenerico()
-        Using frmModal As New Form()
-            frmModal.Text = "Agregar Producto Genérico"
-            frmModal.StartPosition = FormStartPosition.CenterParent
-            frmModal.FormBorderStyle = FormBorderStyle.FixedDialog
-            frmModal.MaximizeBox = False
-            frmModal.MinimizeBox = False
-            frmModal.ClientSize = New Size(320, 210)
+        bloqueandoEventosGrilla = True
+        Try
+            Using frmModal As New Form()
+                frmModal.Text = "Agregar Producto Genérico"
+                frmModal.StartPosition = FormStartPosition.CenterParent
+                frmModal.FormBorderStyle = FormBorderStyle.FixedDialog
+                frmModal.MaximizeBox = False
+                frmModal.MinimizeBox = False
+                frmModal.ClientSize = New Size(320, 210)
 
-            ' 1. Controles simples
-            Dim lblDesc As New Label() With {.Text = "Descripción:", .Left = 20, .Top = 20, .Width = 280}
-            Dim txtDesc As New TextBox() With {.Name = "txtDesc", .Left = 20, .Top = 40, .Width = 260, .TabIndex = 0}
+                ' 1. Controles simples
+                Dim lblDesc As New Label() With {.Text = "Descripción:", .Left = 20, .Top = 20, .Width = 280}
+                Dim txtDesc As New TextBox() With {.Name = "txtDesc", .Left = 20, .Top = 40, .Width = 260, .TabIndex = 0}
 
-            Dim lblCant As New Label() With {.Text = "Cantidad:", .Left = 20, .Top = 75, .Width = 120}
-            Dim txtCant As New TextBox() With {.Name = "txtCant", .Left = 20, .Top = 95, .Width = 120, .Text = "1", .TabIndex = 1}
+                Dim lblCant As New Label() With {.Text = "Cantidad:", .Left = 20, .Top = 75, .Width = 120}
+                Dim txtCant As New TextBox() With {.Name = "txtCant", .Left = 20, .Top = 95, .Width = 120, .Text = "1", .TabIndex = 1}
 
-            Dim lblPrecio As New Label() With {.Text = "Precio Unitario Final:", .Left = 150, .Top = 75, .Width = 130}
-            Dim txtPrecio As New TextBox() With {.Name = "txtPrecio", .Left = 150, .Top = 95, .Width = 130, .TabIndex = 2}
+                Dim lblPrecio As New Label() With {.Text = "Precio Unitario Final:", .Left = 150, .Top = 75, .Width = 130}
+                Dim txtPrecio As New TextBox() With {.Name = "txtPrecio", .Left = 150, .Top = 95, .Width = 130, .TabIndex = 2}
 
-            Dim btnAceptar As New Button() With {.Text = "Aceptar", .Left = 80, .Top = 145, .Width = 90, .DialogResult = DialogResult.OK, .TabIndex = 3}
-            Dim btnCancelar As New Button() With {.Text = "Cancelar", .Left = 180, .Top = 145, .Width = 90, .DialogResult = DialogResult.Cancel, .TabIndex = 4}
+                Dim btnAceptar As New Button() With {.Text = "Aceptar", .Left = 80, .Top = 145, .Width = 90, .DialogResult = DialogResult.OK, .TabIndex = 3}
+                Dim btnCancelar As New Button() With {.Text = "Cancelar", .Left = 180, .Top = 145, .Width = 90, .DialogResult = DialogResult.Cancel, .TabIndex = 4}
 
-            frmModal.CancelButton = btnCancelar
+                frmModal.CancelButton = btnCancelar
 
-            ' 2. Salto con Enter para no usar el mouse (súper útil)
-            Dim MoverConEnter As KeyEventHandler = Sub(s, e)
-                                                       If e.KeyCode = Keys.Enter Then
-                                                           e.SuppressKeyPress = True
-                                                           frmModal.SelectNextControl(CType(s, Control), True, True, True, True)
-                                                       End If
-                                                   End Sub
+                ' 2. Salto con Enter para no usar el mouse (súper útil)
+                Dim MoverConEnter As KeyEventHandler = Sub(s, e)
+                                                           If e.KeyCode = Keys.Enter Then
+                                                               e.SuppressKeyPress = True
+                                                               frmModal.SelectNextControl(CType(s, Control), True, True, True, True)
+                                                           End If
+                                                       End Sub
 
-            AddHandler txtDesc.KeyDown, MoverConEnter
-            AddHandler txtCant.KeyDown, MoverConEnter
-            AddHandler txtPrecio.KeyDown, MoverConEnter
+                AddHandler txtDesc.KeyDown, MoverConEnter
+                AddHandler txtCant.KeyDown, MoverConEnter
+                AddHandler txtPrecio.KeyDown, MoverConEnter
 
-            frmModal.Controls.AddRange(New Control() {lblDesc, txtDesc, lblCant, txtCant, lblPrecio, txtPrecio, btnAceptar, btnCancelar})
-            txtDesc.Focus()
+                frmModal.Controls.AddRange(New Control() {lblDesc, txtDesc, lblCant, txtCant, lblPrecio, txtPrecio, btnAceptar, btnCancelar})
+                txtDesc.Focus()
 
-            ' 3. Procesamos al presionar Aceptar
-            If frmModal.ShowDialog(Me) = DialogResult.OK Then
-                Dim descripcion As String = txtDesc.Text.ToUpper.Trim()
+                ' 3. Procesamos al presionar Aceptar
+                If frmModal.ShowDialog(Me) = DialogResult.OK Then
+                    Dim descripcion As String = txtDesc.Text.ToUpper.Trim()
 
-                ' ACÁ ESTÁ LA MAGIA: Tu función se encarga de todo, escriban punto o coma
-                Dim cantidad As Decimal = ParsearDecimal(txtCant.Text)
-                Dim precioUnitario As Decimal = ParsearDecimal(txtPrecio.Text)
+                    ' ACÁ ESTÁ LA MAGIA: Tu función se encarga de todo, escriban punto o coma
+                    Dim cantidad As Decimal = ParsearDecimal(txtCant.Text)
+                    Dim precioUnitario As Decimal = ParsearDecimal(txtPrecio.Text)
 
-                If String.IsNullOrEmpty(descripcion) Then
-                    MsgBox("Debe ingresar una descripción.", MsgBoxStyle.Exclamation)
-                    Return
+                    If String.IsNullOrEmpty(descripcion) Then
+                        MsgBox("Debe ingresar una descripción.", MsgBoxStyle.Exclamation)
+                        Return
+                    End If
+
+                    If cantidad <= 0 Then
+                        MsgBox("La cantidad no es válida.", MsgBoxStyle.Exclamation)
+                        Return
+                    End If
+
+                    If precioUnitario < 0 Then
+                        MsgBox("El precio no es válido.", MsgBoxStyle.Exclamation)
+                        Return
+                    End If
+
+                    ' 4. Volcamos el producto en la grilla
+                    Dim prodTemp As New GestorInsumos.fact_insumos()
+                    prodTemp.id = 0
+                    prodTemp.codigo = "VARIOS"
+                    prodTemp.descripcion = descripcion
+                    prodTemp.ganancia = 0
+                    prodTemp.iva = 21
+                    prodTemp.impuestoFijo01 = 0
+                    prodTemp.impuestoFijo02 = 0
+                    prodTemp.monedaId = My.Settings.monedaDef
+
+                    Dim subtotalLinea As Decimal = Math.Round(precioUnitario * cantidad, 2)
+
+                    Dim indexFila As Integer = dgvFacturaProductos.Rows.Add(
+                        prodTemp.codigo,
+                        prodTemp.descripcion,
+                        cantidad,
+                        precioUnitario,
+                        subtotalLinea,
+                        prodTemp.ganancia,
+                        prodTemp.iva,
+                        prodTemp.impuestoFijo01,
+                        prodTemp.impuestoFijo02,
+                        prodTemp.id,
+                        prodTemp.monedaId
+                    )
+
+                    Dim filaNueva As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
+
+                    ' ASIGNACIÓN CORRECTA DE TAGS PARA EL PRODUCTO GENÉRICO
+                    filaNueva.Cells("codProducto").Tag = prodTemp
+                    filaNueva.Cells("cantProducto").Tag = cantidad
+                    filaNueva.Cells("punitProducto").Tag = precioUnitario
+                    filaNueva.Cells("ptotalProducto").Tag = subtotalLinea
+
+                    ' Marcamos la fila como modificada/genérica para que nadie la pise a cero
+                    filaNueva.Tag = True
+
+                    CalcularTotalesFactura()
+                    ActualizarCantidadTotalItems()
+
+                    txtbusquedaAddPlu.Focus()
                 End If
-
-                If cantidad <= 0 Then
-                    MsgBox("La cantidad no es válida.", MsgBoxStyle.Exclamation)
-                    Return
-                End If
-
-                If precioUnitario < 0 Then
-                    MsgBox("El precio no es válido.", MsgBoxStyle.Exclamation)
-                    Return
-                End If
-
-                ' 4. Volcamos el producto en la grilla
-                Dim prodTemp As New GestorInsumos.fact_insumos()
-                prodTemp.id = 0
-                prodTemp.codigo = "VARIOS"
-                prodTemp.descripcion = descripcion
-                prodTemp.ganancia = 0
-                prodTemp.iva = 21
-                prodTemp.impuestoFijo01 = 0
-                prodTemp.impuestoFijo02 = 0
-                prodTemp.monedaId = My.Settings.monedaDef
-
-                Dim subtotalLinea As Decimal = Math.Round(precioUnitario * cantidad, 2)
-
-                Dim indexFila As Integer = dgvFacturaProductos.Rows.Add(
-                    prodTemp.codigo,
-                    prodTemp.descripcion,
-                    cantidad,
-                    precioUnitario,
-                    subtotalLinea,
-                    prodTemp.ganancia,
-                    prodTemp.iva,
-                    prodTemp.impuestoFijo01,
-                    prodTemp.impuestoFijo02,
-                    prodTemp.id,
-                    prodTemp.monedaId
-                )
-
-                Dim filaNueva As DataGridViewRow = dgvFacturaProductos.Rows(indexFila)
-
-                ' ASIGNACIÓN CORRECTA DE TAGS PARA EL PRODUCTO GENÉRICO
-                filaNueva.Cells("codProducto").Tag = prodTemp
-                filaNueva.Cells("cantProducto").Tag = cantidad
-                filaNueva.Cells("punitProducto").Tag = precioUnitario
-                filaNueva.Cells("ptotalProducto").Tag = subtotalLinea
-
-                ' Marcamos la fila como modificada/genérica para que nadie la pise a cero
-                filaNueva.Tag = True
-
-                CalcularTotalesFactura()
-                ActualizarCantidadTotalItems()
-
-                txtbusquedaAddPlu.Focus()
-            End If
-        End Using
+            End Using
+        Catch ex As Exception
+            MsgBox($"hubo un error al agregar el producto generico {ex.Message }", vbCritical)
+        Finally
+            bloqueandoEventosGrilla = False
+        End Try
     End Sub
     Public Function LlenarDatosFacturaDesdePantalla() As Boolean
         Try
@@ -1273,40 +1317,6 @@ Public Class frmPtoVtaNvo
 
     End Sub
 
-    Public Sub CargarPedidoRemoto(numPedido As Integer, ptoVtaPedido As Integer, idFilaOrigen As Integer)
-        Try
-            ' 1. Pedimos los datos limpios al Gestor
-            Dim pedidoDato As DatosPedidoFacturar = GestorFacturacion.ObtenerPedidoParaFacturar(numPedido, ptoVtaPedido)
-
-            If pedidoDato Is Nothing Then
-                MsgBox("El pedido " & numPedido & " no fue encontrado o ya está facturado.", MsgBoxStyle.Exclamation)
-                Exit Sub
-            End If
-
-            ' 2. Actualizamos el entorno de la venta (Vendedor y Condición)
-            ' Asumo que tenés las variables globales o métodos para actualizar la UI:
-            facturaCondicionVenta = datosEstructura.fact_condventas.BuscarPorID(pedidoDato.IdCondVta)
-            ' Lógica para setear el vendedor en tu sistema (ej: facturaVendedor = ...)
-            facturaCliente = fact_clientes.BuscarPorID(pedidoDato.IdCliente)
-            facturaVendedor = fact_vendedor.BuscarPorID(pedidoDato.IdVendedor)
-            CargarDatosCliente()
-            CargarDatosVendedor()
-
-            ' 3. Volcamos los ítems a la grilla visual
-            For Each itm As DatosItemPedido In pedidoDato.Items
-                ' Ajustá los nombres de las columnas a como se llamen en tu DataGridView (dgvItems)
-                dgvFacturaProductos.Rows.Add(itm.Codigo, itm.CodInt, itm.Cantidad, itm.Descripcion, itm.Iva, itm.PUnit, itm.PTotal)
-            Next
-
-            ' 4. Guardamos el ID del pedido para actualizarlo después
-            PedidosVinculados.Add(pedidoDato.IdPedido)
-            CalcularTotalesFactura()
-
-
-        Catch ex As Exception
-            MsgBox("Error al volcar el pedido a la factura: " & ex.Message)
-        End Try
-    End Sub
 
     Private Sub btnLimpiarProductos_Click(sender As Object, e As EventArgs) Handles btnLimpiarProductos.Click
 
@@ -1383,10 +1393,6 @@ Public Class frmPtoVtaNvo
     End Sub
 
     Private Sub dgvFacturaProductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellContentClick
-
-    End Sub
-
-    Private Sub dgvFacturaProductos_CellValidated(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellValidated
 
     End Sub
 End Class
