@@ -24,12 +24,12 @@ Partial Class fichaequipo
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(fichaequipo))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.lblalerta = New System.Windows.Forms.Label()
         Me.Label1 = New System.Windows.Forms.Label()
@@ -65,16 +65,20 @@ Partial Class fichaequipo
         Me.txtrazon = New System.Windows.Forms.TextBox()
         Me.lblcliente = New System.Windows.Forms.Label()
         Me.panelequipo = New System.Windows.Forms.Panel()
+        Me.panelSerie = New System.Windows.Forms.Panel()
+        Me.lblSerie = New System.Windows.Forms.Label()
+        Me.txtnumeroSerie = New System.Windows.Forms.TextBox()
+        Me.panelModelo = New System.Windows.Forms.Panel()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.cmbmodelos = New System.Windows.Forms.ComboBox()
+        Me.panelMarca = New System.Windows.Forms.Panel()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.cmbmarcas = New System.Windows.Forms.ComboBox()
+        Me.paneltipoEquipo = New System.Windows.Forms.Panel()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.cmbtipoequ = New System.Windows.Forms.ComboBox()
         Me.lblcodexistente = New System.Windows.Forms.Label()
         Me.lblmodelo = New System.Windows.Forms.Label()
-        Me.txtnumeroSerie = New System.Windows.Forms.TextBox()
-        Me.lblSerie = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label9 = New System.Windows.Forms.Label()
-        Me.Label6 = New System.Windows.Forms.Label()
-        Me.cmbmodelos = New System.Windows.Forms.ComboBox()
-        Me.cmbmarcas = New System.Windows.Forms.ComboBox()
-        Me.cmbtipoequ = New System.Windows.Forms.ComboBox()
         Me.Label24 = New System.Windows.Forms.Label()
         Me.txtpresupuesto = New System.Windows.Forms.TextBox()
         Me.txtfalla = New System.Windows.Forms.TextBox()
@@ -85,14 +89,6 @@ Partial Class fichaequipo
         Me.lblmotivo = New System.Windows.Forms.Label()
         Me.txtaccesorios = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
-        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
         Me.tmrComprobarOR = New System.Windows.Forms.Timer(Me.components)
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -112,6 +108,20 @@ Partial Class fichaequipo
         Me.txtresolucion = New System.Windows.Forms.RichTextBox()
         Me.txtespecificaciones = New System.Windows.Forms.RichTextBox()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
+        Me.Label15 = New System.Windows.Forms.Label()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.panelfallaPresupuesto = New System.Windows.Forms.Panel()
+        Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.Panel3 = New System.Windows.Forms.Panel()
+        Me.Panel5 = New System.Windows.Forms.Panel()
+        Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -120,30 +130,20 @@ Partial Class fichaequipo
         Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.Panel1 = New System.Windows.Forms.Panel()
-        Me.Panel3 = New System.Windows.Forms.Panel()
-        Me.paneltipoEquipo = New System.Windows.Forms.Panel()
-        Me.panelMarca = New System.Windows.Forms.Panel()
-        Me.panelModelo = New System.Windows.Forms.Panel()
-        Me.panelSerie = New System.Windows.Forms.Panel()
-        Me.panelfallaPresupuesto = New System.Windows.Forms.Panel()
-        Me.Panel5 = New System.Windows.Forms.Panel()
         Me.pntitulo.SuspendLayout()
         Me.panelingreso.SuspendLayout()
         Me.panelcliente.SuspendLayout()
         Me.panelequipo.SuspendLayout()
+        Me.panelSerie.SuspendLayout()
+        Me.panelModelo.SuspendLayout()
+        Me.panelMarca.SuspendLayout()
+        Me.paneltipoEquipo.SuspendLayout()
         Me.Panel2.SuspendLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel4.SuspendLayout()
+        Me.panelfallaPresupuesto.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.Panel3.SuspendLayout()
-        Me.paneltipoEquipo.SuspendLayout()
-        Me.panelMarca.SuspendLayout()
-        Me.panelModelo.SuspendLayout()
-        Me.panelSerie.SuspendLayout()
-        Me.panelfallaPresupuesto.SuspendLayout()
         Me.Panel5.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -572,6 +572,127 @@ Partial Class fichaequipo
         Me.panelequipo.Size = New System.Drawing.Size(1224, 48)
         Me.panelequipo.TabIndex = 105
         '
+        'panelSerie
+        '
+        Me.panelSerie.Controls.Add(Me.lblSerie)
+        Me.panelSerie.Controls.Add(Me.txtnumeroSerie)
+        Me.panelSerie.Dock = System.Windows.Forms.DockStyle.Left
+        Me.panelSerie.Location = New System.Drawing.Point(520, 0)
+        Me.panelSerie.Name = "panelSerie"
+        Me.panelSerie.Size = New System.Drawing.Size(193, 48)
+        Me.panelSerie.TabIndex = 231
+        '
+        'lblSerie
+        '
+        Me.lblSerie.AutoSize = True
+        Me.lblSerie.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblSerie.Location = New System.Drawing.Point(3, 3)
+        Me.lblSerie.Name = "lblSerie"
+        Me.lblSerie.Size = New System.Drawing.Size(147, 16)
+        Me.lblSerie.TabIndex = 225
+        Me.lblSerie.Text = "NUMERO DE SERIE"
+        '
+        'txtnumeroSerie
+        '
+        Me.txtnumeroSerie.Location = New System.Drawing.Point(6, 24)
+        Me.txtnumeroSerie.Name = "txtnumeroSerie"
+        Me.txtnumeroSerie.ReadOnly = True
+        Me.txtnumeroSerie.Size = New System.Drawing.Size(171, 18)
+        Me.txtnumeroSerie.TabIndex = 10
+        '
+        'panelModelo
+        '
+        Me.panelModelo.Controls.Add(Me.Label10)
+        Me.panelModelo.Controls.Add(Me.cmbmodelos)
+        Me.panelModelo.Dock = System.Windows.Forms.DockStyle.Left
+        Me.panelModelo.Location = New System.Drawing.Point(354, 0)
+        Me.panelModelo.Name = "panelModelo"
+        Me.panelModelo.Size = New System.Drawing.Size(166, 48)
+        Me.panelModelo.TabIndex = 230
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(2, 3)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(70, 16)
+        Me.Label10.TabIndex = 224
+        Me.Label10.Text = "MODELO"
+        '
+        'cmbmodelos
+        '
+        Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbmodelos.Enabled = False
+        Me.cmbmodelos.FormattingEnabled = True
+        Me.cmbmodelos.Location = New System.Drawing.Point(5, 22)
+        Me.cmbmodelos.Name = "cmbmodelos"
+        Me.cmbmodelos.Size = New System.Drawing.Size(155, 20)
+        Me.cmbmodelos.TabIndex = 9
+        '
+        'panelMarca
+        '
+        Me.panelMarca.Controls.Add(Me.Label9)
+        Me.panelMarca.Controls.Add(Me.cmbmarcas)
+        Me.panelMarca.Dock = System.Windows.Forms.DockStyle.Left
+        Me.panelMarca.Location = New System.Drawing.Point(166, 0)
+        Me.panelMarca.Name = "panelMarca"
+        Me.panelMarca.Size = New System.Drawing.Size(188, 48)
+        Me.panelMarca.TabIndex = 229
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(3, 3)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(60, 16)
+        Me.Label9.TabIndex = 223
+        Me.Label9.Text = "MARCA"
+        '
+        'cmbmarcas
+        '
+        Me.cmbmarcas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbmarcas.Enabled = False
+        Me.cmbmarcas.FormattingEnabled = True
+        Me.cmbmarcas.Location = New System.Drawing.Point(6, 22)
+        Me.cmbmarcas.Name = "cmbmarcas"
+        Me.cmbmarcas.Size = New System.Drawing.Size(178, 20)
+        Me.cmbmarcas.TabIndex = 8
+        '
+        'paneltipoEquipo
+        '
+        Me.paneltipoEquipo.Controls.Add(Me.Label6)
+        Me.paneltipoEquipo.Controls.Add(Me.cmbtipoequ)
+        Me.paneltipoEquipo.Dock = System.Windows.Forms.DockStyle.Left
+        Me.paneltipoEquipo.Location = New System.Drawing.Point(0, 0)
+        Me.paneltipoEquipo.Name = "paneltipoEquipo"
+        Me.paneltipoEquipo.Size = New System.Drawing.Size(166, 48)
+        Me.paneltipoEquipo.TabIndex = 228
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(3, 3)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(128, 16)
+        Me.Label6.TabIndex = 222
+        Me.Label6.Text = "TIPO DE EQUIPO"
+        '
+        'cmbtipoequ
+        '
+        Me.cmbtipoequ.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
+        Me.cmbtipoequ.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbtipoequ.Enabled = False
+        Me.cmbtipoequ.FormattingEnabled = True
+        Me.cmbtipoequ.Location = New System.Drawing.Point(6, 22)
+        Me.cmbtipoequ.Name = "cmbtipoequ"
+        Me.cmbtipoequ.Size = New System.Drawing.Size(160, 20)
+        Me.cmbtipoequ.TabIndex = 7
+        '
         'lblcodexistente
         '
         Me.lblcodexistente.AutoSize = True
@@ -591,87 +712,6 @@ Partial Class fichaequipo
         Me.lblmodelo.Name = "lblmodelo"
         Me.lblmodelo.Size = New System.Drawing.Size(0, 16)
         Me.lblmodelo.TabIndex = 226
-        '
-        'txtnumeroSerie
-        '
-        Me.txtnumeroSerie.Location = New System.Drawing.Point(6, 24)
-        Me.txtnumeroSerie.Name = "txtnumeroSerie"
-        Me.txtnumeroSerie.ReadOnly = True
-        Me.txtnumeroSerie.Size = New System.Drawing.Size(171, 18)
-        Me.txtnumeroSerie.TabIndex = 10
-        '
-        'lblSerie
-        '
-        Me.lblSerie.AutoSize = True
-        Me.lblSerie.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblSerie.Location = New System.Drawing.Point(3, 3)
-        Me.lblSerie.Name = "lblSerie"
-        Me.lblSerie.Size = New System.Drawing.Size(147, 16)
-        Me.lblSerie.TabIndex = 225
-        Me.lblSerie.Text = "NUMERO DE SERIE"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label10.Location = New System.Drawing.Point(2, 3)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(70, 16)
-        Me.Label10.TabIndex = 224
-        Me.Label10.Text = "MODELO"
-        '
-        'Label9
-        '
-        Me.Label9.AutoSize = True
-        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label9.Location = New System.Drawing.Point(3, 3)
-        Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(60, 16)
-        Me.Label9.TabIndex = 223
-        Me.Label9.Text = "MARCA"
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label6.Location = New System.Drawing.Point(3, 3)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(128, 16)
-        Me.Label6.TabIndex = 222
-        Me.Label6.Text = "TIPO DE EQUIPO"
-        '
-        'cmbmodelos
-        '
-        Me.cmbmodelos.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbmodelos.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbmodelos.Enabled = False
-        Me.cmbmodelos.FormattingEnabled = True
-        Me.cmbmodelos.Location = New System.Drawing.Point(5, 22)
-        Me.cmbmodelos.Name = "cmbmodelos"
-        Me.cmbmodelos.Size = New System.Drawing.Size(155, 20)
-        Me.cmbmodelos.TabIndex = 9
-        '
-        'cmbmarcas
-        '
-        Me.cmbmarcas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbmarcas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbmarcas.Enabled = False
-        Me.cmbmarcas.FormattingEnabled = True
-        Me.cmbmarcas.Location = New System.Drawing.Point(6, 22)
-        Me.cmbmarcas.Name = "cmbmarcas"
-        Me.cmbmarcas.Size = New System.Drawing.Size(178, 20)
-        Me.cmbmarcas.TabIndex = 8
-        '
-        'cmbtipoequ
-        '
-        Me.cmbtipoequ.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
-        Me.cmbtipoequ.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
-        Me.cmbtipoequ.Enabled = False
-        Me.cmbtipoequ.FormattingEnabled = True
-        Me.cmbtipoequ.Location = New System.Drawing.Point(6, 22)
-        Me.cmbtipoequ.Name = "cmbtipoequ"
-        Me.cmbtipoequ.Size = New System.Drawing.Size(160, 20)
-        Me.cmbtipoequ.TabIndex = 7
         '
         'Label24
         '
@@ -780,70 +820,6 @@ Partial Class fichaequipo
         Me.Label12.TabIndex = 219
         Me.Label12.Text = "ACCESORIOS"
         '
-        'DataGridViewTextBoxColumn1
-        '
-        Me.DataGridViewTextBoxColumn1.HeaderText = "id"
-        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
-        Me.DataGridViewTextBoxColumn1.Visible = False
-        '
-        'DataGridViewTextBoxColumn2
-        '
-        Me.DataGridViewTextBoxColumn2.FillWeight = 25.0!
-        Me.DataGridViewTextBoxColumn2.HeaderText = "Codigo/#PLU"
-        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
-        Me.DataGridViewTextBoxColumn2.Width = 86
-        '
-        'DataGridViewTextBoxColumn3
-        '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle1
-        Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn3.HeaderText = "Cantidad"
-        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
-        Me.DataGridViewTextBoxColumn3.Width = 69
-        '
-        'DataGridViewTextBoxColumn4
-        '
-        Me.DataGridViewTextBoxColumn4.FillWeight = 169.5432!
-        Me.DataGridViewTextBoxColumn4.HeaderText = "Producto"
-        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
-        Me.DataGridViewTextBoxColumn4.Width = 587
-        '
-        'DataGridViewTextBoxColumn5
-        '
-        Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn5.HeaderText = "IVA"
-        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
-        Me.DataGridViewTextBoxColumn5.Width = 69
-        '
-        'DataGridViewTextBoxColumn6
-        '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle2
-        Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn6.HeaderText = "P/U"
-        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
-        Me.DataGridViewTextBoxColumn6.Width = 70
-        '
-        'DataGridViewTextBoxColumn7
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = Nothing
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle3
-        Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
-        Me.DataGridViewTextBoxColumn7.HeaderText = "P/T"
-        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
-        Me.DataGridViewTextBoxColumn7.ReadOnly = True
-        Me.DataGridViewTextBoxColumn7.Width = 69
-        '
-        'DataGridViewTextBoxColumn8
-        '
-        Me.DataGridViewTextBoxColumn8.HeaderText = "ganancia"
-        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
-        Me.DataGridViewTextBoxColumn8.Visible = False
-        '
         'tmrComprobarOR
         '
         Me.tmrComprobarOR.Interval = 5000
@@ -859,7 +835,7 @@ Partial Class fichaequipo
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Right
         Me.Panel2.Location = New System.Drawing.Point(1012, 0)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(212, 125)
+        Me.Panel2.Size = New System.Drawing.Size(212, 276)
         Me.Panel2.TabIndex = 248
         '
         'txttotaltrabajo
@@ -1042,64 +1018,6 @@ Partial Class fichaequipo
         Me.dtproductos.Size = New System.Drawing.Size(1012, 92)
         Me.dtproductos.TabIndex = 245
         '
-        'Column7
-        '
-        Me.Column7.HeaderText = "id"
-        Me.Column7.Name = "Column7"
-        Me.Column7.Visible = False
-        '
-        'Column1
-        '
-        Me.Column1.FillWeight = 25.0!
-        Me.Column1.HeaderText = "Codigo/#PLU"
-        Me.Column1.Name = "Column1"
-        '
-        'Column3
-        '
-        DataGridViewCellStyle4.Format = "N2"
-        DataGridViewCellStyle4.NullValue = Nothing
-        Me.Column3.DefaultCellStyle = DataGridViewCellStyle4
-        Me.Column3.FillWeight = 20.0!
-        Me.Column3.HeaderText = "Cantidad"
-        Me.Column3.Name = "Column3"
-        '
-        'Column2
-        '
-        Me.Column2.FillWeight = 169.5432!
-        Me.Column2.HeaderText = "Producto"
-        Me.Column2.Name = "Column2"
-        '
-        'Column6
-        '
-        Me.Column6.FillWeight = 20.0!
-        Me.Column6.HeaderText = "IVA"
-        Me.Column6.Name = "Column6"
-        '
-        'Column4
-        '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Column4.FillWeight = 20.0!
-        Me.Column4.HeaderText = "P/U"
-        Me.Column4.Name = "Column4"
-        '
-        'Column5
-        '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle6
-        Me.Column5.FillWeight = 20.0!
-        Me.Column5.HeaderText = "P/T"
-        Me.Column5.Name = "Column5"
-        Me.Column5.ReadOnly = True
-        '
-        'Column8
-        '
-        Me.Column8.HeaderText = "ganancia"
-        Me.Column8.Name = "Column8"
-        Me.Column8.Visible = False
-        '
         'Label15
         '
         Me.Label15.AutoSize = True
@@ -1124,6 +1042,18 @@ Partial Class fichaequipo
         Me.Panel4.Name = "Panel4"
         Me.Panel4.Size = New System.Drawing.Size(1224, 129)
         Me.Panel4.TabIndex = 107
+        '
+        'panelfallaPresupuesto
+        '
+        Me.panelfallaPresupuesto.Controls.Add(Me.Label3)
+        Me.panelfallaPresupuesto.Controls.Add(Me.txtfalla)
+        Me.panelfallaPresupuesto.Controls.Add(Me.Label24)
+        Me.panelfallaPresupuesto.Controls.Add(Me.txtpresupuesto)
+        Me.panelfallaPresupuesto.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.panelfallaPresupuesto.Location = New System.Drawing.Point(0, 74)
+        Me.panelfallaPresupuesto.Name = "panelfallaPresupuesto"
+        Me.panelfallaPresupuesto.Size = New System.Drawing.Size(1224, 55)
+        Me.panelfallaPresupuesto.TabIndex = 240
         '
         'Panel1
         '
@@ -1152,58 +1082,6 @@ Partial Class fichaequipo
         Me.Panel3.Size = New System.Drawing.Size(1012, 103)
         Me.Panel3.TabIndex = 258
         '
-        'paneltipoEquipo
-        '
-        Me.paneltipoEquipo.Controls.Add(Me.Label6)
-        Me.paneltipoEquipo.Controls.Add(Me.cmbtipoequ)
-        Me.paneltipoEquipo.Dock = System.Windows.Forms.DockStyle.Left
-        Me.paneltipoEquipo.Location = New System.Drawing.Point(0, 0)
-        Me.paneltipoEquipo.Name = "paneltipoEquipo"
-        Me.paneltipoEquipo.Size = New System.Drawing.Size(166, 48)
-        Me.paneltipoEquipo.TabIndex = 228
-        '
-        'panelMarca
-        '
-        Me.panelMarca.Controls.Add(Me.Label9)
-        Me.panelMarca.Controls.Add(Me.cmbmarcas)
-        Me.panelMarca.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelMarca.Location = New System.Drawing.Point(166, 0)
-        Me.panelMarca.Name = "panelMarca"
-        Me.panelMarca.Size = New System.Drawing.Size(188, 48)
-        Me.panelMarca.TabIndex = 229
-        '
-        'panelModelo
-        '
-        Me.panelModelo.Controls.Add(Me.Label10)
-        Me.panelModelo.Controls.Add(Me.cmbmodelos)
-        Me.panelModelo.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelModelo.Location = New System.Drawing.Point(354, 0)
-        Me.panelModelo.Name = "panelModelo"
-        Me.panelModelo.Size = New System.Drawing.Size(166, 48)
-        Me.panelModelo.TabIndex = 230
-        '
-        'panelSerie
-        '
-        Me.panelSerie.Controls.Add(Me.lblSerie)
-        Me.panelSerie.Controls.Add(Me.txtnumeroSerie)
-        Me.panelSerie.Dock = System.Windows.Forms.DockStyle.Left
-        Me.panelSerie.Location = New System.Drawing.Point(520, 0)
-        Me.panelSerie.Name = "panelSerie"
-        Me.panelSerie.Size = New System.Drawing.Size(193, 48)
-        Me.panelSerie.TabIndex = 231
-        '
-        'panelfallaPresupuesto
-        '
-        Me.panelfallaPresupuesto.Controls.Add(Me.Label3)
-        Me.panelfallaPresupuesto.Controls.Add(Me.txtfalla)
-        Me.panelfallaPresupuesto.Controls.Add(Me.Label24)
-        Me.panelfallaPresupuesto.Controls.Add(Me.txtpresupuesto)
-        Me.panelfallaPresupuesto.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.panelfallaPresupuesto.Location = New System.Drawing.Point(0, 74)
-        Me.panelfallaPresupuesto.Name = "panelfallaPresupuesto"
-        Me.panelfallaPresupuesto.Size = New System.Drawing.Size(1224, 55)
-        Me.panelfallaPresupuesto.TabIndex = 240
-        '
         'Panel5
         '
         Me.Panel5.Controls.Add(Me.Panel1)
@@ -1212,15 +1090,137 @@ Partial Class fichaequipo
         Me.Panel5.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel5.Location = New System.Drawing.Point(0, 328)
         Me.Panel5.Name = "Panel5"
-        Me.Panel5.Size = New System.Drawing.Size(1224, 125)
+        Me.Panel5.Size = New System.Drawing.Size(1224, 276)
         Me.Panel5.TabIndex = 259
+        '
+        'DataGridViewTextBoxColumn1
+        '
+        Me.DataGridViewTextBoxColumn1.HeaderText = "id"
+        Me.DataGridViewTextBoxColumn1.Name = "DataGridViewTextBoxColumn1"
+        Me.DataGridViewTextBoxColumn1.Visible = False
+        '
+        'DataGridViewTextBoxColumn2
+        '
+        Me.DataGridViewTextBoxColumn2.FillWeight = 25.0!
+        Me.DataGridViewTextBoxColumn2.HeaderText = "Codigo/#PLU"
+        Me.DataGridViewTextBoxColumn2.Name = "DataGridViewTextBoxColumn2"
+        Me.DataGridViewTextBoxColumn2.Width = 86
+        '
+        'DataGridViewTextBoxColumn3
+        '
+        DataGridViewCellStyle4.Format = "N2"
+        DataGridViewCellStyle4.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle4
+        Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn3.HeaderText = "Cantidad"
+        Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
+        Me.DataGridViewTextBoxColumn3.Width = 69
+        '
+        'DataGridViewTextBoxColumn4
+        '
+        Me.DataGridViewTextBoxColumn4.FillWeight = 169.5432!
+        Me.DataGridViewTextBoxColumn4.HeaderText = "Producto"
+        Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
+        Me.DataGridViewTextBoxColumn4.Width = 587
+        '
+        'DataGridViewTextBoxColumn5
+        '
+        Me.DataGridViewTextBoxColumn5.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn5.HeaderText = "IVA"
+        Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
+        Me.DataGridViewTextBoxColumn5.Width = 69
+        '
+        'DataGridViewTextBoxColumn6
+        '
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle5
+        Me.DataGridViewTextBoxColumn6.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn6.HeaderText = "P/U"
+        Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
+        Me.DataGridViewTextBoxColumn6.Width = 70
+        '
+        'DataGridViewTextBoxColumn7
+        '
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = Nothing
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle6
+        Me.DataGridViewTextBoxColumn7.FillWeight = 20.0!
+        Me.DataGridViewTextBoxColumn7.HeaderText = "P/T"
+        Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
+        Me.DataGridViewTextBoxColumn7.ReadOnly = True
+        Me.DataGridViewTextBoxColumn7.Width = 69
+        '
+        'DataGridViewTextBoxColumn8
+        '
+        Me.DataGridViewTextBoxColumn8.HeaderText = "ganancia"
+        Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
+        Me.DataGridViewTextBoxColumn8.Visible = False
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "id"
+        Me.Column7.Name = "Column7"
+        Me.Column7.Visible = False
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 25.0!
+        Me.Column1.HeaderText = "Codigo/#PLU"
+        Me.Column1.Name = "Column1"
+        '
+        'Column3
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column3.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column3.FillWeight = 20.0!
+        Me.Column3.HeaderText = "Cantidad"
+        Me.Column3.Name = "Column3"
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 169.5432!
+        Me.Column2.HeaderText = "Producto"
+        Me.Column2.Name = "Column2"
+        '
+        'Column6
+        '
+        Me.Column6.FillWeight = 20.0!
+        Me.Column6.HeaderText = "IVA"
+        Me.Column6.Name = "Column6"
+        '
+        'Column4
+        '
+        DataGridViewCellStyle2.Format = "N2"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column4.FillWeight = 20.0!
+        Me.Column4.HeaderText = "P/U"
+        Me.Column4.Name = "Column4"
+        '
+        'Column5
+        '
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle3
+        Me.Column5.FillWeight = 20.0!
+        Me.Column5.HeaderText = "P/T"
+        Me.Column5.Name = "Column5"
+        Me.Column5.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.HeaderText = "ganancia"
+        Me.Column8.Name = "Column8"
+        Me.Column8.Visible = False
         '
         'fichaequipo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(1224, 453)
+        Me.ClientSize = New System.Drawing.Size(1224, 604)
         Me.Controls.Add(Me.Panel5)
         Me.Controls.Add(Me.Panel4)
         Me.Controls.Add(Me.panelequipo)
@@ -1239,25 +1239,25 @@ Partial Class fichaequipo
         Me.panelcliente.PerformLayout()
         Me.panelequipo.ResumeLayout(False)
         Me.panelequipo.PerformLayout()
+        Me.panelSerie.ResumeLayout(False)
+        Me.panelSerie.PerformLayout()
+        Me.panelModelo.ResumeLayout(False)
+        Me.panelModelo.PerformLayout()
+        Me.panelMarca.ResumeLayout(False)
+        Me.panelMarca.PerformLayout()
+        Me.paneltipoEquipo.ResumeLayout(False)
+        Me.paneltipoEquipo.PerformLayout()
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
         CType(Me.dtproductos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
+        Me.panelfallaPresupuesto.ResumeLayout(False)
+        Me.panelfallaPresupuesto.PerformLayout()
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
-        Me.paneltipoEquipo.ResumeLayout(False)
-        Me.paneltipoEquipo.PerformLayout()
-        Me.panelMarca.ResumeLayout(False)
-        Me.panelMarca.PerformLayout()
-        Me.panelModelo.ResumeLayout(False)
-        Me.panelModelo.PerformLayout()
-        Me.panelSerie.ResumeLayout(False)
-        Me.panelSerie.PerformLayout()
-        Me.panelfallaPresupuesto.ResumeLayout(False)
-        Me.panelfallaPresupuesto.PerformLayout()
         Me.Panel5.ResumeLayout(False)
         Me.ResumeLayout(False)
 

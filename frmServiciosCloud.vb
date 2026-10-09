@@ -167,7 +167,8 @@
 
     Private Sub dtcloud_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dtcloud.CellEndEdit
         If e.ColumnIndex = 5 Then
-            Dim sqlQuery As String = "update AuthServ.CliAuth set clave=sha('" & dtcloud.CurrentRow.Cells(5).Value & "') where id=" & dtcloud.CurrentRow.Cells(0).Value
+            Dim claveMD5 As String = GetMd5Hash(dtcloud.CurrentRow.Cells(5).Value.ToString.Trim())
+            Dim sqlQuery As String = "update AuthServ.CliAuth set clave='" & claveMD5 & "' where id=" & dtcloud.CurrentRow.Cells(0).Value
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             comandoadd.ExecuteNonQuery()
             CargaServiciosCloud()

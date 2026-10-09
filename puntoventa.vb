@@ -2273,6 +2273,12 @@ Public Class puntoventa
                 fe.F1DetalleCbteHastaS = Val(lblfactnumero.Text)
                 fe.F1DetalleCbteFch = Format(Now, "yyyyMMdd")
 
+
+                ' --- NUEVOS REQUISITOS ARCA ---
+                ' Usamos "contribtipo" porque ahí se guardó el TipoResponsable del cliente más arriba
+                fe.F1DetalleCondicionIvaReceptor = contribtipo
+                fe.F1DetalleCanMisMonExt = "N"
+                ' ------------------------------
                 Dim cantiva As Integer
 
                 If tipofact <> 11 Or tipofact <> 12 Or tipofact <> 13 Then

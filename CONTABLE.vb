@@ -1628,6 +1628,127 @@ Public Class CONTABLE
         End Try
     End Sub
 
+    'Private Sub cmdbuscarcomp_Click(sender As Object, e As EventArgs) Handles cmdbuscarcomp.Click
+    '    Dim EnProgreso As New Form
+    '    EnProgreso.ControlBox = False
+    '    EnProgreso.FormBorderStyle = Windows.Forms.FormBorderStyle.Fixed3D
+    '    EnProgreso.Size = New Point(430, 30)
+    '    EnProgreso.StartPosition = FormStartPosition.CenterScreen
+    '    EnProgreso.TopMost = True
+    '    Dim Etiqueta As New Label
+    '    Etiqueta.AutoSize = True
+    '    Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
+    '    Etiqueta.Location = New Point(5, 5)
+    '    EnProgreso.Controls.Add(Etiqueta)
+    '    'Dim Barra As New ProgressBar
+    '    'Barra.Style = ProgressBarStyle.Marquee
+    '    'Barra.Size = New Point(270, 40)
+    '    'Barra.Location = New Point(10, 30)
+    '    'Barra.Value = 100
+    '    'EnProgreso.Controls.Add(Barra)
+    '    EnProgreso.Show()
+    '    Application.DoEvents()
+
+    '    Try
+    '        Reconectar()
+    '        Dim columna As Integer
+    '        Dim desde As String = Format(CDate(dtpdecob.Value), "yyyy-MM-dd")
+    '        Dim hasta As String = Format(CDate(dtphastacob.Value), "yyyy-MM-dd")
+    '        Dim tablacob As New DataTable
+    '        Dim consPtovta As String
+
+    '        If cmbInforPtoVta2.SelectedValue = 0 Then
+    '            consPtovta = " and fact.ptovta like '%' "
+    '        Else
+    '            consPtovta = " and fact.ptovta = " & cmbInforPtoVta2.SelectedValue & " "
+    '        End If
+    '        tablacob.Clear()
+    '        ' Dim parambusq As String = " and fac.tipofact in ('5') "
+    '        If rdcobranzadiaria.Checked = True Then
+    '            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, 
+    '            format(sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalTarjeta, 
+    '            format(sum(replace(total,',','.')) -
+    '            sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalEfectivo, 
+    '            format(sum(replace(total,',','.')),2,'es_AR') as totalRecibo
+    '            FROM fact_facturas as fact                 
+    '            where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
+    '            "group by fecha order by fecha desc", GestorConexiones.conexionPrinc)
+    '            columna = 3
+    '            consulta.Fill(tablacob)
+    '            dtlistacob.DataSource = tablacob
+    '        End If
+    '        If rdcobranzaintervalo.Checked = True Then
+    '            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',
+    '            lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, 
+    '            format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
+    '            if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
+    '            format(replace(total,',','.') -
+    '            (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo,
+
+    '            format(replace(total,',','.'),2,'es_AR') as totalRecibo,
+
+    '            (select codigoAsiento from cm_libroDiario where comprobanteInterno like ReciboNumero limit 1) as NumeroAsiento
+
+    '            FROM fact_facturas as fact, fact_conffiscal as fis
+
+    '            where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and  fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
+    '            "order by fact.razon asc", GestorConexiones.conexionPrinc)
+    '            columna = 6
+    '            MsgBox(consulta.SelectCommand.CommandText)
+
+    '            consulta.Fill(tablacob)
+    '            dtlistacob.DataSource = tablacob
+    '            dtlistacob.Columns(0).Visible = False
+    '        End If
+    '        If rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex = -1 Then
+    '            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("
+    '            select ft.nombre, format(sum(replace(ft.importe,',','.')),2,'es_AR') as importe from fact_tarjetas ft, fact_facturas fact 
+    '            where ft.fecha between '" & desde & "' and '" & hasta & "' and 
+    '            fact.id = ft.comprobante " &
+    '            consPtovta & "
+    '            GROUP by ft.nombre ", GestorConexiones.conexionPrinc)
+    '            columna = 1
+    '            consulta.Fill(tablacob)
+    '            'Dim bindintarjetas As New DataView(tablacob)
+    '            'bindintarjetas.RowFilter = " totalTarjeta<>'' "
+    '            dtlistacob.DataSource = tablacob 'bindintarjetas
+    '            'dtlistacob.Columns(0).Visible = False
+    '        ElseIf rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex <> -1 Then
+    '            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
+    '            format((select replace(importe,',','.') as totalTarjeta from fact_tarjetas where comprobante=fact.id and nombre like '%" & cmbTarjetasMarcas.Text.Replace(" ", "%") & "%'),2,'es_AR') as totalTarjeta			
+    '            FROM fact_facturas as fact 
+    '            where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' 
+    '            and fact.id in (select comprobante from fact_tarjetas) " & consPtovta &
+    '            "order by fact.razon asc", GestorConexiones.conexionPrinc)
+    '            columna = 4
+    '            consulta.Fill(tablacob)
+    '            Dim bindintarjetas As New DataView(tablacob)
+    '            bindintarjetas.RowFilter = " totalTarjeta<>'' "
+    '            dtlistacob.DataSource = bindintarjetas
+    '            dtlistacob.Columns(0).Visible = False
+    '        End If
+    '        If rdefectivo.Checked = True Then
+    '            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 			
+    '            if (fact.id not in (select comprobante from fact_tarjetas),
+    '            format(replace(total,',','.'),2,'es_AR'),format(replace(total,',','.') -
+    '            (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo	
+    '            FROM fact_facturas as fact 
+    '            where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
+    '            " having totalEfectivo<>0
+    '            order by fact.razon  asc", GestorConexiones.conexionPrinc)
+    '            columna = 4
+    '            consulta.Fill(tablacob)
+    '            dtlistacob.DataSource = tablacob
+    '            dtlistacob.Columns(0).Visible = False
+    '        End If
+    '        lbltotcob.Text = SumarTotal(dtlistacob, columna, 0)
+    '        EnProgreso.Close()
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '        EnProgreso.Close()
+    '    End Try
+    'End Sub
+
     Private Sub cmdbuscarcomp_Click(sender As Object, e As EventArgs) Handles cmdbuscarcomp.Click
         Dim EnProgreso As New Form
         EnProgreso.ControlBox = False
@@ -1640,12 +1761,6 @@ Public Class CONTABLE
         Etiqueta.Text = "La consulta esta en progreso, esto puede tardar unos momentos, por favor espere ..."
         Etiqueta.Location = New Point(5, 5)
         EnProgreso.Controls.Add(Etiqueta)
-        'Dim Barra As New ProgressBar
-        'Barra.Style = ProgressBarStyle.Marquee
-        'Barra.Size = New Point(270, 40)
-        'Barra.Location = New Point(10, 30)
-        'Barra.Value = 100
-        'EnProgreso.Controls.Add(Barra)
         EnProgreso.Show()
         Application.DoEvents()
 
@@ -1663,92 +1778,102 @@ Public Class CONTABLE
                 consPtovta = " and fact.ptovta = " & cmbInforPtoVta2.SelectedValue & " "
             End If
             tablacob.Clear()
-            ' Dim parambusq As String = " and fac.tipofact in ('5') "
+
             If rdcobranzadiaria.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, 
-                format(sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalTarjeta, 
-                format(sum(replace(total,',','.')) -
-                sum((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id)),2,'es_AR') as totalEfectivo, 
-                format(sum(replace(total,',','.')),2,'es_AR') as totalRecibo
-                FROM fact_facturas as fact                 
-                where fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
-                "group by fecha order by fecha desc", GestorConexiones.conexionPrinc)
+                Dim sql As String =
+                "SELECT DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, " &
+                "FORMAT(SUM(IFNULL(t.totalTarjeta, 0)), 2, 'es_AR') AS totalTarjeta, " &
+                "FORMAT(SUM(REPLACE(fact.total, ',', '.') - IFNULL(t.totalTarjeta, 0)), 2, 'es_AR') AS totalEfectivo, " &
+                "FORMAT(SUM(REPLACE(fact.total, ',', '.')), 2, 'es_AR') AS totalRecibo " &
+                "FROM fact_facturas AS fact " &
+                "LEFT JOIN (SELECT comprobante, SUM(REPLACE(importe, ',', '.')) AS totalTarjeta FROM fact_tarjetas GROUP BY comprobante) AS t ON fact.id = t.comprobante " &
+                "WHERE fact.tipofact = 996 AND fact.fecha BETWEEN '" & desde & "' AND '" & hasta & "' " & consPtovta & " " &
+                "GROUP BY fact.fecha ORDER BY fact.fecha DESC"
+
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
                 columna = 3
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
             End If
+
             If rdcobranzaintervalo.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id, concat(fis.abrev,' ',
-                lpad(fact.ptovta,4,'0'),'-',lpad(fact.num_fact,8,'0')) as ReciboNumero, DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, 
-                format((select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR') as totalTarjeta, 
-                if (fact.id not in (select comprobante from fact_tarjetas),format(replace(total,',','.'),2,'es_AR'),
-                format(replace(total,',','.') -
-                (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo,
-                
-                format(replace(total,',','.'),2,'es_AR') as totalRecibo,
+                Dim sql As String =
+                "SELECT fact.id, CONCAT(fis.abrev, ' ', LPAD(fact.ptovta, 4, '0'), '-', LPAD(fact.num_fact, 8, '0')) AS ReciboNumero, " &
+                "DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, fact.razon, " &
+                "FORMAT(IFNULL(t.totalTarjeta, 0), 2, 'es_AR') AS totalTarjeta, " &
+                "FORMAT(REPLACE(fact.total, ',', '.') - IFNULL(t.totalTarjeta, 0), 2, 'es_AR') AS totalEfectivo, " &
+                "FORMAT(REPLACE(fact.total, ',', '.'), 2, 'es_AR') AS totalRecibo, " &
+                "(SELECT codigoAsiento FROM cm_libroDiario WHERE comprobanteInterno = CONCAT(fis.abrev, ' ', LPAD(fact.ptovta, 4, '0'), '-', LPAD(fact.num_fact, 8, '0')) LIMIT 1) AS NumeroAsiento " &
+                "FROM fact_facturas AS fact " &
+                "INNER JOIN fact_conffiscal AS fis ON fis.donfdesc = fact.tipofact AND fis.ptovta = fact.ptovta " &
+                "LEFT JOIN (SELECT comprobante, SUM(REPLACE(importe, ',', '.')) AS totalTarjeta FROM fact_tarjetas GROUP BY comprobante) AS t ON fact.id = t.comprobante " &
+                "WHERE fact.tipofact = 996 AND fact.fecha BETWEEN '" & desde & "' AND '" & hasta & "' " & consPtovta & " " &
+                "ORDER BY fact.razon ASC"
 
-                (select codigoAsiento from cm_libroDiario where comprobanteInterno like ReciboNumero limit 1) as NumeroAsiento
-                
-                FROM fact_facturas as fact, fact_conffiscal as fis
-
-                where fis.donfdesc=fact.tipofact and fis.ptovta=fact.ptovta and  fact.tipofact=996 and fact.fecha between '" & desde & "' and '" & hasta & "' " & consPtovta &
-                "order by fact.razon asc", GestorConexiones.conexionPrinc)
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
                 columna = 6
-                'MsgBox(consulta.SelectCommand.CommandText)
-
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
+
             If rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex = -1 Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("
-                select ft.nombre, format(sum(replace(ft.importe,',','.')),2,'es_AR') as importe from fact_tarjetas ft, fact_facturas fact 
-                where ft.fecha between '" & desde & "' and '" & hasta & "' and 
-                fact.id = ft.comprobante " &
-                consPtovta & "
-                GROUP by ft.nombre ", GestorConexiones.conexionPrinc)
+                Dim sql As String =
+                "SELECT ft.nombre, FORMAT(SUM(REPLACE(ft.importe, ',', '.')), 2, 'es_AR') AS importe " &
+                "FROM fact_tarjetas ft " &
+                "INNER JOIN fact_facturas fact ON fact.id = ft.comprobante " &
+                "WHERE ft.fecha BETWEEN '" & desde & "' AND '" & hasta & "' " & consPtovta & " " &
+                "GROUP BY ft.nombre"
+
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
                 columna = 1
                 consulta.Fill(tablacob)
-                'Dim bindintarjetas As New DataView(tablacob)
-                'bindintarjetas.RowFilter = " totalTarjeta<>'' "
-                dtlistacob.DataSource = tablacob 'bindintarjetas
-                'dtlistacob.Columns(0).Visible = False
+                dtlistacob.DataSource = tablacob
+
             ElseIf rdtarjeta.Checked = True And cmbTarjetasMarcas.SelectedIndex <> -1 Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero,                 
-                format((select replace(importe,',','.') as totalTarjeta from fact_tarjetas where comprobante=fact.id and nombre like '%" & cmbTarjetasMarcas.Text.Replace(" ", "%") & "%'),2,'es_AR') as totalTarjeta			
-                FROM fact_facturas as fact 
-                where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' 
-                and fact.id in (select comprobante from fact_tarjetas) " & consPtovta &
-                "order by fact.razon asc", GestorConexiones.conexionPrinc)
+                Dim sql As String =
+                "SELECT fact.id, DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, fact.razon, CONCAT(fact.ptovta, '-', fact.num_fact) AS ReciboNumero, " &
+                "FORMAT(SUM(REPLACE(ft.importe, ',', '.')), 2, 'es_AR') AS totalTarjeta " &
+                "FROM fact_facturas AS fact " &
+                "INNER JOIN fact_tarjetas AS ft ON fact.id = ft.comprobante " &
+                "WHERE fact.tipofact = 996 AND fact.fecha BETWEEN '" & desde & "' AND '" & hasta & "' " & consPtovta & " " &
+                "AND ft.nombre LIKE '%" & cmbTarjetasMarcas.Text.Replace(" ", "%") & "%' " &
+                "GROUP BY fact.id, fact.fecha, fact.razon, fact.ptovta, fact.num_fact " &
+                "ORDER BY fact.razon ASC"
+
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
-                Dim bindintarjetas As New DataView(tablacob)
-                bindintarjetas.RowFilter = " totalTarjeta<>'' "
-                dtlistacob.DataSource = bindintarjetas
+                ' Al agrupar desde SQL ya no necesitas el DataView.RowFilter
+                dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
+
             If rdefectivo.Checked = True Then
-                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fact.id,DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha,fact.razon, concat(fact.ptovta,'-',fact.num_fact) as ReciboNumero, 			
-                if (fact.id not in (select comprobante from fact_tarjetas),
-                format(replace(total,',','.'),2,'es_AR'),format(replace(total,',','.') -
-                (select replace(importe,',','.') from fact_tarjetas where comprobante=fact.id),2,'es_AR')) as totalEfectivo	
-                FROM fact_facturas as fact 
-                where fact.tipofact=996 and fact.fecha between'" & desde & "' and '" & hasta & "' " & consPtovta &
-                " having totalEfectivo<>0
-                order by fact.razon  asc", GestorConexiones.conexionPrinc)
+                Dim sql As String =
+                "SELECT fact.id, DATE_FORMAT(fact.fecha, '%d-%m-%Y') AS fecha, fact.razon, CONCAT(fact.ptovta, '-', fact.num_fact) AS ReciboNumero, " &
+                "FORMAT(REPLACE(fact.total, ',', '.') - IFNULL(t.totalTarjeta, 0), 2, 'es_AR') AS totalEfectivo " &
+                "FROM fact_facturas AS fact " &
+                "LEFT JOIN (SELECT comprobante, SUM(REPLACE(importe, ',', '.')) AS totalTarjeta FROM fact_tarjetas GROUP BY comprobante) AS t ON fact.id = t.comprobante " &
+                "WHERE fact.tipofact = 996 AND fact.fecha BETWEEN '" & desde & "' AND '" & hasta & "' " & consPtovta & " " &
+                "AND (REPLACE(fact.total, ',', '.') - IFNULL(t.totalTarjeta, 0)) <> 0 " &
+                "ORDER BY fact.razon ASC"
+
+                Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
                 columna = 4
                 consulta.Fill(tablacob)
                 dtlistacob.DataSource = tablacob
                 dtlistacob.Columns(0).Visible = False
             End If
+
             lbltotcob.Text = SumarTotal(dtlistacob, columna, 0)
             EnProgreso.Close()
+
         Catch ex As Exception
             MsgBox(ex.Message)
             EnProgreso.Close()
         End Try
     End Sub
-
     Private Sub cmbbuscarcheques_Click(sender As Object, e As EventArgs) Handles cmdbuscarcheques.Click
         Try
             Dim consul As String
@@ -5149,16 +5274,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         End Try
     End Sub
 
-    Private Sub cmbperiodoLibroDiario_SelectedValueChangedComitted(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectionChangeCommitted
-
-
-
-    End Sub
-
-    Private Sub cmbCuentas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbCuentas.SelectedIndexChanged
-        'CargarLibroDiario()
-    End Sub
-
     Private Sub rdCtaSaldo_CheckedChanged(sender As Object, e As EventArgs) Handles rdCtaSaldo.CheckedChanged
         If rdCtaSaldo.Checked = True Then
             dgvListadoCuentaConSaldos.Rows.Clear()
@@ -5297,28 +5412,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         CargarLibroMayor()
     End Sub
 
-    Private Sub Panel16_Paint(sender As Object, e As PaintEventArgs) Handles Panel16.Paint
-
-    End Sub
-
-    Private Sub TabPage6_Click(sender As Object, e As EventArgs) Handles tabUsuarios.Click
-
-    End Sub
-
-    Private Sub TabPage6_Enter(sender As Object, e As EventArgs) Handles tabUsuarios.Enter
-        'Try
-        '    Reconectar()
-        '    Dim consUsuarios As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id, Cliente as usuario, autorizado, codus,clave,(select  
-        '    FROM AuthServ.CliAuth  where bd like '" & DatosAcceso.bd & "'  ", conexionAuth)
-        '    Dim tabUsuarios As New DataTable
-        '    consUsuarios.Fill(tabUsuarios)
-
-        '    dgvUsuarios.DataSource = tabUsuarios
-        'Catch ex As Exception
-
-        'End Try
-    End Sub
-
     Private Sub TabLog_Enter(sender As Object, e As EventArgs) Handles tabLog.Enter
         CargarLogAcceso()
     End Sub
@@ -5345,14 +5438,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
     End Sub
     Private Sub Button39_Click_1(sender As Object, e As EventArgs) Handles Button39.Click
         CargarLogAcceso()
-    End Sub
-
-    Private Sub tabdtostecni_Click(sender As Object, e As EventArgs) Handles tabdtostecni.Click
-
-    End Sub
-
-    Private Sub servidorCorreo_Click(sender As Object, e As EventArgs) Handles servidorCorreo.Click
-
     End Sub
 
     Private Sub servidorCorreo_Enter(sender As Object, e As EventArgs) Handles servidorCorreo.Enter
@@ -5382,10 +5467,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         Catch ex As Exception
 
         End Try
-    End Sub
-
-    Private Sub dtfacturas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtfacturas.CellContentClick
-
     End Sub
 
     Private Sub Button40_Click(sender As Object, e As EventArgs) Handles Button40.Click
@@ -5471,30 +5552,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         cmbTarjetasMarcas.DisplayMember = readTarjetasNombre.Tables(0).Columns("nombre").Caption.ToString.ToUpper
         cmbTarjetasMarcas.ValueMember = readTarjetasNombre.Tables(0).Columns("id").Caption.ToString
         cmbTarjetasMarcas.SelectedIndex = -1
-    End Sub
-
-    Private Sub ComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbPeriodoComp.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub ComboBox2_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbPeriodoComp.SelectionChangeCommitted
-
-    End Sub
-
-    Private Sub cmbperiodocarg_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbperiodocarg.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub ivaVentas_Click(sender As Object, e As EventArgs) Handles ivaVentas.Click
-
-    End Sub
-
-    Private Sub ivaVentas_EnabledChanged(sender As Object, e As EventArgs) Handles ivaVentas.EnabledChanged
-
-    End Sub
-
-    Private Sub tabCompras_Click(sender As Object, e As EventArgs) Handles tabCompras.Click
-
     End Sub
 
     Private Sub tabCompras_Enter(sender As Object, e As EventArgs) Handles tabCompras.Enter
@@ -5785,10 +5842,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
 
     Private Sub txtbdsincronizarCOMP_TextChanged(sender As Object, e As EventArgs) Handles txtbdsincronizarCOMP.TextChanged
         txtbdSincronizar.Text = txtbdsincronizarCOMP.Text
-    End Sub
-
-    Private Sub dgvUsuarios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellContentClick
-
     End Sub
 
     Private Sub dgvUsuarios_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs) Handles dgvUsuarios.CellEndEdit
@@ -6164,13 +6217,6 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         MsgBox("contactar administrador")
     End Sub
 
-    Private Sub cmbperiodoLibroDiario_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmbperiodoLibroDiario.SelectedIndexChanged
-
-    End Sub
-
-    Private Sub Panel6_Paint(sender As Object, e As PaintEventArgs) Handles Panel6.Paint
-
-    End Sub
 
     Private Sub Button49_Click(sender As Object, e As EventArgs) Handles Button49.Click
         Dim EnProgreso As New Form
@@ -6293,13 +6339,16 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         End Try
     End Sub
 
-    Private Sub dgvgastos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvgastos.CellContentClick
+    Private Sub dtlistacob_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dtlistacob.DataBindingComplete
+        ' Recorremos todas las filas y le asignamos su índice (+1 para que arranque en 1)
+        For Each fila As DataGridViewRow In dtlistacob.Rows
+            fila.HeaderCell.Value = (fila.Index + 1).ToString()
+        Next
 
+        ' Ensanchamos el encabezado automáticamente para que números de 3 o 4 cifras no queden cortados
+        dtlistacob.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
     End Sub
 
-    Private Sub dgvgastos_CellStyleContentChanged(sender As Object, e As DataGridViewCellStyleContentChangedEventArgs) Handles dgvgastos.CellStyleContentChanged
-
-    End Sub
 
     Private Sub dgvgastos_KeyUp(sender As Object, e As KeyEventArgs) Handles dgvgastos.KeyUp
         If e.KeyCode = Keys.Delete And InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
@@ -6340,35 +6389,13 @@ group by concat(year(fecha),'/',lpad(month(fecha),2,'0'))", GestorConexiones.con
         CargarLibroDiario()
     End Sub
 
-    Private Sub dtchequespropios_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtchequespropios.CellContentClick
+    Private Sub dtfacturas_DataBindingComplete(sender As Object, e As DataGridViewBindingCompleteEventArgs) Handles dtfacturas.DataBindingComplete
+        ' Recorremos todas las filas y le asignamos su índice (+1 para que arranque en 1)
+        For Each fila As DataGridViewRow In dtfacturas.Rows
+            fila.HeaderCell.Value = (fila.Index + 1).ToString()
+        Next
 
-    End Sub
-
-    Private Sub tabcomprobantes_Click(sender As Object, e As EventArgs) Handles tabcomprobantes.Click
-
-    End Sub
-
-    Private Sub Panel11_Paint(sender As Object, e As PaintEventArgs) Handles Panel11.Paint
-
-    End Sub
-
-    Private Sub dtlistacob_ControlRemoved(sender As Object, e As ControlEventArgs) Handles dtlistacob.ControlRemoved
-
-    End Sub
-
-    Private Sub dtestadocuentas_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dtestadocuentas.CellContentClick
-
-    End Sub
-
-    Private Sub Panel13_Paint(sender As Object, e As PaintEventArgs) Handles Panel13.Paint
-
-    End Sub
-
-    Private Sub tabcuentasclientes_Click(sender As Object, e As EventArgs) Handles tabcuentasclientes.Click
-
-    End Sub
-
-    Private Sub tabstockvalorizado_Click(sender As Object, e As EventArgs) Handles tabstockvalorizado.Click
-
+        ' Ensanchamos el encabezado automáticamente para que números de 3 o 4 cifras no queden cortados
+        dtfacturas.AutoResizeRowHeadersWidth(DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders)
     End Sub
 End Class

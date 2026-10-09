@@ -962,9 +962,9 @@ Partial Class informedeventas
         Me.Label62.ForeColor = System.Drawing.Color.White
         Me.Label62.Location = New System.Drawing.Point(3, 0)
         Me.Label62.Name = "Label62"
-        Me.Label62.Size = New System.Drawing.Size(311, 39)
+        Me.Label62.Size = New System.Drawing.Size(334, 39)
         Me.Label62.TabIndex = 2
-        Me.Label62.Text = "Informe de ventas"
+        Me.Label62.Text = "Informe de Pedidos"
         '
         'TabPage1
         '
@@ -1771,9 +1771,9 @@ Partial Class informedeventas
         Me.Label1.ForeColor = System.Drawing.Color.White
         Me.Label1.Location = New System.Drawing.Point(3, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(330, 39)
+        Me.Label1.Size = New System.Drawing.Size(311, 39)
         Me.Label1.TabIndex = 2
-        Me.Label1.Text = "Informe de pedidos"
+        Me.Label1.Text = "Informe de ventas"
         '
         'tabseguimientoVendedores
         '

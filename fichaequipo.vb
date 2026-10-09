@@ -164,53 +164,68 @@
     Private Sub cargarOrden()
         Try
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT tall.trabajo_categoria, tall.equipo, tall.cliente, cl.nomapell_razon,tall.recibe, eq.tipo_equ,eq.marca,eq.modelo, tall.serie, " &
-        "tall.accesorios, tall.motivo_ing, tall.observaciones, tall.falla, tall.tarea_realiz, format(tall.mo_monto,2,'es_AR') as mo_monto,tall.actualizado,tall.tecnico,tall.infoextra,tall.estado,tall.modelo,tall.fecha_ing, " &
-        "tall.trab_estado, tall.mail, tall.telefono,tall.presupuesto, " &
-        "if (tall.fecha_eg like '0000-00-00','SIN TERMINAR',tall.fecha_eg), cl.lista_precios," &
-        "(select especificaciones from tecni_equipos_clientes where id=tall.equipo) as especificaciones " &
-        "FROM tecni_taller as tall, fact_clientes as cl, tecni_equipos as eq " &
-        "where tall.cliente=cl.idclientes and tall.modelo=eq.id and tall.id=" & ORden, GestorConexiones.conexionPrinc)
+
+            ' 1. Consulta SQL optimizada y con formatos de fecha correctos (DATE_FORMAT)
+            Dim sql As String =
+                "SELECT tall.trabajo_categoria, tall.equipo, tall.cliente, cl.nomapell_razon, tall.recibe, " &
+                "eq.tipo_equ, eq.marca, eq.modelo AS eq_modelo, tall.serie, tall.accesorios, " &
+                "tall.motivo_ing, tall.observaciones, tall.falla, tall.tarea_realiz, " &
+                "FORMAT(tall.mo_monto, 2, 'es_AR') AS mo_monto, " &
+                "DATE_FORMAT(tall.actualizado, '%d/%m/%Y %H:%i') AS actualizado, " &
+                "tall.tecnico, tall.infoextra, tall.estado, tall.modelo, " &
+                "DATE_FORMAT(tall.fecha_ing, '%d/%m/%Y') AS fecha_ing, " &
+                "tall.trab_estado, tall.mail, tall.telefono, tall.presupuesto, " &
+                "IF(tall.fecha_eg LIKE '0000-00-00%', 'SIN TERMINAR', DATE_FORMAT(tall.fecha_eg, '%d/%m/%Y')) AS fecha_eg, " &
+                "cl.lista_precios, " &
+                "(SELECT especificaciones FROM tecni_equipos_clientes WHERE id = tall.equipo) AS especificaciones " &
+                "FROM tecni_taller AS tall " &
+                "INNER JOIN fact_clientes AS cl ON tall.cliente = cl.idclientes " &
+                "INNER JOIN tecni_equipos AS eq ON tall.modelo = eq.id " &
+                "WHERE tall.id = " & ORden
 
             Dim tablaequipo As New DataTable
-            Dim infoequ() As DataRow
-            consulta.Fill(tablaequipo)
-            infoequ = tablaequipo.Select("")
 
-            If infoequ.Length > 0 Then
-                ' --- Manejo de ComboBoxes (Solo asigna si no es nulo) ---
-                If Not IsDBNull(infoequ(0)(0)) Then cmbcattrab.SelectedValue = infoequ(0)(0)
-                If Not IsDBNull(infoequ(0)(4)) Then cmbrecibeusuario.SelectedValue = infoequ(0)(4)
-                If Not IsDBNull(infoequ(0)(5)) Then cmbtipoequ.SelectedValue = infoequ(0)(5)
-                If Not IsDBNull(infoequ(0)(6)) Then cmbmarcas.SelectedValue = infoequ(0)(6)
-                If Not IsDBNull(infoequ(0)(7)) Then cmbmodelos.SelectedValue = infoequ(0)(7)
-                If Not IsDBNull(infoequ(0)(26)) Then cmblistaprecio.SelectedValue = infoequ(0)(26)
+            ' Usamos 'Using' para liberar los recursos de conexión automáticamente
+            Using consulta As New MySql.Data.MySqlClient.MySqlDataAdapter(sql, GestorConexiones.conexionPrinc)
+                consulta.Fill(tablaequipo)
+            End Using
 
-                ' --- Manejo de TextBoxes y Labels (.ToString() convierte DBNull en string vacío "") ---
+            If tablaequipo.Rows.Count > 0 Then
+                Dim fila As DataRow = tablaequipo.Rows(0)
+
+                ' --- Manejo de ComboBoxes (Validamos DBNull) ---
+                If Not IsDBNull(fila("trabajo_categoria")) Then cmbcattrab.SelectedValue = fila("trabajo_categoria")
+                If Not IsDBNull(fila("recibe")) Then cmbrecibeusuario.SelectedValue = fila("recibe")
+                If Not IsDBNull(fila("tipo_equ")) Then cmbtipoequ.SelectedValue = fila("tipo_equ")
+                If Not IsDBNull(fila("marca")) Then cmbmarcas.SelectedValue = fila("marca")
+                If Not IsDBNull(fila("eq_modelo")) Then cmbmodelos.SelectedValue = fila("eq_modelo")
+                If Not IsDBNull(fila("lista_precios")) Then cmblistaprecio.SelectedValue = fila("lista_precios")
+
+                ' --- Manejo de TextBoxes y Labels (Llamamos a la columna por su nombre) ---
                 txtnumor.Text = CompletarCeros(ORden, 2)
-                txtcodint.Text = infoequ(0)(1).ToString()
-                txtctaclie.Text = infoequ(0)(2).ToString()
-                txtrazon.Text = infoequ(0)(3).ToString()
-                txtnumeroSerie.Text = infoequ(0)(8).ToString()
-                txtaccesorios.Text = infoequ(0)(9).ToString()
-                txtmotivo.Text = infoequ(0)(10).ToString()
-                txtobservaciones.Text = infoequ(0)(11).ToString()
-                txtfalla.Text = infoequ(0)(12).ToString()
-                txtresolucion.Text = infoequ(0)(13).ToString()
-                txtmanoobra.Text = infoequ(0)(14).ToString()
-                lblfechaact.Text = "Revisado:" & infoequ(0)(15).ToString()
-                txtinfoextra.Text = infoequ(0)(17).ToString()
-                lblmodelo.Text = infoequ(0)(19).ToString()
-                lblfecha.Text = "Ingreso: " & infoequ(0)(20).ToString()
-                txtmail.Text = infoequ(0)(22).ToString()
-                txttelefono.Text = infoequ(0)(23).ToString()
-                txtpresupuesto.Text = infoequ(0)(24).ToString()
-                txtespecificaciones.Text = infoequ(0)("especificaciones").ToString()
+                txtcodint.Text = fila("equipo").ToString()
+                txtctaclie.Text = fila("cliente").ToString()
+                txtrazon.Text = fila("nomapell_razon").ToString()
+                txtnumeroSerie.Text = fila("serie").ToString()
+                txtaccesorios.Text = fila("accesorios").ToString()
+                txtmotivo.Text = fila("motivo_ing").ToString()
+                txtobservaciones.Text = fila("observaciones").ToString()
+                txtfalla.Text = fila("falla").ToString()
+                txtresolucion.Text = fila("tarea_realiz").ToString()
+                txtmanoobra.Text = fila("mo_monto").ToString()
+                lblfechaact.Text = "Revisado: " & fila("actualizado").ToString()
+                txtinfoextra.Text = fila("infoextra").ToString()
+                lblmodelo.Text = fila("modelo").ToString()
+                lblfecha.Text = "Ingreso: " & fila("fecha_ing").ToString()
+                txtmail.Text = fila("mail").ToString()
+                txttelefono.Text = fila("telefono").ToString()
+                txtpresupuesto.Text = fila("presupuesto").ToString()
+                txtespecificaciones.Text = fila("especificaciones").ToString()
 
-                ' --- Manejo de condiciones numéricas (Validamos nulos antes de comparar) ---
-                Dim tecnico As Integer = If(IsDBNull(infoequ(0)(16)), 0, Convert.ToInt32(infoequ(0)(16)))
-                Dim estado As Integer = If(IsDBNull(infoequ(0)(18)), 0, Convert.ToInt32(infoequ(0)(18)))
-                Dim facturado As Integer = If(IsDBNull(infoequ(0)(21)), 0, Convert.ToInt32(infoequ(0)(21)))
+                ' --- Manejo de condiciones numéricas ---
+                Dim tecnico As Integer = If(IsDBNull(fila("tecnico")), 0, Convert.ToInt32(fila("tecnico")))
+                Dim estado As Integer = If(IsDBNull(fila("estado")), 0, Convert.ToInt32(fila("estado")))
+                Dim facturado As Integer = If(IsDBNull(fila("trab_estado")), 0, Convert.ToInt32(fila("trab_estado")))
 
                 cmbestadotrab.SelectedValue = estado
 
@@ -222,7 +237,7 @@
 
                 If estado = 8 Then
                     cmdfinalizar.Enabled = False
-                    lblfechafin.Text = "Finalizado: " & infoequ(0)(25).ToString()
+                    lblfechafin.Text = "Finalizado: " & fila("fecha_eg").ToString()
                     cmdimprimir.Enabled = True
                 End If
 
@@ -230,27 +245,29 @@
                     chkfacturado.Checked = True
                 End If
 
-                ' --- Carga de repuestos (Con protección .ToString()) ---
-                Dim consultarep As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT id,codigo,plu,cantidad,descripcion," &
-            "format(iva,2,'es_AR') as iva, format(punit,2,'es_AR') as punit,format(ptotal,2,'es_AR') as ptotal,idtaller " &
-            "from tecni_taller_insumos where idtaller=" & ORden, GestorConexiones.conexionPrinc)
+                ' --- Carga de repuestos ---
+                Dim sqlRep As String =
+                    "SELECT id, codigo, plu, cantidad, descripcion, " &
+                    "FORMAT(iva, 2, 'es_AR') AS iva, FORMAT(punit, 2, 'es_AR') AS punit, FORMAT(ptotal, 2, 'es_AR') AS ptotal " &
+                    "FROM tecni_taller_insumos WHERE idtaller=" & ORden
 
                 Dim tablarep As New DataTable
-                Dim inforep() As DataRow
-                consultarep.Fill(tablarep)
-                inforep = tablarep.Select("")
+                Using consultarep As New MySql.Data.MySqlClient.MySqlDataAdapter(sqlRep, GestorConexiones.conexionPrinc)
+                    consultarep.Fill(tablarep)
+                End Using
+
                 dtproductos.Rows.Clear()
 
-                For i As Integer = 0 To inforep.GetUpperBound(0)
+                For Each filaRep As DataRow In tablarep.Rows
                     dtproductos.Rows.Add(
-                    inforep(i)(0).ToString(),
-                    inforep(i)(1).ToString(),
-                    inforep(i)(3).ToString(),
-                    inforep(i)(4).ToString(),
-                    inforep(i)(5).ToString(),
-                    inforep(i)(6).ToString(),
-                    inforep(i)(7).ToString()
-                )
+                        filaRep("id").ToString(),
+                        filaRep("plu").ToString(),
+                        filaRep("cantidad").ToString(),
+                        filaRep("descripcion").ToString(),
+                        filaRep("iva").ToString(),
+                        filaRep("punit").ToString(),
+                        filaRep("ptotal").ToString()
+                    )
                     dtproductos.Rows(dtproductos.RowCount - 2).DefaultCellStyle.BackColor = Color.GreenYellow
                 Next
 
@@ -258,7 +275,7 @@
             End If
 
         Catch ex As Exception
-            ' Opcional: MsgBox(ex.Message) para depurar si falla algo dentro del bloque
+            MsgBox("Error al cargar la orden: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
     Private Sub CargarCategoriastrab()

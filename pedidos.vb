@@ -1,6 +1,9 @@
 ﻿Public Class Presupuestos
     Dim IDPedidoSeleccionado As Integer
     Dim SeleccionMultiple As Boolean
+
+    ' SEMÁFORO PARA EVITAR CARGAS DUPLICADAS
+    Private IniciandoFormulario As Boolean = True
     Private Sub cmdnuevapers_Click(sender As Object, e As EventArgs) Handles cmdnuevapers.Click
         Dim i As Integer
         For i = 0 To Me.MdiChildren.Length - 1
@@ -16,9 +19,14 @@
     End Sub
 
     Private Sub pedidos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        IniciandoFormulario = True ' Encendemos el semáforo
+
         cargarDatosGrales()
-        cargarPedidos()
-        dtpdesde.Value = obtenerPrimerDiaMes()
+        dtpdesde.Value = obtenerPrimerDiaMes() ' Cambia el valor, pero el evento será ignorado
+
+        IniciandoFormulario = False ' Apagamos el semáforo
+
+        cargarPedidos() ' Llamada única, limpia y oficial
     End Sub
     Private Sub cargarDatosGrales()
         Try
@@ -42,63 +50,107 @@
         Catch ex As Exception
         End Try
     End Sub
+
     Public Sub cargarPedidos()
+
+        Dim frmCarga As Form = Nothing
         Try
-            Dim ConsultaEXT As String
-            Dim desde As String = Format(CDate(dtpdesde.Value), "yyyy-MM-dd")
-            Dim hasta As String = Format(CDate(dtphasta.Value), "yyyy-MM-dd")
-            If cmbvendedor.SelectedIndex <> -1 Then
-                ConsultaEXT &= " and vendedor= " & cmbvendedor.SelectedValue
-            End If
-            If txtbusqCliente.Text <> "" Then
-                ConsultaEXT &= " and razon like '%" & txtbusqCliente.Text & "%'"
-            End If
-            If rdpendientes.Checked = True Then
-                ConsultaEXT &= " and observaciones like 'PENDIENTE'"
-            End If
-            If rdfacturados.Checked = True Then
-                ConsultaEXT &= " and observaciones like 'FACTURADO'"
-                cmdmodificar.Enabled = False
-            Else
-                cmdmodificar.Enabled = True
-            End If
-            If rdImportar.Checked = True Then
-                ConsultaEXT &= " and observaciones <> 'FACTURADO' and observaciones <> 'PENDIENTE'"
-            End If
+            ' 1. Iniciamos la pantalla de espera
+            frmCarga = GestorUtilidades.MostrarProgreso("Buscando pedidos. Por favor espere...")
 
-            Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, 
-            concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,DATE_FORMAT(fac.fecha, '%d-%m-%Y'),
-            (select if 
-            (idclientes=9999,
-				concat(idclientes,'(',fac.razon,')'),
-				concat(idclientes,'(',nomapell_razon,')')
-			)
-            from fact_clientes where idclientes= fac.id_cliente) as razon, 
-            (select direccion from fact_clientes where idclientes= fac.id_cliente) as direccion, 
-            (select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
-            con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones, f_alta as FEnviado 
-            from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
-            " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", GestorConexiones.conexionPrinc)
-            Dim tablaped As New DataTable
-            'MsgBox(consulta.SelectCommand.CommandText)
+            ' 2. Recolectar parámetros de la pantalla
+            Dim fechaDesde As Date = dtpdesde.Value
+            Dim fechaHasta As Date = dtphasta.Value
+            Dim idVend As Integer = If(cmbvendedor.SelectedIndex <> -1, Convert.ToInt32(cmbvendedor.SelectedValue), 0)
+            Dim busqueda As String = txtbusqCliente.Text.Trim()
 
-            consulta.Fill(tablaped)
+            Dim filtroEstado As String = ""
+            If rdpendientes.Checked Then filtroEstado = "PENDIENTE"
+            If rdfacturados.Checked Then filtroEstado = "FACTURADO"
+            If rdImportar.Checked Then filtroEstado = "IMPORTAR"
 
-            'dtpedidos.DataSource = tablaped
-            'dtpedidos.Columns(0).Visible = False
+            ' Gestión visual del botón Modificar
+            cmdmodificar.Enabled = Not rdfacturados.Checked
+
+            ' 3. Llamar al Gestor limpio y optimizado
+            Dim tablaped As DataTable = GestorPedidos.ObtenerListadoPedidos(fechaDesde, fechaHasta, idVend, busqueda, filtroEstado)
+
+            ' 4. Volcar datos y sumar
             dgvPedidos.Cargar_Datos(tablaped)
+
             Dim totalSuma As Double = 0
-
             For Each fila As DataRow In tablaped.Rows
-                totalSuma += FormatNumber(fila.Item(7), 2)
+                totalSuma += Convert.ToDouble(fila.Item("total"))
             Next
+            lbltotalPedidos.Text = totalSuma.ToString("C2", New System.Globalization.CultureInfo("es-AR"))
 
-            lbltotalPedidos.Text = "$" & totalSuma 'SumarTotal(dgvPedidos.dgvVista, 7)
         Catch ex As Exception
-
+            MsgBox("Error al cargar la grilla: " & ex.Message, MsgBoxStyle.Critical)
+        Finally
+            ' 5. Garantizar el cierre del formulario de progreso
+            If frmCarga IsNot Nothing AndAlso Not frmCarga.IsDisposed Then
+                frmCarga.Close()
+                frmCarga.Dispose()
+            End If
         End Try
     End Sub
+    ' Public Sub cargarPedidos()
+    '     Try
+    '         Dim ConsultaEXT As String
+    '         Dim desde As String = Format(CDate(dtpdesde.Value), "yyyy-MM-dd")
+    '         Dim hasta As String = Format(CDate(dtphasta.Value), "yyyy-MM-dd")
+    '         If cmbvendedor.SelectedIndex <> -1 Then
+    '             ConsultaEXT &= " and vendedor= " & cmbvendedor.SelectedValue
+    '         End If
+    '         If txtbusqCliente.Text <> "" Then
+    '             ConsultaEXT &= " and razon like '%" & txtbusqCliente.Text & "%'"
+    '         End If
+    '         If rdpendientes.Checked = True Then
+    '             ConsultaEXT &= " and observaciones like 'PENDIENTE'"
+    '         End If
+    '         If rdfacturados.Checked = True Then
+    '             ConsultaEXT &= " and observaciones like 'FACTURADO'"
+    '             cmdmodificar.Enabled = False
+    '         Else
+    '             cmdmodificar.Enabled = True
+    '         End If
+    '         If rdImportar.Checked = True Then
+    '             ConsultaEXT &= " and observaciones <> 'FACTURADO' and observaciones <> 'PENDIENTE'"
+    '         End If
+
+    '         Reconectar()
+    '         Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fac.id, 
+    '         concat(lpad(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as pedidonum,DATE_FORMAT(fac.fecha, '%d-%m-%Y'),
+    '         (select if 
+    '         (idclientes=9999,
+    '	concat(idclientes,'(',fac.razon,')'),
+    '	concat(idclientes,'(',nomapell_razon,')')
+    ')
+    '         from fact_clientes where idclientes= fac.id_cliente) as razon, 
+    '         (select direccion from fact_clientes where idclientes= fac.id_cliente) as direccion, 
+    '         (select nombre from cm_localidad as loca, fact_clientes as cl where id=cl.dir_localidad and cl.idclientes=fac.id_cliente ) as localidad, 
+    '         con.condicion, format(fac.total,2,'es_AR'), fac.observaciones as estado, fac.observaciones2 as observaciones, f_alta as FEnviado 
+    '         from fact_facturas as fac, fact_condventas as con where con.id=fac.condvta and fac.tipofact=995 " & ConsultaEXT &
+    '         " and fac.fecha between '" & desde & "' and '" & hasta & "' order by fac.id asc", GestorConexiones.conexionPrinc)
+    '         Dim tablaped As New DataTable
+    '         'MsgBox(consulta.SelectCommand.CommandText)
+
+    '         consulta.Fill(tablaped)
+
+    '         'dtpedidos.DataSource = tablaped
+    '         'dtpedidos.Columns(0).Visible = False
+    '         dgvPedidos.Cargar_Datos(tablaped)
+    '         Dim totalSuma As Double = 0
+
+    '         For Each fila As DataRow In tablaped.Rows
+    '             totalSuma += FormatNumber(fila.Item(7), 2)
+    '         Next
+
+    '         lbltotalPedidos.Text = "$" & totalSuma 'SumarTotal(dgvPedidos.dgvVista, 7)
+    '     Catch ex As Exception
+
+    '     End Try
+    ' End Sub
 
     Private Sub cmdmodificar_Click(sender As Object, e As EventArgs) Handles cmdmodificar.Click
         Try
@@ -174,41 +226,68 @@
     Private Sub cmdeliminar_Click(sender As Object, e As EventArgs) Handles cmdeliminar.Click
         Try
             If InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
-                MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+                MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES", MsgBoxStyle.Exclamation)
                 Exit Sub
             End If
-            If MsgBox("Esta seguro que desa eliminar este pedido?", vbQuestion + vbYesNo) = vbNo Then
+
+            If MsgBox("¿Está seguro que desea eliminar este pedido?", vbQuestion + vbYesNo) = vbNo Then
                 Exit Sub
             End If
-            Dim idped As Integer = IDPedidoSeleccionado
-            Dim condicionITM As String = ""
-            Dim condicionPED As String = ""
 
-            If rdImportar.Checked = True Then
-                condicionITM = " where codint like '" & dgvPedidos.dgvVista.CurrentRow.Cells("observaciones").Value & "'"
-                condicionPED = " where id= " & IDPedidoSeleccionado
-            Else
-                condicionITM = " where id_fact=" & IDPedidoSeleccionado
-                condicionPED = " where id= " & IDPedidoSeleccionado
+            Dim modoImportar As Boolean = rdImportar.Checked
+            Dim codInt As String = ""
+
+            If modoImportar AndAlso dgvPedidos.dgvVista.CurrentRow IsNot Nothing Then
+                codInt = dgvPedidos.dgvVista.CurrentRow.Cells("observaciones").Value.ToString()
             End If
 
-            Dim delItm As String = "delete from fact_items " & condicionITM
+            ' Llamamos al Gestor (Ejecuta la transacción SQL de manera segura)
+            If GestorPedidos.EliminarPedido(IDPedidoSeleccionado, modoImportar, codInt) Then
+                cargarPedidos()
+            End If
 
-            Dim delPed As String = "delete from fact_facturas " & condicionPED
-
-            Reconectar()
-            Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, GestorConexiones.conexionPrinc)
-            comandoDelItm.ExecuteNonQuery()
-
-            Reconectar()
-            Dim comandoDelPed As New MySql.Data.MySqlClient.MySqlCommand(delPed, GestorConexiones.conexionPrinc)
-            comandoDelPed.ExecuteNonQuery()
-
-            cargarPedidos()
         Catch ex As Exception
-
+            MsgBox(ex.Message)
         End Try
     End Sub
+    'Private Sub cmdeliminar_Click(sender As Object, e As EventArgs) Handles cmdeliminar.Click
+    '    Try
+    '        If InStr(DatosAcceso.Moduloacc, "SUPERADMIN") = False Then
+    '            MsgBox("NO ESTA AUTORIZADO PARA ELIMINAR COMPROBANTES")
+    '            Exit Sub
+    '        End If
+    '        If MsgBox("Esta seguro que desa eliminar este pedido?", vbQuestion + vbYesNo) = vbNo Then
+    '            Exit Sub
+    '        End If
+    '        Dim idped As Integer = IDPedidoSeleccionado
+    '        Dim condicionITM As String = ""
+    '        Dim condicionPED As String = ""
+
+    '        If rdImportar.Checked = True Then
+    '            condicionITM = " where codint like '" & dgvPedidos.dgvVista.CurrentRow.Cells("observaciones").Value & "'"
+    '            condicionPED = " where id= " & IDPedidoSeleccionado
+    '        Else
+    '            condicionITM = " where id_fact=" & IDPedidoSeleccionado
+    '            condicionPED = " where id= " & IDPedidoSeleccionado
+    '        End If
+
+    '        Dim delItm As String = "delete from fact_items " & condicionITM
+
+    '        Dim delPed As String = "delete from fact_facturas " & condicionPED
+
+    '        Reconectar()
+    '        Dim comandoDelItm As New MySql.Data.MySqlClient.MySqlCommand(delItm, GestorConexiones.conexionPrinc)
+    '        comandoDelItm.ExecuteNonQuery()
+
+    '        Reconectar()
+    '        Dim comandoDelPed As New MySql.Data.MySqlClient.MySqlCommand(delPed, GestorConexiones.conexionPrinc)
+    '        comandoDelPed.ExecuteNonQuery()
+
+    '        cargarPedidos()
+    '    Catch ex As Exception
+
+    '    End Try
+    'End Sub
 
     Private Sub txtbusqCliente_KeyUp(sender As Object, e As KeyEventArgs) Handles txtbusqCliente.KeyUp
 
@@ -349,15 +428,17 @@
             End If
         Catch ex As Exception
         End Try
-        cargarPedidos()
+
+        ' Acá está el freno:
+        If rdImportar.Checked AndAlso Not IniciandoFormulario Then cargarPedidos()
     End Sub
 
     Private Sub rdfacturados_CheckedChanged(sender As Object, e As EventArgs) Handles rdfacturados.CheckedChanged
-        cargarPedidos()
+        If Not IniciandoFormulario Then cargarPedidos()
     End Sub
 
     Private Sub rdpendientes_CheckedChanged(sender As Object, e As EventArgs) Handles rdpendientes.CheckedChanged
-        cargarPedidos()
+        If Not IniciandoFormulario Then cargarPedidos()
     End Sub
 
     Private Function ObtenerIdCliente(ClienteTexto As String) As Integer
@@ -458,7 +539,7 @@
     End Sub
 
     Private Sub cmbvendedor_SelectionChangeCommitted(sender As Object, e As EventArgs) Handles cmbvendedor.SelectionChangeCommitted
-        cargarPedidos()
+        If Not IniciandoFormulario Then cargarPedidos()
     End Sub
 
     Private Sub Panel2_Paint(sender As Object, e As PaintEventArgs) Handles Panel2.Paint
@@ -466,11 +547,11 @@
     End Sub
 
     Private Sub dtpdesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpdesde.ValueChanged
-        cargarPedidos()
+        If Not IniciandoFormulario Then cargarPedidos()
     End Sub
 
     Private Sub dtphasta_ValueChanged(sender As Object, e As EventArgs) Handles dtphasta.ValueChanged
-        cargarPedidos()
+        If Not IniciandoFormulario Then cargarPedidos()
     End Sub
     Private Sub PedidoSeleccionado(IdPedido As Integer) Handles dgvPedidos.SeleccionarItem
         IDPedidoSeleccionado = IdPedido
