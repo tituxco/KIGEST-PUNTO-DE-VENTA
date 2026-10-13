@@ -67,9 +67,7 @@ Public Class frmPtoVtaNvo
         facturaPtoVta = GestorFacturacion.fact_puntosventa.BuscarPorID(DatosAcceso.IdPtoVtaDef)
 
         lblFacturaFechaComprobante.Text = fechaFacturaSeleccionada
-        chkFacturaDescontarStock.Checked = DatosAcceso.StockPpref
-        rdFacturaImpresionTermica.Checked = My.Settings.ImprTikets
-        chkFacturaImpresionAutomatica.Checked = My.Settings.ImprTikets 'esto lo cambiaremos despues para que sea n
+
         'cargamos datos generales
         CargarDatosCliente()
         CargarDatosVendedor()
@@ -77,9 +75,15 @@ Public Class frmPtoVtaNvo
         CargarDatosAlmacen()
         CargarDatosCoprobanteSeleccionado()
         CargarDatosCondicionVenta()
-
+        CargarConfiguracion()
 
         'MsgBox("ASIGNACION INICIAL " & fechaFacturaSeleccionada)
+    End Sub
+    Private Sub CargarConfiguracion()
+        If InStr(DatosAcceso.Moduloacc, "3g") = True Then dgvFacturaProductos.Columns("punitProducto").ReadOnly = False
+        chkFacturaDescontarStock.Checked = DatosAcceso.StockPpref
+        rdFacturaImpresionTermica.Checked = My.Settings.ImprTikets
+        chkFacturaImpresionAutomatica.Checked = My.Settings.ImprTikets 'esto lo cambiaremos despues para que sea n
     End Sub
     Public Sub CargarDatosCliente()
         Try

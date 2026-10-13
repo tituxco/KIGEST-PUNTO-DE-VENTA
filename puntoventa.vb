@@ -46,6 +46,9 @@ Public Class puntoventa
     End Sub
     Public Sub cargar_datos_factura()
         Try
+
+
+            If InStr(DatosAcceso.Moduloacc, "3g") = True Then dtproductos.Columns("PUnit").ReadOnly = False
             Reconectar()
             Dim consfactrap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fr.nombre, fis.abrev, lpad(fr.punto_venta, 4, 0) As ptovta, lpad(fis.confnume + 1, 8, 0) As numfact, fr.tipofact 
 			From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta

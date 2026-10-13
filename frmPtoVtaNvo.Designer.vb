@@ -28,14 +28,6 @@ Partial Class frmPtoVtaNvo
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -44,21 +36,18 @@ Partial Class frmPtoVtaNvo
         Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dgvFacturaProductos = New System.Windows.Forms.DataGridView()
-        Me.codProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.descProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cantProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.punitProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ptotalProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.gananciaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ivaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.impFijo1Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.impFijo2Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.idProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.monedaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.panelSuperiorCompleto = New System.Windows.Forms.TableLayoutPanel()
         Me.Panel11 = New System.Windows.Forms.Panel()
         Me.lblFacturaFechaComprobante = New System.Windows.Forms.Label()
@@ -134,6 +123,17 @@ Partial Class frmPtoVtaNvo
         Me.DataGridViewTextBoxColumn12 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn13 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.tmrFacturaParpadeoLegal = New System.Windows.Forms.Timer(Me.components)
+        Me.codProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.descProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cantProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.punitProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ptotalProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.gananciaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ivaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.impFijo1Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.impFijo2Producto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.idProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.monedaProducto = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvFacturaProductos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -248,97 +248,6 @@ Partial Class frmPtoVtaNvo
         Me.dgvFacturaProductos.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black
         Me.dgvFacturaProductos.Size = New System.Drawing.Size(889, 235)
         Me.dgvFacturaProductos.TabIndex = 102
-        '
-        'codProducto
-        '
-        Me.codProducto.FillWeight = 50.0!
-        Me.codProducto.HeaderText = "PLU/Codigo"
-        Me.codProducto.Name = "codProducto"
-        '
-        'descProducto
-        '
-        Me.descProducto.HeaderText = "DESCRIPCION"
-        Me.descProducto.Name = "descProducto"
-        '
-        'cantProducto
-        '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.cantProducto.DefaultCellStyle = DataGridViewCellStyle3
-        Me.cantProducto.FillWeight = 20.0!
-        Me.cantProducto.HeaderText = "CANTIDAD"
-        Me.cantProducto.Name = "cantProducto"
-        '
-        'punitProducto
-        '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.punitProducto.DefaultCellStyle = DataGridViewCellStyle4
-        Me.punitProducto.FillWeight = 50.0!
-        Me.punitProducto.HeaderText = "P. Unitario"
-        Me.punitProducto.Name = "punitProducto"
-        '
-        'ptotalProducto
-        '
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = "0"
-        Me.ptotalProducto.DefaultCellStyle = DataGridViewCellStyle5
-        Me.ptotalProducto.FillWeight = 50.0!
-        Me.ptotalProducto.HeaderText = "P. Total"
-        Me.ptotalProducto.Name = "ptotalProducto"
-        '
-        'gananciaProducto
-        '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = "0"
-        Me.gananciaProducto.DefaultCellStyle = DataGridViewCellStyle6
-        Me.gananciaProducto.HeaderText = "GANANCIA"
-        Me.gananciaProducto.Name = "gananciaProducto"
-        Me.gananciaProducto.Visible = False
-        '
-        'ivaProducto
-        '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.ivaProducto.DefaultCellStyle = DataGridViewCellStyle7
-        Me.ivaProducto.HeaderText = "IVA"
-        Me.ivaProducto.Name = "ivaProducto"
-        Me.ivaProducto.Visible = False
-        '
-        'impFijo1Producto
-        '
-        DataGridViewCellStyle8.Format = "N2"
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.impFijo1Producto.DefaultCellStyle = DataGridViewCellStyle8
-        Me.impFijo1Producto.HeaderText = "Imp. Fijo 1"
-        Me.impFijo1Producto.Name = "impFijo1Producto"
-        Me.impFijo1Producto.Visible = False
-        '
-        'impFijo2Producto
-        '
-        DataGridViewCellStyle9.Format = "N2"
-        DataGridViewCellStyle9.NullValue = "0"
-        Me.impFijo2Producto.DefaultCellStyle = DataGridViewCellStyle9
-        Me.impFijo2Producto.FillWeight = 50.0!
-        Me.impFijo2Producto.HeaderText = "Imp. Fijo 2"
-        Me.impFijo2Producto.Name = "impFijo2Producto"
-        Me.impFijo2Producto.Visible = False
-        '
-        'idProducto
-        '
-        DataGridViewCellStyle10.Format = "N2"
-        DataGridViewCellStyle10.NullValue = "0"
-        Me.idProducto.DefaultCellStyle = DataGridViewCellStyle10
-        Me.idProducto.FillWeight = 50.0!
-        Me.idProducto.HeaderText = "idProducto"
-        Me.idProducto.Name = "idProducto"
-        Me.idProducto.Visible = False
-        '
-        'monedaProducto
-        '
-        Me.monedaProducto.HeaderText = "monedaProducto"
-        Me.monedaProducto.Name = "monedaProducto"
-        Me.monedaProducto.Visible = False
         '
         'panelSuperiorCompleto
         '
@@ -1257,6 +1166,101 @@ Partial Class frmPtoVtaNvo
         'tmrFacturaParpadeoLegal
         '
         '
+        'codProducto
+        '
+        Me.codProducto.FillWeight = 50.0!
+        Me.codProducto.HeaderText = "PLU/Codigo"
+        Me.codProducto.Name = "codProducto"
+        '
+        'descProducto
+        '
+        Me.descProducto.HeaderText = "DESCRIPCION"
+        Me.descProducto.Name = "descProducto"
+        '
+        'cantProducto
+        '
+        DataGridViewCellStyle3.Format = "N2"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.cantProducto.DefaultCellStyle = DataGridViewCellStyle3
+        Me.cantProducto.FillWeight = 20.0!
+        Me.cantProducto.HeaderText = "CANTIDAD"
+        Me.cantProducto.Name = "cantProducto"
+        '
+        'punitProducto
+        '
+        DataGridViewCellStyle4.Format = "C2"
+        DataGridViewCellStyle4.NullValue = "0"
+        Me.punitProducto.DefaultCellStyle = DataGridViewCellStyle4
+        Me.punitProducto.FillWeight = 50.0!
+        Me.punitProducto.HeaderText = "P. Unitario"
+        Me.punitProducto.Name = "punitProducto"
+        Me.punitProducto.ReadOnly = True
+        '
+        'ptotalProducto
+        '
+        DataGridViewCellStyle5.Format = "C2"
+        DataGridViewCellStyle5.NullValue = "0"
+        Me.ptotalProducto.DefaultCellStyle = DataGridViewCellStyle5
+        Me.ptotalProducto.FillWeight = 50.0!
+        Me.ptotalProducto.HeaderText = "P. Total"
+        Me.ptotalProducto.Name = "ptotalProducto"
+        Me.ptotalProducto.ReadOnly = True
+        '
+        'gananciaProducto
+        '
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.gananciaProducto.DefaultCellStyle = DataGridViewCellStyle6
+        Me.gananciaProducto.HeaderText = "GANANCIA"
+        Me.gananciaProducto.Name = "gananciaProducto"
+        Me.gananciaProducto.ReadOnly = True
+        Me.gananciaProducto.Visible = False
+        '
+        'ivaProducto
+        '
+        DataGridViewCellStyle7.Format = "N2"
+        DataGridViewCellStyle7.NullValue = "0"
+        Me.ivaProducto.DefaultCellStyle = DataGridViewCellStyle7
+        Me.ivaProducto.HeaderText = "IVA"
+        Me.ivaProducto.Name = "ivaProducto"
+        Me.ivaProducto.ReadOnly = True
+        Me.ivaProducto.Visible = False
+        '
+        'impFijo1Producto
+        '
+        DataGridViewCellStyle8.Format = "N2"
+        DataGridViewCellStyle8.NullValue = "0"
+        Me.impFijo1Producto.DefaultCellStyle = DataGridViewCellStyle8
+        Me.impFijo1Producto.HeaderText = "Imp. Fijo 1"
+        Me.impFijo1Producto.Name = "impFijo1Producto"
+        Me.impFijo1Producto.Visible = False
+        '
+        'impFijo2Producto
+        '
+        DataGridViewCellStyle9.Format = "N2"
+        DataGridViewCellStyle9.NullValue = "0"
+        Me.impFijo2Producto.DefaultCellStyle = DataGridViewCellStyle9
+        Me.impFijo2Producto.FillWeight = 50.0!
+        Me.impFijo2Producto.HeaderText = "Imp. Fijo 2"
+        Me.impFijo2Producto.Name = "impFijo2Producto"
+        Me.impFijo2Producto.Visible = False
+        '
+        'idProducto
+        '
+        DataGridViewCellStyle10.Format = "N2"
+        DataGridViewCellStyle10.NullValue = "0"
+        Me.idProducto.DefaultCellStyle = DataGridViewCellStyle10
+        Me.idProducto.FillWeight = 50.0!
+        Me.idProducto.HeaderText = "idProducto"
+        Me.idProducto.Name = "idProducto"
+        Me.idProducto.Visible = False
+        '
+        'monedaProducto
+        '
+        Me.monedaProducto.HeaderText = "monedaProducto"
+        Me.monedaProducto.Name = "monedaProducto"
+        Me.monedaProducto.Visible = False
+        '
         'frmPtoVtaNvo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1368,17 +1372,6 @@ Partial Class frmPtoVtaNvo
     Friend WithEvents btnProductoBuscar As Button
     Friend WithEvents DataGridViewTextBoxColumn11 As DataGridViewTextBoxColumn
     Friend WithEvents btnAgregarProdGenerico As Button
-    Friend WithEvents codProducto As DataGridViewTextBoxColumn
-    Friend WithEvents descProducto As DataGridViewTextBoxColumn
-    Friend WithEvents cantProducto As DataGridViewTextBoxColumn
-    Friend WithEvents punitProducto As DataGridViewTextBoxColumn
-    Friend WithEvents ptotalProducto As DataGridViewTextBoxColumn
-    Friend WithEvents gananciaProducto As DataGridViewTextBoxColumn
-    Friend WithEvents ivaProducto As DataGridViewTextBoxColumn
-    Friend WithEvents impFijo1Producto As DataGridViewTextBoxColumn
-    Friend WithEvents impFijo2Producto As DataGridViewTextBoxColumn
-    Friend WithEvents idProducto As DataGridViewTextBoxColumn
-    Friend WithEvents monedaProducto As DataGridViewTextBoxColumn
     Friend WithEvents Panel11 As Panel
     Friend WithEvents lblFacturaFechaComprobante As Label
     Friend WithEvents Label4 As Label
@@ -1396,4 +1389,15 @@ Partial Class frmPtoVtaNvo
     Friend WithEvents DataGridViewTextBoxColumn13 As DataGridViewTextBoxColumn
     Friend WithEvents btnLimpiarProductos As Button
     Friend WithEvents tmrFacturaParpadeoLegal As Timer
+    Friend WithEvents codProducto As DataGridViewTextBoxColumn
+    Friend WithEvents descProducto As DataGridViewTextBoxColumn
+    Friend WithEvents cantProducto As DataGridViewTextBoxColumn
+    Friend WithEvents punitProducto As DataGridViewTextBoxColumn
+    Friend WithEvents ptotalProducto As DataGridViewTextBoxColumn
+    Friend WithEvents gananciaProducto As DataGridViewTextBoxColumn
+    Friend WithEvents ivaProducto As DataGridViewTextBoxColumn
+    Friend WithEvents impFijo1Producto As DataGridViewTextBoxColumn
+    Friend WithEvents impFijo2Producto As DataGridViewTextBoxColumn
+    Friend WithEvents idProducto As DataGridViewTextBoxColumn
+    Friend WithEvents monedaProducto As DataGridViewTextBoxColumn
 End Class

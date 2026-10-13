@@ -25,13 +25,6 @@ Partial Class puntoventa
         Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -52,6 +45,13 @@ Partial Class puntoventa
         Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle28 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button1 = New System.Windows.Forms.Button()
@@ -99,16 +99,6 @@ Partial Class puntoventa
         Me.txtsub21 = New System.Windows.Forms.TextBox()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.dtproductos = New System.Windows.Forms.DataGridView()
-        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.cant = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.descripcion = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.iva = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PUnit = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.PTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.impuestoFijo01 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.impuestoFijo02 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.paneltareas = New System.Windows.Forms.Panel()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.Button4 = New System.Windows.Forms.Button()
@@ -202,6 +192,16 @@ Partial Class puntoventa
         Me.DataGridViewTextBoxColumn21 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn22 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn23 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.id = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.codigo = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.cant = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.descripcion = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.iva = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PUnit = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column20 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.impuestoFijo01 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.impuestoFijo02 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.pntitulo.SuspendLayout()
         Me.paneltareas2.SuspendLayout()
         CType(Me.dtpedidosfact, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -789,85 +789,6 @@ Partial Class puntoventa
         Me.dtproductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.dtproductos.Size = New System.Drawing.Size(956, 503)
         Me.dtproductos.TabIndex = 101
-        '
-        'id
-        '
-        DataGridViewCellStyle2.Format = "N0"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.id.DefaultCellStyle = DataGridViewCellStyle2
-        Me.id.HeaderText = "id"
-        Me.id.Name = "id"
-        Me.id.Visible = False
-        '
-        'codigo
-        '
-        Me.codigo.FillWeight = 40.0!
-        Me.codigo.HeaderText = "Codigo/#PLU"
-        Me.codigo.Name = "codigo"
-        '
-        'cant
-        '
-        DataGridViewCellStyle3.Format = "N3"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.cant.DefaultCellStyle = DataGridViewCellStyle3
-        Me.cant.FillWeight = 20.0!
-        Me.cant.HeaderText = "Cantidad"
-        Me.cant.Name = "cant"
-        '
-        'descripcion
-        '
-        Me.descripcion.HeaderText = "Producto/Descripción"
-        Me.descripcion.Name = "descripcion"
-        '
-        'iva
-        '
-        DataGridViewCellStyle4.NullValue = "21"
-        Me.iva.DefaultCellStyle = DataGridViewCellStyle4
-        Me.iva.FillWeight = 20.0!
-        Me.iva.HeaderText = "I.V.A."
-        Me.iva.Name = "iva"
-        '
-        'PUnit
-        '
-        DataGridViewCellStyle5.Format = "N2"
-        DataGridViewCellStyle5.NullValue = "0"
-        Me.PUnit.DefaultCellStyle = DataGridViewCellStyle5
-        Me.PUnit.FillWeight = 20.0!
-        Me.PUnit.HeaderText = "PUnit."
-        Me.PUnit.Name = "PUnit"
-        '
-        'PTotal
-        '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = "0"
-        Me.PTotal.DefaultCellStyle = DataGridViewCellStyle6
-        Me.PTotal.FillWeight = 20.0!
-        Me.PTotal.HeaderText = "PTotal"
-        Me.PTotal.Name = "PTotal"
-        Me.PTotal.ReadOnly = True
-        '
-        'Column20
-        '
-        Me.Column20.FillWeight = 20.0!
-        Me.Column20.HeaderText = "ganancia"
-        Me.Column20.Name = "Column20"
-        Me.Column20.Visible = False
-        '
-        'impuestoFijo01
-        '
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.impuestoFijo01.DefaultCellStyle = DataGridViewCellStyle7
-        Me.impuestoFijo01.FillWeight = 20.0!
-        Me.impuestoFijo01.HeaderText = "ImpuestoFijo01"
-        Me.impuestoFijo01.Name = "impuestoFijo01"
-        '
-        'impuestoFijo02
-        '
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.impuestoFijo02.DefaultCellStyle = DataGridViewCellStyle8
-        Me.impuestoFijo02.FillWeight = 20.0!
-        Me.impuestoFijo02.HeaderText = "impuestoFijo02"
-        Me.impuestoFijo02.Name = "impuestoFijo02"
         '
         'paneltareas
         '
@@ -1880,6 +1801,89 @@ Partial Class puntoventa
         Me.DataGridViewTextBoxColumn23.Name = "DataGridViewTextBoxColumn23"
         Me.DataGridViewTextBoxColumn23.Visible = False
         '
+        'id
+        '
+        DataGridViewCellStyle2.Format = "N0"
+        DataGridViewCellStyle2.NullValue = "0"
+        Me.id.DefaultCellStyle = DataGridViewCellStyle2
+        Me.id.HeaderText = "id"
+        Me.id.Name = "id"
+        Me.id.Visible = False
+        '
+        'codigo
+        '
+        Me.codigo.FillWeight = 40.0!
+        Me.codigo.HeaderText = "Codigo/#PLU"
+        Me.codigo.Name = "codigo"
+        '
+        'cant
+        '
+        DataGridViewCellStyle3.Format = "N3"
+        DataGridViewCellStyle3.NullValue = "0"
+        Me.cant.DefaultCellStyle = DataGridViewCellStyle3
+        Me.cant.FillWeight = 20.0!
+        Me.cant.HeaderText = "Cantidad"
+        Me.cant.Name = "cant"
+        '
+        'descripcion
+        '
+        Me.descripcion.HeaderText = "Producto/Descripción"
+        Me.descripcion.Name = "descripcion"
+        '
+        'iva
+        '
+        DataGridViewCellStyle4.NullValue = "21"
+        Me.iva.DefaultCellStyle = DataGridViewCellStyle4
+        Me.iva.FillWeight = 20.0!
+        Me.iva.HeaderText = "I.V.A."
+        Me.iva.Name = "iva"
+        Me.iva.ReadOnly = True
+        '
+        'PUnit
+        '
+        DataGridViewCellStyle5.Format = "N2"
+        DataGridViewCellStyle5.NullValue = "0"
+        Me.PUnit.DefaultCellStyle = DataGridViewCellStyle5
+        Me.PUnit.FillWeight = 20.0!
+        Me.PUnit.HeaderText = "PUnit."
+        Me.PUnit.Name = "PUnit"
+        Me.PUnit.ReadOnly = True
+        '
+        'PTotal
+        '
+        DataGridViewCellStyle6.Format = "N2"
+        DataGridViewCellStyle6.NullValue = "0"
+        Me.PTotal.DefaultCellStyle = DataGridViewCellStyle6
+        Me.PTotal.FillWeight = 20.0!
+        Me.PTotal.HeaderText = "PTotal"
+        Me.PTotal.Name = "PTotal"
+        Me.PTotal.ReadOnly = True
+        '
+        'Column20
+        '
+        Me.Column20.FillWeight = 20.0!
+        Me.Column20.HeaderText = "ganancia"
+        Me.Column20.Name = "Column20"
+        Me.Column20.Visible = False
+        '
+        'impuestoFijo01
+        '
+        DataGridViewCellStyle7.NullValue = "0"
+        Me.impuestoFijo01.DefaultCellStyle = DataGridViewCellStyle7
+        Me.impuestoFijo01.FillWeight = 20.0!
+        Me.impuestoFijo01.HeaderText = "ImpuestoFijo01"
+        Me.impuestoFijo01.Name = "impuestoFijo01"
+        Me.impuestoFijo01.Visible = False
+        '
+        'impuestoFijo02
+        '
+        DataGridViewCellStyle8.NullValue = "0"
+        Me.impuestoFijo02.DefaultCellStyle = DataGridViewCellStyle8
+        Me.impuestoFijo02.FillWeight = 20.0!
+        Me.impuestoFijo02.HeaderText = "impuestoFijo02"
+        Me.impuestoFijo02.Name = "impuestoFijo02"
+        Me.impuestoFijo02.Visible = False
+        '
         'puntoventa
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -2063,6 +2067,10 @@ Partial Class puntoventa
     Friend WithEvents DataGridViewTextBoxColumn22 As DataGridViewTextBoxColumn
     Friend WithEvents DataGridViewTextBoxColumn23 As DataGridViewTextBoxColumn
     Friend WithEvents Button6 As Button
+    Friend WithEvents txttotalICL As Label
+    Friend WithEvents txttotalIDC As Label
+    Friend WithEvents Button4 As Button
+    Friend WithEvents Button7 As Button
     Friend WithEvents id As DataGridViewTextBoxColumn
     Friend WithEvents codigo As DataGridViewTextBoxColumn
     Friend WithEvents cant As DataGridViewTextBoxColumn
@@ -2073,8 +2081,4 @@ Partial Class puntoventa
     Friend WithEvents Column20 As DataGridViewTextBoxColumn
     Friend WithEvents impuestoFijo01 As DataGridViewTextBoxColumn
     Friend WithEvents impuestoFijo02 As DataGridViewTextBoxColumn
-    Friend WithEvents txttotalICL As Label
-    Friend WithEvents txttotalIDC As Label
-    Friend WithEvents Button4 As Button
-    Friend WithEvents Button7 As Button
 End Class

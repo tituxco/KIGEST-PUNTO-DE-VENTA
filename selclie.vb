@@ -230,7 +230,8 @@ Public Class selclie
                 .Visible = True
                 .HeaderText = "Razón Social / Apellido y Nombre"
                 .DisplayIndex = 0
-                .AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill ' Para que ocupe el espacio principal
+                .Width = 200
+                '.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill ' Para que ocupe el espacio principal
             End With
         End If
 
@@ -239,7 +240,7 @@ Public Class selclie
                 .Visible = True
                 .HeaderText = "Domicilio"
                 .DisplayIndex = 1
-                .Width = 200
+                .Width = 100
             End With
         End If
 
@@ -248,7 +249,7 @@ Public Class selclie
                 .Visible = True
                 .HeaderText = "Localidad"
                 .DisplayIndex = 2
-                .Width = 150
+                .Width = 100
             End With
         End If
 
@@ -257,7 +258,7 @@ Public Class selclie
                 .Visible = True
                 .HeaderText = "Vendedor"
                 .DisplayIndex = 3
-                .Width = 150
+                .Width = 100
             End With
         End If
     End Sub
