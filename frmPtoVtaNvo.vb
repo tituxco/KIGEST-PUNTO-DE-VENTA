@@ -722,7 +722,7 @@ Public Class frmPtoVtaNvo
         End If
         Dim tiposValidos As Integer() = {1, 6, 11, 999}
         'a consumidor final solamente se pueden hacer facturas no notas de credito ni de debito
-        If Not tiposValidos.Contains(facturaTipoCompobante.id) AndAlso facturaCliente.idCliente <> 9999 Then
+        If Not tiposValidos.Contains(facturaTipoCompobante.id) AndAlso facturaCliente.idCliente = 9999 Then
             MsgBox("este comprobante no se puede realizar a un consumidor final, debe seleccionar o agregar un cliente")
             Exit Sub
         End If
@@ -824,6 +824,7 @@ Public Class frmPtoVtaNvo
                 Exit Sub
             End If
             nuevaFactura_Datos.ComprobanteAsociadoFecha = fechaAsoc
+
         End If
 
 

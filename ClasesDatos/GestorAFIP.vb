@@ -142,24 +142,27 @@ Public Class GestorAFIP
                 fe.F1DetalleIvaItemCantidad = cantAlicuotas
             End If
 
-            'Dim otrosTributos As Decimal = factura.t. + factura.TotalICL
+            ' ==========================================================
+            ' 6.5. ESTRUCTURA PARA NOTAS DE CRÉDITO Y DÉBITO (ARCA)
+            ' ==========================================================    
+            Dim tiposNCND As Integer() = {2, 3, 7, 8, 12, 13}
 
-            'If otrosTributos > 0 Then
-            '    ' Le decimos al componente la cantidad de ítems de tributos (en tu caso siempre 2)
-            '    fe.F1DetalleTributoItemCantidad = 2
+            If tiposNCND.Contains(factura.tipofact.id) Then
+                ' Le indicamos a AFIP que enviaremos 1 comprobante asociado
+                fe.F1DetalleCbtesAsocItemCantidad = 1
+                fe.f1IndiceItem = 0 ' Índice 0 para el primer comprobante
 
-            '    ' Índice 0: IDC
-            '    fe.f1IndiceItem = 0
-            '    fe.F1DetalleTributoId = 1
-            '    fe.F1DetalleTributoDesc = "I.D.C. - IMPUESTO A COMBUSTIBLES"
-            '    fe.F1DetalleTributoImporte = factura.TotalIDC
+                ' IMPORTANTE: Tu objeto "factura" debe tener estas propiedades cargadas 
+                ' con los datos de la factura ORIGINAL que estás afectando.
+                ' Por ejemplo, si hacés una NC "C" para anular la Factura "C" Nro 150 del Punto 3:
+                fe.F1DetalleCbtesAsocTipo = factura.ComprobanteAsociadoTipo      ' Ej: 11 (Factura C original)
+                fe.F1DetalleCbtesAsocPtoVta = factura.ptovta.id   ' Ej: 3
+                fe.F1DetalleCbtesAsocNro = factura.ComprobanteAsociadoNro     ' Ej: 150
 
-            '    ' Índice 1: ICL
-            '    fe.f1IndiceItem = 1
-            '    fe.F1DetalleTributoId = 1
-            '    fe.F1DetalleTributoDesc = "I.C.L. - IMPUESTO A COMBUSTIBLES"
-            '    fe.F1DetalleTributoImporte = factura.TotalICL
-            'End If
+                ' (Opcional en algunos casos, pero recomendado si se tiene)
+                ' fe.F1DetalleCbtesAsocCuit = factura.cliente.cuit.Replace("-", "")
+            End If
+
 
 
             ' ==========================================================
