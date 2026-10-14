@@ -765,9 +765,11 @@ Module funciones_Globales
             Else
                 lista = (FormatNumber(filaslistas(0)(2) + 100) / 100)
                 If My.Settings.metodoCalculo = 1 Then
+                    Console.WriteLine("metodo 1 ")
                     PrecioSinIva = precioCosto * cotizacion * lista * utilidad
                     PrecioVenta = PrecioSinIva * iva
                 Else
+                    Console.WriteLine("metodo 0 ")
                     PrecioSinIva = precioCosto * cotizacion * ((lista + utilidad) - 1)
                     PrecioVenta = PrecioSinIva * iva
                     'Console.WriteLine(PrecioSinIva & "----" & PrecioVenta)

@@ -2,6 +2,7 @@
 Imports System.Security
 Imports SIGT__KIGEST.datosEstructura
 Imports SIGT__KIGEST.GestorAcademia
+Imports WSAFIPFE.panmat
 Public Class puntoventa
     Dim fechagral As String = Format(Now, "dd-MM-yyyy")
     Public idfacrap As Integer
@@ -48,7 +49,10 @@ Public Class puntoventa
         Try
 
 
-            If InStr(DatosAcceso.Moduloacc, "3g") = True Then dtproductos.Columns("PUnit").ReadOnly = False
+            'MsgBox($"{DatosAcceso.Moduloacc} ----{InStr(DatosAcceso.Moduloacc, "3g")}")
+            If InStr(DatosAcceso.Moduloacc, "3g") = False Then
+                dtproductos.Columns("PUnit").ReadOnly = True
+            End If
             Reconectar()
             Dim consfactrap As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT fr.nombre, fis.abrev, lpad(fr.punto_venta, 4, 0) As ptovta, lpad(fis.confnume + 1, 8, 0) As numfact, fr.tipofact 
 			From fact_facturasrapidas As fr, fact_conffiscal As fis, fact_puntosventa As ptovta

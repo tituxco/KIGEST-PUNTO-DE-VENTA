@@ -625,7 +625,7 @@ Public Class GestorInsumos
             ' 1. Costo base convertido a la moneda de curso
             Dim costoBase As Decimal = prod.precio * cotizacionMoneda
 
-            ' 2. Buscamos la utilidad según la lista de precios seleccionada
+            ' 2. Buscamos la utilidad del insumo según la lista de precios seleccionada
             Dim utilidadInsumo As Decimal = 0
             If listaPrecio IsNot Nothing Then
                 Select Case listaPrecio.auxcol
@@ -638,19 +638,31 @@ Public Class GestorInsumos
                 End Select
             End If
 
-            ' Aplicamos la ganancia sobre el costo
-            Dim precioConGanancia As Decimal = costoBase * (1 + (utilidadInsumo / 100))
-
-            ' 3. Aplicamos el recargo/descuento extra de la Lista de Precios general
+            ' 3. Extraemos el recargo/descuento de la Lista de Precios
             Dim utilidadLista As Decimal = 0
-            If listaPrecio IsNot Nothing AndAlso Decimal.TryParse(listaPrecio.utilidad, utilidadLista) Then
+            If listaPrecio IsNot Nothing Then
+                Decimal.TryParse(listaPrecio.utilidad, utilidadLista)
+            End If
+
+            ' 4. Aplicamos el cálculo según la configuración elegida por el usuario
+            Dim precioConGanancia As Decimal = 0
+
+            If My.Settings.metodoCalculo = 0 Then
+                Console.WriteLine("metodo 1 ")
+                ' Método 1 (Aditivo): Se suman los porcentajes y se aplican juntos al costo
+                ' Fórmula: precio = preciobase * (1 + (utilidadprod + utilidadlista) / 100)
+                precioConGanancia = costoBase * (1 + ((utilidadInsumo + utilidadLista) / 100))
+            ElseIf My.Settings.metodoCalculo = 1 Then
+                Console.WriteLine("metodo 0 ")
+                ' Método 0 (Cascada - Por defecto): Se aplica la utilidad de la lista sobre el precio ya remarcado del producto
+                ' Fórmula: precio = (preciobase * utilidadprod) * utilidadlista
+                precioConGanancia = costoBase * (1 + (utilidadInsumo / 100))
                 precioConGanancia = precioConGanancia * (1 + (utilidadLista / 100))
             End If
 
-            ' 4. Aplicamos el IVA al final para obtener el precio de venta final
+            ' 5. Aplicamos el IVA al final para obtener el precio de venta final
             Dim precioFinalVenta As Decimal = precioConGanancia * (1 + (prod.iva / 100))
 
-            'MsgBox($"VARIABLES PARA CALCULO: {costoBase } * {utilidadInsumo } * {utilidadLista } = {precioConGanancia } * {prod.iva  } = {precioFinalVenta } ")
             Return Math.Round(precioFinalVenta, 2)
         End Function
     End Class

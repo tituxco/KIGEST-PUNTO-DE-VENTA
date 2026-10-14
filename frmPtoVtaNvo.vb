@@ -80,7 +80,7 @@ Public Class frmPtoVtaNvo
         'MsgBox("ASIGNACION INICIAL " & fechaFacturaSeleccionada)
     End Sub
     Private Sub CargarConfiguracion()
-        If InStr(DatosAcceso.Moduloacc, "3g") = True Then dgvFacturaProductos.Columns("punitProducto").ReadOnly = False
+        If InStr(DatosAcceso.Moduloacc, "3g") = False Then dgvFacturaProductos.Columns("punitProducto").ReadOnly = True
         chkFacturaDescontarStock.Checked = DatosAcceso.StockPpref
         rdFacturaImpresionTermica.Checked = My.Settings.ImprTikets
         chkFacturaImpresionAutomatica.Checked = My.Settings.ImprTikets 'esto lo cambiaremos despues para que sea n
