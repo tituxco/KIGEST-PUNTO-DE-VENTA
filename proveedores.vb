@@ -114,7 +114,7 @@ Public Class proveedores
         Try
             dtcomprobantes.Rows.Clear()
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, fa.fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada 
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select fa.id, DATE_FORMAT(fa.fecha, '%d-%m-%Y') as fecha, fa.tipo, fa.numero, fa.monto, fa.vencimiento, fa.observaciones,fa.pagada 
             from fact_proveedores_fact as fa where idproveedor= " & idProv & " and fa.tipo in (select donfdesc from tipos_comprobantes where debcred like 'D')
             order by fa.fecha desc", GestorConexiones.conexionPrinc)
             Dim tablacta As New DataTable

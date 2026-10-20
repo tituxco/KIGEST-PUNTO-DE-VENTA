@@ -548,7 +548,8 @@ Public Class CONTABLE
             lbldatoscuentaprov.Text = dtoprov(0)(1)
 
             Reconectar()
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cuentaprov where idproveedor=" & idprov, GestorConexiones.conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select id,DATE_FORMAT(fecha, '%d-%m-%Y') as fecha, idProveedor, comprobante, monto,
+            vencimiento, tipo,tipoingeg, pago from cuentaprov where idProveedor=" & idprov, GestorConexiones.conexionPrinc)
 
             Dim tabla As New DataTable
             consulta.Fill(tabla)
@@ -559,7 +560,7 @@ Public Class CONTABLE
             dtcuentaprov.Rows.Clear()
 
             For i = 0 To tablacta.GetUpperBound(0)
-                Dim fechacomprob As Date = CType(tablacta(i)(1).ToString, Date)
+                Dim fechacomprob As Date = CType(tablacta(i)("fecha").ToString(), Date)
                 Dim fechainicio As Date = CType(dtdesdecuentaprov.Value, Date)
                 Dim dias As Integer = DateDiff(DateInterval.Day, fechacomprob, fechainicio)
                 Select Case tablacta(i)(6)
@@ -590,7 +591,7 @@ Public Class CONTABLE
 
                 End Select
             Next
-            lblsaldocuentaprov.Text = "El saldo anterior a esta fecha es de: $ " & saldoant
+            lblsaldocuentaprov.Text = "El saldo anterior a esta fecha es de:  $ " & saldoant
             dttotalesprov.Rows.Clear()
             dttotalesprov.Rows.Add("", "TOTALES", FormatNumber(debegral, 2), FormatNumber(habergral, 2), "", saldo)
             dttotalesprov.Rows(dttotalesprov.RowCount - 1).DefaultCellStyle.BackColor = Color.YellowGreen

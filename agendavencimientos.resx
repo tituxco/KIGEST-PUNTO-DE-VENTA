@@ -123,17 +123,16 @@
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="Button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAiVJREFUWEft
-        lc1LVUEYh2+YkOAtLVsW9g9ciDYilAuzRUH0nwQtgyArciPaVmjdwhTX4jZBM8q+iNCgjTf7BgvNyMbn
-        95535HC8t3suuorzwIPzvvPOOPfMzDmlgoKCgryEEFqwD0dwFqv4zVX7EQ7jWWzxYXuHyY7hIH7CvKj2
-        Jh71aZqHwW14GzcwsoSjeBG7sdM9hZfwHi5jZBO1kEM+bT4YMIDvMPIZe727IdRqG35qoKOF93t3fSg6
-        iEP4F0V87Le8xCBuRdW9d9Vu9W6D+DqKL/53C+9g7fNBRwfOoNCju4pPLArhjJcZxPqHWe56t0FcSdLh
-        LV7D3xaFMI1HvCyBhA7aC/XCCvZ4/rtlWJwVOsQ69Vmq3m0Q6wyJdY978YNlQljE5IDSKONjZeEVnrAO
-        oB33sd1TBnGcKE12AZpXrHlKuZP42rIhzGFZSf16rUhkF6DHJyqeMojzbMHpJB3eeCq7gGe48xSO40tl
-        Ib0F9y0Twg0rdIjjIdQhlbUOoa6fGPM4vQXPscsKIyRqHcILFiXX8LCXNoRazfVVA6Ef/30II3Rkr+E8
-        Pk2aYRwPeGldVIOTGgC6RQtJs8E1TENR+kWkxcTVT2Cnl+2CPp2nKRWCxsQforfjeS/LBwN0jbTiH5hG
-        r+YHeBn1qOUVz/3CNGuo70ibT9s8DI4fo7inedDbb28foyxMps/xOdT+fsQ/GFF7FR/i/n6OCwoK/nNK
-        pW345CS40rggYwAAAABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAfZJREFUWEft
+        lUtLVlEUho0SFEqtbFjYHxCkSQjVwHJgEP0ToWEgdKMmUU0Fxw660DiaFpRK95AowUleuoJFaVSPvPBu
+        Wa4+vw7VKM4Dm7P3Ou9aZ5291967paWmpqamIsBm4BBwCbgLzAEf3NS/A1wEDkib/f8YYCdwGnhDdaQ9
+        BezI8SoDtANnga8h8EvgMjAE9ADb3fYCR4ErwKugX3EibTl+U4AjwEwI9Bboz7qN8DJ8Dv5KfCDrfgHY
+        AlwAftqxTPuZpGu1btZN/dakOWnfd37+AM5tWB9AF3DbYk3dMDDl8b6k1Qcz55Om1/YXwAngm8e3gM6o
+        LYX2xILXwH7bP9rWlfSq+sxc0qiGxBeP+4F52x6tFSiwDZjwi2fA7hCkrOPWEFv2EiiSE1BcsRRse4Dn
+        tt+Tpvy9MhI5AU2f6F2LXH0J+myfDraYwMM4C7uAp34Rl2DMtpEQW/ZShCpStUZFqO0nRj2OS/AY6I56
+        CRoV4aDH2oYd6xya4Fjv7Tvw2yIsNNiG94EH7l8FNmWfjDTADftoF02633wbRtJBpGRK9td18mV9wfV0
+        01r5lB/R6Xg465vibaSMPzlIQUfzOHDMU6123LblpF3yPdKe41cmXEZlTaug0+/vLqOMr+ODXt9F4Hv4
+        oPoLwLV/fh3X1NT896wC+OQkuIaRPTkAAAAASUVORK5CYII=
 </value>
   </data>
 </root>

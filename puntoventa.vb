@@ -74,7 +74,7 @@ Public Class puntoventa
             lblfactnumero.Text = infofr(0)(3)
             tipofact = infofr(0)(4)
 
-            If tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Then
+            If tipofact = 1 Or tipofact = 6 Or tipofact = 11 Or tipofact = 999 Or tipofact = 991 Or tipofact = 999 Or tipofact = 8 Or tipofact = 3 Or tipofact = 13 Then
                 '  MsgBox("quitar")
                 If DatosAcceso.StockPpref = 1 Then
                     chkquitarstock.CheckState = CheckState.Checked

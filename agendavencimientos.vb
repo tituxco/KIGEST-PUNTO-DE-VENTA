@@ -24,8 +24,8 @@
         Try
             Reconectar()
             ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select proveedor, comprobante, vencimiento, monto from facturasproveedores_impagas " _
-            & " where vencimiento between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", gestorConexiones.conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select proveedor, comprobante, DATE_FORMAT(vencimiento, '%d-%m-%Y') as vencimiento, monto from facturasproveedores_impagas " _
+            & " where vencimiento between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", GestorConexiones.conexionPrinc)
 
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
@@ -45,8 +45,8 @@
         Try
             Reconectar()
             ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from vencimiento_cheques " _
-            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", gestorConexiones.conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select cliente,banco,serie,DATE_FORMAT(fecha_cobro, '%d-%m-%Y') as fecha_cobro,importe from vencimiento_cheques " _
+            & " where fecha_cobro between '" & Format(CDate(dtpdesde.Value), "yyyy-MM-dd") & "' and '" & Format(CDate(dtphasta.Value), "yyyy-MM-dd") & "' ", GestorConexiones.conexionPrinc)
 
             Dim tablaPers As New DataTable
             consulta.Fill(tablaPers)
