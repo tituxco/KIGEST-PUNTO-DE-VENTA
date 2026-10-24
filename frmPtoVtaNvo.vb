@@ -888,6 +888,7 @@ Public Class frmPtoVtaNvo
                 lblFacturaMensajes.Text = "Comprobante guardado con éxito!"
                 lblFacturaMensajes.ForeColor = Color.GreenYellow
                 btnFacturaImprimir.Enabled = True
+                btnFacturaGuardar.Enabled = True
                 'btnFacturaFinalizar.Enabled = False
 
                 'Dim tipofact As Integer = nuevaFactura_Datos.tipofact.id
@@ -1002,7 +1003,22 @@ Public Class frmPtoVtaNvo
             Else
                 MsgBox("Aún no hay datos en nuevaFactura_Datos.")
             End If
-
+        ElseIf e.KeyCode = Keys.F1 Then
+            btnFacturaCondicionVentaSeleccionar.PerformClick()
+        ElseIf e.KeyCode = Keys.F2 Then
+            btnFacturaListaPreciosSeleccionar.PerformClick()
+        ElseIf e.KeyCode = Keys.F3 Then
+            btnFacturaVendedorSeleccionar.PerformClick()
+        ElseIf e.KeyCode = Keys.F4 Then
+            btnFacturaFinalizar.PerformClick()
+        ElseIf e.KeyCode = Keys.F5 Then
+            btnFacturaImprimir.PerformClick()
+        ElseIf e.KeyCode = Keys.F6 Then
+            btnFacturaClienteBuscar.PerformClick()
+        ElseIf e.KeyCode = Keys.F7 Then
+            btnFacturaAlmacenSeleccionar.PerformClick()
+        ElseIf e.KeyCode = Keys.F8 Then
+            btnFcturaTipoSeleccionar.PerformClick()
         End If
     End Sub
     Private Sub dgvFacturaProductos_RowsRemoved(sender As Object, e As DataGridViewRowsRemovedEventArgs) Handles dgvFacturaProductos.RowsRemoved
@@ -1283,6 +1299,7 @@ Public Class frmPtoVtaNvo
         ' Verificamos si el comprobante que quedó seleccionado es Factura A (Ajustá el ID si es distinto de 1)
         Dim esFacturaA As Boolean = {1, 2, 3}.Contains(facturaTipoCompobante.id)
         btnFacturaImprimir.Enabled = False
+        btnFacturaGuardar.Enabled = False
         If esFacturaA Then
             ' Si es Factura A, no puede quedar Consumidor Final. Vaciamos el objeto cliente.
             facturaCliente = Nothing
@@ -1396,8 +1413,9 @@ Public Class frmPtoVtaNvo
 
 
     End Sub
-
-    Private Sub dgvFacturaProductos_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles dgvFacturaProductos.CellContentClick
-
+    Private Sub btnFacturaGuardar_Click(sender As Object, e As EventArgs) Handles btnFacturaGuardar.Click
+        Dim idFac As Integer = CInt(nuevaFactura_Datos.IdDevuelto)
+        Dim ptoVta As Integer = CInt(nuevaFactura_Datos.ptovta.id)
+        GestorImpresion.GuardarYEnviarComprobantePDF(idFac, ptoVta, False)
     End Sub
 End Class

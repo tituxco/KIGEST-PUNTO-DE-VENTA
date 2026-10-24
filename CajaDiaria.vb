@@ -5,7 +5,7 @@ Public Class CajaDiaria
     Dim saldoCaja As Double = 0
     Dim CajaDef As Integer = My.Settings.CajaDef
     Private Sub CajaDiaria_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, fecha from fact_cajas_cierres where caja=" & CajaDef & " order by id desc", GestorConexiones.conexionPrinc)
+        Dim tablacierres As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, DATE_FORMAT(fecha, '%d-%m-%Y') as fecha from fact_cajas_cierres where caja=" & CajaDef & " order by id desc", GestorConexiones.conexionPrinc)
         Dim readcierres As New DataSet
         tablacierres.Fill(readcierres)
         cmbcierresCajas.DataSource = readcierres.Tables(0)
@@ -41,10 +41,10 @@ Public Class CajaDiaria
         Dim SQLcheques As String = ""
         dtcaja.Rows.Clear()
         If historial = True Then
-            SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")"
+            SQLARQUEO = "select DATE_FORMAT(fecha, '%d-%m-%Y') as fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id<" & idCierreSel & ")"
 
         Else
-            SQLARQUEO = "select fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
+            SQLARQUEO = "select DATE_FORMAT(fecha, '%d-%m-%Y') as fecha, monto from fact_cajas_cierres where caja=" & CajaDef & " and fecha=(select max(cc.fecha)from fact_cajas_cierres as cc where cc.caja=" & CajaDef & ")"
 
         End If
         Reconectar()
@@ -62,7 +62,7 @@ Public Class CajaDiaria
         End If
 
         If historial = True Then
-            SQLCAJA = "select ie.fecha, 
+            SQLCAJA = "select DATE_FORMAT(ie.fecha, '%d-%m-%Y') as fecha, 
 		case ie.tipo
 			When 1 Then (
 				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  
@@ -108,7 +108,7 @@ Public Class CajaDiaria
             and (select max(cc.fecha) from fact_cajas_cierres as cc where cc.caja=" & CajaDef & " and cc.id=" & idCierreSel & ")"
         Else
 
-            SQLCAJA = "select ie.fecha, 
+            SQLCAJA = "select DATE_FORMAT(ie.fecha, '%d-%m-%Y') as fecha, 
 		case ie.tipo
 			When 1 Then (
 				Select concat(ic.concepto,' - ', cl.nomapell_razon) from  fact_ingresos_concepto as ic,  

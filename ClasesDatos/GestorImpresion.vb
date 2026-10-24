@@ -404,4 +404,106 @@ Public Class GestorImpresion
 
         e.Graphics.DrawString("Gracias por tu compra!", font3, Brushes.Black, 10, yPos)
     End Sub
+
+    ' =========================================================================
+    ' MÉTODO EXPORTAR PDF Y WHATSAPP
+    ' =========================================================================
+    Public Shared Sub GuardarYEnviarComprobantePDF(idfact As Integer, ptovta As Integer, enviarWhatsApp As Boolean)
+        Try
+            ' 1. Seleccionar Carpeta de Destino
+            Dim carpetaAlmacenamiento As String = My.Settings.capetaAlmacenamDocum
+            If String.IsNullOrEmpty(carpetaAlmacenamiento) Then
+                Using FolderDialog As New FolderBrowserDialog()
+                    If FolderDialog.ShowDialog() = DialogResult.OK Then
+                        My.Settings.capetaAlmacenamDocum = FolderDialog.SelectedPath & "\"
+                        My.Settings.Save()
+                        carpetaAlmacenamiento = My.Settings.capetaAlmacenamDocum
+                    Else
+                        Exit Sub ' Cancela la selección
+                    End If
+                End Using
+            End If
+
+            Dim fac As New datosfacturas()
+            Reconectar()
+
+            ' 2. Reutilizamos TUS CONSULTAS EXACTAS del Gestor de Impresión
+            Dim sqlEmp As String = "SELECT emp.nombrefantasia as empnombre, emp.razonsocial as emprazon, emp.direccion as empdire, emp.localidad as emploca, " &
+                                   "emp.cuit as empcuit, emp.ingbrutos as empib, emp.ivatipo as empcontr, emp.inicioact as empinicioact, emp.drei as empdrei, emp.logo as emplogo, " &
+                                   "concat(fis.abrev,' ', LPAD(fac.ptovta,4,'0'),'-',lpad(fac.num_fact,8,'0')) as facnum, DATE_FORMAT(fac.f_alta, '%d-%m-%Y') AS facfech, " &
+                                   "concat(fac.id_cliente,'-',fac.razon,' - tel ',cl.telefono) as facrazon, fac.direccion as facdire, fac.localidad as facloca, fac.tipocontr as factipocontr, fac.cuit as faccuit, " &
+                                   "concat(vend.apellido,', ',vend.nombre) as facvend, condvent.condicion as faccondvta, fac.observaciones2 as facobserva, format(fac.iva105,2,'es_AR') as iva105, format(fac.iva21,2,'es_AR') as iva21, " &
+                                   "fis.donfdesc, fac.cae, fis.letra as facletra, fis.codfiscal as faccodigo, fac.vtocae, fac.codbarra, format(fac.total,2,'es_AR') as factotal, format(fac.subtotal,2,'es_AR') as facsubtotal, fac.codigo_qr, cl.email " &
+                                   "FROM fact_vendedor as vend, fact_clientes as cl, fact_conffiscal as fis, fact_empresa2 as emp, fact_facturas as fac, " &
+                                   "fact_puntosventa as ptovta, fact_condventas as condvent " &
+                                   "WHERE vend.id=fac.vendedor AND cl.idclientes=fac.id_cliente AND " &
+                                   "fac.ptovta = ptovta.numero AND ptovta.idEmpresa=emp.idEmpresa AND " &
+                                   "fis.donfdesc=fac.tipofact AND fis.ptovta=fac.ptovta AND condvent.id=fac.condvta AND fac.id = @idFac"
+
+            Using cmdEmp As New MySqlCommand(sqlEmp, GestorConexiones.conexionPrinc)
+                cmdEmp.Parameters.AddWithValue("@idFac", idfact)
+                Using adapter As New MySqlDataAdapter(cmdEmp)
+                    adapter.Fill(fac.Tables("factura_enca"))
+                End Using
+            End Using
+
+            Dim sqlFac As String = "SELECT plu, format(replace(cantidad,',','.'),2,'es_AR') as cant, descripcion, " &
+                                   "format(replace(iva,',','.'),2,'es_AR') as iva, format(replace(punit,',','.'),2,'es_AR') as punit, " &
+                                   "format(replace(impuestoFijo01,',','.'),2,'es_AR') as idc, format(replace(impuestoFijo02,',','.'),2,'es_AR') as icl, " &
+                                   "format(replace(ptotal,',','.'),2,'es_AR') as ptotal, plu as codigo " &
+                                   "FROM fact_items WHERE id_fact = @idFac"
+
+            Using cmdFac As New MySqlCommand(sqlFac, GestorConexiones.conexionPrinc)
+                cmdFac.Parameters.AddWithValue("@idFac", idfact)
+                Using adapter As New MySqlDataAdapter(cmdFac)
+                    adapter.Fill(fac.Tables("facturax"))
+                End Using
+            End Using
+
+            If fac.Tables("factura_enca").Rows.Count = 0 Then
+                MsgBox("No se encontró información para imprimir el comprobante ID: " & idfact, MsgBoxStyle.Exclamation)
+                Return
+            End If
+
+            Dim rowEnca As DataRow = fac.Tables("factura_enca").Rows(0)
+            Dim tipoFact As Integer = Convert.ToInt32(rowEnca("donfdesc"))
+
+            ' 3. Determinar Reporte
+            Dim NMReporte As String = System.Environment.CurrentDirectory & "\reportes\facturax.rdlc"
+            Select Case tipoFact
+                Case 1 To 3, 6 To 8, 11 To 13
+                    NMReporte = System.Environment.CurrentDirectory & "\reportes\facturaelectro.rdlc"
+            End Select
+
+            ' 4. Nombre Archivo y Generar (Asumo que `GenerarPDF` lo tienes declarado público en un módulo)
+            Dim numFactura As String = rowEnca("facnum").ToString()
+            ' Para evitar caracteres inválidos en el nombre de archivo, sacamos el 'tel' de facrazon (ya que tu nuevo query lo trae pegado)
+            Dim razonSocialArchivo As String = rowEnca("facrazon").ToString().Split("-"c)(1).Trim()
+            Dim nombreArchivo As String = numFactura & "(" & razonSocialArchivo & ")" & ".pdf"
+
+            GenerarPDF(fac.Tables("factura_enca"), fac.Tables("facturax"), carpetaAlmacenamiento, nombreArchivo, NMReporte)
+
+            ' 5. Flujo de WhatsApp
+            If enviarWhatsApp Then
+                Dim telClieTemp As String = ""
+                Try
+                    telClieTemp = obtenerDatosClienteDesdeFactura(idfact) ' Asegúrate que esta función sea global o accesible
+                Catch
+                End Try
+
+                Dim telefono As String = InputBox("Ingrese el teléfono al que enviar el WhatsApp:", "Enviar archivo por WhatsApp", telClieTemp)
+
+                If Not String.IsNullOrEmpty(telefono) Then
+                    telefono = telefono.Replace(" ", "").Replace("-", "")
+                    System.Diagnostics.Process.Start("https://api.whatsapp.com/send?phone=" & telefono & "&text=Hola%2C%20te%20envio%20el%20comprobante%20" & numFactura)
+                    Process.Start("explorer.exe", carpetaAlmacenamiento)
+                End If
+            Else
+                MsgBox("Comprobante guardado en: " & carpetaAlmacenamiento & nombreArchivo, MsgBoxStyle.Information)
+            End If
+
+        Catch ex As Exception
+            MsgBox("Error al generar PDF: " & ex.Message, MsgBoxStyle.Critical)
+        End Try
+    End Sub
 End Class

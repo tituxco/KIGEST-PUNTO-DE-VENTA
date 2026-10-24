@@ -56,7 +56,7 @@
             cli.idclientes=tall.cliente and tall.estado=te.id " _
             & consulta, GestorConexiones.conexionPrinc)
 
-            'MsgBox(tabla.SelectCommand)
+            'MsgBox(tabla.SelectCommand.CommandText)
             ' MsgBox(tabla.SelectCommand.CommandText)
             Dim leertab As New DataTable
             'Dim itemtab() As DataRow

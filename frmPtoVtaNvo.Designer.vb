@@ -23,27 +23,27 @@ Partial Class frmPtoVtaNvo
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle43 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle44 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle53 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle54 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle55 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle45 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle46 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle47 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle48 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle49 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle50 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle51 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle52 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle56 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle57 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle58 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle59 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle60 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle61 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle62 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle63 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
@@ -89,6 +89,7 @@ Partial Class frmPtoVtaNvo
         Me.lblFacturaTotal = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.btnFacturaGuardar = New System.Windows.Forms.Button()
         Me.btnFcturaTipoSeleccionar = New System.Windows.Forms.Button()
         Me.btnFacturaClienteBuscar = New System.Windows.Forms.Button()
         Me.btnFacturaImprimir = New System.Windows.Forms.Button()
@@ -162,7 +163,7 @@ Partial Class frmPtoVtaNvo
         Me.pntitulo.Dock = System.Windows.Forms.DockStyle.Top
         Me.pntitulo.Location = New System.Drawing.Point(0, 0)
         Me.pntitulo.Name = "pntitulo"
-        Me.pntitulo.Size = New System.Drawing.Size(1089, 34)
+        Me.pntitulo.Size = New System.Drawing.Size(1211, 34)
         Me.pntitulo.TabIndex = 76
         '
         'Label1
@@ -186,41 +187,41 @@ Partial Class frmPtoVtaNvo
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel1.Location = New System.Drawing.Point(0, 34)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(1089, 522)
+        Me.Panel1.Size = New System.Drawing.Size(1211, 543)
         Me.Panel1.TabIndex = 88
         '
         'dgvFacturaProductos
         '
         Me.dgvFacturaProductos.AllowUserToResizeColumns = False
         Me.dgvFacturaProductos.AllowUserToResizeRows = False
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        Me.dgvFacturaProductos.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle43.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle43.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle43.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        DataGridViewCellStyle43.SelectionForeColor = System.Drawing.Color.Black
+        Me.dgvFacturaProductos.AlternatingRowsDefaultCellStyle = DataGridViewCellStyle43
         Me.dgvFacturaProductos.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
         Me.dgvFacturaProductos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.dgvFacturaProductos.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.dgvFacturaProductos.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText
         Me.dgvFacturaProductos.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvFacturaProductos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle44.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle44.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle44.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle44.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle44.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle44.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle44.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvFacturaProductos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle44
         Me.dgvFacturaProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvFacturaProductos.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.codProducto, Me.descProducto, Me.cantProducto, Me.punitProducto, Me.ptotalProducto, Me.gananciaProducto, Me.ivaProducto, Me.impFijo1Producto, Me.impFijo2Producto, Me.idProducto, Me.monedaProducto})
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dgvFacturaProductos.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle53.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle53.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle53.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle53.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle53.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        DataGridViewCellStyle53.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle53.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dgvFacturaProductos.DefaultCellStyle = DataGridViewCellStyle53
         Me.dgvFacturaProductos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvFacturaProductos.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnKeystroke
         Me.dgvFacturaProductos.EnableHeadersVisualStyles = False
@@ -228,25 +229,25 @@ Partial Class frmPtoVtaNvo
         Me.dgvFacturaProductos.Location = New System.Drawing.Point(0, 198)
         Me.dgvFacturaProductos.Name = "dgvFacturaProductos"
         Me.dgvFacturaProductos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.[Single]
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dgvFacturaProductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle54.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle54.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle54.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle54.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle54.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle54.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle54.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dgvFacturaProductos.RowHeadersDefaultCellStyle = DataGridViewCellStyle54
         Me.dgvFacturaProductos.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing
-        DataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
-        Me.dgvFacturaProductos.RowsDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle55.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        DataGridViewCellStyle55.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle55.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
+        DataGridViewCellStyle55.SelectionForeColor = System.Drawing.Color.Black
+        Me.dgvFacturaProductos.RowsDefaultCellStyle = DataGridViewCellStyle55
         Me.dgvFacturaProductos.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
         Me.dgvFacturaProductos.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.White
         Me.dgvFacturaProductos.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.dgvFacturaProductos.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Black
-        Me.dgvFacturaProductos.Size = New System.Drawing.Size(889, 235)
+        Me.dgvFacturaProductos.Size = New System.Drawing.Size(1011, 256)
         Me.dgvFacturaProductos.TabIndex = 102
         '
         'codProducto
@@ -262,27 +263,27 @@ Partial Class frmPtoVtaNvo
         '
         'cantProducto
         '
-        DataGridViewCellStyle3.Format = "N2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.cantProducto.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle45.Format = "N2"
+        DataGridViewCellStyle45.NullValue = "0"
+        Me.cantProducto.DefaultCellStyle = DataGridViewCellStyle45
         Me.cantProducto.FillWeight = 20.0!
         Me.cantProducto.HeaderText = "CANTIDAD"
         Me.cantProducto.Name = "cantProducto"
         '
         'punitProducto
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.punitProducto.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle46.Format = "C2"
+        DataGridViewCellStyle46.NullValue = "0"
+        Me.punitProducto.DefaultCellStyle = DataGridViewCellStyle46
         Me.punitProducto.FillWeight = 50.0!
         Me.punitProducto.HeaderText = "P. Unitario"
         Me.punitProducto.Name = "punitProducto"
         '
         'ptotalProducto
         '
-        DataGridViewCellStyle5.Format = "C2"
-        DataGridViewCellStyle5.NullValue = "0"
-        Me.ptotalProducto.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle47.Format = "C2"
+        DataGridViewCellStyle47.NullValue = "0"
+        Me.ptotalProducto.DefaultCellStyle = DataGridViewCellStyle47
         Me.ptotalProducto.FillWeight = 50.0!
         Me.ptotalProducto.HeaderText = "P. Total"
         Me.ptotalProducto.Name = "ptotalProducto"
@@ -290,9 +291,9 @@ Partial Class frmPtoVtaNvo
         '
         'gananciaProducto
         '
-        DataGridViewCellStyle6.Format = "N2"
-        DataGridViewCellStyle6.NullValue = "0"
-        Me.gananciaProducto.DefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle48.Format = "N2"
+        DataGridViewCellStyle48.NullValue = "0"
+        Me.gananciaProducto.DefaultCellStyle = DataGridViewCellStyle48
         Me.gananciaProducto.HeaderText = "GANANCIA"
         Me.gananciaProducto.Name = "gananciaProducto"
         Me.gananciaProducto.ReadOnly = True
@@ -300,9 +301,9 @@ Partial Class frmPtoVtaNvo
         '
         'ivaProducto
         '
-        DataGridViewCellStyle7.Format = "N2"
-        DataGridViewCellStyle7.NullValue = "0"
-        Me.ivaProducto.DefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle49.Format = "N2"
+        DataGridViewCellStyle49.NullValue = "0"
+        Me.ivaProducto.DefaultCellStyle = DataGridViewCellStyle49
         Me.ivaProducto.HeaderText = "IVA"
         Me.ivaProducto.Name = "ivaProducto"
         Me.ivaProducto.ReadOnly = True
@@ -310,18 +311,18 @@ Partial Class frmPtoVtaNvo
         '
         'impFijo1Producto
         '
-        DataGridViewCellStyle8.Format = "N2"
-        DataGridViewCellStyle8.NullValue = "0"
-        Me.impFijo1Producto.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle50.Format = "N2"
+        DataGridViewCellStyle50.NullValue = "0"
+        Me.impFijo1Producto.DefaultCellStyle = DataGridViewCellStyle50
         Me.impFijo1Producto.HeaderText = "Imp. Fijo 1"
         Me.impFijo1Producto.Name = "impFijo1Producto"
         Me.impFijo1Producto.Visible = False
         '
         'impFijo2Producto
         '
-        DataGridViewCellStyle9.Format = "N2"
-        DataGridViewCellStyle9.NullValue = "0"
-        Me.impFijo2Producto.DefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle51.Format = "N2"
+        DataGridViewCellStyle51.NullValue = "0"
+        Me.impFijo2Producto.DefaultCellStyle = DataGridViewCellStyle51
         Me.impFijo2Producto.FillWeight = 50.0!
         Me.impFijo2Producto.HeaderText = "Imp. Fijo 2"
         Me.impFijo2Producto.Name = "impFijo2Producto"
@@ -329,9 +330,9 @@ Partial Class frmPtoVtaNvo
         '
         'idProducto
         '
-        DataGridViewCellStyle10.Format = "N2"
-        DataGridViewCellStyle10.NullValue = "0"
-        Me.idProducto.DefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle52.Format = "N2"
+        DataGridViewCellStyle52.NullValue = "0"
+        Me.idProducto.DefaultCellStyle = DataGridViewCellStyle52
         Me.idProducto.FillWeight = 50.0!
         Me.idProducto.HeaderText = "idProducto"
         Me.idProducto.Name = "idProducto"
@@ -368,7 +369,7 @@ Partial Class frmPtoVtaNvo
         Me.panelSuperiorCompleto.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.panelSuperiorCompleto.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30.0!))
         Me.panelSuperiorCompleto.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.panelSuperiorCompleto.Size = New System.Drawing.Size(889, 198)
+        Me.panelSuperiorCompleto.Size = New System.Drawing.Size(1011, 198)
         Me.panelSuperiorCompleto.TabIndex = 1
         '
         'Panel11
@@ -379,7 +380,7 @@ Partial Class frmPtoVtaNvo
         Me.Panel11.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel11.Location = New System.Drawing.Point(3, 87)
         Me.Panel11.Name = "Panel11"
-        Me.Panel11.Size = New System.Drawing.Size(211, 78)
+        Me.Panel11.Size = New System.Drawing.Size(241, 78)
         Me.Panel11.TabIndex = 11
         '
         'lblFacturaFechaComprobante
@@ -412,9 +413,9 @@ Partial Class frmPtoVtaNvo
         Me.lblFacturaMensajes.Dock = System.Windows.Forms.DockStyle.Top
         Me.lblFacturaMensajes.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblFacturaMensajes.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
-        Me.lblFacturaMensajes.Location = New System.Drawing.Point(711, 84)
+        Me.lblFacturaMensajes.Location = New System.Drawing.Point(810, 84)
         Me.lblFacturaMensajes.Name = "lblFacturaMensajes"
-        Me.lblFacturaMensajes.Size = New System.Drawing.Size(175, 72)
+        Me.lblFacturaMensajes.Size = New System.Drawing.Size(198, 72)
         Me.lblFacturaMensajes.TabIndex = 10
         Me.lblFacturaMensajes.Text = "MENSAJES " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "DE " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "SISTEMA"
         Me.lblFacturaMensajes.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
@@ -425,9 +426,9 @@ Partial Class frmPtoVtaNvo
         Me.Panel10.Controls.Add(Me.lblFacturaCondicionVenta)
         Me.Panel10.Controls.Add(Me.Label27)
         Me.Panel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel10.Location = New System.Drawing.Point(534, 87)
+        Me.Panel10.Location = New System.Drawing.Point(608, 87)
         Me.Panel10.Name = "Panel10"
-        Me.Panel10.Size = New System.Drawing.Size(171, 78)
+        Me.Panel10.Size = New System.Drawing.Size(196, 78)
         Me.Panel10.TabIndex = 9
         '
         'lblFacturaCondicionVenta
@@ -450,9 +451,9 @@ Partial Class frmPtoVtaNvo
         Me.Label27.ForeColor = System.Drawing.Color.White
         Me.Label27.Location = New System.Drawing.Point(0, 0)
         Me.Label27.Name = "Label27"
-        Me.Label27.Size = New System.Drawing.Size(157, 17)
+        Me.Label27.Size = New System.Drawing.Size(187, 17)
         Me.Label27.TabIndex = 1
-        Me.Label27.Text = "CONDICION DE VENTA"
+        Me.Label27.Text = "CONDICION DE VENTA (F1)"
         '
         'Panel9
         '
@@ -462,9 +463,9 @@ Partial Class frmPtoVtaNvo
         Me.Panel9.Controls.Add(Me.lblFacturaListaPrecios)
         Me.Panel9.Controls.Add(Me.Label23)
         Me.Panel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel9.Location = New System.Drawing.Point(357, 87)
+        Me.Panel9.Location = New System.Drawing.Point(406, 87)
         Me.Panel9.Name = "Panel9"
-        Me.Panel9.Size = New System.Drawing.Size(171, 78)
+        Me.Panel9.Size = New System.Drawing.Size(196, 78)
         Me.Panel9.TabIndex = 8
         '
         'lblFacturaAlmacen
@@ -487,9 +488,9 @@ Partial Class frmPtoVtaNvo
         Me.Label25.ForeColor = System.Drawing.Color.White
         Me.Label25.Location = New System.Drawing.Point(0, 34)
         Me.Label25.Name = "Label25"
-        Me.Label25.Size = New System.Drawing.Size(73, 17)
+        Me.Label25.Size = New System.Drawing.Size(103, 17)
         Me.Label25.TabIndex = 3
-        Me.Label25.Text = "ALMACEN"
+        Me.Label25.Text = "ALMACEN (F7)"
         '
         'lblFacturaListaPrecios
         '
@@ -511,9 +512,9 @@ Partial Class frmPtoVtaNvo
         Me.Label23.ForeColor = System.Drawing.Color.White
         Me.Label23.Location = New System.Drawing.Point(0, 0)
         Me.Label23.Name = "Label23"
-        Me.Label23.Size = New System.Drawing.Size(133, 17)
+        Me.Label23.Size = New System.Drawing.Size(163, 17)
         Me.Label23.TabIndex = 1
-        Me.Label23.Text = "LISTA DE PRECIOS"
+        Me.Label23.Text = "LISTA DE PRECIOS (F2)"
         '
         'Panel6
         '
@@ -524,7 +525,7 @@ Partial Class frmPtoVtaNvo
         Me.Panel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Panel6.Location = New System.Drawing.Point(3, 171)
         Me.Panel6.Name = "Panel6"
-        Me.Panel6.Size = New System.Drawing.Size(883, 24)
+        Me.Panel6.Size = New System.Drawing.Size(1005, 24)
         Me.Panel6.TabIndex = 7
         '
         'Label11
@@ -561,7 +562,7 @@ Partial Class frmPtoVtaNvo
         Me.pnPanelFacturaComprobante.ForeColor = System.Drawing.Color.Black
         Me.pnPanelFacturaComprobante.Location = New System.Drawing.Point(3, 3)
         Me.pnPanelFacturaComprobante.Name = "pnPanelFacturaComprobante"
-        Me.pnPanelFacturaComprobante.Size = New System.Drawing.Size(211, 78)
+        Me.pnPanelFacturaComprobante.Size = New System.Drawing.Size(241, 78)
         Me.pnPanelFacturaComprobante.TabIndex = 6
         '
         'lblFacturaNumComprobante
@@ -584,9 +585,9 @@ Partial Class frmPtoVtaNvo
         Me.Label9.ForeColor = System.Drawing.Color.White
         Me.Label9.Location = New System.Drawing.Point(0, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(115, 17)
+        Me.Label9.Size = New System.Drawing.Size(145, 17)
         Me.Label9.TabIndex = 1
-        Me.Label9.Text = "COMPROBANTE"
+        Me.Label9.Text = "COMPROBANTE (F8)"
         '
         'Panel3
         '
@@ -596,9 +597,9 @@ Partial Class frmPtoVtaNvo
         Me.Panel3.Controls.Add(Me.lblFacturaClienteNombreApellido)
         Me.Panel3.Controls.Add(Me.Label7)
         Me.Panel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel3.Location = New System.Drawing.Point(220, 3)
+        Me.Panel3.Location = New System.Drawing.Point(250, 3)
         Me.Panel3.Name = "Panel3"
-        Me.Panel3.Size = New System.Drawing.Size(308, 78)
+        Me.Panel3.Size = New System.Drawing.Size(352, 78)
         Me.Panel3.TabIndex = 5
         '
         'lblFacturaClienteOtrosDatos
@@ -633,9 +634,9 @@ Partial Class frmPtoVtaNvo
         Me.Label7.ForeColor = System.Drawing.Color.White
         Me.Label7.Location = New System.Drawing.Point(0, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(65, 17)
+        Me.Label7.Size = New System.Drawing.Size(95, 17)
         Me.Label7.TabIndex = 1
-        Me.Label7.Text = "CLIENTE"
+        Me.Label7.Text = "CLIENTE (F6)"
         '
         'Panel2
         '
@@ -643,9 +644,9 @@ Partial Class frmPtoVtaNvo
         Me.Panel2.Controls.Add(Me.lblVendedor)
         Me.Panel2.Controls.Add(Me.Label5)
         Me.Panel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel2.Location = New System.Drawing.Point(220, 87)
+        Me.Panel2.Location = New System.Drawing.Point(250, 87)
         Me.Panel2.Name = "Panel2"
-        Me.Panel2.Size = New System.Drawing.Size(131, 78)
+        Me.Panel2.Size = New System.Drawing.Size(150, 78)
         Me.Panel2.TabIndex = 4
         '
         'lblVendedor
@@ -668,9 +669,9 @@ Partial Class frmPtoVtaNvo
         Me.Label5.ForeColor = System.Drawing.Color.White
         Me.Label5.Location = New System.Drawing.Point(0, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(86, 17)
+        Me.Label5.Size = New System.Drawing.Size(116, 17)
         Me.Label5.TabIndex = 1
-        Me.Label5.Text = "VENDEDOR"
+        Me.Label5.Text = "VENDEDOR (F3)"
         '
         'Panel4
         '
@@ -679,9 +680,9 @@ Partial Class frmPtoVtaNvo
         Me.Panel4.Controls.Add(Me.lblFacturaTotal)
         Me.Panel4.Controls.Add(Me.Label2)
         Me.Panel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Panel4.Location = New System.Drawing.Point(534, 3)
+        Me.Panel4.Location = New System.Drawing.Point(608, 3)
         Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(352, 78)
+        Me.Panel4.Size = New System.Drawing.Size(400, 78)
         Me.Panel4.TabIndex = 3
         '
         'lblFacturaTotal
@@ -691,7 +692,7 @@ Partial Class frmPtoVtaNvo
         Me.lblFacturaTotal.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.lblFacturaTotal.Location = New System.Drawing.Point(0, 17)
         Me.lblFacturaTotal.Name = "lblFacturaTotal"
-        Me.lblFacturaTotal.Size = New System.Drawing.Size(352, 37)
+        Me.lblFacturaTotal.Size = New System.Drawing.Size(400, 37)
         Me.lblFacturaTotal.TabIndex = 2
         Me.lblFacturaTotal.Text = "$99.999.999,99"
         Me.lblFacturaTotal.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -703,7 +704,7 @@ Partial Class frmPtoVtaNvo
         Me.Label2.ForeColor = System.Drawing.Color.White
         Me.Label2.Location = New System.Drawing.Point(0, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(352, 17)
+        Me.Label2.Size = New System.Drawing.Size(400, 17)
         Me.Label2.TabIndex = 1
         Me.Label2.Text = "TOTAL"
         Me.Label2.TextAlign = System.Drawing.ContentAlignment.TopRight
@@ -713,6 +714,7 @@ Partial Class frmPtoVtaNvo
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.btnFacturaGuardar, 1, 1)
         Me.TableLayoutPanel1.Controls.Add(Me.btnFcturaTipoSeleccionar, 1, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.btnFacturaClienteBuscar, 0, 2)
         Me.TableLayoutPanel1.Controls.Add(Me.btnFacturaImprimir, 0, 1)
@@ -720,7 +722,7 @@ Partial Class frmPtoVtaNvo
         Me.TableLayoutPanel1.Controls.Add(Me.pnMetodoImpresion, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.pnFacturaDescontarStock, 1, 3)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(889, 0)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(1011, 0)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 7
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
@@ -730,8 +732,24 @@ Partial Class frmPtoVtaNvo
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(200, 433)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(200, 454)
         Me.TableLayoutPanel1.TabIndex = 2
+        '
+        'btnFacturaGuardar
+        '
+        Me.btnFacturaGuardar.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.btnFacturaGuardar.Enabled = False
+        Me.btnFacturaGuardar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.btnFacturaGuardar.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnFacturaGuardar.ForeColor = System.Drawing.Color.White
+        Me.btnFacturaGuardar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_64px
+        Me.btnFacturaGuardar.Location = New System.Drawing.Point(103, 103)
+        Me.btnFacturaGuardar.Name = "btnFacturaGuardar"
+        Me.btnFacturaGuardar.Size = New System.Drawing.Size(94, 94)
+        Me.btnFacturaGuardar.TabIndex = 7
+        Me.btnFacturaGuardar.Text = "Guardar"
+        Me.btnFacturaGuardar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.btnFacturaGuardar.UseVisualStyleBackColor = True
         '
         'btnFcturaTipoSeleccionar
         '
@@ -765,7 +783,7 @@ Partial Class frmPtoVtaNvo
         '
         'btnFacturaImprimir
         '
-        Me.TableLayoutPanel1.SetColumnSpan(Me.btnFacturaImprimir, 2)
+        Me.btnFacturaImprimir.BackColor = System.Drawing.Color.Goldenrod
         Me.btnFacturaImprimir.Dock = System.Windows.Forms.DockStyle.Fill
         Me.btnFacturaImprimir.Enabled = False
         Me.btnFacturaImprimir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
@@ -774,11 +792,11 @@ Partial Class frmPtoVtaNvo
         Me.btnFacturaImprimir.Image = Global.SIGT__KIGEST.My.Resources.Resources.Print
         Me.btnFacturaImprimir.Location = New System.Drawing.Point(3, 103)
         Me.btnFacturaImprimir.Name = "btnFacturaImprimir"
-        Me.btnFacturaImprimir.Size = New System.Drawing.Size(194, 94)
+        Me.btnFacturaImprimir.Size = New System.Drawing.Size(94, 94)
         Me.btnFacturaImprimir.TabIndex = 2
-        Me.btnFacturaImprimir.Text = "Imprimir"
+        Me.btnFacturaImprimir.Text = "Imprimir (F5)"
         Me.btnFacturaImprimir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.btnFacturaImprimir.UseVisualStyleBackColor = True
+        Me.btnFacturaImprimir.UseVisualStyleBackColor = False
         '
         'btnFacturaFinalizar
         '
@@ -793,7 +811,7 @@ Partial Class frmPtoVtaNvo
         Me.btnFacturaFinalizar.Name = "btnFacturaFinalizar"
         Me.btnFacturaFinalizar.Size = New System.Drawing.Size(194, 94)
         Me.btnFacturaFinalizar.TabIndex = 1
-        Me.btnFacturaFinalizar.Text = "Finalizar"
+        Me.btnFacturaFinalizar.Text = "Finalizar (F4)"
         Me.btnFacturaFinalizar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.btnFacturaFinalizar.UseVisualStyleBackColor = False
         '
@@ -893,7 +911,7 @@ Partial Class frmPtoVtaNvo
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50.0!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 476.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 561.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.btnLimpiarProductos, 8, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.dtpedidosfact, 10, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.btnAgregarProdGenerico, 7, 1)
@@ -906,12 +924,12 @@ Partial Class frmPtoVtaNvo
         Me.TableLayoutPanel2.Controls.Add(Me.Panel8, 1, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Panel7, 0, 0)
         Me.TableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 433)
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(0, 454)
         Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
         Me.TableLayoutPanel2.RowCount = 2
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1089, 89)
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(1211, 89)
         Me.TableLayoutPanel2.TabIndex = 3
         '
         'btnLimpiarProductos
@@ -936,7 +954,7 @@ Partial Class frmPtoVtaNvo
         Me.dtpedidosfact.Location = New System.Drawing.Point(653, 3)
         Me.dtpedidosfact.Name = "dtpedidosfact"
         Me.TableLayoutPanel2.SetRowSpan(Me.dtpedidosfact, 2)
-        Me.dtpedidosfact.Size = New System.Drawing.Size(470, 83)
+        Me.dtpedidosfact.Size = New System.Drawing.Size(555, 83)
         Me.dtpedidosfact.TabIndex = 75
         Me.dtpedidosfact.Visible = False
         '
@@ -1159,9 +1177,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle14.Format = "N2"
-        DataGridViewCellStyle14.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle56.Format = "N2"
+        DataGridViewCellStyle56.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle56
         Me.DataGridViewTextBoxColumn3.FillWeight = 20.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "DESCRIPCION"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -1169,9 +1187,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle15.Format = "C2"
-        DataGridViewCellStyle15.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle57.Format = "C2"
+        DataGridViewCellStyle57.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle57
         Me.DataGridViewTextBoxColumn4.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn4.HeaderText = "P. Unitario"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
@@ -1179,9 +1197,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn5
         '
-        DataGridViewCellStyle16.Format = "C2"
-        DataGridViewCellStyle16.NullValue = "0"
-        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle58.Format = "C2"
+        DataGridViewCellStyle58.NullValue = "0"
+        Me.DataGridViewTextBoxColumn5.DefaultCellStyle = DataGridViewCellStyle58
         Me.DataGridViewTextBoxColumn5.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn5.HeaderText = "P. Total"
         Me.DataGridViewTextBoxColumn5.Name = "DataGridViewTextBoxColumn5"
@@ -1189,9 +1207,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn6
         '
-        DataGridViewCellStyle17.Format = "N2"
-        DataGridViewCellStyle17.NullValue = "0"
-        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle59.Format = "N2"
+        DataGridViewCellStyle59.NullValue = "0"
+        Me.DataGridViewTextBoxColumn6.DefaultCellStyle = DataGridViewCellStyle59
         Me.DataGridViewTextBoxColumn6.HeaderText = "GANANCIA"
         Me.DataGridViewTextBoxColumn6.Name = "DataGridViewTextBoxColumn6"
         Me.DataGridViewTextBoxColumn6.Visible = False
@@ -1199,9 +1217,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn7
         '
-        DataGridViewCellStyle18.Format = "N2"
-        DataGridViewCellStyle18.NullValue = "0"
-        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle60.Format = "N2"
+        DataGridViewCellStyle60.NullValue = "0"
+        Me.DataGridViewTextBoxColumn7.DefaultCellStyle = DataGridViewCellStyle60
         Me.DataGridViewTextBoxColumn7.HeaderText = "IVA"
         Me.DataGridViewTextBoxColumn7.Name = "DataGridViewTextBoxColumn7"
         Me.DataGridViewTextBoxColumn7.Visible = False
@@ -1209,9 +1227,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn8
         '
-        DataGridViewCellStyle19.Format = "N2"
-        DataGridViewCellStyle19.NullValue = "0"
-        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle19
+        DataGridViewCellStyle61.Format = "N2"
+        DataGridViewCellStyle61.NullValue = "0"
+        Me.DataGridViewTextBoxColumn8.DefaultCellStyle = DataGridViewCellStyle61
         Me.DataGridViewTextBoxColumn8.HeaderText = "Imp. Fijo 1"
         Me.DataGridViewTextBoxColumn8.Name = "DataGridViewTextBoxColumn8"
         Me.DataGridViewTextBoxColumn8.Visible = False
@@ -1219,9 +1237,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn9
         '
-        DataGridViewCellStyle20.Format = "N2"
-        DataGridViewCellStyle20.NullValue = "0"
-        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle20
+        DataGridViewCellStyle62.Format = "N2"
+        DataGridViewCellStyle62.NullValue = "0"
+        Me.DataGridViewTextBoxColumn9.DefaultCellStyle = DataGridViewCellStyle62
         Me.DataGridViewTextBoxColumn9.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn9.HeaderText = "Imp. Fijo 2"
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
@@ -1230,9 +1248,9 @@ Partial Class frmPtoVtaNvo
         '
         'DataGridViewTextBoxColumn10
         '
-        DataGridViewCellStyle21.Format = "N2"
-        DataGridViewCellStyle21.NullValue = "0"
-        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle21
+        DataGridViewCellStyle63.Format = "N2"
+        DataGridViewCellStyle63.NullValue = "0"
+        Me.DataGridViewTextBoxColumn10.DefaultCellStyle = DataGridViewCellStyle63
         Me.DataGridViewTextBoxColumn10.FillWeight = 50.0!
         Me.DataGridViewTextBoxColumn10.HeaderText = "idProducto"
         Me.DataGridViewTextBoxColumn10.Name = "DataGridViewTextBoxColumn10"
@@ -1264,7 +1282,7 @@ Partial Class frmPtoVtaNvo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1089, 556)
+        Me.ClientSize = New System.Drawing.Size(1211, 577)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.pntitulo)
         Me.KeyPreview = True
@@ -1399,4 +1417,5 @@ Partial Class frmPtoVtaNvo
     Friend WithEvents impFijo2Producto As DataGridViewTextBoxColumn
     Friend WithEvents idProducto As DataGridViewTextBoxColumn
     Friend WithEvents monedaProducto As DataGridViewTextBoxColumn
+    Friend WithEvents btnFacturaGuardar As Button
 End Class
