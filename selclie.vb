@@ -30,6 +30,7 @@ Public Class selclie
     ' =====================================================================
     Private Sub txtBusquedaCliente_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBusquedaCliente.KeyDown
         If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True
             If String.IsNullOrEmpty(txtBusquedaCliente.Text) Then
                 MsgBox("Debe ingresar un texto a buscar", MsgBoxStyle.Exclamation)
                 Exit Sub
@@ -37,6 +38,21 @@ Public Class selclie
             IniciarBusqueda()
         ElseIf e.KeyCode = Keys.Escape Then
             Me.Close()
+        ElseIf e.KeyCode = Keys.Down OrElse e.KeyCode = Keys.Up Then
+            If dtpersonal.Rows.Count > 0 Then
+                ' Pasamos el foco a la grilla
+                dtpersonal.Focus()
+
+                ' Si la flecha fue hacia abajo y no hay nada seleccionado, forzamos seleccionar la primera fila
+                If e.KeyCode = Keys.Down AndAlso dtpersonal.CurrentRow Is Nothing Then
+                    dtpersonal.Rows(0).Selected = True
+                    dtpersonal.CurrentCell = dtpersonal.Rows(0).Cells(0) ' Ajusta el índice (0) a la columna que quieras enfocar
+                End If
+
+                ' Evitamos que la caja de texto procese la flecha (para que no mueva el cursor de texto al final/principio)
+                e.Handled = True
+
+            End If
         End If
     End Sub
 
@@ -261,5 +277,9 @@ Public Class selclie
                 .Width = 100
             End With
         End If
+    End Sub
+
+    Private Sub txtBusquedaCliente_TextChanged(sender As Object, e As EventArgs) Handles txtBusquedaCliente.TextChanged
+
     End Sub
 End Class

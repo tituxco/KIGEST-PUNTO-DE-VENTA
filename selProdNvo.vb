@@ -151,7 +151,27 @@ Public Class selProdNvo
 
     Private Sub txtBusquedaProd_KeyDown(sender As Object, e As KeyEventArgs) Handles txtBusquedaProd.KeyDown
         If e.KeyCode = Keys.Enter Then
+            ' Para evitar el sonido de "ding" al presionar Enter en un TextBox
+            e.SuppressKeyPress = True
             RealizarBusqueda()
+        ElseIf e.KeyCode = Keys.Down OrElse e.KeyCode = Keys.Up Then
+            ' Si presiona la flecha abajo/arriba y hay filas en la grilla...
+            If dtproductos.Rows.Count > 0 Then
+                ' Pasamos el foco a la grilla
+                dtproductos.Focus()
+
+                ' Si la flecha fue hacia abajo y no hay nada seleccionado, forzamos seleccionar la primera fila
+                If e.KeyCode = Keys.Down AndAlso dtproductos.CurrentRow Is Nothing Then
+                    dtproductos.Rows(0).Selected = True
+                    dtproductos.CurrentCell = dtproductos.Rows(0).Cells(0) ' Ajusta el índice (0) a la columna que quieras enfocar
+                End If
+
+                ' Evitamos que la caja de texto procese la flecha (para que no mueva el cursor de texto al final/principio)
+                e.Handled = True
+
+            End If
+        ElseIf e.KeyCode = Keys.Escape Then
+            Me.Close()
         End If
     End Sub
 
@@ -185,5 +205,9 @@ Public Class selProdNvo
                 Me.Close()
             End If
         End If
+    End Sub
+
+    Private Sub txtBusquedaProd_TextChanged(sender As Object, e As EventArgs) Handles txtBusquedaProd.TextChanged
+
     End Sub
 End Class
