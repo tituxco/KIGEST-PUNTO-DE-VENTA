@@ -26,10 +26,17 @@ Partial Class frmaspirantes
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmaspirantes))
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.lblestado = New System.Windows.Forms.Label()
+        Me.cmdeliminar = New System.Windows.Forms.Button()
+        Me.cmdaceptar = New System.Windows.Forms.Button()
+        Me.cmdcancelar = New System.Windows.Forms.Button()
+        Me.cmdmodificar = New System.Windows.Forms.Button()
+        Me.cmdnuevapers = New System.Windows.Forms.Button()
+        Me.cmdsalir = New System.Windows.Forms.Button()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.pnlistaclientes = New System.Windows.Forms.Panel()
+        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -67,7 +74,15 @@ Partial Class frmaspirantes
         Me.chkHistorialPorProductos = New System.Windows.Forms.CheckBox()
         Me.txtmesesvtasCliente = New System.Windows.Forms.TextBox()
         Me.Label18 = New System.Windows.Forms.Label()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.tabPublicidad = New System.Windows.Forms.TabPage()
+        Me.dgvPublicidades = New System.Windows.Forms.DataGridView()
+        Me.Panel4 = New System.Windows.Forms.Panel()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
+        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.chkfecha = New System.Windows.Forms.CheckBox()
         Me.grpperiodo = New System.Windows.Forms.GroupBox()
@@ -77,36 +92,21 @@ Partial Class frmaspirantes
         Me.Label12 = New System.Windows.Forms.Label()
         Me.chkvendedor = New System.Windows.Forms.CheckBox()
         Me.cmbvendedor_lst = New System.Windows.Forms.ComboBox()
+        Me.Button2 = New System.Windows.Forms.Button()
         Me.chklocalidad = New System.Windows.Forms.CheckBox()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
         Me.tabSeguimientoVendedores = New System.Windows.Forms.TabPage()
+        Me.DgvHistorialVtasCliente = New SIGT__KIGEST.DGVPaginado()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.txtmeseshistorial = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
         Me.Label14 = New System.Windows.Forms.Label()
         Me.cmbVendedorHistorial = New System.Windows.Forms.ComboBox()
-        Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
-        Me.tabPublicidad = New System.Windows.Forms.TabPage()
-        Me.dgvPublicidades = New System.Windows.Forms.DataGridView()
-        Me.Panel4 = New System.Windows.Forms.Panel()
-        Me.Button6 = New System.Windows.Forms.Button()
-        Me.Button8 = New System.Windows.Forms.Button()
-        Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
-        Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
-        Me.cmdeliminar = New System.Windows.Forms.Button()
-        Me.cmdaceptar = New System.Windows.Forms.Button()
-        Me.cmdcancelar = New System.Windows.Forms.Button()
-        Me.cmdmodificar = New System.Windows.Forms.Button()
-        Me.cmdnuevapers = New System.Windows.Forms.Button()
-        Me.cmdsalir = New System.Windows.Forms.Button()
-        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
-        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
-        Me.DgvHistorialVtasCliente = New SIGT__KIGEST.DGVPaginado()
+        Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
@@ -118,14 +118,14 @@ Partial Class frmaspirantes
         Me.tabHistorialVentasCliente.SuspendLayout()
         CType(Me.dgvHistorialCliente, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel3.SuspendLayout()
+        Me.tabPublicidad.SuspendLayout()
+        CType(Me.dgvPublicidades, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel4.SuspendLayout()
         Me.TabPage3.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.grpperiodo.SuspendLayout()
         Me.tabSeguimientoVendedores.SuspendLayout()
         Me.Panel2.SuspendLayout()
-        Me.tabPublicidad.SuspendLayout()
-        CType(Me.dgvPublicidades, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.Panel4.SuspendLayout()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -156,6 +156,110 @@ Partial Class frmaspirantes
         Me.lblestado.Size = New System.Drawing.Size(587, 89)
         Me.lblestado.TabIndex = 36
         Me.lblestado.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'cmdeliminar
+        '
+        Me.cmdeliminar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdeliminar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdeliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdeliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdeliminar.ForeColor = System.Drawing.Color.White
+        Me.cmdeliminar.Image = CType(resources.GetObject("cmdeliminar.Image"), System.Drawing.Image)
+        Me.cmdeliminar.Location = New System.Drawing.Point(158, 0)
+        Me.cmdeliminar.Name = "cmdeliminar"
+        Me.cmdeliminar.Size = New System.Drawing.Size(79, 89)
+        Me.cmdeliminar.TabIndex = 31
+        Me.cmdeliminar.Text = "Eliminar"
+        Me.cmdeliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdeliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdeliminar.UseVisualStyleBackColor = True
+        '
+        'cmdaceptar
+        '
+        Me.cmdaceptar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdaceptar.Enabled = False
+        Me.cmdaceptar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdaceptar.ForeColor = System.Drawing.Color.White
+        Me.cmdaceptar.Image = CType(resources.GetObject("cmdaceptar.Image"), System.Drawing.Image)
+        Me.cmdaceptar.Location = New System.Drawing.Point(824, 0)
+        Me.cmdaceptar.Name = "cmdaceptar"
+        Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
+        Me.cmdaceptar.TabIndex = 30
+        Me.cmdaceptar.Text = "Guardar"
+        Me.cmdaceptar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdaceptar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdaceptar.UseVisualStyleBackColor = True
+        '
+        'cmdcancelar
+        '
+        Me.cmdcancelar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdcancelar.Enabled = False
+        Me.cmdcancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdcancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdcancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdcancelar.ForeColor = System.Drawing.Color.White
+        Me.cmdcancelar.Image = CType(resources.GetObject("cmdcancelar.Image"), System.Drawing.Image)
+        Me.cmdcancelar.Location = New System.Drawing.Point(926, 0)
+        Me.cmdcancelar.Name = "cmdcancelar"
+        Me.cmdcancelar.Size = New System.Drawing.Size(93, 89)
+        Me.cmdcancelar.TabIndex = 27
+        Me.cmdcancelar.Text = "Cancelar"
+        Me.cmdcancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdcancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdcancelar.UseVisualStyleBackColor = True
+        '
+        'cmdmodificar
+        '
+        Me.cmdmodificar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdmodificar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdmodificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdmodificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdmodificar.ForeColor = System.Drawing.Color.White
+        Me.cmdmodificar.Image = CType(resources.GetObject("cmdmodificar.Image"), System.Drawing.Image)
+        Me.cmdmodificar.Location = New System.Drawing.Point(75, 0)
+        Me.cmdmodificar.Name = "cmdmodificar"
+        Me.cmdmodificar.Size = New System.Drawing.Size(83, 89)
+        Me.cmdmodificar.TabIndex = 19
+        Me.cmdmodificar.Text = "Modificar"
+        Me.cmdmodificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdmodificar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdmodificar.UseVisualStyleBackColor = True
+        '
+        'cmdnuevapers
+        '
+        Me.cmdnuevapers.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdnuevapers.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdnuevapers.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdnuevapers.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdnuevapers.ForeColor = System.Drawing.Color.White
+        Me.cmdnuevapers.Image = CType(resources.GetObject("cmdnuevapers.Image"), System.Drawing.Image)
+        Me.cmdnuevapers.Location = New System.Drawing.Point(0, 0)
+        Me.cmdnuevapers.Name = "cmdnuevapers"
+        Me.cmdnuevapers.Size = New System.Drawing.Size(75, 89)
+        Me.cmdnuevapers.TabIndex = 18
+        Me.cmdnuevapers.Text = "Agregar"
+        Me.cmdnuevapers.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdnuevapers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdnuevapers.UseVisualStyleBackColor = True
+        '
+        'cmdsalir
+        '
+        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdsalir.ForeColor = System.Drawing.Color.White
+        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
+        Me.cmdsalir.Location = New System.Drawing.Point(1019, 0)
+        Me.cmdsalir.Name = "cmdsalir"
+        Me.cmdsalir.Size = New System.Drawing.Size(88, 89)
+        Me.cmdsalir.TabIndex = 17
+        Me.cmdsalir.Text = "Salir"
+        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdsalir.UseVisualStyleBackColor = True
         '
         'pntitulo
         '
@@ -196,6 +300,14 @@ Partial Class frmaspirantes
         Me.pnlistaclientes.Name = "pnlistaclientes"
         Me.pnlistaclientes.Size = New System.Drawing.Size(372, 445)
         Me.pnlistaclientes.TabIndex = 63
+        '
+        'dgvClientes
+        '
+        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
+        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
+        Me.dgvClientes.Name = "dgvClientes"
+        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
+        Me.dgvClientes.TabIndex = 63
         '
         'txtbuscar
         '
@@ -300,7 +412,7 @@ Partial Class frmaspirantes
         Me.Label8.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label8.Location = New System.Drawing.Point(260, 341)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(76, 16)
+        Me.Label8.Size = New System.Drawing.Size(75, 16)
         Me.Label8.TabIndex = 206
         Me.Label8.Text = "Vendedor"
         '
@@ -321,7 +433,7 @@ Partial Class frmaspirantes
         Me.Label6.ForeColor = System.Drawing.Color.Black
         Me.Label6.Location = New System.Drawing.Point(337, 3)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(85, 16)
+        Me.Label6.Size = New System.Drawing.Size(84, 16)
         Me.Label6.TabIndex = 204
         Me.Label6.Text = "CodigoClie"
         '
@@ -342,7 +454,7 @@ Partial Class frmaspirantes
         Me.Label5.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label5.Location = New System.Drawing.Point(261, 295)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(119, 16)
+        Me.Label5.Size = New System.Drawing.Size(118, 16)
         Me.Label5.TabIndex = 202
         Me.Label5.Text = "Lista de precios"
         '
@@ -361,7 +473,7 @@ Partial Class frmaspirantes
         Me.Label3.ForeColor = System.Drawing.Color.Black
         Me.Label3.Location = New System.Drawing.Point(337, 49)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(43, 16)
+        Me.Label3.Size = New System.Drawing.Size(42, 16)
         Me.Label3.TabIndex = 200
         Me.Label3.Text = "CUIT"
         '
@@ -381,7 +493,7 @@ Partial Class frmaspirantes
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label10.Location = New System.Drawing.Point(-3, 295)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(81, 16)
+        Me.Label10.Size = New System.Drawing.Size(80, 16)
         Me.Label10.TabIndex = 198
         Me.Label10.Text = "Contactos:"
         '
@@ -400,7 +512,7 @@ Partial Class frmaspirantes
         Me.Label9.ForeColor = System.Drawing.Color.Black
         Me.Label9.Location = New System.Drawing.Point(-3, 245)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(41, 16)
+        Me.Label9.Size = New System.Drawing.Size(40, 16)
         Me.Label9.TabIndex = 196
         Me.Label9.Text = "Mail:"
         '
@@ -419,7 +531,7 @@ Partial Class frmaspirantes
         Me.Label2.ForeColor = System.Drawing.Color.Black
         Me.Label2.Location = New System.Drawing.Point(260, 197)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(61, 16)
+        Me.Label2.Size = New System.Drawing.Size(60, 16)
         Me.Label2.TabIndex = 189
         Me.Label2.Text = "Celular:"
         '
@@ -438,7 +550,7 @@ Partial Class frmaspirantes
         Me.Label11.ForeColor = System.Drawing.Color.Black
         Me.Label11.Location = New System.Drawing.Point(-3, 197)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(74, 16)
+        Me.Label11.Size = New System.Drawing.Size(73, 16)
         Me.Label11.TabIndex = 187
         Me.Label11.Text = "Teléfono:"
         '
@@ -457,7 +569,7 @@ Partial Class frmaspirantes
         Me.Label15.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label15.Location = New System.Drawing.Point(-3, 92)
         Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(77, 16)
+        Me.Label15.Size = New System.Drawing.Size(76, 16)
         Me.Label15.TabIndex = 185
         Me.Label15.Text = "Domicilio:"
         '
@@ -477,7 +589,7 @@ Partial Class frmaspirantes
         Me.Label42.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label42.Location = New System.Drawing.Point(-3, 396)
         Me.Label42.Name = "Label42"
-        Me.Label42.Size = New System.Drawing.Size(117, 16)
+        Me.Label42.Size = New System.Drawing.Size(116, 16)
         Me.Label42.TabIndex = 183
         Me.Label42.Text = "Observaciones:"
         '
@@ -498,7 +610,7 @@ Partial Class frmaspirantes
         Me.Label16.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label16.Location = New System.Drawing.Point(-3, 145)
         Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(81, 16)
+        Me.Label16.Size = New System.Drawing.Size(80, 16)
         Me.Label16.TabIndex = 182
         Me.Label16.Text = "Localidad:"
         '
@@ -519,7 +631,7 @@ Partial Class frmaspirantes
         Me.Label13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label13.Location = New System.Drawing.Point(-3, 49)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(76, 16)
+        Me.Label13.Size = New System.Drawing.Size(75, 16)
         Me.Label13.TabIndex = 164
         Me.Label13.Text = "Cond. IVA"
         '
@@ -538,7 +650,7 @@ Partial Class frmaspirantes
         Me.Label4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.Label4.Location = New System.Drawing.Point(2, 3)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(249, 16)
+        Me.Label4.Size = New System.Drawing.Size(248, 16)
         Me.Label4.TabIndex = 24
         Me.Label4.Text = "Apellido y nombres / Razon social:"
         '
@@ -619,6 +731,109 @@ Partial Class frmaspirantes
         Me.Label18.TabIndex = 72
         Me.Label18.Text = "Meses"
         '
+        'Button6
+        '
+        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
+        Me.Button6.Location = New System.Drawing.Point(551, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(75, 74)
+        Me.Button6.TabIndex = 67
+        Me.Button6.Text = "Exportar"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.UseVisualStyleBackColor = False
+        '
+        'Button8
+        '
+        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button8.ForeColor = System.Drawing.Color.White
+        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
+        Me.Button8.Location = New System.Drawing.Point(626, 0)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(81, 74)
+        Me.Button8.TabIndex = 64
+        Me.Button8.Text = "Buscar"
+        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button8.UseVisualStyleBackColor = False
+        '
+        'tabPublicidad
+        '
+        Me.tabPublicidad.Controls.Add(Me.dgvPublicidades)
+        Me.tabPublicidad.Controls.Add(Me.Panel4)
+        Me.tabPublicidad.Location = New System.Drawing.Point(4, 25)
+        Me.tabPublicidad.Name = "tabPublicidad"
+        Me.tabPublicidad.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabPublicidad.Size = New System.Drawing.Size(713, 416)
+        Me.tabPublicidad.TabIndex = 2
+        Me.tabPublicidad.Text = "Publicidades"
+        Me.tabPublicidad.UseVisualStyleBackColor = True
+        '
+        'dgvPublicidades
+        '
+        Me.dgvPublicidades.AllowUserToAddRows = False
+        Me.dgvPublicidades.AllowUserToDeleteRows = False
+        Me.dgvPublicidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
+        Me.dgvPublicidades.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
+        Me.dgvPublicidades.BackgroundColor = System.Drawing.Color.White
+        Me.dgvPublicidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dgvPublicidades.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvPublicidades.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
+        Me.dgvPublicidades.Location = New System.Drawing.Point(3, 77)
+        Me.dgvPublicidades.Name = "dgvPublicidades"
+        Me.dgvPublicidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dgvPublicidades.Size = New System.Drawing.Size(707, 336)
+        Me.dgvPublicidades.TabIndex = 27
+        '
+        'Panel4
+        '
+        Me.Panel4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel4.Controls.Add(Me.Button4)
+        Me.Panel4.Controls.Add(Me.Button7)
+        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Panel4.Location = New System.Drawing.Point(3, 3)
+        Me.Panel4.Name = "Panel4"
+        Me.Panel4.Size = New System.Drawing.Size(707, 74)
+        Me.Panel4.TabIndex = 26
+        '
+        'Button4
+        '
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = Global.SIGT__KIGEST.My.Resources.Resources.Eye_32px1
+        Me.Button4.Location = New System.Drawing.Point(551, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(75, 74)
+        Me.Button4.TabIndex = 67
+        Me.Button4.Text = "Detalle"
+        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button4.UseVisualStyleBackColor = False
+        '
+        'Button7
+        '
+        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button7.ForeColor = System.Drawing.Color.White
+        Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
+        Me.Button7.Location = New System.Drawing.Point(626, 0)
+        Me.Button7.Name = "Button7"
+        Me.Button7.Size = New System.Drawing.Size(81, 74)
+        Me.Button7.TabIndex = 64
+        Me.Button7.Text = "Buscar"
+        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button7.UseVisualStyleBackColor = False
+        '
         'TabPage3
         '
         Me.TabPage3.Controls.Add(Me.dgvlistaClientes)
@@ -630,6 +845,14 @@ Partial Class frmaspirantes
         Me.TabPage3.TabIndex = 1
         Me.TabPage3.Text = "LISTADOS"
         Me.TabPage3.UseVisualStyleBackColor = True
+        '
+        'dgvlistaClientes
+        '
+        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
+        Me.dgvlistaClientes.Name = "dgvlistaClientes"
+        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
+        Me.dgvlistaClientes.TabIndex = 1
         '
         'Panel1
         '
@@ -740,6 +963,22 @@ Partial Class frmaspirantes
         Me.cmbvendedor_lst.Size = New System.Drawing.Size(222, 24)
         Me.cmbvendedor_lst.TabIndex = 68
         '
+        'Button2
+        '
+        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Location = New System.Drawing.Point(855, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(75, 74)
+        Me.Button2.TabIndex = 67
+        Me.Button2.Text = "Exportar"
+        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button2.UseVisualStyleBackColor = False
+        '
         'chklocalidad
         '
         Me.chklocalidad.AutoSize = True
@@ -751,6 +990,38 @@ Partial Class frmaspirantes
         Me.chklocalidad.TabIndex = 66
         Me.chklocalidad.Text = "Localidad"
         Me.chklocalidad.UseVisualStyleBackColor = True
+        '
+        'Button1
+        '
+        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
+        Me.Button1.Location = New System.Drawing.Point(930, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(82, 74)
+        Me.Button1.TabIndex = 65
+        Me.Button1.Text = "Imprimir"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.UseVisualStyleBackColor = False
+        '
+        'cmdbuscar
+        '
+        Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
+        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
+        Me.cmdbuscar.Location = New System.Drawing.Point(1012, 0)
+        Me.cmdbuscar.Name = "cmdbuscar"
+        Me.cmdbuscar.Size = New System.Drawing.Size(81, 74)
+        Me.cmdbuscar.TabIndex = 64
+        Me.cmdbuscar.Text = "Buscar"
+        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdbuscar.UseVisualStyleBackColor = False
         '
         'cmblistaloca
         '
@@ -773,6 +1044,14 @@ Partial Class frmaspirantes
         Me.tabSeguimientoVendedores.TabIndex = 2
         Me.tabSeguimientoVendedores.Text = "SEGUIMIENTO DE VENDEDORES"
         Me.tabSeguimientoVendedores.UseVisualStyleBackColor = True
+        '
+        'DgvHistorialVtasCliente
+        '
+        Me.DgvHistorialVtasCliente.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvHistorialVtasCliente.Location = New System.Drawing.Point(3, 77)
+        Me.DgvHistorialVtasCliente.Name = "DgvHistorialVtasCliente"
+        Me.DgvHistorialVtasCliente.Size = New System.Drawing.Size(1093, 371)
+        Me.DgvHistorialVtasCliente.TabIndex = 2
         '
         'Panel2
         '
@@ -829,157 +1108,6 @@ Partial Class frmaspirantes
         Me.cmbVendedorHistorial.Size = New System.Drawing.Size(222, 24)
         Me.cmbVendedorHistorial.TabIndex = 68
         '
-        'tabPublicidad
-        '
-        Me.tabPublicidad.Controls.Add(Me.dgvPublicidades)
-        Me.tabPublicidad.Controls.Add(Me.Panel4)
-        Me.tabPublicidad.Location = New System.Drawing.Point(4, 25)
-        Me.tabPublicidad.Name = "tabPublicidad"
-        Me.tabPublicidad.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabPublicidad.Size = New System.Drawing.Size(713, 416)
-        Me.tabPublicidad.TabIndex = 2
-        Me.tabPublicidad.Text = "Publicidades"
-        Me.tabPublicidad.UseVisualStyleBackColor = True
-        '
-        'dgvPublicidades
-        '
-        Me.dgvPublicidades.AllowUserToAddRows = False
-        Me.dgvPublicidades.AllowUserToDeleteRows = False
-        Me.dgvPublicidades.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill
-        Me.dgvPublicidades.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells
-        Me.dgvPublicidades.BackgroundColor = System.Drawing.Color.White
-        Me.dgvPublicidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvPublicidades.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvPublicidades.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically
-        Me.dgvPublicidades.Location = New System.Drawing.Point(3, 77)
-        Me.dgvPublicidades.Name = "dgvPublicidades"
-        Me.dgvPublicidades.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dgvPublicidades.Size = New System.Drawing.Size(707, 336)
-        Me.dgvPublicidades.TabIndex = 27
-        '
-        'Panel4
-        '
-        Me.Panel4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Panel4.Controls.Add(Me.Button4)
-        Me.Panel4.Controls.Add(Me.Button7)
-        Me.Panel4.Dock = System.Windows.Forms.DockStyle.Top
-        Me.Panel4.Location = New System.Drawing.Point(3, 3)
-        Me.Panel4.Name = "Panel4"
-        Me.Panel4.Size = New System.Drawing.Size(707, 74)
-        Me.Panel4.TabIndex = 26
-        '
-        'Button6
-        '
-        Me.Button6.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button6.ForeColor = System.Drawing.Color.White
-        Me.Button6.Image = CType(resources.GetObject("Button6.Image"), System.Drawing.Image)
-        Me.Button6.Location = New System.Drawing.Point(551, 0)
-        Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(75, 74)
-        Me.Button6.TabIndex = 67
-        Me.Button6.Text = "Exportar"
-        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button6.UseVisualStyleBackColor = False
-        '
-        'Button8
-        '
-        Me.Button8.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button8.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button8.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button8.ForeColor = System.Drawing.Color.White
-        Me.Button8.Image = CType(resources.GetObject("Button8.Image"), System.Drawing.Image)
-        Me.Button8.Location = New System.Drawing.Point(626, 0)
-        Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(81, 74)
-        Me.Button8.TabIndex = 64
-        Me.Button8.Text = "Buscar"
-        Me.Button8.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button8.UseVisualStyleBackColor = False
-        '
-        'Button4
-        '
-        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button4.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Image = Global.SIGT__KIGEST.My.Resources.Resources.Eye_32px1
-        Me.Button4.Location = New System.Drawing.Point(551, 0)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(75, 74)
-        Me.Button4.TabIndex = 67
-        Me.Button4.Text = "Detalle"
-        Me.Button4.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button4.UseVisualStyleBackColor = False
-        '
-        'Button7
-        '
-        Me.Button7.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button7.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button7.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button7.ForeColor = System.Drawing.Color.White
-        Me.Button7.Image = CType(resources.GetObject("Button7.Image"), System.Drawing.Image)
-        Me.Button7.Location = New System.Drawing.Point(626, 0)
-        Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(81, 74)
-        Me.Button7.TabIndex = 64
-        Me.Button7.Text = "Buscar"
-        Me.Button7.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button7.UseVisualStyleBackColor = False
-        '
-        'Button2
-        '
-        Me.Button2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(855, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(75, 74)
-        Me.Button2.TabIndex = 67
-        Me.Button2.Text = "Exportar"
-        Me.Button2.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button2.UseVisualStyleBackColor = False
-        '
-        'Button1
-        '
-        Me.Button1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Image = CType(resources.GetObject("Button1.Image"), System.Drawing.Image)
-        Me.Button1.Location = New System.Drawing.Point(930, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(82, 74)
-        Me.Button1.TabIndex = 65
-        Me.Button1.Text = "Imprimir"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.UseVisualStyleBackColor = False
-        '
-        'cmdbuscar
-        '
-        Me.cmdbuscar.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.cmdbuscar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdbuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdbuscar.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdbuscar.ForeColor = System.Drawing.Color.White
-        Me.cmdbuscar.Image = CType(resources.GetObject("cmdbuscar.Image"), System.Drawing.Image)
-        Me.cmdbuscar.Location = New System.Drawing.Point(1012, 0)
-        Me.cmdbuscar.Name = "cmdbuscar"
-        Me.cmdbuscar.Size = New System.Drawing.Size(81, 74)
-        Me.cmdbuscar.TabIndex = 64
-        Me.cmdbuscar.Text = "Buscar"
-        Me.cmdbuscar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdbuscar.UseVisualStyleBackColor = False
-        '
         'Button3
         '
         Me.Button3.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1011,134 +1139,6 @@ Partial Class frmaspirantes
         Me.Button5.Text = "Buscar"
         Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button5.UseVisualStyleBackColor = False
-        '
-        'cmdeliminar
-        '
-        Me.cmdeliminar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdeliminar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdeliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdeliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdeliminar.ForeColor = System.Drawing.Color.White
-        Me.cmdeliminar.Image = CType(resources.GetObject("cmdeliminar.Image"), System.Drawing.Image)
-        Me.cmdeliminar.Location = New System.Drawing.Point(158, 0)
-        Me.cmdeliminar.Name = "cmdeliminar"
-        Me.cmdeliminar.Size = New System.Drawing.Size(79, 89)
-        Me.cmdeliminar.TabIndex = 31
-        Me.cmdeliminar.Text = "Eliminar"
-        Me.cmdeliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdeliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdeliminar.UseVisualStyleBackColor = True
-        '
-        'cmdaceptar
-        '
-        Me.cmdaceptar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdaceptar.Enabled = False
-        Me.cmdaceptar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdaceptar.ForeColor = System.Drawing.Color.White
-        Me.cmdaceptar.Image = CType(resources.GetObject("cmdaceptar.Image"), System.Drawing.Image)
-        Me.cmdaceptar.Location = New System.Drawing.Point(824, 0)
-        Me.cmdaceptar.Name = "cmdaceptar"
-        Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
-        Me.cmdaceptar.TabIndex = 30
-        Me.cmdaceptar.Text = "Guardar"
-        Me.cmdaceptar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdaceptar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdaceptar.UseVisualStyleBackColor = True
-        '
-        'cmdcancelar
-        '
-        Me.cmdcancelar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdcancelar.Enabled = False
-        Me.cmdcancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdcancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdcancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdcancelar.ForeColor = System.Drawing.Color.White
-        Me.cmdcancelar.Image = CType(resources.GetObject("cmdcancelar.Image"), System.Drawing.Image)
-        Me.cmdcancelar.Location = New System.Drawing.Point(926, 0)
-        Me.cmdcancelar.Name = "cmdcancelar"
-        Me.cmdcancelar.Size = New System.Drawing.Size(93, 89)
-        Me.cmdcancelar.TabIndex = 27
-        Me.cmdcancelar.Text = "Cancelar"
-        Me.cmdcancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdcancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdcancelar.UseVisualStyleBackColor = True
-        '
-        'cmdmodificar
-        '
-        Me.cmdmodificar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdmodificar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdmodificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdmodificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdmodificar.ForeColor = System.Drawing.Color.White
-        Me.cmdmodificar.Image = CType(resources.GetObject("cmdmodificar.Image"), System.Drawing.Image)
-        Me.cmdmodificar.Location = New System.Drawing.Point(75, 0)
-        Me.cmdmodificar.Name = "cmdmodificar"
-        Me.cmdmodificar.Size = New System.Drawing.Size(83, 89)
-        Me.cmdmodificar.TabIndex = 19
-        Me.cmdmodificar.Text = "Modificar"
-        Me.cmdmodificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdmodificar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdmodificar.UseVisualStyleBackColor = True
-        '
-        'cmdnuevapers
-        '
-        Me.cmdnuevapers.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdnuevapers.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdnuevapers.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdnuevapers.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdnuevapers.ForeColor = System.Drawing.Color.White
-        Me.cmdnuevapers.Image = CType(resources.GetObject("cmdnuevapers.Image"), System.Drawing.Image)
-        Me.cmdnuevapers.Location = New System.Drawing.Point(0, 0)
-        Me.cmdnuevapers.Name = "cmdnuevapers"
-        Me.cmdnuevapers.Size = New System.Drawing.Size(75, 89)
-        Me.cmdnuevapers.TabIndex = 18
-        Me.cmdnuevapers.Text = "Agregar"
-        Me.cmdnuevapers.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdnuevapers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdnuevapers.UseVisualStyleBackColor = True
-        '
-        'cmdsalir
-        '
-        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdsalir.ForeColor = System.Drawing.Color.White
-        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(1019, 0)
-        Me.cmdsalir.Name = "cmdsalir"
-        Me.cmdsalir.Size = New System.Drawing.Size(88, 89)
-        Me.cmdsalir.TabIndex = 17
-        Me.cmdsalir.Text = "Salir"
-        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdsalir.UseVisualStyleBackColor = True
-        '
-        'dgvClientes
-        '
-        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
-        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
-        Me.dgvClientes.Name = "dgvClientes"
-        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
-        Me.dgvClientes.TabIndex = 63
-        '
-        'dgvlistaClientes
-        '
-        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
-        Me.dgvlistaClientes.Name = "dgvlistaClientes"
-        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
-        Me.dgvlistaClientes.TabIndex = 1
-        '
-        'DgvHistorialVtasCliente
-        '
-        Me.DgvHistorialVtasCliente.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvHistorialVtasCliente.Location = New System.Drawing.Point(3, 77)
-        Me.DgvHistorialVtasCliente.Name = "DgvHistorialVtasCliente"
-        Me.DgvHistorialVtasCliente.Size = New System.Drawing.Size(1093, 371)
-        Me.DgvHistorialVtasCliente.TabIndex = 2
         '
         'MySettingsBindingSource
         '
@@ -1172,6 +1172,9 @@ Partial Class frmaspirantes
         CType(Me.dgvHistorialCliente, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel3.ResumeLayout(False)
         Me.Panel3.PerformLayout()
+        Me.tabPublicidad.ResumeLayout(False)
+        CType(Me.dgvPublicidades, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel4.ResumeLayout(False)
         Me.TabPage3.ResumeLayout(False)
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
@@ -1180,9 +1183,6 @@ Partial Class frmaspirantes
         Me.tabSeguimientoVendedores.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
         Me.Panel2.PerformLayout()
-        Me.tabPublicidad.ResumeLayout(False)
-        CType(Me.dgvPublicidades, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.Panel4.ResumeLayout(False)
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 

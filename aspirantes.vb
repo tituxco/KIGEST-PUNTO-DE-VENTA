@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.InteropServices
+Imports SIGT__KIGEST.GestorClientes
 Public Class frmaspirantes
 
     Inherits System.Windows.Forms.Form
@@ -35,7 +36,7 @@ Public Class frmaspirantes
         Try
             Reconectar()
             ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, idclientes as Codigo from fact_clientes where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq", gestorConexiones.conexionPrinc)
+            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select idclientes as Cuenta, nomapell_razon as Cliente, idclientes as Codigo from fact_clientes where nomapell_razon like @busq or dir_domicilio like @busq or cuit like @busq or telefono like @busq or celular like @busq", GestorConexiones.conexionPrinc)
             consulta.SelectCommand.Parameters.Add(New MySql.Data.MySqlClient.MySqlParameter("@busq", MySql.Data.MySqlClient.MySqlDbType.Text))
             consulta.SelectCommand.Parameters("@busq").Value = "%" & busqueda & "%"
             'MsgBox(consulta.SelectCommand.CommandText)
@@ -58,39 +59,38 @@ Public Class frmaspirantes
     End Sub
 
     Private Sub CargarInfoPers()
-        Dim imag As Byte()
         vaciarControles()
         Try
-            Reconectar()
+            ' 1. Buscamos el cliente usando el método que ya tenés armado
+            Dim cliente As fact_clientes = fact_clientes.BuscarPorID(Idcliente)
 
-            ''GestorConexiones.conexionPrinc.ChangeDatabase(database)
-            Dim consulta As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from fact_clientes where idclientes=" & Idcliente, gestorConexiones.conexionPrinc)
-            Dim tablacli As New DataTable
-            Dim infocli() As DataRow
-            consulta.Fill(tablacli)
-            infocli = tablacli.Select("")
+            ' 2. Verificamos que realmente exista
+            If cliente IsNot Nothing Then
+                txtnumeroclie.Text = cliente.codClie
+                txtrazon.Text = cliente.nomapellRazon
+                cmbcondiva.SelectedValue = cliente.idIvaTipo
+                txtcuit.Text = cliente.cuit
+                txttelefono.Text = cliente.telefono
+                txtcelular.Text = cliente.celular
+                txtmail.Text = cliente.email
+                txtdomicilio.Text = cliente.dirDomicilio
+                cmblocalidad.SelectedValue = cliente.idLocalidad
+                txtcontactos.Text = cliente.contacto
+                txtobservaciones.Text = cliente.observaciones
+                cmblistas.SelectedValue = cliente.idListaPrecios
+                cmbvendedor.SelectedValue = cliente.idVendedor
 
-            '***********************************DATOS PERSONALES*********************************************
-            'Dim posComa As String = InStr(lector("nomapell_razon").ToString, ",")
-            txtnumeroclie.Text = infocli(0)(12)
-            txtrazon.Text = infocli(0)(1)
-            cmbcondiva.SelectedValue = infocli(0)(4)
-            txtcuit.Text = infocli(0)(5)
-            txttelefono.Text = infocli(0)(6)
-            txtcelular.Text = infocli(0)(8)
-            txtmail.Text = infocli(0)(9)
-            txtdomicilio.Text = infocli(0)(2)
-            cmblocalidad.SelectedValue = infocli(0)(3)
-            txtcontactos.Text = infocli(0)(7)
-            txtobservaciones.Text = infocli(0)(10)
-            cmblistas.SelectedValue = infocli(0)(11)
-            cmbvendedor.SelectedValue = infocli(0)(13)
+                lblestado.ForeColor = Color.Black
+                lblestado.Text = "Cliente cargado correctamente."
+            Else
+                lblestado.ForeColor = Color.Red
+                lblestado.Text = "Atención: No se encontró el cliente en la base de datos."
+            End If
+
         Catch ex As Exception
-
             lblestado.ForeColor = Color.Red
             lblestado.Text = "Atención: " & ex.Message
         End Try
-
     End Sub
     Private Sub cargarDtosGrales()
         pbprogresocons.Visible = True
@@ -99,7 +99,7 @@ Public Class frmaspirantes
             'GestorConexiones.conexionPrinc.ChangeDatabase(database)
 
             'cargamos listas
-            Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", gestorConexiones.conexionPrinc)
+            Dim tablalistas As New MySql.Data.MySqlClient.MySqlDataAdapter("select id, nombre from fact_listas_precio", GestorConexiones.conexionPrinc)
             Dim readlis As New DataSet
             tablalistas.Fill(readlis)
             cmblistas.DataSource = readlis.Tables(0)
@@ -108,7 +108,7 @@ Public Class frmaspirantes
             cmblistas.SelectedValue = My.Settings.idListaDef
 
             'cargamos localidades
-            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", gestorConexiones.conexionPrinc)
+            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", GestorConexiones.conexionPrinc)
             Dim readloc As New DataSet
             tablalocalidad.Fill(readloc)
             cmblocalidad.DataSource = readloc.Tables(0)
@@ -893,5 +893,89 @@ Public Class frmaspirantes
             tec.diasMora = 0
         Catch ex As Exception
         End Try
+    End Sub
+
+    Private Sub txtcuit_TextChanged(sender As Object, e As EventArgs) Handles txtcuit.TextChanged
+
+    End Sub
+
+    Private Sub txtcuit_KeyDown(sender As Object, e As KeyEventArgs) Handles txtcuit.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            e.SuppressKeyPress = True ' Evita el "ding" de Windows al presionar Enter
+
+            Dim cuitIngresado As String = txtcuit.Text.Trim()
+
+            ' Validamos un poco antes de procesar
+            If cuitIngresado.Length < 11 Then
+                MsgBox("El CUIT ingresado no es válido.", MsgBoxStyle.Exclamation)
+                Exit Sub
+            End If
+
+            ' 1. ¿El cliente ya existe en tu base local? (Usamos la función que devuelve el objeto completo)
+            Dim clienteLocal As fact_clientes = fact_clientes.ObtenerPorCUIT(cuitIngresado)
+
+            If clienteLocal IsNot Nothing Then
+                ' 2. SÍ EXISTE: Asignamos el ID a la variable global de tu formulario y cargamos
+                Me.Idcliente = clienteLocal.idCliente ' Asumiendo que Idcliente es la variable que usa CargarInfoPers
+
+                ' Llamamos a la rutina que acabas de actualizar
+                CargarInfoPers()
+
+                MsgBox("Cliente cargado desde la base local.", MsgBoxStyle.Information)
+
+            Else
+                ' 3. NO EXISTE EN LA BASE LOCAL: Preguntamos si quiere buscar en AFIP
+                If MsgBox("El cliente no existe en su base de datos. ¿Desea agregarlo automáticamente consultando el padrón de AFIP?", vbYesNo + vbQuestion, "Nuevo Cliente") = vbYes Then
+
+                    ' 4. Consultamos el padrón A5 usando nuestra nueva función globalizada
+                    Me.Cursor = Cursors.WaitCursor
+                    Dim datosAFIP = GestorAFIP.ConsultarPadron(cuitIngresado)
+                    Me.Cursor = Cursors.Default
+
+                    If datosAFIP.EsValido Then
+                        ' 5. EXITO AFIP: Llenamos el formulario con los datos nuevitos
+                        ' Como es un cliente NUEVO, vaciamos la variable Idcliente (o la ponemos en 0)
+                        Me.Idcliente = 0
+                        vaciarControles() ' Aseguramos que la pantalla esté limpia
+
+                        ' Y ahora cargamos los datos que trajimos de AFIP directamente en las cajas de texto
+                        txtcuit.Text = datosAFIP.CUIT
+                        txtrazon.Text = datosAFIP.RazonSocial
+                        txtdomicilio.Text = datosAFIP.Domicilio
+
+                        ' La localidad a veces no coincide exacto con las de tu base, 
+                        ' lo ponemos en el TextBox si no tienes un ComboBox, o en Observaciones
+                        txtobservaciones.Text = "Localidad AFIP: " & datosAFIP.Localidad
+
+                        ' Seleccionamos la categoría de IVA en el ComboBox de tu pantalla
+                        ' (Ajustá los IDs numéricos según tu base de datos)
+                        Select Case datosAFIP.TipoContribuyente
+                            Case "RESPONSABLE INSCRIPTO"
+                                cmbcondiva.SelectedValue = 1
+                            Case "MONOTRIBUTO"
+                                cmbcondiva.SelectedValue = 6
+                            Case "EXENTO"
+                                cmbcondiva.SelectedValue = 5
+                            Case Else ' Consumidor Final
+                                cmbcondiva.SelectedValue = 4
+                        End Select
+
+                        lblestado.ForeColor = Color.Blue
+                        lblestado.Text = "Datos de AFIP importados. Verifique y presione Guardar para registrar al cliente."
+                        MsgBox("Datos de AFIP importados. Verifique y presione Guardar para registrar al cliente.", MsgBoxStyle.Information)
+
+                    Else
+                        ' 6. ERROR AFIP (Sin internet, CUIT inválido, etc.)
+                        lblestado.ForeColor = Color.Red
+                        lblestado.Text = "Error AFIP: " & datosAFIP.MensajeError
+                        MsgBox(datosAFIP.MensajeError, MsgBoxStyle.Exclamation, "Error AFIP")
+                    End If
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub dgvClientes_Enter(sender As Object, e As EventArgs) Handles dgvClientes.Enter
+
     End Sub
 End Class

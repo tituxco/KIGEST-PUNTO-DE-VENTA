@@ -3215,4 +3215,8 @@ Public Class puntoventa
     Private Sub txtcodPLU_TextChanged(sender As Object, e As EventArgs) Handles txtcodPLU.TextChanged
 
     End Sub
+
+    Private Sub txtcliecuitcuil_Layout(sender As Object, e As LayoutEventArgs) Handles txtcliecuitcuil.Layout
+
+    End Sub
 End Class

@@ -2,6 +2,18 @@
 Imports System.Runtime.CompilerServices
 Imports WSAFIPFE.anmat
 
+
+Public Class DatosPadronAFIP
+    Public Property CUIT As String
+    Public Property RazonSocial As String
+    Public Property Domicilio As String
+    Public Property Localidad As String
+    Public Property TipoContribuyente As String
+    Public Property EstadoClave As String
+    Public Property EsValido As Boolean
+    Public Property MensajeError As String
+End Class
+
 Public Class GestorAFIP
 
     ' --- PROPIEDADES DE RESPUESTA ---
@@ -12,6 +24,90 @@ Public Class GestorAFIP
     Public Property MensajeError As String = ""
     Public Property Observaciones As String = ""
     Public Property CodigoQR As Byte() = Nothing
+
+    ' ========================================================================================
+    ' 2. NUEVO: MÉTODO PARA CONSULTAR EL PADRÓN (A5)
+    ' ========================================================================================
+    Public Shared Function ConsultarPadron(cuitBuscado As String) As DatosPadronAFIP
+        Dim resultado As New DatosPadronAFIP()
+        resultado.EsValido = False
+
+        ' Limpiar el CUIT (quitar guiones o espacios)
+        cuitBuscado = cuitBuscado.Replace("-", "").Replace(" ", "").Trim()
+
+        If cuitBuscado = "" OrElse Not IsNumeric(cuitBuscado) OrElse cuitBuscado.Length <> 11 Then
+            resultado.MensajeError = "Verifique el CUIT ingresado. Debe contener 11 números."
+            Return resultado
+        End If
+
+        Try
+            Dim fe As New WSAFIPFE.Factura()
+
+            ' Iniciamos usando tus variables globales (igual que en SolicitarCAE)
+            If fe.iniciar(WSAFIPFE.Factura.modoFiscal.Fiscal,
+                          EmpresaActual.cuit,
+                          EmpresaActual.direccionCertificado, EmpresaActual.direccionLicencia) Then
+
+                fe.ArchivoCertificadoPassword = EmpresaActual.passCertificado
+                fe.ArchivoXMLEnviado = Application.StartupPath & "\p1envio.xml"
+                fe.ArchivoXMLRecibido = Application.StartupPath & "\p1recibo.xml"
+
+                ' Padrón A5 (versión 55 o la que soporte tu componente actual)
+                fe.p1Version = 55
+
+                If fe.p1ObtenerTicketAcceso() Then
+                    If fe.p1GetPersona(cuitBuscado) Then
+
+                        ' Verificamos si AFIP devolvió un error interno para ese CUIT
+                        Dim errorAFIP As String = fe.p1LeerPropiedad("p1getPersona", "errorConstancia.error", "", 0, 0)
+                        If errorAFIP <> "" Then
+                            resultado.MensajeError = "AFIP informa: " & errorAFIP
+                            Return resultado
+                        End If
+
+                        ' Extraer Datos
+                        resultado.EstadoClave = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.estadoClave", "", 0, 0)
+
+                        ' AFIP devuelve Razón Social si es persona jurídica, o Apellido/Nombre si es física
+                        Dim razonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.razonsocial", "", 0, 0)
+                        If String.IsNullOrEmpty(razonSocial) Then
+                            resultado.RazonSocial = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.apellido", "", 0, 0) & " " & fe.p1LeerPropiedad("p1getPersona", "datosGenerales.nombre", "", 0, 0)
+                        Else
+                            resultado.RazonSocial = razonSocial
+                        End If
+
+                        resultado.Localidad = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.localidad", "", 0, 0)
+                        resultado.Domicilio = fe.p1LeerPropiedad("p1getPersona", "datosGenerales.domicilioFiscal.direccion", "", 0, 0)
+
+                        ' Determinar Condición frente al IVA
+                        resultado.TipoContribuyente = "CONSUMIDOR FINAL" ' Por defecto
+                        If fe.p1VerificarImpuesto(20, "activo") Then
+                            resultado.TipoContribuyente = "MONOTRIBUTO"
+                        ElseIf fe.p1VerificarImpuesto(30, "activo") Then
+                            resultado.TipoContribuyente = "RESPONSABLE INSCRIPTO"
+                        ElseIf fe.p1VerificarImpuesto(32, "activo") Then
+                            resultado.TipoContribuyente = "EXENTO"
+                        End If
+
+                        resultado.CUIT = cuitBuscado
+                        resultado.EsValido = True
+                    Else
+                        resultado.MensajeError = "No se pudo obtener la persona. " & fe.UltimoMensajeError
+                    End If
+                Else
+                    resultado.MensajeError = "No se pudo obtener el ticket de acceso. " & fe.UltimoMensajeError
+                End If
+            Else
+                resultado.MensajeError = "No se pudo iniciar el servicio de AFIP. Verifique certificados."
+            End If
+
+        Catch ex As Exception
+            resultado.MensajeError = "Error crítico al consultar padrón AFIP: " & ex.Message
+        End Try
+
+        Return resultado
+    End Function
+
 
     ' --- MÉTODO PRINCIPAL ---
     Public Function SolicitarCAE(factura As GestorFacturacion.factNuevaFactura_Datos) As Boolean

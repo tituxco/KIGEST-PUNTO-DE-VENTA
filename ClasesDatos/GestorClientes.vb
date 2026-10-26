@@ -224,5 +224,74 @@ Public Class GestorClientes
             End Try
             Return lista
         End Function
+        Public Shared Function ObtenerPorCUIT(cuitBuscar As String) As fact_clientes
+            Dim cli As fact_clientes = Nothing
+
+            Try
+                Using conn As New MySqlConnection(CadenaConexion)
+                    conn.Open()
+                    ' Buscamos exactamente por CUIT (sin el LIKE % para evitar falsos positivos)
+                    Dim sql As String = "SELECT * FROM fact_clientes WHERE cuit = @cuit LIMIT 1"
+
+                    Using cmd As New MySqlCommand(sql, conn)
+                        cmd.Parameters.AddWithValue("@cuit", cuitBuscar)
+
+                        Using lector As MySqlDataReader = cmd.ExecuteReader()
+                            If lector.Read() Then
+                                cli = New fact_clientes()
+
+                                ' 1. Mapeo idéntico al de BuscarPorID y BuscarPorNombre
+                                cli.idCliente = Convert.ToInt32(lector("idclientes"))
+                                cli.nomapellRazon = lector("nomapell_razon").ToString()
+                                cli.dirDomicilio = lector("dir_domicilio").ToString()
+                                cli.cuit = lector("cuit").ToString()
+                                cli.telefono = lector("telefono").ToString()
+                                cli.contacto = lector("contacto").ToString()
+                                cli.celular = lector("celular").ToString()
+                                cli.email = lector("email").ToString()
+                                cli.observaciones = lector("observaciones").ToString()
+                                cli.codClie = lector("codClie").ToString()
+
+                                cli.idListaPrecios = Convert.ToInt32(lector("lista_precios"))
+                                cli.idIvaTipo = Convert.ToInt32(lector("iva_tipo"))
+                                cli.idLocalidad = Convert.ToInt32(lector("dir_localidad"))
+                                cli.idVendedor = Convert.ToInt32(lector("vendedor"))
+
+                            End If
+                        End Using
+                    End Using
+                End Using
+
+                ' 2. Carga profunda de los objetos hijos (Hacerlo fuera del Using del DataReader evita problemas de conexiones anidadas)
+                If cli IsNot Nothing Then
+                    cli.listaPrecios = fact_listaPrecios.BuscarPorID(cli.idListaPrecios)
+                    cli.vendedor = fact_vendedor.BuscarPorID(cli.idVendedor)
+                    cli.dirLocalidad = cm_localidades.BuscarPorID(cli.idLocalidad)
+                    cli.ivaTipo = fact_ivaTipo.BuscarPorID(cli.idIvaTipo)
+                End If
+
+            Catch ex As Exception
+                MsgBox("Error al buscar cliente por CUIT: " & ex.Message)
+            End Try
+
+            Return cli
+        End Function
+        ' La que usamos solo para saber si ya existe (Ej. al dar de alta uno nuevo en AFIP)
+        Public Shared Function ExisteCUIT(cuitBuscar As String) As Boolean
+            Try
+                Using conn As New MySqlConnection(CadenaConexion)
+                    conn.Open()
+                    ' Usamos COUNT que es muchísimo más rápido que traer toda la tabla
+                    Dim sql As String = "SELECT COUNT(*) FROM fact_clientes WHERE cuit = @cuit"
+                    Using cmd As New MySqlCommand(sql, conn)
+                        cmd.Parameters.AddWithValue("@cuit", cuitBuscar)
+                        Dim cantidad As Integer = Convert.ToInt32(cmd.ExecuteScalar())
+                        Return cantidad > 0
+                    End Using
+                End Using
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
     End Class
 End Class
