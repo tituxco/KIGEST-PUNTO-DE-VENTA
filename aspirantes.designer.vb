@@ -36,7 +36,6 @@ Partial Class frmaspirantes
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.pnlistaclientes = New System.Windows.Forms.Panel()
-        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl2 = New System.Windows.Forms.TabControl()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
@@ -82,7 +81,6 @@ Partial Class frmaspirantes
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
-        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.chkfecha = New System.Windows.Forms.CheckBox()
         Me.grpperiodo = New System.Windows.Forms.GroupBox()
@@ -98,7 +96,6 @@ Partial Class frmaspirantes
         Me.cmdbuscar = New System.Windows.Forms.Button()
         Me.cmblistaloca = New System.Windows.Forms.ComboBox()
         Me.tabSeguimientoVendedores = New System.Windows.Forms.TabPage()
-        Me.DgvHistorialVtasCliente = New SIGT__KIGEST.DGVPaginado()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.txtmeseshistorial = New System.Windows.Forms.TextBox()
         Me.Label17 = New System.Windows.Forms.Label()
@@ -107,6 +104,10 @@ Partial Class frmaspirantes
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.PageSetupDialog1 = New System.Windows.Forms.PageSetupDialog()
+        Me.btnAgregarLocalidad = New System.Windows.Forms.Button()
+        Me.dgvClientes = New SIGT__KIGEST.DGVPaginado()
+        Me.dgvlistaClientes = New SIGT__KIGEST.DGVPaginado()
+        Me.DgvHistorialVtasCliente = New SIGT__KIGEST.DGVPaginado()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pnnavegacion.SuspendLayout()
         Me.pntitulo.SuspendLayout()
@@ -301,14 +302,6 @@ Partial Class frmaspirantes
         Me.pnlistaclientes.Size = New System.Drawing.Size(372, 445)
         Me.pnlistaclientes.TabIndex = 63
         '
-        'dgvClientes
-        '
-        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
-        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
-        Me.dgvClientes.Name = "dgvClientes"
-        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
-        Me.dgvClientes.TabIndex = 63
-        '
         'txtbuscar
         '
         Me.txtbuscar.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
@@ -361,6 +354,7 @@ Partial Class frmaspirantes
         'TabPage1
         '
         Me.TabPage1.AutoScroll = True
+        Me.TabPage1.Controls.Add(Me.btnAgregarLocalidad)
         Me.TabPage1.Controls.Add(Me.cmbvendedor)
         Me.TabPage1.Controls.Add(Me.Label8)
         Me.TabPage1.Controls.Add(Me.txtnumeroclie)
@@ -399,6 +393,7 @@ Partial Class frmaspirantes
         '
         Me.cmbvendedor.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbvendedor.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbvendedor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbvendedor.FormattingEnabled = True
         Me.cmbvendedor.Location = New System.Drawing.Point(263, 360)
         Me.cmbvendedor.Name = "cmbvendedor"
@@ -441,6 +436,7 @@ Partial Class frmaspirantes
         '
         Me.cmblistas.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmblistas.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmblistas.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmblistas.FormattingEnabled = True
         Me.cmblistas.Location = New System.Drawing.Point(264, 314)
         Me.cmblistas.Name = "cmblistas"
@@ -597,10 +593,11 @@ Partial Class frmaspirantes
         '
         Me.cmblocalidad.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmblocalidad.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmblocalidad.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmblocalidad.FormattingEnabled = True
         Me.cmblocalidad.Location = New System.Drawing.Point(0, 164)
         Me.cmblocalidad.Name = "cmblocalidad"
-        Me.cmblocalidad.Size = New System.Drawing.Size(500, 24)
+        Me.cmblocalidad.Size = New System.Drawing.Size(418, 24)
         Me.cmblocalidad.TabIndex = 4
         '
         'Label16
@@ -618,6 +615,7 @@ Partial Class frmaspirantes
         '
         Me.cmbcondiva.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.cmbcondiva.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems
+        Me.cmbcondiva.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbcondiva.FormattingEnabled = True
         Me.cmbcondiva.Location = New System.Drawing.Point(0, 68)
         Me.cmbcondiva.Name = "cmbcondiva"
@@ -846,14 +844,6 @@ Partial Class frmaspirantes
         Me.TabPage3.Text = "LISTADOS"
         Me.TabPage3.UseVisualStyleBackColor = True
         '
-        'dgvlistaClientes
-        '
-        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
-        Me.dgvlistaClientes.Name = "dgvlistaClientes"
-        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
-        Me.dgvlistaClientes.TabIndex = 1
-        '
         'Panel1
         '
         Me.Panel1.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1045,14 +1035,6 @@ Partial Class frmaspirantes
         Me.tabSeguimientoVendedores.Text = "SEGUIMIENTO DE VENDEDORES"
         Me.tabSeguimientoVendedores.UseVisualStyleBackColor = True
         '
-        'DgvHistorialVtasCliente
-        '
-        Me.DgvHistorialVtasCliente.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvHistorialVtasCliente.Location = New System.Drawing.Point(3, 77)
-        Me.DgvHistorialVtasCliente.Name = "DgvHistorialVtasCliente"
-        Me.DgvHistorialVtasCliente.Size = New System.Drawing.Size(1093, 371)
-        Me.DgvHistorialVtasCliente.TabIndex = 2
-        '
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
@@ -1139,6 +1121,39 @@ Partial Class frmaspirantes
         Me.Button5.Text = "Buscar"
         Me.Button5.TextAlign = System.Drawing.ContentAlignment.BottomCenter
         Me.Button5.UseVisualStyleBackColor = False
+        '
+        'btnAgregarLocalidad
+        '
+        Me.btnAgregarLocalidad.Location = New System.Drawing.Point(424, 165)
+        Me.btnAgregarLocalidad.Name = "btnAgregarLocalidad"
+        Me.btnAgregarLocalidad.Size = New System.Drawing.Size(75, 23)
+        Me.btnAgregarLocalidad.TabIndex = 207
+        Me.btnAgregarLocalidad.Text = "Nueva"
+        Me.btnAgregarLocalidad.UseVisualStyleBackColor = True
+        '
+        'dgvClientes
+        '
+        Me.dgvClientes.Dock = System.Windows.Forms.DockStyle.Left
+        Me.dgvClientes.Location = New System.Drawing.Point(0, 22)
+        Me.dgvClientes.Name = "dgvClientes"
+        Me.dgvClientes.Size = New System.Drawing.Size(372, 423)
+        Me.dgvClientes.TabIndex = 63
+        '
+        'dgvlistaClientes
+        '
+        Me.dgvlistaClientes.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgvlistaClientes.Location = New System.Drawing.Point(3, 77)
+        Me.dgvlistaClientes.Name = "dgvlistaClientes"
+        Me.dgvlistaClientes.Size = New System.Drawing.Size(1093, 371)
+        Me.dgvlistaClientes.TabIndex = 1
+        '
+        'DgvHistorialVtasCliente
+        '
+        Me.DgvHistorialVtasCliente.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvHistorialVtasCliente.Location = New System.Drawing.Point(3, 77)
+        Me.DgvHistorialVtasCliente.Name = "DgvHistorialVtasCliente"
+        Me.DgvHistorialVtasCliente.Size = New System.Drawing.Size(1093, 371)
+        Me.DgvHistorialVtasCliente.TabIndex = 2
         '
         'MySettingsBindingSource
         '
@@ -1271,4 +1286,5 @@ Partial Class frmaspirantes
     Friend WithEvents Panel4 As Panel
     Friend WithEvents Button4 As Button
     Friend WithEvents Button7 As Button
+    Friend WithEvents btnAgregarLocalidad As Button
 End Class

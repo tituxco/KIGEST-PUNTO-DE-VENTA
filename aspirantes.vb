@@ -107,17 +107,25 @@ Public Class frmaspirantes
             cmblistas.ValueMember = readlis.Tables(0).Columns(0).Caption.ToString
             cmblistas.SelectedValue = My.Settings.idListaDef
 
-            'cargamos localidades
-            Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", GestorConexiones.conexionPrinc)
-            Dim readloc As New DataSet
-            tablalocalidad.Fill(readloc)
-            cmblocalidad.DataSource = readloc.Tables(0)
-            cmblocalidad.DisplayMember = readloc.Tables(0).Columns(1).Caption.ToString
-            cmblocalidad.ValueMember = readloc.Tables(0).Columns(0).Caption.ToString
-            cmblocalidad.SelectedIndex = -1
-            cmblistaloca.DataSource = readloc.Tables(0)
-            cmblistaloca.DisplayMember = readloc.Tables(0).Columns(1).Caption.ToString
-            cmblistaloca.ValueMember = readloc.Tables(0).Columns(0).Caption.ToString
+            ''cargamos localidades
+            'Dim tablalocalidad As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_localidad", GestorConexiones.conexionPrinc)
+            'Dim readloc As New DataSet
+            'tablalocalidad.Fill(readloc)
+            'cmblocalidad.DataSource = readloc.Tables(0)
+            'cmblocalidad.DisplayMember = readloc.Tables(0).Columns(1).Caption.ToString
+            'cmblocalidad.ValueMember = readloc.Tables(0).Columns(0).Caption.ToString
+            'cmblocalidad.SelectedIndex = -1
+            'cmblistaloca.DataSource = readloc.Tables(0)
+            'cmblistaloca.DisplayMember = readloc.Tables(0).Columns(1).Caption.ToString
+            'cmblistaloca.ValueMember = readloc.Tables(0).Columns(0).Caption.ToString
+
+            ' Rutina para cargar el combo (llámala en el Load del form)
+
+            ' Usamos nuestro Gestor para traer los datos limpios
+            cmblocalidad.DataSource = GestorClasesComunes.cm_localidades.ObtenerTodas()
+            cmblocalidad.DisplayMember = "nombre"
+            cmblocalidad.ValueMember = "id"
+
 
 
             'cargamos tipos de contribuyentes
@@ -151,6 +159,7 @@ Public Class frmaspirantes
 
         End Try
     End Sub
+
 
 
     Private Sub deshabilitarControles()
@@ -977,5 +986,43 @@ Public Class frmaspirantes
 
     Private Sub dgvClientes_Enter(sender As Object, e As EventArgs) Handles dgvClientes.Enter
 
+    End Sub
+
+    Private Sub btnAgregarLocalidad_Click(sender As Object, e As EventArgs) Handles btnAgregarLocalidad.Click
+        ' 1. Pedimos el nombre
+        Dim nuevaLoc As String = InputBox("Ingrese el nombre de la nueva localidad:", "Agregar Localidad").Trim().ToUpper()
+
+        If String.IsNullOrEmpty(nuevaLoc) Then Exit Sub
+
+        ' 2. Verificamos usando el Gestor
+        If GestorClasesComunes.cm_localidades.Existe(nuevaLoc) Then
+            MsgBox("La localidad '" & nuevaLoc & "' ya existe en la base de datos.", MsgBoxStyle.Information, "Aviso")
+
+            ' La seleccionamos
+            Dim idExistente As Integer = GestorClasesComunes.cm_localidades.ObtenerIdPorNombre(nuevaLoc)
+            If idExistente > 0 Then
+                cmblocalidad.SelectedValue = idExistente
+            End If
+        Else
+            ' 3. Si no existe, la agregamos
+            Try
+                Me.Cursor = Cursors.WaitCursor
+
+                Dim nuevoId As Integer = GestorClasesComunes.cm_localidades.Agregar(nuevaLoc)
+
+                ' Recargamos el combo para que aparezca la nueva
+                cargarDtosGrales()
+
+                ' Y la dejamos seleccionada
+                cmblocalidad.SelectedValue = nuevoId
+
+                MsgBox("Localidad agregada correctamente.", MsgBoxStyle.Information, "Éxito")
+
+            Catch ex As Exception
+                MsgBox("No se pudo agregar la localidad: " & ex.Message, MsgBoxStyle.Critical, "Error")
+            Finally
+                Me.Cursor = Cursors.Default
+            End Try
+        End If
     End Sub
 End Class

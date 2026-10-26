@@ -33,7 +33,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>590</ApplicationRevision>
+    <ApplicationRevision>591</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -309,6 +309,7 @@
     <Compile Include="ClasesDatos\GestorAcademia.vb" />
     <Compile Include="ClasesDatos\GestorAFIP.vb" />
     <Compile Include="ClasesDatos\GestorCajas.vb" />
+    <Compile Include="ClasesDatos\GestorClasesComunes.vb" />
     <Compile Include="ClasesDatos\GestorClientes.vb" />
     <Compile Include="ClasesDatos\GestorConexiones.vb" />
     <Compile Include="ClasesDatos\GestorFacturacion.vb" />
