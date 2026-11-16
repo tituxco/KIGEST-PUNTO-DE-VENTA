@@ -33,7 +33,7 @@
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.htm</WebPage>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>591</ApplicationRevision>
+    <ApplicationRevision>600</ApplicationRevision>
     <ApplicationVersion>2.5.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -315,6 +315,7 @@
     <Compile Include="ClasesDatos\GestorFacturacion.vb" />
     <Compile Include="ClasesDatos\GestorImpresion.vb" />
     <Compile Include="ClasesDatos\GestorInsumos.vb" />
+    <Compile Include="ClasesDatos\GestorITegra.vb" />
     <Compile Include="ClasesDatos\GestorPedidos.vb" />
     <Compile Include="ClasesDatos\GestorPublicidad.vb" />
     <Compile Include="ClasesDatos\GestorUtilidades.vb" />
@@ -963,6 +964,9 @@
     <None Include="Resources\iconos\Search in List.png" />
     <None Include="Resources\iconos\Add Shopping Cart_32px.png" />
     <None Include="Resources\iconos\clean.png" />
+    <None Include="Resources\iconos\Delete.png" />
+    <None Include="Resources\iconos\Tags.png" />
+    <None Include="Resources\iconos\Scales.png" />
     <Content Include="sinimagen.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

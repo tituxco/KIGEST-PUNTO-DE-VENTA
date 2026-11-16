@@ -701,18 +701,18 @@
             ' --- 2. GUARDADO EN BASE DE DATOS (TEC_TALLER) ---
             Reconectar()
             Dim sqlQuery As String = "INSERT INTO tecni_taller(id,equipo,trab_estado,tecnico,estado,falla,tarea_realiz," &
-        "observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie," &
-        "cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(" &
-        "?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins," &
-        "?preciomo,?extra,?presup,?mail,?telefono,?serie," &
-        "?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe) " &
-        "ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, " &
-        "tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, " &
-        "observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, " &
-        "mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, " &
-        "telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng," &
-        "accesorios=?accesorios,fecha_ing=?fechaIng,modelo=?modeloEq," &
-        "trabajo_categoria=?trabCateg,recibe=?recibe"
+                "observaciones,trab_monto,ins_monto,mo_monto,infoextra,presupuesto,mail,telefono,serie," &
+                "cliente, motivo_ing,accesorios,fecha_ing,modelo,trabajo_categoria,recibe) VALUES(" &
+                "?id,?codint,?trabest,?tecnico,?estado,?falla,?resolucion,?observaciones,?preciotot,?precioins," &
+                "?preciomo,?extra,?presup,?mail,?telefono,?serie," &
+                "?cliente,?motivoIng,?accesorios,?fechaIng,?modeloEq,?trabCateg,?recibe) " &
+                "ON DUPLICATE KEY UPDATE  equipo=?codint, trab_estado=?trabest, " &
+                "tecnico=?tecnico, estado=?estado, falla=?falla, tarea_realiz=?resolucion, " &
+                "observaciones=?observaciones, trab_monto=?preciotot, ins_monto=?precioins, " &
+                "mo_monto=?preciomo, infoextra=?extra, presupuesto=?presup, mail=?mail, " &
+                "telefono=?telefono, serie=?serie, cliente=?cliente,motivo_ing=?motivoIng," &
+                "accesorios=?accesorios, modelo=?modeloEq," &
+                "trabajo_categoria=?trabCateg,recibe=?recibe"
 
             Dim comandoadd As New MySql.Data.MySqlClient.MySqlCommand(sqlQuery, GestorConexiones.conexionPrinc)
             With comandoadd.Parameters
@@ -1046,7 +1046,8 @@
 
             Reconectar()
             sql.Connection = GestorConexiones.conexionPrinc
-            sql.CommandText = "update tecni_taller set estado=8, trab_estado=3,fecha_eg='" & Format(FECHAGRAL, "yyyy-MM-dd") & "', equipo=" & codint & " where id=" & ORden
+            sql.CommandText = "update tecni_taller set estado=8, trab_estado=3,
+            fecha_eg='" & Format(FECHAGRAL, "yyyy-MM-dd") & "', equipo=" & codint & " where id=" & ORden
             sql.CommandType = CommandType.Text
             lector = sql.ExecuteReader
             MsgBox("Orden de reparacion terminada")

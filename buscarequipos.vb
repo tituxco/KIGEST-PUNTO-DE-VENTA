@@ -54,7 +54,7 @@
             from tecni_taller as tall,  fact_clientes as cli, tecni_taller_estado as te where
             fecha_ing between '" & Format(dtpdesdetrab.Value, "yyyy-MM-dd") & "' and '" & Format(dtphastatrab.Value, "yyyy-MM-dd") & "' and 
             cli.idclientes=tall.cliente and tall.estado=te.id " _
-            & consulta, GestorConexiones.conexionPrinc)
+            & consulta & " order by tall.id desc", GestorConexiones.conexionPrinc)
 
             'MsgBox(tabla.SelectCommand.CommandText)
             ' MsgBox(tabla.SelectCommand.CommandText)

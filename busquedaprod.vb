@@ -295,6 +295,7 @@ Public Class busquedaprod
                 dgvProductos.Cargar_Datos(tablaProd)
                 dgvProductos.dgvVista.Columns("PLU").Width = 100
                 dgvProductos.dgvVista.Columns("Stock").Visible = False
+                dgvProductos.dgvVista.Columns("CodInterno").Visible = False
             Else
                 ' === LOGICA DE IMPRESIÓN ===
                 Dim fac As New datosfacturas()

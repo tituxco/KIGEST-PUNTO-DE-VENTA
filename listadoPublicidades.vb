@@ -230,11 +230,11 @@ Public Class listadoPublicidades
     End Sub
 
     Private Sub rdAFacturar_CheckedChanged(sender As Object, e As EventArgs) Handles rdAFacturar.CheckedChanged
-        If rdAFacturar.Checked = True Then
-            dtdesdefact.Enabled = False
-        Else
-            dtdesdefact.Enabled = True
-        End If
+        'If rdAFacturar.Checked = True Then
+        '    dtdesdefact.Enabled = False
+        'Else
+        '    dtdesdefact.Enabled = True
+        'End If
 
     End Sub
 
@@ -532,72 +532,10 @@ Public Class listadoPublicidades
         Catch ex As Exception
             MsgBox("Error al abrir el detalle de publicidad: " & ex.Message, MsgBoxStyle.Critical)
         End Try
-        'Try
-        '    Dim i As Integer
-        '    For i = 0 To frmprincipal.MdiChildren.Count - 1
-        '        If frmprincipal.MdiChildren(i).Name = "NvaPublicidad" Then
-        '            frmprincipal.MdiChildren(i).BringToFront()
-        '            With CType(frmprincipal.MdiChildren(i), NvaPublicidad)
-        '                .txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-        '                .txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-        '                .diasMora = txtdiasmora.Text
-        '                .NvaPubli = False
-        '                .cmdGuardarEditar.Enabled = False
-        '                .btnCalcular.Enabled = False
-        '                .btnPagar.Enabled = True
-        '                .CargarDetalle()
-        '            End With
-        '            Exit Sub
-        '        End If
-        '    Next
 
-        '    Dim form As New NvaPublicidad
-        '    form.MdiParent = Me.MdiParent
-        '    form.Show()
-        '    form.txtBuscaPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-        '    form.txtPrestamo.Text = dgvInformes.dgvVista.CurrentRow.Cells(0).Value
-        '    form.NvaPubli = False
-        '    form.cmdGuardarEditar.Enabled = False
-        '    form.btnCalcular.Enabled = False
-        '    form.btnPagar.Enabled = True
-        '    form.diasMora = txtdiasmora.Text
-
-
-        'Catch ex As Exception
-        '    MsgBox(ex.Message)
-        'End Try
     End Sub
 
-    'Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
-    '    Try
-    '        Dim i As Integer
-    '        For i = 0 To frmprincipal.MdiChildren.Count - 1
-    '            If frmprincipal.MdiChildren(i).Name = "CONTABLE" Then
-    '                frmprincipal.MdiChildren(i).BringToFront()
-    '                With CType(frmprincipal.MdiChildren(i), CONTABLE)
-    '                    .txtcuentabus.Text = dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value
-    '                    .txtcliebus.Text = dgvInformes.dgvVista.CurrentRow.Cells("nomapell_razon").Value.ToString.ToUpper
-    '                    .cargarCuentaClie(Val(dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value))
-    '                    .tabcontable.SelectedTab = .tabcuentasclientes
-    '                End With
-    '                Exit Sub
-    '            End If
-    '        Next
-    '        Dim ventana As New CONTABLE
-    '        ventana.MdiParent = Me.MdiParent
-    '        With ventana
-    '            .Show()
-    '            .txtcuentabus.Text = dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value
-    '            .txtcliebus.Text = dgvInformes.dgvVista.CurrentRow.Cells("nomapell_razon").Value.ToString.ToUpper
-    '            .cargarCuentaClie(Val(dgvInformes.dgvVista.CurrentRow.Cells("idClientes").Value))
-    '            .tabcontable.SelectedTab = .tabcuentasclientes
-    '        End With
 
-
-    '    Catch ex As Exception
-
-    '    End Try
-    'End Sub
 
     Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         If dgvInformes.dgvVista.CurrentRow IsNot Nothing Then
@@ -606,38 +544,7 @@ Public Class listadoPublicidades
             AbrirFormularioContable(idClie, nomClie)
         End If
     End Sub
-    'Private Sub CargarListadoOrdenesAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarListadoOrdenesAsync.DoWork
-    '    cargarListadoOrdenes()
-    'End Sub
-    'Private Sub CargarListadoOrdenesAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarListadoOrdenesAsync.DoWork
-    '    Try
-    '        ' Acá estamos en el hilo secundario. ¡Solo hablamos con el Gestor, no tocamos la UI!
-    '        dtResultadosListado = DominioPublicidad.GestorPublicidad.ObtenerListado(tipoVistaActual, filtrosActuales)
-    '    Catch ex As Exception
-    '        ' Pasamos el error al hilo principal
-    '        e.Result = ex
-    '    End Try
-    'End Sub
 
-
-    'Private Sub CargarListadoOrdenesAsync_RunWorkerCompleted(sender As Object, e As RunWorkerCompletedEventArgs) Handles CargarListadoOrdenesAsync.RunWorkerCompleted
-    '    Try
-    '        frmprincipal.pbprincipal.Visible = False
-    '        frmprincipal.lblprocesando.Visible = False
-    '        dgvPrestamos.dgvVista.Columns(0).Visible = True
-    '        dgvPrestamos.dgvVista.Columns("VencActual").Visible = False
-    '        dgvPrestamos.dgvVista.Columns("idclientes").Visible = False
-    '        dgvPrestamos.dgvVista.Columns("DESCRIPCION").Visible = True
-    '        ' dgvPrestamos.dgvVista.Columns("MESES_DEBE").Visible = False
-    '        dgvPrestamos.dgvVista.Columns("MONTO_TOTAL").Visible = False
-    '        dgvPrestamos.dgvVista.Columns("SALDO").Visible = False
-    '        dgvPrestamos.dgvVista.Columns("vendedor").Visible = False
-    '        'DataGridView1.DataSource = ds.Tables(0)
-    '    Catch ex As Exception
-
-    '    End Try
-
-    'End Sub
     Private Sub CargarListadoOrdenesAsync_DoWork(sender As Object, e As DoWorkEventArgs) Handles CargarListadoOrdenesAsync.DoWork
         Try
             ' Acá estamos en el hilo secundario. ¡Solo hablamos con el Gestor, no tocamos la UI!
@@ -796,5 +703,7 @@ Public Class listadoPublicidades
         form.tabcontable.SelectedTab = form.tabcuentasclientes
     End Sub
 
+    Private Sub rdvigentes_CheckedChanged(sender As Object, e As EventArgs) Handles rdvigentes.CheckedChanged
 
+    End Sub
 End Class

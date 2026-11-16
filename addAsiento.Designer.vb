@@ -22,15 +22,17 @@ Partial Class addAsiento
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.chkReabrir = New System.Windows.Forms.CheckBox()
         Me.txtAsientoNumero = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.rdHaber = New System.Windows.Forms.RadioButton()
+        Me.rdDebe = New System.Windows.Forms.RadioButton()
         Me.txtAsientoComprobante = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.cmdGuardar = New System.Windows.Forms.Button()
@@ -53,8 +55,7 @@ Partial Class addAsiento
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.rdDebe = New System.Windows.Forms.RadioButton()
-        Me.rdHaber = New System.Windows.Forms.RadioButton()
+        Me.cmdReasentar = New System.Windows.Forms.Button()
         Me.pntitulo.SuspendLayout()
         Me.Panel1.SuspendLayout()
         CType(Me.dgvPartidas, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -124,6 +125,30 @@ Partial Class addAsiento
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(785, 59)
         Me.Panel1.TabIndex = 67
+        '
+        'rdHaber
+        '
+        Me.rdHaber.AutoSize = True
+        Me.rdHaber.ForeColor = System.Drawing.Color.White
+        Me.rdHaber.Location = New System.Drawing.Point(634, 37)
+        Me.rdHaber.Name = "rdHaber"
+        Me.rdHaber.Size = New System.Drawing.Size(70, 17)
+        Me.rdHaber.TabIndex = 80
+        Me.rdHaber.Text = "CtaHaber"
+        Me.rdHaber.UseVisualStyleBackColor = True
+        '
+        'rdDebe
+        '
+        Me.rdDebe.AutoSize = True
+        Me.rdDebe.Checked = True
+        Me.rdDebe.ForeColor = System.Drawing.Color.White
+        Me.rdDebe.Location = New System.Drawing.Point(634, 14)
+        Me.rdDebe.Name = "rdDebe"
+        Me.rdDebe.Size = New System.Drawing.Size(67, 17)
+        Me.rdDebe.TabIndex = 79
+        Me.rdDebe.TabStop = True
+        Me.rdDebe.Text = "CtaDebe"
+        Me.rdDebe.UseVisualStyleBackColor = True
         '
         'txtAsientoComprobante
         '
@@ -215,7 +240,6 @@ Partial Class addAsiento
         Me.dgvPartidas.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.idCuenta, Me.Codigo, Me.dgvCuenta, Me.DEBE, Me.HABER})
         Me.dgvPartidas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgvPartidas.Location = New System.Drawing.Point(0, 116)
-        Me.dgvPartidas.MultiSelect = False
         Me.dgvPartidas.Name = "dgvPartidas"
         Me.dgvPartidas.Size = New System.Drawing.Size(785, 257)
         Me.dgvPartidas.TabIndex = 3
@@ -243,18 +267,18 @@ Partial Class addAsiento
         '
         'DEBE
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = "0"
-        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.Format = "N2"
+        DataGridViewCellStyle13.NullValue = "0"
+        Me.DEBE.DefaultCellStyle = DataGridViewCellStyle13
         Me.DEBE.FillWeight = 30.0!
         Me.DEBE.HeaderText = "DEBE"
         Me.DEBE.Name = "DEBE"
         '
         'HABER
         '
-        DataGridViewCellStyle2.Format = "N2"
-        DataGridViewCellStyle2.NullValue = "0"
-        Me.HABER.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Format = "N2"
+        DataGridViewCellStyle14.NullValue = "0"
+        Me.HABER.DefaultCellStyle = DataGridViewCellStyle14
         Me.HABER.FillWeight = 30.0!
         Me.HABER.HeaderText = "HABER"
         Me.HABER.Name = "HABER"
@@ -273,6 +297,7 @@ Partial Class addAsiento
         'Panel2
         '
         Me.Panel2.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Panel2.Controls.Add(Me.cmdReasentar)
         Me.Panel2.Controls.Add(Me.lbltotalHaber)
         Me.Panel2.Controls.Add(Me.lbltotalDebe)
         Me.Panel2.Controls.Add(Me.Label4)
@@ -332,9 +357,9 @@ Partial Class addAsiento
         '
         'DataGridViewTextBoxColumn3
         '
-        DataGridViewCellStyle3.Format = "C2"
-        DataGridViewCellStyle3.NullValue = "0"
-        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle15.Format = "C2"
+        DataGridViewCellStyle15.NullValue = "0"
+        Me.DataGridViewTextBoxColumn3.DefaultCellStyle = DataGridViewCellStyle15
         Me.DataGridViewTextBoxColumn3.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn3.HeaderText = "HABER"
         Me.DataGridViewTextBoxColumn3.Name = "DataGridViewTextBoxColumn3"
@@ -342,37 +367,28 @@ Partial Class addAsiento
         '
         'DataGridViewTextBoxColumn4
         '
-        DataGridViewCellStyle4.Format = "C2"
-        DataGridViewCellStyle4.NullValue = "0"
-        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle16.Format = "C2"
+        DataGridViewCellStyle16.NullValue = "0"
+        Me.DataGridViewTextBoxColumn4.DefaultCellStyle = DataGridViewCellStyle16
         Me.DataGridViewTextBoxColumn4.FillWeight = 30.0!
         Me.DataGridViewTextBoxColumn4.HeaderText = "HABER"
         Me.DataGridViewTextBoxColumn4.Name = "DataGridViewTextBoxColumn4"
         Me.DataGridViewTextBoxColumn4.Width = 70
         '
-        'rdDebe
+        'cmdReasentar
         '
-        Me.rdDebe.AutoSize = True
-        Me.rdDebe.Checked = True
-        Me.rdDebe.ForeColor = System.Drawing.Color.White
-        Me.rdDebe.Location = New System.Drawing.Point(634, 14)
-        Me.rdDebe.Name = "rdDebe"
-        Me.rdDebe.Size = New System.Drawing.Size(67, 17)
-        Me.rdDebe.TabIndex = 79
-        Me.rdDebe.TabStop = True
-        Me.rdDebe.Text = "CtaDebe"
-        Me.rdDebe.UseVisualStyleBackColor = True
-        '
-        'rdHaber
-        '
-        Me.rdHaber.AutoSize = True
-        Me.rdHaber.ForeColor = System.Drawing.Color.White
-        Me.rdHaber.Location = New System.Drawing.Point(634, 37)
-        Me.rdHaber.Name = "rdHaber"
-        Me.rdHaber.Size = New System.Drawing.Size(70, 17)
-        Me.rdHaber.TabIndex = 80
-        Me.rdHaber.Text = "CtaHaber"
-        Me.rdHaber.UseVisualStyleBackColor = True
+        Me.cmdReasentar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdReasentar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdReasentar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdReasentar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdReasentar.ForeColor = System.Drawing.Color.White
+        Me.cmdReasentar.Location = New System.Drawing.Point(0, 0)
+        Me.cmdReasentar.Name = "cmdReasentar"
+        Me.cmdReasentar.Size = New System.Drawing.Size(99, 38)
+        Me.cmdReasentar.TabIndex = 79
+        Me.cmdReasentar.Text = "Reasentar"
+        Me.cmdReasentar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdReasentar.UseVisualStyleBackColor = True
         '
         'addAsiento
         '
@@ -431,4 +447,5 @@ Partial Class addAsiento
     Friend WithEvents chkReabrir As CheckBox
     Friend WithEvents rdDebe As RadioButton
     Friend WithEvents rdHaber As RadioButton
+    Friend WithEvents cmdReasentar As Button
 End Class

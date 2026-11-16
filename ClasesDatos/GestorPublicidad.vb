@@ -182,7 +182,14 @@ Public Class GestorPublicidad
         Dim queryBase As String = ""
         Dim havingSql As String = ""
 
+        ' 1. Por defecto, evaluamos la FECHA normal para el mes y año
+        Dim filtroMesAnio As String = "FECHA"
 
+        ' 2. Si el usuario selfiltroeccionó que la búsqueda empieza el día 01...
+        If filtros.FechaDesde.Day = 1 Then
+            ' Convertimos (solo para el filtro) las fechas que vencen a fin de mes al día 1 del mes siguiente
+            filtroMesAnio = "IF(FECHA = LAST_DAY(FECHA), DATE_ADD(FECHA, INTERVAL 1 DAY), FECHA)"
+        End If
 
         ' 1. DEFINICIÓN DE QUERIES SEGÚN LA VISTA
         Select Case vista
@@ -205,59 +212,62 @@ Public Class GestorPublicidad
                 ' ===========================================================================
                 ' VISTAS CONTABLES: Vigentes, A Facturar, A Vencer (Con montos y estados)
                 ' ===========================================================================
+                ' ===========================================================================
+                ' VISTAS CONTABLES: Vigentes, A Facturar, A Vencer (Con montos y estados)
+                ' ===========================================================================
             Case Else
-                ' ACÁ AGREGAMOS "dt.ID AS ID_CUOTA"
                 queryBase = "SELECT
-                      pr.ID_PRESTAMO AS ID_PUBLICIDAD,
-                      dt.ID AS ID_CUOTA,
-                      pr.FECHA AS INICIO,
-                      dt.FECHA AS VencActual,
-                      (SELECT DATE_SUB(MAX(fecha), INTERVAL 1 DAY)
-                         FROM rym_detalle_prestamo
-                        WHERE ID_PRESTAMO = pr.ID_PRESTAMO) AS FIN,
-                      cl.idclientes,
-                      cl.nomapell_razon AS CLIENTE,
-                      pr.DESCRIPCION,
-                      ROUND(pr.MONTO_PRESTAMO, 2) AS MONTO_TOTAL,
-                      ROUND(pr.CUOTA, 2) AS MONTO_MENSUAL,
-                      ROUND(pr.MONTO_PRESTAMO - (SELECT IFNULL(SUM(MONTO_PAGADO), 0)
-                                                  FROM rym_pagos
-                                                 WHERE ID_PRESTAMO = pr.ID_PRESTAMO), 2) AS SALDO,
-                      pr.CONCEPTO,
-                      pr.OBSERVACIONES,
-                      cl.vendedor,
-                      pr.COBRADOR,
-                      CASE
-                        WHEN dt.id_recibo > 0 THEN 'PAGADA'
-                        WHEN dt.id_factura > 0 THEN 'FACTURADA'
-                        WHEN dt.ID IS NOT NULL THEN 'PENDIENTE'
-                        ELSE 'SIN CUOTA'
-                      END AS ESTADO_MES_CURSO,
-                      -- Número de factura: ptovta (4) + num_fact (8) con ceros a la izquierda; vacío si no existe factura
-                      COALESCE(CONCAT(LPAD(f.ptovta, 4, '0'), '-', LPAD(f.num_fact, 8, '0')), '') AS NUMERO_FACTURA,
-                      -- Monto de la factura (total) convertido a decimal y redondeado; NULL si no existe factura o total vacío
-                      CASE
-                        WHEN f.total IS NULL OR TRIM(f.total) = '' THEN NULL
-                        ELSE ROUND(CAST(REPLACE(f.total, ',', '.') AS DECIMAL(15,2)), 2)
-                      END AS MONTO_FACTURA
-                    FROM rym_prestamo AS pr
-                    INNER JOIN fact_clientes AS cl ON pr.ID_CLIENTE = cl.idclientes
-                    LEFT JOIN rym_detalle_prestamo AS dt
-                      ON dt.ID_PRESTAMO = pr.ID_PRESTAMO
-                      AND MONTH(dt.FECHA) = MONTH(?fechaDesde)
-                      AND YEAR(dt.FECHA) = YEAR(?fechaDesde)
-                    LEFT JOIN fact_facturas AS f ON f.id = NULLIF(dt.id_factura, 0)
-                    WHERE pr.ESTADO = 1  "
+                    pr.ID_PRESTAMO AS ID_PUBLICIDAD,
+                    dt.ID AS ID_CUOTA,
+                    pr.FECHA AS INICIO,
+                    dt.FECHA AS VencActual,
+                    (SELECT DATE_SUB(MAX(fecha), INTERVAL 1 DAY)
+                       FROM rym_detalle_prestamo
+                      WHERE ID_PRESTAMO = pr.ID_PRESTAMO) AS FIN,
+                    cl.idclientes,
+                    cl.nomapell_razon AS CLIENTE,
+                    pr.DESCRIPCION,
+                    ROUND(pr.MONTO_PRESTAMO, 2) AS MONTO_TOTAL,
+                    ROUND(pr.CUOTA, 2) AS MONTO_MENSUAL,
+                    ROUND(pr.MONTO_PRESTAMO - (SELECT IFNULL(SUM(MONTO_PAGADO), 0)
+                                               FROM rym_pagos
+                                              WHERE ID_PRESTAMO = pr.ID_PRESTAMO), 2) AS SALDO,
+                    pr.CONCEPTO,
+                    pr.OBSERVACIONES,
+                    cl.vendedor,
+                    pr.COBRADOR,
+                    CASE
+                      WHEN dt.id_recibo > 0 THEN 'PAGADA'
+                      WHEN dt.id_factura > 0 THEN 'FACTURADA'
+                      WHEN dt.ID IS NOT NULL THEN 'PENDIENTE'
+                      ELSE 'SIN CUOTA'
+                    END AS ESTADO_MES_CURSO,
+                    -- Número de factura: ptovta (4) + num_fact (8) con ceros a la izquierda; vacío si no existe factura
+                    COALESCE(CONCAT(LPAD(f.ptovta, 4, '0'), '-', LPAD(f.num_fact, 8, '0')), '') AS NUMERO_FACTURA,
+                    -- Monto de la factura (total) convertido a decimal y redondeado; NULL si no existe factura o total vacío
+                    CASE
+                      WHEN f.total IS NULL OR TRIM(f.total) = '' THEN NULL
+                      ELSE ROUND(CAST(REPLACE(f.total, ',', '.') AS DECIMAL(15,2)), 2)
+                    END AS MONTO_FACTURA
+                  FROM rym_prestamo AS pr
+                  INNER JOIN fact_clientes AS cl ON pr.ID_CLIENTE = cl.idclientes
+                  LEFT JOIN rym_detalle_prestamo AS dt
+                    ON dt.ID_PRESTAMO = pr.ID_PRESTAMO
+                    AND MONTH(" & filtroMesAnio.Replace("FECHA", "dt.FECHA") & ") = MONTH(?fechaDesde) " & ' <--- AQUÍ INYECTAMOS EL FILTRO
+                      "AND YEAR(" & filtroMesAnio.Replace("FECHA", "dt.FECHA") & ") = YEAR(?fechaDesde)
+                  LEFT JOIN fact_facturas AS f ON f.id = NULLIF(dt.id_factura, 0)
+                  WHERE pr.ESTADO = 1  "
 
                 ' Lógica de filtrado por tipo de vista contable
                 Select Case vista
                     Case TipoVistaPublicidad.AFacturar
-                        ' CORRECCIÓN AQUÍ: Se cambió dt.ID_DETALLE por dt.ID (que es la clave primaria real de la tabla)
                         filtrosSql &= " AND dt.ID IS NOT NULL AND dt.id_factura = 0 "
-
+                        havingSql = " HAVING VencActual >= DATE_FORMAT(?fechaDesde, '%Y-%m-01') "
                     Case TipoVistaPublicidad.AVencer
                         ' Solo las que la última cuota (FIN) es en este mes
-                        havingSql = " HAVING MONTH(FIN) = MONTH(?fechaDesde) AND YEAR(FIN) = YEAR(?fechaDesde) "
+                        ' También inyectamos la lógica acá por si la ÚLTIMA cuota vence el 31
+                        Dim finModificado As String = filtroMesAnio.Replace("FECHA", "FIN")
+                        havingSql = " HAVING MONTH(" & finModificado & ") = MONTH(?fechaDesde) AND YEAR(" & finModificado & ") = YEAR(?fechaDesde) "
 
                     Case TipoVistaPublicidad.Vigentes
                         ' Todo lo que termina de hoy en adelante
@@ -279,7 +289,7 @@ Public Class GestorPublicidad
         End If
         ' 3. ENSAMBLADO FINAL
         Dim queryFinal As String = queryBase & filtrosSql & havingSql & " ORDER BY " & filtros.OrdenarPor
-        'sgBox(queryFinal)
+        'MsgBox(queryFinal)
         Try
             Using conn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(queryFinal, conn)
@@ -648,7 +658,7 @@ Public Class GestorPublicidad
                         AND publi.estado=1 " & filtroCancelados &
                         "HAVING ESTADO LIKE '" & estadoInforme & "'" &
                         "ORDER BY cli.nomapell_razon ASC, DTP.ID_PRESTAMO ASC, DTP.FECHA ASC"
-        'MsgBox(query)
+        MsgBox(query)
         Try
             Using conn As New MySqlConnection(CadenaConexion)
                 Using cmd As New MySqlCommand(query, conn)

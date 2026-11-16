@@ -441,7 +441,6 @@ Public Class GestorFacturacion
         End Try
         Return lista
     End Function
-
     Public Shared Function BuscarProductoProduccion(codigoBuscado As String, ByRef cantidadSalida As Decimal) As GestorInsumos.fact_insumos
         Try
 
@@ -850,6 +849,44 @@ Public Class GestorFacturacion
         End Try
     End Function
 
+    Public Shared Function ProcesarCodigoEscaneado(codigoBuscado As String, ByRef cantidadSalida As Decimal) As GestorInsumos.fact_insumos
+        codigoBuscado = codigoBuscado.Trim()
+
+        ' =========================================================================
+        ' CAMINO 1: TICKET DE PRODUCCIÓN EN BASE DE DATOS (Prefijo "A00")
+        ' Lógica original: Busca en fact_insumos_produccion, calcula precio y cantidad.
+        ' =========================================================================
+        If codigoBuscado.StartsWith("A00") Then
+            Return BuscarProductoProduccion(codigoBuscado, cantidadSalida)
+        End If
+
+        ' =========================================================================
+        ' CAMINO 2: BALANZA / PESO INCRUSTADO (Prefijos "21" o "23" - EAN-13)
+        ' Patrón: 2 (Prefijo) + 5 (PLU) + 5 (Peso en gramos) + 1 (Dígito Verificador)
+        ' =========================================================================
+        If (codigoBuscado.StartsWith("21") OrElse codigoBuscado.StartsWith("23")) AndAlso codigoBuscado.Length = 13 Then
+            Try
+                ' 1. Extraer PLU (Posición 3 a 7, removiendo ceros a la izquierda)
+                Dim pluRaw As String = codigoBuscado.Substring(2, 5).TrimStart("0"c)
+
+                ' 2. Extraer Peso en gramos (Posición 8 a 12) y convertir a Kilos
+                Dim gramosRaw As String = codigoBuscado.Substring(7, 5)
+                Dim gramos As Decimal = 0D
+
+                If Decimal.TryParse(gramosRaw, gramos) Then
+                    cantidadSalida = gramos / 1000D ' Ejemplo: 01250 -> 1.250 kg
+
+                    ' 3. Traer producto con su precio lista original (sin recalcular)
+                    Dim item As GestorInsumos.fact_insumos = GestorInsumos.fact_insumos.BuscarPorCodigoOLector(pluRaw)
+                    Return item
+                End If
+            Catch ex As Exception
+                Console.WriteLine("Error al procesar código de balanza: " & ex.Message)
+            End Try
+        End If
+
+        Return Nothing
+    End Function
     ' 2. MÉTODO PARA BUSCAR EL PEDIDO LIMPIO (En GestorFacturacion)
     Public Shared Function ObtenerPedidoParaFacturar(numPedido As Integer, ptoVtaPedido As Integer) As DatosPedidoFacturar
         Dim pedido As New DatosPedidoFacturar()

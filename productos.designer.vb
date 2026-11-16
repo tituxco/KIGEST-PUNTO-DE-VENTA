@@ -23,32 +23,25 @@ Partial Class productos
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(productos))
         Me.pbprogresocons = New System.Windows.Forms.ProgressBar()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.pntitulo = New System.Windows.Forms.Panel()
         Me.pnnavegacion = New System.Windows.Forms.Panel()
         Me.cmbOrdenarPor = New System.Windows.Forms.ComboBox()
         Me.Label36 = New System.Windows.Forms.Label()
-        Me.cmdpromocion = New System.Windows.Forms.Button()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.chkstock = New System.Windows.Forms.CheckBox()
         Me.cmbcatProdGral = New System.Windows.Forms.ComboBox()
         Me.Label7 = New System.Windows.Forms.Label()
-        Me.cmdeliminar = New System.Windows.Forms.Button()
-        Me.cmdaceptar = New System.Windows.Forms.Button()
-        Me.cmdcancelar = New System.Windows.Forms.Button()
-        Me.cmdmodificar = New System.Windows.Forms.Button()
-        Me.cmdnuevapers = New System.Windows.Forms.Button()
-        Me.cmdsalir = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
+        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
         Me.txtbuscar = New System.Windows.Forms.TextBox()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
@@ -156,6 +149,7 @@ Partial Class productos
         Me.tabimporlista = New System.Windows.Forms.TabPage()
         Me.dtimportados = New System.Windows.Forms.DataGridView()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.chkimportDescCantidad = New System.Windows.Forms.CheckBox()
         Me.chkutilidad = New System.Windows.Forms.CheckBox()
         Me.chkimportiva = New System.Windows.Forms.CheckBox()
         Me.chkimportprecio = New System.Windows.Forms.CheckBox()
@@ -169,26 +163,29 @@ Partial Class productos
         Me.txtlistaimportaiva = New System.Windows.Forms.TextBox()
         Me.chkcalcularprecio = New System.Windows.Forms.CheckBox()
         Me.txtgananciagral = New System.Windows.Forms.TextBox()
-        Me.Button4 = New System.Windows.Forms.Button()
         Me.lblcantprod = New System.Windows.Forms.Label()
-        Me.cmdimportar = New System.Windows.Forms.Button()
-        Me.Button2 = New System.Windows.Forms.Button()
         Me.TabPage2 = New System.Windows.Forms.TabPage()
         Me.lbldireccionimagen = New System.Windows.Forms.Label()
         Me.Panel6 = New System.Windows.Forms.Panel()
-        Me.imgFoto = New System.Windows.Forms.PictureBox()
         Me.cmdSeleccionar = New System.Windows.Forms.Button()
         Me.TabPage3 = New System.Windows.Forms.TabPage()
         Me.Panel7 = New System.Windows.Forms.Panel()
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.Button3 = New System.Windows.Forms.Button()
         Me.ImportarListaPrecios = New System.ComponentModel.BackgroundWorker()
         Me.Panel4 = New System.Windows.Forms.Panel()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.dtdescuentos = New System.Windows.Forms.DataGridView()
+        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.Label34 = New System.Windows.Forms.Label()
         Me.dtlistas = New System.Windows.Forms.DataGridView()
-        Me.chkimportDescCantidad = New System.Windows.Forms.CheckBox()
+        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -198,16 +195,20 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.DataGridViewTextBoxColumn9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column6 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column7 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column8 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column9 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column3 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column4 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column5 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.Column2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.DgvProductos = New SIGT__KIGEST.DGVPaginado()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.cmdimportar = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.imgFoto = New System.Windows.Forms.PictureBox()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.cmdpromocion = New System.Windows.Forms.Button()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.cmdeliminar = New System.Windows.Forms.Button()
+        Me.cmdaceptar = New System.Windows.Forms.Button()
+        Me.cmdcancelar = New System.Windows.Forms.Button()
+        Me.cmdmodificar = New System.Windows.Forms.Button()
+        Me.cmdnuevapers = New System.Windows.Forms.Button()
+        Me.cmdsalir = New System.Windows.Forms.Button()
         Me.MySettingsBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.pntitulo.SuspendLayout()
         Me.pnnavegacion.SuspendLayout()
@@ -228,13 +229,13 @@ Partial Class productos
         Me.Panel2.SuspendLayout()
         Me.TabPage2.SuspendLayout()
         Me.Panel6.SuspendLayout()
-        CType(Me.imgFoto, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabPage3.SuspendLayout()
         Me.Panel7.SuspendLayout()
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel4.SuspendLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.imgFoto, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -271,6 +272,7 @@ Partial Class productos
         'pnnavegacion
         '
         Me.pnnavegacion.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.pnnavegacion.Controls.Add(Me.Button6)
         Me.pnnavegacion.Controls.Add(Me.cmbOrdenarPor)
         Me.pnnavegacion.Controls.Add(Me.Label36)
         Me.pnnavegacion.Controls.Add(Me.cmdpromocion)
@@ -312,39 +314,6 @@ Partial Class productos
         Me.Label36.TabIndex = 171
         Me.Label36.Text = "Ordenar por:"
         '
-        'cmdpromocion
-        '
-        Me.cmdpromocion.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdpromocion.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdpromocion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdpromocion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdpromocion.ForeColor = System.Drawing.Color.White
-        Me.cmdpromocion.Image = CType(resources.GetObject("cmdpromocion.Image"), System.Drawing.Image)
-        Me.cmdpromocion.Location = New System.Drawing.Point(780, 0)
-        Me.cmdpromocion.Name = "cmdpromocion"
-        Me.cmdpromocion.Size = New System.Drawing.Size(102, 89)
-        Me.cmdpromocion.TabIndex = 169
-        Me.cmdpromocion.Text = "Prom/Comis"
-        Me.cmdpromocion.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdpromocion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdpromocion.UseVisualStyleBackColor = True
-        '
-        'Button1
-        '
-        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.ForeColor = System.Drawing.Color.White
-        Me.Button1.Location = New System.Drawing.Point(882, 0)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(102, 89)
-        Me.Button1.TabIndex = 168
-        Me.Button1.Text = "Etiqueta"
-        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.Button1.UseVisualStyleBackColor = True
-        '
         'chkstock
         '
         Me.chkstock.AutoSize = True
@@ -378,109 +347,6 @@ Partial Class productos
         Me.Label7.TabIndex = 166
         Me.Label7.Text = "Categoria:"
         '
-        'cmdeliminar
-        '
-        Me.cmdeliminar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdeliminar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdeliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdeliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdeliminar.ForeColor = System.Drawing.Color.White
-        Me.cmdeliminar.Image = CType(resources.GetObject("cmdeliminar.Image"), System.Drawing.Image)
-        Me.cmdeliminar.Location = New System.Drawing.Point(158, 0)
-        Me.cmdeliminar.Name = "cmdeliminar"
-        Me.cmdeliminar.Size = New System.Drawing.Size(79, 89)
-        Me.cmdeliminar.TabIndex = 31
-        Me.cmdeliminar.Text = "Eliminar"
-        Me.cmdeliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdeliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdeliminar.UseVisualStyleBackColor = True
-        '
-        'cmdaceptar
-        '
-        Me.cmdaceptar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdaceptar.Enabled = False
-        Me.cmdaceptar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdaceptar.ForeColor = System.Drawing.Color.White
-        Me.cmdaceptar.Location = New System.Drawing.Point(984, 0)
-        Me.cmdaceptar.Name = "cmdaceptar"
-        Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
-        Me.cmdaceptar.TabIndex = 8
-        Me.cmdaceptar.Text = "Guardar"
-        Me.cmdaceptar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdaceptar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdaceptar.UseVisualStyleBackColor = True
-        '
-        'cmdcancelar
-        '
-        Me.cmdcancelar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdcancelar.Enabled = False
-        Me.cmdcancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdcancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdcancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdcancelar.ForeColor = System.Drawing.Color.White
-        Me.cmdcancelar.Image = CType(resources.GetObject("cmdcancelar.Image"), System.Drawing.Image)
-        Me.cmdcancelar.Location = New System.Drawing.Point(1086, 0)
-        Me.cmdcancelar.Name = "cmdcancelar"
-        Me.cmdcancelar.Size = New System.Drawing.Size(93, 89)
-        Me.cmdcancelar.TabIndex = 27
-        Me.cmdcancelar.Text = "Cancelar"
-        Me.cmdcancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdcancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdcancelar.UseVisualStyleBackColor = True
-        '
-        'cmdmodificar
-        '
-        Me.cmdmodificar.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdmodificar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdmodificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdmodificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdmodificar.ForeColor = System.Drawing.Color.White
-        Me.cmdmodificar.Image = CType(resources.GetObject("cmdmodificar.Image"), System.Drawing.Image)
-        Me.cmdmodificar.Location = New System.Drawing.Point(75, 0)
-        Me.cmdmodificar.Name = "cmdmodificar"
-        Me.cmdmodificar.Size = New System.Drawing.Size(83, 89)
-        Me.cmdmodificar.TabIndex = 19
-        Me.cmdmodificar.Text = "Modificar"
-        Me.cmdmodificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdmodificar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdmodificar.UseVisualStyleBackColor = True
-        '
-        'cmdnuevapers
-        '
-        Me.cmdnuevapers.Dock = System.Windows.Forms.DockStyle.Left
-        Me.cmdnuevapers.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdnuevapers.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdnuevapers.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdnuevapers.ForeColor = System.Drawing.Color.White
-        Me.cmdnuevapers.Image = CType(resources.GetObject("cmdnuevapers.Image"), System.Drawing.Image)
-        Me.cmdnuevapers.Location = New System.Drawing.Point(0, 0)
-        Me.cmdnuevapers.Name = "cmdnuevapers"
-        Me.cmdnuevapers.Size = New System.Drawing.Size(75, 89)
-        Me.cmdnuevapers.TabIndex = 18
-        Me.cmdnuevapers.Text = "Agregar"
-        Me.cmdnuevapers.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdnuevapers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdnuevapers.UseVisualStyleBackColor = True
-        '
-        'cmdsalir
-        '
-        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
-        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmdsalir.ForeColor = System.Drawing.Color.White
-        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
-        Me.cmdsalir.Location = New System.Drawing.Point(1179, 0)
-        Me.cmdsalir.Name = "cmdsalir"
-        Me.cmdsalir.Size = New System.Drawing.Size(70, 89)
-        Me.cmdsalir.TabIndex = 17
-        Me.cmdsalir.Text = "Salir"
-        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
-        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
-        Me.cmdsalir.UseVisualStyleBackColor = True
-        '
         'Panel1
         '
         Me.Panel1.Controls.Add(Me.DgvProductos)
@@ -490,6 +356,14 @@ Partial Class productos
         Me.Panel1.Name = "Panel1"
         Me.Panel1.Size = New System.Drawing.Size(389, 515)
         Me.Panel1.TabIndex = 75
+        '
+        'DgvProductos
+        '
+        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
+        Me.DgvProductos.Name = "DgvProductos"
+        Me.DgvProductos.Size = New System.Drawing.Size(389, 493)
+        Me.DgvProductos.TabIndex = 64
         '
         'txtbuscar
         '
@@ -1759,6 +1633,17 @@ Partial Class productos
         Me.Panel2.Size = New System.Drawing.Size(846, 79)
         Me.Panel2.TabIndex = 0
         '
+        'chkimportDescCantidad
+        '
+        Me.chkimportDescCantidad.AutoSize = True
+        Me.chkimportDescCantidad.ForeColor = System.Drawing.Color.White
+        Me.chkimportDescCantidad.Location = New System.Drawing.Point(377, 57)
+        Me.chkimportDescCantidad.Name = "chkimportDescCantidad"
+        Me.chkimportDescCantidad.Size = New System.Drawing.Size(83, 20)
+        Me.chkimportDescCantidad.TabIndex = 250
+        Me.chkimportDescCantidad.Text = "Des_cant"
+        Me.chkimportDescCantidad.UseVisualStyleBackColor = True
+        '
         'chkutilidad
         '
         Me.chkutilidad.AutoSize = True
@@ -1909,18 +1794,6 @@ Partial Class productos
         Me.txtgananciagral.TabIndex = 6
         Me.txtgananciagral.Text = "1"
         '
-        'Button4
-        '
-        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.ForeColor = System.Drawing.Color.White
-        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
-        Me.Button4.Location = New System.Drawing.Point(0, 0)
-        Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(43, 53)
-        Me.Button4.TabIndex = 4
-        Me.Button4.UseVisualStyleBackColor = False
-        '
         'lblcantprod
         '
         Me.lblcantprod.Dock = System.Windows.Forms.DockStyle.Right
@@ -1931,30 +1804,6 @@ Partial Class productos
         Me.lblcantprod.Size = New System.Drawing.Size(127, 79)
         Me.lblcantprod.TabIndex = 2
         Me.lblcantprod.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-        '
-        'cmdimportar
-        '
-        Me.cmdimportar.Dock = System.Windows.Forms.DockStyle.Right
-        Me.cmdimportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.cmdimportar.ForeColor = System.Drawing.Color.White
-        Me.cmdimportar.Image = CType(resources.GetObject("cmdimportar.Image"), System.Drawing.Image)
-        Me.cmdimportar.Location = New System.Drawing.Point(683, 0)
-        Me.cmdimportar.Name = "cmdimportar"
-        Me.cmdimportar.Size = New System.Drawing.Size(80, 79)
-        Me.cmdimportar.TabIndex = 1
-        Me.cmdimportar.UseVisualStyleBackColor = True
-        '
-        'Button2
-        '
-        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
-        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.ForeColor = System.Drawing.Color.White
-        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
-        Me.Button2.Location = New System.Drawing.Point(763, 0)
-        Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(83, 79)
-        Me.Button2.TabIndex = 0
-        Me.Button2.UseVisualStyleBackColor = True
         '
         'TabPage2
         '
@@ -1985,17 +1834,6 @@ Partial Class productos
         Me.Panel6.Size = New System.Drawing.Size(344, 291)
         Me.Panel6.TabIndex = 242
         '
-        'imgFoto
-        '
-        Me.imgFoto.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.imgFoto.Image = CType(resources.GetObject("imgFoto.Image"), System.Drawing.Image)
-        Me.imgFoto.Location = New System.Drawing.Point(0, 0)
-        Me.imgFoto.Name = "imgFoto"
-        Me.imgFoto.Size = New System.Drawing.Size(344, 291)
-        Me.imgFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.imgFoto.TabIndex = 236
-        Me.imgFoto.TabStop = False
-        '
         'cmdSeleccionar
         '
         Me.cmdSeleccionar.Location = New System.Drawing.Point(6, 6)
@@ -2024,17 +1862,6 @@ Partial Class productos
         Me.Panel7.Name = "Panel7"
         Me.Panel7.Size = New System.Drawing.Size(483, 197)
         Me.Panel7.TabIndex = 244
-        '
-        'PictureBox1
-        '
-        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
-        Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(483, 197)
-        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
-        Me.PictureBox1.TabIndex = 236
-        Me.PictureBox1.TabStop = False
         '
         'Button3
         '
@@ -2089,6 +1916,30 @@ Partial Class productos
         Me.dtdescuentos.Size = New System.Drawing.Size(380, 156)
         Me.dtdescuentos.TabIndex = 227
         '
+        'Column6
+        '
+        Me.Column6.HeaderText = "idProm"
+        Me.Column6.Name = "Column6"
+        Me.Column6.Visible = False
+        '
+        'Column7
+        '
+        Me.Column7.HeaderText = "TIPO"
+        Me.Column7.Name = "Column7"
+        Me.Column7.ReadOnly = True
+        '
+        'Column8
+        '
+        Me.Column8.FillWeight = 30.0!
+        Me.Column8.HeaderText = "MINIMO"
+        Me.Column8.Name = "Column8"
+        '
+        'Column9
+        '
+        Me.Column9.FillWeight = 30.0!
+        Me.Column9.HeaderText = "PORCENTAJE"
+        Me.Column9.Name = "Column9"
+        '
         'Label34
         '
         Me.Label34.AutoSize = True
@@ -2117,16 +1968,43 @@ Partial Class productos
         Me.dtlistas.Size = New System.Drawing.Size(301, 156)
         Me.dtlistas.TabIndex = 225
         '
-        'chkimportDescCantidad
+        'Column3
         '
-        Me.chkimportDescCantidad.AutoSize = True
-        Me.chkimportDescCantidad.ForeColor = System.Drawing.Color.White
-        Me.chkimportDescCantidad.Location = New System.Drawing.Point(377, 57)
-        Me.chkimportDescCantidad.Name = "chkimportDescCantidad"
-        Me.chkimportDescCantidad.Size = New System.Drawing.Size(83, 20)
-        Me.chkimportDescCantidad.TabIndex = 250
-        Me.chkimportDescCantidad.Text = "Des_cant"
-        Me.chkimportDescCantidad.UseVisualStyleBackColor = True
+        Me.Column3.HeaderText = "Nombre"
+        Me.Column3.Name = "Column3"
+        Me.Column3.ReadOnly = True
+        '
+        'Column4
+        '
+        DataGridViewCellStyle1.Format = "N2"
+        DataGridViewCellStyle1.NullValue = Nothing
+        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
+        Me.Column4.HeaderText = "Utilidad"
+        Me.Column4.Name = "Column4"
+        Me.Column4.Visible = False
+        '
+        'Column5
+        '
+        DataGridViewCellStyle2.Format = "C3"
+        DataGridViewCellStyle2.NullValue = Nothing
+        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Column5.FillWeight = 40.0!
+        Me.Column5.HeaderText = "Precio"
+        Me.Column5.Name = "Column5"
+        '
+        'Column1
+        '
+        Me.Column1.FillWeight = 30.0!
+        Me.Column1.HeaderText = "%"
+        Me.Column1.Name = "Column1"
+        Me.Column1.Visible = False
+        '
+        'Column2
+        '
+        Me.Column2.FillWeight = 30.0!
+        Me.Column2.HeaderText = "utilAux"
+        Me.Column2.Name = "Column2"
+        Me.Column2.Visible = False
         '
         'DataGridViewTextBoxColumn1
         '
@@ -2215,75 +2093,218 @@ Partial Class productos
         Me.DataGridViewTextBoxColumn9.Name = "DataGridViewTextBoxColumn9"
         Me.DataGridViewTextBoxColumn9.Visible = False
         '
-        'Column6
+        'Button4
         '
-        Me.Column6.HeaderText = "idProm"
-        Me.Column6.Name = "Column6"
-        Me.Column6.Visible = False
+        Me.Button4.BackColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button4.ForeColor = System.Drawing.Color.White
+        Me.Button4.Image = CType(resources.GetObject("Button4.Image"), System.Drawing.Image)
+        Me.Button4.Location = New System.Drawing.Point(0, 0)
+        Me.Button4.Name = "Button4"
+        Me.Button4.Size = New System.Drawing.Size(43, 53)
+        Me.Button4.TabIndex = 4
+        Me.Button4.UseVisualStyleBackColor = False
         '
-        'Column7
+        'cmdimportar
         '
-        Me.Column7.HeaderText = "TIPO"
-        Me.Column7.Name = "Column7"
-        Me.Column7.ReadOnly = True
+        Me.cmdimportar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdimportar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdimportar.ForeColor = System.Drawing.Color.White
+        Me.cmdimportar.Image = CType(resources.GetObject("cmdimportar.Image"), System.Drawing.Image)
+        Me.cmdimportar.Location = New System.Drawing.Point(683, 0)
+        Me.cmdimportar.Name = "cmdimportar"
+        Me.cmdimportar.Size = New System.Drawing.Size(80, 79)
+        Me.cmdimportar.TabIndex = 1
+        Me.cmdimportar.UseVisualStyleBackColor = True
         '
-        'Column8
+        'Button2
         '
-        Me.Column8.FillWeight = 30.0!
-        Me.Column8.HeaderText = "MINIMO"
-        Me.Column8.Name = "Column8"
+        Me.Button2.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button2.ForeColor = System.Drawing.Color.White
+        Me.Button2.Image = CType(resources.GetObject("Button2.Image"), System.Drawing.Image)
+        Me.Button2.Location = New System.Drawing.Point(763, 0)
+        Me.Button2.Name = "Button2"
+        Me.Button2.Size = New System.Drawing.Size(83, 79)
+        Me.Button2.TabIndex = 0
+        Me.Button2.UseVisualStyleBackColor = True
         '
-        'Column9
+        'imgFoto
         '
-        Me.Column9.FillWeight = 30.0!
-        Me.Column9.HeaderText = "PORCENTAJE"
-        Me.Column9.Name = "Column9"
+        Me.imgFoto.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.imgFoto.Image = CType(resources.GetObject("imgFoto.Image"), System.Drawing.Image)
+        Me.imgFoto.Location = New System.Drawing.Point(0, 0)
+        Me.imgFoto.Name = "imgFoto"
+        Me.imgFoto.Size = New System.Drawing.Size(344, 291)
+        Me.imgFoto.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.imgFoto.TabIndex = 236
+        Me.imgFoto.TabStop = False
         '
-        'Column3
+        'PictureBox1
         '
-        Me.Column3.HeaderText = "Nombre"
-        Me.Column3.Name = "Column3"
-        Me.Column3.ReadOnly = True
+        Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Size = New System.Drawing.Size(483, 197)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage
+        Me.PictureBox1.TabIndex = 236
+        Me.PictureBox1.TabStop = False
         '
-        'Column4
+        'Button6
         '
-        DataGridViewCellStyle1.Format = "N2"
-        DataGridViewCellStyle1.NullValue = Nothing
-        Me.Column4.DefaultCellStyle = DataGridViewCellStyle1
-        Me.Column4.HeaderText = "Utilidad"
-        Me.Column4.Name = "Column4"
-        Me.Column4.Visible = False
+        Me.Button6.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button6.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button6.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button6.ForeColor = System.Drawing.Color.White
+        Me.Button6.Image = Global.SIGT__KIGEST.My.Resources.Resources.Scales
+        Me.Button6.Location = New System.Drawing.Point(678, 0)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(102, 89)
+        Me.Button6.TabIndex = 172
+        Me.Button6.Text = "Balanza"
+        Me.Button6.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button6.UseVisualStyleBackColor = True
         '
-        'Column5
+        'cmdpromocion
         '
-        DataGridViewCellStyle2.Format = "C3"
-        DataGridViewCellStyle2.NullValue = Nothing
-        Me.Column5.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Column5.FillWeight = 40.0!
-        Me.Column5.HeaderText = "Precio"
-        Me.Column5.Name = "Column5"
+        Me.cmdpromocion.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdpromocion.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdpromocion.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdpromocion.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdpromocion.ForeColor = System.Drawing.Color.White
+        Me.cmdpromocion.Image = CType(resources.GetObject("cmdpromocion.Image"), System.Drawing.Image)
+        Me.cmdpromocion.Location = New System.Drawing.Point(780, 0)
+        Me.cmdpromocion.Name = "cmdpromocion"
+        Me.cmdpromocion.Size = New System.Drawing.Size(102, 89)
+        Me.cmdpromocion.TabIndex = 169
+        Me.cmdpromocion.Text = "Prom/Comis"
+        Me.cmdpromocion.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdpromocion.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdpromocion.UseVisualStyleBackColor = True
         '
-        'Column1
+        'Button1
         '
-        Me.Column1.FillWeight = 30.0!
-        Me.Column1.HeaderText = "%"
-        Me.Column1.Name = "Column1"
-        Me.Column1.Visible = False
+        Me.Button1.Dock = System.Windows.Forms.DockStyle.Right
+        Me.Button1.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Button1.ForeColor = System.Drawing.Color.White
+        Me.Button1.Image = Global.SIGT__KIGEST.My.Resources.Resources.Tags
+        Me.Button1.Location = New System.Drawing.Point(882, 0)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(102, 89)
+        Me.Button1.TabIndex = 168
+        Me.Button1.Text = "Etiqueta"
+        Me.Button1.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.Button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.Button1.UseVisualStyleBackColor = True
         '
-        'Column2
+        'cmdeliminar
         '
-        Me.Column2.FillWeight = 30.0!
-        Me.Column2.HeaderText = "utilAux"
-        Me.Column2.Name = "Column2"
-        Me.Column2.Visible = False
+        Me.cmdeliminar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdeliminar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdeliminar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdeliminar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdeliminar.ForeColor = System.Drawing.Color.White
+        Me.cmdeliminar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Delete
+        Me.cmdeliminar.Location = New System.Drawing.Point(158, 0)
+        Me.cmdeliminar.Name = "cmdeliminar"
+        Me.cmdeliminar.Size = New System.Drawing.Size(79, 89)
+        Me.cmdeliminar.TabIndex = 31
+        Me.cmdeliminar.Text = "Eliminar"
+        Me.cmdeliminar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdeliminar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdeliminar.UseVisualStyleBackColor = True
         '
-        'DgvProductos
+        'cmdaceptar
         '
-        Me.DgvProductos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.DgvProductos.Location = New System.Drawing.Point(0, 22)
-        Me.DgvProductos.Name = "DgvProductos"
-        Me.DgvProductos.Size = New System.Drawing.Size(389, 493)
-        Me.DgvProductos.TabIndex = 64
+        Me.cmdaceptar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdaceptar.Enabled = False
+        Me.cmdaceptar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdaceptar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdaceptar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdaceptar.ForeColor = System.Drawing.Color.White
+        Me.cmdaceptar.Image = Global.SIGT__KIGEST.My.Resources.Resources.Save_64px
+        Me.cmdaceptar.Location = New System.Drawing.Point(984, 0)
+        Me.cmdaceptar.Name = "cmdaceptar"
+        Me.cmdaceptar.Size = New System.Drawing.Size(102, 89)
+        Me.cmdaceptar.TabIndex = 8
+        Me.cmdaceptar.Text = "Guardar"
+        Me.cmdaceptar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdaceptar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdaceptar.UseVisualStyleBackColor = True
+        '
+        'cmdcancelar
+        '
+        Me.cmdcancelar.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdcancelar.Enabled = False
+        Me.cmdcancelar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdcancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdcancelar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdcancelar.ForeColor = System.Drawing.Color.White
+        Me.cmdcancelar.Image = CType(resources.GetObject("cmdcancelar.Image"), System.Drawing.Image)
+        Me.cmdcancelar.Location = New System.Drawing.Point(1086, 0)
+        Me.cmdcancelar.Name = "cmdcancelar"
+        Me.cmdcancelar.Size = New System.Drawing.Size(93, 89)
+        Me.cmdcancelar.TabIndex = 27
+        Me.cmdcancelar.Text = "Cancelar"
+        Me.cmdcancelar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdcancelar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdcancelar.UseVisualStyleBackColor = True
+        '
+        'cmdmodificar
+        '
+        Me.cmdmodificar.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdmodificar.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdmodificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdmodificar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdmodificar.ForeColor = System.Drawing.Color.White
+        Me.cmdmodificar.Image = CType(resources.GetObject("cmdmodificar.Image"), System.Drawing.Image)
+        Me.cmdmodificar.Location = New System.Drawing.Point(75, 0)
+        Me.cmdmodificar.Name = "cmdmodificar"
+        Me.cmdmodificar.Size = New System.Drawing.Size(83, 89)
+        Me.cmdmodificar.TabIndex = 19
+        Me.cmdmodificar.Text = "Modificar"
+        Me.cmdmodificar.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdmodificar.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdmodificar.UseVisualStyleBackColor = True
+        '
+        'cmdnuevapers
+        '
+        Me.cmdnuevapers.Dock = System.Windows.Forms.DockStyle.Left
+        Me.cmdnuevapers.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdnuevapers.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdnuevapers.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdnuevapers.ForeColor = System.Drawing.Color.White
+        Me.cmdnuevapers.Image = CType(resources.GetObject("cmdnuevapers.Image"), System.Drawing.Image)
+        Me.cmdnuevapers.Location = New System.Drawing.Point(0, 0)
+        Me.cmdnuevapers.Name = "cmdnuevapers"
+        Me.cmdnuevapers.Size = New System.Drawing.Size(75, 89)
+        Me.cmdnuevapers.TabIndex = 18
+        Me.cmdnuevapers.Text = "Agregar"
+        Me.cmdnuevapers.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdnuevapers.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdnuevapers.UseVisualStyleBackColor = True
+        '
+        'cmdsalir
+        '
+        Me.cmdsalir.Dock = System.Windows.Forms.DockStyle.Right
+        Me.cmdsalir.FlatAppearance.BorderColor = System.Drawing.Color.Gray
+        Me.cmdsalir.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdsalir.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmdsalir.ForeColor = System.Drawing.Color.White
+        Me.cmdsalir.Image = CType(resources.GetObject("cmdsalir.Image"), System.Drawing.Image)
+        Me.cmdsalir.Location = New System.Drawing.Point(1179, 0)
+        Me.cmdsalir.Name = "cmdsalir"
+        Me.cmdsalir.Size = New System.Drawing.Size(70, 89)
+        Me.cmdsalir.TabIndex = 17
+        Me.cmdsalir.Text = "Salir"
+        Me.cmdsalir.TextAlign = System.Drawing.ContentAlignment.BottomCenter
+        Me.cmdsalir.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText
+        Me.cmdsalir.UseVisualStyleBackColor = True
         '
         'MySettingsBindingSource
         '
@@ -2336,14 +2357,14 @@ Partial Class productos
         Me.TabPage2.ResumeLayout(False)
         Me.TabPage2.PerformLayout()
         Me.Panel6.ResumeLayout(False)
-        CType(Me.imgFoto, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabPage3.ResumeLayout(False)
         Me.Panel7.ResumeLayout(False)
-        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel4.ResumeLayout(False)
         Me.Panel4.PerformLayout()
         CType(Me.dtdescuentos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dtlistas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.imgFoto, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MySettingsBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -2526,4 +2547,5 @@ Partial Class productos
     Friend WithEvents Column2 As DataGridViewTextBoxColumn
     Friend WithEvents chkpreciobase As CheckBox
     Friend WithEvents chkimportDescCantidad As CheckBox
+    Friend WithEvents Button6 As Button
 End Class

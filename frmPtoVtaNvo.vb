@@ -188,34 +188,63 @@ Public Class frmPtoVtaNvo
         selVendedor.dtvendedor.Focus()
         selVendedor.ShowDialog()
     End Sub
+
+
+
     'Private Sub txtbusquedaAddPlu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtbusquedaAddPlu.KeyDown
     '    Try
     '        If e.KeyCode = Keys.Enter Then
     '            e.SuppressKeyPress = True ' Anula el sonido "ding" de Windows
 
     '            Dim codigo As String = txtbusquedaAddPlu.Text.Trim()
-    '            If codigo = "" Then Return ' Opcional: Acá podrías abrir la ventana de búsqueda manual
+    '            If codigo = "" Then Return
 
-    '            ' 1. Pedimos el producto a tu capa de negocio
-    '            Dim prod As GestorInsumos.fact_insumos = GestorInsumos.fact_insumos.BuscarPorCodigoOLector(codigo)
+    '            Dim prod As GestorInsumos.fact_insumos = Nothing
+    '            Dim cantidadCalculada As Decimal = 1
 
-    '            ' 2. Lo agregamos a la grilla si existe
-    '            If prod IsNot Nothing Then
-    '                AgregarProductoAGrilla(prod, 1) ' 1 es la cantidad predeterminada
+    '            ' 1. Verificamos si es un código de Producción Propia (A00 o 00)
+    '            If codigo.StartsWith("A00", StringComparison.OrdinalIgnoreCase) OrElse codigo.StartsWith("00", StringComparison.OrdinalIgnoreCase) Then
+
+    '                Dim codigoLimpio As String = codigo.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", "").Trim()
+
+    '                ' --- LLAMAMOS AL GESTOR DE FACTURACIÓN ---
+    '                prod = GestorFacturacion.BuscarProductoProduccion(codigoLimpio, cantidadCalculada)
+
+    '                If prod Is Nothing Then
+    '                    MsgBox("No se encuentra el ticket de producción o ya fue facturado.", MsgBoxStyle.Exclamation, "Atención")
+    '                End If
+
+    '                ' 2. Si no es de producción, hacemos la búsqueda Normal
     '            Else
-    '                MsgBox("Producto no encontrado.", MsgBoxStyle.Exclamation, "Atención")
+    '                ' --- LLAMAMOS AL GESTOR DE INSUMOS ---
+    '                prod = GestorInsumos.fact_insumos.BuscarPorCodigoOLector(codigo)
+
+    '                If prod Is Nothing Then
+    '                    MsgBox("Producto no encontrado.", MsgBoxStyle.Exclamation, "Atención")
+    '                End If
     '            End If
 
-    '            ' 3. Limpiamos para el próximo escaneo
+    '            ' 3. Si encontramos algo, lo agregamos a la grilla
+    '            If prod IsNot Nothing Then
+    '                If codigo.StartsWith("A00", StringComparison.OrdinalIgnoreCase) OrElse codigo.StartsWith("00", StringComparison.OrdinalIgnoreCase) Then
+    '                    ' Lo agregamos indicando que es de producción (NO recalcula precios)
+    '                    AgregarProductoAGrilla(prod, cantidadCalculada, True)
+    '                Else
+    '                    ' Producto común (SÍ recalcula precios según lista)
+    '                    AgregarProductoAGrilla(prod, cantidadCalculada, False)
+    '                End If
+    '            End If
+
+    '            ' 4. Limpiamos para el próximo escaneo
     '            txtbusquedaAddPlu.Text = ""
     '            txtbusquedaAddPlu.Focus()
     '        End If
     '    Catch ex As Exception
     '        MsgBox("Error: " & ex.Message)
     '    End Try
-
-
     'End Sub
+
+
     Private Sub txtbusquedaAddPlu_KeyDown(sender As Object, e As KeyEventArgs) Handles txtbusquedaAddPlu.KeyDown
         Try
             If e.KeyCode = Keys.Enter Then
@@ -226,46 +255,75 @@ Public Class frmPtoVtaNvo
 
                 Dim prod As GestorInsumos.fact_insumos = Nothing
                 Dim cantidadCalculada As Decimal = 1
+                Dim esProduccion As Boolean = False
 
-                ' 1. Verificamos si es un código de Producción Propia (A00 o 00)
-                If codigo.StartsWith("A00", StringComparison.OrdinalIgnoreCase) OrElse codigo.StartsWith("00", StringComparison.OrdinalIgnoreCase) Then
+                ' =========================================================================
+                ' 1. CAMINO 1: PRODUCCIÓN PROPIA EN BD (Prefijo "A00")
+                ' =========================================================================
+                If codigo.StartsWith("A00", StringComparison.OrdinalIgnoreCase) Then
 
                     Dim codigoLimpio As String = codigo.Replace("B", "").Replace("A", "").Replace("b", "").Replace("a", "").Trim()
 
                     ' --- LLAMAMOS AL GESTOR DE FACTURACIÓN ---
                     prod = GestorFacturacion.BuscarProductoProduccion(codigoLimpio, cantidadCalculada)
+                    esProduccion = True
 
                     If prod Is Nothing Then
                         MsgBox("No se encuentra el ticket de producción o ya fue facturado.", MsgBoxStyle.Exclamation, "Atención")
                     End If
 
-                    ' 2. Si no es de producción, hacemos la búsqueda Normal
+                    ' =========================================================================
+                    ' 2. CAMINO 2: BALANZA EAN-13 (Prefijos "21" o "23" de 13 dígitos)
+                    ' Estructura: 2 (Prefijo) + 5 (PLU) + 5 (Peso en gramos) + 1 (Verificador)
+                    ' =========================================================================
+                ElseIf (codigo.StartsWith("21") OrElse codigo.StartsWith("23")) AndAlso codigo.Length = 13 Then
+
+                    ' Extraemos el PLU (5 dígitos a partir de la pos 2) y quitamos ceros a la izquierda
+                    Dim pluRaw As String = codigo.Substring(2, 5).TrimStart("0"c)
+
+                    ' Extraemos los 5 dígitos de gramos (pos 7) y convertimos a Kilos
+                    Dim gramosRaw As String = codigo.Substring(7, 5)
+                    Dim gramos As Decimal = 0D
+
+                    If Decimal.TryParse(gramosRaw, gramos) Then
+                        cantidadCalculada = gramos / 1000D ' Ej: 01250 g -> 1.250 kg
+                    End If
+
+                    ' Buscamos el insumo común por su PLU
+                    prod = GestorInsumos.fact_insumos.BuscarPorCodigoOLector(pluRaw)
+                    esProduccion = False
+
+                    If prod Is Nothing Then
+                        MsgBox("Producto de balanza (PLU: " & pluRaw & ") no encontrado en el sistema.", MsgBoxStyle.Exclamation, "Atención")
+                    End If
+
+                    ' =========================================================================
+                    ' 3. CAMINO 3: BÚSQUEDA TRADICIONAL / PRODUCTO COMÚN
+                    ' =========================================================================
                 Else
                     ' --- LLAMAMOS AL GESTOR DE INSUMOS ---
                     prod = GestorInsumos.fact_insumos.BuscarPorCodigoOLector(codigo)
+                    esProduccion = False
 
                     If prod Is Nothing Then
                         MsgBox("Producto no encontrado.", MsgBoxStyle.Exclamation, "Atención")
                     End If
                 End If
 
-                ' 3. Si encontramos algo, lo agregamos a la grilla
+                ' =========================================================================
+                ' 4. AGREGAR A LA GRILLA DE VENTA
+                ' =========================================================================
                 If prod IsNot Nothing Then
-                    If codigo.StartsWith("A00", StringComparison.OrdinalIgnoreCase) OrElse codigo.StartsWith("00", StringComparison.OrdinalIgnoreCase) Then
-                        ' Lo agregamos indicando que es de producción (NO recalcula precios)
-                        AgregarProductoAGrilla(prod, cantidadCalculada, True)
-                    Else
-                        ' Producto común (SÍ recalcula precios según lista)
-                        AgregarProductoAGrilla(prod, cantidadCalculada, False)
-                    End If
+                    ' Agregamos indicando si es de producción (True) o producto común/balanza (False)
+                    AgregarProductoAGrilla(prod, cantidadCalculada, esProduccion)
                 End If
 
-                ' 4. Limpiamos para el próximo escaneo
+                ' 5. Limpiamos para el próximo escaneo
                 txtbusquedaAddPlu.Text = ""
                 txtbusquedaAddPlu.Focus()
             End If
         Catch ex As Exception
-            MsgBox("Error: " & ex.Message)
+            MsgBox("Error al procesar el código: " & ex.Message, MsgBoxStyle.Critical)
         End Try
     End Sub
     Private Sub ActualizarProductoEnFila(indexFila As Integer, prod As GestorInsumos.fact_insumos, cantidad As Double)
@@ -1417,5 +1475,9 @@ Public Class frmPtoVtaNvo
         Dim idFac As Integer = CInt(nuevaFactura_Datos.IdDevuelto)
         Dim ptoVta As Integer = CInt(nuevaFactura_Datos.ptovta.id)
         GestorImpresion.GuardarYEnviarComprobantePDF(idFac, ptoVta, False)
+    End Sub
+
+    Private Sub txtbusquedaAddPlu_TextChanged(sender As Object, e As EventArgs) Handles txtbusquedaAddPlu.TextChanged
+
     End Sub
 End Class

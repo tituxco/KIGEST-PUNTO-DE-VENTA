@@ -48,9 +48,7 @@ Public Class reimpresionComprobantes
 
     End Sub
 
-
     Private Sub reimpresionComprobantes_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
         Try
             Reconectar()
             dtdesdeCobranza.Value = obtenerPrimerDiaMes()
@@ -461,7 +459,7 @@ Public Class reimpresionComprobantes
                           "fact.observaciones as notas, fact.observaciones2, fact.tipofact, fact.ptovta " &
                           "FROM fact_conffiscal as fis " &
                           "INNER JOIN fact_facturas as fact ON fis.donfdesc = fact.tipofact AND fis.ptovta = fact.ptovta " &
-                          "INNER JOIN fact_condventas as con ON con.id = fact.condvta " &
+                          "LEFT JOIN fact_condventas as con ON con.id = fact.condvta " &
                           "WHERE 1=1 " ' <-- Truco para poder concatenar los "AND" sin problemas
 
         ' 2. FILTRO DE FECHAS (Obligatorio siempre)
@@ -531,6 +529,7 @@ Public Class reimpresionComprobantes
                 End If
 
                 Using adaptador As New MySqlDataAdapter(comando)
+                    ' MsgBox(comando.CommandText)
                     adaptador.Fill(dtResultados)
                 End Using
             End Using

@@ -20,35 +20,26 @@ Module funciones_Globales
     Function NormalizarFecha(fechaStr As String) As Date
         Dim fecha As Date
 
-        ' Formato US: MM/DD/YYYY
-        If fechaStr.Contains("/") Then
-            If Date.TryParseExact(fechaStr, "MM/dd/yyyy",
-            Globalization.CultureInfo.InvariantCulture,
-            Globalization.DateTimeStyles.None, fecha) Then
-                Return fecha
-            End If
+        ' 1. Definimos los formatos ordenados por prioridad (Los de Argentina PRIMERO)
+        Dim formatosEsperados As String() = {
+        "dd/MM/yyyy", ' Formato AR estándar
+        "d/M/yyyy",   ' Formato AR sin ceros a la izquierda (ej: 4/5/2026)
+        "dd-MM-yyyy", ' Formato AR con guiones
+        "yyyy-MM-dd", ' Formato ISO (Base de datos MySQL)
+        "MM/dd/yyyy"  ' Formato US (solo se evalúa si los de arriba fallan)
+    }
+
+        ' 2. TryParseExact probará uno por uno en el orden del arreglo
+        If Date.TryParseExact(fechaStr, formatosEsperados,
+                          Globalization.CultureInfo.InvariantCulture,
+                          Globalization.DateTimeStyles.None, fecha) Then
+            Return fecha
         End If
 
-        ' Formato ISO: YYYY-MM-DD
-        If fechaStr.Contains("-") Then
-            If Date.TryParseExact(fechaStr, "yyyy-MM-dd",
-            Globalization.CultureInfo.InvariantCulture,
-            Globalization.DateTimeStyles.None, fecha) Then
-                Return fecha
-            End If
-        End If
-
-        ' Formato AR: DD-MM-YYYY
-        If fechaStr.Contains("-") Then
-            If Date.TryParseExact(fechaStr, "dd-MM-yyyy",
-            Globalization.CultureInfo.InvariantCulture,
-            Globalization.DateTimeStyles.None, fecha) Then
-                Return fecha
-            End If
-        End If
-
-        ' Último intento: cualquier formato que VB pueda interpretar
-        If Date.TryParse(fechaStr, fecha) Then
+        ' 3. Último intento: dejamos que la PC use su propia configuración regional (Argentina)
+        ' Acá usamos CurrentCulture en lugar de InvariantCulture
+        If Date.TryParse(fechaStr, Globalization.CultureInfo.CurrentCulture,
+                     Globalization.DateTimeStyles.None, fecha) Then
             Return fecha
         End If
 
@@ -561,85 +552,215 @@ Module funciones_Globales
 
         End Try
     End Function
+    'Public Function ObtenerNumeroAsiento() As Integer
+    '    Reconectar()
+    '    Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", GestorConexiones.conexionPrinc)
+    '    Dim tabNumeroAsiento As New DataTable
+    '    consNumeroAsiento.Fill(tabNumeroAsiento)
+    '    Dim NumeroAsiento As Integer = 0
+    '    If IsDBNull(tabNumeroAsiento.Rows(0).Item("codigoAsiento")) Then
+    '        NumeroAsiento = 1
+    '    Else
+    '        NumeroAsiento = tabNumeroAsiento.Rows(0).Item("codigoAsiento") + 1
+    '    End If
+    '    Return NumeroAsiento
+    'End Function
+
     Public Function ObtenerNumeroAsiento() As Integer
         Reconectar()
-        Dim consNumeroAsiento As New MySql.Data.MySqlClient.MySqlDataAdapter("SELECT max(codigoAsiento) as codigoAsiento from cm_libroDiario limit 1", GestorConexiones.conexionPrinc)
-        Dim tabNumeroAsiento As New DataTable
-        consNumeroAsiento.Fill(tabNumeroAsiento)
-        Dim NumeroAsiento As Integer = 0
-        If IsDBNull(tabNumeroAsiento.Rows(0).Item("codigoAsiento")) Then
-            NumeroAsiento = 1
-        Else
-            NumeroAsiento = tabNumeroAsiento.Rows(0).Item("codigoAsiento") + 1
-        End If
-        Return NumeroAsiento
+        ' Mira el máximo entre cm_libroDiario y cm_Asientos para jamás reutilizar un número con partidas
+        Dim sql As String = "SELECT GREATEST(" &
+                        "COALESCE((SELECT MAX(codigoAsiento) FROM cm_libroDiario), 0), " &
+                        "COALESCE((SELECT MAX(codigoAsiento) FROM cm_Asientos), 0)" &
+                        ") + 1"
+
+        Using cmd As New MySql.Data.MySqlClient.MySqlCommand(sql, GestorConexiones.conexionPrinc)
+            Return Convert.ToInt32(cmd.ExecuteScalar())
+        End Using
     End Function
 
     Public Function GuardarAsientoContable(codigoAsiento As Integer, comprobante As String, concepto As String, importeDebe As Double, cuentaDebeId As Integer,
-                                           importeHaber As Double, cuentaHaberId As Integer, numPartidas As Integer, fecha As String) As Boolean
+                                       importeHaber As Double, cuentaHaberId As Integer, numPartidas As Integer, fecha As String) As Boolean
+        Dim lockObtenido As Boolean = False
+        Dim asientoFinal As Integer = codigoAsiento
+
         Try
-            If ConsultarPeriodoCerrado(Format(fecha, "yyyy-MM")) = True Then
+            ' 1. Normalizar fecha (evita fallos de formato en ConsultarPeriodoCerrado y en MySQL)
+            Dim fechaDate As Date = CDate(fecha)
+            Dim fechaMySQL As String = fechaDate.ToString("yyyy-MM-dd")
+
+            If ConsultarPeriodoCerrado(fechaDate.ToString("yyyy-MM")) = True Then
                 Return False
-                Exit Function
             End If
+
+            If importeDebe = 0 OrElse importeHaber = 0 Then
+                Return False
+            End If
+
+            ' 2. Sanitizar y limitar longitudes (evita error "Data too long for column")
+            Dim compSeguro As String = comprobante.Trim()
+            If compSeguro.Length > 45 Then compSeguro = compSeguro.Substring(0, 45)
+
+            ' Si ampliaste concepto a VARCHAR(150) poné 150; si lo dejaste en 45 dejalo en 45
+            Dim concSeguro As String = concepto.ToUpper().Trim()
+            If concSeguro.Length > 45 Then concSeguro = concSeguro.Substring(0, 45)
 
             Reconectar()
-            If importeDebe <> 0 And importeHaber <> 0 Then
-                Dim agregarPartidaDebe As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
-                (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
-                Dim comandoPartidaDebe As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaDebe, GestorConexiones.conexionPrinc)
-                With comandoPartidaDebe.Parameters
-                    .AddWithValue("?codigoAsiento", codigoAsiento)
-                    .AddWithValue("?cuentaDebeId", cuentaDebeId)
-                    .AddWithValue("?importeDebe", importeDebe)
-                    .AddWithValue("?cuentaHaberId", 0)
-                    .AddWithValue("?importeHaber", 0)
-                End With
-                comandoPartidaDebe.ExecuteNonQuery()
 
-                Reconectar()
-                Dim agregarPartidaHaber As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
-                (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
-                Dim comandoPartidaHaber As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaHaber, GestorConexiones.conexionPrinc)
-                With comandoPartidaHaber.Parameters
-                    .AddWithValue("?codigoAsiento", codigoAsiento)
-                    .AddWithValue("?cuentaDebeId", 0)
-                    .AddWithValue("?importeDebe", 0)
-                    .AddWithValue("?cuentaHaberId", cuentaHaberId)
-                    .AddWithValue("?importeHaber", importeHaber)
-                End With
-                comandoPartidaHaber.ExecuteNonQuery()
+            ' 3. Bloqueo de concurrencia en MySQL (espera hasta 10 seg si otra PC está grabando)
+            Using cmdLock As New MySql.Data.MySqlClient.MySqlCommand("SELECT GET_LOCK('kigest_asiento', 10)", GestorConexiones.conexionPrinc)
+                Dim resLock As Object = cmdLock.ExecuteScalar()
+                lockObtenido = (resLock IsNot Nothing AndAlso Convert.ToInt32(resLock) = 1)
+            End Using
 
-                Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
-            (?comprobanteInterno,?codigoAsiento,?fecha,?concepto,?totalDebe,?totalHaber,?numPartidas)"
-                Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, GestorConexiones.conexionPrinc)
-                With comandoLibroDiario.Parameters
-                    .AddWithValue("?comprobanteInterno", comprobante)
-                    .AddWithValue("?codigoAsiento", codigoAsiento)
-                    .AddWithValue("?fecha", fecha)
-                    .AddWithValue("?concepto", concepto.ToUpper)
-                    .AddWithValue("?totalDebe", importeDebe)
-                    .AddWithValue("?totalHaber", importeHaber)
-                    .AddWithValue("?numPartidas", numPartidas)
-                End With
-                comandoLibroDiario.ExecuteNonQuery()
+            ' Recalculamos el número adentro del bloqueo para asegurar unicidad absoluta
+            asientoFinal = ObtenerNumeroAsiento()
 
-                Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
-            (?fecha,?concepto,?codigoAsiento)"
-                Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, GestorConexiones.conexionPrinc)
-                With comandoLibroMayor.Parameters
-                    .AddWithValue("?fecha", fecha)
-                    .AddWithValue("?concepto", concepto.ToUpper)
-                    .AddWithValue("?codigoAsiento", codigoAsiento)
-                End With
-                comandoLibroMayor.ExecuteNonQuery()
-            End If
+            ' 4. PRIMERO LIBRO DIARIO (reserva el codigoAsiento de inmediato)
+            Dim sqlDiario As String = "INSERT INTO cm_libroDiario (comprobanteInterno, codigoAsiento, fecha, concepto, totalDebe, totalHaber, NumPartidas) " &
+                                  "VALUES (?comprobanteInterno, ?codigoAsiento, ?fecha, ?concepto, ?totalDebe, ?totalHaber, ?numPartidas)"
+            Using cmdDiario As New MySql.Data.MySqlClient.MySqlCommand(sqlDiario, GestorConexiones.conexionPrinc)
+                cmdDiario.Parameters.AddWithValue("?comprobanteInterno", compSeguro)
+                cmdDiario.Parameters.AddWithValue("?codigoAsiento", asientoFinal)
+                cmdDiario.Parameters.AddWithValue("?fecha", fechaMySQL)
+                cmdDiario.Parameters.AddWithValue("?concepto", concSeguro)
+                cmdDiario.Parameters.AddWithValue("?totalDebe", importeDebe)
+                cmdDiario.Parameters.AddWithValue("?totalHaber", importeHaber)
+                cmdDiario.Parameters.AddWithValue("?numPartidas", numPartidas)
+                cmdDiario.ExecuteNonQuery()
+            End Using
+
+            ' 5. PARTIDA DEBE
+            Dim sqlDebe As String = "INSERT INTO cm_Asientos (codigoAsiento, cuentaDebeId, importeDebe, cuentaHaberId, importeHaber) " &
+                                "VALUES (?codigoAsiento, ?cuentaDebeId, ?importeDebe, 0, 0)"
+            Using cmdDebe As New MySql.Data.MySqlClient.MySqlCommand(sqlDebe, GestorConexiones.conexionPrinc)
+                cmdDebe.Parameters.AddWithValue("?codigoAsiento", asientoFinal)
+                cmdDebe.Parameters.AddWithValue("?cuentaDebeId", cuentaDebeId)
+                cmdDebe.Parameters.AddWithValue("?importeDebe", importeDebe)
+                cmdDebe.ExecuteNonQuery()
+            End Using
+
+            ' 6. PARTIDA HABER
+            Dim sqlHaber As String = "INSERT INTO cm_Asientos (codigoAsiento, cuentaDebeId, importeDebe, cuentaHaberId, importeHaber) " &
+                                 "VALUES (?codigoAsiento, 0, 0, ?cuentaHaberId, ?importeHaber)"
+            Using cmdHaber As New MySql.Data.MySqlClient.MySqlCommand(sqlHaber, GestorConexiones.conexionPrinc)
+                cmdHaber.Parameters.AddWithValue("?codigoAsiento", asientoFinal)
+                cmdHaber.Parameters.AddWithValue("?cuentaHaberId", cuentaHaberId)
+                cmdHaber.Parameters.AddWithValue("?importeHaber", importeHaber)
+                cmdHaber.ExecuteNonQuery()
+            End Using
+
+            ' 7. LIBRO MAYOR
+            Dim sqlMayor As String = "INSERT INTO cm_libroMayor (fecha, concepto, codigoAsiento) " &
+                                 "VALUES (?fecha, ?concepto, ?codigoAsiento)"
+            Using cmdMayor As New MySql.Data.MySqlClient.MySqlCommand(sqlMayor, GestorConexiones.conexionPrinc)
+                cmdMayor.Parameters.AddWithValue("?fecha", fechaMySQL)
+                cmdMayor.Parameters.AddWithValue("?concepto", concSeguro)
+                cmdMayor.Parameters.AddWithValue("?codigoAsiento", asientoFinal)
+                cmdMayor.ExecuteNonQuery()
+            End Using
+
             Return True
-        Catch ex As Exception
-            Return False
-        End Try
 
+        Catch ex As Exception
+            ' Rollback manual para MyISAM si se interrumpió a mitad de camino
+            If asientoFinal > 0 Then
+                Try
+                    Using cmdDel1 As New MySql.Data.MySqlClient.MySqlCommand("DELETE FROM cm_Asientos WHERE codigoAsiento = ?cod", GestorConexiones.conexionPrinc)
+                        cmdDel1.Parameters.AddWithValue("?cod", asientoFinal)
+                        cmdDel1.ExecuteNonQuery()
+                    End Using
+                    Using cmdDel2 As New MySql.Data.MySqlClient.MySqlCommand("DELETE FROM cm_libroDiario WHERE codigoAsiento = ?cod", GestorConexiones.conexionPrinc)
+                        cmdDel2.Parameters.AddWithValue("?cod", asientoFinal)
+                        cmdDel2.ExecuteNonQuery()
+                    End Using
+                    Using cmdDel3 As New MySql.Data.MySqlClient.MySqlCommand("DELETE FROM cm_libroMayor WHERE codigoAsiento = ?cod", GestorConexiones.conexionPrinc)
+                        cmdDel3.Parameters.AddWithValue("?cod", asientoFinal)
+                        cmdDel3.ExecuteNonQuery()
+                    End Using
+                Catch
+                End Try
+            End If
+
+            MsgBox("Error al guardar el asiento contable (" & comprobante & "): " & ex.Message, MsgBoxStyle.Critical, "Contabilidad")
+            Return False
+
+        Finally
+            If lockObtenido Then
+                Try
+                    Using cmdUnlock As New MySql.Data.MySqlClient.MySqlCommand("SELECT RELEASE_LOCK('kigest_asiento')", GestorConexiones.conexionPrinc)
+                        cmdUnlock.ExecuteScalar()
+                    End Using
+                Catch
+                End Try
+            End If
+        End Try
     End Function
+    'Public Function GuardarAsientoContable(codigoAsiento As Integer, comprobante As String, concepto As String, importeDebe As Double, cuentaDebeId As Integer,
+    '                                       importeHaber As Double, cuentaHaberId As Integer, numPartidas As Integer, fecha As String) As Boolean
+    '    Try
+    '        If ConsultarPeriodoCerrado(Format(fecha, "yyyy-MM")) = True Then
+    '            Return False
+    '            Exit Function
+    '        End If
+
+    '        Reconectar()
+    '        If importeDebe <> 0 And importeHaber <> 0 Then
+    '            Dim agregarPartidaDebe As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+    '            (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
+    '            Dim comandoPartidaDebe As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaDebe, GestorConexiones.conexionPrinc)
+    '            With comandoPartidaDebe.Parameters
+    '                .AddWithValue("?codigoAsiento", codigoAsiento)
+    '                .AddWithValue("?cuentaDebeId", cuentaDebeId)
+    '                .AddWithValue("?importeDebe", importeDebe)
+    '                .AddWithValue("?cuentaHaberId", 0)
+    '                .AddWithValue("?importeHaber", 0)
+    '            End With
+    '            comandoPartidaDebe.ExecuteNonQuery()
+
+    '            Reconectar()
+    '            Dim agregarPartidaHaber As String = "insert into cm_Asientos(codigoAsiento,cuentaDebeId,importeDebe,cuentaHaberId,importeHaber) values
+    '            (?codigoAsiento,?cuentaDebeId,?importeDebe,?cuentaHaberId,?importeHaber)"
+    '            Dim comandoPartidaHaber As New MySql.Data.MySqlClient.MySqlCommand(agregarPartidaHaber, GestorConexiones.conexionPrinc)
+    '            With comandoPartidaHaber.Parameters
+    '                .AddWithValue("?codigoAsiento", codigoAsiento)
+    '                .AddWithValue("?cuentaDebeId", 0)
+    '                .AddWithValue("?importeDebe", 0)
+    '                .AddWithValue("?cuentaHaberId", cuentaHaberId)
+    '                .AddWithValue("?importeHaber", importeHaber)
+    '            End With
+    '            comandoPartidaHaber.ExecuteNonQuery()
+
+    '            Dim agregarLibroDiario As String = "insert into cm_libroDiario (comprobanteInterno,codigoAsiento,fecha,concepto,totalDebe,totalHaber,numPartidas) values
+    '        (?comprobanteInterno,?codigoAsiento,?fecha,?concepto,?totalDebe,?totalHaber,?numPartidas)"
+    '            Dim comandoLibroDiario As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroDiario, GestorConexiones.conexionPrinc)
+    '            With comandoLibroDiario.Parameters
+    '                .AddWithValue("?comprobanteInterno", comprobante)
+    '                .AddWithValue("?codigoAsiento", codigoAsiento)
+    '                .AddWithValue("?fecha", fecha)
+    '                .AddWithValue("?concepto", concepto.ToUpper)
+    '                .AddWithValue("?totalDebe", importeDebe)
+    '                .AddWithValue("?totalHaber", importeHaber)
+    '                .AddWithValue("?numPartidas", numPartidas)
+    '            End With
+    '            comandoLibroDiario.ExecuteNonQuery()
+
+    '            Dim agregarLibroMayor As String = "insert into cm_libroMayor (fecha,concepto,codigoAsiento) values
+    '        (?fecha,?concepto,?codigoAsiento)"
+    '            Dim comandoLibroMayor As New MySql.Data.MySqlClient.MySqlCommand(agregarLibroMayor, GestorConexiones.conexionPrinc)
+    '            With comandoLibroMayor.Parameters
+    '                .AddWithValue("?fecha", fecha)
+    '                .AddWithValue("?concepto", concepto.ToUpper)
+    '                .AddWithValue("?codigoAsiento", codigoAsiento)
+    '            End With
+    '            comandoLibroMayor.ExecuteNonQuery()
+    '        End If
+    '        Return True
+    '    Catch ex As Exception
+    '        Return False
+    '    End Try
+
+    'End Function
     'Public Function ObtenerFechaFacturaElectro(numFac As Integer, tipoFac As Integer) As String
     '    Try
     '        Reconectar()

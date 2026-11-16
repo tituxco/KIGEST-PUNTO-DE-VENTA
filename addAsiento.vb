@@ -23,7 +23,9 @@
 
             If ModificarAsiento = True Then
                 Reconectar()
-                Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select * from cm_libroDiario where codigoAsiento=" & IdAsiento & " limit 1", GestorConexiones.conexionPrinc)
+                Dim consLibroDiario As New MySql.Data.MySqlClient.MySqlDataAdapter("select 
+                id, comprobanteInterno, codigoAsiento, DATE_FORMAT(fecha, '%d-%m-%Y') AS fecha, concepto, totalDebe, totalHaber, NumPartidas
+                from cm_libroDiario where codigoAsiento=" & IdAsiento & " limit 1", GestorConexiones.conexionPrinc)
                 Dim tabLibroDiario As New DataTable
                 '    MsgBox(consLibroDiario.SelectCommand.CommandText)
                 consLibroDiario.Fill(tabLibroDiario)
@@ -38,24 +40,48 @@
                 Dim tabAsiento As New DataTable
                 consAsiento.Fill(tabAsiento)
 
+                'For Each Partida As DataRow In tabAsiento.Rows
+
+                '    If Partida.Item("cuentaDebeId") <> 0 Then
+                '        dgvPartidas.Rows.Add(
+                '                         Partida.Item("cuentaDebeId"),
+                '                         ObtenerCodigoCuenta(Partida.Item("cuentaDebeId")),
+                '                         Partida.Item("cuentaDebeId"),
+                '                         Partida.Item("importeDebe"),
+                '                         0
+                '                         )
+                '    Else
+                '        dgvPartidas.Rows.Add(
+                '                        Partida.Item("cuentaHaberId"),
+                '                        ObtenerCodigoCuenta(Partida.Item("cuentaHaberId")),
+                '                        Partida.Item("cuentaHaberId"),
+                '                        0,
+                '                        Partida.Item("importeHaber")
+                '                        )
+                '    End If
+                'Next
+
                 For Each Partida As DataRow In tabAsiento.Rows
+                    Dim idxFila As Integer
                     If Partida.Item("cuentaDebeId") <> 0 Then
-                        dgvPartidas.Rows.Add(
-                                         Partida.Item("cuentaDebeId"),
-                                         ObtenerCodigoCuenta(Partida.Item("cuentaDebeId")),
-                                         Partida.Item("cuentaDebeId"),
-                                         Partida.Item("importeDebe"),
-                                         0
-                                         )
+                        idxFila = dgvPartidas.Rows.Add(
+                                Partida.Item("cuentaDebeId"),
+                                ObtenerCodigoCuenta(Partida.Item("cuentaDebeId")),
+                                Partida.Item("cuentaDebeId"),
+                                Partida.Item("importeDebe"),
+                                0
+                            )
                     Else
-                        dgvPartidas.Rows.Add(
-                                        Partida.Item("cuentaHaberId"),
-                                        ObtenerCodigoCuenta(Partida.Item("cuentaHaberId")),
-                                        Partida.Item("cuentaHaberId"),
-                                        0,
-                                        Partida.Item("importeHaber")
-                                        )
+                        idxFila = dgvPartidas.Rows.Add(
+                                Partida.Item("cuentaHaberId"),
+                                ObtenerCodigoCuenta(Partida.Item("cuentaHaberId")),
+                                Partida.Item("cuentaHaberId"),
+                                0,
+                                Partida.Item("importeHaber")
+                            )
                     End If
+                    ' Guardamos el ID real de la tabla cm_Asientos en el Tag de la fila
+                    dgvPartidas.Rows(idxFila).Tag = Convert.ToInt32(Partida.Item("id"))
                 Next
                 If ConsultarPeriodoCerrado(Format(fchAsientoFecha.Value, "yyyy-MM")) = True Then
                     dgvPartidas.ReadOnly = True
@@ -387,5 +413,165 @@
                 MsgBox(ex.Message)
             End Try
         'End If
+    End Sub
+
+    Private Sub cmdReasentar_Click(sender As Object, e As EventArgs) Handles cmdReasentar.Click
+        Try
+            If Not ModificarAsiento Then
+                MsgBox("Esta función solo está disponible al modificar un asiento existente.", MsgBoxStyle.Exclamation, "Atención")
+                Exit Sub
+            End If
+
+            ' Obtenemos las filas seleccionadas (funciona tanto si seleccionás la fila completa como si marcás celdas de 2 filas)
+            Dim filasSeleccionadas As New List(Of DataGridViewRow)()
+            For Each celda As DataGridViewCell In dgvPartidas.SelectedCells
+                If Not celda.OwningRow.IsNewRow AndAlso Not filasSeleccionadas.Contains(celda.OwningRow) Then
+                    filasSeleccionadas.Add(celda.OwningRow)
+                End If
+            Next
+
+            ' Validar que sean exactamente 2 partidas
+            If filasSeleccionadas.Count <> 2 Then
+                MsgBox("Debe seleccionar exactamente 2 partidas (una en el DEBE y otra en el HABER) para reasentar.", MsgBoxStyle.Exclamation, "Selección inválida")
+                Exit Sub
+            End If
+
+            Dim filaDebe As DataGridViewRow = Nothing
+            Dim filaHaber As DataGridViewRow = Nothing
+            Dim montoDebe As Double = 0
+            Dim montoHaber As Double = 0
+
+            For Each fila As DataGridViewRow In filasSeleccionadas
+                Dim d As Double = Val(fila.Cells("DEBE").Value.ToString().Replace("$", "").Replace(".", "").Replace(",", "."))
+                Dim h As Double = Val(fila.Cells("HABER").Value.ToString().Replace("$", "").Replace(".", "").Replace(",", "."))
+
+                ' Si el formato en celda ya es numérico estándar de VB:
+                If IsNumeric(fila.Cells("DEBE").Value) Then d = CDbl(fila.Cells("DEBE").Value)
+                If IsNumeric(fila.Cells("HABER").Value) Then h = CDbl(fila.Cells("HABER").Value)
+
+                If d > 0 AndAlso h = 0 Then
+                    filaDebe = fila
+                    montoDebe = d
+                ElseIf h > 0 AndAlso d = 0 Then
+                    filaHaber = fila
+                    montoHaber = h
+                End If
+            Next
+
+            ' Validar que haya 1 Debe, 1 Haber y diferencia cero
+            If filaDebe Is Nothing OrElse filaHaber Is Nothing Then
+                MsgBox("Las filas seleccionadas deben corresponder una al DEBE y otra al HABER.", MsgBoxStyle.Exclamation, "Atención")
+                Exit Sub
+            End If
+
+            If Math.Round(montoDebe - montoHaber, 2) <> 0 Then
+                MsgBox($"El asiento no balancea. Diferencia: {Math.Round(montoDebe - montoHaber, 2):N2}", MsgBoxStyle.Exclamation, "Diferencia en importes")
+                Exit Sub
+            End If
+
+            If filaDebe.Tag Is Nothing OrElse filaHaber.Tag Is Nothing Then
+                MsgBox("Las partidas seleccionadas aún no están guardadas en la base de datos.", MsgBoxStyle.Exclamation, "Atención")
+                Exit Sub
+            End If
+
+            ' -------------------------------------------------------------------------
+            ' PASO 1: Primera confirmación
+            ' -------------------------------------------------------------------------
+            If MsgBox("¿Está seguro que desea reasentar estas dos partidas en un nuevo asiento contable?",
+                      MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "Confirmar Reasentamiento") = MsgBoxResult.No Then
+                Exit Sub
+            End If
+
+            ' -------------------------------------------------------------------------
+            ' PASO 2: Abrir ventana selfac filtrada por fecha, importe y razón > 45
+            ' -------------------------------------------------------------------------
+            Me.TopMost = False
+            Dim frmBuscar As New selfac()
+            frmBuscar.LLAMA = "REASENTAR"
+            frmBuscar.FechaFiltro = fchAsientoFecha.Value.Date
+            frmBuscar.ImporteFiltro = montoDebe
+
+            If frmBuscar.ShowDialog() <> DialogResult.OK Then
+                Exit Sub
+            End If
+
+            ' -------------------------------------------------------------------------
+            ' PASO 3: Segunda confirmación con el comprobante elegido
+            ' -------------------------------------------------------------------------
+            Dim msgConfirmar2 As String = $"¿Está seguro que desea asignar las partidas al comprobante:{vbCrLf}{vbCrLf}" &
+                                          $"Comprobante: {frmBuscar.ComprobanteSeleccionado}{vbCrLf}" &
+                                          $"Cliente/Razón: {frmBuscar.RazonSeleccionada}{vbCrLf}" &
+                                          $"Importe: ${montoDebe:N2}?"
+
+            If MsgBox(msgConfirmar2, MsgBoxStyle.YesNo Or MsgBoxStyle.Question, "Confirmar Asignación") = MsgBoxResult.No Then
+                Exit Sub
+            End If
+
+            ' -------------------------------------------------------------------------
+            ' PASO 4: Crear nuevo asiento en Diario/Mayor y reasignar las 2 partidas
+            ' -------------------------------------------------------------------------
+            Reconectar()
+
+            Dim nuevoCodigoAsiento As Integer = ObtenerNumeroAsiento()
+            Dim fechaMySQL As String = frmBuscar.FechaSeleccionada.ToString("yyyy-MM-dd")
+
+            Dim compSeguro As String = frmBuscar.ComprobanteSeleccionado.ToUpper().Trim()
+            'If compSeguro.Length > 45 Then compSeguro = compSeguro.Substring(0, 45)
+
+            Dim conceptoSeguro As String = ("COMPROBANTE " & frmBuscar.RazonSeleccionada).ToUpper().Trim()
+            ' If conceptoSeguro.Length > 45 Then conceptoSeguro = conceptoSeguro.Substring(0, 45)
+
+            ' A. Insertar cabecera en cm_libroDiario
+            Dim sqlDiario As String = "INSERT INTO cm_libroDiario (comprobanteInterno, codigoAsiento, fecha, concepto, totalDebe, totalHaber, NumPartidas) " &
+                                      "VALUES (@comp, @asiento, @fecha, @concepto, @debe, @haber, 2)"
+            Using cmdDiario As New MySql.Data.MySqlClient.MySqlCommand(sqlDiario, GestorConexiones.conexionPrinc)
+                cmdDiario.Parameters.AddWithValue("@comp", compSeguro)
+                cmdDiario.Parameters.AddWithValue("@asiento", nuevoCodigoAsiento)
+                cmdDiario.Parameters.AddWithValue("@fecha", fechaMySQL)
+                cmdDiario.Parameters.AddWithValue("@concepto", conceptoSeguro)
+                cmdDiario.Parameters.AddWithValue("@debe", montoDebe)
+                cmdDiario.Parameters.AddWithValue("@haber", montoHaber)
+                cmdDiario.ExecuteNonQuery()
+            End Using
+
+            ' B. Insertar cabecera en cm_libroMayor
+            Dim sqlMayor As String = "INSERT INTO cm_libroMayor (fecha, concepto, codigoAsiento) VALUES (@fecha, @concepto, @asiento)"
+            Using cmdMayor As New MySql.Data.MySqlClient.MySqlCommand(sqlMayor, GestorConexiones.conexionPrinc)
+                cmdMayor.Parameters.AddWithValue("@fecha", fechaMySQL)
+                cmdMayor.Parameters.AddWithValue("@concepto", conceptoSeguro)
+                cmdMayor.Parameters.AddWithValue("@asiento", nuevoCodigoAsiento)
+                cmdMayor.ExecuteNonQuery()
+            End Using
+
+            ' C. Reasignar el codigoAsiento únicamente a las 2 filas seleccionadas en cm_Asientos
+            Dim idPartidaDebe As Integer = Convert.ToInt32(filaDebe.Tag)
+            Dim idPartidaHaber As Integer = Convert.ToInt32(filaHaber.Tag)
+
+            Dim sqlUpdAsientos As String = "UPDATE cm_Asientos SET codigoAsiento = @nuevoAsiento WHERE id IN (@id1, @id2)"
+            Using cmdUpd As New MySql.Data.MySqlClient.MySqlCommand(sqlUpdAsientos, GestorConexiones.conexionPrinc)
+                cmdUpd.Parameters.AddWithValue("@nuevoAsiento", nuevoCodigoAsiento)
+                cmdUpd.Parameters.AddWithValue("@id1", idPartidaDebe)
+                cmdUpd.Parameters.AddWithValue("@id2", idPartidaHaber)
+                cmdUpd.ExecuteNonQuery()
+            End Using
+
+            ' D. Quitamos las 2 partidas movidas de la grilla actual y recalculamos
+            dgvPartidas.Rows.Remove(filaDebe)
+            dgvPartidas.Rows.Remove(filaHaber)
+            CalcularTotalAsiento()
+
+            ' Refrescamos el formulario padre CONTABLE si está abierto
+            If TypeOf frmprincipal.ActiveMdiChild Is CONTABLE Then
+                With CType(frmprincipal.ActiveMdiChild, CONTABLE)
+                    .CargarPeriodos()
+                    .CargarLibroDiario()
+                End With
+            End If
+
+            MsgBox($"Partidas reasentadas correctamente en el nuevo Asiento N° {nuevoCodigoAsiento}.", MsgBoxStyle.Information, "Proceso Completado")
+
+        Catch ex As Exception
+            MsgBox("Error al reasentar partidas: " & ex.Message, MsgBoxStyle.Critical, "Error")
+        End Try
     End Sub
 End Class

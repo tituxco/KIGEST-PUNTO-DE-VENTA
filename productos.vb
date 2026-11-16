@@ -1874,4 +1874,19 @@ Public Class productos
     Private Sub tabstock_Click(sender As Object, e As EventArgs) Handles tabstock.Click
 
     End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        Dim ruta As String = My.Settings.capetaAlmacenamDocum & "exportar_blanza.csv"
+        Dim omitidos As New List(Of String)()
+
+        If GestorITegra.ExportarProductosITegra(ruta, omitidos) Then
+            If omitidos.Count > 0 Then
+                Dim detalle As String = String.Join(vbCrLf, omitidos.Take(10))
+                MsgBox($"CSV generado, pero se omitieron {omitidos.Count} productos por tener ID mayor a 99999:" & vbCrLf & vbCrLf & detalle,
+                   MsgBoxStyle.Exclamation, "Advertencia")
+            Else
+                MsgBox("Archivo CSV generado correctamente en: " & ruta, MsgBoxStyle.Information, "Exportación Exitosa")
+            End If
+        End If
+    End Sub
 End Class

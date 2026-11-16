@@ -1821,6 +1821,7 @@ Public Class puntoventa
 				Where fis.donfdesc = fr.tipofact And ptovta.id = fis.ptovta And ptovta.id = fr.punto_venta And (fr.punto_venta=" & My.Settings.idPtoVta & " or fr.punto_venta=" & FacturaElectro.puntovtaelect & ")
 				order by fr.id asc", GestorConexiones.conexionPrinc)
                     Dim tablaFacRap As New DataTable
+                    'MsgBox(consultaFacRap.SelectCommand.CommandText)
                     consultaFacRap.Fill(tablaFacRap)
                     Dim textoInput As String = "Ingrese codigo de comprobante: " & vbNewLine & vbNewLine
                     For Each factRap As DataRow In tablaFacRap.Rows

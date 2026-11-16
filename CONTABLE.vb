@@ -41,8 +41,8 @@ Public Class CONTABLE
                 TOTmonot += FormatNumber(row.Cells.Item(10).Value, 2)
                 TOTacuenta += FormatNumber(row.Cells.Item(11).Value, 2)
                 TOTnogr += FormatNumber(row.Cells.Item(12).Value, 2)
-                TOTperib += FormatNumber(row.Cells.Item(13).Value, 2)
-                TOTperiv += FormatNumber(row.Cells.Item(14).Value, 2)
+                TOTperib += FormatNumber(row.Cells.Item(14).Value, 2)
+                TOTperiv += FormatNumber(row.Cells.Item(13).Value, 2)
                 TOTgral += FormatNumber(row.Cells.Item(15).Value, 2)
             End If
         Next
